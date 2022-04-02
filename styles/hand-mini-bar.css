@@ -1,0 +1,266 @@
+#fq-card-engine-container{
+    display:flex;
+    flex-direction: column;
+}
+
+#fq-card-engine-hands-container{
+    display:flex;
+    flex-direction: column;
+    max-height:900px;
+    transition: max-height 500ms ease-in-out;
+    padding-top: 18px;
+    padding-bottom: 25px;
+    overflow: hidden;
+}
+
+#fq-card-engine-container.hidden #fq-card-engine-hands-container{
+    max-height:0px;
+    padding-bottom: 0px; 
+}
+
+#fq-card-engine-container.hidden i.fq-card-engine-hide-show{
+    margin-top:0px;
+}
+
+i.fq-card-engine-hide-show{
+    margin-left:109px;
+    color:#c9c7b8;
+    padding:2px;
+    cursor:pointer;
+    pointer-events: all;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;    
+    font-size: 17px;
+    margin-top:-24px;
+}
+
+
+i.fq-card-engine-hide-show:before{
+    content: "\f107";
+}
+
+i.fq-card-engine-hide-show.show{
+    line-height: 18px;
+    margin-top: -24px;
+}
+
+i.fq-card-engine-hide-show.show:before{
+    content: "\f106";
+}
+
+.fq-card-engine-hand{
+    display:flex;
+    flex-direction: column;
+    max-width:200px;
+    max-height: 65px;
+    margin: 5px 5px 0px 15px;
+    color: var(--color-text-light-highlight);
+    z-index: var(--z-index-ui);
+    pointer-events: all;
+}
+
+.fq-card-engine-hand-inner{
+    display:flex;
+    flex-direction: row;
+    padding: 0;
+    background: url(../../../ui/denim075.png) repeat;
+    border-radius: 5px;
+    box-shadow: 0 0 20px var(--color-shadow-dark);
+    border: 1px solid #000;
+}
+
+.fq-card-engine-hand-name{
+    display:none;
+    font-size: 12px;
+    /*color: #c9c7b8;*/
+    color:#FFF;
+    width: 200px;
+    text-align: center;
+}
+
+#fq-card-engine-container.show-names .fq-card-engine-hand-name{
+    display:block;
+
+}
+
+.fq-card-engine-settings,
+.fq-card-engine-actions{
+    display:flex;
+    cursor: pointer;
+    flex-direction: column; 
+    height: 50px;
+
+}
+
+.fq-card-engine-settings-hand{
+    background-image: url(/modules/fq-card-engine/artwork/cards.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 25px;
+    background-position-y: 1px;
+    background-position-x: 0px;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+    border-radius: 5px 0 0 0;
+    color: #c9c7b8;
+}
+
+.fq-card-engine-settings-choose{
+    background-size: 30px;
+    background-repeat: no-repeat;
+    width: 23px;
+    height: 25px;
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    border-radius:0 0 0 5px;
+    color:#c9c7b8;
+    font-size: 21px;
+    padding-left: 1px;
+    line-height: 23px;
+}
+
+.fq-card-engine-settings-choose:before{
+    content:'\2699';
+}
+
+
+.fq-card-engine-reset{
+    width: 23px;
+    height: 25px;
+    background-position-y: 7px;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    border-radius:0 0 5px 0;
+    color:#c9c7b8;
+    padding-left: 2px;
+    font-size: 22px;
+    line-height: 23px;
+}
+
+.fq-card-engine-reset:before{
+    content: "\21bb";
+}
+
+.fq-card-engine-pass{
+    width: 23px;
+    height: 25px;
+    background-position-y: 7px;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    border-radius:0 0 5px 0;
+    color:#c9c7b8;
+    padding-left: 2px;
+    font-size: 22px;
+    line-height: 23px;
+}
+
+.fq-card-engine-pass:before{
+    content: "\21aa";
+}
+
+.fq-card-engine-draw{
+    display:block;
+    width: 23px;
+    height:25px;
+    color:#c9c7b8;
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+    border-radius:0 5px 0 0;
+    padding-left:1px;
+}
+
+
+.fq-card-engine-settings-choose:hover,
+.fq-card-engine-pass:hover,
+.fq-card-engine-settings-hand:hover,
+.fq-card-engine-draw:hover{
+    border: 1px solid var(--color-border-highlight-alt);
+    border-bottom: 1px solid var(--color-border-highlight);
+    box-shadow: 0 0 10px var(--color-shadow-highlight);
+}
+
+.fq-card-engine-draw:before{
+    content: '+';
+    font-size: 36px;
+    line-height: 22px;
+}
+
+.fq-card-engine-card-container{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    max-width: 154px;
+    max-height: 50px;
+    /*To Overlap cards and tokens*/
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+.fq-card-engine-card{
+    height: 50px;
+    width: 50px;
+    /*better for catds?
+     *width: calc(48px * 2 / 3);
+    */
+    background-repeat: no-repeat;  
+    background-size: auto 50px;
+    margin-left: 1px;
+    cursor: pointer;
+    /*To Overlap cards and tokens*/
+    margin-left: -14px;
+    margin-right: -14px;    
+    z-index:1000;
+    filter: drop-shadow(0px 0px 3px #000);
+}
+
+.fq-card-engine-card:hover{
+    height: 100px;
+    width: calc(100px * 2 / 3);
+    background-size: calc(100px * 2 / 3) auto;
+    background-position: center;
+    margin-top:-24px;
+    flex: none;
+    margin-left:-24px;
+    filter:drop-shadow(5px 5px 5px #000);
+}
+
+
+.fq-card-engine-message{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.fq-card-engine-message-info{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    max-width: 224px;
+    padding-left: 4px;
+}
+
+.fq-card-engine-message-name{
+    margin-bottom: 2px;
+}
+
+.fq-card-engine-message-description{
+    font-size: smaller;
+}
+
+.fq-card-engine-message-card{
+    height: 50px;
+    width: 50px;
+    background-position: center;
+    background-size: auto 50px;
+    background-repeat:no-repeat;
+
+}
+
+.empty-hand-message{
+    margin-left:-10px;
+    padding:8px;
+}
+.empty-hand-message .settings-icon{
+    color:greenyellow;
+}

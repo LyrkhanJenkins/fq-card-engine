@@ -1,0 +1,24 @@
+{
+    "FQCARDENGINE.ModuleName":"FQ Card Engine",
+    "FQCARDENGINE.NoHandMessageBefore":"Select the",
+    "FQCARDENGINE.NoHandMessageAfter":"Icon to choose a hand",
+    "FQCARDENGINE.ChooseHand":"Select Hand",
+    "FQCARDENGINE.NoAvailableHands":"This user does not have any available hands.",
+    "FQCARDENGINE.CardBack":"Back",
+    "FQCARDENGINE.CardHidden":"Hidden",
+    "FQCARDENGINE.AddCard":"Draw Cards",
+    "FQCARDENGINE.ResetHandConfirmTitle":"Reset Hand",
+    "FQCARDENGINE.ResetHandConfirmQuestion":"Place all cards back in their original Deck?",
+    "FQCARDENGINE.DeckList":"List of Hands",
+    "FQCARDENGINE.OpenHand":"Hand Info",
+    "FQCARDENGINE.Pass":"Pass Cards",
+    "FQCARDENGINE.HandCountSetting":"Hand Count",
+    "FQCARDENGINE.HandCountSettingHint":"Number of hands to display on the screen",
+    "FQCARDENGINE.DisplayHandNameSetting":"Display Hand Name",
+    "FQCARDENGINE.DisplayHandNameSettingHint":"Displays the name for the hand above the hand (useful for multiple hands)",
+    "FQCARDENGINE.HideMessagesSetting":"No Messages",
+    "FQCARDENGINE.HideMessagesSettingHint":"Disables Messages when cards are moved to and from the mini bar",
+    "FQCARDENGINE.BetterChatMessagesSetting":"Better Chat Messages",
+    "FQCARDENGINE.BetterChatMessagesSettingHint":"Messages in Chat are displayed with card images and descriptions"
+
+}
