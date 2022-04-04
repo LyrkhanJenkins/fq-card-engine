@@ -1,5 +1,6 @@
 {
     "FQCARDENGINE.ModuleName":"FQ Card Engine",
+    "FQCARDENGINE.NoHandSelected":"You must first select a hand for this toolbar.",
     "FQCARDENGINE.NoHandMessageBefore":"Select the",
     "FQCARDENGINE.NoHandMessageAfter":"Icon to choose a hand",
     "FQCARDENGINE.ChooseHand":"Select Hand",
