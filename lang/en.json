@@ -20,6 +20,13 @@
     "FQCARDENGINE.HideMessagesSetting":"No Messages",
     "FQCARDENGINE.HideMessagesSettingHint":"Disables Messages when cards are moved to and from the mini bar",
     "FQCARDENGINE.BetterChatMessagesSetting":"Better Chat Messages",
-    "FQCARDENGINE.BetterChatMessagesSettingHint":"Messages in Chat are displayed with card images and descriptions"
+    "FQCARDENGINE.BetterChatMessagesSettingHint":"Messages in Chat are displayed with card images and descriptions",
+    "FQCARDENGINE.BarPositionAbovePlayersSetting":"Above Player List",
+    "FQCARDENGINE.BarPositionRightMacroSetting":"Right of Macro Bar",
+    "FQCARDENGINE.BarPositionLeftMacroSetting":"Left of Macro Bar",
+    "FQCARDENGINE.BarPositionSetting":"Bar Position",
+    "FQCARDENGINE.BarPositionSettingHint":"Select the position of the bar for all users",
+    "FQCARDENGINE.TokenModeSetting":"Token Mode",
+    "FQCARDENGINE.TokenModeSettingHint":"Disables the ability to flip when using the module for tokens"
 
 }

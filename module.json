@@ -27,7 +27,7 @@
   "styles": [
     "styles/fq-card-engine.css"
   ],  
-  "socket": false,
+  "socket": true,
   "manifest": "https://github.com/LyrkhanJenkins/fq-card-engine/-/raw/main/module.json",
   "download": "https://github.com/LyrkhanJenkins/fq-card-engine/-/archive/main/fq-card-engine-main.zip"
 }
