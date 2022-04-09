@@ -25,7 +25,7 @@
     "FQCARDENGINE.BarPositionRightMacroSetting":"Right of Macro Bar",
     "FQCARDENGINE.BarPositionLeftMacroSetting":"Left of Macro Bar",
     "FQCARDENGINE.BarPositionSetting":"Bar Position",
-    "FQCARDENGINE.BarPositionSettingHint":"Select the position of the bar for all users",
+    "FQCARDENGINE.BarPositionSettingHint":"Select the position of the bar for all players",
     "FQCARDENGINE.TokenModeSetting":"Token Mode",
     "FQCARDENGINE.TokenModeSettingHint":"Disables the ability to flip when using the module for tokens"
 
