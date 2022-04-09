@@ -1,6 +1,7 @@
 #fq-card-engine-container{
     display:flex;
     flex-direction: column;
+    z-index: 1;
 }
 
 #fq-card-engine-hands-container{
@@ -249,6 +250,13 @@ i.fq-card-engine-hide-show.show:before{
 
 .fq-card-engine-message-name{
     margin-bottom: 2px;
+}
+
+.fq-card-engine-play-dialog-description{
+    text-align:center;
+    margin: 0px;
+    font-weight: normal;
+    font-size: 12px;
 }
 
 .fq-card-engine-message-description{
