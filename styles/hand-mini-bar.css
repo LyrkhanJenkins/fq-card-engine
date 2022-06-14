@@ -1,3 +1,8 @@
+/* Fixes bug when combined with WebRTC Tweaks module */
+#ui-top{
+    min-height:0;
+}
+
 #fq-card-engine-container{
     display:flex;
     flex-direction: column;
@@ -232,10 +237,10 @@ i.fq-card-engine-hide-show.show:before{
 }
 
 .fq-card-engine-card:hover{
-    height: 100px;
     margin-top:-24px;
+    height:100px;
     flex: none;
-    filter:drop-shadow(5px 5px 5px #000);
+    filter:drop-shadow(0px 0px 2px #FFF);
 }
 
 
