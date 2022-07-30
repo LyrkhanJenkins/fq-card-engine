@@ -34,6 +34,17 @@
     "FQCARDENGINE.ChooseUser":"Select a Player for the Toolbar",
     "FQCARDENGINE.ResetToolbarDialogTitle":"Reset Toolbar",
     "FQCARDENGINE.ResetToolbarDialogQuestion":"Reset The Toolbar back to default?",
-    "FQCARDENGINE.NoHand":"No Hand"
+    "FQCARDENGINE.CardClickBehavior":"Card Click Behavior",
+    "FQCARDENGINE.CardClickBehaviorHint":"Select what happens when a card in the bar is clicked",
+    "FQCARDENGINE.CardClickPlayCard":"Play Card Dialog",
+    "FQCARDENGINE.CardClickOpenHand":"Open Hand",
+    "FQCARDENGINE.CardClickCardImage":"Display Card Image",
+    "FQCARDENGINE.RemoveBar":"Remove Bar",
+    "FQCARDENGINE.HideShow":"Hide/Show",
+    "FQCARDENGINE.AddBar":"Add Bar",
+    "FQCARDENGINE.NoHand":"No Hand",
+    "FQCARDENGINE.ResetBar":"Reset Bar",
+    "FQCARDENGINE.Player":"Player",
+    "FQCARDENGINE.Hand":"Hand"
 
 }

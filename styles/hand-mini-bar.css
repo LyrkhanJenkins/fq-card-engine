@@ -28,42 +28,31 @@
 }
 
 .fq-card-engine-buttons-container{
+    max-height:20px;
     max-width: 220px;
     min-width: 220px;
-    margin: 0px 0px 0px auto;
     display: flex;
     flex-grow: 1;
+    margin-bottom: -15px;
+    padding-left: 15px;
 }
 
-.fq-card-engine-buttons-container .fq-card-engine-hide-show{
-  height: 24px;
-  align-self: self-end;
-}
-
-i.fq-card-engine-hide-show{
-    margin-left:109px;
+.fq-card-engine-buttons-container *{
     color:#c9c7b8;
     padding:2px;
     cursor:pointer;
     pointer-events: all;
-    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-width: .5px;
     -webkit-text-stroke-color: black;    
-    font-size: 17px;
-    /*margin-top:-24px;*/
-    margin: 0px auto -24px auto;
+    font-size: 22px;
+    margin: auto;
+    text-align: center;
+    line-height: 22px;
+    height: 22px;
 }
 
-
-i.fq-card-engine-hide-show:before{
-    content: "\f107";
-}
-
-i.fq-card-engine-hide-show.show{
-    line-height: 18px;
-}
-
-i.fq-card-engine-hide-show.show:before{
-    content: "\f106";
+.fq-card-engine-hide-show.show{
+    transform: rotate(180deg);;
 }
 
 .fq-card-engine-hand{
@@ -190,6 +179,9 @@ i.fq-card-engine-hide-show.show:before{
     padding-left:1px;
 }
 
+.fq-card-engine-buttons-container *:hover{
+    filter: drop-shadow(0px 0px 2px var(--color-shadow-highlight));
+}
 
 .fq-card-engine-settings-choose:hover,
 .fq-card-engine-pass:hover,
@@ -327,6 +319,10 @@ i.fq-card-engine-hide-show.show:before{
     flex-wrap: nowrap;
 }
 
+div#fq-card-engine-container{
+    justify-content: end;
+}
+
 #ui-bottom.fq-card-engine div#fq-card-engine-container{
     grid-row: 1/4;
     grid-column: 2;
@@ -356,6 +352,11 @@ i.fq-card-engine-hide-show.show:before{
     #ui-bottom div#fq-card-engine-container div#fq-card-engine-hands-container{
         margin-left:24px;
     }
+
+    .fq-card-engine-buttons-container{
+        margin-left: 15px;
+    }
+
     #ui-bottom{
       grid-template-columns: minmax(auto, auto) minmax(244px, 244px);
     }
