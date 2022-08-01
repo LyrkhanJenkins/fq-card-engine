@@ -339,6 +339,30 @@ div#fq-card-engine-container{
 #ui-bottom.fq-card-engine-right div#fq-card-engine-container{
     grid-column: 2;
 }
+/* Window popup css*/
+.fq-card-engine-window{
+    height:100%;
+}
+
+.fq-card-engine-window-cards{
+    height:100%;
+    display: flex;
+    width:20000px;
+
+}
+
+.fq-card-engine-window-card:first{
+    margin-left:0px;
+}
+
+.fq-card-engine-window-card{
+    height:100%;
+    cursor:pointer;
+}
+
+.fq-card-engine-window-card img{
+    height: 100%;
+}
 
 /* Shrink macro bar sooner*/
 @media (max-width: 1316px)
