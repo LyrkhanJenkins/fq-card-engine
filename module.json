@@ -26,8 +26,8 @@
       "url": "https://github.com/LyrkhanJenkins"
     }
   ],
-  "scripts": [
-    "scripts/fq-card-engine.js"
+  "esmodules": [
+    "scripts/fq-card-engine-module.js"
   ],
   "styles": [
     "styles/fq-card-engine.css"

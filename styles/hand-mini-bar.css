@@ -346,22 +346,16 @@ div#fq-card-engine-container{
 
 .fq-card-engine-window-cards{
     height:100%;
+    width:100%;
     display: flex;
-    width:20000px;
+    flex-wrap: wrap;
 
-}
-
-.fq-card-engine-window-card:first{
-    margin-left:0px;
 }
 
 .fq-card-engine-window-card{
+    max-height:300px;
     height:100%;
     cursor:pointer;
-}
-
-.fq-card-engine-window-card img{
-    height: 100%;
 }
 
 /* Shrink macro bar sooner*/
