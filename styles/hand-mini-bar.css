@@ -59,7 +59,7 @@
 
 .fq-card-engine-buttons-container .fq-card-engine-hide-show.show{
     transform: rotate(0deg);
-    margin-bottom: -4px;
+    margin-bottom: 0px;
 }
 
 .fq-card-engine-hand{
