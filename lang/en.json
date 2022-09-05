@@ -1,6 +1,7 @@
 {
     "FQCARDENGINE.ModuleName":"FQ Card Engine",
     "FQCARDENGINE.NoHandSelected":"You must first select a hand for this toolbar.",
+    "FQCARDENGINE.NoPermission":"You do not have sufficient permission to do that.",
     "FQCARDENGINE.NoHandMessageBefore":"Select the",
     "FQCARDENGINE.NoHandMessageAfter":"Icon to choose a hand",
     "FQCARDENGINE.ChooseHand":"Select a Hand for the Toolbar",
@@ -46,6 +47,7 @@
     "FQCARDENGINE.NoHand":"No Hand",
     "FQCARDENGINE.ResetBar":"Reset Bar",
     "FQCARDENGINE.Player":"Player",
-    "FQCARDENGINE.Hand":"Hand"
+    "FQCARDENGINE.Hand":"Hand",
+    "FQCARDENGINE.Bar":"bar"
 
 }
