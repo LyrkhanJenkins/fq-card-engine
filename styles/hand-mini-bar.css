@@ -27,12 +27,48 @@
 }
 
 .fq-card-engine-buttons-container{
-    max-height:20px;
+    max-height:8px;
     max-width: 220px;
     min-width: 220px;
     display: flex;
     flex-grow: 1;
     padding-left: 15px;
+    filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.5));
+    transition: transform 0.2s ease-in, z-index 0.2s step-start;
+}
+
+.fq-card-engine-buttons-container.expanded,
+.fq-card-engine-buttons-container.hidden-expanded{
+    max-height:22px;
+}
+
+.fq-card-engine-hidden-buttons{
+    display:none;
+}
+
+.fq-card-engine-buttons-container.expanded .fq-card-engine-hidden-buttons,
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-hidden-buttons{
+    display:flex;
+    flex-grow: 1;
+}
+
+.fq-card-engine-buttons-container.expanded .fq-card-engine-show-buttons,
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-show-buttons{
+    display:none;
+}
+
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-add-bar,
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-subtract-bar{
+    display:none;
+}
+
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-hide-show{
+    transform: rotate(0deg);
+    margin-bottom: 0px;
+}
+
+.fq-card-engine-buttons-container .fq-card-engine-hide-show{
+    transform: rotate(180deg);
 }
 
 .fq-card-engine-buttons-container *{
@@ -49,13 +85,14 @@
     height: 22px;
 }
 
-.fq-card-engine-buttons-container .fq-card-engine-hide-show{
-    transform: rotate(180deg);
+.fq-card-engine-show-buttons{
+    line-height: 0px;
+    max-height: 10px;
+    font-size: 12px;
+    width: 100%;
 }
-
-.fq-card-engine-buttons-container .fq-card-engine-hide-show.show{
-    transform: rotate(0deg);
-    margin-bottom: 0px;
+.fq-card-engine-show-buttons.hide{
+    display:none;
 }
 
 .fq-card-engine-hand{
@@ -100,6 +137,7 @@
     background: url(../../../ui/denim075.png) repeat;
 
 }
+
 .fq-card-engine-settings{
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
