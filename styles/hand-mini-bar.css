@@ -15,7 +15,7 @@
     max-height:900px;
     /*ransition: max-height 500ms ease-in-out;*/
     transition: all 500ms ease-in-out;
-    padding-top:8px;
+    padding-top:22px;
     padding-bottom: 2px;
     overflow: hidden;    
     margin: 0px 0px 0px auto;
@@ -42,29 +42,31 @@
     max-height:22px;
 }
 
-.fq-card-engine-hidden-buttons{
-    display:none;
-}
-
 .fq-card-engine-buttons-container.expanded .fq-card-engine-hidden-buttons,
 .fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-hidden-buttons{
     display:flex;
     flex-grow: 1;
 }
 
+.fq-card-engine-hidden-buttons,
 .fq-card-engine-buttons-container.expanded .fq-card-engine-show-buttons,
-.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-show-buttons{
-    display:none;
-}
-
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-show-buttons,
 .fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-add-bar,
 .fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-subtract-bar{
     display:none;
 }
 
+.fq-card-engine-buttons-container .fq-card-engine-add-bar,
+.fq-card-engine-buttons-container .fq-card-engine-subtract-bar{
+    line-height:14px;
+}
+
 .fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-hide-show{
     transform: rotate(0deg);
     margin-bottom: 0px;
+}
+.fq-card-engine-buttons-container .fq-card-engine-hide-show{
+    line-height:22px;
 }
 
 .fq-card-engine-buttons-container .fq-card-engine-hide-show{
@@ -76,7 +78,7 @@
     padding:2px;
     cursor:pointer;
     pointer-events: all;
-    -webkit-text-stroke-width: .5px;
+    -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;    
     font-size: 26px;
     margin: auto;
@@ -88,10 +90,14 @@
 .fq-card-engine-show-buttons{
     line-height: 0px;
     max-height: 10px;
-    font-size: 18px;
     width: 100%;
     margin-top:-3px;
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-width: 1px;
+    padding:0px;
+    font-size: 26px;
 }
+
 .fq-card-engine-show-buttons.hide{
     display:none;
 }
