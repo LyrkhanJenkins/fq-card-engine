@@ -33,6 +33,7 @@
     "styles/fq-card-engine.css"
   ],  
   "socket": true,
+  "url": "https://github.com/LyrkhanJenkins/fq-card-engine",
   "manifest": "https://github.com/LyrkhanJenkins/fq-card-engine/-/raw/main/module.json",
   "download": "https://github.com/LyrkhanJenkins/fq-card-engine/-/archive/v1.2.7/fq-card-engine-v1.2.7.zip"
 }
