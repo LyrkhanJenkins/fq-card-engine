@@ -3,7 +3,7 @@
   "title": "Card FQ Card Engine",
   "description": "A module to display a players hand of cards on the screen in a small toolbar",
   "author": "lyrkhan",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "minimumCoreVersion": "9",
   "compatibleCoreVersion": "10",
   "languages": [
@@ -35,5 +35,5 @@
   "socket": true,
   "url": "https://github.com/LyrkhanJenkins/fq-card-engine",
   "manifest": "https://github.com/LyrkhanJenkins/fq-card-engine/-/raw/main/module.json",
-  "download": "https://github.com/LyrkhanJenkins/fq-card-engine/-/archive/v1.2.7/fq-card-engine-v1.2.7.zip"
+  "download": "https://github.com/LyrkhanJenkins/fq-card-engine/-/archive/v1.2.8/fq-card-engine-v1.2.8.zip"
 }
