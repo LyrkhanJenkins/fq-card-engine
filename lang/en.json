@@ -48,6 +48,9 @@
     "FQCARDENGINE.ResetBar":"Reset Bar",
     "FQCARDENGINE.Player":"Player",
     "FQCARDENGINE.Hand":"Hand",
-    "FQCARDENGINE.Bar":"bar"
+    "FQCARDENGINE.Bar":"bar",
+    "FQCARDENGINE.DragDropError":"Unable to Drag Drop",
+    "FQCARDENGINE.DragDropUUIDError":"Cannot Drop Missing UUID",
+    "FQCARDENGINE.DragDropObjectError":"Cannot Drop that Type of Object Here"
 
 }
