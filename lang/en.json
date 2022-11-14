@@ -12,7 +12,7 @@
     "FQCARDENGINE.ResetHandConfirmTitle":"Reset Hand",
     "FQCARDENGINE.ResetHandConfirmQuestion":"Place all cards back in their original Deck?",
     "FQCARDENGINE.DeckList":"List of Hands",
-    "FQCARDENGINE.OpenHand":"Hand Window",
+    "FQCARDENGINE.OpenHand":"Stack Window",
     "FQCARDENGINE.OpenCardStack":"Card Stack",
     "FQCARDENGINE.Pass":"Pass Cards",
     "FQCARDENGINE.HandCountSetting":"Hand Count",
