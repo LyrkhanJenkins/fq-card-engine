@@ -58,6 +58,9 @@
     "FQCARDENGINE.ShowStackUUIDError":"Problem showing Stack Missing UUID",
     "FQCARDENGINE.StackShowSuccess":"Stack Shown to ",
     "FQCARDENGINE.allPlayers": " all players",
-    "FQCARDENGINE.selectedPlayers": " selected players"
+    "FQCARDENGINE.selectedPlayers": " selected players",
+    "FQCARDENGINE.Deal": " Deal Cards",
+    "FQCARDENGINE.Reset": " Reset Pile",
+    "FQCARDENGINE.FlipAllCards": "Flip All"
 
 }
