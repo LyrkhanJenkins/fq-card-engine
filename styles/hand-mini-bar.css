@@ -452,6 +452,10 @@ div#fq-card-engine-container{
     box-shadow: 0 0 5px var(--color-shadow-primary);
 }
 
+.fq-card-engine-flip-icon:before{
+    content: "\f064";
+}
+
 /* Shrink macro bar sooner*/
 @media (max-width: 1316px)
 {

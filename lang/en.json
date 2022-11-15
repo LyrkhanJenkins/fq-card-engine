@@ -59,8 +59,10 @@
     "FQCARDENGINE.StackShowSuccess":"Stack Shown to ",
     "FQCARDENGINE.allPlayers": " all players",
     "FQCARDENGINE.selectedPlayers": " selected players",
-    "FQCARDENGINE.Deal": " Deal Cards",
-    "FQCARDENGINE.Reset": " Reset Pile",
+    "FQCARDENGINE.Deal": "Deal",
+    "FQCARDENGINE.Reset": "Reset",
+    "FQCARDENGINE.Shuffle": "Shuffle",
+    "FQCARDENGINE.Draw": "Draw",
     "FQCARDENGINE.FlipAllCards": "Flip All"
 
 }
