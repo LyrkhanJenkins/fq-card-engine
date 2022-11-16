@@ -23,6 +23,8 @@
     "FQCARDENGINE.HideMessagesSettingHint":"Disables Messages when cards are moved to and from the mini bar",
     "FQCARDENGINE.BetterChatMessagesSetting":"Better Chat Messages",
     "FQCARDENGINE.BetterChatMessagesSettingHint":"Messages in Chat are displayed with card images and descriptions",
+    "FQCARDENGINE.ShowPlayedPlayerNames":"Show Player Names in Pile",
+    "FQCARDENGINE.ShowPlayedPlayerNamesHint":"When active this will show who played the cards in the Pile (Window View)",
     "FQCARDENGINE.BarPositionAbovePlayersSetting":"Above Player List",
     "FQCARDENGINE.BarPositionRightMacroSetting":"Right of Macro Bar",
     "FQCARDENGINE.BarPositionLeftMacroSetting":"Left of Macro Bar",
