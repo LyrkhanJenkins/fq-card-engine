@@ -541,6 +541,9 @@ div#fq-card-engine-container{
     margin: 2px;
     overflow: hidden;
 }
+.fq-card-engine-option-container{
+    margin:8px 0px;
+}
 
 /* Shrink macro bar sooner*/
 @media (max-width: 1316px)
