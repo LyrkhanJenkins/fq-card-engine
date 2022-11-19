@@ -1,21 +1,19 @@
 {
-  "name": "fq-card-engine",
   "title": "Card FQ Card Engine",
   "description": "A module to display a players hand of cards on the screen in a small toolbar",
-  "author": "lyrkhan",
   "version": "1.3.1",
-  "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "10",
   "languages": [
     {
       "lang": "en",
       "name": "English",
-      "path": "lang/en.json"
+      "path": "lang/en.json",
+      "flags": {}
     },
     {
       "lang": "ja",
       "name": "日本語",
-      "path": "lang/ja.json"
+      "path": "lang/ja.json",
+      "flags": {}
     }
   ],
   "authors": [
@@ -23,7 +21,8 @@
       "name": "Lyrkhan",
       "email": "lyrkhanjenkins@gmail.com",
       "discord": "lyrkhanjenkins",
-      "url": "https://github.com/LyrkhanJenkins"
+      "url": "https://github.com/LyrkhanJenkins",
+      "flags": {}
     }
   ],
   "esmodules": [
@@ -31,9 +30,14 @@
   ],
   "styles": [
     "styles/fq-card-engine.css"
-  ],  
+  ],
   "socket": true,
   "url": "https://github.com/LyrkhanJenkins/fq-card-engine",
   "manifest": "https://github.com/LyrkhanJenkins/fq-card-engine/-/raw/main/module.json",
-  "download": "https://github.com/LyrkhanJenkins/fq-card-engine/-/archive/v1.3.1/fq-card-engine-v1.3.1.zip"
+  "download": "https://github.com/LyrkhanJenkins/fq-card-engine/-/archive/v1.3.1/fq-card-engine-v1.3.1.zip",
+  "id": "fq-card-engine",
+  "compatibility": {
+    "minimum": "9",
+    "verified": "10"
+  }
 }

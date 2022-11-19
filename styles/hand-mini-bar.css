@@ -404,6 +404,10 @@ div#fq-card-engine-container{
     flex-grow: 1;
 }
 
+.fq-card-engine-pile-shortcut-container{
+    margin-left:10px;
+}
+
 .fq-card-engine-pile-shortcut{
     max-width: 154px;
     min-width: 154px;
