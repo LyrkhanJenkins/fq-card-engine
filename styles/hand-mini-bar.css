@@ -227,17 +227,15 @@
     padding-left:1px;
 }
 
-.fq-card-engine-buttons-container *:hover{
-    filter: drop-shadow(0px 0px 2px var(--color-shadow-highlight));
+.fq-card-engine-buttons-container .fq-card-engine-hidden-buttons *:hover{
+    filter: drop-shadow(0px 0px 2px #FFF);
 }
 
 .fq-card-engine-settings-choose:hover,
 .fq-card-engine-pass:hover,
 .fq-card-engine-settings-hand:hover,
 .fq-card-engine-draw:hover{
-    border: 1px solid var(--color-border-highlight-alt);
-    border-bottom: 1px solid var(--color-border-highlight);
-    box-shadow: 0 0 10px var(--color-shadow-highlight);
+    box-shadow: 0 0 5px #ffff;
 }
 
 .fq-card-engine-draw:before{
@@ -404,6 +402,29 @@ div#fq-card-engine-container{
     height: calc(100% - 33px);
     display: flex;
     flex-grow: 1;
+}
+
+.fq-card-engine-pile-shortcut{
+    max-width: 154px;
+    min-width: 154px;
+    max-height: 52px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    background: rgba(0, 0, 0, 0.5);
+    color: #FFF;
+    text-shadow: 2px 2px #000;
+    box-shadow: 0 0 5px #444 inset;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: auto;
+    margin-bottom:-22px;    
+    pointer-events: all;
+}
+
+.fq-card-engine-pile-shortcut:hover{
+    outline: none;
+    box-shadow: 0 0 5px #FFF;
 }
 
 
