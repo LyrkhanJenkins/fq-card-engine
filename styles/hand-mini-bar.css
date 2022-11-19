@@ -397,6 +397,7 @@ div#fq-card-engine-container{
     height:100%;
 }
 
+
 .fq-card-engine-window-cards{    
     max-width: 100%;
     height: calc(100% - 33px);
@@ -405,10 +406,10 @@ div#fq-card-engine-container{
 }
 
 .fq-card-engine-pile-shortcut-container{
-    margin-left:10px;
+    margin-left:9px;
 }
 
-.fq-card-engine-pile-shortcut{
+.fq-card-engine-pile-shortcut-container .fq-card-engine-pile-shortcut{
     max-width: 154px;
     min-width: 154px;
     max-height: 52px;
@@ -424,6 +425,15 @@ div#fq-card-engine-container{
     margin: auto;
     margin-bottom:-22px;    
     pointer-events: all;
+}
+.directory-item .fq-card-engine-pile-shortcut{    background-image: url(/modules/fq-card-engine/artwork/cards.png);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    width: 40px;
+    max-width: 40px;
+    background-position: 4px;
+    margin-right: 2px;
+    cursor: pointer;
 }
 
 .fq-card-engine-pile-shortcut:hover{
