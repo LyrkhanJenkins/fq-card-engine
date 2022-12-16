@@ -450,6 +450,24 @@ div#fq-card-engine-container{
     flex-flow: wrap;
 }
 
+.fq-card-engine-window-cards.hand{    
+    max-width: 100%;
+    height: calc(100% - 33px);
+    display: table;
+    width: 100%;
+}
+
+.fq-card-engine-window-cards-row{
+    max-width: 100%;
+    height: calc(100% - 33px);
+    display: table-row;
+    flex-grow: 1;
+    flex-direction: row;
+}
+.fq-card-engine-window-cards-row .card{
+    display: table-cell;
+}
+
 .fq-card-engine-window-cards.pile.show-players{    
     overflow-x: scroll;
     flex-flow:nowrap;
