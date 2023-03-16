@@ -6,7 +6,7 @@
     "FQCARDENGINE.ChooseHand":"手札を選択",
     "FQCARDENGINE.NoAvailableHands":"このユーザーは利用可能な手札を持っていない。",
     "FQCARDENGINE.CardBack":"戻る",
-	"FQCARDENGINE.CardPlayed": "Played",
+    "FQCARDENGINE.CardPlayed": "カードプレイ",
     "FQCARDENGINE.CardHidden":"隠す",
     "FQCARDENGINE.AddCard":"カードを引く",
     "FQCARDENGINE.ResetHandConfirmTitle":"手札リセット",
