@@ -37,6 +37,11 @@
     "FQCARDENGINE.ChooseUser":"ツールバーに置くプレイヤーを選択してください",
     "FQCARDENGINE.ResetToolbarDialogTitle":"ツールバーリセット",
     "FQCARDENGINE.ResetToolbarDialogQuestion":"ツールバーを初期状態にリセットしますか？",
-    "FQCARDENGINE.NoHand":"手札無し"
-
+    "FQCARDENGINE.NoHand":"手札無し",
+    "FQCARDENGINE.BarPositionDraggablePlayersSetting":"ドラッグ可能",
+    "FQCARDENGINE.Move":"動く",
+    "FQCARDENGINE.DraggableBarPositionSettingY":"Y 位置",
+    "FQCARDENGINE.DraggableBarPositionSettingX":"X 位置",
+    "FQCARDENGINE.DraggableBarPositionSettingHintX":"X 位置 ドラッグ可能が有効な場合",
+    "FQCARDENGINE.DraggableBarPositionSettingHintY":"Y 位置 ドラッグ可能が有効な場合"
 }

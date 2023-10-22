@@ -15,10 +15,10 @@
     max-height:900px;
     /*ransition: max-height 500ms ease-in-out;*/
     transition: all 500ms ease-in-out;
-    padding-top:22px;
     padding-bottom: 2px;
     overflow: hidden;    
     margin: 0px 0px 0px auto;
+    padding-top:24px;
 }
 
 #fq-card-engine-container.hidden #fq-card-engine-hands-container{
@@ -26,7 +26,7 @@
     padding-bottom: 0px; 
 }
 
-.fq-card-engine-buttons-container{
+.fq-card-engine-buttons-container, .fq-card-engine-buttons-top-container{
     max-height:7px;
     max-width: 220px;
     min-width: 220px;
@@ -35,6 +35,10 @@
     padding-left: 15px;
     filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.5));
     transition: transform 0.2s ease-in, z-index 0.2s step-start;
+}
+.fq-card-engine-buttons-top-container{
+
+    margin-bottom:-20px;
 }
 
 .fq-card-engine-buttons-container.expanded,
@@ -52,7 +56,8 @@
 .fq-card-engine-buttons-container.expanded .fq-card-engine-show-buttons,
 .fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-show-buttons,
 .fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-add-bar,
-.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-subtract-bar{
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-subtract-bar,
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-move-handle{
     display:none;
 }
 
@@ -73,7 +78,8 @@
     transform: rotate(180deg);
 }
 
-.fq-card-engine-buttons-container *{
+.fq-card-engine-buttons-container *,
+.fq-card-engine-buttons-top-container *{
     color:#c9c7b8;
     padding:2px;
     cursor:pointer;
@@ -426,7 +432,8 @@ div#fq-card-engine-container{
     margin-bottom:-22px;    
     pointer-events: all;
 }
-.directory-item .fq-card-engine-pile-shortcut{    background-image: url(/modules/fq-card-engine/artwork/cards.png);
+.directory-item .fq-card-engine-pile-shortcut{    
+    background-image: url(/modules/fq-card-engine/artwork/cards.png);
     background-repeat: no-repeat;
     background-size: 30px;
     width: 40px;
@@ -581,11 +588,29 @@ div#fq-card-engine-container{
         margin-left:24px;
     }
 
-    .fq-card-engine-buttons-container{
-        margin-left: 15px;
-    }
-
     #ui-bottom{
       grid-template-columns: minmax(auto, auto) minmax(244px, 244px);
     }
+}
+
+.fq-card-engine-draggable{
+    position: absolute;
+    /*Default location*/
+    left: 110px;
+    top: 50px;
+}
+
+.fq-card-engine-move-handle{
+    cursor: move;
+    display:none;
+    height: 5px;
+    width: 30px;
+    border-top: 1px solid #c9c7b8;
+    border-bottom: 1px solid #c9c7b8;
+    padding-bottom: 2px;
+    padding-top:2px;
+}
+
+.fq-card-engine-draggable .fq-card-engine-move-handle{
+    display: block;
 }

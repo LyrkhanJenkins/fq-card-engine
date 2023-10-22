@@ -69,6 +69,12 @@
     "FQCARDENGINE.FlipAllCards": "Flip All",
     "FQCARDENGINE.CardsStackShortcut":"Display Stack Shortcut",
     "FQCARDENGINE.CardsStackShortcutHint":"If a pile is chosen a button will appear above everyones hand to open a pile window",
-    "FQCARDENGINE.CardsStackShortcutNoShortcut":"No Shortcut"
+    "FQCARDENGINE.CardsStackShortcutNoShortcut":"No Shortcut",
+    "FQCARDENGINE.BarPositionDraggablePlayersSetting":"Draggable",
+    "FQCARDENGINE.Move":"Move",
+    "FQCARDENGINE.DraggableBarPositionSettingY":"Y Position",
+    "FQCARDENGINE.DraggableBarPositionSettingX":"X Position",
+    "FQCARDENGINE.DraggableBarPositionSettingHintX":"X Position of the bar only when Draggable is enabled",
+    "FQCARDENGINE.DraggableBarPositionSettingHintY":"Y Position of the bar only when Draggable is enabled"
 
 }

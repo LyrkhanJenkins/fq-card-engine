@@ -69,6 +69,12 @@
   "FQCARDENGINE.FlipAllCards": "Tout retourner",
   "FQCARDENGINE.CardsStackShortcut": "Afficher le raccourci de pile",
   "FQCARDENGINE.CardsStackShortcutHint": "Si une pile est choisie, un boutton apparaitra au dessus de toutes les mains pour ouvrir la fen\u00eatre de pile",
-  "FQCARDENGINE.CardsStackShortcutNoShortcut": "Pas de raccourci"
+  "FQCARDENGINE.CardsStackShortcutNoShortcut": "Pas de raccourci",
+  "FQCARDENGINE.BarPositionDraggablePlayersSetting":"Déplaçable",
+  "FQCARDENGINE.Move":"déplacer",
+  "FQCARDENGINE.DraggableBarPositionSettingY":"Position Y",
+  "FQCARDENGINE.DraggableBarPositionSettingX":"Position X",
+  "FQCARDENGINE.DraggableBarPositionSettingHintX":"Position X Lorsque le déplacement est activé",
+  "FQCARDENGINE.DraggableBarPositionSettingHintY":"Position Y Lorsque le déplacement est activé"
 
 }
