@@ -1,3 +1,6 @@
+Update 1.4.2
+ - Fixed bug when switching between Draggable and other mount points
+
 Update 1.4.1
  - Added Draggability to the position options
 
