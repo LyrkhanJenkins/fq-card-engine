@@ -1,7 +1,7 @@
 {
-  "title": "Card FQ Card Engine",
-  "description": "A module to display a players hand of cards on the screen in a small toolbar",
-  "version": "1.5.0",
+  "title": "FQ Card Engine",
+  "description": "Module for Final Quest 8 Battle system based on fq-card-engine https://github.com/LyrkhanJenkins/fq-card-engine",
+  "version": "1.0.0",
   "languages": [
     {
       "lang": "en",
@@ -29,6 +29,11 @@
       "discord": "lyrkhanjenkins",
       "url": "https://github.com/LyrkhanJenkins",
       "flags": {}
+    },
+    {
+      "name": "Lyrkhan",
+      "url": "https://gitlab.com/mvoutat",
+      "flags": {}
     }
   ],
   "esmodules": [
@@ -38,12 +43,12 @@
     "styles/fq-card-engine.css"
   ],
   "socket": true,
-  "url": "https://github.com/LyrkhanJenkins/fq-card-engine",
-  "manifest": "https://github.com/LyrkhanJenkins/fq-card-engine/-/raw/main/module.json",
-  "download": "https://github.com/LyrkhanJenkins/fq-card-engine/-/archive/v1.5.0/fq-card-engine-v1.5.0.zip",
+  "url": "https://gitlab.com/mvoutat/fq-card-engine",
+  "manifest": "https://gitlab.com/mvoutat/fq-card-engine/-/raw/main/module.json",
+  "download": "https://github.com/LyrkhanJenkins/fq-card-engine/-/archive/v1.4.2/fq-card-engine-v1.4.2.zip",
   "id": "fq-card-engine",
   "compatibility": {
-    "minimum": "9",
-    "verified": "12"
+    "minimum": "12",
+    "verified": "12.316"
   }
 }
