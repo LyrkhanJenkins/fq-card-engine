@@ -26,14 +26,12 @@
     {
       "name": "Lyrkhan",
       "email": "lyrkhanjenkins@gmail.com",
-      "discord": "lyrkhanjenkins",
       "url": "https://github.com/LyrkhanJenkins",
-      "flags": {}
+      "discord": "lyrkhanjenkins"
     },
     {
       "name": "Lyrkhan",
-      "url": "https://gitlab.com/mvoutat",
-      "flags": {}
+      "url": "https://gitlab.com/mvoutat"
     }
   ],
   "esmodules": [
@@ -50,5 +48,26 @@
   "compatibility": {
     "minimum": "12",
     "verified": "12.316"
-  }
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system"
+      }
+    ]
+  },
+  "packs": [
+    {
+      "name": "decks-final-quest-8",
+      "label": "Decks Final Quest 8",
+      "path": "packs/decks-final-quest-8",
+      "type": "Cards",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "dnd5e"
+    }
+  ]
 }
