@@ -1,33 +1,33 @@
 /* Fixes bug when combined with WebRTC Tweaks module */
-#ui-top{
-    min-height:0;
+#ui-top {
+    min-height: 0;
 }
 
-#fq-card-engine-container{
-    display:flex;
+#fq-card-engine-container {
+    display: flex;
     flex-direction: column;
     z-index: 1;
 }
 
-#fq-card-engine-hands-container{
-    display:flex;
+#fq-card-engine-hands-container {
+    display: flex;
     flex-direction: column;
-    max-height:900px;
+    max-height: 900px;
     /*ransition: max-height 500ms ease-in-out;*/
     transition: all 500ms ease-in-out;
     padding-bottom: 2px;
-    overflow: hidden;    
+    overflow: hidden;
     margin: 0px 0px 0px auto;
-    padding-top:24px;
+    padding-top: 24px;
 }
 
-#fq-card-engine-container.hidden #fq-card-engine-hands-container{
-    max-height:0px;
-    padding-bottom: 0px; 
+#fq-card-engine-container.hidden #fq-card-engine-hands-container {
+    max-height: 0px;
+    padding-bottom: 0px;
 }
 
-.fq-card-engine-buttons-container, .fq-card-engine-buttons-top-container{
-    max-height:7px;
+.fq-card-engine-buttons-container, .fq-card-engine-buttons-top-container {
+    max-height: 7px;
     max-width: 220px;
     min-width: 220px;
     display: flex;
@@ -36,19 +36,20 @@
     filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.5));
     transition: transform 0.2s ease-in, z-index 0.2s step-start;
 }
-.fq-card-engine-buttons-top-container{
 
-    margin-bottom:-20px;
+.fq-card-engine-buttons-top-container {
+
+    margin-bottom: -20px;
 }
 
 .fq-card-engine-buttons-container.expanded,
-.fq-card-engine-buttons-container.hidden-expanded{
-    max-height:22px;
+.fq-card-engine-buttons-container.hidden-expanded {
+    max-height: 22px;
 }
 
 .fq-card-engine-buttons-container.expanded .fq-card-engine-hidden-buttons,
-.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-hidden-buttons{
-    display:flex;
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-hidden-buttons {
+    display: flex;
     flex-grow: 1;
 }
 
@@ -57,35 +58,36 @@
 .fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-show-buttons,
 .fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-add-bar,
 .fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-subtract-bar,
-.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-move-handle{
-    display:none;
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-move-handle {
+    display: none;
 }
 
 .fq-card-engine-buttons-container .fq-card-engine-add-bar,
-.fq-card-engine-buttons-container .fq-card-engine-subtract-bar{
-    line-height:14px;
+.fq-card-engine-buttons-container .fq-card-engine-subtract-bar {
+    line-height: 14px;
 }
 
-.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-hide-show{
+.fq-card-engine-buttons-container.hidden-expanded .fq-card-engine-hide-show {
     transform: rotate(0deg);
     margin-bottom: 0px;
 }
-.fq-card-engine-buttons-container .fq-card-engine-hide-show{
-    line-height:22px;
+
+.fq-card-engine-buttons-container .fq-card-engine-hide-show {
+    line-height: 22px;
 }
 
-.fq-card-engine-buttons-container .fq-card-engine-hide-show{
+.fq-card-engine-buttons-container .fq-card-engine-hide-show {
     transform: rotate(180deg);
 }
 
 .fq-card-engine-buttons-container *,
-.fq-card-engine-buttons-top-container *{
-    color:#c9c7b8;
-    padding:2px;
-    cursor:pointer;
+.fq-card-engine-buttons-top-container * {
+    color: #c9c7b8;
+    padding: 2px;
+    cursor: pointer;
     pointer-events: all;
     -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;    
+    -webkit-text-stroke-color: black;
     font-size: 26px;
     margin: auto;
     text-align: center;
@@ -93,25 +95,25 @@
     height: 22px;
 }
 
-.fq-card-engine-show-buttons{
+.fq-card-engine-show-buttons {
     line-height: 0px;
     max-height: 10px;
     width: 100%;
-    margin-top:-3px;
+    margin-top: -3px;
     -webkit-text-stroke-color: black;
     -webkit-text-stroke-width: 1px;
-    padding:0px;
+    padding: 0px;
     font-size: 26px;
 }
 
-.fq-card-engine-show-buttons.hide{
-    display:none;
+.fq-card-engine-show-buttons.hide {
+    display: none;
 }
 
-.fq-card-engine-hand{
-    display:flex;
+.fq-card-engine-hand {
+    display: flex;
     flex-direction: column;
-    max-width:200px;
+    max-width: 200px;
     max-height: 68px;
     margin: 5px 5px 1px 15px;
     color: var(--color-text-light-highlight);
@@ -119,48 +121,49 @@
     pointer-events: all;
 }
 
-.fq-card-engine-hand-inner{
-    display:flex;
+.fq-card-engine-hand-inner {
+    display: flex;
     flex-direction: row;
     padding: 0;
     border-radius: 5px;
     box-shadow: 0 0 20px var(--color-shadow-dark);
 }
 
-.fq-card-engine-hand-name{
-    display:none;
+.fq-card-engine-hand-name {
+    display: none;
     font-size: 12px;
-    color:#FFF;
+    color: #FFF;
     text-shadow: 2px 2px #000;
     width: 200px;
     text-align: center;
 }
 
-#fq-card-engine-container.show-names .fq-card-engine-hand-name{
-    display:block;
+#fq-card-engine-container.show-names .fq-card-engine-hand-name {
+    display: block;
 
 }
 
 .fq-card-engine-settings,
-.fq-card-engine-actions{
-    display:flex;
+.fq-card-engine-actions {
+    display: flex;
     cursor: pointer;
-    flex-direction: column; 
+    flex-direction: column;
     height: 52px;
     background: url(../../../ui/denim075.png) repeat;
 
 }
 
-.fq-card-engine-settings{
+.fq-card-engine-settings {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
-.fq-card-engine-actions{
+
+.fq-card-engine-actions {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
-.fq-card-engine-settings-hand{
+.fq-card-engine-settings-hand {
     background-image: url(/modules/fq-card-engine/artwork/cards.png);
     background-size: 20px;
     background-repeat: no-repeat;
@@ -168,89 +171,89 @@
     height: 27px;
     background-position-y: 1px;
     background-position-x: 0px;
-    border:1px solid #000;
+    border: 1px solid #000;
     border-radius: 5px 0 0 0;
     color: #c9c7b8;
 }
 
-.fq-card-engine-settings-choose{
+.fq-card-engine-settings-choose {
     background-size: 30px;
     background-repeat: no-repeat;
     width: 23px;
     height: 28px;
-    border:1px solid #000;
-    border-radius:0 0 0 5px;
-    color:#c9c7b8;
+    border: 1px solid #000;
+    border-radius: 0 0 0 5px;
+    color: #c9c7b8;
     font-size: 21px;
     padding-left: 1px;
     line-height: 23px;
 }
 
-.fq-card-engine-settings-choose:before{
-    content:'\2699';
+.fq-card-engine-settings-choose:before {
+    content: '\2699';
 }
 
 
-.fq-card-engine-reset{
+.fq-card-engine-reset {
     width: 23px;
     height: 26px;
     background-position-y: 7px;
-    border:1px solid #000;
-    border-radius:0 0 5px 0;
-    color:#c9c7b8;
+    border: 1px solid #000;
+    border-radius: 0 0 5px 0;
+    color: #c9c7b8;
     padding-left: 2px;
     font-size: 22px;
     line-height: 23px;
 }
 
-.fq-card-engine-reset:before{
+.fq-card-engine-reset:before {
     content: "\21bb";
 }
 
-.fq-card-engine-pass{
+.fq-card-engine-pass {
     width: 23px;
     height: 26px;
     background-position-y: 7px;
-    border:1px solid #000;
-    border-radius:0 0 5px 0;
-    color:#c9c7b8;
+    border: 1px solid #000;
+    border-radius: 0 0 5px 0;
+    color: #c9c7b8;
     padding-left: 2px;
     font-size: 22px;
     line-height: 23px;
 }
 
-.fq-card-engine-pass:before{
+.fq-card-engine-pass:before {
     content: "\21aa";
 }
 
-.fq-card-engine-draw{
-    display:block;
+.fq-card-engine-draw {
+    display: block;
     width: 23px;
-    height:26px;
-    color:#c9c7b8;
-    border:1px solid #000;
-    border-radius:0 5px 0 0;
-    padding-left:1px;
+    height: 26px;
+    color: #c9c7b8;
+    border: 1px solid #000;
+    border-radius: 0 5px 0 0;
+    padding-left: 1px;
 }
 
-.fq-card-engine-buttons-container .fq-card-engine-hidden-buttons *:hover{
+.fq-card-engine-buttons-container .fq-card-engine-hidden-buttons *:hover {
     filter: drop-shadow(0px 0px 2px #FFF);
 }
 
 .fq-card-engine-settings-choose:hover,
 .fq-card-engine-pass:hover,
 .fq-card-engine-settings-hand:hover,
-.fq-card-engine-draw:hover{
+.fq-card-engine-draw:hover {
     box-shadow: 0 0 5px #ffff;
 }
 
-.fq-card-engine-draw:before{
+.fq-card-engine-draw:before {
     content: '+';
     font-size: 36px;
     line-height: 22px;
 }
 
-.fq-card-engine-card-container{
+.fq-card-engine-card-container {
     display: flex;
     flex-grow: 1;
     flex-direction: row;
@@ -266,35 +269,35 @@
     box-shadow: 0 0 5px #444 inset;
 }
 
-.fq-card-engine-card{
+.fq-card-engine-card {
     height: 50px;
     width: 50px;
-    background-repeat: no-repeat;  
+    background-repeat: no-repeat;
     background-size: auto 50px;
     cursor: pointer;
     /*To Overlap cards and tokens*/
     margin-left: -14px;
-    margin-right: -14px;    
-    z-index:1000;
+    margin-right: -14px;
+    z-index: 1000;
     filter: drop-shadow(0px 0px 1px #000);
     transition: margin 500ms;
 }
 
-.fq-card-engine-card:hover{
-    margin-top:-24px;
-    height:100px;
+.fq-card-engine-card:hover {
+    margin-top: -24px;
+    height: 100px;
     flex: none;
-    filter:drop-shadow(0px 0px 2px #FFF);
+    filter: drop-shadow(0px 0px 2px #FFF);
 }
 
 
-.fq-card-engine-message{
+.fq-card-engine-message {
     display: flex;
     flex-direction: row;
     text-align: center;
 }
 
-.fq-card-engine-message-info{
+.fq-card-engine-message-info {
     display: flex;
     flex-grow: 1;
     flex-direction: column;
@@ -302,120 +305,123 @@
     padding-left: 4px;
 }
 
-.fq-card-engine-message-name{
+.fq-card-engine-message-name {
     margin-bottom: 2px;
 }
 
 .fq-card-engine-play-dialog-description,
-.fq-card-engine-play-dialog-face-description{
-    text-align:center;
+.fq-card-engine-play-dialog-face-description {
+    text-align: center;
     margin: 0px;
     font-weight: normal;
     font-size: 12px;
 }
 
-div.separator{
+div.separator {
     margin: 3px auto 0px auto;
     width: 30px;
     height: 6px;
     border-top: solid 1px #000;
 }
 
-.fq-card-engine-message-description{
+.fq-card-engine-message-description {
     font-size: smaller;
 }
 
-.fq-card-engine-message-card{
+.fq-card-engine-message-card {
     height: 50px;
     width: 50px;
     background-position: center;
     background-size: auto 50px;
-    background-repeat:no-repeat;
-    cursor:pointer;
+    background-repeat: no-repeat;
+    cursor: pointer;
 
     filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.5));
     transition: transform 0.2s ease-in, z-index 0.2s step-start;
 }
 
-.fq-card-engine-message-card:hover{
+.fq-card-engine-message-card:hover {
     z-index: 3;
     transform: translate(113px) scale(6);
 }
 
-.empty-hand-message{
-    margin-left:-10px;
-    padding:8px;
+.empty-hand-message {
+    margin-left: -10px;
+    padding: 8px;
 }
-.empty-hand-message .settings-icon{
-    color:greenyellow;
+
+.empty-hand-message .settings-icon {
+    color: greenyellow;
 }
 
 /* For displaying at the bottom-right of the screen*/
 
-#ui-bottom.fq-card-engine{
-  display: grid;
-  grid-auto-rows: minmax(auto, auto);
+#ui-bottom.fq-card-engine {
+    display: grid;
+    grid-auto-rows: minmax(auto, auto);
 }
 
-.fq-card-engine-right{
+.fq-card-engine-right {
     grid-template-columns: minmax(auto, auto) minmax(220px, 220px);
 }
 
-.fq-card-engine-left{
-    grid-template-columns: minmax(220px, 220px) minmax(auto, auto) ;
+.fq-card-engine-left {
+    grid-template-columns: minmax(220px, 220px) minmax(auto, auto);
 }
 
-.fq-card-engine #camera-views .camera-view{
-    height:auto;
+.fq-card-engine #camera-views .camera-view {
+    height: auto;
 }
 
-#ui-bottom.fq-card-engine div{
+#ui-bottom.fq-card-engine div {
     grid-row: 3;
 }
 
-#ui-bottom.fq-card-engine div#camera-views{
+#ui-bottom.fq-card-engine div#camera-views {
     grid-row: 2;
-    display:flex;
+    display: flex;
     flex-wrap: nowrap;
 }
 
-div#fq-card-engine-container{
+div#fq-card-engine-container {
     justify-content: end;
 }
 
-#ui-bottom.fq-card-engine div#fq-card-engine-container{
+#ui-bottom.fq-card-engine div#fq-card-engine-container {
     grid-row: 1/4;
     grid-column: 2;
 }
-#ui-bottom.fq-card-engine-left div#fq-card-engine-container{
+
+#ui-bottom.fq-card-engine-left div#fq-card-engine-container {
     grid-column: 1;
 }
 
-#ui-bottom.fq-card-engine-right div#fq-card-engine-container{
+#ui-bottom.fq-card-engine-right div#fq-card-engine-container {
     grid-column: 2;
 }
+
 /* Window popup css*/
-.fq-card-engine-hand-popout .window-content{
+.fq-card-engine-hand-popout .window-content {
     background: transparent;
 }
 
-.fq-card-engine-window{
-    height:100%;
+.fq-card-engine-window {
+    height: 100%;
 }
 
 
-.fq-card-engine-window-cards{
+.fq-card-engine-window-cards {
     max-width: 100%;
     height: calc(100% - 33px);
     display: flex;
     flex-grow: 1;
 }
 
-.fq-card-engine-pile-shortcut-container{
-    margin-left:9px;
+.fq-card-engine-pile-shortcut-container {
+    margin-left: 9px;
 }
 
-.fq-card-engine-pile-shortcut-container .fq-card-engine-pile-shortcut{
+.fq-card-engine-pile-shortcut-container .fq-card-engine-pile-shortcut {
     max-width: 154px;
     min-width: 154px;
     max-height: 52px;
@@ -429,10 +435,11 @@ div#fq-card-engine-container{
     border-radius: 10px;
     cursor: pointer;
     margin: auto;
-    margin-bottom:-22px;    
+    margin-bottom: -22px;
     pointer-events: all;
 }
-.directory-item .fq-card-engine-pile-shortcut{
+
+.directory-item .fq-card-engine-pile-shortcut {
     background-image: url(/modules/fq-card-engine/artwork/cards.png);
     background-repeat: no-repeat;
     background-size: 30px;
@@ -443,13 +450,13 @@ div#fq-card-engine-container{
     cursor: pointer;
 }
 
-.fq-card-engine-pile-shortcut:hover{
+.fq-card-engine-pile-shortcut:hover {
     outline: none;
     box-shadow: 0 0 5px #FFF;
 }
 
 
-.fq-card-engine-window-cards.deck, .fq-card-engine-window-cards.pile{
+.fq-card-engine-window-cards.deck, .fq-card-engine-window-cards.pile {
     max-width: 100%;
     height: calc(100% - 33px);
     display: flex;
@@ -457,35 +464,36 @@ div#fq-card-engine-container{
     flex-flow: wrap;
 }
 
-.fq-card-engine-window-cards.hand{
+.fq-card-engine-window-cards.hand {
     max-width: 100%;
     height: calc(100% - 33px);
     display: table;
     width: 100%;
 }
 
-.fq-card-engine-window-cards-row{
+.fq-card-engine-window-cards-row {
     max-width: 100%;
     height: calc(100% - 33px);
     display: table-row;
     flex-grow: 1;
     flex-direction: row;
 }
-.fq-card-engine-window-cards-row .card{
+
+.fq-card-engine-window-cards-row .card {
     display: table-cell;
 }
 
-.fq-card-engine-window-cards.pile.show-players{
+.fq-card-engine-window-cards.pile.show-players {
     overflow-x: scroll;
-    flex-flow:nowrap;
+    flex-flow: nowrap;
 }
 
-.fq-card-engine-window-cards.pile.show-players .fq-card-engine-window-card{
+.fq-card-engine-window-cards.pile.show-players .fq-card-engine-window-card {
     margin: 10px;
 }
 
 .fq-card-engine-window-cards.deck .fq-card-engine-window-card,
-.fq-card-engine-window-cards.pile .fq-card-engine-window-card{
+.fq-card-engine-window-cards.pile .fq-card-engine-window-card {
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -498,7 +506,7 @@ div#fq-card-engine-container{
     min-height: 165px;
 }
 
-.fq-card-engine-window-card{
+.fq-card-engine-window-card {
     min-height: 300px;
     background-size: contain;
     background-repeat: no-repeat;
@@ -509,7 +517,7 @@ div#fq-card-engine-container{
     flex-grow: 1;
 }
 
-.fa-fq-card-engine-open-hand{
+.fa-fq-card-engine-open-hand {
     background-image: url(/modules/fq-card-engine/artwork/cards.png);
     width: 15px;
     height: 15px;
@@ -520,13 +528,13 @@ div#fq-card-engine-container{
     float: left;
 }
 
-.fq-card-engine-window-buttons{
-    display:flex;
-    top:0;
-    padding-bottom:3px;
+.fq-card-engine-window-buttons {
+    display: flex;
+    top: 0;
+    padding-bottom: 3px;
 }
 
-.fq-card-engine-window-button{
+.fq-card-engine-window-button {
     flex-grow: 1;
     max-width: 33%;
     margin: 0 1px;
@@ -546,71 +554,92 @@ div#fq-card-engine-container{
     box-shadow: 0 0 5px var(--color-shadow-primary);
 }
 
-.fq-card-engine-flip-icon:before{
+.fq-card-engine-flip-icon:before {
     content: "\f064";
 }
 
-.fq-card-engine-window-player-container{
-    margin-right:2px;
+.fq-card-engine-window-player-container {
+    margin-right: 2px;
 }
-.fq-card-engine-window-player-container-name{
-    color:var(--color-border-light-primary);
+
+.fq-card-engine-window-player-container-name {
+    color: var(--color-border-light-primary);
     border: 1px solid var(--color-border-light-primary);
-    text-align:center;
+    text-align: center;
     border-radius: 8px;
     background-color: #000;
-    margin-bottom:0px;
+    margin-bottom: 0px;
 }
+
 .fq-card-engine-window-player-container-cards {
     width: 130px;
     margin: 2px;
     overflow: hidden;
 }
-.fq-card-engine-option-container{
-    margin:8px 0px;
+
+.fq-card-engine-option-container {
+    margin: 8px 0px;
 }
 
 /* Shrink macro bar sooner*/
-@media (max-width: 1316px)
-{
+@media (max-width: 1316px) {
     #hotbar {
         width: calc(var(--hotbar-width) / 2);
         height: calc(var(--hotbar-height) * 2);
     }
+
     #hotbar #macro-list {
         grid-template-columns: repeat(5, 50px);
     }
 }
 
-@media (max-width: 1065px)
-{
-    #ui-bottom div#fq-card-engine-container div#fq-card-engine-hands-container{
-        margin-left:24px;
+@media (max-width: 1065px) {
+    #ui-bottom div#fq-card-engine-container div#fq-card-engine-hands-container {
+        margin-left: 24px;
     }
 
-    #ui-bottom{
-      grid-template-columns: minmax(auto, auto) minmax(244px, 244px);
+    #ui-bottom {
+        grid-template-columns: minmax(auto, auto) minmax(244px, 244px);
     }
 }
 
-.fq-card-engine-draggable{
+.fq-card-engine-draggable {
     position: absolute;
     /*Default location*/
     left: 110px;
     top: 50px;
 }
 
-.fq-card-engine-move-handle{
+.fq-card-engine-move-handle {
     cursor: move;
-    display:none;
+    display: none;
     height: 5px;
     width: 30px;
     border-top: 1px solid #c9c7b8;
     border-bottom: 1px solid #c9c7b8;
     padding-bottom: 2px;
-    padding-top:2px;
+    padding-top: 2px;
 }
 
-.fq-card-engine-draggable .fq-card-engine-move-handle{
+.fq-card-engine-draggable .fq-card-engine-move-handle {
     display: block;
+}
+
+
+.has-been-played-on-round {
+    filter: saturate(0%);
+}
+
+.has-been-played {
+    filter: saturate(35%) drop-shadow(2px 2px 3px limegreen);
+    animation: pulse 2s infinite; /* Animation de clignotement */
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.4; /* Début et fin de l'animation avec opacité à 0 */
+    }
+    50% {
+        opacity: 1; /* Milieu de l'animation avec opacité à 1 */
+    }
 }
