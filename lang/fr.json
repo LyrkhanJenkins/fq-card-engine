@@ -75,6 +75,11 @@
   "FQCARDENGINE.DraggableBarPositionSettingY":"Position Y",
   "FQCARDENGINE.DraggableBarPositionSettingX":"Position X",
   "FQCARDENGINE.DraggableBarPositionSettingHintX":"Position X Lorsque le déplacement est activé",
-  "FQCARDENGINE.DraggableBarPositionSettingHintY":"Position Y Lorsque le déplacement est activé"
+  "FQCARDENGINE.DraggableBarPositionSettingHintY":"Position Y Lorsque le déplacement est activé",
 
+  "FQCARDENGINE.HandSizeSetting": "Taille de la fenêtre",
+  "FQCARDENGINE.HandSizeSettingHint": "Fenêtre de la main des joueurs",
+  "FQCARDENGINE.HandSizeSmallSetting": "Petite",
+  "FQCARDENGINE.HandSizeMediumSetting": "Moyenne",
+  "FQCARDENGINE.HandSizeLargeSetting": "Grande"
 }

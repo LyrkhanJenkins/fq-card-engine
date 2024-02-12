@@ -28,13 +28,24 @@
 
 .fq-card-engine-buttons-container, .fq-card-engine-buttons-top-container {
     max-height: 7px;
-    max-width: 220px;
     min-width: 220px;
     display: flex;
     flex-grow: 1;
     padding-left: 15px;
     filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.5));
     transition: transform 0.2s ease-in, z-index 0.2s step-start;
+}
+
+.fq-card-engine-buttons-container-small {
+    max-width: 200px;
+}
+
+.fq-card-engine-buttons-container-medium {
+    max-width: 290px;
+}
+
+.fq-card-engine-buttons-container-large {
+    max-width: 380px;
 }
 
 .fq-card-engine-buttons-top-container {
@@ -113,12 +124,25 @@
 .fq-card-engine-hand {
     display: flex;
     flex-direction: column;
-    max-width: 200px;
-    max-height: 68px;
     margin: 5px 5px 1px 15px;
     color: var(--color-text-light-highlight);
     z-index: var(--z-index-ui);
     pointer-events: all;
+}
+
+.fq-card-engine-hand-small {
+    max-width: 200px;
+    max-height: 68px;
+}
+
+.fq-card-engine-hand-medium {
+    max-width: 300px;
+    max-height: 102px;
+}
+
+.fq-card-engine-hand-large {
+    max-width: 400px;
+    max-height: 136px;
 }
 
 .fq-card-engine-hand-inner {
@@ -134,8 +158,19 @@
     font-size: 12px;
     color: #FFF;
     text-shadow: 2px 2px #000;
-    width: 200px;
     text-align: center;
+}
+
+.fq-card-engine-hand-name-small {
+    width: 200px;
+}
+
+.fq-card-engine-hand-name-medium {
+    width: 290px;
+}
+
+.fq-card-engine-hand-name-large {
+    width: 380px;
 }
 
 #fq-card-engine-container.show-names .fq-card-engine-hand-name {
@@ -148,9 +183,20 @@
     display: flex;
     cursor: pointer;
     flex-direction: column;
-    height: 52px;
     background: url(../../../ui/denim075.png) repeat;
 
+}
+
+.fq-card-engine-settings-small {
+    height: 52px;
+}
+
+.fq-card-engine-settings-medium {
+    height: 78px;
+}
+
+.fq-card-engine-settings-large {
+    height: 104px;
 }
 
 .fq-card-engine-settings {
@@ -168,7 +214,6 @@
     background-size: 20px;
     background-repeat: no-repeat;
     width: 23px;
-    height: 27px;
     background-position-y: 1px;
     background-position-x: 0px;
     border: 1px solid #000;
@@ -176,11 +221,22 @@
     color: #c9c7b8;
 }
 
+.fq-card-engine-button-small {
+    height: 27px;
+}
+
+.fq-card-engine-button-medium {
+    height: 31px;
+}
+
+.fq-card-engine-button-large {
+    height: 54px;
+}
+
 .fq-card-engine-settings-choose {
     background-size: 30px;
     background-repeat: no-repeat;
     width: 23px;
-    height: 28px;
     border: 1px solid #000;
     border-radius: 0 0 0 5px;
     color: #c9c7b8;
@@ -212,7 +268,6 @@
 
 .fq-card-engine-pass {
     width: 23px;
-    height: 26px;
     background-position-y: 7px;
     border: 1px solid #000;
     border-radius: 0 0 5px 0;
@@ -229,7 +284,6 @@
 .fq-card-engine-draw {
     display: block;
     width: 23px;
-    height: 26px;
     color: #c9c7b8;
     border: 1px solid #000;
     border-radius: 0 5px 0 0;
@@ -257,9 +311,6 @@
     display: flex;
     flex-grow: 1;
     flex-direction: row;
-    max-width: 154px;
-    min-width: 154px;
-    max-height: 52px;
     /*To Overlap cards and tokens*/
     padding-left: 14px;
     padding-right: 14px;
@@ -269,11 +320,26 @@
     box-shadow: 0 0 5px #444 inset;
 }
 
+.fq-card-engine-card-container-small {
+    max-width: 154px;
+    min-width: 154px;
+    max-height: 52px;
+}
+
+.fq-card-engine-card-container-medium {
+    max-width: 231px;
+    min-width: 231px;
+    max-height: 78px;
+}
+
+.fq-card-engine-card-container-large {
+    max-width: 308px;
+    min-width: 308px;
+    max-height: 104px;
+}
+
 .fq-card-engine-card {
-    height: 50px;
-    width: 50px;
     background-repeat: no-repeat;
-    background-size: auto 50px;
     cursor: pointer;
     /*To Overlap cards and tokens*/
     margin-left: -14px;
@@ -281,6 +347,25 @@
     z-index: 1000;
     filter: drop-shadow(0px 0px 1px #000);
     transition: margin 500ms;
+}
+
+
+.fq-card-engine-card-small {
+    height: 50px;
+    width: 50px;
+    background-size: auto 50px;
+}
+
+.fq-card-engine-card-medium {
+    height: 75px;
+    width: 75px;
+    background-size: auto 75px;
+}
+
+.fq-card-engine-card-large {
+    height: 100px;
+    width: 100px;
+    background-size: auto 100px;
 }
 
 .fq-card-engine-card:hover {
