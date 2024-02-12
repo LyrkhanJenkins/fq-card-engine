@@ -56,18 +56,5 @@
         "type": "system"
       }
     ]
-  },
-  "packs": [
-    {
-      "name": "decks-final-quest-8",
-      "label": "Decks Final Quest 8",
-      "path": "packs/decks-final-quest-8",
-      "type": "Cards",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      },
-      "system": "dnd5e"
-    }
-  ]
+  }
 }
