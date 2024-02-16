@@ -71,6 +71,7 @@
   "FQCARDENGINE.CardsStackShortcutHint": "Si une pile est choisie, un boutton apparaitra au dessus de toutes les mains pour ouvrir la fen\u00eatre de pile",
   "FQCARDENGINE.CardsStackShortcutNoShortcut": "Pas de raccourci",
   "FQCARDENGINE.BarPositionDraggablePlayersSetting":"Déplaçable",
+  "FQCARDENGINE.BarPositionAboveMacrosSetting":"Au dessus des macros",
   "FQCARDENGINE.Move":"déplacer",
   "FQCARDENGINE.DraggableBarPositionSettingY":"Position Y",
   "FQCARDENGINE.DraggableBarPositionSettingX":"Position X",
@@ -78,7 +79,7 @@
   "FQCARDENGINE.DraggableBarPositionSettingHintY":"Position Y Lorsque le déplacement est activé",
 
   "FQCARDENGINE.HandSizeSetting": "Taille de la fenêtre",
-  "FQCARDENGINE.HandSizeSettingHint": "Fenêtre de la main des joueurs",
+  "FQCARDENGINE.HandSizeSettingHint": "Fenêtre de la main des joueurs (Ne peut pas changer si à droite ou à gauche des macros ou si au dessus des noms des joueurs)",
   "FQCARDENGINE.HandSizeSmallSetting": "Petite",
   "FQCARDENGINE.HandSizeMediumSetting": "Moyenne",
   "FQCARDENGINE.HandSizeLargeSetting": "Grande"
