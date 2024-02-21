@@ -82,5 +82,7 @@
     "FQCARDENGINE.HandSizeSettingHint": "Size of the window for hand's players, not possible if position of hand is above players, or at the left or right side to the macro bar",
     "FQCARDENGINE.HandSizeSmallSetting": "Small",
     "FQCARDENGINE.HandSizeMediumSetting": "Medium",
-    "FQCARDENGINE.HandSizeLargeSetting": "Large"
+    "FQCARDENGINE.HandSizeLargeSetting": "Large",
+    "FQCARDENGINE.HandSizeMaxSetting": "Max"
+
 }
