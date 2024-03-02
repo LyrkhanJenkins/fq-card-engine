@@ -72,3 +72,11 @@ There wasn't a module (that I knew of) in Foundry to display a hand of cards on 
 
 The project came out of a need in our Deadlands campaign to display multi colored tokens (Bennys) instead of the single colored ones provided by the SWADE System. The new cards feature is the perfect framework for pulling tokens out of a bag at random. Using the card system also allows the module to be used for keeping track of anything in a tabletop game that a player needs to keep track of (e.g. Hero Points).
 
+## From DND5E
+```
+# Transfer json to db compendium
+node ./utils/packs.mjs package pack
+
+# Transfer db compendium to json
+node ./utils/packs.mjs package unpack 
+```

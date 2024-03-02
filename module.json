@@ -64,5 +64,62 @@
         "compatibility": {}
       }
     ]
-  }
+  },
+  "packs": [
+    {
+      "name": "decks-final-quest-8",
+      "label": "Decks Final Quest 8",
+      "path": "packs/decks-final-quest-8",
+      "type": "Cards",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
+      "name": "decks-fq8-generated",
+      "label": "Decks Final Quest 8 (générés)",
+      "path": "packs/decks-fq8-generated",
+      "type": "Cards",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
+      "name": "classes-fq8",
+      "label": "Classes (FQ8)",
+      "system": "dnd5e",
+      "path": "packs/classes-fq8",
+      "type": "Item",
+      "private": false,
+      "flags": {}
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "FQ8 Assets",
+      "sorting": "m",
+      "color": "#3aa123",
+      "folders": [
+        {
+          "name": "Cards",
+          "sorting": "m",
+          "color": "#317d0e",
+          "packs": [
+            "decks-final-quest-8",
+            "decks-fq8-generated"
+          ]
+        }
+      ],
+      "packs": [
+        "classes-fq8",
+        "minions-fq8"
+      ]
+    }
+  ]
 }

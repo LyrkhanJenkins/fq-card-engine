@@ -1,0 +1,69 @@
+{
+  "_id": "M1rQLgLCLFaAkX1Y",
+  "name": "Elementaliste",
+  "type": "class",
+  "img": "modules/fq-card-engine/images/classes/craiyon_150235_Red_mage_icon__fire_wind_earth_water_spell_around_him.png",
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "cf": {
+      "id": "temp_9hjmr9g6fcm"
+    }
+  },
+  "_stats": {
+    "coreVersion": "12.316",
+    "systemId": null,
+    "systemVersion": null,
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {
+    "description": {
+      "value": "<p class=\"MsoNormal\" style=\"margin-bottom:.0001pt\"><span style=\"color:#2e74b5;mso-themecolor:accent1;mso-themeshade:191\">L'élémentaliste allie des effets de feu, de givre, d'air et de terre pour infliger d'importants dégâts. La classe est fragile mais possèdes les plus gros dégâts bruts du jeu.</span></p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "FQ",
+    "identifier": "elementaliste",
+    "levels": 1,
+    "hitDice": "d4",
+    "hitDiceUsed": 0,
+    "advancement": [
+      {
+        "_id": "6nqriktupjcsj8wi",
+        "type": "HitPoints",
+        "configuration": {},
+        "value": {}
+      },
+      {
+        "_id": "5lahzhdra2kuoje6",
+        "type": "ScaleValue",
+        "configuration": {
+          "identifier": "",
+          "type": "string",
+          "distance": {
+            "units": ""
+          },
+          "scale": {}
+        },
+        "value": {}
+      }
+    ],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": "int"
+    }
+  },
+  "_key": "!items!M1rQLgLCLFaAkX1Y"
+}
