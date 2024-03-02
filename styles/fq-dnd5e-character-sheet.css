@@ -10,6 +10,7 @@
     --fq8-color-zeal-1: #3b0909;
     --fq8-color-zeal-2: #ed5555;
     --fq8-color-zeal-3: #a12828;
+    --fq8-color-zeal-4: #b57878;
 }
 
 .dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.hit-points {
@@ -55,4 +56,13 @@
     border-radius: 4px 0 0 4px;
 }
 
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.sectioned > .zeal-init {
+    flex: none;
+    width: 25px;
+    color: var(--fq8-color-zeal-1);
+    background-color: var(--fq8-color-zeal-4);
+    border-right: 2px dashed var(--fq8-color-zeal-1);
+    text-align: center;
+    padding-top: 1.5px;
+}
 
