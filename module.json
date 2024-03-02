@@ -38,7 +38,8 @@
     "scripts/fq-card-engine-module.js"
   ],
   "styles": [
-    "styles/fq-card-engine.css"
+    "styles/fq-card-engine.css",
+    "styles/fq-dnd5e-character-sheet.css"
   ],
   "socket": true,
   "url": "https://gitlab.com/mvoutat/fq-card-engine",
@@ -60,7 +61,11 @@
       {
         "id": "socketlib",
         "type": "module",
-        "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/develop/module.json",
+        "compatibility": {}
+      },
+      {
+        "id": "lib-wrapper",
+        "type": "module",
         "compatibility": {}
       }
     ]
