@@ -54,7 +54,8 @@
     "systems": [
       {
         "id": "dnd5e",
-        "type": "system"
+        "type": "system",
+        "compatibility": {}
       }
     ],
     "requires": [
@@ -80,8 +81,7 @@
       "ownership": {
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
-      },
-      "flags": {}
+      }
     },
     {
       "name": "decks-fq8-generated",
@@ -92,17 +92,29 @@
       "ownership": {
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
-      },
-      "flags": {}
+      }
     },
     {
       "name": "classes-fq8",
       "label": "Classes (FQ8)",
-      "system": "dnd5e",
       "path": "packs/classes-fq8",
       "type": "Item",
-      "private": false,
-      "flags": {}
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "minions-fq8",
+      "label": "Minions FQ8",
+      "path": "packs/minions-fq8",
+      "type": "Actor",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "dnd5e"
     }
   ],
   "packFolders": [

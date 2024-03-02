@@ -212,8 +212,8 @@ async function compilePacks(packName) {
 async function extractPacks(packName, entryName) {
   entryName = entryName?.toLowerCase();
 
-  // Load system.json.
-  const system = JSON.parse(fs.readFileSync("./system.json", { encoding: "utf8" }));
+  // Load module.json.
+  const system = JSON.parse(fs.readFileSync("./module.json", { encoding: "utf8" }));
 
   // Determine which source packs to process.
   const packs = system.packs.filter(p => !packName || p.name === packName);
