@@ -61,8 +61,26 @@
     width: 25px;
     color: var(--fq8-color-zeal-1);
     background-color: var(--fq8-color-zeal-4);
-    border-right: 2px dashed var(--fq8-color-zeal-1);
+    border-right: 2px dashed var(--fq8-color-zeal-3);
     text-align: center;
-    padding-top: 1.5px;
+    padding-top: 2px;
 }
 
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.hit-dice {
+    margin-top: -9px;
+}
+
+.dnd5e2 .meter .label .fq-hit-dice-label {
+    margin-left: auto;
+    font-size: 10px;
+    padding-right: 0;
+    width: fit-content;
+    color: var(--dnd5e-color-gold);
+    font-style: italic;
+    font-weight: 500
+}
+
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .stats .lozenges .lozenge .value {
+    text-align: center;
+    border: 0;
+}
