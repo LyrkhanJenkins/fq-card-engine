@@ -568,7 +568,7 @@
       },
       "bonus": {
         "range": 0,
-        "hpot": 0
+        "dot": 0
       },
       "cards": {
         "hand": 1,
