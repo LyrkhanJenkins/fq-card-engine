@@ -1,0 +1,24 @@
+{
+  "name": "Courir",
+  "type": "script",
+  "author": "eLD9iPNHJXGMQX6z",
+  "img": "icons/skills/movement/feet-winged-boots-glowing-yellow.webp",
+  "scope": "global",
+  "command": "if ([...game.combats].filter(combat => combat.isActive).length === 0)  {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: #C0392B;\">Le sort n'est utilisable qu'en combat</h3>`\n    });\n} else if (game.user.character.system.fq.action.value !== game.user.character.system.fq.action.max) {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: #C0392B;\">Vous devez avoir tous vos points d'action pour courir ce tour-ci</h3>`\n    });\n} else {\n    AudioHelper.play({\n        src: \"modules/fq-card-engine/sounds/passive_spells/run.mp3\",\n        volume: 0.4,\n        autoplay: true,\n        loop: false\n    }, true);\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: darkgreen;\">Vous vous mettez, à courir, la pioche est réduite à 0, et votre déplacement est doublé pendant 2 tours</h3>`\n    });\n    game.user.character.update({\"system.fq.action.value\": 0});\n    game.user.character.createEmbeddedDocuments(\"ActiveEffect\", [\n            {\n                label: \"Pioche à 0\",\n                icon: \"icons/sundries/gaming/rune-card.webp\",\n                origin: \"FQ Effect\",\n                changes: [\n                    {\n                        key: \"system.fq.cards.pick\",\n                        value: \"0\",\n                        mode: 5\n                    }\n                ],\n                duration: {\n                    startTime: null,\n                    rounds: 2,\n                    turns: null\n                },\n\n                flags: {isFQEffects: true}\n            }, {\n                label: \"Courir\",\n                icon: \"icons/skills/movement/feet-winged-boots-glowing-yellow.webp\",\n                origin: \"FQ Effect\",\n                changes: [\n                    {\n                        key: \"system.attributes.movement.walk\",\n                        value: \"2\",\n                        mode: 1\n                    },\n                    {\n                        key: \"macro.tokenMagic\",\n                        value: \"zoomblur\",\n                        mode: 0\n                    }\n                ],\n                duration: {\n                    startTime: null,\n                    rounds: 1,\n                    turns: null\n                },\n            }\n        ]\n    );\n}",
+  "folder": null,
+  "flags": {},
+  "_id": "WdbBjMn0rm3mel7X",
+  "sort": 300000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "coreVersion": "12.317",
+    "systemId": "dnd5e",
+    "systemVersion": "3.0.4",
+    "createdTime": 1710427482787,
+    "modifiedTime": 1710427958134,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "_key": "!macros!WdbBjMn0rm3mel7X"
+}

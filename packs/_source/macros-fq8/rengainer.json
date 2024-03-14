@@ -1,0 +1,24 @@
+{
+  "name": "Rengainer",
+  "type": "script",
+  "author": "eLD9iPNHJXGMQX6z",
+  "img": "icons/skills/melee/sword-damaged-broken-purple.webp",
+  "scope": "global",
+  "command": "if ([...game.combats].filter(combat => combat.isActive).length !== 0) {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: #C0392B;\">Le sort n'est pas utilisable en combat</h3>`\n    });\n} else if (!game.user.character.effects.filter(e => e.label === 'Dégainer')?.length) {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: #C0392B;\">Vous devez avoir dégainer</h3>`\n    });\n} else {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: darkgreen;\">Vous rengainez et remettez votre main dans la bibliothèque</h3>`\n    });\n    game.user.character.deleteEmbeddedDocuments(\"ActiveEffect\", game.user.character.effects.filter(e => e.label === 'Dégainer').map(e => e.id));\n    const deck = game.cards.filter(cards => cards.ownership[game.userId] === 3 && cards.type === 'deck')[0];\n    deck.recall();\n    AudioHelper.play({\n        src: \"modules/fq-card-engine/sounds/passive_spells/sheathe.mp3\",\n        volume: 0.4,\n        autoplay: true,\n        loop: false\n    }, true);\n}",
+  "folder": null,
+  "flags": {},
+  "_id": "XamSScdxXPuA4fuW",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "coreVersion": "12.317",
+    "systemId": "dnd5e",
+    "systemVersion": "3.0.4",
+    "createdTime": 1710428493144,
+    "modifiedTime": 1710428493144,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "_key": "!macros!XamSScdxXPuA4fuW"
+}
