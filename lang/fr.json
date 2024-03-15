@@ -17,6 +17,7 @@
   "FQCARDENGINE.OpenHand": "Agrandissement",
   "FQCARDENGINE.OpenCardStack": "Pile de cartes",
   "FQCARDENGINE.Pass": "Passer des cartes",
+  "FQCARDENGINE.PassTo": "Passer à",
   "FQCARDENGINE.HandCountSetting": "Nombre de mains",
   "FQCARDENGINE.HandCountSettingHint": "Nombre de mains \u00e0 afficher sur l\u0027\u00e9cran",
   "FQCARDENGINE.DisplayHandNameSetting": "Afficher le nom de la main",
@@ -47,6 +48,8 @@
   "FQCARDENGINE.CardClickBehavior": "Comportement d\u0027un clic sur une carte",
   "FQCARDENGINE.CardClickBehaviorHint": "Action quand une carte est cliqu\u00e9e sur la barre",
   "FQCARDENGINE.CardClickPlayCard": "Afficher la fen\u00eatre \u0027Jouer une carte\u0027",
+  "FQCARDENGINE.PlayCard": "Jouer la carte",
+  "FQCARDENGINE.DiscardCard": "Défausser la carte",
   "FQCARDENGINE.CardClickOpenHand": "Ouvrir la main",
   "FQCARDENGINE.CardClickCardImage": "Affiche l\u0027image de la carte",
   "FQCARDENGINE.RemoveBar": "Enlever une barre",
@@ -88,6 +91,10 @@
   "FQCARDENGINE.HandSizeMediumSetting": "Moyenne",
   "FQCARDENGINE.HandSizeLargeSetting": "Grande",
   "FQCARDENGINE.HandSizeMaxSetting": "Maximale",
+
+  "FQCARDENGINE.DialogPlayFormError": "Erreur dans le formulaire",
+  "FQCARDENGINE.DialogPlayFormErrorXXX": "Ajouter une valeur à X",
+  "FQCARDENGINE.DialogPlayFormErrorYYY": "Ajouter une valeur à Y",
 
   "FQCARDENGINE.ActionPoints": "Points d'Action",
   "FQCARDENGINE.ActionPointsCurrent": "Points d'Action Actuels",
