@@ -116,5 +116,10 @@
   "FQCARDENGINE.Hand": "Hand",
   "FQCARDENGINE.Pick": "Pick",
   "FQCARDENGINE.CurrentDrop": "Discard Card During Turn",
-  "FQCARDENGINE.LifeCost": "Life cost"
+  "FQCARDENGINE.Life": "Life",
+  "FQCARDENGINE.Drop": "Drop Cards",
+
+  "FQCARDENGINE.SheetCharacter": "FQ Character Sheet",
+  "FQCARDENGINE.SheetNPC": "FQ NPC Sheet",
+  "FQCARDENGINE.SheetItem": "FQ Item Sheet"
 }

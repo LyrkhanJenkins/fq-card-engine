@@ -41,7 +41,7 @@
   ],
   "styles": [
     "styles/fq-card-engine.css",
-    "styles/fq-dnd5e-character-sheet.css"
+    "styles/fq-dnd5e-sheet.css"
   ],
   "socket": true,
   "url": "https://gitlab.com/mvoutat/fq-card-engine",
