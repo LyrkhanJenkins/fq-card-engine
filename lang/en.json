@@ -121,5 +121,12 @@
 
   "FQCARDENGINE.SheetCharacter": "FQ Character Sheet",
   "FQCARDENGINE.SheetNPC": "FQ NPC Sheet",
-  "FQCARDENGINE.SheetItem": "FQ Item Sheet"
+  "FQCARDENGINE.SheetItem": "FQ Item Sheet",
+
+  "FQCARDENGINE.WarningMsgNotEnoughHp": "has not enough hit points",
+  "FQCARDENGINE.WarningMsgNotEnoughAction": "has not enough action points",
+  "FQCARDENGINE.WarningMsgNotEnoughMana": "has not enough mana",
+  "FQCARDENGINE.WarningMsgNotEnoughZeal": "has not enough zeal",
+  "FQCARDENGINE.WarningMsgNotEnoughDraw": "has not enough cards on his deck",
+  "FQCARDENGINE.WarningMsgNotEnoughDrop": "has not enough drop cards from his hand"
 }

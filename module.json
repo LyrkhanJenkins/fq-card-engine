@@ -37,7 +37,8 @@
   "esmodules": [
     "scripts/fq-card-engine-module.js",
     "scripts/fq-combat.js",
-    "scripts/fq-trading-cards.js"
+    "scripts/fq-trading-cards.js",
+    "scripts/fq-item-use.js"
   ],
   "styles": [
     "styles/fq-card-engine.css",

@@ -14,7 +14,7 @@
 
     --fq8-color-drop-1: #000000;
 
-    --fq8-color-life-1: #123b09;
+    --fq8-color-hp-1: #123b09;
 }
 
 .dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.hit-points {
@@ -117,8 +117,8 @@
     color: var(--fq8-color-drop-1);
 }
 
-.dnd5e.sheet.item .section-fq .life-cost  {
-    color: var(--fq8-color-life-1);
+.dnd5e.sheet.item .section-fq .hp-cost  {
+    color: var(--fq8-color-hp-1);
 }
 
 .dnd5e.sheet.item .section-fq .divider {
