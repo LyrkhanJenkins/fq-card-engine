@@ -115,5 +115,6 @@
   "FQCARDENGINE.Cards": "Cartes",
   "FQCARDENGINE.Hand": "Main",
   "FQCARDENGINE.Pick": "Pioche",
-  "FQCARDENGINE.CurrentDrop": "Carte défaussée pendant le tour"
+  "FQCARDENGINE.CurrentDrop": "Carte défaussée pendant le tour",
+  "FQCARDENGINE.LifeCost": "Coût en vie"
 }
