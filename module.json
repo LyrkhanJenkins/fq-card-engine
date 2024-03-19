@@ -25,13 +25,15 @@
   "authors": [
     {
       "name": "Lyrkhan",
-      "email": "lyrkhanjenkins@gmail.com",
-      "url": "https://github.com/LyrkhanJenkins",
-      "discord": "lyrkhanjenkins"
+      "url": "https://gitlab.com/mvoutat",
+      "flags": {}
     },
     {
       "name": "Lyrkhan",
-      "url": "https://gitlab.com/mvoutat"
+      "email": "lyrkhanjenkins@gmail.com",
+      "url": "https://github.com/LyrkhanJenkins",
+      "discord": "lyrkhanjenkins",
+      "flags": {}
     }
   ],
   "esmodules": [
@@ -46,8 +48,8 @@
   ],
   "socket": true,
   "url": "https://gitlab.com/mvoutat/fq-card-engine",
-  "manifest": "https://gitlab.com/mvoutat/fq-card-engine/-/raw/main/module.json",
-  "download": "https://github.com/LyrkhanJenkins/fq-card-engine/-/archive/v1.4.2/fq-card-engine-v1.4.2.zip",
+  "manifest": "https://gitlab.com/mvoutat/fq-card-engine/-/raw/final-quest-8/module.json",
+  "download": "https://gitlab.com/mvoutat/fq-card-engine/-/jobs/6429936675/artifacts/raw/fq-card-engine.zip",
   "id": "fq-card-engine",
   "compatibility": {
     "minimum": "12",
@@ -84,7 +86,8 @@
       "ownership": {
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
-      }
+      },
+      "flags": {}
     },
     {
       "name": "decks-fq8-generated",
@@ -95,7 +98,8 @@
       "ownership": {
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
-      }
+      },
+      "flags": {}
     },
     {
       "name": "classes-fq8",
@@ -106,7 +110,8 @@
       "ownership": {
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
-      }
+      },
+      "flags": {}
     },
     {
       "name": "minions-fq8",
@@ -117,7 +122,8 @@
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
       },
-      "system": "dnd5e"
+      "system": "dnd5e",
+      "flags": {}
     },
     {
       "label": "Macros FQ8",
@@ -145,7 +151,8 @@
           "packs": [
             "decks-final-quest-8",
             "decks-fq8-generated"
-          ]
+          ],
+          "folders": []
         }
       ],
       "packs": [
