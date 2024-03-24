@@ -32,7 +32,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -41,8 +41,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.UCYOEqiF8N1AN8Sl"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.UCYOEqiF8N1AN8Sl",
+      "cards": []
     },
     {
       "_id": "qVyz2F79jPsA7xTy",
@@ -71,7 +71,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -80,8 +80,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.qVyz2F79jPsA7xTy"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.qVyz2F79jPsA7xTy",
+      "cards": []
     },
     {
       "_id": "SOTzE1uX2WwLbeEr",
@@ -110,7 +110,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -119,8 +119,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.SOTzE1uX2WwLbeEr"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.SOTzE1uX2WwLbeEr",
+      "cards": []
     },
     {
       "_id": "kZQbFkLMnCb7brjU",
@@ -149,7 +149,7 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -158,8 +158,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.kZQbFkLMnCb7brjU"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.kZQbFkLMnCb7brjU",
+      "cards": []
     },
     {
       "_id": "pZ02qHWvJS4kIbIY",
@@ -188,7 +188,7 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -197,8 +197,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.pZ02qHWvJS4kIbIY"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.pZ02qHWvJS4kIbIY",
+      "cards": []
     },
     {
       "_id": "e6HICEkLS9HgEZbD",
@@ -227,7 +227,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -236,8 +236,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.e6HICEkLS9HgEZbD"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.e6HICEkLS9HgEZbD",
+      "cards": []
     },
     {
       "_id": "ypg6iIljUHPuFOz7",
@@ -266,7 +266,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -275,13 +275,13 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.ypg6iIljUHPuFOz7"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.ypg6iIljUHPuFOz7",
+      "cards": []
     },
     {
       "_id": "7vF29PgR3WHXhEb6",
       "name": "Brouillard",
-      "description": "{\n  \"action\": \"-5\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"99999999\",\n  \"nbTargets\": \"9999\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Effet air' || e.name === 'Effet de Terre').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de terre actif sur au moins une cible\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Brouillard\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Brouillard\",\n              \"icon\": \"icons/magic/air/fog-gas-smoke-gray.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"-@int\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fog\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Effet Brouillard appliqué à toutes les cibles enlevant @int en critique et @wis en esquive\"\n        }\n      ]\n    }\n  ]\n}",
+      "description": "{\n  \"action\": \"-5\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"99999999\",\n  \"nbTargets\": \"9999\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Effet air' || e.name === 'Effet de Terre').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de terre actif sur au moins une cible\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Brouillard\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Brouillard\",\n              \"icon\": \"icons/magic/air/fog-gas-smoke-gray.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"-@int\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fog\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Effet Brouillard appliqué à toutes les cibles enlevant @int en critique et @wis en esquive\"\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -305,17 +305,17 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1711290399104,
+        "lastModifiedBy": "SA6JKCaEua1JXSu4"
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.7vF29PgR3WHXhEb6"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.7vF29PgR3WHXhEb6",
+      "cards": []
     },
     {
       "_id": "aXrcw2gqwFuTDo58",
@@ -344,7 +344,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -353,8 +353,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.aXrcw2gqwFuTDo58"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.aXrcw2gqwFuTDo58",
+      "cards": []
     },
     {
       "_id": "5b97DVTONwBhLdAl",
@@ -383,7 +383,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -392,8 +392,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.5b97DVTONwBhLdAl"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.5b97DVTONwBhLdAl",
+      "cards": []
     },
     {
       "_id": "866YLG5WLwU2OsaO",
@@ -422,7 +422,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -431,8 +431,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.866YLG5WLwU2OsaO"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.866YLG5WLwU2OsaO",
+      "cards": []
     },
     {
       "_id": "qa9KGKFhhIRWkfHi",
@@ -461,7 +461,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -470,13 +470,13 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.qa9KGKFhhIRWkfHi"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.qa9KGKFhhIRWkfHi",
+      "cards": []
     },
     {
       "_id": "55tY0W7Dbd1OfKSQ",
       "name": "Incantation",
-      "description": "{\n    \"action\": \"-(3 + XXX)\",\n    \"xmax\": \"0+@int\",\n    \"replayable\": \"passif\",\n    \"addingRolls\": [\n        {\n            \"title\": \"Incantation\",\n            \"formula\": \"1\",\n            \"effects\": [\n                {\n                    \"result\": \"1\",\n                    \"timer\": \"300\",\n                    \"data\": [\n                        {\n                            \"label\": \"Incanter XXX points d'action\",\n                            \"icon\": \"icons/magic/symbols/runes-carved-stone-yellow.webp\",\n                            \"changes\": [\n                                {\n                                    \"key\": \"system.fq.action.max\",\n                                    \"value\": \"XXX\",\n                                    \"mode\": \"2\"\n                                }\n                            ],\n                            \"duration\": {\n                                \"startTime\": \"0\",\n                                \"rounds\": \"1\",\n                                \"turns\": \"0\"\n                            }\n                        }\n                    ],\n                    \"other\": \"Vous incantez XXX points d'actions pour le prochain tour\"\n                }\n            ]\n        }\n    ],\n    \"afterFirstPlay\": {\n        \"action\": \"-(XXX)\",\n        \"xmax\": \"0+@int\",\n        \"replayable\": \"passif\",\n        \"hasBeenPlayed\": \"true\",\n        \"addingRolls\": [\n            {\n                \"title\": \"Incantation\",\n                \"formula\": \"1\",\n                \"effects\": [\n                    {\n                        \"result\": \"1\",\n                        \"timer\": \"300\",\n                        \"data\": [\n                            {\n                                \"label\": \"Incanter XXX points d'action\",\n                                \"icon\": \"icons/magic/symbols/runes-carved-stone-yellow.webp\",\n                                \"changes\": [\n                                    {\n                                        \"key\": \"system.fq.action.max\",\n                                        \"value\": \"XXX\",\n                                        \"mode\": \"2\"\n                                    }\n                                ],\n                                \"duration\": {\n                                    \"startTime\": \"0\",\n                                    \"rounds\": \"1\",\n                                    \"turns\": \"0\"\n                                }\n                            }\n                        ],\n                        \"other\": \"Vous incantez XXX points d'actions pour le prochain tour\"\n                    }\n                ]\n            }\n        ]\n    }\n}",
+      "description": "{\n    \"action\": \"-(3 + XXX)\",\n    \"xmax\": \"0+@int\",\n    \"replayable\": \"passif\",\n    \"addingRolls\": [\n        {\n            \"title\": \"Incantation\",\n            \"formula\": \"1\",\n            \"effects\": [\n                {\n                    \"result\": \"1\",\n                    \"data\": [\n                        {\n                            \"label\": \"Incanter XXX points d'action\",\n                            \"icon\": \"icons/magic/symbols/runes-carved-stone-yellow.webp\",\n                            \"changes\": [\n                                {\n                                    \"key\": \"system.fq.action.max\",\n                                    \"value\": \"XXX\",\n                                    \"mode\": \"2\"\n                                }\n                            ],\n                            \"duration\": {\n                                \"startTime\": \"0\",\n                                \"rounds\": \"1\",\n                                \"turns\": \"0\"\n                            }\n                        }\n                    ],\n                    \"other\": \"Vous incantez XXX points d'actions pour le prochain tour\"\n                }\n            ]\n        }\n    ],\n    \"afterFirstPlay\": {\n        \"action\": \"-(XXX)\",\n        \"xmax\": \"0+@int\",\n        \"replayable\": \"passif\",\n        \"hasBeenPlayed\": \"true\",\n        \"addingRolls\": [\n            {\n                \"title\": \"Incantation\",\n                \"formula\": \"1\",\n                \"effects\": [\n                    {\n                        \"result\": \"1\",\n                        \"data\": [\n                            {\n                                \"label\": \"Incanter XXX points d'action\",\n                                \"icon\": \"icons/magic/symbols/runes-carved-stone-yellow.webp\",\n                                \"changes\": [\n                                    {\n                                        \"key\": \"system.fq.action.max\",\n                                        \"value\": \"XXX\",\n                                        \"mode\": \"2\"\n                                    }\n                                ],\n                                \"duration\": {\n                                    \"startTime\": \"0\",\n                                    \"rounds\": \"1\",\n                                    \"turns\": \"0\"\n                                }\n                            }\n                        ],\n                        \"other\": \"Vous incantez XXX points d'actions pour le prochain tour\"\n                    }\n                ]\n            }\n        ]\n    }\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -500,22 +500,22 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1711290437885,
+        "lastModifiedBy": "SA6JKCaEua1JXSu4"
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.55tY0W7Dbd1OfKSQ"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.55tY0W7Dbd1OfKSQ",
+      "cards": []
     },
     {
       "_id": "VwRiKk5Nv0wwXGtv",
       "name": "Plastron Magique",
-      "description": "{\n  \"minReach\": \"0\",\n  \"bonusCrit\": \"-9999\",\n  \"maxReach\": \"8\",\n  \"action\": \"-7\",\n  \"heal\": \"10 + 3*@cha\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.combat.combatants.filter(c =&gt; c.actor?.effects.filter(e =&gt; e?.data?.label === 'Effet de Terre').length).length || game.combat.combatants.filter(c =&gt; c.actor?.data?.effects.filter(e =&gt; e?.data?.label === 'Gel').length).length\",\n      \"message\": \"Vous n'avez pas d'effet de Terre ou de gel actif\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Plastron Magique\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Plastron Magique\",\n              \"icon\": \"icons/magic/defensive/shield-barrier-flaming-pentagon-blue-yellow.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.hp.tempmax\",\n                  \"value\": \"10 + 3*@cha\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"air-field\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": [\n            \"L'effet Plastron Magique a été appliqué aux cibles\",\n            \"Supprimer l'effet de givre ou de terre concerné sur la cible\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "description": "{\n  \"minReach\": \"0\",\n  \"bonusCrit\": \"-9999\",\n  \"maxReach\": \"8\",\n  \"action\": \"-7\",\n  \"heal\": \"10 + 3*@cha\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.combat.combatants.filter(c =&gt; c.actor?.effects.filter(e =&gt; e?.data?.label === 'Effet de Terre').length).length || game.combat.combatants.filter(c =&gt; c.actor?.data?.effects.filter(e =&gt; e?.data?.label === 'Gel').length).length\",\n      \"message\": \"Vous n'avez pas d'effet de Terre ou de gel actif\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Plastron Magique\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Plastron Magique\",\n              \"icon\": \"icons/magic/defensive/shield-barrier-flaming-pentagon-blue-yellow.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.hp.tempmax\",\n                  \"value\": \"10 + 3*@cha\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"air-field\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": [\n            \"L'effet Plastron Magique a été appliqué aux cibles\",\n            \"Supprimer l'effet de givre ou de terre concerné sur la cible\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -539,17 +539,17 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1711290452694,
+        "lastModifiedBy": "SA6JKCaEua1JXSu4"
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.VwRiKk5Nv0wwXGtv"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.VwRiKk5Nv0wwXGtv",
+      "cards": []
     },
     {
       "_id": "1nwTNnbbl8BeaUwJ",
@@ -578,7 +578,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -587,8 +587,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.1nwTNnbbl8BeaUwJ"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.1nwTNnbbl8BeaUwJ",
+      "cards": []
     },
     {
       "_id": "CPZ20TlYwqrMq3C1",
@@ -617,7 +617,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -626,13 +626,13 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.CPZ20TlYwqrMq3C1"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.CPZ20TlYwqrMq3C1",
+      "cards": []
     },
     {
       "_id": "z3BMWtXMBCF996I2",
       "name": "Propagation des dégâts",
-      "description": "{\n  \"action\": \"-4\",\n  \"zeal\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"9\",\n  \"replayable\": \"passif\",\n  \"customEval\": [\n    {\n      \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n      \"message\": \"Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Propagation des dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Propagation des dégâts\",\n              \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"shockwave\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"@wis dégâts sont propagés à la cible chaque tour pendant 3 tours\"\n        }\n      ]\n    }\n  ],\n  \"afterFirstPlay\": {\n    \"minReach\": \"1\",\n    \"maxReach\": \"9\",\n    \"replayable\": \"passif\",\n    \"customEval\": [\n      {\n        \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n        \"message\": \"Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort\"\n      }\n    ],\n    \"addingRolls\": [\n      {\n        \"title\": \"Propagation des dégâts\",\n        \"formula\": \"1\",\n        \"effects\": [\n          {\n            \"result\": \"1\",\n            \"timer\": \"300\",\n            \"data\": [\n              {\n                \"label\": \"Propagation des dégâts\",\n                \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n                \"changes\": [\n                  {\n                    \"key\": \"system.fq.bonus.dot\",\n                    \"value\": \"@wis\",\n                    \"mode\": \"2\"\n                  },\n                  {\n                    \"key\": \"macro.tokenMagic\",\n                    \"value\": \"shockwave\",\n                    \"mode\": \"0\"\n                  }\n                ],\n                \"duration\": {\n                  \"startTime\": \"0\",\n                  \"rounds\": \"3\",\n                  \"turns\": \"0\"\n                }\n              }\n            ],\n            \"other\": \"@wis dégâts sont propagés à la cible chaque tour pendant 3 tours\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+      "description": "{\n  \"action\": \"-4\",\n  \"zeal\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"9\",\n  \"replayable\": \"passif\",\n  \"customEval\": [\n    {\n      \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n      \"message\": \"Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Propagation des dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Propagation des dégâts\",\n              \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"shockwave\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"@wis dégâts sont propagés à la cible chaque tour pendant 3 tours\"\n        }\n      ]\n    }\n  ],\n  \"afterFirstPlay\": {\n    \"minReach\": \"1\",\n    \"maxReach\": \"9\",\n    \"replayable\": \"passif\",\n    \"customEval\": [\n      {\n        \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n        \"message\": \"Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort\"\n      }\n    ],\n    \"addingRolls\": [\n      {\n        \"title\": \"Propagation des dégâts\",\n        \"formula\": \"1\",\n        \"effects\": [\n          {\n            \"result\": \"1\",\n            \"data\": [\n              {\n                \"label\": \"Propagation des dégâts\",\n                \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n                \"changes\": [\n                  {\n                    \"key\": \"system.fq.bonus.dot\",\n                    \"value\": \"@wis\",\n                    \"mode\": \"2\"\n                  },\n                  {\n                    \"key\": \"macro.tokenMagic\",\n                    \"value\": \"shockwave\",\n                    \"mode\": \"0\"\n                  }\n                ],\n                \"duration\": {\n                  \"startTime\": \"0\",\n                  \"rounds\": \"3\",\n                  \"turns\": \"0\"\n                }\n              }\n            ],\n            \"other\": \"@wis dégâts sont propagés à la cible chaque tour pendant 3 tours\"\n          }\n        ]\n      }\n    ]\n  }\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -656,17 +656,17 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1711290482416,
+        "lastModifiedBy": "SA6JKCaEua1JXSu4"
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.z3BMWtXMBCF996I2"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.z3BMWtXMBCF996I2",
+      "cards": []
     }
   ],
   "width": null,
@@ -677,7 +677,7 @@
   "sort": 0,
   "flags": {},
   "_stats": {
-    "coreVersion": "12.317",
+    "coreVersion": "12.318",
     "systemId": null,
     "systemVersion": null,
     "createdTime": null,
