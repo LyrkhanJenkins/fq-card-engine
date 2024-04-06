@@ -1,0 +1,208 @@
+{
+  "name": "Concentration",
+  "type": "spell",
+  "img": "icons/magic/symbols/runes-carved-stone-yellow.webp",
+  "effects": [
+    {
+      "_id": "re707ptlyhllhqco",
+      "changes": [
+        {
+          "key": "system.attributes.action.max",
+          "mode": 2,
+          "value": "5",
+          "priority": 20
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "rounds": 1,
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "origin": "Scene.WaNPpr4aoUfEjLRE.Token.AKqvkYmdcpUqSPQY.Item.i8t4wxjkx3s2r7xy",
+      "transfer": false,
+      "flags": {
+        "dae": {
+          "selfTarget": true,
+          "stackable": "multi",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [],
+          "transfer": false
+        },
+        "core": {
+          "statusId": ""
+        }
+      },
+      "tint": "#ffffff",
+      "_stats": {
+        "coreVersion": "12.318",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "name": "Concentration",
+      "img": "icons/magic/symbols/runes-carved-stone-yellow.webp",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!Z38Zjk2CwUrCcNka.re707ptlyhllhqco"
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "midi-qol": {
+      "effectActivation": false,
+      "forceCEOn": false,
+      "fumbleThreshold": null
+    },
+    "midiProperties": {
+      "nodam": false,
+      "fulldam": false,
+      "halfdam": false,
+      "rollOther": false,
+      "critOther": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "concentration": false,
+      "toggleEffect": false
+    },
+    "rest-recovery": {
+      "data": {
+        "recovery": {
+          "enabled": false
+        }
+      }
+    }
+  },
+  "_id": "Z38Zjk2CwUrCcNka",
+  "_stats": {
+    "coreVersion": "12.318",
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.1",
+    "createdTime": 1709393284702,
+    "modifiedTime": 1712393429868,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {
+    "description": {
+      "value": "<p>Récupère 5 points d'action et utilise 1 point de mana.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": {
+      "custom": "PHB pg. 287"
+    },
+    "activation": {
+      "type": "none",
+      "cost": null,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "self",
+      "prompt": true
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": "self"
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null,
+      "recovery": "",
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": "",
+      "amount": null,
+      "scale": false
+    },
+    "ability": "",
+    "actionType": "util",
+    "attackBonus": "",
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": "",
+      "value": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell",
+      "value": ""
+    },
+    "level": 0,
+    "school": "con",
+    "components": {
+      "value": "",
+      "vocal": true,
+      "somatic": true,
+      "material": true,
+      "ritual": false,
+      "concentration": false
+    },
+    "materials": {
+      "value": "",
+      "consumed": false,
+      "cost": 100,
+      "supply": 0
+    },
+    "preparation": {
+      "mode": "always",
+      "prepared": false
+    },
+    "scaling": {
+      "mode": "none",
+      "formula": ""
+    },
+    "attunement": 0,
+    "cover": null,
+    "crewed": false,
+    "properties": [
+      "vocal",
+      "somatic",
+      "material",
+      "mgc"
+    ],
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "summons": null,
+    "fq": {
+      "action": -5,
+      "mana": -1,
+      "zeal": 0,
+      "drop": 0,
+      "hp": 0
+    }
+  },
+  "_key": "!items!Z38Zjk2CwUrCcNka"
+}
