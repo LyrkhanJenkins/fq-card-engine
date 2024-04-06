@@ -111,6 +111,8 @@
   "FQCARDENGINE.EvasionScore": "Evasion",
   "FQCARDENGINE.Bonuses": "FQ Bonuses",
   "FQCARDENGINE.RangeBonus": "Range Bonus",
+  "FQCARDENGINE.DamageBonus": "Damage Bonus",
+  "FQCARDENGINE.HealBonus": "Heal Bonus",
   "FQCARDENGINE.HitPointsOnTime": "Hit Points By Turns",
   "FQCARDENGINE.Cards": "Cards",
   "FQCARDENGINE.Hand": "Hand",
