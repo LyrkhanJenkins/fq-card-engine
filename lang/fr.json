@@ -18,6 +18,8 @@
   "FQCARDENGINE.OpenCardStack": "Pile de cartes",
   "FQCARDENGINE.Pass": "Passer des cartes",
   "FQCARDENGINE.PassTo": "Passer à",
+  "FQCARDENGINE.ChooseEffect": "Choix de l'effet",
+  "FQCARDENGINE.InvokeMinion": "Emplacement minion(s)",
   "FQCARDENGINE.HandCountSetting": "Nombre de mains",
   "FQCARDENGINE.HandCountSettingHint": "Nombre de mains \u00e0 afficher sur l\u0027\u00e9cran",
   "FQCARDENGINE.DisplayHandNameSetting": "Afficher le nom de la main",
@@ -95,6 +97,7 @@
   "FQCARDENGINE.DialogPlayFormError": "Erreur dans le formulaire",
   "FQCARDENGINE.DialogPlayFormErrorXXX": "Ajouter une valeur à X",
   "FQCARDENGINE.DialogPlayFormErrorYYY": "Ajouter une valeur à Y",
+  "FQCARDENGINE.DialogPlayFormErrorMinionLocation": "Sélectionner le bon nombre d'emplacement libre pour l'invocation des minions",
 
   "FQCARDENGINE.ActionPoints": "Points d'Action",
   "FQCARDENGINE.ActionPointsCurrent": "Points d'Action Actuels",
