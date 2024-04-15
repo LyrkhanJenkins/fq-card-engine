@@ -93,6 +93,8 @@
   "FQCARDENGINE.HandSizeMediumSetting": "Moyenne",
   "FQCARDENGINE.HandSizeLargeSetting": "Grande",
   "FQCARDENGINE.HandSizeMaxSetting": "Maximale",
+  "FQCARDENGINE.GMUsingCardsSetting": "Les cartes du MJ vont à la défausse",
+  "FQCARDENGINE.GMUsingCardsSettingHint": "Décochez cette case si vous voulez que le MJ ne défausse jamais les cartes qu'il utilise dans les mains qu'il souhaite mais qu'il puisse tout de même les utiliser",
 
   "FQCARDENGINE.DialogPlayFormError": "Erreur dans le formulaire",
   "FQCARDENGINE.DialogPlayFormErrorXXX": "Ajouter une valeur à X",
