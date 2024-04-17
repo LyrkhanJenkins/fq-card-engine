@@ -1,0 +1,24 @@
+{
+  "name": "Supprimer son deck",
+  "type": "script",
+  "scope": "global",
+  "author": "SA6JKCaEua1JXSu4",
+  "img": "icons/magic/fire/flame-burning-fence.webp",
+  "command": "socket = socketlib.registerModule(FqCardEngineModule.moduleName);\nawait socket.executeAsGM('deleteDeckForUser', game.userId);",
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_id": "y8KRtZuiD36dhRUe",
+  "sort": 0,
+  "_stats": {
+    "coreVersion": "12.318",
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "createdTime": 1713337240315,
+    "modifiedTime": 1713337240315,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "_key": "!macros!y8KRtZuiD36dhRUe"
+}
