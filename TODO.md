@@ -1,9 +1,15 @@
 ## 1.0.0
 - Traduction en anglais de toutes les cartes et items
-- Réduction aux 5 premières classes
+- Règles du jeu et readme complété
+- Implémentation des classes à revoir
+- Création des personnages de bases
+- Réduction aux 5 premières classes/decks
+
+## 0.2.2
+- Recette globale avec utilisateurs et MJs
 
 ## 0.2.1
-- Suppression de tous les warnings/ tous les bugs pour 1.0.0 alpha
+- Suppression de tous les warnings/ tous les bugs pour 1.0.0 sans utilisateur
 
 ## 0.2.0
 
@@ -13,12 +19,11 @@
 - Empêcher les joueurs de modifier des cartes d'un deck ou d'une bibliotheque (et de supprimer)
 
 ## 0.1.2
-- Gestion de plusieurs modules pour les effets magiques de combat
-- Migrations objets et sorts passifs dnd5e v FQ
 - Problématique de taille quand ajout d'une nouvelle main
 - Problématique du hover sur les cartes
 - MJ doit pouvoir créer les decks pour ses joueurs avec une meta macros
 - Migration 12.330 - Enlever lew warnings
+- Problématiques avec CardViewer (mettre en expérimentation ou corrigé)
 
 
 ~~Ne piochez ou déplacez que vers des stacks de type fqType~~
@@ -39,10 +44,12 @@
 - Implémenter les cartes communes pour le niveau 6 + 4 Sorts Ultime par classes
 - tagué les cartes et le nombre max
 - affiché le nombre max dans les decks
+- Migrations objets et sorts passifs dnd5e v FQ
 
 ### Medium:
 
 - Ne pas utiliser de points d'actions quand hors combat
+- Gestion de plusieurs modules pour les effets magiques de combat
 - Vérifier qu'un GM est connecté pour pouvoir lancer les cartes
 - Lancer les sons des cartes sur un dossier plutôt qu'un fichier (lancer un fichier audio aléatoire d'un dossier)
 
