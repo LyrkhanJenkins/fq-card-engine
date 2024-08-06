@@ -47,12 +47,14 @@
       },
       "tint": "#ffffff",
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "name": "Au tapis",
       "img": "icons/skills/melee/hand-grip-staff-teal.webp",
@@ -60,6 +62,7 @@
       "system": {},
       "description": "",
       "statuses": [],
+      "sort": 0,
       "_key": "!items.effects!QzBpOIugfqv1ATrp.nw705ddcpfj989y4"
     }
   ],
@@ -90,12 +93,14 @@
     }
   },
   "_stats": {
-    "coreVersion": "12.318",
+    "coreVersion": "12.330",
     "systemId": "dnd5e",
     "systemVersion": "3.1.1",
     "createdTime": 1709393284701,
     "modifiedTime": 1712393377805,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "ownership": {
     "default": 0

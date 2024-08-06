@@ -52,12 +52,14 @@
       },
       "tint": "#ffffff",
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "name": "Stunning Screech",
       "img": "icons/creatures/abilities/lion-roar-yellow.webp",
@@ -65,6 +67,7 @@
       "system": {},
       "description": "",
       "statuses": [],
+      "sort": 0,
       "_key": "!items.effects!ss2gejj2Nhzj8HoV.e5m87d6l6cd3d2f6"
     }
   ],
@@ -95,12 +98,14 @@
   },
   "_id": "ss2gejj2Nhzj8HoV",
   "_stats": {
-    "coreVersion": "12.318",
+    "coreVersion": "12.330",
     "systemId": "dnd5e",
     "systemVersion": "3.1.1",
     "createdTime": 1709393284703,
     "modifiedTime": 1712389863027,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "ownership": {
     "default": 0

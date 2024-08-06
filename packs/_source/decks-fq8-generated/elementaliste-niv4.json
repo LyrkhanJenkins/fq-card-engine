@@ -32,17 +32,19 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.vkoKIXI2fRvqHOQg"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.vkoKIXI2fRvqHOQg",
+      "cards": []
     },
     {
       "_id": "lwMfjQvfYjzFb7Nr",
@@ -71,17 +73,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.lwMfjQvfYjzFb7Nr"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.lwMfjQvfYjzFb7Nr",
+      "cards": []
     },
     {
       "_id": "Hd6LLhsS4WYmUTwF",
@@ -110,17 +114,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.Hd6LLhsS4WYmUTwF"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.Hd6LLhsS4WYmUTwF",
+      "cards": []
     },
     {
       "_id": "PI26TG0qA01Son1M",
@@ -149,17 +155,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.PI26TG0qA01Son1M"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.PI26TG0qA01Son1M",
+      "cards": []
     },
     {
       "_id": "6M72EmqxK1uIKRnJ",
@@ -188,17 +196,19 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.6M72EmqxK1uIKRnJ"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.6M72EmqxK1uIKRnJ",
+      "cards": []
     },
     {
       "_id": "6WtUpdWtYp6K17pz",
@@ -227,17 +237,19 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.6WtUpdWtYp6K17pz"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.6WtUpdWtYp6K17pz",
+      "cards": []
     },
     {
       "_id": "06qQYOafT256CfkY",
@@ -266,17 +278,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.06qQYOafT256CfkY"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.06qQYOafT256CfkY",
+      "cards": []
     },
     {
       "_id": "2iZyYKrMQgQ1sIzX",
@@ -305,17 +319,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.2iZyYKrMQgQ1sIzX"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.2iZyYKrMQgQ1sIzX",
+      "cards": []
     },
     {
       "_id": "gdNFBfdVxcxTQfus",
@@ -344,17 +360,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.gdNFBfdVxcxTQfus"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.gdNFBfdVxcxTQfus",
+      "cards": []
     },
     {
       "_id": "3nhHE5K2lbxMVGEU",
@@ -383,17 +401,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.3nhHE5K2lbxMVGEU"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.3nhHE5K2lbxMVGEU",
+      "cards": []
     },
     {
       "_id": "R73WpoosNlC48lnm",
@@ -422,17 +442,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1711290399104,
-        "lastModifiedBy": "SA6JKCaEua1JXSu4"
+        "lastModifiedBy": "SA6JKCaEua1JXSu4",
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.R73WpoosNlC48lnm"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.R73WpoosNlC48lnm",
+      "cards": []
     },
     {
       "_id": "SH30zP8YAHPcDp2K",
@@ -461,17 +483,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.SH30zP8YAHPcDp2K"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.SH30zP8YAHPcDp2K",
+      "cards": []
     },
     {
       "_id": "BxwkMbdQlQy2TtG7",
@@ -500,17 +524,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.BxwkMbdQlQy2TtG7"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.BxwkMbdQlQy2TtG7",
+      "cards": []
     },
     {
       "_id": "clq1ky1UOIaV8kFV",
@@ -539,17 +565,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.clq1ky1UOIaV8kFV"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.clq1ky1UOIaV8kFV",
+      "cards": []
     },
     {
       "_id": "1kNXohR4ewZjj5DT",
@@ -578,17 +606,19 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.1kNXohR4ewZjj5DT"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.1kNXohR4ewZjj5DT",
+      "cards": []
     },
     {
       "_id": "tAigE9fuHiGuc889",
@@ -617,17 +647,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.tAigE9fuHiGuc889"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.tAigE9fuHiGuc889",
+      "cards": []
     },
     {
       "_id": "opcmJCYVH8nN5GpO",
@@ -656,17 +688,19 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.opcmJCYVH8nN5GpO"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.opcmJCYVH8nN5GpO",
+      "cards": []
     },
     {
       "_id": "EjECSQykbU534mzd",
@@ -695,17 +729,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.EjECSQykbU534mzd"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.EjECSQykbU534mzd",
+      "cards": []
     },
     {
       "_id": "yjRug8O7DdnjEWBr",
@@ -734,17 +770,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.yjRug8O7DdnjEWBr"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.yjRug8O7DdnjEWBr",
+      "cards": []
     },
     {
       "_id": "wPkn3ALsqsLeZlHC",
@@ -773,17 +811,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1711290437885,
-        "lastModifiedBy": "SA6JKCaEua1JXSu4"
+        "lastModifiedBy": "SA6JKCaEua1JXSu4",
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.wPkn3ALsqsLeZlHC"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.wPkn3ALsqsLeZlHC",
+      "cards": []
     },
     {
       "_id": "VV6qGX9zew2umGcI",
@@ -812,17 +852,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1711290437885,
-        "lastModifiedBy": "SA6JKCaEua1JXSu4"
+        "lastModifiedBy": "SA6JKCaEua1JXSu4",
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.VV6qGX9zew2umGcI"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.VV6qGX9zew2umGcI",
+      "cards": []
     },
     {
       "_id": "smKSxwxryt4xqm2C",
@@ -851,17 +893,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.smKSxwxryt4xqm2C"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.smKSxwxryt4xqm2C",
+      "cards": []
     },
     {
       "_id": "S6eAEuS9fbj2OQvL",
@@ -890,17 +934,19 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.S6eAEuS9fbj2OQvL"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.S6eAEuS9fbj2OQvL",
+      "cards": []
     },
     {
       "_id": "uhPdiwSNz6ZIPRR9",
@@ -929,17 +975,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.uhPdiwSNz6ZIPRR9"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.uhPdiwSNz6ZIPRR9",
+      "cards": []
     },
     {
       "_id": "8OWcqi436IjTZmcO",
@@ -968,17 +1016,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1711290482416,
-        "lastModifiedBy": "SA6JKCaEua1JXSu4"
+        "lastModifiedBy": "SA6JKCaEua1JXSu4",
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.8OWcqi436IjTZmcO"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.8OWcqi436IjTZmcO",
+      "cards": []
     },
     {
       "_id": "in46Mc0YaUx65J4b",
@@ -1007,17 +1057,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!0wjknCGnmiKTlfa4.in46Mc0YaUx65J4b"
+      "_key": "!cards.cards!0wjknCGnmiKTlfa4.in46Mc0YaUx65J4b",
+      "cards": []
     }
   ],
   "width": null,
@@ -1028,12 +1080,14 @@
   "sort": 0,
   "flags": {},
   "_stats": {
-    "coreVersion": "12.318",
+    "coreVersion": "12.330",
     "systemId": null,
     "systemVersion": null,
     "createdTime": null,
     "modifiedTime": null,
-    "lastModifiedBy": null
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "ownership": {
     "default": 0
