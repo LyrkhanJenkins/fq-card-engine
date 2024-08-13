@@ -1,28 +1,43 @@
+## 1.2.0
+- Implémenter les cartes communes pour le niveau 6 + 4 Sorts Ultime par classes OU que les boosters
+- tagué les cartes et le nombre max
+- Afficher le nombre max dans les decks
+- Migrations objets et sorts passifs dnd5e v FQ
+
+
+## 1.1.0
+- Implémentation de deux nouvelles classes: Gardien et Sorcière
+
 ## 1.0.0
 - Traduction en anglais de toutes les cartes et items
 - Règles du jeu et readme complété
 - Implémentation des classes à revoir
 - Création des personnages de bases
 - Réduction aux 5 premières classes/decks
+- Recette globale avec utilisateurs et MJs
+- Mettre à jour le Readme
+- Déploiement sur le store
 
 ## 0.2.2
 - Recette globale avec utilisateurs et MJs
 
 ## 0.2.1
-- Suppression de tous les warnings/ tous les bugs pour 1.0.0 sans utilisateur
+- Suppression de tous les Warnings/ tous les bugs pour 1.0.0 sans utilisateur
+- Mettre à jour le readme
 
 ## 0.2.0
-
+Droits joueurs limités (avec option?):
 - Ne pas pouvoir modifier ou ajouter des cartes dans son deck pour les joueurs
-- Macro pour piocher un booster et le mettre dans la bibliotheque du joueur
+- Tagué les bibliothèque (spellbook): le flag 'fqType' a déjà été créé
 - Empêcher le drag and drop autre que d'un deck vers une bibliotheque
 - Empêcher les joueurs de modifier des cartes d'un deck ou d'une bibliotheque (et de supprimer)
+- Correctement créer les bibliothèques/decks/main et pile avec le fqType
 
 ## 0.1.2
-- MJ doit pouvoir créer les decks pour ses joueurs avec une meta macros
-- Migration 12.330 - Enlever les erreurs et warnings
-- Problématiques avec CardViewer (mettre en expérimentation ou corrigé)
+~~- MJ doit pouvoir créer les decks pour ses joueurs avec une meta macros~~
 
+~~- - Migration 12.330 - Enlever les erreurs et warnings~~-
+- Problématiques avec CardViewer (mettre en expérimentation ou corrigé)
 
 ~~Ne piochez ou déplacez que vers des stacks de type fqType~~
 
@@ -39,10 +54,7 @@
 ## Backlog
 
 ### High:
-- Implémenter les cartes communes pour le niveau 6 + 4 Sorts Ultime par classes
-- tagué les cartes et le nombre max
-- affiché le nombre max dans les decks
-- Migrations objets et sorts passifs dnd5e v FQ
+- Macro pour piocher un booster et le mettre dans la bibliotheque du joueur
 
 ### Medium:
 
