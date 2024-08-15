@@ -3,7 +3,7 @@
   "name": "Trappeur Niv1",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cartes/Trappeur/dos_de_carte.PNG",
+  "img": "modules/fq-card-engine/images/cards/fr/Trappeur/dos_de_carte.PNG",
   "cards": [
     {
       "_id": "B8hztOVnbhXvy9JH",
@@ -19,7 +19,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
           "text": ""
         }
       ],
@@ -60,7 +60,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
           "text": ""
         }
       ],
@@ -101,7 +101,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
           "text": ""
         }
       ],
@@ -142,7 +142,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Double%20fl%C3%A8ches.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Double%20fl%C3%A8ches.PNG",
           "text": ""
         }
       ],
@@ -183,7 +183,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Louve%20apprivois%C3%A9e.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Louve%20apprivois%C3%A9e.PNG",
           "text": ""
         }
       ],
@@ -224,7 +224,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Tireur%20d%27%C3%A9lite.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tireur%20d%27%C3%A9lite.PNG",
           "text": ""
         }
       ],
@@ -266,7 +266,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Pluie%20de%20fl%C3%A8ches.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Pluie%20de%20fl%C3%A8ches.PNG",
           "text": ""
         }
       ],
