@@ -1,6 +1,6 @@
 {
   "_id": "0KiJSNiOBCToN6IC",
-  "name": "Elementaliste",
+  "name": "Elementalist",
   "type": "character",
   "img": "",
   "items": [],
@@ -457,7 +457,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Elementaliste",
+    "name": "Elementalist",
     "displayName": 0,
     "actorLink": true,
     "width": 1,

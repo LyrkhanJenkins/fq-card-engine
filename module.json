@@ -87,7 +87,7 @@
     },
     {
       "name": "decks-fq8-generated",
-      "label": "Decks Final Quest 8 (générés)",
+      "label": "Decks Final Quest 8 (Generated)",
       "path": "packs/decks-fq8-generated",
       "type": "Cards",
       "system": "dnd5e",

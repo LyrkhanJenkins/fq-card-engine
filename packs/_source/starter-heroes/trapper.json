@@ -1,6 +1,6 @@
 {
   "_id": "WNblzSeh6PnOMDNA",
-  "name": "Trappeur",
+  "name": "Trapper",
   "type": "character",
   "img": "",
   "items": [],
@@ -453,7 +453,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Trappeur",
+    "name": "Trapper",
     "displayName": 0,
     "actorLink": true,
     "width": 1,

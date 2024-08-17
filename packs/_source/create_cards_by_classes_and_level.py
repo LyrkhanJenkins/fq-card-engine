@@ -35,80 +35,80 @@ def ecrire_nouveaux_deck(name, tableau, cards):
 
 
 listes_cards = {
-  'Elementaliste Niv1': ["Boule de feu", "Tornade", "Fracture Terrestre", "Fracture Terrestre", "Frappe de givre",
+  'Elementalist Lvl1': ["Boule de feu", "Tornade", "Fracture Terrestre", "Fracture Terrestre", "Frappe de givre",
                          "Frappe de givre", "Récupération de mana"],
-  'Illusionniste Niv1': ["Frappe avec salto arrière", "Frappe illusoire", "Frappe illusoire", "Fouet Enchantée",
+  'Illusionist Lvl1': ["Frappe avec salto arrière", "Frappe illusoire", "Frappe illusoire", "Fouet Enchantée",
                          "Fouet Enchantée", "Fouet Enchantée", "Inspiration chantée", "Allonge magique",
                          "Vases communicants", "Shuriken empoisonné"],
-  'Trappeur Niv1': ["Tir précis", "Tir précis", "Tir précis", "Double flèches", "Louve apprivoisée",
+  'Trapper Lvl1': ["Tir précis", "Tir précis", "Tir précis", "Double flèches", "Louve apprivoisée",
                     "Tireur d'élite", "Pluie de flèches"],
-  'MageBlanc Niv1': ["Energie Lumineuse", "Energie Lumineuse", "Energie Lumineuse", "Malédiction", "Malédiction",
+  'White-Mage Lvl1': ["Energie Lumineuse", "Energie Lumineuse", "Energie Lumineuse", "Malédiction", "Malédiction",
                      "Bouclier magique", "Explosion d'arcanes"],
-  'Moine Niv1': ["Coup droit", "Coup droit", "Coup droit", "Coup droit", "Coup droit", "Coup droit", "Coup gauche",
+  'Monk Lvl1': ["Coup droit", "Coup droit", "Coup droit", "Coup droit", "Coup droit", "Coup droit", "Coup gauche",
                  "Coup gauche", "Coup gauche", "Combo", "Combo", "Récupération de mana III", "Bouclier zélé",
                  "Bouclier zélé"]
 }
-listes_cards['Moine Niv2'] = listes_cards['Moine Niv1'] + ["Coup gauche", "Coup gauche", "Cape inhibitrice",
+listes_cards['Monk Lvl2'] = listes_cards['Monk Lvl1'] + ["Coup gauche", "Coup gauche", "Cape inhibitrice",
                                                            "Vive-esquive"];
-listes_cards['Moine Niv3'] = listes_cards['Moine Niv2'] + ["Booster de Tour V", "Cape inhibitrice", "Méditation Zen",
+listes_cards['Monk Lvl3'] = listes_cards['Monk Lvl2'] + ["Booster de Tour V", "Cape inhibitrice", "Méditation Zen",
                                                            "Bouclier zélé", "Récupération de Mana III", "Lame fantôme"];
-listes_cards['Moine Niv4'] = listes_cards['Moine Niv3'] + ["Cape inhibitrice", "Combo", "Dissimulation",
+listes_cards['Monk Lvl4'] = listes_cards['Monk Lvl3'] + ["Cape inhibitrice", "Combo", "Dissimulation",
                                                            "Conversion", "Souffle de Ki", "Booster de Tour V"];
-listes_cards['Moine Niv5'] = listes_cards['Moine Niv4'] + ["Armes secrètes", "Vive-esquive", "Dissimulation",
+listes_cards['Monk Lvl5'] = listes_cards['Monk Lvl4'] + ["Armes secrètes", "Vive-esquive", "Dissimulation",
                                                            "Méditation Zen", "Déplacement éclair", "Lame fantôme"];
 
-listes_cards['MageBlanc Niv2'] = listes_cards['MageBlanc Niv1'] + ["Energie Lumineuse", "Energie Lumineuse",
+listes_cards['White-Mage Lvl2'] = listes_cards['White-Mage Lvl1'] + ["Energie Lumineuse", "Energie Lumineuse",
                                                                    "Malédiction", "Bouclier magique",
                                                                    "Récupération de mana III", "Explosion d'arcanes"];
-listes_cards['MageBlanc Niv3'] = listes_cards['MageBlanc Niv2'] + ["Pioche III", "Energie Lumineuse",
+listes_cards['White-Mage Lvl3'] = listes_cards['White-Mage Lvl2'] + ["Pioche III", "Energie Lumineuse",
                                                                    "Bouclier magique", "Malédiction Instantanée",
                                                                    "Récupération de mana III", "Soins d'urgence",
                                                                    "Infusion de Mana"];
-listes_cards['MageBlanc Niv4'] = listes_cards['MageBlanc Niv3'] + ["Bouclier magique", "Exorcisme", "Exorcisme",
+listes_cards['White-Mage Lvl4'] = listes_cards['White-Mage Lvl3'] + ["Bouclier magique", "Exorcisme", "Exorcisme",
                                                                    "Malédiction Instantanée", "Booster de Tour V",
                                                                    "Bouclier vengeur", "Bouclier empathique",
                                                                    "Explosion d'arcanes"];
-listes_cards['MageBlanc Niv5'] = listes_cards['MageBlanc Niv4'] + ["Pioche III", "Malédiction Instantanée",
+listes_cards['White-Mage Lvl5'] = listes_cards['White-Mage Lvl4'] + ["Pioche III", "Malédiction Instantanée",
                                                                    "Booster de Tour V", "Epiphanie", "Epiphanie",
                                                                    "Frappe de lumière", "Bouclier divin",
                                                                    "Bouclier de mana"];
-listes_cards['Trappeur Niv2'] = listes_cards['Trappeur Niv1'] + ["Pioche II", "Récupération de mana", "Traquenard",
+listes_cards['Trapper Lvl2'] = listes_cards['Trapper Lvl1'] + ["Pioche II", "Récupération de mana", "Traquenard",
                                                                  "Tir précis", "Tir Réflexe"];
-listes_cards['Trappeur Niv3'] = listes_cards['Trappeur Niv2'] + ["Tir empoisonné", "Tir empoisonné", "Tir transperçant",
+listes_cards['Trapper Lvl3'] = listes_cards['Trapper Lvl2'] + ["Tir empoisonné", "Tir empoisonné", "Tir transperçant",
                                                                  "Pioche II", "Tir précis", "Booster de Tour"];
-listes_cards['Trappeur Niv4'] = listes_cards['Trappeur Niv3'] + ["Tireur d'élite", "Booster de tour", "Double flèches",
+listes_cards['Trapper Lvl4'] = listes_cards['Trapper Lvl3'] + ["Tireur d'élite", "Booster de tour", "Double flèches",
                                                                  "Tir précis", "Récupération de mana", "Embuscade",
                                                                  "Embuscade", "Traquenard", "Pluie de flèches"];
-listes_cards['Trappeur Niv5'] = listes_cards['Trappeur Niv4'] + ["Tir Réflexe", "Tir supersonique", "Tir supersonique",
+listes_cards['Trapper Lvl5'] = listes_cards['Trapper Lvl4'] + ["Tir Réflexe", "Tir supersonique", "Tir supersonique",
                                                                  "Tir explosif", "Tir explosif", "Tir précis",
                                                                  "Louve apprivoisée", "Tir empoisonné",
                                                                  "Etude du point faible"];
 
-listes_cards['Illusionniste Niv2'] = listes_cards['Illusionniste Niv1'] + ["Images Miroir", "Inspiration chantée",
+listes_cards['Illusionist Lvl2'] = listes_cards['Illusionist Lvl1'] + ["Images Miroir", "Inspiration chantée",
                                                                            "Attaque latérale", "Pioche II"];
-listes_cards['Illusionniste Niv3'] = listes_cards['Illusionniste Niv2'] + ["Pioche III", "Succion de mana",
+listes_cards['Illusionist Lvl3'] = listes_cards['Illusionist Lvl2'] + ["Pioche III", "Succion de mana",
                                                                            "Passage vers le plan éthéré", "Shuriken",
                                                                            "Shuriken", "Shuriken empoisonné"];
-listes_cards['Illusionniste Niv4'] = listes_cards['Illusionniste Niv3'] + ["Allonge magique", "Allonge magique",
+listes_cards['Illusionist Lvl4'] = listes_cards['Illusionist Lvl3'] + ["Allonge magique", "Allonge magique",
                                                                            "Apothicaire 1", "Attaque diagonale",
                                                                            "Peste Noire", "Vases Communicants",
                                                                            "Danse enfiévrée", "Images Miroir"];
-listes_cards['Illusionniste Niv5'] = listes_cards['Illusionniste Niv4'] + ["Danse enfiévrée", "Nuage de dague",
+listes_cards['Illusionist Lvl5'] = listes_cards['Illusionist Lvl4'] + ["Danse enfiévrée", "Nuage de dague",
                                                                            "Volée de shuriken", "Apothicaire 2",
                                                                            "Frappe avec salto arrière",
                                                                            "Attaque en cercle", "Frappe illusoire",
                                                                            "Prise en traitre"];
 
-listes_cards['Elementaliste Niv2'] = listes_cards['Elementaliste Niv1'] + ["Pioche III", "Captation de mana",
+listes_cards['Elementalist Lvl2'] = listes_cards['Elementalist Lvl1'] + ["Pioche III", "Captation de mana",
                                                                            "Givrefeu", "Brouillard", "Tornade"];
-listes_cards['Elementaliste Niv3'] = listes_cards['Elementaliste Niv2'] + ["Booster de Tour", "Tornade", "Boule de feu",
+listes_cards['Elementalist Lvl3'] = listes_cards['Elementalist Lvl2'] + ["Booster de Tour", "Tornade", "Boule de feu",
                                                                            "Météore", "Frappe de givre",
                                                                            "Captation de mana"];
-listes_cards['Elementaliste Niv4'] = listes_cards['Elementaliste Niv3'] + ["Fracture Terrestre", "Incantation",
+listes_cards['Elementalist Lvl4'] = listes_cards['Elementalist Lvl3'] + ["Fracture Terrestre", "Incantation",
                                                                            "Incantation", "Pioche III", "Boule de feu",
                                                                            "Onde glacée", "Propagation des dégâts",
                                                                            "Choc de feu"];
-listes_cards['Elementaliste Niv5'] = listes_cards['Elementaliste Niv4'] + ["Booster de Tour", "Captation de mana",
+listes_cards['Elementalist Lvl5'] = listes_cards['Elementalist Lvl4'] + ["Booster de Tour", "Captation de mana",
                                                                            "Tornade", "Fracture Terrestre",
                                                                            "Frappe de givre", "Boule de feu",
                                                                            "Récupération de mana", "Assassin du néant",
