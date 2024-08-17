@@ -1,6 +1,6 @@
 {
   "_id": "9xIJp9Rqvf7N7r33",
-  "name": "Trappeur",
+  "name": "Trapper",
   "type": "class",
   "img": "modules/fq-card-engine/images/classes/craiyon_151523_green_archer_in_forest_with_wolf_pet_along_him.png",
   "effects": [],
@@ -31,7 +31,7 @@
       "unidentified": ""
     },
     "source": "",
-    "identifier": "trappeur",
+    "identifier": "trapper",
     "levels": 1,
     "hitDice": "d6",
     "hitDiceUsed": 0,

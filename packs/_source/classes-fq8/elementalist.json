@@ -1,0 +1,174 @@
+{
+  "_id": "M1rQLgLCLFaAkX1Y",
+  "name": "Elementalist",
+  "type": "class",
+  "img": "modules/fq-card-engine/images/classes/craiyon_150235_Red_mage_icon__fire_wind_earth_water_spell_around_him.png",
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "cf": {
+      "id": "temp_9hjmr9g6fcm"
+    }
+  },
+  "_stats": {
+    "coreVersion": "12.330",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": null,
+    "modifiedTime": 1723889115327,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {
+    "description": {
+      "value": "<p class=\"MsoNormal\" style=\"margin-bottom:.0001pt\"><span style=\"color:#2e74b5;mso-themecolor:accent1;mso-themeshade:191\">L'élémentaliste allie des effets de feu, de givre, d'air et de terre pour infliger d'importants dégâts. La classe est fragile mais possèdes les plus gros dégâts bruts du jeu.</span></p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "FQ",
+    "identifier": "elementalist",
+    "levels": 1,
+    "hitDice": "d4",
+    "hitDiceUsed": 0,
+    "advancement": [
+      {
+        "_id": "6nqriktupjcsj8wi",
+        "type": "HitPoints",
+        "configuration": {},
+        "value": {}
+      },
+      {
+        "_id": "5lahzhdra2kuoje6",
+        "type": "ScaleValue",
+        "configuration": {
+          "identifier": "",
+          "type": "string",
+          "distance": {
+            "units": ""
+          },
+          "scale": {}
+        },
+        "value": {}
+      },
+      {
+        "_id": "0pnpvFC6RK2B4Xem",
+        "type": "AbilityScoreImprovement",
+        "configuration": {
+          "points": 1,
+          "fixed": {
+            "str": 0,
+            "dex": 0,
+            "con": 0,
+            "int": 0,
+            "wis": 0,
+            "cha": 0
+          },
+          "cap": 1
+        },
+        "value": {
+          "type": "asi"
+        },
+        "level": 1,
+        "title": "",
+        "hint": ""
+      },
+      {
+        "_id": "oXOKZHsflEkQx5h0",
+        "type": "ItemChoice",
+        "configuration": {
+          "choices": {},
+          "allowDrops": true,
+          "type": null,
+          "pool": [],
+          "spell": null,
+          "restriction": {}
+        },
+        "value": {
+          "added": {},
+          "replaced": {}
+        }
+      },
+      {
+        "_id": "WdosOMhQfB1PM6Y8",
+        "type": "ItemChoice",
+        "configuration": {
+          "choices": {},
+          "allowDrops": true,
+          "type": null,
+          "pool": [],
+          "spell": null,
+          "restriction": {}
+        },
+        "value": {
+          "added": {},
+          "replaced": {}
+        },
+        "title": "Caracteristics",
+        "hint": ""
+      },
+      {
+        "_id": "RLrzRGMzvcPVS2CC",
+        "type": "ItemChoice",
+        "configuration": {
+          "choices": {
+            "1": {
+              "count": 1,
+              "replacement": false
+            },
+            "2": {
+              "count": 1,
+              "replacement": false
+            },
+            "3": {
+              "count": 1,
+              "replacement": false
+            },
+            "4": {
+              "count": 1,
+              "replacement": false
+            },
+            "5": {
+              "count": 1,
+              "replacement": false
+            }
+          },
+          "allowDrops": true,
+          "type": null,
+          "pool": [
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.ExJ5vJgBTGhEo9Ot"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.nWqAZ2gxQYAdm26q"
+            }
+          ],
+          "spell": null,
+          "restriction": {}
+        },
+        "value": {
+          "added": {},
+          "replaced": {}
+        },
+        "title": "",
+        "hint": ""
+      }
+    ],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": "int"
+    },
+    "wealth": ""
+  },
+  "_key": "!items!M1rQLgLCLFaAkX1Y"
+}

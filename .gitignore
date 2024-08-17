@@ -12,3 +12,6 @@ packs/*
 
 # Node Modules
 node_modules/
+
+# Temporary
+/doc/archives/

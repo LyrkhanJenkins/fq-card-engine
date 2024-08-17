@@ -110,6 +110,18 @@
       "flags": {}
     },
     {
+      "name": "classes-stats-fq8",
+      "label": "Classes Stats (FQ8)",
+      "path": "packs/classes-stats-fq8",
+      "type": "Item",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
       "name": "minions-fq8",
       "label": "Minions FQ8",
       "path": "packs/minions-fq8",
@@ -146,10 +158,22 @@
       "flags": {}
     },
     {
-      "label": "Sorts PNJ",
+      "label": "Spells NPC",
       "type": "Item",
-      "name": "sorts-pnj",
-      "path": "packs/sorts-pnj",
+      "name": "spells-npc",
+      "path": "packs/spells-npc",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
+      "label": "Starter Heroes",
+      "type": "Actor",
+      "name": "starter-heroes",
+      "path": "packs/starter-heroes",
       "system": "dnd5e",
       "ownership": {
         "PLAYER": "OBSERVER",
@@ -173,14 +197,24 @@
             "decks-fq8-generated"
           ],
           "folders": []
+        },
+        {
+          "name": "Classes",
+          "sorting": "m",
+          "color": "#317d0e",
+          "packs": [
+            "classes-fq8",
+            "classes-stats-fq8",
+            "starter-heroes"
+          ],
+          "folders": []
         }
       ],
       "packs": [
-        "classes-fq8",
         "minions-fq8",
         "macros-fq8",
         "macros-gm-fq8",
-        "sorts-pnj"
+        "spells-npc"
       ]
     }
   ]

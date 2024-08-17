@@ -1,15 +1,15 @@
 {
-  "name": "Avaler",
+  "name": "+1 critical",
   "type": "feat",
-  "img": "icons/creatures/abilities/mouth-teeth-tongue-purple.webp",
+  "img": "icons/magic/symbols/rune-sigil-hook-white-red.webp",
   "effects": [
     {
-      "_id": "ef6xv9dg31w4emo8",
+      "_id": "gLxh9IhVmNUCs9pM",
       "changes": [
         {
-          "key": "system.attributes.movement.walk",
-          "mode": 5,
-          "value": "0",
+          "key": "system.attributes.critical",
+          "mode": 2,
+          "value": "1",
           "priority": 20
         }
       ],
@@ -23,16 +23,16 @@
         "startRound": null,
         "startTurn": null
       },
-      "origin": "Scene.BtJ1d6nxqlKytkKh.Token.KuiNkDPv65LywMaY.Item.6aBDwlIsxceFMXxL",
-      "transfer": false,
+      "origin": "Item.oSfpFdarEM0Sll9K",
+      "transfer": true,
       "flags": {
         "dae": {
           "selfTarget": false,
-          "stackable": "none",
+          "stackable": "multi",
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
-          "transfer": false
+          "transfer": true
         },
         "core": {
           "statusId": ""
@@ -49,50 +49,32 @@
         "compendiumSource": null,
         "duplicateSource": null
       },
-      "name": "Swallow",
-      "img": "icons/creatures/abilities/mouth-teeth-tongue-purple.webp",
+      "name": "+1 critique",
+      "img": "icons/magic/symbols/rune-sigil-hook-white-red.webp",
       "type": "base",
       "system": {},
       "description": "",
       "statuses": [],
       "sort": 0,
-      "_key": "!items.effects!p25xHtjPir18zYZ2.ef6xv9dg31w4emo8"
+      "_key": "!items.effects!ExJ5vJgBTGhEo9Ot.gLxh9IhVmNUCs9pM"
     }
   ],
   "folder": null,
   "sort": 0,
   "flags": {
-    "rest-recovery": {
-      "data": {
-        "recovery": {
-          "enabled": false
-        }
-      }
-    },
-    "midi-qol": {
-      "effectActivation": false
-    },
-    "midiProperties": {
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "rollOther": false,
-      "critOther": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "toggleEffect": false
+    "cf": {
+      "id": "temp_fmyn85q4rtg"
     }
   },
-  "_id": "p25xHtjPir18zYZ2",
+  "_id": "ExJ5vJgBTGhEo9Ot",
   "_stats": {
     "coreVersion": "12.330",
     "systemId": "dnd5e",
     "systemVersion": "3.1.1",
-    "createdTime": 1709393284703,
-    "modifiedTime": 1712393390715,
+    "createdTime": 1709393283175,
+    "modifiedTime": 1723888753785,
     "lastModifiedBy": "dnd5ebuilder0000",
-    "compendiumSource": null,
+    "compendiumSource": "Item.7J5PiCmMVmx8WVD3",
     "duplicateSource": null
   },
   "ownership": {
@@ -100,18 +82,18 @@
   },
   "system": {
     "description": {
-      "value": "<p>La cible est avalée, elle ne peut plus se déplacer ou ne cibler autre chose que le lanceur du sort.</p>\n<p>Si la cible subit plus de 20% de ses points de vie pendant le tour de la cible avalée, elle est recraché, sinon subit 3d6 dégâts d'acide</p>",
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "source": "",
     "activation": {
-      "type": "action",
-      "cost": 1,
+      "type": "",
+      "cost": null,
       "condition": ""
     },
     "duration": {
-      "value": "",
+      "value": null,
       "units": ""
     },
     "target": {
@@ -127,16 +109,16 @@
     },
     "uses": {
       "value": null,
-      "max": "0",
-      "per": ""
+      "max": "",
+      "per": null
     },
     "consume": {
       "type": "",
-      "target": "",
+      "target": null,
       "amount": null
     },
-    "ability": "str",
-    "actionType": "other",
+    "ability": null,
+    "actionType": "",
     "attackBonus": 0,
     "chatFlavor": "",
     "critical": {
@@ -144,12 +126,7 @@
       "damage": ""
     },
     "damage": {
-      "parts": [
-        [
-          "3d6[force]",
-          "acid"
-        ]
-      ],
+      "parts": [],
       "versatile": ""
     },
     "formula": "",
@@ -163,14 +140,13 @@
       "value": null,
       "charged": false
     },
-    "attunement": 0,
-    "fq": {
-      "action": -9,
-      "mana": -2,
-      "zeal": 0,
-      "drop": 0,
-      "hp": 0
+    "cost": {
+      "action": null,
+      "mana": null,
+      "zeal": null,
+      "drop": null,
+      "hp": null
     }
   },
-  "_key": "!items!p25xHtjPir18zYZ2"
+  "_key": "!items!ExJ5vJgBTGhEo9Ot"
 }

@@ -1,0 +1,152 @@
+{
+  "name": "+1 pick",
+  "type": "feat",
+  "img": "icons/sundries/gaming/playing-cards-grey.webp",
+  "effects": [
+    {
+      "_id": "gLxh9IhVmNUCs9pM",
+      "changes": [
+        {
+          "key": "system.attributes.pick",
+          "mode": 2,
+          "value": "1",
+          "priority": 20
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "origin": "Item.oSfpFdarEM0Sll9K",
+      "transfer": true,
+      "flags": {
+        "dae": {
+          "selfTarget": false,
+          "stackable": "multi",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [],
+          "transfer": true
+        },
+        "core": {
+          "statusId": ""
+        }
+      },
+      "tint": "#ffffff",
+      "_stats": {
+        "coreVersion": "12.330",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "name": "+1 pioche",
+      "img": "icons/sundries/gaming/playing-cards-grey.webp",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "statuses": [],
+      "sort": 0,
+      "_key": "!items.effects!UxBmqZLEaLgSpnwY.gLxh9IhVmNUCs9pM"
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "cf": {
+      "id": "temp_fmyn85q4rtg"
+    }
+  },
+  "_id": "UxBmqZLEaLgSpnwY",
+  "_stats": {
+    "coreVersion": "12.330",
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.1",
+    "createdTime": 1709393283176,
+    "modifiedTime": 1723888803368,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": "Item.7J5PiCmMVmx8WVD3",
+    "duplicateSource": null
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "",
+    "activation": {
+      "type": "",
+      "cost": null,
+      "condition": ""
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": ""
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": ""
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null
+    },
+    "ability": null,
+    "actionType": "",
+    "attackBonus": 0,
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "requirements": "",
+    "recharge": {
+      "value": null,
+      "charged": false
+    },
+    "cost": {
+      "action": null,
+      "mana": null,
+      "zeal": null,
+      "drop": null,
+      "hp": null
+    }
+  },
+  "_key": "!items!UxBmqZLEaLgSpnwY"
+}
