@@ -56,56 +56,6 @@ All actions are displayed on chat.
 After playing a card, automatic roll, effect, damage, heal are applied, also critical and evasion rolls.
 ![img.png](images/doc/chat-roll.png)
 
-## Version
-### 0.1.2 - alpha (En Cours):
-    #### Feature:
-    - Macros for generating and displaying deck and spellbook (if exist preparation for lvl 6+)
-    - Choose location for summoning minions
-    - GM can choose to use cards without sending them to piles
-    - Deck/Hand/Pile are flaged 'fqType'
-
-    #### Fix:
-    - Support for 12.330 version
-    - Fix problems with module CardViewer
-
-### 0.1.1 - alpha:
-    #### Feature:
-    - Automatic damage/heals with critical hits and dodges (option to disable and prevent conflicts?)
-    - Manage range for spells
-    - Creation of compendiums and migration of passive spells for NPCs
-    - Dodging sound should not use the classic damage sound
-    - Management of custom damage bonuses (corrections needed for familiars, cards, damage)
-    #### Fix:
-    - Custom evaluation of diagonal attack (Illusionist cards)
-    - Effect of enchanted whip (Illusionist cards)
-    - Bug with drawing a hand when a user has no character or is missing one?
-    - Bug if no deck: Return a clean error
-    - Bug if Card Viewer module is not present
-    - Issue with the style of replayable cards
-
-### 0.1.0 - alpha:
-    #### Feature:
-    - Ability to modify the consumption of items
-    - All items (spells, objects) can consume FQ resources
-    - CI/CD pipeline for updating module automatically
-
-### 0.0.2 - alpha:
-    #### Feature:
-    - Integration of CardViewer
-    - Migration of macros
-    - X and Y field required on play dialog
-    - Limite players cards right
-    - Launch initiative automatically
-    #### Fix:
-    - Passive effects not flipping cards
-    - apply DOT each turn
-    - Remove effect after using
-    - Minions combat's turn just after the master
-    - Option of hand size for player (local storage)
-    - Max value can't be exceeded
-
-### 0.0.1 - alpha:
-    - Card System for Foundry v12
 
 ## Rules
 - The cards are design to be used with rectilinear grids

@@ -9,29 +9,18 @@
 - Implémentation de deux nouvelles classes: Gardien et Sorcière
 
 ## 1.0.0
-- Traduction en anglais de toutes les cartes et items
 - Règles du jeu et readme complété
+- Recette globale avec utilisateurs et MJs
+- Suppression de tous les Warnings/ tous les bugs pour 1.0.0 sans utilisateur
+- Mettre à jour le readme
+- Traduction des effets des cartes
+
+## 0.1.3
+- Traduction en anglais de toutes les cartes et items
 - Implémentation des classes à revoir
 - Création des personnages de bases
 - Réduction aux 5 premières classes/decks
-- Recette globale avec utilisateurs et MJs
-- Mettre à jour le Readme
 - Déploiement sur le store
-
-## 0.2.2
-- Recette globale avec utilisateurs et MJs
-
-## 0.2.1
-- Suppression de tous les Warnings/ tous les bugs pour 1.0.0 sans utilisateur
-- Mettre à jour le readme
-
-## 0.2.0
-Droits joueurs limités (avec option?):
-- Ne pas pouvoir modifier ou ajouter des cartes dans son deck pour les joueurs
-- Tagué les bibliothèque (spellbook): le flag 'fqType' a déjà été créé
-- Empêcher le drag and drop autre que d'un deck vers une bibliotheque
-- Empêcher les joueurs de modifier des cartes d'un deck ou d'une bibliotheque (et de supprimer)
-- Correctement créer les bibliothèques/decks/main et pile avec le fqType
 
 ## 0.1.2
 ~~- MJ doit pouvoir créer les decks pour ses joueurs avec une meta macros~~
@@ -55,6 +44,12 @@ Droits joueurs limités (avec option?):
 
 ### High:
 - Macro pour piocher un booster et le mettre dans la bibliotheque du joueur
+  Droits joueurs limités (avec option?):
+- Ne pas pouvoir modifier ou ajouter des cartes dans son deck pour les joueurs
+- Tagué les bibliothèque (spellbook): le flag 'fqType' a déjà été créé
+- Empêcher le drag and drop autre que d'un deck vers une bibliotheque
+- Empêcher les joueurs de modifier des cartes d'un deck ou d'une bibliotheque (et de supprimer)
+- Correctement créer les bibliothèques/decks/main et pile avec le fqType
 
 ### Medium:
 
