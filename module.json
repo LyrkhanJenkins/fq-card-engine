@@ -1,7 +1,7 @@
 {
   "title": "FQ Card Engine",
   "description": "Module for Final Quest 8 Battle system based on fq-card-engine https://github.com/LyrkhanJenkins/fq-card-engine",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "languages": [
     {
       "lang": "en",
@@ -49,7 +49,7 @@
   "id": "fq-card-engine",
   "compatibility": {
     "minimum": "12",
-    "verified": "12.330"
+    "verified": "12.331"
   },
   "relationships": {
     "systems": [
