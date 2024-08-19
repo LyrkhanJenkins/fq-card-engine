@@ -2,8 +2,282 @@
   "_id": "WNblzSeh6PnOMDNA",
   "name": "Trapper",
   "type": "character",
-  "img": "",
-  "items": [],
+  "img": "modules/fq-card-engine/images/classes/Concept_Art_green_ranger_archer_from_above_token_2.png",
+  "items": [
+    {
+      "_id": "2YtSecb6I6rSBHk4",
+      "name": "Trapper",
+      "type": "class",
+      "img": "modules/fq-card-engine/images/classes/craiyon_151523_green_archer_in_forest_with_wolf_pet_along_him.png",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {
+        "cf": {
+          "id": "temp_9hjmr9g6fcm"
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.fq-card-engine.classes-fq8.Item.9xIJp9Rqvf7N7r33",
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "3.3.1",
+        "createdTime": 1724079640242,
+        "modifiedTime": 1724079640242,
+        "lastModifiedBy": "dnd5ebuilder0000"
+      },
+      "ownership": {
+        "default": 0
+      },
+      "system": {
+        "description": {
+          "value": "<p class=\"MsoNormal\" style=\"margin-bottom:.0001pt\"><span style=\"color:#2e74b5;mso-themecolor:accent1;mso-themeshade:191\">Le Trapper est une classe à distance spécialisée dans les attaques critiques. Il est accompagné de son familier et peut également poser des pièges redoutables</span></p>",
+          "chat": ""
+        },
+        "source": {
+          "custom": ""
+        },
+        "identifier": "trapper",
+        "levels": 1,
+        "hitDice": "d6",
+        "hitDiceUsed": 0,
+        "advancement": [
+          {
+            "_id": "lkw3w6oebsnedz8w",
+            "type": "HitPoints",
+            "configuration": {},
+            "value": {
+              "1": "max"
+            }
+          },
+          {
+            "_id": "3nSNSdYKOMGOpZq9",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 1,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "cap": 1
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 2,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "_id": "wd1v1AFEocSc7l68",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 1,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "cap": 1
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 3,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "_id": "FcWnFld4Uzgm4SDV",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 1,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "cap": 1
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 4,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "_id": "Ljnd5jIt4Ft3mmVR",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "cap": 2
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 5,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "_id": "Z0sxNAm3S58IAwcQ",
+            "type": "ItemChoice",
+            "configuration": {
+              "choices": {
+                "2": {
+                  "count": 3,
+                  "replacement": false
+                },
+                "3": {
+                  "count": 3,
+                  "replacement": false
+                },
+                "4": {
+                  "count": 3,
+                  "replacement": false
+                },
+                "5": {
+                  "count": 3,
+                  "replacement": false
+                },
+                "6": {
+                  "count": 3,
+                  "replacement": false
+                }
+              },
+              "allowDrops": true,
+              "type": null,
+              "pool": [
+                {
+                  "uuid": "Item.64ylBRuyvh9hxtLC"
+                },
+                {
+                  "uuid": "Item.7wHrjCrX6hzetFLV"
+                },
+                {
+                  "uuid": "Item.YG3pxPrE7eAWY9IX"
+                },
+                {
+                  "uuid": "Item.tDzFl4SqZhGeKqEf"
+                },
+                {
+                  "uuid": "Item.kKMGCqMvoiwQ089b"
+                },
+                {
+                  "uuid": "Item.awu3jv6NmnDlojf4"
+                },
+                {
+                  "uuid": "Item.OwfYUtnXfxEE29iG"
+                },
+                {
+                  "uuid": "Item.xNkAebLEOeer8k8z"
+                },
+                {
+                  "uuid": "Item.XxPBnkchfLrbh7pd"
+                },
+                {
+                  "uuid": "Item.FN2DmCGuBdYlhMzT"
+                },
+                {
+                  "uuid": "Item.HrjrLYaBcMOcnTXi"
+                },
+                {
+                  "uuid": "Item.yDlO2lQGy5HN2f1f"
+                },
+                {
+                  "uuid": "Item.w2ovhONTz8Jf2HHw"
+                },
+                {
+                  "uuid": "Item.afVVfgkQrdkfzOtc"
+                },
+                {
+                  "uuid": "Item.4h54ohmIwyNgp2QL"
+                },
+                {
+                  "uuid": "Item.s3ToGVEf3nvzgoM8"
+                },
+                {
+                  "uuid": "Item.nS0wcPs9sEsUE5V8"
+                },
+                {
+                  "uuid": "Item.jo1kA1FVMCvUsTV5"
+                },
+                {
+                  "uuid": "Item.nvufm6POcXfcZA4u"
+                },
+                {
+                  "uuid": "Item.lJVsOAWrOeM4YL6l"
+                },
+                {
+                  "uuid": "Item.R27G0Fe74mZuhuod"
+                },
+                {
+                  "uuid": "Item.PQF0zFA2blGgCzjd"
+                }
+              ],
+              "spell": null,
+              "restriction": {}
+            },
+            "value": {
+              "added": {},
+              "replaced": {}
+            },
+            "title": "",
+            "hint": ""
+          },
+          {
+            "_id": "rFYkuuiyRMWRN8pI",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "cap": 2
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 6,
+            "title": "",
+            "hint": ""
+          }
+        ],
+        "spellcasting": {
+          "progression": "none",
+          "ability": ""
+        },
+        "wealth": "",
+        "startingEquipment": []
+      },
+      "_key": "!actors.items!WNblzSeh6PnOMDNA.2YtSecb6I6rSBHk4"
+    }
+  ],
   "effects": [],
   "folder": null,
   "sort": 0,
@@ -13,11 +287,11 @@
     }
   },
   "_stats": {
-    "coreVersion": "12.330",
+    "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": 1709393283252,
-    "modifiedTime": 1723887300129,
+    "modifiedTime": 1724082235021,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.YJrXLvkBMAihNVOi",
     "duplicateSource": null
@@ -152,7 +426,7 @@
       "alignment": "",
       "race": "",
       "background": "",
-      "originalClass": "",
+      "originalClass": "2YtSecb6I6rSBHk4",
       "xp": {
         "value": 0,
         "min": 0,
@@ -450,6 +724,19 @@
         "lr": false,
         "label": ""
       }
+    },
+    "fq": {
+      "mana": {
+        "value": 3,
+        "max": 3
+      },
+      "cards": {
+        "hand": 0
+      },
+      "attributes": {
+        "critical": 2,
+        "evasion": 0
+      }
     }
   },
   "prototypeToken": {
@@ -570,7 +857,7 @@
     "appendNumber": false,
     "prependAdjective": false,
     "texture": {
-      "src": "",
+      "src": "modules/fq-card-engine/images/classes/Concept_Art_green_ranger_archer_from_above_token_2.png",
       "anchorX": 0.5,
       "anchorY": 0.5,
       "offsetX": 0,

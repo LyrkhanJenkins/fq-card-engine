@@ -7,10 +7,10 @@
       "_id": "gLxh9IhVmNUCs9pM",
       "changes": [
         {
-          "key": "system.attributes.mana.max",
+          "key": "system.fq.mana.max",
           "mode": 2,
           "value": "1",
-          "priority": 20
+          "priority": null
         }
       ],
       "disabled": false,
@@ -33,21 +33,18 @@
           "macroRepeat": "none",
           "specialDuration": [],
           "transfer": true
-        },
-        "core": {
-          "statusId": ""
         }
       },
       "tint": "#ffffff",
       "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "3.3.1",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
+        "lastModifiedBy": null
       },
       "name": "+1 mana",
       "img": "icons/magic/light/explosion-star-teal-purple.webp",
@@ -56,26 +53,24 @@
       "description": "",
       "statuses": [],
       "sort": 0,
-      "_key": "!items.effects!nWqAZ2gxQYAdm26q.gLxh9IhVmNUCs9pM"
+      "_key": "!items.effects!VR2Qf8AFBXbXxEyy.gLxh9IhVmNUCs9pM"
     }
   ],
   "folder": null,
-  "sort": 0,
   "flags": {
     "cf": {
       "id": "temp_fmyn85q4rtg"
     }
   },
-  "_id": "nWqAZ2gxQYAdm26q",
   "_stats": {
-    "coreVersion": "12.330",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
     "systemId": "dnd5e",
-    "systemVersion": "3.1.1",
-    "createdTime": 1709393283177,
-    "modifiedTime": 1712389860759,
-    "lastModifiedBy": "dnd5ebuilder0000",
-    "compendiumSource": "Item.7J5PiCmMVmx8WVD3",
-    "duplicateSource": null
+    "systemVersion": "3.3.1",
+    "createdTime": 1724074035608,
+    "modifiedTime": 1724075092039,
+    "lastModifiedBy": "dnd5ebuilder0000"
   },
   "ownership": {
     "default": 0
@@ -83,24 +78,26 @@
   "system": {
     "description": {
       "value": "",
-      "chat": "",
-      "unidentified": ""
+      "chat": ""
     },
-    "source": "",
+    "source": {
+      "custom": ""
+    },
     "activation": {
       "type": "",
       "cost": null,
       "condition": ""
     },
     "duration": {
-      "value": null,
+      "value": "",
       "units": ""
     },
     "target": {
-      "value": null,
+      "value": "",
       "width": null,
       "units": "",
-      "type": ""
+      "type": "",
+      "prompt": true
     },
     "range": {
       "value": null,
@@ -110,16 +107,18 @@
     "uses": {
       "value": null,
       "max": "",
-      "per": null
+      "per": null,
+      "recovery": "",
+      "prompt": true
     },
     "consume": {
       "type": "",
       "target": null,
-      "amount": null
+      "amount": null,
+      "scale": false
     },
     "ability": null,
     "actionType": "",
-    "attackBonus": 0,
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -140,13 +139,31 @@
       "value": null,
       "charged": false
     },
-    "cost": {
-      "action": null,
-      "mana": null,
-      "zeal": null,
-      "drop": null,
-      "hp": null
-    }
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "cover": null,
+    "crewed": false,
+    "enchantment": null,
+    "summons": null,
+    "fq": {
+      "action": 0,
+      "mana": 0,
+      "zeal": 0,
+      "drop": 0,
+      "hp": 0
+    },
+    "type": {
+      "value": "",
+      "subtype": ""
+    },
+    "prerequisites": {
+      "level": null
+    },
+    "properties": []
   },
-  "_key": "!items!nWqAZ2gxQYAdm26q"
+  "_id": "VR2Qf8AFBXbXxEyy",
+  "sort": 500000,
+  "_key": "!items!VR2Qf8AFBXbXxEyy"
 }

@@ -12,11 +12,11 @@
     }
   },
   "_stats": {
-    "coreVersion": "12.330",
+    "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": null,
-    "modifiedTime": 1723889115327,
+    "modifiedTime": 1724078639073,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null
@@ -56,28 +56,6 @@
         "value": {}
       },
       {
-        "_id": "0pnpvFC6RK2B4Xem",
-        "type": "AbilityScoreImprovement",
-        "configuration": {
-          "points": 1,
-          "fixed": {
-            "str": 0,
-            "dex": 0,
-            "con": 0,
-            "int": 0,
-            "wis": 0,
-            "cha": 0
-          },
-          "cap": 1
-        },
-        "value": {
-          "type": "asi"
-        },
-        "level": 1,
-        "title": "",
-        "hint": ""
-      },
-      {
         "_id": "oXOKZHsflEkQx5h0",
         "type": "ItemChoice",
         "configuration": {
@@ -112,48 +90,221 @@
         "hint": ""
       },
       {
-        "_id": "RLrzRGMzvcPVS2CC",
+        "_id": "tWeBheqq0F1Kuyjr",
+        "type": "AbilityScoreImprovement",
+        "configuration": {
+          "points": 1,
+          "fixed": {
+            "str": 0,
+            "dex": 0,
+            "con": 0,
+            "int": 0,
+            "wis": 0,
+            "cha": 0
+          },
+          "cap": 1
+        },
+        "value": {
+          "type": "asi"
+        },
+        "level": 2,
+        "title": "",
+        "hint": ""
+      },
+      {
+        "_id": "pPYvJYrw47lMVO9R",
+        "type": "AbilityScoreImprovement",
+        "configuration": {
+          "points": 1,
+          "fixed": {
+            "str": 0,
+            "dex": 0,
+            "con": 0,
+            "int": 0,
+            "wis": 0,
+            "cha": 0
+          },
+          "cap": 1
+        },
+        "value": {
+          "type": "asi"
+        },
+        "level": 3,
+        "title": "",
+        "hint": ""
+      },
+      {
+        "_id": "lIRGnYWzEXPk0aOX",
+        "type": "AbilityScoreImprovement",
+        "configuration": {
+          "points": 1,
+          "fixed": {
+            "str": 0,
+            "dex": 0,
+            "con": 0,
+            "int": 0,
+            "wis": 0,
+            "cha": 0
+          },
+          "cap": 1
+        },
+        "value": {
+          "type": "asi"
+        },
+        "level": 4,
+        "title": "",
+        "hint": ""
+      },
+      {
+        "_id": "a1mc7a4pr6M130x7",
+        "type": "AbilityScoreImprovement",
+        "configuration": {
+          "points": 2,
+          "fixed": {
+            "str": 0,
+            "dex": 0,
+            "con": 0,
+            "int": 0,
+            "wis": 0,
+            "cha": 0
+          },
+          "cap": 2
+        },
+        "value": {
+          "type": "asi"
+        },
+        "level": 5,
+        "title": "",
+        "hint": ""
+      },
+      {
+        "_id": "iur7gLzg2tdBDns1",
         "type": "ItemChoice",
         "configuration": {
           "choices": {
-            "1": {
-              "count": 1,
-              "replacement": false
-            },
             "2": {
-              "count": 1,
+              "count": 3,
               "replacement": false
             },
             "3": {
-              "count": 1,
+              "count": 3,
               "replacement": false
             },
             "4": {
-              "count": 1,
+              "count": 3,
               "replacement": false
             },
             "5": {
-              "count": 1,
+              "count": 3,
+              "replacement": false
+            },
+            "6": {
+              "count": 3,
               "replacement": false
             }
           },
           "allowDrops": true,
-          "type": null,
+          "type": "feat",
           "pool": [
             {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.ExJ5vJgBTGhEo9Ot"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.VR2Qf8AFBXbXxEyy"
             },
             {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.nWqAZ2gxQYAdm26q"
+              "uuid": "Item.YG3pxPrE7eAWY9IX"
+            },
+            {
+              "uuid": "Item.9TQUySKanYpKM6Au"
+            },
+            {
+              "uuid": "Item.zoOKdQOqw8BhTaGo"
+            },
+            {
+              "uuid": "Item.8cjrlW6r2B1PBD5l"
+            },
+            {
+              "uuid": "Item.tDzFl4SqZhGeKqEf"
+            },
+            {
+              "uuid": "Item.awu3jv6NmnDlojf4"
+            },
+            {
+              "uuid": "Item.OwfYUtnXfxEE29iG"
+            },
+            {
+              "uuid": "Item.ooKg5U1N5rJjCbVK"
+            },
+            {
+              "uuid": "Item.kKMGCqMvoiwQ089b"
+            },
+            {
+              "uuid": "Item.TZsa6h8PPZdIyO4J"
+            },
+            {
+              "uuid": "Item.jo1kA1FVMCvUsTV5"
+            },
+            {
+              "uuid": "Item.iGiQASxJ3pBobgdP"
+            },
+            {
+              "uuid": "Item.k9ITbirtpC02wA4O"
+            },
+            {
+              "uuid": "Item.2zjOskSKpIT0f0j5"
+            },
+            {
+              "uuid": "Item.XxPBnkchfLrbh7pd"
+            },
+            {
+              "uuid": "Item.FN2DmCGuBdYlhMzT"
+            },
+            {
+              "uuid": "Item.nvufm6POcXfcZA4u"
+            },
+            {
+              "uuid": "Item.lJVsOAWrOeM4YL6l"
+            },
+            {
+              "uuid": "Item.64ylBRuyvh9hxtLC"
+            },
+            {
+              "uuid": "Item.7wHrjCrX6hzetFLV"
+            },
+            {
+              "uuid": "Item.xNkAebLEOeer8k8z"
             }
           ],
           "spell": null,
-          "restriction": {}
+          "restriction": {
+            "type": "",
+            "subtype": ""
+          }
         },
         "value": {
           "added": {},
           "replaced": {}
         },
+        "title": "",
+        "hint": ""
+      },
+      {
+        "_id": "RGP0bm4CVYiDuAA0",
+        "type": "AbilityScoreImprovement",
+        "configuration": {
+          "points": 2,
+          "fixed": {
+            "str": 0,
+            "dex": 0,
+            "con": 0,
+            "int": 0,
+            "wis": 0,
+            "cha": 0
+          },
+          "cap": 2
+        },
+        "value": {
+          "type": "asi"
+        },
+        "level": 6,
         "title": "",
         "hint": ""
       }
