@@ -61,90 +61,85 @@ def write_generated_decks(name, tableau, cards, targetFolder):
 
 
 listes_cards = {
-    'Elementalist Lvl1': ["Boule de feu", "Tornade", "Fracture Terrestre", "Fracture Terrestre", "Frappe de givre",
-                          "Frappe de givre", "Récupération de mana"],
-    'Illusionist Lvl1': ["Frappe avec salto arrière", "Frappe illusoire", "Frappe illusoire", "Fouet Enchantée",
-                         "Fouet Enchantée", "Fouet Enchantée", "Inspiration chantée", "Allonge magique",
-                         "Vases communicants", "Shuriken empoisonné"],
-    'Trapper Lvl1': ["Tir précis", "Tir précis", "Tir précis", "Double flèches", "Louve apprivoisée",
-                     "Tireur d'élite", "Pluie de flèches"],
-    'White-Mage Lvl1': ["Energie Lumineuse", "Energie Lumineuse", "Energie Lumineuse", "Malédiction", "Malédiction",
-                        "Bouclier magique", "Explosion d'arcanes"],
-    'Monk Lvl1': ["Coup droit", "Coup droit", "Coup droit", "Coup droit", "Coup droit", "Coup droit", "Coup gauche",
-                  "Coup gauche", "Coup gauche", "Combo", "Combo", "Récupération de mana III", "Bouclier zélé",
-                  "Bouclier zélé"]
+    'Elementalist Lvl1': ["Fireball", "Tornado", "Earth Fracture", "Earth Fracture", "Frost Strike", "Frost Strike",
+                          "Mana Recovery III"],
+    'Illusionist Lvl1': ["Backflip Strike", "Illusory Strike", "Illusory Strike", "Enchanted Whip", "Enchanted Whip",
+                         "Enchanted Whip", "Sung Inspiration", "Magic Reach", "Communicating Vessels",
+                         "Poisoned Shuriken"],
+    'Trapper Lvl1': ["Precise Shot", "Precise Shot", "Precise Shot", "Double Arrows", "Tamed Wolf", "Elite Marksman",
+                     "Rain of Arrows"],
+    'White-Mage Lvl1': ["Light Energy", "Light Energy", "Light Energy", "Curse", "Curse", "Magic Shield",
+                        "Arcane Explosion"],
+    'Monk Lvl1': ["Right Punch", "Right Punch", "Right Punch", "Right Punch", "Right Punch", "Right Punch",
+                  "Left Punch", "Left Punch", "Left Punch", "Combo", "Combo", "Mana Recovery III", "Zealous Shield",
+                  "Zealous Shield"]
 }
-listes_cards['Monk Lvl2'] = listes_cards['Monk Lvl1'] + ["Coup gauche", "Coup gauche", "Cape inhibitrice",
-                                                         "Vive-esquive"];
-listes_cards['Monk Lvl3'] = listes_cards['Monk Lvl2'] + ["Booster de Tour V", "Cape inhibitrice", "Méditation Zen",
-                                                         "Bouclier zélé", "Récupération de Mana III", "Lame fantôme"];
-listes_cards['Monk Lvl4'] = listes_cards['Monk Lvl3'] + ["Cape inhibitrice", "Combo", "Dissimulation",
-                                                         "Conversion", "Souffle de Ki", "Booster de Tour V"];
-listes_cards['Monk Lvl5'] = listes_cards['Monk Lvl4'] + ["Armes secrètes", "Vive-esquive", "Dissimulation",
-                                                         "Méditation Zen", "Déplacement éclair", "Lame fantôme"];
 
-listes_cards['White-Mage Lvl2'] = listes_cards['White-Mage Lvl1'] + ["Energie Lumineuse", "Energie Lumineuse",
-                                                                     "Malédiction", "Bouclier magique",
-                                                                     "Récupération de mana III", "Explosion d'arcanes"];
-listes_cards['White-Mage Lvl3'] = listes_cards['White-Mage Lvl2'] + ["Pioche III", "Energie Lumineuse",
-                                                                     "Bouclier magique", "Malédiction Instantanée",
-                                                                     "Récupération de mana III", "Soins d'urgence",
-                                                                     "Infusion de Mana"];
-listes_cards['White-Mage Lvl4'] = listes_cards['White-Mage Lvl3'] + ["Bouclier magique", "Exorcisme", "Exorcisme",
-                                                                     "Malédiction Instantanée", "Booster de Tour V",
-                                                                     "Bouclier vengeur", "Bouclier empathique",
-                                                                     "Explosion d'arcanes"];
-listes_cards['White-Mage Lvl5'] = listes_cards['White-Mage Lvl4'] + ["Pioche III", "Malédiction Instantanée",
-                                                                     "Booster de Tour V", "Epiphanie", "Epiphanie",
-                                                                     "Frappe de lumière", "Bouclier divin",
-                                                                     "Bouclier de mana"];
-listes_cards['Trapper Lvl2'] = listes_cards['Trapper Lvl1'] + ["Pioche II", "Récupération de mana", "Traquenard",
-                                                               "Tir précis", "Tir Réflexe"];
-listes_cards['Trapper Lvl3'] = listes_cards['Trapper Lvl2'] + ["Tir empoisonné", "Tir empoisonné", "Tir transperçant",
-                                                               "Pioche II", "Tir précis", "Booster de Tour"];
-listes_cards['Trapper Lvl4'] = listes_cards['Trapper Lvl3'] + ["Tireur d'élite", "Booster de tour", "Double flèches",
-                                                               "Tir précis", "Récupération de mana", "Embuscade",
-                                                               "Embuscade", "Traquenard", "Pluie de flèches"];
-listes_cards['Trapper Lvl5'] = listes_cards['Trapper Lvl4'] + ["Tir Réflexe", "Tir supersonique", "Tir supersonique",
-                                                               "Tir explosif", "Tir explosif", "Tir précis",
-                                                               "Louve apprivoisée", "Tir empoisonné",
-                                                               "Etude du point faible"];
+listes_cards['Monk Lvl2'] = listes_cards['Monk Lvl1'] + ["Left Punch", "Left Punch", "Inhibiting Cape", "Quick Dodge"]
+listes_cards['Monk Lvl3'] = listes_cards['Monk Lvl2'] + ["Turn Booster V", "Inhibiting Cape", "Zen Meditation",
+                                                         "Zealous Shield", "Mana Recovery III", "Phantom Blade"]
+listes_cards['Monk Lvl4'] = listes_cards['Monk Lvl3'] + ["Inhibiting Cape", "Combo", "Concealment", "Conversion",
+                                                         "Ki Breath", "Turn Booster V"]
+listes_cards['Monk Lvl5'] = listes_cards['Monk Lvl4'] + ["Secret Weapons", "Quick Dodge", "Concealment",
+                                                         "Zen Meditation", "Flash Move", "Phantom Blade"]
 
-listes_cards['Illusionist Lvl2'] = listes_cards['Illusionist Lvl1'] + ["Images Miroir", "Inspiration chantée",
-                                                                       "Attaque latérale", "Pioche II"];
-listes_cards['Illusionist Lvl3'] = listes_cards['Illusionist Lvl2'] + ["Pioche III", "Succion de mana",
-                                                                       "Passage vers le plan éthéré", "Shuriken",
-                                                                       "Shuriken", "Shuriken empoisonné"];
-listes_cards['Illusionist Lvl4'] = listes_cards['Illusionist Lvl3'] + ["Allonge magique", "Allonge magique",
-                                                                       "Apothicaire 1", "Attaque diagonale",
-                                                                       "Peste Noire", "Vases Communicants",
-                                                                       "Danse enfiévrée", "Images Miroir"];
-listes_cards['Illusionist Lvl5'] = listes_cards['Illusionist Lvl4'] + ["Danse enfiévrée", "Nuage de dague",
-                                                                       "Volée de shuriken", "Apothicaire 2",
-                                                                       "Frappe avec salto arrière",
-                                                                       "Attaque en cercle", "Frappe illusoire",
-                                                                       "Prise en traitre"];
+listes_cards['White-Mage Lvl2'] = listes_cards['White-Mage Lvl1'] + ["Light Energy", "Light Energy", "Curse",
+                                                                     "Magic Shield", "Mana Recovery III",
+                                                                     "Arcane Explosion"]
+listes_cards['White-Mage Lvl3'] = listes_cards['White-Mage Lvl2'] + ["Draw III", "Light Energy", "Magic Shield",
+                                                                     "Instant Curse", "Mana Recovery III",
+                                                                     "Emergency Healing", "Mana Infusion"]
+listes_cards['White-Mage Lvl4'] = listes_cards['White-Mage Lvl3'] + ["Magic Shield", "Exorcism", "Exorcism",
+                                                                     "Instant Curse", "Turn Booster V",
+                                                                     "Vengeful Shield", "Empathetic Shield",
+                                                                     "Arcane Explosion"]
+listes_cards['White-Mage Lvl5'] = listes_cards['White-Mage Lvl4'] + ["Draw III", "Instant Curse", "Turn Booster V",
+                                                                     "Epiphany", "Epiphany", "Light Strike",
+                                                                     "Divine Shield", "Mana Shield"]
 
-listes_cards['Elementalist Lvl2'] = listes_cards['Elementalist Lvl1'] + ["Pioche III", "Captation de mana",
-                                                                         "Givrefeu", "Brouillard", "Tornade"];
-listes_cards['Elementalist Lvl3'] = listes_cards['Elementalist Lvl2'] + ["Booster de Tour", "Tornade", "Boule de feu",
-                                                                         "Météore", "Frappe de givre",
-                                                                         "Captation de mana"];
-listes_cards['Elementalist Lvl4'] = listes_cards['Elementalist Lvl3'] + ["Fracture Terrestre", "Incantation",
-                                                                         "Incantation", "Pioche III", "Boule de feu",
-                                                                         "Onde glacée", "Propagation des dégâts",
-                                                                         "Choc de feu"];
-listes_cards['Elementalist Lvl5'] = listes_cards['Elementalist Lvl4'] + ["Booster de Tour", "Captation de mana",
-                                                                         "Tornade", "Fracture Terrestre",
-                                                                         "Frappe de givre", "Boule de feu",
-                                                                         "Récupération de mana", "Assassin du néant",
-                                                                         "Incantation", "Plastron Magique"];
+listes_cards['Trapper Lvl2'] = listes_cards['Trapper Lvl1'] + ["Draw II", "Mana Recovery II", "Trap", "Precise Shot",
+                                                               "Reflex Shot"]
+listes_cards['Trapper Lvl3'] = listes_cards['Trapper Lvl2'] + ["Poisoned Shot", "Poisoned Shot", "Piercing Shot",
+                                                               "Draw II", "Precise Shot", "Turn Booster IV"]
+listes_cards['Trapper Lvl4'] = listes_cards['Trapper Lvl3'] + ["Elite Marksman", "Turn Booster IV", "Double Arrows",
+                                                               "Precise Shot", "Mana Recovery II", "Ambush", "Ambush",
+                                                               "Trap", "Rain of Arrows"]
+listes_cards['Trapper Lvl5'] = listes_cards['Trapper Lvl4'] + ["Reflex Shot", "Supersonic Shot", "Supersonic Shot",
+                                                               "Explosive Shot", "Explosive Shot", "Precise Shot",
+                                                               "Tamed Wolf", "Poisoned Shot", "Weak Point Study"]
+
+listes_cards['Illusionist Lvl2'] = listes_cards['Illusionist Lvl1'] + ["Mirror Images", "Sung Inspiration",
+                                                                       "Side Attack", "Draw II"]
+listes_cards['Illusionist Lvl3'] = listes_cards['Illusionist Lvl2'] + ["Draw III", "Mana Drain",
+                                                                       "Ethereal Plane Passage", "Shuriken", "Shuriken",
+                                                                       "Poisoned Shuriken"]
+listes_cards['Illusionist Lvl4'] = listes_cards['Illusionist Lvl3'] + ["Magic Reach", "Magic Reach", "Apothecary I",
+                                                                       "Diagonal Attack", "Black Plague",
+                                                                       "Communicating Vessels", "Fevered Dance",
+                                                                       "Mirror Images"]
+listes_cards['Illusionist Lvl5'] = listes_cards['Illusionist Lvl4'] + ["Fevered Dance", "Dagger Cloud",
+                                                                       "Shuriken Volley", "Apothecary II",
+                                                                       "Backflip Strike", "Circle Attack",
+                                                                       "Illusory Strike", "Backstab"]
+
+listes_cards['Elementalist Lvl2'] = listes_cards['Elementalist Lvl1'] + ["Draw III", "Mana Capture", "Frostfire", "Fog",
+                                                                         "Tornado"]
+listes_cards['Elementalist Lvl3'] = listes_cards['Elementalist Lvl2'] + ["Turn Booster IV", "Tornado", "Fireball",
+                                                                         "Meteor", "Frost Strike", "Mana Capture"]
+listes_cards['Elementalist Lvl4'] = listes_cards['Elementalist Lvl3'] + ["Earth Fracture", "Incantation", "Incantation",
+                                                                         "Draw III", "Fireball", "Ice Wave",
+                                                                         "Damage Propagation", "Fire Shock"]
+listes_cards['Elementalist Lvl5'] = listes_cards['Elementalist Lvl4'] + ["Turn Booster IV", "Mana Capture", "Tornado",
+                                                                         "Earth Fracture", "Frost Strike", "Fireball",
+                                                                         "Mana Recovery III", "Void Assassin",
+                                                                         "Incantation", "Magic Plastron"]
 
 cardsGeneratedPackFolder = "./decks-fq8-generated/"
 cardsPackFolder = "./decks-fq8/"
 cardsOriginPackFolder = "./decks-pattern-fq8/"
 supportedLanguages = ["en", "fr"]
 
+os.makedirs(cardsPackFolder, exist_ok=True)
 os.makedirs(cardsGeneratedPackFolder, exist_ok=True)
 for language in supportedLanguages:
     for filename in os.listdir(cardsOriginPackFolder):

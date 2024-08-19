@@ -3,11 +3,11 @@
   "name": "Elementalist All",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cards/en/elementalist/dos_de_carte.PNG",
+  "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG",
   "cards": [
     {
       "_id": "UCYOEqiF8N1AN8Sl",
-      "name": "Fracture Terrestre",
+      "name": "Earth Fracture",
       "description": "{\n  \"damage\": \"1d@wis[force]+(2*XXX)[force]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"7\",\n  \"action\": \"-(2*XXX)\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\",\n  \"xmax\": \"3\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Effet de Terre\",\n      \"formula\": \"1d(4-XXX)\",\n      \"effects\": [\n        {\n          \"result\": \"4-XXX\",\n          \"data\": [\n            {\n              \"label\": \"Effet de Terre\",\n              \"icon\": \"icons/magic/earth/barrier-stone-explosion-debris.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"outline\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"L'effet de terre a été appliqué aux cibles\"\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
@@ -19,7 +19,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Fracture%20Terrestre.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/earth_fracture.PNG",
           "text": "{\"damage\":\"1d2 + (2*XXX)\",\"action\":\"-(2*XXX)\",\"mana\":\"-1\",\"zeal\":\"1\",\"addingRolls\":[{\"title\":\"Effet de Terre\",\"formula\":\"1d(4-X)\",\"effects\":[{\"result\":\"(4-XXX)\",\"other\":\"Appliquer un effet ou stack supplémentaire de terre à la cible\"}]}]}"
         }
       ],
@@ -48,7 +48,7 @@
     },
     {
       "_id": "qVyz2F79jPsA7xTy",
-      "name": "Tornade",
+      "name": "Tornado",
       "description": "{\n  \"damage\": \"2[thunder]+@int[thunder]+1d6[thunder]\",\n  \"action\": \"-6\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"6\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Effet air\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Effet air\",\n              \"icon\": \"icons/magic/air/wind-tornado-spiral-teal-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"-5\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fumes\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"L'Effet air a été appliqué aux cibles\"\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
@@ -60,7 +60,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Tornade.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/tornado.PNG",
           "text": ""
         }
       ],
@@ -89,7 +89,7 @@
     },
     {
       "_id": "SOTzE1uX2WwLbeEr",
-      "name": "Récupération de mana",
+      "name": "Mana Recovery III",
       "description": "{\n\"action\":\"-5\",\n\"mana\":\"+3\",\n\"other\":[\"Vous avez regagné 3 points de mana\"]\n}",
       "type": "base",
       "suit": "",
@@ -101,7 +101,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/R%C3%A9cup%C3%A9ration%20de%20mana.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/mana_recovery_iii.PNG",
           "text": ""
         }
       ],
@@ -130,7 +130,7 @@
     },
     {
       "_id": "kZQbFkLMnCb7brjU",
-      "name": "Frappe de Givre",
+      "name": "Frost Strike",
       "description": "{\n  \"damage\": \"1[cold]+@wis[cold]+1d3[cold]\",\n  \"action\": \"-4\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"mana\": \"-1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Gel\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Gel\",\n              \"icon\": \"icons/magic/water/barrier-ice-crystal-wall-faceted.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.action.max\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.action.value\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glacial-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Le Gel a été appliqué aux cibles\"\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
@@ -143,7 +143,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Frappe%20de%20givre.png",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/frost_strike.png",
           "text": ""
         }
       ],
@@ -171,7 +171,7 @@
     },
     {
       "_id": "pZ02qHWvJS4kIbIY",
-      "name": "Boule de feu",
+      "name": "Fireball",
       "description": "{\n  \"damage\": \"4[fire]+@int[fire]+1d8[fire]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"6\",\n  \"action\": \"-8\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Brulure\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Brulure\",\n              \"icon\": \"icons/magic/fire/explosion-embers-evade-silhouette.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fire-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"L'effet Brulure a été appliqué aux cibles\"\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
@@ -184,7 +184,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Boule%20de%20feu.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/fireball.PNG",
           "text": ""
         }
       ],
@@ -212,7 +212,7 @@
     },
     {
       "_id": "e6HICEkLS9HgEZbD",
-      "name": "Pioche III",
+      "name": "Draw III",
       "description": "{\"action\":\"-3\",\"draw\":\"3\",\"other\":[\"Vous piochez 3 cartes\"]}",
       "type": "base",
       "suit": "",
@@ -224,7 +224,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Pioche%20III.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/draw_iii.PNG",
           "text": ""
         }
       ],
@@ -253,7 +253,7 @@
     },
     {
       "_id": "ypg6iIljUHPuFOz7",
-      "name": "Captation de mana",
+      "name": "Mana Capture",
       "description": "{\n  \"zeal\": \"-1\",\n  \"reactif\": true,\n  \"mana\": \"@wis\",\n  \"other\":[\"Vous avez regagné @wis points de mana\"]\n}",
       "type": "base",
       "suit": "",
@@ -265,7 +265,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Captation%20de%20mana.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/mana_capture.PNG",
           "text": ""
         }
       ],
@@ -294,19 +294,19 @@
     },
     {
       "_id": "7vF29PgR3WHXhEb6",
-      "name": "Brouillard",
+      "name": "Fog",
       "description": "{\n  \"action\": \"-5\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"99999999\",\n  \"nbTargets\": \"9999\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Effet air' || e.name === 'Effet de Terre').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de terre actif sur au moins une cible\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Brouillard\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Brouillard\",\n              \"icon\": \"icons/magic/air/fog-gas-smoke-gray.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"-@int\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fog\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Effet Brouillard appliqué à toutes les cibles enlevant @int en critique et @wis en esquive\"\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
-        "name": "Unknown (Elementalist all)",
+        "name": "",
         "text": "",
-        "img": "modules/fq-card-engine/images/cards/en/elementalist/dos_de_carte.PNG"
+        "img": null
       },
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Brouillard.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/fog.PNG",
           "text": ""
         }
       ],
@@ -335,19 +335,19 @@
     },
     {
       "_id": "aXrcw2gqwFuTDo58",
-      "name": "Givrefeu",
+      "name": "Frostfire",
       "description": "{\n  \"damage\": \"@int[fire]+1d10[fire]+4[cold]+@wis[cold]+1d4[cold]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"8\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length !== 1 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Brulure' || e.name === 'Gel').length).length \",\n      \"message\": \"Vous n'avez pas d'effet de brulûre ou de gel actif sur la cible\"\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
-        "name": "Unknown (Elementalist all)",
+        "name": "",
         "text": "",
-        "img": "modules/fq-card-engine/images/cards/en/elementalist/dos_de_carte.PNG"
+        "img": null
       },
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Givrefeu.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/frostfire.PNG",
           "text": ""
         }
       ],
@@ -376,19 +376,19 @@
     },
     {
       "_id": "5b97DVTONwBhLdAl",
-      "name": "Booster de tour",
+      "name": "Turn Booster IV",
       "description": "{\"action\":\"+4\",\"other\":[\"Vous avez regagné 4 points d'action\"]}",
       "type": "base",
       "suit": "",
       "back": {
-        "name": "Unknown (Elementalist all)",
+        "name": "",
         "text": "",
-        "img": "modules/fq-card-engine/images/cards/en/elementalist/dos_de_carte.PNG"
+        "img": null
       },
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Booster%20de%20tour.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/turn_booster_iv.PNG",
           "text": ""
         }
       ],
@@ -417,7 +417,7 @@
     },
     {
       "_id": "866YLG5WLwU2OsaO",
-      "name": "Météore",
+      "name": "Meteor",
       "description": "{\n  \"damage\": \"(2+@wis+1d4)[force]+(1+@int+1d4)[fire]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"10\",\n  \"nbTargets\": \"4\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length &lt; 1 || [...game.user.targets].length &gt; 9 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Brulure' || e.name === 'Effet de Terre').length).length\",\n      \"message\": \"Vous n'avez pas d'effet de terre ou de feu actif sur au moins une cible\"\n    },\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"message\": \"Les cibles doivent être contenues dans un carré 3X3\"\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
@@ -429,7 +429,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/M%C3%A9t%C3%A9ore.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/meteor.PNG",
           "text": ""
         }
       ],
@@ -458,7 +458,7 @@
     },
     {
       "_id": "qa9KGKFhhIRWkfHi",
-      "name": "Assassin du néant",
+      "name": "Void Assassin",
       "description": "{\n  \"damage\": \"(2*@dex+3*YYY)[psychic]+1d(2*XXX)[psychic]\",\n  \"action\": \"-(XXX)\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"1\",\n  \"zeal\": \"-(YYY)\",\n  \"xmax\": \"6\",\n  \"ymax\": \"4\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Brulure' || e.name === 'Gel' || e.name === 'Effet de Terre' || e.name === 'Effet air').length &gt; 1).length\",\n      \"message\": \"Vous n'avez pas 2 éléments actif sur la cible\"\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
@@ -470,7 +470,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Assassin%20du%20n%C3%A9ant.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/void_assassin.PNG",
           "text": ""
         }
       ],
@@ -511,7 +511,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Incantation.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/incantation.PNG",
           "text": ""
         }
       ],
@@ -540,19 +540,19 @@
     },
     {
       "_id": "VwRiKk5Nv0wwXGtv",
-      "name": "Plastron Magique",
+      "name": "Magic Plastron",
       "description": "{\n  \"minReach\": \"0\",\n  \"bonusCrit\": \"-9999\",\n  \"maxReach\": \"8\",\n  \"action\": \"-7\",\n  \"heal\": \"10 + 3*@cha\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.combat.combatants.filter(c =&gt; c.actor?.effects.filter(e =&gt; e?.data?.label === 'Effet de Terre').length).length || game.combat.combatants.filter(c =&gt; c.actor?.data?.effects.filter(e =&gt; e?.data?.label === 'Gel').length).length\",\n      \"message\": \"Vous n'avez pas d'effet de Terre ou de gel actif\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Plastron Magique\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Plastron Magique\",\n              \"icon\": \"icons/magic/defensive/shield-barrier-flaming-pentagon-blue-yellow.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.hp.tempmax\",\n                  \"value\": \"10 + 3*@cha\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"air-field\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": [\n            \"L'effet Plastron Magique a été appliqué aux cibles\",\n            \"Supprimer l'effet de givre ou de terre concerné sur la cible\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
-        "name": "Unknown (Elementalist all)",
+        "name": "",
         "text": "",
-        "img": "modules/fq-card-engine/images/cards/en/elementalist/dos_de_carte.PNG"
+        "img": null
       },
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Plastron%20magique.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/magic_plastron.PNG",
           "text": ""
         }
       ],
@@ -581,7 +581,7 @@
     },
     {
       "_id": "1nwTNnbbl8BeaUwJ",
-      "name": "Onde glacée",
+      "name": "Ice Wave",
       "description": "{\n  \"damage\": \"(1+@int+1d4)[thunder]+(1+@sag+1d4)[cold]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"1\",\n  \"nbTargets\": \"4\",\n  \"action\": \"-7\",\n  \"mana\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Effet air' || e.name === 'Gel').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de gel actif sur au moins une cible\"\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
@@ -593,7 +593,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Onde%20glac%C3%A9e.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/ice_wave.PNG",
           "text": ""
         }
       ],
@@ -622,7 +622,7 @@
     },
     {
       "_id": "CPZ20TlYwqrMq3C1",
-      "name": "Choc de feu",
+      "name": "Fire Shock",
       "description": "{\n  \"damage\": \"(2*@int)[thunder]+2d8[fire]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"8\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-10\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-2\",\n  \"customEval\": [\n    {\n      \"test\": \"game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Brulure' || e.name === 'Effet air').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de feu actif sur au moins une cible\"\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
@@ -634,7 +634,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Choc%20de%20feu.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/fire_shock.PNG",
           "text": ""
         }
       ],
@@ -663,7 +663,7 @@
     },
     {
       "_id": "z3BMWtXMBCF996I2",
-      "name": "Propagation des dégâts",
+      "name": "Damage Propagation",
       "description": "{\n  \"action\": \"-4\",\n  \"zeal\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"9\",\n  \"replayable\": \"passif\",\n  \"customEval\": [\n    {\n      \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n      \"message\": \"Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Propagation des dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Propagation des dégâts\",\n              \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"shockwave\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"@wis dégâts sont propagés à la cible chaque tour pendant 3 tours\"\n        }\n      ]\n    }\n  ],\n  \"afterFirstPlay\": {\n    \"minReach\": \"1\",\n    \"maxReach\": \"9\",\n    \"replayable\": \"passif\",\n    \"customEval\": [\n      {\n        \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n        \"message\": \"Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort\"\n      }\n    ],\n    \"addingRolls\": [\n      {\n        \"title\": \"Propagation des dégâts\",\n        \"formula\": \"1\",\n        \"effects\": [\n          {\n            \"result\": \"1\",\n            \"data\": [\n              {\n                \"label\": \"Propagation des dégâts\",\n                \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n                \"changes\": [\n                  {\n                    \"key\": \"system.fq.bonus.dot\",\n                    \"value\": \"@wis\",\n                    \"mode\": \"2\"\n                  },\n                  {\n                    \"key\": \"macro.tokenMagic\",\n                    \"value\": \"shockwave\",\n                    \"mode\": \"0\"\n                  }\n                ],\n                \"duration\": {\n                  \"startTime\": \"0\",\n                  \"rounds\": \"3\",\n                  \"turns\": \"0\"\n                }\n              }\n            ],\n            \"other\": \"@wis dégâts sont propagés à la cible chaque tour pendant 3 tours\"\n          }\n        ]\n      }\n    ]\n  }\n}",
       "type": "base",
       "suit": "",
@@ -675,7 +675,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/Propagation%20des%20d%C3%A9g%C3%A2ts.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/damage_propagation.PNG",
           "text": ""
         }
       ],
