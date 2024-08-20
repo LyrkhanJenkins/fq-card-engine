@@ -1,5 +1,5 @@
 {
-  "name": "+1 mana",
+  "name": "+1 mana (7)",
   "type": "feat",
   "img": "icons/magic/light/explosion-star-teal-purple.webp",
   "effects": [
@@ -53,7 +53,7 @@
       "description": "",
       "statuses": [],
       "sort": 0,
-      "_key": "!items.effects!VR2Qf8AFBXbXxEyy.gLxh9IhVmNUCs9pM"
+      "_key": "!items.effects!O29XCkFWL3RV5Cyc.gLxh9IhVmNUCs9pM"
     }
   ],
   "folder": null,
@@ -68,8 +68,8 @@
     "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
-    "createdTime": 1724074035608,
-    "modifiedTime": 1724075092039,
+    "createdTime": 1724140541890,
+    "modifiedTime": 1724142418515,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "ownership": {
@@ -163,7 +163,7 @@
     },
     "properties": []
   },
-  "_id": "VR2Qf8AFBXbXxEyy",
-  "sort": 500000,
-  "_key": "!items!VR2Qf8AFBXbXxEyy"
+  "_id": "O29XCkFWL3RV5Cyc",
+  "sort": 0,
+  "_key": "!items!O29XCkFWL3RV5Cyc"
 }

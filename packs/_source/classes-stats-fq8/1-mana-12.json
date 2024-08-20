@@ -1,13 +1,13 @@
 {
-  "name": "+1 action point",
+  "name": "+1 mana (12)",
   "type": "feat",
-  "img": "icons/magic/light/explosion-star-glow-orange.webp",
+  "img": "icons/magic/light/explosion-star-teal-purple.webp",
   "effects": [
     {
       "_id": "gLxh9IhVmNUCs9pM",
       "changes": [
         {
-          "key": "system.fq.action.max",
+          "key": "system.fq.mana.max",
           "mode": 2,
           "value": "1",
           "priority": null
@@ -46,14 +46,14 @@
         "modifiedTime": null,
         "lastModifiedBy": null
       },
-      "name": "+1 point d'action",
-      "img": "icons/magic/light/explosion-star-glow-orange.webp",
+      "name": "+1 mana",
+      "img": "icons/magic/light/explosion-star-teal-purple.webp",
       "type": "base",
       "system": {},
       "description": "",
       "statuses": [],
       "sort": 0,
-      "_key": "!items.effects!EsykJcnLC6eNwU8Z.gLxh9IhVmNUCs9pM"
+      "_key": "!items.effects!9skVpJ7u4B5P2Ddi.gLxh9IhVmNUCs9pM"
     }
   ],
   "folder": null,
@@ -68,8 +68,8 @@
     "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
-    "createdTime": 1724074029477,
-    "modifiedTime": 1724075152613,
+    "createdTime": 1724140538108,
+    "modifiedTime": 1724142452776,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "ownership": {
@@ -163,7 +163,7 @@
     },
     "properties": []
   },
-  "_id": "EsykJcnLC6eNwU8Z",
-  "sort": 100000,
-  "_key": "!items!EsykJcnLC6eNwU8Z"
+  "_id": "9skVpJ7u4B5P2Ddi",
+  "sort": 1300000,
+  "_key": "!items!9skVpJ7u4B5P2Ddi"
 }

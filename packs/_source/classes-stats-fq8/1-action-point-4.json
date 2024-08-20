@@ -1,16 +1,16 @@
 {
-  "name": "+1 moving",
+  "name": "+1 action point (4)",
   "type": "feat",
-  "img": "icons/skills/movement/feet-spurred-boots-brown.webp",
+  "img": "icons/magic/light/explosion-star-glow-orange.webp",
   "effects": [
     {
       "_id": "gLxh9IhVmNUCs9pM",
       "changes": [
         {
-          "key": "system.attributes.movement.walk",
+          "key": "system.fq.action.max",
           "mode": 2,
-          "value": "5",
-          "priority": 20
+          "value": "1",
+          "priority": null
         }
       ],
       "disabled": false,
@@ -33,9 +33,6 @@
           "macroRepeat": "none",
           "specialDuration": [],
           "transfer": true
-        },
-        "core": {
-          "statusId": ""
         }
       },
       "tint": "#ffffff",
@@ -49,14 +46,14 @@
         "modifiedTime": null,
         "lastModifiedBy": null
       },
-      "name": "+1 déplacement",
-      "img": "icons/skills/movement/feet-spurred-boots-brown.webp",
+      "name": "+1 point d'action",
+      "img": "icons/magic/light/explosion-star-glow-orange.webp",
       "type": "base",
       "system": {},
       "description": "",
       "statuses": [],
       "sort": 0,
-      "_key": "!items.effects!OTabgA0bLJcJEOsD.gLxh9IhVmNUCs9pM"
+      "_key": "!items.effects!cG5Vrwv6NP5ifChp.gLxh9IhVmNUCs9pM"
     }
   ],
   "folder": null,
@@ -71,8 +68,8 @@
     "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
-    "createdTime": 1724074036925,
-    "modifiedTime": 1724075092039,
+    "createdTime": 1724140494989,
+    "modifiedTime": 1724141326137,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "ownership": {
@@ -166,7 +163,7 @@
     },
     "properties": []
   },
-  "_id": "OTabgA0bLJcJEOsD",
-  "sort": 600000,
-  "_key": "!items!OTabgA0bLJcJEOsD"
+  "_id": "cG5Vrwv6NP5ifChp",
+  "sort": 1900000,
+  "_key": "!items!cG5Vrwv6NP5ifChp"
 }

@@ -1,16 +1,16 @@
 {
-  "name": "+1 evasion",
+  "name": "+1 moving (1)",
   "type": "feat",
-  "img": "icons/magic/symbols/rune-sigil-horned-blue.webp",
+  "img": "icons/skills/movement/feet-spurred-boots-brown.webp",
   "effects": [
     {
       "_id": "gLxh9IhVmNUCs9pM",
       "changes": [
         {
-          "key": "system.fq.attributes.evasion",
+          "key": "system.attributes.movement.walk",
           "mode": 2,
-          "value": "1",
-          "priority": null
+          "value": "5",
+          "priority": 20
         }
       ],
       "disabled": false,
@@ -33,6 +33,9 @@
           "macroRepeat": "none",
           "specialDuration": [],
           "transfer": true
+        },
+        "core": {
+          "statusId": ""
         }
       },
       "tint": "#ffffff",
@@ -46,14 +49,14 @@
         "modifiedTime": null,
         "lastModifiedBy": null
       },
-      "name": "+1 esquive",
-      "img": "icons/magic/symbols/rune-sigil-horned-blue.webp",
+      "name": "+1 déplacement",
+      "img": "icons/skills/movement/feet-spurred-boots-brown.webp",
       "type": "base",
       "system": {},
       "description": "",
       "statuses": [],
       "sort": 0,
-      "_key": "!items.effects!R63FEsMi4wGxeyxu.gLxh9IhVmNUCs9pM"
+      "_key": "!items.effects!o2IgHEIEdELHmZRr.gLxh9IhVmNUCs9pM"
     }
   ],
   "folder": null,
@@ -68,8 +71,8 @@
     "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
-    "createdTime": 1724074032441,
-    "modifiedTime": 1724075092039,
+    "createdTime": 1724140557025,
+    "modifiedTime": 1724142467668,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "ownership": {
@@ -163,7 +166,7 @@
     },
     "properties": []
   },
-  "_id": "R63FEsMi4wGxeyxu",
-  "sort": 300000,
-  "_key": "!items!R63FEsMi4wGxeyxu"
+  "_id": "o2IgHEIEdELHmZRr",
+  "sort": 0,
+  "_key": "!items!o2IgHEIEdELHmZRr"
 }

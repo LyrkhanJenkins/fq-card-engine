@@ -16,7 +16,7 @@
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": null,
-    "modifiedTime": 1724078639073,
+    "modifiedTime": 1724142590489,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null
@@ -207,70 +207,70 @@
           "type": "feat",
           "pool": [
             {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.VR2Qf8AFBXbXxEyy"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.n7zQGe2I1VbkDVRF"
             },
             {
-              "uuid": "Item.YG3pxPrE7eAWY9IX"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0yBINX3UH0BmEstg"
             },
             {
-              "uuid": "Item.9TQUySKanYpKM6Au"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.O29XCkFWL3RV5Cyc"
             },
             {
-              "uuid": "Item.zoOKdQOqw8BhTaGo"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.xRaP0WhdwpbI2OR6"
             },
             {
-              "uuid": "Item.8cjrlW6r2B1PBD5l"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.CV0d8g7fNssbB2rU"
             },
             {
-              "uuid": "Item.tDzFl4SqZhGeKqEf"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.hqQ9NfbZRJzXoUuI"
             },
             {
-              "uuid": "Item.awu3jv6NmnDlojf4"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.yBBdFKHxqJY3AgkW"
             },
             {
-              "uuid": "Item.OwfYUtnXfxEE29iG"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.1lb8TZ3uQoyVmENi"
             },
             {
-              "uuid": "Item.ooKg5U1N5rJjCbVK"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Egca7jSQLqR0G4MB"
             },
             {
-              "uuid": "Item.kKMGCqMvoiwQ089b"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2K2aJ2fuoABOtFKg"
             },
             {
-              "uuid": "Item.TZsa6h8PPZdIyO4J"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AZWIkbaogSC7VszC"
             },
             {
-              "uuid": "Item.jo1kA1FVMCvUsTV5"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.9skVpJ7u4B5P2Ddi"
             },
             {
-              "uuid": "Item.iGiQASxJ3pBobgdP"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.phV1tmxN2JUdz1Po"
             },
             {
-              "uuid": "Item.k9ITbirtpC02wA4O"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.k5ZvZtbIe5W3Z4r1"
             },
             {
-              "uuid": "Item.2zjOskSKpIT0f0j5"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.3xcKaffBtgGMOG7c"
             },
             {
-              "uuid": "Item.XxPBnkchfLrbh7pd"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cG5Vrwv6NP5ifChp"
             },
             {
-              "uuid": "Item.FN2DmCGuBdYlhMzT"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.kxqmlP2SSyqufLbl"
             },
             {
-              "uuid": "Item.nvufm6POcXfcZA4u"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.nFxrUC4iiOJC8kpk"
             },
             {
-              "uuid": "Item.lJVsOAWrOeM4YL6l"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.3Z6b6N6RcrFXMFF1"
             },
             {
-              "uuid": "Item.64ylBRuyvh9hxtLC"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.g3WWPMnrflZSKFLv"
             },
             {
-              "uuid": "Item.7wHrjCrX6hzetFLV"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TFLGzRHDabJIfYfW"
             },
             {
-              "uuid": "Item.xNkAebLEOeer8k8z"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.m7gUDIzZ1YIi0XAk"
             }
           ],
           "spell": null,
