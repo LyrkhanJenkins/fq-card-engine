@@ -24,7 +24,8 @@
 
 ~~- Traduction manquantes pour macros~~
 
-- Traduction manquantes pour spells NPC
+~~- Traduction manquantes pour spells NPC~~
+
 - Traduction des effets des cartes
 
 ~~- Les items choice des classes ne sont pas bons (utiliser des compendiums)~~
