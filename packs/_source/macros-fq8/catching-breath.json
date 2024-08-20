@@ -1,0 +1,26 @@
+{
+  "name": "Catching breath",
+  "type": "script",
+  "author": "eLD9iPNHJXGMQX6z",
+  "img": "icons/magic/movement/abstract-ribbons-red-orange.webp",
+  "scope": "global",
+  "command": "if ([...game.combats].filter(combat => combat.isActive).length === 0) {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: darkgreen;\">${game.i18n.format(\"FQCARDENGINE.MacroMsgCatchingBreath\")}</h3>`\n    });\n    game.user.character.update({ \"system.fq.action.value\": game.user.character.system.fq.action.max});\n    foundry.audio.AudioHelper.play({\n        src: \"modules/fq-card-engine/sounds/passive_spells/breathe.mp3\",\n        volume: 0.5,\n        autoplay: true,\n        loop: false\n    }, true);\n} else {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: #C0392B;\">${game.i18n.format(\"FQCARDENGINE.WarningMsgSpellUseOutCombat\")}</h3>`\n    });\n}",
+  "folder": null,
+  "flags": {},
+  "_id": "QQm5zIwYy8CRZ91I",
+  "sort": 200000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.0.4",
+    "createdTime": 1710428586165,
+    "modifiedTime": 1724164870538,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null
+  },
+  "_key": "!macros!QQm5zIwYy8CRZ91I"
+}

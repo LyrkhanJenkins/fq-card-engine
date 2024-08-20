@@ -163,6 +163,17 @@
   "FQCARDENGINE.InfoMsgPartCardResult": "Result(s)",
   "FQCARDENGINE.InfoMsgPartCardNoResult": "No result",
   "FQCARDENGINE.InfoMsgPartCardOtherEffect": "Other Effect(s): ",
+  "FQCARDENGINE.WarningMsgSpellUseInCombat": "The spell can only be used in combat!",
+  "FQCARDENGINE.WarningMsgSpellUseOutCombat": "The spell can only be used out of combat!",
+
+  "FQCARDENGINE.MacroMsgCatchingBreath": "You catch your breath... Action points are now at maximum!",
+  "FQCARDENGINE.MacroErrorMsgHustle": "You must have exactly one target, and it must be on a square adjacent to your character.",
+  "FQCARDENGINE.MacroMsgHustle": "You use your action to shove \"{targetName}\" 1 square in front of your character.",
+  "FQCARDENGINE.MacroMsgRun": "You start running, the draw pile is reduced to 0, and your movement is doubled for 2 turns.",
+  "FQCARDENGINE.MacroErrorMsgSheathe": "You must have 'Unsheathe'.",
+  "FQCARDENGINE.MacroMsgSheathe": "You sheathe your weapon and return your hand to the library.",
+  "FQCARDENGINE.MacroErrorMsgUnsheathe": "You must have a positive hand score.",
+  "FQCARDENGINE.MacroMsgUnsheathe": "You prepare your next spells by drawing your hand; this action \nmay be considered an act of aggression by those around the player.",
 
   "FQCARDENGINE.SpellBookPrefixName": "Spellbook of ",
   "FQCARDENGINE.DeckPrefixName": "Deck of ",

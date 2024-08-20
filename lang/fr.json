@@ -163,6 +163,17 @@
   "FQCARDENGINE.InfoMsgPartCardResult": "Résultat(s)",
   "FQCARDENGINE.InfoMsgPartCardNoResult": "Aucun résultat",
   "FQCARDENGINE.InfoMsgPartCardOtherEffect": "Autre(s) Effet(s) : ",
+  "FQCARDENGINE.WarningMsgSpellUseInCombat": "Le sort n'est utilisable qu'en combat!",
+  "FQCARDENGINE.WarningMsgSpellUseOutCombat": "Le sort n'est utilisable qu'en dehors des combats!",
+
+  "FQCARDENGINE.MacroMsgCatchingBreath": "Vous reprenez votre souffle... Les points d'action sont désormais au maximum!",
+  "FQCARDENGINE.MacroErrorMsgHustle": "Vous devez avoir une et une seule cible et elle doit se trouver sur une \ncase adjacente à votre personnage",
+  "FQCARDENGINE.MacroMsgHustle": "Vous utilisez votre action pour bousculer \"{targetName}\" de 1 case devant votre personnage",
+  "FQCARDENGINE.MacroMsgRun": "Vous vous mettez, à courir, la pioche est réduite à 0, et votre déplacement est doublé pendant 2 tours",
+  "FQCARDENGINE.MacroErrorMsgSheathe": "Vous devez avoir dégainer",
+  "FQCARDENGINE.MacroMsgSheathe": "Vous rengainez et remettez votre main dans la bibliothèque",
+  "FQCARDENGINE.MacroErrorMsgUnsheathe": "Vous devez avoir un score de main positif",
+  "FQCARDENGINE.MacroMsgUnsheathe": "Vous préparez vos prochains sorts en piochant votre main, cette action \npeut être considérée comme un acte d'aggression par les personnes autour du joueur",
 
   "FQCARDENGINE.SpellBookPrefixName": "Bibliothèque de ",
   "FQCARDENGINE.DeckPrefixName": "Deck de ",

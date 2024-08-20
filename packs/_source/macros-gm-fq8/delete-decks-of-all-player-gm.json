@@ -1,7 +1,7 @@
 {
-  "name": "Supprimer les decks de tous les joueurs",
+  "name": "Delete decks of all player (GM)",
   "type": "script",
-  "command": "socket = socketlib.registerModule(FqCardEngineModule.moduleName);\nawait socket.executeForEveryone('executeFqMacro', 'Supprimer son deck');",
+  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.deleteDeckForUser(user.id);\n})",
   "img": "icons/magic/fire/beam-jet-stream-spiral-yellow.webp",
   "author": "SA6JKCaEua1JXSu4",
   "scope": "global",
@@ -13,14 +13,14 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.330",
+    "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
-    "createdTime": 1722960557297,
-    "modifiedTime": 1722960557297,
+    "createdTime": 1724162748653,
+    "modifiedTime": 1724163863015,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
-  "_id": "q4qfTNcFOQNfXZJp",
+  "_id": "uPBUQCPyAmjFYaZ8",
   "sort": 0,
-  "_key": "!macros!q4qfTNcFOQNfXZJp"
+  "_key": "!macros!uPBUQCPyAmjFYaZ8"
 }
