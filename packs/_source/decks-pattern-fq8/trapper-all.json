@@ -8,7 +8,7 @@
     {
       "_id": "0XmTT5oPhItCvY9S",
       "name": "Tamed Wolf",
-      "description": "{\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"sound\": \"modules/fq-card-engine/sounds/louve-apprivoisee.mp3\",\n  \"minions\": [\n    {\n      \"name\": \"Louve Apprivoisée\",\n      \"data\": {\n        \"hp\": \"10+@cha\",\n        \"damageBonus\": \"trunc(@cha/3)\",\n        \"movement\": \"5*(trunc(@cha/2)+4)\"\n      }\n    }\n  ],\n \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": [\"Une Louve apprivoisée a été invoquée\"]\n}",
+      "description": "{\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"sound\": \"modules/fq-card-engine/sounds/tamed-wolf.mp3\",\n  \"minions\": [\n    {\n      \"name\": \"Tamed Wolf\",\n      \"data\": {\n        \"hp\": \"10+@cha\",\n        \"damageBonus\": \"trunc(@cha/3)\",\n        \"movement\": \"5*(trunc(@cha/2)+4)\"\n      }\n    }\n  ],\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgMinionInvoked\",\n      \"arg\": {\n        \"minion\": \"Tamed Wolf\"\n      }\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -32,19 +32,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1724479694794,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.0XmTT5oPhItCvY9S"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.0XmTT5oPhItCvY9S",
+      "cards": []
     },
     {
       "_id": "Mde8sV1ruccJhiZh",
@@ -90,7 +90,7 @@
     {
       "_id": "9AxZSYKu9yh6sfH2",
       "name": "Elite Marksman",
-      "description": "{\n  \"action\": \"-10\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Elite Marksman\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Elite Marksman\",\n              \"icon\": \"icons/skills/ranged/person-archery-bow-attack-orange.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"10+@str\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"adjustment\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": \"Augmente le critique de @str + 10 jusqu'a la fin du prochain tour\"\n        }\n      ]\n    }\n  ]\n}",
+      "description": "{\n  \"action\": \"-10\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Elite Marksman\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Elite Marksman\",\n              \"icon\": \"icons/skills/ranged/person-archery-bow-attack-orange.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"10+@str\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"adjustment\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgCriticalBonus\",\n              \"arg\": {\n                \"critical\": \"@str + 10\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Elite Marksman\",\n                \"turn\": \"1\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -114,19 +114,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1711291675032,
-        "lastModifiedBy": "SA6JKCaEua1JXSu4",
+        "modifiedTime": 1724480045620,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.9AxZSYKu9yh6sfH2"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.9AxZSYKu9yh6sfH2",
+      "cards": []
     },
     {
       "_id": "M0Lg29KpmNYuLWBc",
@@ -172,7 +172,7 @@
     {
       "_id": "irjLZGMorDOXWkIe",
       "name": "Rain of Arrows",
-      "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"12\",\n  \"nbTargets\": \"5\",\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": \"Toutes les cibles doivent être contenues dans un carré 3X3 cases\"\n    }\n  ]\n}",
+      "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"12\",\n  \"nbTargets\": \"5\",\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgSquareEffect\",\n          \"arg\": {\n            \"area\": \"3X3\"\n          }\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "value": null,
@@ -196,24 +196,24 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1724480091633,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.irjLZGMorDOXWkIe"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.irjLZGMorDOXWkIe",
+      "cards": []
     },
     {
       "_id": "a2ExofDTulU8nBd9",
       "name": "Draw II",
-      "description": "{\"action\":\"-2\",\"draw\":\"2\",\"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\":[\"Vous piochez 2 cartes\"]}",
+      "description": "{\n  \"action\": \"-2\",\n  \"draw\": \"2\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgDrawCard\",\n      \"arg\": {\n        \"draw\": \"2\"\n      }\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -237,24 +237,24 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1724480290174,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.a2ExofDTulU8nBd9"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.a2ExofDTulU8nBd9",
+      "cards": []
     },
     {
       "_id": "gh2fMPhKr53UgyQE",
       "name": "Mana Recovery II",
-      "description": "{\"action\":\"-3\",\"mana\":\"+2\",\"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\":[\"Vous avez regagné 2 points de mana\"]}",
+      "description": "{\n  \"action\": \"-3\",\n  \"mana\": \"+2\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"2\"\n      }\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -278,24 +278,24 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1724480249300,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.gh2fMPhKr53UgyQE"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.gh2fMPhKr53UgyQE",
+      "cards": []
     },
     {
       "_id": "kAbNEfKHWIWvCmdb",
       "name": "Trap",
-      "description": "{\n  \"action\": \"-2\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@int + 1d4)[slashing]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"12\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Immobilization\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Immobilization\",\n              \"icon\": \"icons/magic/control/silhouette-grow-shrink-blue.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"0\",\n                  \"mode\": \"5\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"electric\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"1\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": \"L'Effet 'Immobilization' a été appliqué pour 1 tour\"\n        }\n      ]\n    }\n  ]\n}",
+      "description": "{\n  \"action\": \"-2\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@int + 1d4)[slashing]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"12\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Immobilization\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Immobilization\",\n              \"icon\": \"icons/magic/control/silhouette-grow-shrink-blue.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"0\",\n                  \"mode\": \"5\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"electric\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"1\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Immobilization\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -319,19 +319,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1724480062997,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.kAbNEfKHWIWvCmdb"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.kAbNEfKHWIWvCmdb",
+      "cards": []
     },
     {
       "_id": "f9pLmgPFm4NR2i0C",
@@ -377,7 +377,7 @@
     {
       "_id": "TxGcr0vyW9JMVnuI",
       "name": "Turn Booster IV",
-      "description": "{\"action\":\"+4\",\"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\":[\"Vous avez regagné 4 points d'action\"]}",
+      "description": "{\n  \"action\": \"+4\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgActionRecover\",\n      \"arg\": {\n        \"acrion\": \"4\"\n      }\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -401,24 +401,24 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1724480269992,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.TxGcr0vyW9JMVnuI"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.TxGcr0vyW9JMVnuI",
+      "cards": []
     },
     {
       "_id": "VQzzm4SZPAFdPW03",
       "name": "Poisoned Shot",
-      "description": "{\n  \"action\": \"-5\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@dex+1d4)[poison]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Poison\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Poison @wis\",\n              \"icon\": \"icons/skills/melee/strike-scythe-fire-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glow\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": \"L'Effet 'Poison @wis' a été appliqué pour 2 tours\"\n        }\n      ]\n    }\n  ]\n}",
+      "description": "{\n  \"action\": \"-5\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@dex+1d4)[poison]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Poison\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Poison @wis\",\n              \"icon\": \"icons/skills/melee/strike-scythe-fire-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glow\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Poison @wis\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "value": null,
@@ -442,24 +442,24 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1724479632594,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.VQzzm4SZPAFdPW03"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.VQzzm4SZPAFdPW03",
+      "cards": []
     },
     {
       "_id": "QGo9GbrgzApbBQWc",
       "name": "Piercing Shot",
-      "description": "{\n  \"damage\": \"(@dex+1d6)[piercing]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-9\",\n  \"zeal\": \"+1\",\n  \"mana\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size !== 2 || ((Math.abs([...game.user.targets][0].x - [...game.user.targets][1].x) ===  game.canvas?.scene?.dimensions?.size &amp;&amp; [...game.user.targets][0].y === [...game.user.targets][1].y ) || (Math.abs([...game.user.targets][0].y - [...game.user.targets][1].y) ===  game.canvas?.scene?.dimensions?.size  &amp;&amp; [...game.user.targets][0].x === [...game.user.targets][1].x))\",\n      \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": \"Les deux cibles doivent être adjacentes\"\n    }\n  ]\n}",
+      "description": "{\n  \"damage\": \"(@dex+1d6)[piercing]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-9\",\n  \"zeal\": \"+1\",\n  \"mana\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size !== 2 || ((Math.abs([...game.user.targets][0].x - [...game.user.targets][1].x) ===  game.canvas?.scene?.dimensions?.size &amp;&amp; [...game.user.targets][0].y === [...game.user.targets][1].y ) || (Math.abs([...game.user.targets][0].y - [...game.user.targets][1].y) ===  game.canvas?.scene?.dimensions?.size  &amp;&amp; [...game.user.targets][0].x === [...game.user.targets][1].x))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgTargetAdjacents\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "value": null,
@@ -483,24 +483,24 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1724479912563,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.QGo9GbrgzApbBQWc"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.QGo9GbrgzApbBQWc",
+      "cards": []
     },
     {
       "_id": "cGyK3RraGVHOG7H3",
       "name": "Weak Point Study",
-      "description": "{\n  \"zeal\": \"+1\",\n  \"customEval\": [\n    {\n      \"test\": \"(!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id).filter(l =&gt; l.resultArray.filter(r =&gt; r.evasion).length).length))\",\n      \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": \"Vous devez avoir joué un sort qui a été esquivé pendant ce tour\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Damage Bonus\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Damage Bonus +1\",\n              \"icon\": \"icons/skills/wounds/anatomy-organ-heart-red.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.damage\",\n                  \"value\": \"+1\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": \"Augmente les dégâts de 1 jusqu'à la fin du combat\"\n        }\n      ]\n    }\n  ],\n  \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": [\n    \"Récupérez le(s) carte(s) concernée(s) dans votre défausse, et mettez ce(s) carte(s) dans votre main\"\n  ]\n}",
+      "description": "{\n  \"zeal\": \"+1\",\n  \"customEval\": [\n    {\n      \"test\": \"(!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id).filter(l =&gt; l.resultArray.filter(r =&gt; r.evasion).length).length))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgSpellAvoided\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Damage Bonus\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Damage Bonus +1\",\n              \"icon\": \"icons/skills/wounds/anatomy-organ-heart-red.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.damage\",\n                  \"value\": \"+1\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageBonus\",\n              \"arg\": {\n                \"damage\": \"1\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgPickOnPile\",\n      \"arg\": {}\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -524,24 +524,24 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1711291711578,
-        "lastModifiedBy": "SA6JKCaEua1JXSu4",
+        "modifiedTime": 1724480192891,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.cGyK3RraGVHOG7H3"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.cGyK3RraGVHOG7H3",
+      "cards": []
     },
     {
       "_id": "YoH2Y1D0tGjrvcR3",
       "name": "Ambush",
-      "description": "{\n  \"name\": \"Embuscade\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"fq.action.value\",\n  \"customEval\": [\n    {\n      \"test\": \"(!game.combat.flags.FQLogs || ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()) || ([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop().cardContent.name === 'Ambush')\",\n      \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": \"Impossible de jouer ce sort si une carte a déjà été joué ce tour-ci\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Damage Bonus\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Damage Bonus +@wis\",\n              \"icon\": \"icons/skills/targeting/crosshair-scope-sniper-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.damage\",\n                  \"value\": \"+@wis\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": \"Augmente les dégâts de @wis pendant 2 tour\"\n        }\n      ]\n    }\n  ],\n  \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": [\n    \"vos points d'action sont à 0\",\n    \"Vous DEVEZ passez votre tour maintenant ou jouez une autre carte 'Embuscade'\"\n  ]\n}",
+      "description": "{\n  \"name\": \"Ambush\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"fq.action.value\",\n  \"customEval\": [\n    {\n      \"test\": \"(!game.combat.flags.FQLogs || ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()) || ([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop().cardContent.name === 'Ambush')\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgOnlyThisSpellThisTurn\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Damage Bonus\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Damage Bonus +@wis\",\n              \"icon\": \"icons/skills/targeting/crosshair-scope-sniper-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.damage\",\n                  \"value\": \"+@wis\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageBonus\",\n              \"arg\": {\n                \"damage\": \"@wis\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Damage Bonus\",\n                \"turn\": \"2\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgAmbush\",\n      \"arg\": {}\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -565,24 +565,24 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1711291516035,
-        "lastModifiedBy": "SA6JKCaEua1JXSu4",
+        "modifiedTime": 1724479874005,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.YoH2Y1D0tGjrvcR3"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.YoH2Y1D0tGjrvcR3",
+      "cards": []
     },
     {
       "_id": "eQI6ftL0jPoeubYF",
       "name": "Supersonic Shot",
-      "description": "{\n  \"minReach\": \"2\",\n  \"maxReach\": \"9999\",\n  \"damage\": \"(@cha + 2d6 - XXX)[bludgeoning]\",\n  \"bonusCrit\": \"-9999\",\n  \"bonusEva\": \"-9999\",\n  \"action\": \"-9\",\n  \"xvalue\": \"reach\",\n  \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": [\"déplacez la cible de 2*@wis-XXX dans la direction souhaitée\"]\n}",
+      "description": "{\n  \"minReach\": \"2\",\n  \"maxReach\": \"9999\",\n  \"damage\": \"(@cha + 2d6 - XXX)[bludgeoning]\",\n  \"bonusCrit\": \"-9999\",\n  \"bonusEva\": \"-9999\",\n  \"action\": \"-9\",\n  \"xvalue\": \"reach\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgSupersonicStrike\",\n      \"arg\": {\n        \"score\": \"2*@wis-XXX\"\n      }\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -606,24 +606,24 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1724479947703,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.eQI6ftL0jPoeubYF"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.eQI6ftL0jPoeubYF",
+      "cards": []
     },
     {
       "_id": "JUARxHb2gjxbgd6P",
       "name": "Explosive Shot",
-      "description": "{\n  \"damage\": \"(@dex+1d6)[force]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"7\",\n  \"nbTargets\": \"5\",\n  \"action\": \"-8\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 5 || ([...game.user.targets].filter(pt =&gt; [...game.user.targets].filter(t =&gt; (Math.abs(t.x - pt.x) === game.canvas?.scene?.dimensions?.size &amp;&amp; t.y === pt.y) || (Math.abs(t.y - pt.y) === game.canvas?.scene?.dimensions?.size &amp;&amp; t.x === pt.x)).length === [...game.user.targets].length - 1).length &gt;= 1)\",\n      \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ],\n          \"message\": \"Toutes les cibles doivent être adjacentes\"\n    }\n  ]\n}",
+      "description": "{\n  \"damage\": \"(@dex+1d6)[force]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"7\",\n  \"nbTargets\": \"5\",\n  \"action\": \"-8\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 5 || ([...game.user.targets].filter(pt =&gt; [...game.user.targets].filter(t =&gt; (Math.abs(t.x - pt.x) === game.canvas?.scene?.dimensions?.size &amp;&amp; t.y === pt.y) || (Math.abs(t.y - pt.y) === game.canvas?.scene?.dimensions?.size &amp;&amp; t.x === pt.x)).length === [...game.user.targets].length - 1).length &gt;= 1)\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgTargetAdjacents\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -647,19 +647,19 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1724479714613,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.JUARxHb2gjxbgd6P"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.JUARxHb2gjxbgd6P",
+      "cards": []
     }
   ],
   "width": null,
