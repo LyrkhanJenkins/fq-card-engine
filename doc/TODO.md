@@ -14,23 +14,6 @@
 - Recette globale avec utilisateurs et MJs
 - Suppression de tous les Warnings/ tous les bugs pour 1.0.0 sans utilisateur
 
-## 0.1.4
-
-- Traduction des effets des cartes
-
-~~- Trouver un moyen de le faire pour les joueurs non connectés~~
-
-~~- Ajouter les noms des mains par défaut~~
-
-~~- Pourquoi MJ n'a pas de main~~
-
-~~- Traduction manquantes pour macros~~
-
-~~- Traduction manquantes pour spells NPC~~
-
-~~- Les items choice des classes ne sont pas bons (utiliser des compendiums)~~
-
-
 ## Backlog
 
 ### High:
