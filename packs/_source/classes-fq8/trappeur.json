@@ -1,0 +1,56 @@
+{
+  "_id": "9xIJp9Rqvf7N7r33",
+  "name": "Trappeur",
+  "type": "class",
+  "img": "modules/fq-card-engine/images/classes/craiyon_151523_green_archer_in_forest_with_wolf_pet_along_him.png",
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "cf": {
+      "id": "temp_9hjmr9g6fcm"
+    }
+  },
+  "_stats": {
+    "coreVersion": "12.316",
+    "systemId": null,
+    "systemVersion": null,
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {
+    "description": {
+      "value": "<p class=\"MsoNormal\" style=\"margin-bottom:.0001pt\"><span style=\"color:#2e74b5;mso-themecolor:accent1;mso-themeshade:191\">Le trappeur est une classe à distance spécialisée dans les attaques critiques. Il est accompagné de son familier et peut également poser des pièges redoutables</span></p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "",
+    "identifier": "trappeur",
+    "levels": 1,
+    "hitDice": "d6",
+    "hitDiceUsed": 0,
+    "advancement": [
+      {
+        "_id": "lkw3w6oebsnedz8w",
+        "type": "HitPoints",
+        "configuration": {},
+        "value": {}
+      }
+    ],
+    "saves": [],
+    "skills": {
+      "number": 2,
+      "choices": [],
+      "value": []
+    },
+    "spellcasting": {
+      "progression": "none",
+      "ability": ""
+    }
+  },
+  "_key": "!items!9xIJp9Rqvf7N7r33"
+}
