@@ -1,176 +1,12 @@
 {
-  "_id": "r0R8CKY7ErOC1bNM",
-  "name": "Trappeur Niv3",
+  "_id": "5Obtj3HpOowCbUJM",
+  "name": "Trapper All",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cards/fr/Trappeur/dos_de_carte.PNG",
+  "img": "modules/fq-card-engine/images/cards/fr/trapper/dos_de_carte.PNG",
   "cards": [
     {
-      "_id": "2bXvIxDxDM1G5PC9",
-      "name": "Tir précis",
-      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
-      "type": "base",
-      "suit": "",
-      "back": {
-        "name": "",
-        "text": "",
-        "img": null
-      },
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
-          "text": ""
-        }
-      ],
-      "face": 0,
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 3,
-      "flags": {},
-      "value": null,
-      "system": {},
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "width": null,
-      "height": null,
-      "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.2bXvIxDxDM1G5PC9"
-    },
-    {
-      "_id": "jThSevoFTuCGVbGL",
-      "name": "Tir précis",
-      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
-      "type": "base",
-      "suit": "",
-      "back": {
-        "name": "",
-        "text": "",
-        "img": null
-      },
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
-          "text": ""
-        }
-      ],
-      "face": 0,
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 3,
-      "flags": {},
-      "value": null,
-      "system": {},
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "width": null,
-      "height": null,
-      "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.jThSevoFTuCGVbGL"
-    },
-    {
-      "_id": "SrEjSRfGS8AZoPfd",
-      "name": "Tir précis",
-      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
-      "type": "base",
-      "suit": "",
-      "back": {
-        "name": "",
-        "text": "",
-        "img": null
-      },
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
-          "text": ""
-        }
-      ],
-      "face": 0,
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 3,
-      "flags": {},
-      "value": null,
-      "system": {},
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "width": null,
-      "height": null,
-      "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.SrEjSRfGS8AZoPfd"
-    },
-    {
-      "_id": "dpdSunRq15CIqWPM",
-      "name": "Double flèches",
-      "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"8\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-7\",\n  \"mana\": \"-1\"\n}",
-      "type": "base",
-      "suit": "",
-      "back": {
-        "name": "",
-        "text": "",
-        "img": null
-      },
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Double%20fl%C3%A8ches.PNG",
-          "text": ""
-        }
-      ],
-      "face": 0,
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 8,
-      "flags": {},
-      "value": null,
-      "system": {},
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "width": null,
-      "height": null,
-      "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.dpdSunRq15CIqWPM"
-    },
-    {
-      "_id": "X2U74oOD33oq6ScZ",
+      "_id": "0XmTT5oPhItCvY9S",
       "name": "Louve apprivoisée",
       "description": "{\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"sound\": \"modules/fq-card-engine/sounds/louve-apprivoisee.mp3\",\n  \"minions\": [\n    {\n      \"name\": \"Louve Apprivoisée\",\n      \"data\": {\n        \"hp\": \"10+@cha\",\n        \"damageBonus\": \"trunc(@cha/3)\",\n        \"movement\": \"5*(trunc(@cha/2)+4)\"\n      }\n    }\n  ],\n \"other\": [\"Une Louve apprivoisée a été invoquée\"]\n}",
       "type": "base",
@@ -183,7 +19,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Louve%20apprivois%C3%A9e.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Louve%20apprivois%C3%A9e.PNG",
           "text": ""
         }
       ],
@@ -208,10 +44,51 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.X2U74oOD33oq6ScZ"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.0XmTT5oPhItCvY9S"
     },
     {
-      "_id": "e2HmFVPKY4wC3W2E",
+      "_id": "Mde8sV1ruccJhiZh",
+      "name": "Tir précis",
+      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20Pr%C3%A9cis.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {},
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "12.330",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.Mde8sV1ruccJhiZh"
+    },
+    {
+      "_id": "9AxZSYKu9yh6sfH2",
       "name": "Tireur d'élite",
       "description": "{\n  \"action\": \"-10\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Tireur d'élite\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Tireur d'élite\",\n              \"icon\": \"icons/skills/ranged/person-archery-bow-attack-orange.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"10+@str\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"adjustment\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Augmente le critique de @str + 10 jusqu'a la fin du prochain tour\"\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
@@ -224,7 +101,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tireur%20d%27%C3%A9lite.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tireur%20d%27%C3%A9lite.PNG",
           "text": ""
         }
       ],
@@ -249,10 +126,51 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.e2HmFVPKY4wC3W2E"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.9AxZSYKu9yh6sfH2"
     },
     {
-      "_id": "ulTfAeYwl9WxFCSO",
+      "_id": "M0Lg29KpmNYuLWBc",
+      "name": "Double flèches",
+      "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"8\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-7\",\n  \"mana\": \"-1\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Double%20fl%C3%A8ches.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 8,
+      "flags": {},
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "12.330",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.M0Lg29KpmNYuLWBc"
+    },
+    {
+      "_id": "irjLZGMorDOXWkIe",
       "name": "Pluie de flèches",
       "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"12\",\n  \"nbTargets\": \"5\",\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"message\": \"Toutes les cibles doivent être contenues dans un carré 3X3 cases\"\n    }\n  ]\n}",
       "type": "base",
@@ -266,7 +184,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Pluie%20de%20fl%C3%A8ches.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Pluie%20de%20fl%C3%A8ches.PNG",
           "text": ""
         }
       ],
@@ -290,10 +208,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.ulTfAeYwl9WxFCSO"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.irjLZGMorDOXWkIe"
     },
     {
-      "_id": "j2yXASADhfW0btIo",
+      "_id": "a2ExofDTulU8nBd9",
       "name": "Pioche II",
       "description": "{\"action\":\"-2\",\"draw\":\"2\",\"other\":[\"Vous piochez 2 cartes\"]}",
       "type": "base",
@@ -306,7 +224,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv2/Pioche%20II.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Pioche%20II.PNG",
           "text": ""
         }
       ],
@@ -331,10 +249,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.j2yXASADhfW0btIo"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.a2ExofDTulU8nBd9"
     },
     {
-      "_id": "fujWjQT7yArIFAvO",
+      "_id": "gh2fMPhKr53UgyQE",
       "name": "Récupération de Mana",
       "description": "{\"action\":\"-3\",\"mana\":\"+2\",\"other\":[\"Vous avez regagné 2 points de mana\"]}",
       "type": "base",
@@ -347,7 +265,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv2/R%C3%A9cup%C3%A9ration%20de%20mana.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/R%C3%A9cup%C3%A9ration%20de%20mana.PNG",
           "text": ""
         }
       ],
@@ -372,10 +290,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.fujWjQT7yArIFAvO"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.gh2fMPhKr53UgyQE"
     },
     {
-      "_id": "yJd2E4hAapbcrAGr",
+      "_id": "kAbNEfKHWIWvCmdb",
       "name": "Traquenard",
       "description": "{\n  \"action\": \"-2\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@int + 1d4)[slashing]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"12\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Immobilisation\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Immobilisation\",\n              \"icon\": \"icons/magic/control/silhouette-grow-shrink-blue.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"0\",\n                  \"mode\": \"5\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"electric\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"1\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"L'Effet 'Immobilisation' a été appliqué pour 1 tour\"\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
@@ -388,7 +306,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv2/Traquenard.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Traquenard.PNG",
           "text": ""
         }
       ],
@@ -413,51 +331,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.yJd2E4hAapbcrAGr"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.kAbNEfKHWIWvCmdb"
     },
     {
-      "_id": "94r80egbSIc4nQsJ",
-      "name": "Tir précis",
-      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
-      "type": "base",
-      "suit": "",
-      "back": {
-        "name": "",
-        "text": "",
-        "img": null
-      },
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
-          "text": ""
-        }
-      ],
-      "face": 0,
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 3,
-      "flags": {},
-      "value": null,
-      "system": {},
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "width": null,
-      "height": null,
-      "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.94r80egbSIc4nQsJ"
-    },
-    {
-      "_id": "NvZI4mkNbLITSWRn",
+      "_id": "f9pLmgPFm4NR2i0C",
       "name": "Tir Réflexe",
       "description": "{\n  \"reactif\": true,\n  \"damage\": \"(@dex+1d6)[piercing]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"4\",\n  \"zeal\": \"-2\"\n}",
       "type": "base",
@@ -470,7 +347,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv2/Tir%20r%C3%A9flexe.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20r%C3%A9flexe.PNG",
           "text": ""
         }
       ],
@@ -495,215 +372,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.NvZI4mkNbLITSWRn"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.f9pLmgPFm4NR2i0C"
     },
     {
-      "_id": "exEAZrVJDm2FJSX3",
-      "name": "Tir empoisonné",
-      "description": "{\n  \"action\": \"-5\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@dex+1d4)[poison]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Empoisonnement\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Empoisonnement @wis\",\n              \"icon\": \"icons/skills/melee/strike-scythe-fire-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glow\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"L'Effet 'Empoisonnement @wis' a été appliqué pour 2 tours\"\n        }\n      ]\n    }\n  ]\n}",
-      "type": "base",
-      "suit": "",
-      "value": null,
-      "back": {
-        "name": "",
-        "text": "",
-        "img": null
-      },
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv3/Tir%20empoisonn%C3%A9.PNG",
-          "text": ""
-        }
-      ],
-      "face": 0,
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 0,
-      "flags": {},
-      "system": {},
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "width": null,
-      "height": null,
-      "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.exEAZrVJDm2FJSX3"
-    },
-    {
-      "_id": "OhwBvjhihqFAM08h",
-      "name": "Tir empoisonné",
-      "description": "{\n  \"action\": \"-5\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@dex+1d4)[poison]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Empoisonnement\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Empoisonnement @wis\",\n              \"icon\": \"icons/skills/melee/strike-scythe-fire-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glow\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"L'Effet 'Empoisonnement @wis' a été appliqué pour 2 tours\"\n        }\n      ]\n    }\n  ]\n}",
-      "type": "base",
-      "suit": "",
-      "value": null,
-      "back": {
-        "name": "",
-        "text": "",
-        "img": null
-      },
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv3/Tir%20empoisonn%C3%A9.PNG",
-          "text": ""
-        }
-      ],
-      "face": 0,
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 0,
-      "flags": {},
-      "system": {},
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "width": null,
-      "height": null,
-      "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.OhwBvjhihqFAM08h"
-    },
-    {
-      "_id": "zqR83WnRpu8n8P4w",
-      "name": "Tir transperçant",
-      "description": "{\n  \"damage\": \"(@dex+1d6)[piercing]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-9\",\n  \"zeal\": \"+1\",\n  \"mana\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size !== 2 || ((Math.abs([...game.user.targets][0].x - [...game.user.targets][1].x) ===  game.canvas?.scene?.dimensions?.size &amp;&amp; [...game.user.targets][0].y === [...game.user.targets][1].y ) || (Math.abs([...game.user.targets][0].y - [...game.user.targets][1].y) ===  game.canvas?.scene?.dimensions?.size  &amp;&amp; [...game.user.targets][0].x === [...game.user.targets][1].x))\",\n      \"message\": \"Les deux cibles doivent être adjacentes\"\n    }\n  ]\n}",
-      "type": "base",
-      "suit": "",
-      "value": null,
-      "back": {
-        "name": "",
-        "text": "",
-        "img": null
-      },
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv3/Tir%20transper%C3%A7ant.PNG",
-          "text": ""
-        }
-      ],
-      "face": 0,
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 6,
-      "flags": {},
-      "system": {},
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "width": null,
-      "height": null,
-      "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.zqR83WnRpu8n8P4w"
-    },
-    {
-      "_id": "AbARDnCfcAJ9ajXs",
-      "name": "Pioche II",
-      "description": "{\"action\":\"-2\",\"draw\":\"2\",\"other\":[\"Vous piochez 2 cartes\"]}",
-      "type": "base",
-      "suit": "",
-      "back": {
-        "name": "",
-        "text": "",
-        "img": null
-      },
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv2/Pioche%20II.PNG",
-          "text": ""
-        }
-      ],
-      "face": 0,
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 15,
-      "flags": {},
-      "value": null,
-      "system": {},
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "width": null,
-      "height": null,
-      "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.AbARDnCfcAJ9ajXs"
-    },
-    {
-      "_id": "ZYC7w5sWefEx6n5b",
-      "name": "Tir précis",
-      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
-      "type": "base",
-      "suit": "",
-      "back": {
-        "name": "",
-        "text": "",
-        "img": null
-      },
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
-          "text": ""
-        }
-      ],
-      "face": 0,
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 3,
-      "flags": {},
-      "value": null,
-      "system": {},
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "width": null,
-      "height": null,
-      "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.ZYC7w5sWefEx6n5b"
-    },
-    {
-      "_id": "WVMSJM3fmddimMqb",
+      "_id": "TxGcr0vyW9JMVnuI",
       "name": "Booster de tour",
       "description": "{\"action\":\"+4\",\"other\":[\"Vous avez regagné 4 points d'action\"]}",
       "type": "base",
@@ -716,7 +388,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv3/Booster%20de%20tour.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Booster%20de%20tour.PNG",
           "text": ""
         }
       ],
@@ -741,7 +413,253 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!r0R8CKY7ErOC1bNM.WVMSJM3fmddimMqb"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.TxGcr0vyW9JMVnuI"
+    },
+    {
+      "_id": "VQzzm4SZPAFdPW03",
+      "name": "Tir empoisonné",
+      "description": "{\n  \"action\": \"-5\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@dex+1d4)[poison]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Empoisonnement\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Empoisonnement @wis\",\n              \"icon\": \"icons/skills/melee/strike-scythe-fire-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glow\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"L'Effet 'Empoisonnement @wis' a été appliqué pour 2 tours\"\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20empoisonn%C3%A9.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "system": {},
+      "_stats": {
+        "coreVersion": "12.330",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.VQzzm4SZPAFdPW03"
+    },
+    {
+      "_id": "QGo9GbrgzApbBQWc",
+      "name": "Tir transperçant",
+      "description": "{\n  \"damage\": \"(@dex+1d6)[piercing]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-9\",\n  \"zeal\": \"+1\",\n  \"mana\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size !== 2 || ((Math.abs([...game.user.targets][0].x - [...game.user.targets][1].x) ===  game.canvas?.scene?.dimensions?.size &amp;&amp; [...game.user.targets][0].y === [...game.user.targets][1].y ) || (Math.abs([...game.user.targets][0].y - [...game.user.targets][1].y) ===  game.canvas?.scene?.dimensions?.size  &amp;&amp; [...game.user.targets][0].x === [...game.user.targets][1].x))\",\n      \"message\": \"Les deux cibles doivent être adjacentes\"\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20transper%C3%A7ant.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 6,
+      "flags": {},
+      "system": {},
+      "_stats": {
+        "coreVersion": "12.330",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.QGo9GbrgzApbBQWc"
+    },
+    {
+      "_id": "cGyK3RraGVHOG7H3",
+      "name": "Etude du point faible",
+      "description": "{\n  \"zeal\": \"+1\",\n  \"customEval\": [\n    {\n      \"test\": \"(!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id).filter(l =&gt; l.resultArray.filter(r =&gt; r.evasion).length).length))\",\n      \"message\": \"Vous devez avoir joué un sort qui a été esquivé pendant ce tour\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Bonus de dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Bonus de dégâts +1\",\n              \"icon\": \"icons/skills/wounds/anatomy-organ-heart-red.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.damage\",\n                  \"value\": \"+1\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Augmente les dégâts de 1 jusqu'à la fin du combat\"\n        }\n      ]\n    }\n  ],\n  \"other\": [\n    \"Récupérez le(s) carte(s) concernée(s) dans votre défausse, et mettez ce(s) carte(s) dans votre main\"\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Etude%20du%20point%20faible.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 12,
+      "flags": {},
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "12.330",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1711291711578,
+        "lastModifiedBy": "SA6JKCaEua1JXSu4",
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.cGyK3RraGVHOG7H3"
+    },
+    {
+      "_id": "YoH2Y1D0tGjrvcR3",
+      "name": "Embuscade",
+      "description": "{\n  \"name\": \"Embuscade\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"fq.action.value\",\n  \"customEval\": [\n    {\n      \"test\": \"(!game.combat.flags.FQLogs || ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()) || ([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop().cardContent.name === 'Embuscade')\",\n      \"message\": \"Impossible de jouer ce sort si une carte a déjà été joué ce tour-ci\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Bonus de dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Bonus de dégâts +@wis\",\n              \"icon\": \"icons/skills/targeting/crosshair-scope-sniper-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.damage\",\n                  \"value\": \"+@wis\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Augmente les dégâts de @wis pendant 2 tour\"\n        }\n      ]\n    }\n  ],\n  \"other\": [\n    \"vos points d'action sont à 0\",\n    \"Vous DEVEZ passez votre tour maintenant ou jouez une autre carte 'Embuscade'\"\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Embuscade.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 4,
+      "flags": {},
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "12.330",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1711291516035,
+        "lastModifiedBy": "SA6JKCaEua1JXSu4",
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.YoH2Y1D0tGjrvcR3"
+    },
+    {
+      "_id": "eQI6ftL0jPoeubYF",
+      "name": "Tir supersonique",
+      "description": "{\n  \"minReach\": \"2\",\n  \"maxReach\": \"9999\",\n  \"damage\": \"(@cha + 2d6 - XXX)[bludgeoning]\",\n  \"bonusCrit\": \"-9999\",\n  \"bonusEva\": \"-9999\",\n  \"action\": \"-9\",\n  \"xvalue\": \"reach\",\n  \"other\": [\"déplacez la cible de 2*@wis-XXX dans la direction souhaitée\"]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "Unknown (Trapper All)",
+        "text": "",
+        "img": "modules/fq-card-engine/images/cards/fr/trapper/dos_de_carte.PNG"
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20supersonique.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 7,
+      "flags": {},
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "12.330",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.eQI6ftL0jPoeubYF"
+    },
+    {
+      "_id": "JUARxHb2gjxbgd6P",
+      "name": "Tir explosif",
+      "description": "{\n  \"damage\": \"(@dex+1d6)[force]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"7\",\n  \"nbTargets\": \"5\",\n  \"action\": \"-8\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 5 || ([...game.user.targets].filter(pt =&gt; [...game.user.targets].filter(t =&gt; (Math.abs(t.x - pt.x) === game.canvas?.scene?.dimensions?.size &amp;&amp; t.y === pt.y) || (Math.abs(t.y - pt.y) === game.canvas?.scene?.dimensions?.size &amp;&amp; t.x === pt.x)).length === [...game.user.targets].length - 1).length &gt;= 1)\",\n      \"message\": \"Toutes les cibles doivent être adjacentes\"\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "Unknown (Trapper All)",
+        "text": "",
+        "img": "modules/fq-card-engine/images/cards/fr/trapper/dos_de_carte.PNG"
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20explosif.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2,
+      "flags": {},
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "12.330",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.JUARxHb2gjxbgd6P"
     }
   ],
   "width": null,
@@ -765,5 +683,5 @@
     "default": 0
   },
   "system": {},
-  "_key": "!cards!r0R8CKY7ErOC1bNM"
+  "_key": "!cards!5Obtj3HpOowCbUJM"
 }
