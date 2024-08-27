@@ -404,7 +404,7 @@ div#fq-card-engine-container{
 }
 
 
-.fq-card-engine-window-cards{    
+.fq-card-engine-window-cards{
     max-width: 100%;
     height: calc(100% - 33px);
     display: flex;
@@ -432,7 +432,7 @@ div#fq-card-engine-container{
     margin-bottom:-22px;    
     pointer-events: all;
 }
-.directory-item .fq-card-engine-pile-shortcut{    
+.directory-item .fq-card-engine-pile-shortcut{
     background-image: url(/modules/fq-card-engine/artwork/cards.png);
     background-repeat: no-repeat;
     background-size: 30px;
@@ -449,7 +449,7 @@ div#fq-card-engine-container{
 }
 
 
-.fq-card-engine-window-cards.deck, .fq-card-engine-window-cards.pile{    
+.fq-card-engine-window-cards.deck, .fq-card-engine-window-cards.pile{
     max-width: 100%;
     height: calc(100% - 33px);
     display: flex;
@@ -457,7 +457,7 @@ div#fq-card-engine-container{
     flex-flow: wrap;
 }
 
-.fq-card-engine-window-cards.hand{    
+.fq-card-engine-window-cards.hand{
     max-width: 100%;
     height: calc(100% - 33px);
     display: table;
@@ -475,7 +475,7 @@ div#fq-card-engine-container{
     display: table-cell;
 }
 
-.fq-card-engine-window-cards.pile.show-players{    
+.fq-card-engine-window-cards.pile.show-players{
     overflow-x: scroll;
     flex-flow:nowrap;
 }
@@ -484,7 +484,7 @@ div#fq-card-engine-container{
     margin: 10px;
 }
 
-.fq-card-engine-window-cards.deck .fq-card-engine-window-card, 
+.fq-card-engine-window-cards.deck .fq-card-engine-window-card,
 .fq-card-engine-window-cards.pile .fq-card-engine-window-card{
     background-size: contain;
     background-repeat: no-repeat;
@@ -509,7 +509,7 @@ div#fq-card-engine-container{
     flex-grow: 1;
 }
 
-.fa-fq-card-engine-open-hand{    
+.fa-fq-card-engine-open-hand{
     background-image: url(/modules/fq-card-engine/artwork/cards.png);
     width: 15px;
     height: 15px;
@@ -526,7 +526,7 @@ div#fq-card-engine-container{
     padding-bottom:3px;
 }
 
-.fq-card-engine-window-button{    
+.fq-card-engine-window-button{
     flex-grow: 1;
     max-width: 33%;
     margin: 0 1px;
