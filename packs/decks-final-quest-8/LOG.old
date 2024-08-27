@@ -1,7 +1,0 @@
-2024/02/07-07:58:34.125 30f4 Recovering log #173
-2024/02/07-07:58:34.130 30f4 Delete type=0 #173
-2024/02/07-07:58:34.130 30f4 Delete type=3 #172
-2024/02/07-07:59:13.318 42bc Level-0 table #177: started
-2024/02/07-07:59:13.319 42bc Level-0 table #177: 0 bytes OK
-2024/02/07-07:59:13.321 42bc Delete type=0 #175
-2024/02/07-07:59:13.321 42bc Manual compaction at level-0 from '!cards!5Obtj3HpOowCbUJM' @ 72057594037927935 : 1 .. '!cards.cards!u3sMJdr77pXLAsdb.zS85IHK6w5sLfqim' @ 0 : 0; will stop at (end)
