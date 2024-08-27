@@ -133,5 +133,7 @@
   "FQCARDENGINE.WarningMsgNotEnoughDrop": "n'a pas défaussé suffisamment de carte pour jouer celle-ci",
   "FQCARDENGINE.WarningHandMissingForPlayer": "Le joueur n'a pas de main configurée",
   "FQCARDENGINE.WarningDeckMissingForPlayer": "Le joueur n'a pas de deck configuré",
-  "FQCARDENGINE.WarningPileMissingForPlayer": "Le joueur n'a pas de pile configurée"
+  "FQCARDENGINE.WarningPileMissingForPlayer": "Le joueur n'a pas de pile configurée",
+  "FQCARDENGINE.NoOwnedCharacter": "Le joueur n'a pas de personnage configuré",
+  "FQCARDENGINE.GMMustBeConnected": "Un MJ doit être connecté pour le module FQCardEngine"
 }
