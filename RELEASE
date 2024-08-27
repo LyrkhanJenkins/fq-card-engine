@@ -1,17 +1,54 @@
-Update 0.1.0
-- Consumption of FQ resources for items
-- FQ Resources can be modify for items
+Update 0.1.3:
+    Feature:
+    - Translation of all cards/items/messages into English
+    - Creation of basic characters
 
-Update 0.0.2
-- Fix first issues in cards, update Combat and Character Sheet
-- Handle Card module viewer
-- Add options to limit player's rights
-- Simplify dialog for playing card
+Update 0.1.2:
+    Feature:
+    - Macros for generating and displaying deck and spellbook (if exist preparation for lvl 6+)
+    - Choose location for summoning minions
+    - GM can choose to use cards without sending them to piles
+    - Deck/Hand/Pile are flaged 'fqType'
 
-Update 0.0.1
-- Migration v9 to v12 of fq-card-engine (version not pushed)
-- Handle Dice so nice module
-- Add options to resize hand tool bar
-- Migration of cards for 5 classes level 5
-- FQ Resources on character system and sheet
-- Start Development Based on FQ Card Engine module by Lyrkhan
+    Fix:
+    - Support for 12.330 version
+    - Fix problems with module CardViewer
+
+Update 0.1.1:
+    Feature:
+    - Automatic damage/heals with critical hits and dodges (option to disable and prevent conflicts?)
+    - Manage range for spells
+    - Creation of compendiums and migration of passive spells for NPCs
+    - Dodging sound should not use the classic damage sound
+    - Management of custom damage bonuses (corrections needed for familiars, cards, damage)
+    Fix:
+    - Custom evaluation of diagonal attack (Illusionist cards)
+    - Effect of enchanted whip (Illusionist cards)
+    - Bug with drawing a hand when a user has no character or is missing one?
+    - Bug if no deck: Return a clean error
+    - Bug if Card Viewer module is not present
+    - Issue with the style of replayable cards
+
+Update 0.1.0:
+    Feature:
+    - Ability to modify the consumption of items
+    - All items (spells, objects) can consume FQ resources
+    - CI/CD pipeline for updating module automatically
+
+Update 0.0.2:
+    Feature:
+    - Integration of CardViewer
+    - Migration of macros
+    - X and Y field required on play dialog
+    - Limite players cards right
+    - Launch initiative automatically
+    Fix:
+    - Passive effects not flipping cards
+    - apply DOT each turn
+    - Remove effect after using
+    - Minions combat's turn just after the master
+    - Option of hand size for player (local storage)
+    - Max value can't be exceeded
+
+Update 0.0.1:
+    - Card System for Foundry v12
