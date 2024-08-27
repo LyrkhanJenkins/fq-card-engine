@@ -1,11 +1,11 @@
 {
-  "name": "Louve Apprivoisée",
+  "name": "Tamed Wolf",
   "type": "character",
   "img": "modules/fq-card-engine/images/token/wolf_18.png",
   "items": [
     {
       "_id": "A2fIjQGcwsNc1NfO",
-      "name": "Morsure",
+      "name": "Bite",
       "type": "feat",
       "img": "icons/creatures/abilities/mouth-teeth-sharp.webp",
       "effects": [],
@@ -580,7 +580,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Louve Apprivoisée",
+    "name": "Tamed Wolf",
     "displayName": 0,
     "actorLink": true,
     "width": 1,

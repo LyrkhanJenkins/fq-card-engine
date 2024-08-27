@@ -10,15 +10,13 @@
 
 ## 1.0.0
 - Règles du jeu et readme complété
+- Rédigé le "Get Started"
 - Recette globale avec utilisateurs et MJs
 - Suppression de tous les Warnings/ tous les bugs pour 1.0.0 sans utilisateur
 
 ## 0.1.4
-- Rédigé le "Get Started"
 
 - Traduction des effets des cartes
-
-- classes FQ8 pas rangé au bon endroit
 
 ~~- Trouver un moyen de le faire pour les joueurs non connectés~~
 
@@ -29,6 +27,7 @@
 ~~- Traduction manquantes pour macros~~
 
 ~~- Traduction manquantes pour spells NPC~~
+
 ~~- Les items choice des classes ne sont pas bons (utiliser des compendiums)~~
 
 
