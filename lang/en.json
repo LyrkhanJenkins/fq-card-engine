@@ -75,6 +75,11 @@
     "FQCARDENGINE.DraggableBarPositionSettingY":"Y Position",
     "FQCARDENGINE.DraggableBarPositionSettingX":"X Position",
     "FQCARDENGINE.DraggableBarPositionSettingHintX":"X Position of the bar only when Draggable is enabled",
-    "FQCARDENGINE.DraggableBarPositionSettingHintY":"Y Position of the bar only when Draggable is enabled"
+    "FQCARDENGINE.DraggableBarPositionSettingHintY":"Y Position of the bar only when Draggable is enabled",
 
+    "FQCARDENGINE.HandSizeSetting": "Window size",
+    "FQCARDENGINE.HandSizeSettingHint": "Size of the window for hand's players",
+    "FQCARDENGINE.HandSizeSmallSetting": "Small",
+    "FQCARDENGINE.HandSizeMediumSetting": "Medium",
+    "FQCARDENGINE.HandSizeLargeSetting": "Large"
 }
