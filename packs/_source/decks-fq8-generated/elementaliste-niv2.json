@@ -3,7 +3,7 @@
   "name": "Elementaliste Niv2",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cartes/Elementaliste/dos_de_carte.PNG",
+  "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/dos_de_carte.PNG",
   "cards": [
     {
       "_id": "32DpgFwLrVzllAC8",
@@ -20,7 +20,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%201/Boule%20de%20feu.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%201/Boule%20de%20feu.PNG",
           "text": ""
         }
       ],
@@ -60,7 +60,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%201/Tornade.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%201/Tornade.PNG",
           "text": ""
         }
       ],
@@ -101,7 +101,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%201/Fracture%20Terrestre.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%201/Fracture%20Terrestre.PNG",
           "text": "{\"damage\":\"1d2 + (2*XXX)\",\"action\":\"-(2*XXX)\",\"mana\":\"-1\",\"zeal\":\"1\",\"addingRolls\":[{\"title\":\"Effet de Terre\",\"formula\":\"1d(4-X)\",\"effects\":[{\"result\":\"(4-XXX)\",\"other\":\"Appliquer un effet ou stack supplémentaire de terre à la cible\"}]}]}"
         }
       ],
@@ -142,7 +142,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%201/Fracture%20Terrestre.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%201/Fracture%20Terrestre.PNG",
           "text": "{\"damage\":\"1d2 + (2*XXX)\",\"action\":\"-(2*XXX)\",\"mana\":\"-1\",\"zeal\":\"1\",\"addingRolls\":[{\"title\":\"Effet de Terre\",\"formula\":\"1d(4-X)\",\"effects\":[{\"result\":\"(4-XXX)\",\"other\":\"Appliquer un effet ou stack supplémentaire de terre à la cible\"}]}]}"
         }
       ],
@@ -184,7 +184,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%201/Frappe%20de%20givre.png",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%201/Frappe%20de%20givre.png",
           "text": ""
         }
       ],
@@ -225,7 +225,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%201/Frappe%20de%20givre.png",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%201/Frappe%20de%20givre.png",
           "text": ""
         }
       ],
@@ -265,7 +265,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%201/R%C3%A9cup%C3%A9ration%20de%20mana.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%201/R%C3%A9cup%C3%A9ration%20de%20mana.PNG",
           "text": ""
         }
       ],
@@ -306,7 +306,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%202/Pioche%20III.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%202/Pioche%20III.PNG",
           "text": ""
         }
       ],
@@ -347,7 +347,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%202/Captation%20de%20mana.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%202/Captation%20de%20mana.PNG",
           "text": ""
         }
       ],
@@ -383,12 +383,12 @@
       "back": {
         "name": "Unknown (Elementaliste all)",
         "text": "",
-        "img": "modules/fq-card-engine/images/cartes/Elementaliste/dos_de_carte.PNG"
+        "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/dos_de_carte.PNG"
       },
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%202/Givrefeu.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%202/Givrefeu.PNG",
           "text": ""
         }
       ],
@@ -424,12 +424,12 @@
       "back": {
         "name": "Unknown (Elementaliste all)",
         "text": "",
-        "img": "modules/fq-card-engine/images/cartes/Elementaliste/dos_de_carte.PNG"
+        "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/dos_de_carte.PNG"
       },
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%202/Brouillard.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%202/Brouillard.PNG",
           "text": ""
         }
       ],
@@ -470,7 +470,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Elementaliste/Niveau%201/Tornade.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Elementaliste/Niveau%201/Tornade.PNG",
           "text": ""
         }
       ],

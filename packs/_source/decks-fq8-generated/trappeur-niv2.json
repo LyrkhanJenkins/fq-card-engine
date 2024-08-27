@@ -3,7 +3,7 @@
   "name": "Trappeur Niv2",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cartes/Trappeur/dos_de_carte.PNG",
+  "img": "modules/fq-card-engine/images/cards/fr/Trappeur/dos_de_carte.PNG",
   "cards": [
     {
       "_id": "dSFod4oZ0aBOFR6d",
@@ -19,7 +19,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
           "text": ""
         }
       ],
@@ -60,7 +60,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
           "text": ""
         }
       ],
@@ -101,7 +101,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
           "text": ""
         }
       ],
@@ -142,7 +142,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Double%20fl%C3%A8ches.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Double%20fl%C3%A8ches.PNG",
           "text": ""
         }
       ],
@@ -183,7 +183,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Louve%20apprivois%C3%A9e.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Louve%20apprivois%C3%A9e.PNG",
           "text": ""
         }
       ],
@@ -224,7 +224,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Tireur%20d%27%C3%A9lite.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tireur%20d%27%C3%A9lite.PNG",
           "text": ""
         }
       ],
@@ -266,7 +266,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Pluie%20de%20fl%C3%A8ches.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Pluie%20de%20fl%C3%A8ches.PNG",
           "text": ""
         }
       ],
@@ -306,7 +306,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv2/Pioche%20II.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv2/Pioche%20II.PNG",
           "text": ""
         }
       ],
@@ -347,7 +347,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv2/R%C3%A9cup%C3%A9ration%20de%20mana.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv2/R%C3%A9cup%C3%A9ration%20de%20mana.PNG",
           "text": ""
         }
       ],
@@ -388,7 +388,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv2/Traquenard.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv2/Traquenard.PNG",
           "text": ""
         }
       ],
@@ -429,7 +429,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv1/Tir%20Pr%C3%A9cis.PNG",
           "text": ""
         }
       ],
@@ -470,7 +470,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cartes/Trappeur/Niv2/Tir%20r%C3%A9flexe.PNG",
+          "img": "modules/fq-card-engine/images/cards/fr/Trappeur/Niv2/Tir%20r%C3%A9flexe.PNG",
           "text": ""
         }
       ],
