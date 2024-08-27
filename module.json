@@ -74,9 +74,21 @@
   },
   "packs": [
     {
-      "name": "decks-final-quest-8",
-      "label": "Decks Final Quest 8",
-      "path": "packs/decks-final-quest-8",
+      "name": "decks-pattern-fq8",
+      "label": "Decks Pattern FQ8",
+      "path": "packs/decks-pattern-fq8",
+      "type": "Cards",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
+      "name": "decks-fq8",
+      "label": "Decks FQ8",
+      "path": "packs/decks-fq8",
       "type": "Cards",
       "system": "dnd5e",
       "ownership": {
@@ -193,7 +205,8 @@
           "sorting": "m",
           "color": "#317d0e",
           "packs": [
-            "decks-final-quest-8",
+            "decks-pattern-fq8",
+            "decks-fq8",
             "decks-fq8-generated"
           ],
           "folders": []

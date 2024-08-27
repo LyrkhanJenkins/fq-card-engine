@@ -3,7 +3,7 @@
   "name": "Trapper All",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cards/fr/trapper/dos_de_carte.PNG",
+  "img": "modules/fq-card-engine/images/cards/en/trapper/dos_de_carte.PNG",
   "cards": [
     {
       "_id": "0XmTT5oPhItCvY9S",
@@ -19,7 +19,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Louve%20apprivois%C3%A9e.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Louve%20apprivois%C3%A9e.PNG",
           "text": ""
         }
       ],
@@ -60,7 +60,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20Pr%C3%A9cis.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Tir%20Pr%C3%A9cis.PNG",
           "text": ""
         }
       ],
@@ -101,7 +101,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tireur%20d%27%C3%A9lite.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Tireur%20d%27%C3%A9lite.PNG",
           "text": ""
         }
       ],
@@ -142,7 +142,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Double%20fl%C3%A8ches.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Double%20fl%C3%A8ches.PNG",
           "text": ""
         }
       ],
@@ -184,7 +184,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Pluie%20de%20fl%C3%A8ches.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Pluie%20de%20fl%C3%A8ches.PNG",
           "text": ""
         }
       ],
@@ -224,7 +224,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Pioche%20II.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Pioche%20II.PNG",
           "text": ""
         }
       ],
@@ -265,7 +265,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/R%C3%A9cup%C3%A9ration%20de%20mana.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/R%C3%A9cup%C3%A9ration%20de%20mana.PNG",
           "text": ""
         }
       ],
@@ -306,7 +306,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Traquenard.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Traquenard.PNG",
           "text": ""
         }
       ],
@@ -347,7 +347,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20r%C3%A9flexe.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Tir%20r%C3%A9flexe.PNG",
           "text": ""
         }
       ],
@@ -388,7 +388,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Booster%20de%20tour.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Booster%20de%20tour.PNG",
           "text": ""
         }
       ],
@@ -430,7 +430,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20empoisonn%C3%A9.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Tir%20empoisonn%C3%A9.PNG",
           "text": ""
         }
       ],
@@ -471,7 +471,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20transper%C3%A7ant.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Tir%20transper%C3%A7ant.PNG",
           "text": ""
         }
       ],
@@ -511,7 +511,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Etude%20du%20point%20faible.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Etude%20du%20point%20faible.PNG",
           "text": ""
         }
       ],
@@ -552,7 +552,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Embuscade.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Embuscade.PNG",
           "text": ""
         }
       ],
@@ -588,12 +588,12 @@
       "back": {
         "name": "Unknown (Trapper All)",
         "text": "",
-        "img": "modules/fq-card-engine/images/cards/fr/trapper/dos_de_carte.PNG"
+        "img": "modules/fq-card-engine/images/cards/en/trapper/dos_de_carte.PNG"
       },
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20supersonique.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Tir%20supersonique.PNG",
           "text": ""
         }
       ],
@@ -629,12 +629,12 @@
       "back": {
         "name": "Unknown (Trapper All)",
         "text": "",
-        "img": "modules/fq-card-engine/images/cards/fr/trapper/dos_de_carte.PNG"
+        "img": "modules/fq-card-engine/images/cards/en/trapper/dos_de_carte.PNG"
       },
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/Tir%20explosif.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/base/Tir%20explosif.PNG",
           "text": ""
         }
       ],
