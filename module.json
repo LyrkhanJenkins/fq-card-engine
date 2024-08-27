@@ -116,6 +116,18 @@
         "ASSISTANT": "OWNER"
       },
       "system": "dnd5e"
+    },
+    {
+      "label": "Macros FQ8",
+      "type": "Macro",
+      "name": "macros-fq8",
+      "path": "packs/macros-fq8",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
     }
   ],
   "packFolders": [
@@ -136,7 +148,8 @@
       ],
       "packs": [
         "classes-fq8",
-        "minions-fq8"
+        "minions-fq8",
+        "macros-fq8"
       ]
     }
   ]

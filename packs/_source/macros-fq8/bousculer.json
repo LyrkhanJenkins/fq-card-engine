@@ -1,0 +1,24 @@
+{
+  "name": "Bousculer",
+  "type": "script",
+  "author": "eLD9iPNHJXGMQX6z",
+  "img": "icons/skills/melee/shield-block-bash-yellow.webp",
+  "scope": "global",
+  "command": "const myToken = game.canvas?.scene?.tokens?.find(t => t.actor?.id === game.user?.character?.id);\nconst target = game.user.targets?.size === 1 && [ ...game.user.targets][0].document\nconst squareSize = game.canvas?.scene?.dimensions?.size\nconsole.log(myToken)\nconsole.log(target)\n\nif (game.user.character.system.fq.action.value !== game.user.character.system.fq.action.max) {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: #C0392B;\">Vous devez avoir tous vos points d'action pour utiliser ce sort</h3>`\n    });\n} else if (!(target && ((target.x === myToken.x && Math.abs(target.y - myToken.y) === squareSize) ||\n    (target.y === myToken.y && Math.abs(target.x - myToken.x) === squareSize)))) {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: #C0392B;\">Vous devez avoir une et une seule cible et elle doit se trouver sur une \ncase adjacente à votre personnage</h3>`\n    });\n} else {\n    AudioHelper.play({\n        src: \"modules/fq-card-engine/sounds/passive_spells/hustle.mp3\",\n        volume: 0.4,\n        autoplay: true,\n        loop: false\n    }, true);\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: darkgreen;\">Vous utilisez votre action pour bousculer \"${target.name}\" de 1 case devant votre personnage</h3>`\n    });\n    if ([...game.combats].filter(combat => combat.isActive).length !== 0) {\n        game.user.character.update({\"system.fq.action.value\": 0});\n    }\n}",
+  "folder": null,
+  "flags": {},
+  "_id": "xu3SE2DMInA3TtSm",
+  "sort": 200000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "coreVersion": "12.317",
+    "systemId": "dnd5e",
+    "systemVersion": "3.0.4",
+    "createdTime": 1710427206200,
+    "modifiedTime": 1710427958134,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "_key": "!macros!xu3SE2DMInA3TtSm"
+}

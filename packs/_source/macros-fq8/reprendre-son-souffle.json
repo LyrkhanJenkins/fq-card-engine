@@ -1,0 +1,24 @@
+{
+  "name": "Reprendre son souffle",
+  "type": "script",
+  "author": "eLD9iPNHJXGMQX6z",
+  "img": "icons/magic/movement/abstract-ribbons-red-orange.webp",
+  "scope": "global",
+  "command": "if ([...game.combats].filter(combat => combat.isActive).length === 0) {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: darkgreen;\">Vous reprenez votre souffle... Les points d'action sont désormais au maximum!</h3>`\n    });\n    game.user.character.update({ \"system.fq.action.value\": game.user.character.system.fq.action.max});\n    AudioHelper.play({\n        src: \"modules/fq-card-engine/sounds/passive_spells/breathe.mp3\",\n        volume: 0.5,\n        autoplay: true,\n        loop: false\n    }, true);\n} else {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: #C0392B;\">Vous ne pouvez pas reprendre votre souffle en combat! </h3>`\n    });\n}",
+  "folder": null,
+  "flags": {},
+  "_id": "QQm5zIwYy8CRZ91I",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "coreVersion": "12.317",
+    "systemId": "dnd5e",
+    "systemVersion": "3.0.4",
+    "createdTime": 1710428586165,
+    "modifiedTime": 1710428586165,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "_key": "!macros!QQm5zIwYy8CRZ91I"
+}
