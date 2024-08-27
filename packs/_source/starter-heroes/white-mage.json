@@ -2,7 +2,7 @@
   "_id": "ZNwkztvzG57pQyDu",
   "name": "White-Mage",
   "type": "character",
-  "img": "",
+  "img": "modules/fq-card-engine/images/classes/Concept_Art_yellow_mage_healing_male_from_above_token_1.png",
   "items": [
     {
       "_id": "KmIFBIFfR2PYvLfo",
@@ -201,63 +201,7 @@
       "name": "Bouclier rond",
       "type": "equipment",
       "img": "icons/equipment/shield/round-wooden-boss-steel-red.webp",
-      "effects": [
-        {
-          "_id": "fU4Sv3GOsq3GZmaj",
-          "changes": [
-            {
-              "key": "system.attributes.evasion",
-              "mode": 2,
-              "value": "1",
-              "priority": 20
-            }
-          ],
-          "disabled": false,
-          "duration": {
-            "startTime": null,
-            "seconds": null,
-            "combat": null,
-            "rounds": null,
-            "turns": null,
-            "startRound": null,
-            "startTurn": null
-          },
-          "origin": "Compendium.dnd5e.items.sSs3hSzkKBMNBgTs",
-          "transfer": true,
-          "flags": {
-            "dae": {
-              "selfTarget": false,
-              "stackable": "none",
-              "durationExpression": "",
-              "macroRepeat": "none",
-              "specialDuration": [],
-              "transfer": true
-            },
-            "core": {
-              "statusId": ""
-            }
-          },
-          "tint": "#ffffff",
-          "_stats": {
-            "coreVersion": "12.330",
-            "systemId": null,
-            "systemVersion": null,
-            "createdTime": null,
-            "modifiedTime": null,
-            "lastModifiedBy": null,
-            "compendiumSource": null,
-            "duplicateSource": null
-          },
-          "name": "esquive + 1",
-          "img": "icons/svg/aura.svg",
-          "type": "base",
-          "system": {},
-          "description": "",
-          "statuses": [],
-          "sort": 0,
-          "_key": "!actors.items.effects!ZNwkztvzG57pQyDu.TXFBKeCGzoMVZZQ5.fU4Sv3GOsq3GZmaj"
-        }
-      ],
+      "effects": [],
       "folder": null,
       "sort": 0,
       "flags": {
@@ -644,30 +588,27 @@
       "_key": "!actors.items!ZNwkztvzG57pQyDu.UXzmGXZ2Y69oNFCW"
     },
     {
-      "_id": "jkhB6UusKBjVDiSi",
+      "_id": "hvwvdpWWR8UCUuOG",
       "name": "White-Mage",
       "type": "class",
-      "img": "worlds/final-quest-8/images/Classes/craiyon_154837_White_and_yellow_mage_healing_fantasy.png",
+      "img": "modules/fq-card-engine/images/classes/craiyon_154837_White_and_yellow_mage_healing_fantasy.png",
       "effects": [],
       "folder": null,
       "sort": 0,
       "flags": {
         "cf": {
           "id": "temp_9hjmr9g6fcm"
-        },
-        "core": {
-          "sourceId": "Compendium.world.classes-fq.CZbGyFtm5Igp32KW"
         }
       },
       "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": "Compendium.world.classes-fq.CZbGyFtm5Igp32KW",
-        "duplicateSource": null
+        "compendiumSource": "Compendium.fq-card-engine.classes-fq8.Item.CZbGyFtm5Igp32KW",
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "3.3.1",
+        "createdTime": 1724079742113,
+        "modifiedTime": 1724079742113,
+        "lastModifiedBy": "dnd5ebuilder0000"
       },
       "ownership": {
         "default": 0
@@ -675,10 +616,11 @@
       "system": {
         "description": {
           "value": "<p class=\"MsoNormal\" style=\"margin-bottom:.0001pt;text-align:right\"><span style=\"color:#2e74b5;mso-themecolor:accent1;mso-themeshade:191\">La White-Mage est le meilleur soigneur et protecteur mais ces malédictions ne sont pas à prendre à la légère et peuvent infliger d'important dégâts sur la durée </span></p>",
-          "chat": "",
-          "unidentified": ""
+          "chat": ""
         },
-        "source": "",
+        "source": {
+          "custom": ""
+        },
         "identifier": "white-mage",
         "levels": 1,
         "hitDice": "d6",
@@ -691,89 +633,248 @@
             "value": {
               "1": "max"
             }
+          },
+          {
+            "_id": "3M5NP4M9RnvQSfUT",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 1,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "cap": 1
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 2,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "_id": "f8O15dOdgbusvjWs",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 1,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "cap": 1
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 3,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "_id": "kFeYqHWF2PMXMDmZ",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 1,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "cap": 1
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 4,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "_id": "93INEK2KTSvFb3dX",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "cap": 2
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 5,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "_id": "I0jWzmZMKZG3T9A2",
+            "type": "ItemChoice",
+            "configuration": {
+              "choices": {
+                "2": {
+                  "count": 3,
+                  "replacement": false
+                },
+                "3": {
+                  "count": 3,
+                  "replacement": false
+                },
+                "4": {
+                  "count": 3,
+                  "replacement": false
+                },
+                "5": {
+                  "count": 3,
+                  "replacement": false
+                },
+                "6": {
+                  "count": 3,
+                  "replacement": false
+                }
+              },
+              "allowDrops": true,
+              "type": null,
+              "pool": [
+                {
+                  "uuid": "Item.7wHrjCrX6hzetFLV"
+                },
+                {
+                  "uuid": "Item.64ylBRuyvh9hxtLC"
+                },
+                {
+                  "uuid": "Item.tDzFl4SqZhGeKqEf"
+                },
+                {
+                  "uuid": "Item.kKMGCqMvoiwQ089b"
+                },
+                {
+                  "uuid": "Item.awu3jv6NmnDlojf4"
+                },
+                {
+                  "uuid": "Item.xNkAebLEOeer8k8z"
+                },
+                {
+                  "uuid": "Item.ooKg5U1N5rJjCbVK"
+                },
+                {
+                  "uuid": "Item.8cjrlW6r2B1PBD5l"
+                },
+                {
+                  "uuid": "Item.zoOKdQOqw8BhTaGo"
+                },
+                {
+                  "uuid": "Item.TZsa6h8PPZdIyO4J"
+                },
+                {
+                  "uuid": "Item.2zjOskSKpIT0f0j5"
+                },
+                {
+                  "uuid": "Item.nS0wcPs9sEsUE5V8"
+                },
+                {
+                  "uuid": "Item.jo1kA1FVMCvUsTV5"
+                },
+                {
+                  "uuid": "Item.k9ITbirtpC02wA4O"
+                },
+                {
+                  "uuid": "Item.XxPBnkchfLrbh7pd"
+                },
+                {
+                  "uuid": "Item.FN2DmCGuBdYlhMzT"
+                },
+                {
+                  "uuid": "Item.HrjrLYaBcMOcnTXi"
+                },
+                {
+                  "uuid": "Item.yDlO2lQGy5HN2f1f"
+                },
+                {
+                  "uuid": "Item.nFq4BQO7zeaYH1uN"
+                },
+                {
+                  "uuid": "Item.b8hy9Pwzhqc1RZLY"
+                },
+                {
+                  "uuid": "Item.3JougwwhSPDtComL"
+                },
+                {
+                  "uuid": "Item.4rIhNwkUvm5kP9qW"
+                }
+              ],
+              "spell": null,
+              "restriction": {}
+            },
+            "value": {
+              "added": {},
+              "replaced": {}
+            },
+            "title": "",
+            "hint": ""
+          },
+          {
+            "_id": "roK5zMcqSYsyzWaG",
+            "type": "AbilityScoreImprovement",
+            "configuration": {
+              "points": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "cap": 2
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 6,
+            "title": "",
+            "hint": ""
           }
         ],
-        "saves": [],
-        "skills": {
-          "number": 2,
-          "choices": [],
-          "value": []
-        },
         "spellcasting": {
           "progression": "none",
           "ability": ""
         },
-        "attunement": null
+        "wealth": "",
+        "startingEquipment": []
       },
-      "_key": "!actors.items!ZNwkztvzG57pQyDu.jkhB6UusKBjVDiSi"
+      "_key": "!actors.items!ZNwkztvzG57pQyDu.hvwvdpWWR8UCUuOG"
     }
   ],
-  "effects": [
-    {
-      "_id": "l3C9yEbR3Jqu2U21",
-      "changes": [
-        {
-          "key": "system.attributes.evasion",
-          "mode": 2,
-          "value": "1",
-          "priority": 20
-        }
-      ],
-      "disabled": false,
-      "duration": {
-        "startTime": 8970,
-        "startRound": 0,
-        "startTurn": 1,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null
-      },
-      "origin": "Compendium.world.personnages-de-base.ZNwkztvzG57pQyDu.Item.TXFBKeCGzoMVZZQ5",
-      "tint": "#ffffff",
-      "transfer": false,
-      "flags": {
-        "dae": {
-          "selfTarget": false,
-          "stackable": "none",
-          "durationExpression": "",
-          "macroRepeat": "none",
-          "specialDuration": [],
-          "transfer": true
-        },
-        "core": {
-          "statusId": ""
-        }
-      },
-      "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
-      },
-      "name": "esquive + 1",
-      "img": "icons/svg/aura.svg",
-      "type": "base",
-      "system": {},
-      "description": "",
-      "statuses": [],
-      "sort": 0,
-      "_key": "!actors.effects!ZNwkztvzG57pQyDu.l3C9yEbR3Jqu2U21"
-    }
-  ],
+  "effects": [],
   "folder": null,
   "sort": 0,
-  "flags": {},
+  "flags": {
+    "dnd5e": {
+      "showTokenPortrait": false
+    }
+  },
   "_stats": {
-    "coreVersion": "12.330",
+    "coreVersion": "12.331",
     "systemId": "dnd5e",
-    "systemVersion": "3.1.1",
+    "systemVersion": "3.3.1",
     "createdTime": 1709393283253,
-    "modifiedTime": 1712389860877,
+    "modifiedTime": 1724082251345,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.tnE1cbB7yEjjCvBD",
     "duplicateSource": null
@@ -908,7 +1009,7 @@
       "alignment": "",
       "race": "",
       "background": "",
-      "originalClass": "jkhB6UusKBjVDiSi",
+      "originalClass": "hvwvdpWWR8UCUuOG",
       "xp": {
         "value": 0,
         "min": 0,
@@ -918,7 +1019,15 @@
       "trait": "",
       "ideal": "",
       "bond": "",
-      "flaw": ""
+      "flaw": "",
+      "eyes": "",
+      "height": "",
+      "faith": "",
+      "hair": "",
+      "weight": "",
+      "gender": "",
+      "skin": "",
+      "age": ""
     },
     "traits": {
       "size": "med",
@@ -1198,6 +1307,16 @@
         "lr": false,
         "label": ""
       }
+    },
+    "fq": {
+      "mana": {
+        "value": 6,
+        "max": 6
+      },
+      "attributes": {
+        "critical": 0,
+        "evasion": 0
+      }
     }
   },
   "prototypeToken": {
@@ -1288,7 +1407,7 @@
     "appendNumber": false,
     "prependAdjective": false,
     "texture": {
-      "src": "icons/svg/mystery-man.svg",
+      "src": "modules/fq-card-engine/images/classes/Concept_Art_yellow_mage_healing_male_from_above_token_1.png",
       "anchorX": 0.5,
       "anchorY": 0.5,
       "offsetX": 0,
