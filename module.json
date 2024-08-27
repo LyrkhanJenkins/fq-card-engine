@@ -45,7 +45,7 @@
   "socket": true,
   "url": "https://gitlab.com/final-quest/fq-card-engine",
   "manifest": "https://gitlab.com/final-quest/fq-card-engine/-/raw/final-quest-8/module.json",
-  "download": "https://gitlab.com/final-quest/fq-card-engine/-/jobs/7614488141/artifacts/raw/fq-card-engine.zip",
+  "download": "https://gitlab.com/final-quest/fq-card-engine/-/jobs/7657231794/artifacts/raw/fq-card-engine.zip",
   "id": "fq-card-engine",
   "compatibility": {
     "minimum": "12",
