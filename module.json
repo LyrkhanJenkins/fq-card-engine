@@ -55,6 +55,14 @@
         "id": "dnd5e",
         "type": "system"
       }
+    ],
+    "requires": [
+      {
+        "id": "socketlib",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/develop/module.json",
+        "compatibility": {}
+      }
     ]
   }
 }
