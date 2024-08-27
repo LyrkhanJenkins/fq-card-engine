@@ -5,14 +5,14 @@ FQ Card Engine - A system of combat for Final Quest 8 x DnD5e
 
 Based on the work of Lyrkhan : FQ Card Engine (https://github.com/LyrkhanJenkins/fq-card-engine)
 
-## Modules obligatoires
+## Mandatory modules
 - socketlib https://foundryvtt.com/packages/socketlib
 - lib-wrapper https://foundryvtt.com/packages/lib-wrapper
 
-## Autres Modules conseillés
+## Optional modules
 - DAE https://foundryvtt.com/packages/dae (non à jour)
 - Dice So Nice https://foundryvtt.com/packages/dice-so-nice
-- Card Viewer https://foundryvtt.com/packages/orcnog-card-viewer (currently not working well)
+- Card Viewer https://foundryvtt.com/packages/orcnog-card-viewer
 
 ## Final Quest 8
 
@@ -58,6 +58,15 @@ After playing a card, automatic roll, effect, damage, heal are applied, also cri
 
 ## Version
 ### 0.1.2 - alpha (En Cours):
+    #### Feature:
+    - Macros for generating and displaying deck and spellbook (if exist preparation for lvl 6+)
+    - Choose location for summoning minions
+    - GM can choose to use cards without sending them to piles
+    - Deck/Hand/Pile are flaged 'fqType'
+
+    #### Fix:
+    - Support for 12.330 version
+    - 
 
 ### 0.1.1 - alpha:
     #### Feature:
