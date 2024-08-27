@@ -1,0 +1,213 @@
+{
+  "name": "Frappe Hebetante",
+  "type": "spell",
+  "img": "icons/weapons/hammers/hammer-double-stone.webp",
+  "effects": [
+    {
+      "_id": "dnkld69v1pcbz7t1",
+      "changes": [
+        {
+          "key": "system.attributes.mana.value",
+          "mode": 5,
+          "value": "0",
+          "priority": 20
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "rounds": 1,
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "origin": "Scene.WaNPpr4aoUfEjLRE.Token.AKqvkYmdcpUqSPQY.Item.0jaezysrnatbpqkz",
+      "transfer": false,
+      "flags": {
+        "dae": {
+          "selfTarget": false,
+          "stackable": "none",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [],
+          "transfer": false
+        },
+        "core": {
+          "statusId": ""
+        }
+      },
+      "tint": "#ffffff",
+      "_stats": {
+        "coreVersion": "12.318",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "name": "Frappe Hebetante",
+      "img": "icons/weapons/hammers/hammer-double-stone.webp",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!VQQuO2I65ESr0ZLa.dnkld69v1pcbz7t1"
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "midi-qol": {
+      "effectActivation": false,
+      "forceCEOn": false,
+      "fumbleThreshold": null
+    },
+    "midiProperties": {
+      "nodam": false,
+      "fulldam": false,
+      "halfdam": false,
+      "rollOther": false,
+      "critOther": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "concentration": false,
+      "toggleEffect": false
+    },
+    "rest-recovery": {
+      "data": {
+        "recovery": {
+          "enabled": false
+        }
+      }
+    }
+  },
+  "_id": "VQQuO2I65ESr0ZLa",
+  "_stats": {
+    "coreVersion": "12.318",
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.1",
+    "createdTime": 1709393284702,
+    "modifiedTime": 1712393498455,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {
+    "description": {
+      "value": "<p>CàC. Inflige 1d10 dégâts + le modificateur de force. La cible n'a plus de mana pendant 1 tour.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": {
+      "custom": "PHB pg. 287"
+    },
+    "activation": {
+      "type": "none",
+      "cost": null,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "enemy",
+      "prompt": true
+    },
+    "range": {
+      "value": 5,
+      "long": 5,
+      "units": "ft"
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null,
+      "recovery": "",
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": "",
+      "amount": null,
+      "scale": false
+    },
+    "ability": "",
+    "actionType": "mwak",
+    "attackBonus": "",
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [
+        [
+          "1d10 + @abilities.str.mod[bludgeoning]",
+          "slashing"
+        ]
+      ],
+      "versatile": "",
+      "value": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell",
+      "value": ""
+    },
+    "level": 0,
+    "school": "con",
+    "components": {
+      "value": "",
+      "vocal": true,
+      "somatic": true,
+      "material": true,
+      "ritual": false,
+      "concentration": false
+    },
+    "materials": {
+      "value": "",
+      "consumed": false,
+      "cost": 100,
+      "supply": 0
+    },
+    "preparation": {
+      "mode": "always",
+      "prepared": false
+    },
+    "scaling": {
+      "mode": "none",
+      "formula": ""
+    },
+    "attunement": 0,
+    "cover": null,
+    "crewed": false,
+    "properties": [
+      "vocal",
+      "somatic",
+      "material",
+      "mgc"
+    ],
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "summons": null,
+    "fq": {
+      "action": -6,
+      "mana": 0,
+      "zeal": -1,
+      "drop": 0,
+      "hp": 0
+    }
+  },
+  "_key": "!items!VQQuO2I65ESr0ZLa"
+}

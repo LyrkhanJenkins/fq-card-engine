@@ -1,0 +1,171 @@
+{
+  "name": "Avaler",
+  "type": "feat",
+  "img": "icons/creatures/abilities/mouth-teeth-tongue-purple.webp",
+  "effects": [
+    {
+      "_id": "ef6xv9dg31w4emo8",
+      "changes": [
+        {
+          "key": "system.attributes.movement.walk",
+          "mode": 5,
+          "value": "0",
+          "priority": 20
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "origin": "Scene.BtJ1d6nxqlKytkKh.Token.KuiNkDPv65LywMaY.Item.6aBDwlIsxceFMXxL",
+      "transfer": false,
+      "flags": {
+        "dae": {
+          "selfTarget": false,
+          "stackable": "none",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [],
+          "transfer": false
+        },
+        "core": {
+          "statusId": ""
+        }
+      },
+      "tint": "#ffffff",
+      "_stats": {
+        "coreVersion": "12.318",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "name": "Swallow",
+      "img": "icons/creatures/abilities/mouth-teeth-tongue-purple.webp",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!p25xHtjPir18zYZ2.ef6xv9dg31w4emo8"
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "flags": {
+    "rest-recovery": {
+      "data": {
+        "recovery": {
+          "enabled": false
+        }
+      }
+    },
+    "midi-qol": {
+      "effectActivation": false
+    },
+    "midiProperties": {
+      "nodam": false,
+      "fulldam": false,
+      "halfdam": false,
+      "rollOther": false,
+      "critOther": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "concentration": false,
+      "toggleEffect": false
+    }
+  },
+  "_id": "p25xHtjPir18zYZ2",
+  "_stats": {
+    "coreVersion": "12.318",
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.1",
+    "createdTime": 1709393284703,
+    "modifiedTime": 1712393390715,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {
+    "description": {
+      "value": "<p>La cible est avalée, elle ne peut plus se déplacer ou ne cibler autre chose que le lanceur du sort.</p>\n<p>Si la cible subit plus de 20% de ses points de vie pendant le tour de la cible avalée, elle est recraché, sinon subit 3d6 dégâts d'acide</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "",
+    "activation": {
+      "type": "action",
+      "cost": 1,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": ""
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": ""
+    },
+    "uses": {
+      "value": null,
+      "max": "0",
+      "per": ""
+    },
+    "consume": {
+      "type": "",
+      "target": "",
+      "amount": null
+    },
+    "ability": "str",
+    "actionType": "other",
+    "attackBonus": 0,
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [
+        [
+          "3d6[force]",
+          "acid"
+        ]
+      ],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "requirements": "",
+    "recharge": {
+      "value": null,
+      "charged": false
+    },
+    "attunement": 0,
+    "fq": {
+      "action": -9,
+      "mana": -2,
+      "zeal": 0,
+      "drop": 0,
+      "hp": 0
+    }
+  },
+  "_key": "!items!p25xHtjPir18zYZ2"
+}

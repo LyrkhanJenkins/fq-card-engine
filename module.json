@@ -136,6 +136,18 @@
         "ASSISTANT": "OWNER"
       },
       "flags": {}
+    },
+    {
+      "label": "Sorts PNJ",
+      "type": "Item",
+      "name": "sorts-pnj",
+      "path": "packs/sorts-pnj",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
     }
   ],
   "packFolders": [
@@ -158,7 +170,8 @@
       "packs": [
         "classes-fq8",
         "minions-fq8",
-        "macros-fq8"
+        "macros-fq8",
+        "sorts-pnj"
       ]
     }
   ]
