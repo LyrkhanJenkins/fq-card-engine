@@ -181,6 +181,7 @@
     flex-direction: row;
     padding: 0;
     border-radius: 5px;
+    width: fit-content;
     box-shadow: 0 0 20px var(--color-shadow-dark);
 }
 
@@ -317,6 +318,13 @@
     border: 1px solid #000;
     border-radius: 0 5px 0 0;
     padding-left: 1px;
+}
+
+.fq-card-engine-no-action {
+    display: block;
+    height: 100%;
+    border: 2px solid #000;
+    border-radius: 0 10px 10px 0;
 }
 
 .fq-card-engine-buttons-container .fq-card-engine-hidden-buttons *:hover {

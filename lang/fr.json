@@ -21,6 +21,8 @@
   "FQCARDENGINE.HandCountSettingHint": "Nombre de mains \u00e0 afficher sur l\u0027\u00e9cran",
   "FQCARDENGINE.DisplayHandNameSetting": "Afficher le nom de la main",
   "FQCARDENGINE.DisplayHandNameSettingHint": "Afficher le nom de la main au dessus de chaque mini-barre (utile si plusieurs mains sont affich\u00e9es)",
+  "FQCARDENGINE.PlayerLimitCardsRightSetting" : "Limitation des droits du joueur",
+  "FQCARDENGINE.PlayerLimitCardsRightSettingHint" : "Limite ls droits du joueurs au strict minimum pour les cartes",
   "FQCARDENGINE.HideMessagesSetting": "Pas de message",
   "FQCARDENGINE.HideMessagesSettingHint": "D\u00e9sactive les messages quand les cartes sont d\u00e9plac\u00e9es de et vers la mini-barre",
   "FQCARDENGINE.RollInitiativeNameSetting" : "Lancer l'initiative",

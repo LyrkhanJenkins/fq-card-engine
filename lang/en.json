@@ -23,6 +23,8 @@
     "FQCARDENGINE.DisplayHandNameSettingHint":"Displays the name for the hand above the hand (useful for multiple hands)",
     "FQCARDENGINE.HideMessagesSetting":"No Messages",
     "FQCARDENGINE.HideMessagesSettingHint":"Disables Messages when cards are moved to and from the mini bar",
+    "FQCARDENGINE.PlayerLimitCardsRightSetting" : "Limit Player Right",
+    "FQCARDENGINE.PlayerLimitCardsRightSettingHint" : "Limit the player's right to the minimum for cards",
     "FQCARDENGINE.RollInitiativeNameSetting" : "Roll Initiative",
     "FQCARDENGINE.RollInitiativeNameSettingHint" : "Roll Normal Initiative In start combat and cards creating minions",
     "FQCARDENGINE.BetterChatMessagesSetting":"Better Chat Messages",
