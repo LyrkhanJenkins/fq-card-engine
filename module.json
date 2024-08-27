@@ -138,6 +138,18 @@
       "flags": {}
     },
     {
+      "label": "Macros GM FQ8",
+      "type": "Macro",
+      "name": "macros-gm-fq8",
+      "path": "packs/macros-gm-fq8",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "NONE",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
       "label": "Sorts PNJ",
       "type": "Item",
       "name": "sorts-pnj",
@@ -171,6 +183,7 @@
         "classes-fq8",
         "minions-fq8",
         "macros-fq8",
+        "macros-gm-fq8",
         "sorts-pnj"
       ]
     }
