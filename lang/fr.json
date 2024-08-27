@@ -111,6 +111,8 @@
   "FQCARDENGINE.EvasionScore": "Esquive",
   "FQCARDENGINE.Bonuses": "Bonus FQ",
   "FQCARDENGINE.RangeBonus": "Bonus De Portée",
+  "FQCARDENGINE.DamageBonus": "Bonus De Dégâts",
+  "FQCARDENGINE.HealBonus": "Bonus De Soins",
   "FQCARDENGINE.HitPointsOnTime": "Points de vie par tour",
   "FQCARDENGINE.Cards": "Cartes",
   "FQCARDENGINE.Hand": "Main",
