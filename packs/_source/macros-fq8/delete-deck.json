@@ -1,5 +1,5 @@
 {
-  "name": "Supprimer son deck",
+  "name": "Delete Deck",
   "type": "script",
   "scope": "global",
   "author": "SA6JKCaEua1JXSu4",
@@ -10,17 +10,17 @@
     "default": 0
   },
   "flags": {},
-  "_id": "y8KRtZuiD36dhRUe",
-  "sort": 0,
   "_stats": {
-    "coreVersion": "12.330",
-    "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
-    "createdTime": 1713337240315,
-    "modifiedTime": 1713337240315,
-    "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": 1724162947951,
+    "modifiedTime": 1724162947951,
+    "lastModifiedBy": "dnd5ebuilder0000"
   },
-  "_key": "!macros!y8KRtZuiD36dhRUe"
+  "_id": "XUDoDunSa7zHNDAz",
+  "sort": 0,
+  "_key": "!macros!XUDoDunSa7zHNDAz"
 }

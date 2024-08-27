@@ -12,17 +12,23 @@
 - Règles du jeu et readme complété
 - Recette globale avec utilisateurs et MJs
 - Suppression de tous les Warnings/ tous les bugs pour 1.0.0 sans utilisateur
-- Mettre à jour le readme
-- Traduction manquantes pour macros et spells npc
-- Traduction des effets des cartes
 
 ## 0.1.4
 - Rédigé le "Get Started"
-- Trouver un moyen de le faire pour les joueurs non connectés
+
+  ~~- Trouver un moyen de le faire pour les joueurs non connectés~~
+
 - Toujours le problème de la barre des cartes qui s'affiche mal quand on en créé une toute nouvelle
 - Ajouter les noms des mains par défaut
 - Pourquoi MJ n'a pas de main
+
+~~- Traduction manquantes pour macros~~
+
+- Traduction manquantes pour spells NPC
+- Traduction des effets des cartes
+
 ~~- Les items choice des classes ne sont pas bons (utiliser des compendiums)~~
+
 - classes FQ8 pas rangé au bon endroit
 - (- mineur : retrocompatibilité des feuilles: n'ajouter que la partie fq?)
 
@@ -34,7 +40,9 @@
   Droits joueurs limités (avec option?):
 - Ne pas pouvoir modifier ou ajouter des cartes dans son deck pour les joueurs
 - Tagué les bibliothèque (spellbook): le flag 'fqType' a déjà été créé
+- Répercussion sur toutes les méthodes déjà existantes
 - Empêcher le drag and drop autre que d'un deck vers une bibliotheque
+- Empécher une carte d'une bibliothèque d'aller ailleurs que dans le deck
 - Empêcher les joueurs de modifier des cartes d'un deck ou d'une bibliotheque (et de supprimer)
 - Correctement créer les bibliothèques/decks/main et pile avec le fqType
 
