@@ -128,5 +128,8 @@
   "FQCARDENGINE.WarningMsgNotEnoughMana": "has not enough mana",
   "FQCARDENGINE.WarningMsgNotEnoughZeal": "has not enough zeal",
   "FQCARDENGINE.WarningMsgNotEnoughDraw": "has not enough cards on his deck",
-  "FQCARDENGINE.WarningMsgNotEnoughDrop": "has not enough drop cards from his hand"
+  "FQCARDENGINE.WarningMsgNotEnoughDrop": "has not enough drop cards from his hand",
+  "FQCARDENGINE.WarningHandMissingForPlayer": "Player has no hand",
+  "FQCARDENGINE.WarningDeckMissingForPlayer": "Player has no deck",
+  "FQCARDENGINE.WarningPileMissingForPlayer": "Player has no pile"
 }

@@ -128,5 +128,8 @@
   "FQCARDENGINE.WarningMsgNotEnoughMana": "n'a pas assez de mana",
   "FQCARDENGINE.WarningMsgNotEnoughZeal": "n'a pas assez de zèle",
   "FQCARDENGINE.WarningMsgNotEnoughDraw": "n'a pas assez de carte à piocher dans son deck",
-  "FQCARDENGINE.WarningMsgNotEnoughDrop": "n'a pas défaussé suffisamment de carte pour jouer celle-ci"
+  "FQCARDENGINE.WarningMsgNotEnoughDrop": "n'a pas défaussé suffisamment de carte pour jouer celle-ci",
+  "FQCARDENGINE.WarningHandMissingForPlayer": "Le joueur n'a pas de main configurée",
+  "FQCARDENGINE.WarningDeckMissingForPlayer": "Le joueur n'a pas de deck configuré",
+  "FQCARDENGINE.WarningPileMissingForPlayer": "Le joueur n'a pas de pile configurée"
 }
