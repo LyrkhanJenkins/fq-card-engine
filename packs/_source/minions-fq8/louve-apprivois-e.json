@@ -117,7 +117,7 @@
         "properties": []
       },
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": "dnd5e",
         "systemVersion": "3.0.3",
         "createdTime": null,
@@ -657,7 +657,7 @@
   "_id": "lcpIiyWfFT0pxJwa",
   "sort": 0,
   "_stats": {
-    "coreVersion": "12.317",
+    "coreVersion": "12.318",
     "systemId": "dnd5e",
     "systemVersion": "3.0.3",
     "createdTime": 1709393662256,

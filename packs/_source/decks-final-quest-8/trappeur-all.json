@@ -32,7 +32,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -41,8 +41,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.0XmTT5oPhItCvY9S"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.0XmTT5oPhItCvY9S",
+      "cards": []
     },
     {
       "_id": "Mde8sV1ruccJhiZh",
@@ -71,7 +71,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -80,13 +80,13 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.Mde8sV1ruccJhiZh"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.Mde8sV1ruccJhiZh",
+      "cards": []
     },
     {
       "_id": "9AxZSYKu9yh6sfH2",
       "name": "Tireur d'élite",
-      "description": "{\n  \"action\": \"-10\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Tireur d'élite\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Tireur d'élite\",\n              \"icon\": \"icons/skills/ranged/person-archery-bow-attack-orange.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"10+@str\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"adjustment\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Augmente le critique de @str + 10 jusqu'a la fin du prochain tour\"\n        }\n      ]\n    }\n  ]\n}",
+      "description": "{\n  \"action\": \"-10\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Tireur d'élite\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Tireur d'élite\",\n              \"icon\": \"icons/skills/ranged/person-archery-bow-attack-orange.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"10+@str\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"adjustment\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Augmente le critique de @str + 10 jusqu'a la fin du prochain tour\"\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -110,17 +110,17 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1711291675032,
+        "lastModifiedBy": "SA6JKCaEua1JXSu4"
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.9AxZSYKu9yh6sfH2"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.9AxZSYKu9yh6sfH2",
+      "cards": []
     },
     {
       "_id": "M0Lg29KpmNYuLWBc",
@@ -149,7 +149,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -158,8 +158,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.M0Lg29KpmNYuLWBc"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.M0Lg29KpmNYuLWBc",
+      "cards": []
     },
     {
       "_id": "irjLZGMorDOXWkIe",
@@ -188,7 +188,7 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -197,8 +197,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.irjLZGMorDOXWkIe"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.irjLZGMorDOXWkIe",
+      "cards": []
     },
     {
       "_id": "a2ExofDTulU8nBd9",
@@ -227,7 +227,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -236,8 +236,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.a2ExofDTulU8nBd9"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.a2ExofDTulU8nBd9",
+      "cards": []
     },
     {
       "_id": "gh2fMPhKr53UgyQE",
@@ -266,7 +266,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -275,8 +275,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.gh2fMPhKr53UgyQE"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.gh2fMPhKr53UgyQE",
+      "cards": []
     },
     {
       "_id": "kAbNEfKHWIWvCmdb",
@@ -305,7 +305,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -314,8 +314,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.kAbNEfKHWIWvCmdb"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.kAbNEfKHWIWvCmdb",
+      "cards": []
     },
     {
       "_id": "f9pLmgPFm4NR2i0C",
@@ -344,7 +344,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -353,8 +353,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.f9pLmgPFm4NR2i0C"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.f9pLmgPFm4NR2i0C",
+      "cards": []
     },
     {
       "_id": "TxGcr0vyW9JMVnuI",
@@ -383,7 +383,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -392,8 +392,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.TxGcr0vyW9JMVnuI"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.TxGcr0vyW9JMVnuI",
+      "cards": []
     },
     {
       "_id": "VQzzm4SZPAFdPW03",
@@ -422,7 +422,7 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -431,8 +431,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.VQzzm4SZPAFdPW03"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.VQzzm4SZPAFdPW03",
+      "cards": []
     },
     {
       "_id": "QGo9GbrgzApbBQWc",
@@ -461,7 +461,7 @@
       "flags": {},
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -470,13 +470,13 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.QGo9GbrgzApbBQWc"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.QGo9GbrgzApbBQWc",
+      "cards": []
     },
     {
       "_id": "cGyK3RraGVHOG7H3",
       "name": "Etude du point faible",
-      "description": "{\n  \"zeal\": \"+1\",\n  \"customEval\": [\n    {\n      \"test\": \"(!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id).filter(l =&gt; l.resultArray.filter(r =&gt; r.evasion).length).length))\",\n      \"message\": \"Vous devez avoir joué un sort qui a été esquivé pendant ce tour\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Bonus de dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Bonus de dégâts +1\",\n              \"icon\": \"icons/skills/wounds/anatomy-organ-heart-red.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.bonuses.All-Damage\",\n                  \"value\": \"1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.bonuses.other.damage\",\n                  \"value\": \"1\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Augmente les dégâts de 1 jusqu'à la fin du combat\"\n        }\n      ]\n    }\n  ],\n  \"other\": [\n    \"Récupérez le(s) carte(s) concernée(s) dans votre défausse, et mettez ce(s) carte(s) dans votre main\"\n  ]\n}",
+      "description": "{\n  \"zeal\": \"+1\",\n  \"customEval\": [\n    {\n      \"test\": \"(!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id).filter(l =&gt; l.resultArray.filter(r =&gt; r.evasion).length).length))\",\n      \"message\": \"Vous devez avoir joué un sort qui a été esquivé pendant ce tour\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Bonus de dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Bonus de dégâts +1\",\n              \"icon\": \"icons/skills/wounds/anatomy-organ-heart-red.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.bonuses.All-Damage\",\n                  \"value\": \"1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.bonuses.other.damage\",\n                  \"value\": \"1\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Augmente les dégâts de 1 jusqu'à la fin du combat\"\n        }\n      ]\n    }\n  ],\n  \"other\": [\n    \"Récupérez le(s) carte(s) concernée(s) dans votre défausse, et mettez ce(s) carte(s) dans votre main\"\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -500,22 +500,22 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1711291711578,
+        "lastModifiedBy": "SA6JKCaEua1JXSu4"
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.cGyK3RraGVHOG7H3"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.cGyK3RraGVHOG7H3",
+      "cards": []
     },
     {
       "_id": "YoH2Y1D0tGjrvcR3",
       "name": "Embuscade",
-      "description": "{\n  \"name\": \"Embuscade\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"action.value\",\n  \"customEval\": [\n    {\n      \"test\": \"(!game.combat.flags.FQLogs || ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()) || ([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop().cardContent.name === 'Embuscade')\",\n      \"message\": \"Impossible de jouer ce sort si une carte a déjà été joué ce tour-ci\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Bonus de dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Bonus de dégâts +@wis\",\n              \"icon\": \"icons/skills/targeting/crosshair-scope-sniper-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.bonuses.All-Damage\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.bonuses.other.damage\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Augmente les dégâts de @wis pendant 2 tour\"\n        }\n      ]\n    }\n  ],\n  \"other\": [\n    \"vos points d'action sont à 0\",\n    \"Vous DEVEZ passez votre tour maintenant ou jouez une autre carte 'Embuscade'\"\n  ]\n}",
+      "description": "{\n  \"name\": \"Embuscade\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"action.value\",\n  \"customEval\": [\n    {\n      \"test\": \"(!game.combat.flags.FQLogs || ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()) || ([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop().cardContent.name === 'Embuscade')\",\n      \"message\": \"Impossible de jouer ce sort si une carte a déjà été joué ce tour-ci\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Bonus de dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Bonus de dégâts +@wis\",\n              \"icon\": \"icons/skills/targeting/crosshair-scope-sniper-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.bonuses.All-Damage\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.bonuses.other.damage\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Augmente les dégâts de @wis pendant 2 tour\"\n        }\n      ]\n    }\n  ],\n  \"other\": [\n    \"vos points d'action sont à 0\",\n    \"Vous DEVEZ passez votre tour maintenant ou jouez une autre carte 'Embuscade'\"\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -539,17 +539,17 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1711291516035,
+        "lastModifiedBy": "SA6JKCaEua1JXSu4"
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.YoH2Y1D0tGjrvcR3"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.YoH2Y1D0tGjrvcR3",
+      "cards": []
     },
     {
       "_id": "eQI6ftL0jPoeubYF",
@@ -578,7 +578,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -587,8 +587,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.eQI6ftL0jPoeubYF"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.eQI6ftL0jPoeubYF",
+      "cards": []
     },
     {
       "_id": "JUARxHb2gjxbgd6P",
@@ -617,7 +617,7 @@
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.317",
+        "coreVersion": "12.318",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
@@ -626,8 +626,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.JUARxHb2gjxbgd6P"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.JUARxHb2gjxbgd6P",
+      "cards": []
     }
   ],
   "width": null,
@@ -638,7 +638,7 @@
   "sort": 0,
   "flags": {},
   "_stats": {
-    "coreVersion": "12.317",
+    "coreVersion": "12.318",
     "systemId": null,
     "systemVersion": null,
     "createdTime": null,
