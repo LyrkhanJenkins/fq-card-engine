@@ -18,6 +18,8 @@
   "FQCARDENGINE.OpenCardStack": "Card Stack",
   "FQCARDENGINE.Pass": "Pass Cards",
   "FQCARDENGINE.PassTo": "Pass To",
+  "FQCARDENGINE.ChooseEffect": "Choose the effect",
+  "FQCARDENGINE.InvokeMinion": "Minion(s) location",
   "FQCARDENGINE.HandCountSetting": "Hand Count",
   "FQCARDENGINE.HandCountSettingHint": "Number of hands to display on the screen",
   "FQCARDENGINE.DisplayHandNameSetting": "Display Hand Name",
@@ -95,6 +97,8 @@
   "FQCARDENGINE.DialogPlayFormError": "Form Error",
   "FQCARDENGINE.DialogPlayFormErrorXXX": "No value for X",
   "FQCARDENGINE.DialogPlayFormErrorYYY": "No value for Y",
+  "FQCARDENGINE.DialogPlayFormErrorMinionLocation": "Select right number of FREE minion location for this spell",
+
 
   "FQCARDENGINE.ActionPoints": "Action Points",
   "FQCARDENGINE.ActionPointsCurrent": "Current Action Points",

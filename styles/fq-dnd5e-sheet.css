@@ -141,3 +141,13 @@
     font-weight: bold;
     line-height: 20px;
 }
+
+form .form-group .form-minions {
+    display: flex;
+    flex-direction: column;
+}
+form .form-group .minion-checkbox {
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
