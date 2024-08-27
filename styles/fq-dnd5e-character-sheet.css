@@ -1,0 +1,58 @@
+:root {
+    --fq8-color-action-1: #333102;
+    --fq8-color-action-2: #e0d607;
+    --fq8-color-action-3: #7d7700;
+
+    --fq8-color-mana-1: #0c2759;
+    --fq8-color-mana-2: #4886f7;
+    --fq8-color-mana-3: #275dc2;
+
+    --fq8-color-zeal-1: #3b0909;
+    --fq8-color-zeal-2: #ed5555;
+    --fq8-color-zeal-3: #a12828;
+}
+
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.hit-points {
+    height: 32px;
+    font-size: 18px;
+}
+
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.hit-dice {
+    height: 18px;
+    font-size: 12px;
+}
+
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.action-points {
+    height: 25px;
+    font-size: 16px;
+}
+
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.action-points .progress::before {
+    background: linear-gradient(to right, var(--fq8-color-action-1) 0%, var(--fq8-color-action-2) 100%);
+    border-right: var(--border-width) solid var(--fq8-color-action-3);
+    border-radius: 4px 0 0 4px;
+}
+
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.mana-points {
+    height: 22px;
+    font-size: 14px;
+}
+
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.mana-points .progress::before {
+    background: linear-gradient(to right, var(--fq8-color-mana-1) 0%, var(--fq8-color-mana-2) 100%);
+    border-right: var(--border-width) solid var(--fq8-color-mana-3);
+    border-radius: 4px 0 0 4px;
+}
+
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.zeal-points {
+    height: 22px;
+    font-size: 14px;
+}
+
+.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.zeal-points .progress::before {
+    background: linear-gradient(to right, var(--fq8-color-zeal-1) 0%, var(--fq8-color-zeal-2) 100%);
+    border-right: var(--border-width) solid var(--fq8-color-zeal-3);
+    border-radius: 4px 0 0 4px;
+}
+
+

@@ -51,7 +51,6 @@
     "FQCARDENGINE.NoHand":"No Hand",
     "FQCARDENGINE.ResetBar":"Reset Bar",
     "FQCARDENGINE.Player":"Player",
-    "FQCARDENGINE.Hand":"Hand",
     "FQCARDENGINE.Bar":"bar",
     "FQCARDENGINE.DragDropError":"Unable to Drag Drop",
     "FQCARDENGINE.DragDropUUIDError":"Cannot Drop Missing UUID",
@@ -84,6 +83,27 @@
     "FQCARDENGINE.HandSizeSmallSetting": "Small",
     "FQCARDENGINE.HandSizeMediumSetting": "Medium",
     "FQCARDENGINE.HandSizeLargeSetting": "Large",
-    "FQCARDENGINE.HandSizeMaxSetting": "Max"
+    "FQCARDENGINE.HandSizeMaxSetting": "Max",
+
+    "FQCARDENGINE.ActionPoints": "Action Points",
+    "FQCARDENGINE.ActionPointsCurrent": "Current Action Points",
+    "FQCARDENGINE.ActionPointsMax": "Maximum Action Points",
+    "FQCARDENGINE.ManaPoints": "Mana",
+    "FQCARDENGINE.ManaPointsCurrent": "Current Mana",
+    "FQCARDENGINE.ManaPointsMax": "Maximum Mana",
+    "FQCARDENGINE.ZealPoints": "Zeal",
+    "FQCARDENGINE.ZealPointsCurrent": "Current Zeal",
+    "FQCARDENGINE.ZealPointsMax": "Maximum Zeal",
+    "FQCARDENGINE.ZealPointsInit": "Init Zeal",
+    "FQCARDENGINE.Attributes": "FQ Attributes",
+    "FQCARDENGINE.CriticalScore": "Critical",
+    "FQCARDENGINE.EvasionScore": "Evasion",
+    "FQCARDENGINE.Bonuses": "FQ Bonuses",
+    "FQCARDENGINE.RangeBonus": "Range Bonus",
+    "FQCARDENGINE.HitPointsOnTime": "Hit Points By Turns",
+    "FQCARDENGINE.Cards": "Cards",
+    "FQCARDENGINE.Hand": "Hand",
+    "FQCARDENGINE.Pick": "Pick",
+    "FQCARDENGINE.CurrentDrop": "Discard Card During Turn"
 
 }
