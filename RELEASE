@@ -1,3 +1,15 @@
+Update 0.1.4:
+    Feature:
+    - Translation of all cards effect
+    - Translation of all macros and npc spells
+    - Creation of basic characters
+    - Name of hand by default
+
+    Fix:
+    - Items Choices of FQ classes
+    - GM also draw cards each turns in combat
+    - Automatically draw cards only when turn change
+
 Update 0.1.3:
     Feature:
     - Translation of all cards/items/messages into English
