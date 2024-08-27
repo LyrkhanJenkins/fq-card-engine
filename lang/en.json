@@ -141,5 +141,10 @@
   "FQCARDENGINE.WarningPileMissingForPlayer": "Player has no pile",
   "FQCARDENGINE.NoOwnedCharacter": "Player has no owned character",
   "FQCARDENGINE.NoMainClass": "Character's player has no main FQ main class implemented",
-  "FQCARDENGINE.GMMustBeConnected": "GM Must Be Connected for FQCardEngine module"
+  "FQCARDENGINE.GMMustBeConnected": "GM Must Be Connected for FQCardEngine module",
+
+  "FQCARDENGINE.SpellBookPrefixName": "Spellbook of ",
+  "FQCARDENGINE.DeckPrefixName": "Deck of ",
+  "FQCARDENGINE.HandPrefixName": "Hand of ",
+  "FQCARDENGINE.PilePrefixName": "Discard of "
 }

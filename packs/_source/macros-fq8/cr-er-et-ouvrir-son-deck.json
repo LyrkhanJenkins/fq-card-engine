@@ -1,0 +1,24 @@
+{
+  "name": "Créer et ouvrir son deck",
+  "type": "script",
+  "scope": "global",
+  "author": "SA6JKCaEua1JXSu4",
+  "img": "icons/sundries/gaming/playing-cards-grey.webp",
+  "command": "socket = socketlib.registerModule(FqCardEngineModule.moduleName);\nawait socket.executeAsGM('createDeckForUser', game.userId);\n\nlet deckName = \"Deck de \" + game.user.character.name;\nlet deck = game.cards.find(c => c.name === deckName)\nif (deck) {\n    deck.sheet.render(true, {\n        left: 110,\n        top: 100\n    });\n}\n\nlet spellBookName = \"Bibliothèque de \" + game.user.character.name;\nlet spellBook = game.cards.find(c => c.name === spellBookName)\nif (spellBook) {\n    spellBook.sheet.render(true, {\n        left: 110 + deck.sheet.position.width,\n        top: 100\n    });\n}",
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_id": "LcKbJMnjteOLMbPv",
+  "sort": 100000,
+  "_stats": {
+    "coreVersion": "12.318",
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "createdTime": 1713337146430,
+    "modifiedTime": 1713337146460,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "_key": "!macros!LcKbJMnjteOLMbPv"
+}

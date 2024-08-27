@@ -141,5 +141,10 @@
   "FQCARDENGINE.WarningPileMissingForPlayer": "Le joueur n'a pas de pile configurée",
   "FQCARDENGINE.NoOwnedCharacter": "Le joueur n'a pas de personnage configuré",
   "FQCARDENGINE.NoMainClass": "Le personnage du joueur n'a pas de classe FQ implémenté en classe principale",
-  "FQCARDENGINE.GMMustBeConnected": "Un MJ doit être connecté pour le module FQCardEngine"
+  "FQCARDENGINE.GMMustBeConnected": "Un MJ doit être connecté pour le module FQCardEngine",
+
+  "FQCARDENGINE.SpellBookPrefixName": "Bibliothèque de ",
+  "FQCARDENGINE.DeckPrefixName": "Deck de ",
+  "FQCARDENGINE.HandPrefixName": "Main de ",
+  "FQCARDENGINE.PilePrefixName": "Défausse de "
 }
