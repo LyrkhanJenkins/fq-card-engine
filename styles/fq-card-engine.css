@@ -41,11 +41,11 @@
 }
 
 .fq-card-engine-buttons-container-medium {
-    max-width: 290px;
+    max-width: 600px;
 }
 
 .fq-card-engine-buttons-container-large {
-    max-width: 380px;
+    max-width: 850px;
 }
 
 .fq-card-engine-buttons-top-container {
@@ -136,12 +136,12 @@
 }
 
 .fq-card-engine-hand-medium {
-    max-width: 300px;
+    max-width: 650px;
     max-height: 102px;
 }
 
 .fq-card-engine-hand-large {
-    max-width: 400px;
+    max-width: 850px;
     max-height: 136px;
 }
 
@@ -166,11 +166,11 @@
 }
 
 .fq-card-engine-hand-name-medium {
-    width: 290px;
+    width: 600px;
 }
 
 .fq-card-engine-hand-name-large {
-    width: 380px;
+    width: 820px;
 }
 
 #fq-card-engine-container.show-names .fq-card-engine-hand-name {
@@ -226,7 +226,7 @@
 }
 
 .fq-card-engine-button-medium {
-    height: 31px;
+    height: 42px;
 }
 
 .fq-card-engine-button-large {
@@ -327,14 +327,14 @@
 }
 
 .fq-card-engine-card-container-medium {
-    max-width: 231px;
-    min-width: 231px;
+    max-width: 550px;
+    min-width: 550px;
     max-height: 78px;
 }
 
 .fq-card-engine-card-container-large {
-    max-width: 308px;
-    min-width: 308px;
+    max-width: 800px;
+    min-width: 800px;
     max-height: 104px;
 }
 
@@ -475,6 +475,12 @@ div#fq-card-engine-container {
 #ui-bottom.fq-card-engine div#fq-card-engine-container {
     grid-row: 1/4;
     grid-column: 2;
+}
+
+#ui-bottom.fq-card-engine-above-macros div#fq-card-engine-container {
+    grid-row: 2;
+    grid-column: 1 / span 2;
+    width: fit-content;
 }
 
 #ui-bottom.fq-card-engine-left div#fq-card-engine-container {

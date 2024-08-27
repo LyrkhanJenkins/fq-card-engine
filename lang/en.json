@@ -71,6 +71,7 @@
     "FQCARDENGINE.CardsStackShortcutHint":"If a pile is chosen a button will appear above everyones hand to open a pile window",
     "FQCARDENGINE.CardsStackShortcutNoShortcut":"No Shortcut",
     "FQCARDENGINE.BarPositionDraggablePlayersSetting":"Draggable",
+    "FQCARDENGINE.BarPositionAboveMacrosSetting":"Above Macros",
     "FQCARDENGINE.Move":"Move",
     "FQCARDENGINE.DraggableBarPositionSettingY":"Y Position",
     "FQCARDENGINE.DraggableBarPositionSettingX":"X Position",
@@ -78,7 +79,7 @@
     "FQCARDENGINE.DraggableBarPositionSettingHintY":"Y Position of the bar only when Draggable is enabled",
 
     "FQCARDENGINE.HandSizeSetting": "Window size",
-    "FQCARDENGINE.HandSizeSettingHint": "Size of the window for hand's players",
+    "FQCARDENGINE.HandSizeSettingHint": "Size of the window for hand's players, not possible if position of hand is above players, or at the left or right side to the macro bar",
     "FQCARDENGINE.HandSizeSmallSetting": "Small",
     "FQCARDENGINE.HandSizeMediumSetting": "Medium",
     "FQCARDENGINE.HandSizeLargeSetting": "Large"
