@@ -57,6 +57,8 @@ After playing a card, automatic roll, effect, damage, heal are applied, also cri
 ![img.png](images/doc/chat-roll.png)
 
 ## Version
+### 0.1.2 - alpha (En Cours):
+
 ### 0.1.1 - alpha:
     #### Feature:
     - Automatic damage/heals with critical hits and dodges (option to disable and prevent conflicts?)
