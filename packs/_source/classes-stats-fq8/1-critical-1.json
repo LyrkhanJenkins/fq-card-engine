@@ -1,13 +1,13 @@
 {
-  "name": "+1 zeal",
+  "name": "+1 critical (1)",
   "type": "feat",
-  "img": "icons/magic/fire/explosion-fireball-small-red.webp",
+  "img": "icons/magic/symbols/rune-sigil-hook-white-red.webp",
   "effects": [
     {
       "_id": "gLxh9IhVmNUCs9pM",
       "changes": [
         {
-          "key": "system.fq.zeal.init",
+          "key": "system.fq.attributes.critical",
           "mode": 2,
           "value": "1",
           "priority": null
@@ -46,14 +46,14 @@
         "modifiedTime": null,
         "lastModifiedBy": null
       },
-      "name": "+1 zèle",
-      "img": "icons/magic/fire/explosion-fireball-small-red.webp",
+      "name": "+1 critique",
+      "img": "icons/magic/symbols/rune-sigil-hook-white-red.webp",
       "type": "base",
       "system": {},
       "description": "",
       "statuses": [],
       "sort": 0,
-      "_key": "!items.effects!uSL3hFUygS2zOS34.gLxh9IhVmNUCs9pM"
+      "_key": "!items.effects!kxqmlP2SSyqufLbl.gLxh9IhVmNUCs9pM"
     }
   ],
   "folder": null,
@@ -68,8 +68,8 @@
     "coreVersion": "12.331",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
-    "createdTime": 1724074039907,
-    "modifiedTime": 1724075092039,
+    "createdTime": 1724140507539,
+    "modifiedTime": 1724141386357,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "ownership": {
@@ -163,7 +163,7 @@
     },
     "properties": []
   },
-  "_id": "uSL3hFUygS2zOS34",
-  "sort": 900000,
-  "_key": "!items!uSL3hFUygS2zOS34"
+  "_id": "kxqmlP2SSyqufLbl",
+  "sort": 100000,
+  "_key": "!items!kxqmlP2SSyqufLbl"
 }

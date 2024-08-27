@@ -13,32 +13,19 @@
 - Recette globale avec utilisateurs et MJs
 - Suppression de tous les Warnings/ tous les bugs pour 1.0.0 sans utilisateur
 - Mettre à jour le readme
+- Traduction manquantes pour macros et spells npc
 - Traduction des effets des cartes
 
-## 0.1.3
-- Traduction en anglais de toutes les cartes et items
-- Implémentation des classes à revoir
-- Création des personnages de bases
-- Réduction aux 5 premières classes/decks
-- Déploiement sur le store
+## 0.1.4
+- Rédigé le "Get Started"
+- Trouver un moyen de le faire pour les joueurs non connectés
+- Toujours le problème de la barre des cartes qui s'affiche mal quand on en créé une toute nouvelle
+- Ajouter les noms des mains par défaut
+- Pourquoi MJ n'a pas de main
+~~- Les items choice des classes ne sont pas bons (utiliser des compendiums)~~
+- classes FQ8 pas rangé au bon endroit
+- (- mineur : retrocompatibilité des feuilles: n'ajouter que la partie fq?)
 
-## 0.1.2
-~~- MJ doit pouvoir créer les decks pour ses joueurs avec une meta macros~~
-
-~~- - Migration 12.330 - Enlever les erreurs et warnings~~-
-- Problématiques avec CardViewer (mettre en expérimentation ou corrigé)
-
-~~Ne piochez ou déplacez que vers des stacks de type fqType~~
-
-~~Macros qui affiche la bibliotheque et le deck côté à côte~~
-
-~~Macros pour créer les deck, bibliothèque défausse et main pour FQ suivant la classe du joueur~~
-
-~~Option pour ne pas défausser les cartes quand on les joue avec le MJ (débuguage)~~
-
-~~Gestion de l'emplacement d'invocation d'un minion~~
-
-~~Macro pour générer un deck à partir de sa classe si non créé~~
 
 ## Backlog
 
