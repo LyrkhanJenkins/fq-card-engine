@@ -60,4 +60,4 @@ release:
     assets:
       links:
         - name: "fq-card-engine.zip"
-          url: "https://gitlab.com/mvoutat/fq-card-engine/-/jobs/$CI_JOB_ID/artifacts/raw/fq-card-engine.zip"
+          url: "https://gitlab.com/final-quest/fq-card-engine/-/jobs/$CI_JOB_ID/artifacts/raw/fq-card-engine.zip"
