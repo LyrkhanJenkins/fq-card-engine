@@ -768,16 +768,21 @@ div#fq-card-engine-container {
     filter: saturate(0%);
 }
 
-.has-been-played {
-    filter: saturate(35%) drop-shadow(2px 2px 3px limegreen);
-    animation: pulse 2s infinite; /* Animation de clignotement */
+.fq-card-engine-card:hover.has-been-played-on-round {
+    filter: saturate(0%);
 }
 
-@keyframes pulse {
-    0%, 100% {
-        opacity: 0.4; /* Début et fin de l'animation avec opacité à 0 */
-    }
-    50% {
-        opacity: 1; /* Milieu de l'animation avec opacité à 1 */
-    }
+
+.has-been-played {
+    animation: shine 3s infinite;
+}
+
+.fq-card-engine-card:hover.has-been-played  {
+    filter: saturate(35%) drop-shadow(2px 2px 3px limegreen);
+}
+
+@keyframes shine {
+    0% { filter: saturate(35%) brightness(100%) drop-shadow(1px 1px 2px limegreen); }
+    50% { filter: saturate(35%) brightness(130%) drop-shadow(3px 3px 6px limegreen); }
+    100% { filter: saturate(35%) brightness(100%) drop-shadow(1px 1px 2px limegreen); }
 }
