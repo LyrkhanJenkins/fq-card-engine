@@ -49,7 +49,7 @@
   "socket": true,
   "url": "https://gitlab.com/mvoutat/fq-card-engine",
   "manifest": "https://gitlab.com/mvoutat/fq-card-engine/-/raw/final-quest-8/module.json",
-  "download": "https://gitlab.com/mvoutat/fq-card-engine/-/jobs/6434327857/artifacts/raw/fq-card-engine.zip",
+  "download": "https://gitlab.com/mvoutat/fq-card-engine/-/jobs/6574761226/artifacts/raw/fq-card-engine.zip",
   "id": "fq-card-engine",
   "compatibility": {
     "minimum": "12",
