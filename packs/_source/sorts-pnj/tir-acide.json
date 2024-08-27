@@ -41,12 +41,14 @@
       },
       "tint": "#ffffff",
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "name": "Tir empoisonnée",
       "img": "icons/weapons/crossbows/handcrossbow-green.webp",
@@ -54,6 +56,7 @@
       "system": {},
       "description": "",
       "statuses": [],
+      "sort": 0,
       "_key": "!items.effects!iTWB6S9HGnay0Mnz.gqonaema5jvdxxk6"
     }
   ],
@@ -85,12 +88,14 @@
     }
   },
   "_stats": {
-    "coreVersion": "12.318",
+    "coreVersion": "12.330",
     "systemId": "dnd5e",
     "systemVersion": "3.1.1",
     "createdTime": 1709393284703,
     "modifiedTime": 1712393567977,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "ownership": {
     "default": 0

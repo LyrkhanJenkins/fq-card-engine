@@ -40,12 +40,14 @@
       },
       "tint": "#ffffff",
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "name": "Swallow",
       "img": "icons/creatures/abilities/mouth-teeth-tongue-purple.webp",
@@ -53,6 +55,7 @@
       "system": {},
       "description": "",
       "statuses": [],
+      "sort": 0,
       "_key": "!items.effects!p25xHtjPir18zYZ2.ef6xv9dg31w4emo8"
     }
   ],
@@ -83,12 +86,14 @@
   },
   "_id": "p25xHtjPir18zYZ2",
   "_stats": {
-    "coreVersion": "12.318",
+    "coreVersion": "12.330",
     "systemId": "dnd5e",
     "systemVersion": "3.1.1",
     "createdTime": 1709393284703,
     "modifiedTime": 1712393390715,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "ownership": {
     "default": 0

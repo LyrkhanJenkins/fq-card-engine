@@ -52,12 +52,14 @@
       },
       "tint": "#ffffff",
       "_stats": {
-        "coreVersion": "12.318",
+        "coreVersion": "12.330",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "name": "Tir paralysant",
       "img": "icons/weapons/crossbows/crossbow-blue.webp",
@@ -65,6 +67,7 @@
       "system": {},
       "description": "",
       "statuses": [],
+      "sort": 0,
       "_key": "!items.effects!XEYCQXjN7URuGEK6.gqonaema5jvdxxk6"
     }
   ],
@@ -97,12 +100,14 @@
   },
   "_id": "XEYCQXjN7URuGEK6",
   "_stats": {
-    "coreVersion": "12.318",
+    "coreVersion": "12.330",
     "systemId": "dnd5e",
     "systemVersion": "3.1.1",
     "createdTime": 1709393284702,
     "modifiedTime": 1712393579806,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "ownership": {
     "default": 0

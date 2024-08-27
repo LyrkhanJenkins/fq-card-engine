@@ -19,10 +19,8 @@
 - Empêcher les joueurs de modifier des cartes d'un deck ou d'une bibliotheque (et de supprimer)
 
 ## 0.1.2
-- Problématique de taille quand ajout d'une nouvelle main
-- Problématique du hover sur les cartes
 - MJ doit pouvoir créer les decks pour ses joueurs avec une meta macros
-- Migration 12.330 - Enlever lew warnings
+- Migration 12.330 - Enlever les erreurs et warnings
 - Problématiques avec CardViewer (mettre en expérimentation ou corrigé)
 
 

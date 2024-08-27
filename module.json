@@ -53,7 +53,7 @@
   "id": "fq-card-engine",
   "compatibility": {
     "minimum": "12",
-    "verified": "12.318"
+    "verified": "12.330"
   },
   "relationships": {
     "systems": [
