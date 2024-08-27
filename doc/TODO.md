@@ -16,22 +16,20 @@
 ## 0.1.4
 - Rédigé le "Get Started"
 
-  ~~- Trouver un moyen de le faire pour les joueurs non connectés~~
+- Traduction des effets des cartes
 
-- Toujours le problème de la barre des cartes qui s'affiche mal quand on en créé une toute nouvelle
-- Ajouter les noms des mains par défaut
-- Pourquoi MJ n'a pas de main
+- classes FQ8 pas rangé au bon endroit
+
+~~- Trouver un moyen de le faire pour les joueurs non connectés~~
+
+~~- Ajouter les noms des mains par défaut~~
+
+~~- Pourquoi MJ n'a pas de main~~
 
 ~~- Traduction manquantes pour macros~~
 
 ~~- Traduction manquantes pour spells NPC~~
-
-- Traduction des effets des cartes
-
 ~~- Les items choice des classes ne sont pas bons (utiliser des compendiums)~~
-
-- classes FQ8 pas rangé au bon endroit
-- (- mineur : retrocompatibilité des feuilles: n'ajouter que la partie fq?)
 
 
 ## Backlog
@@ -53,6 +51,7 @@
 - Gestion de plusieurs modules pour les effets magiques de combat
 - Vérifier qu'un GM est connecté pour pouvoir lancer les cartes
 - Lancer les sons des cartes sur un dossier plutôt qu'un fichier (lancer un fichier audio aléatoire d'un dossier)
+- Retrocompatibilité des feuilles: n'ajouter que la partie fq ou  toute la feuille?
 
 ### Low:
 
