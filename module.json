@@ -35,7 +35,8 @@
     }
   ],
   "esmodules": [
-    "scripts/fq-card-engine-module.js"
+    "scripts/fq-card-engine-module.js",
+    "scripts/fq-combat.js"
   ],
   "styles": [
     "styles/fq-card-engine.css",
