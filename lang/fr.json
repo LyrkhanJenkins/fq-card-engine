@@ -82,5 +82,6 @@
   "FQCARDENGINE.HandSizeSettingHint": "Fenêtre de la main des joueurs (Ne peut pas changer si à droite ou à gauche des macros ou si au dessus des noms des joueurs)",
   "FQCARDENGINE.HandSizeSmallSetting": "Petite",
   "FQCARDENGINE.HandSizeMediumSetting": "Moyenne",
-  "FQCARDENGINE.HandSizeLargeSetting": "Grande"
+  "FQCARDENGINE.HandSizeLargeSetting": "Grande",
+  "FQCARDENGINE.HandSizeMaxSetting": "Maximale"
 }
