@@ -31,6 +31,7 @@ build:       # This job runs in the build stage, which runs first.
     - echo "Compiling the code..."
     - npm install
     - npm run build
+    - rm -rf node-modules
     - echo "Compile complete."
   artifacts:
     untracked: true
