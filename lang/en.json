@@ -93,12 +93,13 @@
   "FQCARDENGINE.HandSizeMediumSetting": "Medium",
   "FQCARDENGINE.HandSizeLargeSetting": "Large",
   "FQCARDENGINE.HandSizeMaxSetting": "Max",
+  "FQCARDENGINE.GMUsingCardsSetting": "GM using cards without discarding them",
+  "FQCARDENGINE.GMUsingCardsSettingHint": "Uncheck this if you want that the GM never pass the cards front the hand to an other pile but play them anyway",
 
   "FQCARDENGINE.DialogPlayFormError": "Form Error",
   "FQCARDENGINE.DialogPlayFormErrorXXX": "No value for X",
   "FQCARDENGINE.DialogPlayFormErrorYYY": "No value for Y",
   "FQCARDENGINE.DialogPlayFormErrorMinionLocation": "Select right number of FREE minion location for this spell",
-
 
   "FQCARDENGINE.ActionPoints": "Action Points",
   "FQCARDENGINE.ActionPointsCurrent": "Current Action Points",
