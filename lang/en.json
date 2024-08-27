@@ -84,15 +84,18 @@
   "FQCARDENGINE.DraggableBarPositionSettingX": "X Position",
   "FQCARDENGINE.DraggableBarPositionSettingHintX": "X Position of the bar only when Draggable is enabled",
   "FQCARDENGINE.DraggableBarPositionSettingHintY": "Y Position of the bar only when Draggable is enabled",
+
   "FQCARDENGINE.HandSizeSetting": "Window size",
   "FQCARDENGINE.HandSizeSettingHint": "Size of the window for hand's players, not possible if position of hand is above players, or at the left or right side to the macro bar",
   "FQCARDENGINE.HandSizeSmallSetting": "Small",
   "FQCARDENGINE.HandSizeMediumSetting": "Medium",
   "FQCARDENGINE.HandSizeLargeSetting": "Large",
   "FQCARDENGINE.HandSizeMaxSetting": "Max",
+
   "FQCARDENGINE.DialogPlayFormError": "Form Error",
   "FQCARDENGINE.DialogPlayFormErrorXXX": "No value for X",
   "FQCARDENGINE.DialogPlayFormErrorYYY": "No value for Y",
+
   "FQCARDENGINE.ActionPoints": "Action Points",
   "FQCARDENGINE.ActionPointsCurrent": "Current Action Points",
   "FQCARDENGINE.ActionPointsMax": "Maximum Action Points",
@@ -112,5 +115,6 @@
   "FQCARDENGINE.Cards": "Cards",
   "FQCARDENGINE.Hand": "Hand",
   "FQCARDENGINE.Pick": "Pick",
-  "FQCARDENGINE.CurrentDrop": "Discard Card During Turn"
+  "FQCARDENGINE.CurrentDrop": "Discard Card During Turn",
+  "FQCARDENGINE.LifeCost": "Life cost"
 }
