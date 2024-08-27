@@ -1,45 +1,38 @@
 {
-  "_id": "QzBpOIugfqv1ATrp",
-  "name": "Au tapis",
+  "name": "+1 evasion",
   "type": "feat",
-  "img": "icons/skills/melee/hand-grip-staff-teal.webp",
+  "img": "icons/magic/symbols/rune-sigil-horned-blue.webp",
   "effects": [
     {
-      "_id": "nw705ddcpfj989y4",
+      "_id": "gLxh9IhVmNUCs9pM",
       "changes": [
         {
           "key": "system.attributes.evasion",
-          "mode": 5,
-          "value": "0",
-          "priority": 20
-        },
-        {
-          "key": "system.attributes.action.max",
           "mode": 2,
-          "value": "-3",
+          "value": "1",
           "priority": 20
         }
       ],
       "disabled": false,
       "duration": {
-        "rounds": 1,
         "startTime": null,
         "seconds": null,
         "combat": null,
+        "rounds": null,
         "turns": null,
         "startRound": null,
         "startTurn": null
       },
-      "origin": "Actor.YN33gXABT4OXdTY2.Item.fyK2eQfWiBGThECZ",
-      "transfer": false,
+      "origin": "Item.oSfpFdarEM0Sll9K",
+      "transfer": true,
       "flags": {
         "dae": {
           "selfTarget": false,
-          "stackable": "none",
+          "stackable": "multi",
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
-          "transfer": false
+          "transfer": true
         },
         "core": {
           "statusId": ""
@@ -56,50 +49,32 @@
         "compendiumSource": null,
         "duplicateSource": null
       },
-      "name": "Au tapis",
-      "img": "icons/skills/melee/hand-grip-staff-teal.webp",
+      "name": "+1 esquive",
+      "img": "icons/magic/symbols/rune-sigil-horned-blue.webp",
       "type": "base",
       "system": {},
       "description": "",
       "statuses": [],
       "sort": 0,
-      "_key": "!items.effects!QzBpOIugfqv1ATrp.nw705ddcpfj989y4"
+      "_key": "!items.effects!GD0UVAYhRdpSbGJe.gLxh9IhVmNUCs9pM"
     }
   ],
   "folder": null,
   "sort": 0,
   "flags": {
-    "rest-recovery": {
-      "data": {
-        "recovery": {
-          "enabled": false
-        }
-      }
-    },
-    "midi-qol": {
-      "fumbleThreshold": null,
-      "effectActivation": false
-    },
-    "midiProperties": {
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "rollOther": false,
-      "critOther": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "toggleEffect": false
+    "cf": {
+      "id": "temp_fmyn85q4rtg"
     }
   },
+  "_id": "GD0UVAYhRdpSbGJe",
   "_stats": {
     "coreVersion": "12.330",
     "systemId": "dnd5e",
     "systemVersion": "3.1.1",
-    "createdTime": 1709393284701,
-    "modifiedTime": 1712393377805,
+    "createdTime": 1709393283175,
+    "modifiedTime": 1723888810266,
     "lastModifiedBy": "dnd5ebuilder0000",
-    "compendiumSource": null,
+    "compendiumSource": "Item.7J5PiCmMVmx8WVD3",
     "duplicateSource": null
   },
   "ownership": {
@@ -107,13 +82,13 @@
   },
   "system": {
     "description": {
-      "value": "<p>Met au tapis l'adversaire qui perd 3 point d'action au prochain tour et son  esquive est réduite à 0.</p>",
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "source": "",
     "activation": {
-      "type": "action",
+      "type": "",
       "cost": null,
       "condition": ""
     },
@@ -135,28 +110,23 @@
     "uses": {
       "value": null,
       "max": "",
-      "per": ""
+      "per": null
     },
     "consume": {
       "type": "",
-      "target": "",
+      "target": null,
       "amount": null
     },
-    "ability": "str",
-    "actionType": "mwak",
-    "attackBonus": "0",
+    "ability": null,
+    "actionType": "",
+    "attackBonus": 0,
     "chatFlavor": "",
     "critical": {
       "threshold": null,
       "damage": ""
     },
     "damage": {
-      "parts": [
-        [
-          "1d6+@mod[bludgeoning]",
-          "bludgeoning"
-        ]
-      ],
+      "parts": [],
       "versatile": ""
     },
     "formula": "",
@@ -170,13 +140,13 @@
       "value": null,
       "charged": false
     },
-    "fq": {
-      "action": -10,
-      "mana": 0,
-      "zeal": -3,
-      "drop": 0,
-      "hp": 0
+    "cost": {
+      "action": null,
+      "mana": null,
+      "zeal": null,
+      "drop": null,
+      "hp": null
     }
   },
-  "_key": "!items!QzBpOIugfqv1ATrp"
+  "_key": "!items!GD0UVAYhRdpSbGJe"
 }
