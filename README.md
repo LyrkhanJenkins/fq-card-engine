@@ -66,7 +66,7 @@ After playing a card, automatic roll, effect, damage, heal are applied, also cri
 
     #### Fix:
     - Support for 12.330 version
-    - 
+    - Fix problems with module CardViewer
 
 ### 0.1.1 - alpha:
     #### Feature:
