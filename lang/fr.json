@@ -23,6 +23,8 @@
   "FQCARDENGINE.DisplayHandNameSettingHint": "Afficher le nom de la main au dessus de chaque mini-barre (utile si plusieurs mains sont affich\u00e9es)",
   "FQCARDENGINE.HideMessagesSetting": "Pas de message",
   "FQCARDENGINE.HideMessagesSettingHint": "D\u00e9sactive les messages quand les cartes sont d\u00e9plac\u00e9es de et vers la mini-barre",
+  "FQCARDENGINE.RollInitiativeNameSetting" : "Lancer l'initiative",
+  "FQCARDENGINE.RollInitiativeNameSettingHint" : "Lance les dés d'initiative en mode normal au début des combats et sur les cartes invoquant des familiers",
   "FQCARDENGINE.BetterChatMessagesSetting": "Meilleur message de chat",
   "FQCARDENGINE.BetterChatMessagesSettingHint": "Les messages de chat affichent les images et descriptions des cartes",
   "FQCARDENGINE.ShowPlayedPlayerNames": "Affiche le nom du joueur dans la pile",
