@@ -31,8 +31,18 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.UCYOEqiF8N1AN8Sl",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.UCYOEqiF8N1AN8Sl"
     },
     {
       "_id": "qVyz2F79jPsA7xTy",
@@ -60,8 +70,18 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.qVyz2F79jPsA7xTy",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.qVyz2F79jPsA7xTy"
     },
     {
       "_id": "SOTzE1uX2WwLbeEr",
@@ -89,8 +109,18 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.SOTzE1uX2WwLbeEr",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.SOTzE1uX2WwLbeEr"
     },
     {
       "_id": "kZQbFkLMnCb7brjU",
@@ -118,8 +148,18 @@
       "sort": 3,
       "flags": {},
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.kZQbFkLMnCb7brjU",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.kZQbFkLMnCb7brjU"
     },
     {
       "_id": "pZ02qHWvJS4kIbIY",
@@ -147,8 +187,18 @@
       "sort": 4,
       "flags": {},
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.pZ02qHWvJS4kIbIY",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.pZ02qHWvJS4kIbIY"
     },
     {
       "_id": "e6HICEkLS9HgEZbD",
@@ -176,8 +226,18 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.e6HICEkLS9HgEZbD",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.e6HICEkLS9HgEZbD"
     },
     {
       "_id": "ypg6iIljUHPuFOz7",
@@ -205,13 +265,23 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.ypg6iIljUHPuFOz7",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.ypg6iIljUHPuFOz7"
     },
     {
       "_id": "7vF29PgR3WHXhEb6",
       "name": "Brouillard",
-      "description": "{\n  \"action\": \"-5\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"99999999\",\n  \"nbTargets\": \"9999\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Effet air' || e.name === 'Effet de Terre').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de terre actif sur au moins une cible\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Brouillard\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Brouillard\",\n              \"icon\": \"icons/magic/air/fog-gas-smoke-gray.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"-@int\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fog\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Effet Brouillard appliqué à toutes les cibles enlevant @int en critique et @wis en esquive\"\n        }\n      ]\n    }\n  ]\n}",
+      "description": "{\n  \"action\": \"-5\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"99999999\",\n  \"nbTargets\": \"9999\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Effet air' || e.name === 'Effet de Terre').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de terre actif sur au moins une cible\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Brouillard\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Brouillard\",\n              \"icon\": \"icons/magic/air/fog-gas-smoke-gray.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"-@int\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fog\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"Effet Brouillard appliqué à toutes les cibles enlevant @int en critique et @wis en esquive\"\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -234,13 +304,23 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.7vF29PgR3WHXhEb6",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.7vF29PgR3WHXhEb6"
     },
     {
       "_id": "aXrcw2gqwFuTDo58",
       "name": "Givrefeu",
-      "description": "{\n  \"damage\": \"@int[fire]+1d10[fire]+4[cold]+@wis[cold]+1d4[cold]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"8\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length !== 1 || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Brulure' || e.name === 'Gel').length).length \",\n      \"message\": \"Vous n'avez pas d'effet de brulûre ou de gel actif sur la cible\"\n    }\n  ]\n}",
+      "description": "{\n  \"damage\": \"@int[fire]+1d10[fire]+4[cold]+@wis[cold]+1d4[cold]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"8\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length !== 1 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Brulure' || e.name === 'Gel').length).length \",\n      \"message\": \"Vous n'avez pas d'effet de brulûre ou de gel actif sur la cible\"\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -263,8 +343,18 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.aXrcw2gqwFuTDo58",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.aXrcw2gqwFuTDo58"
     },
     {
       "_id": "5b97DVTONwBhLdAl",
@@ -292,13 +382,23 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.5b97DVTONwBhLdAl",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.5b97DVTONwBhLdAl"
     },
     {
       "_id": "866YLG5WLwU2OsaO",
       "name": "Météore",
-      "description": "{\n  \"damage\": \"(2+@wis+1d4)[force]+(1+@int+1d4)[fire]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"10\",\n  \"nbTargets\": \"4\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length < 1 || [...game.user.targets].length > 9 || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Brulure' || e.name === 'Effet de Terre').length).length\",\n      \"message\": \"Vous n'avez pas d'effet de terre ou de feu actif sur au moins une cible\"\n    },\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size > 9 || ([...game.user.targets].map(t => t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)) && [...game.user.targets].map(t => t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)))\",\n      \"message\": \"Les cibles doivent être contenues dans un carré 3X3\"\n    }\n  ]\n}",
+      "description": "{\n  \"damage\": \"(2+@wis+1d4)[force]+(1+@int+1d4)[fire]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"10\",\n  \"nbTargets\": \"4\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length &lt; 1 || [...game.user.targets].length &gt; 9 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Brulure' || e.name === 'Effet de Terre').length).length\",\n      \"message\": \"Vous n'avez pas d'effet de terre ou de feu actif sur au moins une cible\"\n    },\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"message\": \"Les cibles doivent être contenues dans un carré 3X3\"\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -321,13 +421,23 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.866YLG5WLwU2OsaO",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.866YLG5WLwU2OsaO"
     },
     {
       "_id": "qa9KGKFhhIRWkfHi",
       "name": "Assassin du néant",
-      "description": "{\n  \"damage\": \"(2*@dex+3*YYY)[psychic]+1d(2*XXX)[psychic]\",\n  \"action\": \"-(XXX)\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"1\",\n  \"zeal\": \"-(YYY)\",\n  \"xmax\": \"6\",\n  \"ymax\": \"4\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Brulure' || e.name === 'Gel' || e.name === 'Effet de Terre' || e.name === 'Effet air').length > 1).length\",\n      \"message\": \"Vous n'avez pas 2 éléments actif sur la cible\"\n    }\n  ]\n}",
+      "description": "{\n  \"damage\": \"(2*@dex+3*YYY)[psychic]+1d(2*XXX)[psychic]\",\n  \"action\": \"-(XXX)\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"1\",\n  \"zeal\": \"-(YYY)\",\n  \"xmax\": \"6\",\n  \"ymax\": \"4\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Brulure' || e.name === 'Gel' || e.name === 'Effet de Terre' || e.name === 'Effet air').length &gt; 1).length\",\n      \"message\": \"Vous n'avez pas 2 éléments actif sur la cible\"\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -350,8 +460,18 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.qa9KGKFhhIRWkfHi",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.qa9KGKFhhIRWkfHi"
     },
     {
       "_id": "55tY0W7Dbd1OfKSQ",
@@ -379,13 +499,23 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.55tY0W7Dbd1OfKSQ",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.55tY0W7Dbd1OfKSQ"
     },
     {
       "_id": "VwRiKk5Nv0wwXGtv",
       "name": "Plastron Magique",
-      "description": "{\n  \"minReach\": \"0\",\n  \"bonusCrit\": \"-9999\",\n  \"maxReach\": \"8\",\n  \"action\": \"-7\",\n  \"heal\": \"10 + 3*@cha\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.combat.combatants.filter(c => c.actor?.effects.filter(e => e?.data?.label === 'Effet de Terre').length).length || game.combat.combatants.filter(c => c.actor?.data?.effects.filter(e => e?.data?.label === 'Gel').length).length\",\n      \"message\": \"Vous n'avez pas d'effet de Terre ou de gel actif\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Plastron Magique\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Plastron Magique\",\n              \"icon\": \"icons/magic/defensive/shield-barrier-flaming-pentagon-blue-yellow.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.hp.tempmax\",\n                  \"value\": \"10 + 3*@cha\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"air-field\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": [\n            \"L'effet Plastron Magique a été appliqué aux cibles\",\n            \"Supprimer l'effet de givre ou de terre concerné sur la cible\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "description": "{\n  \"minReach\": \"0\",\n  \"bonusCrit\": \"-9999\",\n  \"maxReach\": \"8\",\n  \"action\": \"-7\",\n  \"heal\": \"10 + 3*@cha\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.combat.combatants.filter(c =&gt; c.actor?.effects.filter(e =&gt; e?.data?.label === 'Effet de Terre').length).length || game.combat.combatants.filter(c =&gt; c.actor?.data?.effects.filter(e =&gt; e?.data?.label === 'Gel').length).length\",\n      \"message\": \"Vous n'avez pas d'effet de Terre ou de gel actif\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Plastron Magique\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Plastron Magique\",\n              \"icon\": \"icons/magic/defensive/shield-barrier-flaming-pentagon-blue-yellow.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.hp.tempmax\",\n                  \"value\": \"10 + 3*@cha\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"air-field\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": [\n            \"L'effet Plastron Magique a été appliqué aux cibles\",\n            \"Supprimer l'effet de givre ou de terre concerné sur la cible\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -408,13 +538,23 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.VwRiKk5Nv0wwXGtv",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.VwRiKk5Nv0wwXGtv"
     },
     {
       "_id": "1nwTNnbbl8BeaUwJ",
       "name": "Onde glacée",
-      "description": "{\n  \"damage\": \"(1+@int+1d4)[thunder]+(1+@sag+1d4)[cold]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"1\",\n  \"nbTargets\": \"4\",\n  \"action\": \"-7\",\n  \"mana\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Effet air' || e.name === 'Gel').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de gel actif sur au moins une cible\"\n    }\n  ]\n}",
+      "description": "{\n  \"damage\": \"(1+@int+1d4)[thunder]+(1+@sag+1d4)[cold]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"1\",\n  \"nbTargets\": \"4\",\n  \"action\": \"-7\",\n  \"mana\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Effet air' || e.name === 'Gel').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de gel actif sur au moins une cible\"\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -437,13 +577,23 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.1nwTNnbbl8BeaUwJ",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.1nwTNnbbl8BeaUwJ"
     },
     {
       "_id": "CPZ20TlYwqrMq3C1",
       "name": "Choc de feu",
-      "description": "{\n  \"damage\": \"(2*@int)[thunder]+2d8[fire]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"8\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-10\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-2\",\n  \"customEval\": [\n    {\n      \"test\": \"game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Brulure' || e.name === 'Effet air').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de feu actif sur au moins une cible\"\n    }\n  ]\n}",
+      "description": "{\n  \"damage\": \"(2*@int)[thunder]+2d8[fire]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"8\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-10\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-2\",\n  \"customEval\": [\n    {\n      \"test\": \"game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Brulure' || e.name === 'Effet air').length).length \",\n      \"message\": \"Vous n'avez pas d'effet air ou de feu actif sur au moins une cible\"\n    }\n  ]\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -466,13 +616,23 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.CPZ20TlYwqrMq3C1",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.CPZ20TlYwqrMq3C1"
     },
     {
       "_id": "z3BMWtXMBCF996I2",
       "name": "Propagation des dégâts",
-      "description": "{\n  \"action\": \"-4\",\n  \"zeal\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"9\",\n  \"replayable\": \"passif\",\n  \"customEval\": [\n    {\n      \"test\": \"!!game.combat.flags.FQLogs && (!![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent && ![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets && !![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.minReach && !![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.damage && ![...game.user.targets].map(t => t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n      \"message\": \"Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Propagation des dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Propagation des dégâts\",\n              \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.hpot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"shockwave\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"@wis dégâts sont propagés à la cible chaque tour pendant 3 tours\"\n        }\n      ]\n    }\n  ],\n  \"afterFirstPlay\": {\n    \"minReach\": \"1\",\n    \"maxReach\": \"9\",\n    \"replayable\": \"passif\",\n    \"customEval\": [\n      {\n        \"test\": \"!!game.combat.flags.FQLogs && (!![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent && ![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets && !![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.minReach && !![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.damage && ![...game.user.targets].map(t => t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n        \"message\": \"Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort\"\n      }\n    ],\n    \"addingRolls\": [\n      {\n        \"title\": \"Propagation des dégâts\",\n        \"formula\": \"1\",\n        \"effects\": [\n          {\n            \"result\": \"1\",\n            \"timer\": \"300\",\n            \"data\": [\n              {\n                \"label\": \"Propagation des dégâts\",\n                \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n                \"changes\": [\n                  {\n                    \"key\": \"system.fq.bonus.hpot\",\n                    \"value\": \"@wis\",\n                    \"mode\": \"2\"\n                  },\n                  {\n                    \"key\": \"macro.tokenMagic\",\n                    \"value\": \"shockwave\",\n                    \"mode\": \"0\"\n                  }\n                ],\n                \"duration\": {\n                  \"startTime\": \"0\",\n                  \"rounds\": \"3\",\n                  \"turns\": \"0\"\n                }\n              }\n            ],\n            \"other\": \"@wis dégâts sont propagés à la cible chaque tour pendant 3 tours\"\n          }\n        ]\n      }\n    ]\n  }\n}",
+      "description": "{\n  \"action\": \"-4\",\n  \"zeal\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"9\",\n  \"replayable\": \"passif\",\n  \"customEval\": [\n    {\n      \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n      \"message\": \"Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort\"\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Propagation des dégâts\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"timer\": \"300\",\n          \"data\": [\n            {\n              \"label\": \"Propagation des dégâts\",\n              \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.hpot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"shockwave\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"other\": \"@wis dégâts sont propagés à la cible chaque tour pendant 3 tours\"\n        }\n      ]\n    }\n  ],\n  \"afterFirstPlay\": {\n    \"minReach\": \"1\",\n    \"maxReach\": \"9\",\n    \"replayable\": \"passif\",\n    \"customEval\": [\n      {\n        \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n        \"message\": \"Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort\"\n      }\n    ],\n    \"addingRolls\": [\n      {\n        \"title\": \"Propagation des dégâts\",\n        \"formula\": \"1\",\n        \"effects\": [\n          {\n            \"result\": \"1\",\n            \"timer\": \"300\",\n            \"data\": [\n              {\n                \"label\": \"Propagation des dégâts\",\n                \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n                \"changes\": [\n                  {\n                    \"key\": \"system.fq.bonus.hpot\",\n                    \"value\": \"@wis\",\n                    \"mode\": \"2\"\n                  },\n                  {\n                    \"key\": \"macro.tokenMagic\",\n                    \"value\": \"shockwave\",\n                    \"mode\": \"0\"\n                  }\n                ],\n                \"duration\": {\n                  \"startTime\": \"0\",\n                  \"rounds\": \"3\",\n                  \"turns\": \"0\"\n                }\n              }\n            ],\n            \"other\": \"@wis dégâts sont propagés à la cible chaque tour pendant 3 tours\"\n          }\n        ]\n      }\n    ]\n  }\n}",
       "type": "base",
       "suit": "",
       "back": {
@@ -495,8 +655,18 @@
       "flags": {},
       "value": null,
       "system": {},
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.z3BMWtXMBCF996I2",
-      "cards": []
+      "_stats": {
+        "coreVersion": "12.317",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.z3BMWtXMBCF996I2"
     }
   ],
   "width": null,
@@ -507,7 +677,7 @@
   "sort": 0,
   "flags": {},
   "_stats": {
-    "coreVersion": "12.316",
+    "coreVersion": "12.317",
     "systemId": null,
     "systemVersion": null,
     "createdTime": null,
