@@ -12,8 +12,7 @@ Based on the work of Lyrkhan : FQ Card Engine (https://github.com/LyrkhanJenkins
 ## Autres Modules conseillés
 - DAE https://foundryvtt.com/packages/dae (non à jour)
 - Dice So Nice https://foundryvtt.com/packages/dice-so-nice
-- Not your turn https://foundryvtt.com/packages/NotYourTurn
-- Card Viewer https://foundryvtt.com/packages/orcnog-card-viewer
+- Card Viewer https://foundryvtt.com/packages/orcnog-card-viewer (currently not working well)
 
 ## Final Quest 8
 
@@ -30,6 +29,7 @@ The module provides several resources for start playing Final Quest 8 :
 - Passive Spells
 - Monsters
 - Macros
+
 ![img.png](images/doc/assets.png)
 
 ### Choose Class
@@ -97,3 +97,7 @@ After playing a card, automatic roll, effect, damage, heal are applied, also cri
 
 ### 0.0.1 - alpha:
     - Card System for Foundry v12
+
+## Rules
+- The cards are design to be used with rectilinear grids
+![img.png](images/doc/rectilinear-grid.png)
