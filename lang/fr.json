@@ -8,6 +8,7 @@
   "FQCARDENGINE.NoAvailableHands": "Cet utilisateur n\u0027a pas de main disponible.",
   "FQCARDENGINE.CardBack": "Dos",
   "FQCARDENGINE.CardPlayed": "Carte jou\u00e9e",
+  "FQCARDENGINE.CardDiscard": "Carte défauss\u00e9e",
   "FQCARDENGINE.CardHidden": "Masqu\u00e9e",
   "FQCARDENGINE.AddCard": "Piocher des cartes",
   "FQCARDENGINE.ResetHandConfirmTitle": "R\u00e9initialiser Main",

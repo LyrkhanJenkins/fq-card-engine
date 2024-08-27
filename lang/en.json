@@ -8,6 +8,7 @@
     "FQCARDENGINE.NoAvailableHands":"This user does not have any available hands.",
     "FQCARDENGINE.CardBack":"Back",
     "FQCARDENGINE.CardPlayed":"Played",
+    "FQCARDENGINE.CardDiscard": "Discard",
     "FQCARDENGINE.CardHidden":"Hidden",
     "FQCARDENGINE.AddCard":"Draw Cards",
     "FQCARDENGINE.ResetHandConfirmTitle":"Reset Hand",
