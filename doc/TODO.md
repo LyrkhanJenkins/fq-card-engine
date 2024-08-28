@@ -9,12 +9,9 @@ les communs apparaissent avec un niveau d'attributs )
 - Migrations objets et sorts passifs dnd5e v FQ
 - Droits joueurs limités (avec option?):
 - Ne pas pouvoir modifier ou ajouter des cartes dans son deck pour les joueurs
-- Tagué les bibliothèque (spellbook): le flag 'fqType' a déjà été créé
-- Répercussion sur toutes les méthodes déjà existantes
 - Empêcher le drag and drop autre que d'un deck vers une bibliotheque
 - Empécher une carte d'une bibliothèque d'aller ailleurs que dans le deck
 - Empêcher les joueurs de modifier des cartes d'un deck ou d'une bibliotheque (et de supprimer)
-- Correctement créer les bibliothèques/decks/main et pile avec le fqType
 - Possibilité de choisir des cartes dans un changement de niveau
 
 ~~- Automatiser la montée de niveau jusqu'au niveau 5 (utiliser la macro )~~
