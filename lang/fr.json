@@ -139,6 +139,7 @@
   "FQCARDENGINE.WarningDeckMissingForPlayer": "Le joueur n'a pas de deck configuré",
   "FQCARDENGINE.WarningPileMissingForPlayer": "Le joueur n'a pas de pile configurée",
   "FQCARDENGINE.NoOwnedCharacter": "Le joueur n'a pas de personnage configuré",
+  "FQCARDENGINE.NoUserForActor": "Le personnage n'est utilisé par aucun joueur",
   "FQCARDENGINE.NoMainClass": "Le personnage du joueur n'a pas de classe FQ implémenté en classe principale",
   "FQCARDENGINE.GMMustBeConnected": "Un MJ doit être connecté pour le module FQCardEngine",
   "FQCARDENGINE.ChatMessageCardEffectChoice": "Choix de l'effet de la carte : {nameContent}",

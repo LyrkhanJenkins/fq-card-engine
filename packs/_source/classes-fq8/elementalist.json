@@ -9,7 +9,8 @@
   "flags": {
     "cf": {
       "id": "temp_9hjmr9g6fcm"
-    }
+    },
+    "fqType" : "CLASS"
   },
   "_stats": {
     "coreVersion": "12.331",
