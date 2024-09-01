@@ -30,6 +30,7 @@ build:       # This job runs in the build stage, which runs first.
   script:
     - echo "Compiling the code..."
     - npm install
+    - npm test
     - npm run build
     - rm -rf node-modules
     - echo "Compile complete."
