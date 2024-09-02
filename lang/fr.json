@@ -124,6 +124,7 @@
   "FQCARDENGINE.CurrentDrop": "Carte défaussée pendant le tour",
   "FQCARDENGINE.Life": "Vie",
   "FQCARDENGINE.Drop": "Cartes défaussés",
+  "FQCARDENGINE.MaxSameCard": "Nb max",
 
   "FQCARDENGINE.SheetCharacter": "Feuille de Personnage FQ",
   "FQCARDENGINE.SheetNPC": "Feuille de PNJ FQ",

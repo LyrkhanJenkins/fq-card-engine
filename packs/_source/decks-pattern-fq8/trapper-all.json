@@ -28,7 +28,9 @@
       "origin": null,
       "rotation": 0,
       "sort": 1,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
@@ -36,7 +38,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724479694794,
+        "modifiedTime": 1728562715219,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -69,23 +71,25 @@
       "origin": null,
       "rotation": 0,
       "sort": 3,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 7
+      },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1728562724529,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.Mde8sV1ruccJhiZh"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.Mde8sV1ruccJhiZh",
+      "cards": []
     },
     {
       "_id": "9AxZSYKu9yh6sfH2",
@@ -110,7 +114,9 @@
       "origin": null,
       "rotation": 0,
       "sort": 9,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
@@ -118,7 +124,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724480045620,
+        "modifiedTime": 1728562763182,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -151,23 +157,25 @@
       "origin": null,
       "rotation": 0,
       "sort": 8,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1728562757945,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.M0Lg29KpmNYuLWBc"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.M0Lg29KpmNYuLWBc",
+      "cards": []
     },
     {
       "_id": "irjLZGMorDOXWkIe",
@@ -193,14 +201,16 @@
       "origin": null,
       "rotation": 0,
       "sort": 11,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "system": {},
       "_stats": {
         "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724480091633,
+        "modifiedTime": 1728562775236,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -233,7 +243,9 @@
       "origin": null,
       "rotation": 0,
       "sort": 15,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
@@ -241,7 +253,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724480290174,
+        "modifiedTime": 1728562792952,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -274,7 +286,9 @@
       "origin": null,
       "rotation": 0,
       "sort": 13,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
@@ -282,7 +296,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724480249300,
+        "modifiedTime": 1728562787615,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -315,7 +329,9 @@
       "origin": null,
       "rotation": 0,
       "sort": 10,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
@@ -323,7 +339,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724480062997,
+        "modifiedTime": 1728562770571,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -356,23 +372,25 @@
       "origin": null,
       "rotation": 0,
       "sort": 5,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1728562740428,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!5Obtj3HpOowCbUJM.f9pLmgPFm4NR2i0C"
+      "_key": "!cards.cards!5Obtj3HpOowCbUJM.f9pLmgPFm4NR2i0C",
+      "cards": []
     },
     {
       "_id": "TxGcr0vyW9JMVnuI",
@@ -397,7 +415,9 @@
       "origin": null,
       "rotation": 0,
       "sort": 14,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
@@ -405,7 +425,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724480269992,
+        "modifiedTime": 1728562790761,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -439,14 +459,16 @@
       "origin": null,
       "rotation": 0,
       "sort": 0,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 3
+      },
       "system": {},
       "_stats": {
         "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724479632594,
+        "modifiedTime": 1728562711033,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -480,14 +502,16 @@
       "origin": null,
       "rotation": 0,
       "sort": 6,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 1
+      },
       "system": {},
       "_stats": {
         "coreVersion": "12.331",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724479912563,
+        "modifiedTime": 1728562747459,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -520,7 +544,9 @@
       "origin": null,
       "rotation": 0,
       "sort": 12,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 1
+      },
       "value": null,
       "system": {},
       "_stats": {
@@ -528,7 +554,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724480192891,
+        "modifiedTime": 1728562780462,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -561,7 +587,9 @@
       "origin": null,
       "rotation": 0,
       "sort": 4,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
@@ -569,7 +597,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724479874005,
+        "modifiedTime": 1728562730894,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -602,7 +630,9 @@
       "origin": null,
       "rotation": 0,
       "sort": 7,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
@@ -610,7 +640,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724479947703,
+        "modifiedTime": 1728562752215,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
@@ -643,7 +673,9 @@
       "origin": null,
       "rotation": 0,
       "sort": 2,
-      "flags": {},
+      "flags": {
+        "maxSameCard": 2
+      },
       "value": null,
       "system": {},
       "_stats": {
@@ -651,7 +683,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1724479714613,
+        "modifiedTime": 1728562719716,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
         "duplicateSource": null
