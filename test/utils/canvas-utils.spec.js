@@ -1,12 +1,13 @@
-import CanvasUtils from '../../scripts/utils/canvas-utils';
+import CanvasUtils from '../../scripts/utils/canvas-utils.js';
 
 describe('CanvasUtils', () => {
-    const token = {actorId: 'charId', x: 5, y: 5}; // Un exemple de token
-    const tokenToLeft = {actorId: 'otherId', x: 0, y: 5}; // Un exemple de token
-    const squareSize = 5; // Une taille de case hypothétique
+    const token = {actorId: 'charId', x: 5, y: 5};
+    const tokenToLeft = {actorId: 'otherId', x: 0, y: 5};
+    const squareSize = 5;
 
 
-    beforeEach(() => { // Mock de l'instance `game`
+    beforeEach(() => {
+        jest.clearAllMocks();
         global.game = {
             canvas: {
                 scene: {
