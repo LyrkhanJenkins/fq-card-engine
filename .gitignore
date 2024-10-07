@@ -2,6 +2,10 @@
 packs/*
 !packs/_source/
 
+# Assets
+assets/*
+!assets/.gitkeep
+
 # IDE
 .idea/
 .nova/
