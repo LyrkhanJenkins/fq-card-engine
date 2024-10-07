@@ -32,7 +32,7 @@ build:       # This job runs in the build stage, which runs first.
     - npm install
     - npm test
     - npm run build
-    - rm -rf node-modules
+    - rm -rf node-modules .git tests examples utils doc .babelrc .gitignore .gitlab-ci.yml package.json package-lock.json # Delete useless files for release
     - echo "Compile complete."
   artifacts:
     untracked: true
