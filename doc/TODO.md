@@ -16,7 +16,10 @@
 
 ## 1.0.0
 - Règles du jeu et readme complété
-- Ajouter des tests unitaires
+- Mettre au propre la CI et les commits
+- Rebase sur le main de lyrkhan et virer le code inutile
+- Proteger les branches principales
+- Ajouter des tests unitaires ( ajouter le tests des cartes )
 - Rédigé le "Get Started"
 - Recette globale avec utilisateurs et MJs
 - Suppression de tous les Warnings/ tous les bugs pour 1.0.0 sans utilisateur

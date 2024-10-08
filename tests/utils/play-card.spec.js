@@ -1,10 +1,18 @@
 import PlayCard from "../../scripts/utils/play-card.js";
-import FQUtils from "../../scripts/utils/fq-utils.js";
 
 jest.mock("../../scripts/fq-card-engine-module.js", () => ({
     socket: {
         executeAsGM: jest.fn()
     }
+}));
+
+const FQUtils = require('../../scripts/utils/fq-utils.js');
+jest.mock("../../scripts/utils/fq-utils.js", () => ({
+    replaceCardContentAbilitiesBonus: jest.fn(),
+    prepareDataFromCard: jest.fn(),
+    applyCardEffect: jest.fn(),
+    replaceCardContentXAndYValue: jest.fn().mockResolvedValue(true),
+    checkIfCanUseCard: jest.fn().mockResolvedValue(true),
 }));
 
 global.game = {
@@ -94,8 +102,8 @@ describe('PlayCard', () => {
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
-            //TODO expect(FQUtils.replaceCardContentAbilitiesBonus).toHaveBeenCalledWith(cardContent);
-            //TODO expect(FQUtils.prepareDataFromCard).toHaveBeenCalledWith(cardContent, card);
+            expect(FQUtils.replaceCardContentAbilitiesBonus).toHaveBeenCalledWith(cardContent);
+            expect(FQUtils.prepareDataFromCard).toHaveBeenCalledWith(cardContent, card);
         });
 
         test('should apply card effect and pass the card if needed', async () => {
@@ -107,7 +115,7 @@ describe('PlayCard', () => {
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
-            //TODO expect(FQUtils.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
+            expect(FQUtils.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
             expect(currentCards.pass).toHaveBeenCalledWith({}, ['mockCardId'], expect.any(Object));
         });
     });
