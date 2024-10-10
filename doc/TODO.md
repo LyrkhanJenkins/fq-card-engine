@@ -1,6 +1,9 @@
 ## V1.1
 - Implémentation de deux nouvelles classes: Gardien et Sorcière
 - Implémenter les cartes communes pour le niveau 6 + 4 Sorts Ultime par classes OU que les boosters
+- Implémenter des cartes utilisable hors des combats et qui ne se défausse jamais (1/2 par classe ? + les communs,
+les communs apparaissent avec un niveau d'attributs ) 
+- Les sorts communs apparaissent au changement de niveau dans la bibliothèque
 - tagué les cartes et le nombre max
 - Afficher le nombre max dans les decks
 - Migrations objets et sorts passifs dnd5e v FQ
@@ -13,16 +16,7 @@
 - Empêcher les joueurs de modifier des cartes d'un deck ou d'une bibliotheque (et de supprimer)
 - Correctement créer les bibliothèques/decks/main et pile avec le fqType
 - Automatiser la montée de niveau jusqu'au niveau 5 (utiliser la macro )
-
-## 1.0.0
-- Règles du jeu et readme complété
-- Mettre au propre la CI et les commits
-- Rebase sur le main de lyrkhan et virer le code inutile
-- Proteger les branches principales
-- Ajouter des tests unitaires ( ajouter le tests des cartes )
-- Rédigé le "Get Started"
-- Recette globale avec utilisateurs et MJs
-- Suppression de tous les Warnings/ tous les bugs pour 1.0.0 sans utilisateur
+- Possibilité de choisir des cartes dans un changement de niveau
 
 ## Backlog
 
