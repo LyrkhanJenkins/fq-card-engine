@@ -148,7 +148,7 @@ for language in supportedLanguages:
             new_file.writelines(write_location_decks(cardsOriginPackFolder + filename, language))
 
     for cle, liste in listes_cards.items():
-        name_file = cle.lower().split(" ")[0] + "-all-" + language + ".json"
+        name_file = cle.lower().split(" ")[0] + "-base-" + language + ".json"
         with open(cardsGeneratedPackFolder + cle.lower().replace(" ", "-") + "-" + language + ".json", 'w',
                   encoding="utf-8") as new_file:
             new_file.writelines(write_generated_decks(cle + " - " + language, liste, name_file, cardsPackFolder))
