@@ -30,7 +30,7 @@ describe('DamageUtils', () => {
         };
         global.Roll = jest.fn(function (formula) {
             this.formula = formula;
-            this.total = Math.random() * 20 + 1; // Mock a random total
+            this.total = Math.floor(Math.random() * 20) + 1; // Mock a random total
             this.evaluate = async () => this;
             this.toMessage = jest.fn(async () => ({id: 'messageId'}));
         });
@@ -79,7 +79,7 @@ describe('DamageUtils', () => {
     });
 
     it('should add bonuses to damage', async () => {
-        const result = await DamageUtils.addBonusesToDamage(actor, 10, 1, 1);
+        const result = await DamageUtils.addBonusesToDamage(actor, 10, 1, -999); // No eva
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
         expect(result[0].value >= 10).toBe(true); // Either 0, 10 or 20, depending on evasion and crit

@@ -38,7 +38,7 @@ describe('FQUtils', () => {
         };
         global.Roll = jest.fn(function (formula) {
             this.formula = formula;
-            this.total = Math.random() * 20 + 1; // Mock a random total
+            this.total = Math.floor(Math.random() * 20) + 1; // Mock a random total
             this.evaluate = async () => this;
             this.toMessage = jest.fn(async () => ({id: 'messageId'}));
         });
