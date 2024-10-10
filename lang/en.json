@@ -139,6 +139,8 @@
   "FQCARDENGINE.WarningHandMissingForPlayer": "Player has no hand",
   "FQCARDENGINE.WarningDeckMissingForPlayer": "Player has no deck",
   "FQCARDENGINE.WarningPileMissingForPlayer": "Player has no pile",
+  "FQCARDENGINE.WarningOnlyCopyCardFromSpellBookToDeck": "Cards can only be copied from the SpellBook to your Deck.",
+  "FQCARDENGINE.WarningReachMaxCardsForDeck": "Unable to add the card, Maximum reached.",
   "FQCARDENGINE.NoOwnedCharacter": "Player has no owned character",
   "FQCARDENGINE.NoUserForActor": "Actor is not used by any player",
   "FQCARDENGINE.NoMainClass": "Character's player has no main FQ main class implemented",

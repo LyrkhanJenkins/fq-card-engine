@@ -1,6 +1,5 @@
 const glob = require("glob");
 const fs = require("fs-extra");
-
 // Fonction pour vérifier les imports dans un fichier
 function checkImportsInFile(filePath) {
     const content = fs.readFileSync(filePath, "utf-8");
