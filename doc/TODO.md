@@ -9,6 +9,7 @@ les communs apparaissent avec un niveau d'attributs )
 - Ajouter des cartes aléatoires d'un compendium vers une bibliothèque
 - Possibilité de choisir des cartes dans un changement de niveau
 - Card Viewer option
+- Faire un json avec tous les possibilité pour une classe
 
 ~~- Droits joueurs limités~~
 

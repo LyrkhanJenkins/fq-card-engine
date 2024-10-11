@@ -1,0 +1,28 @@
+{
+  "damage": "(4+2d3)[piercing]",
+  "minReach": "4",
+  "maxReach": "9999",
+  "action": "-XXX",
+  "xvalue": "reach",
+  "mana": "-1",
+  "zeal": "1",
+  "sound": "modules/fq-card-engine/sounds/tamed_wolf.mp3",
+  "minions": [
+    {
+      "name": "Tamed Wolf",
+      "data": {
+        "hp": "10+@cha",
+        "damageBonus": "trunc(@cha/3)",
+        "movement": "5*(trunc(@cha/2)+4)"
+      }
+    }
+  ],
+  "messages": [
+    {
+      "key": "FQCARDENGINE.CardMsgMinionInvoked",
+      "arg": {
+        "minion": "Tamed Wolf"
+      }
+    }
+  ]
+}

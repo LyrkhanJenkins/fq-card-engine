@@ -95,7 +95,13 @@ describe("PlayCard", () => {
     describe("callBackplayCard", () => {
         test("should replace card content abilities bonus", async () => {
             const cardContent = {};
-            const card = {id: "mockCardId", _id: "mockCardId", back: {img: "mockImg"}, origin: {name: "mockName"}};
+            const card = {
+                id: "mockCardId",
+                _id: "mockCardId",
+                back: {img: "mockImg"},
+                origin: {name: "mockName"},
+                flags: {}
+            };
             const currentCards = {
                 pass: jest.fn().mockResolvedValue(),
             };
@@ -108,7 +114,13 @@ describe("PlayCard", () => {
 
         test("should apply card effect and pass the card if needed", async () => {
             const cardContent = {};
-            const card = {id: "mockCardId", _id: "mockCardId", back: {img: "mockImg"}, origin: {name: "mockName"}};
+            const card = {
+                id: "mockCardId",
+                _id: "mockCardId",
+                back: {img: "mockImg"},
+                origin: {name: "mockName"},
+                flags: {}
+            };
             const currentCards = {
                 pass: jest.fn().mockResolvedValue(),
             };
@@ -117,6 +129,25 @@ describe("PlayCard", () => {
 
             expect(FQUtils.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
             expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
+        });
+
+        test('should apply card effect and not pass card if FQBase flag', async () => {
+            const cardContent = {};
+            const card = {
+                id: 'mockCardId',
+                _id: 'mockCardId',
+                back: {img: 'mockImg'},
+                origin: {name: 'mockName'},
+                flags: {isFQBase: true}
+            };
+            const currentCards = {
+                pass: jest.fn().mockResolvedValue(),
+            };
+
+            await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
+
+            expect(FQUtils.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
+            expect(currentCards.pass).toHaveBeenCalledTimes(0);
         });
     });
 

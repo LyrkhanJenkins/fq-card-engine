@@ -124,7 +124,10 @@
   "FQCARDENGINE.CurrentDrop": "Discard Card During Turn",
   "FQCARDENGINE.Life": "Life",
   "FQCARDENGINE.Drop": "Drop Cards",
-  "FQCARDENGINE.MaxSameCard": "Nb max",
+  "FQCARDENGINE.CardFQBase": "Base card",
+  "FQCARDENGINE.MaxSameCard": "Number of copies per deck",
+  "FQCARDENGINE.CardFQBaseShort": "Base",
+  "FQCARDENGINE.MaxSameCardShort": "Nb max",
 
   "FQCARDENGINE.SheetCharacter": "FQ Character Sheet",
   "FQCARDENGINE.SheetNPC": "FQ NPC Sheet",
