@@ -106,15 +106,21 @@
         },
         "core": {
           "sourceId": "Compendium.dnd5e.items.BnOCLuNWhVvzHLjl"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.0.4",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1728638330081,
+        "lastModifiedBy": "dnd5ebuilder0000",
         "compendiumSource": "Compendium.dnd5e.items.BnOCLuNWhVvzHLjl",
         "duplicateSource": null
       },
@@ -207,15 +213,21 @@
       "flags": {
         "core": {
           "sourceId": "Compendium.dnd5e.items.sSs3hSzkKBMNBgTs"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.0.4",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1728638330081,
+        "lastModifiedBy": "dnd5ebuilder0000",
         "compendiumSource": "Compendium.dnd5e.items.sSs3hSzkKBMNBgTs",
         "duplicateSource": null
       },
@@ -339,15 +351,21 @@
         },
         "core": {
           "sourceId": "Compendium.dnd5e.items.BeKIrNIvNHRPQ4t5"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.0.4",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1728638330081,
+        "lastModifiedBy": "dnd5ebuilder0000",
         "compendiumSource": "Compendium.dnd5e.items.BeKIrNIvNHRPQ4t5",
         "duplicateSource": null
       },
@@ -478,15 +496,21 @@
       "flags": {
         "core": {
           "sourceId": "Compendium.dnd5e.items.DevmObXWP9MfwE2c"
+        },
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
         }
       },
       "_stats": {
-        "coreVersion": "12.330",
-        "systemId": null,
-        "systemVersion": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "4.0.4",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1728638330081,
+        "lastModifiedBy": "dnd5ebuilder0000",
         "compendiumSource": "Compendium.dnd5e.items.DevmObXWP9MfwE2c",
         "duplicateSource": null
       },
@@ -588,7 +612,7 @@
       "_key": "!actors.items!ZNwkztvzG57pQyDu.UXzmGXZ2Y69oNFCW"
     },
     {
-      "_id": "hvwvdpWWR8UCUuOG",
+      "_id": "rpFK2OSLJAQOO7tW",
       "name": "White-Mage",
       "type": "class",
       "img": "modules/fq-card-engine/images/classes/craiyon_154837_White_and_yellow_mage_healing_fantasy.png",
@@ -605,9 +629,9 @@
         "duplicateSource": null,
         "coreVersion": "12.331",
         "systemId": "dnd5e",
-        "systemVersion": "3.3.1",
-        "createdTime": 1724079742113,
-        "modifiedTime": 1724079742113,
+        "systemVersion": "4.0.4",
+        "createdTime": 1728638332488,
+        "modifiedTime": 1728638332488,
         "lastModifiedBy": "dnd5ebuilder0000"
       },
       "ownership": {
@@ -619,7 +643,9 @@
           "chat": ""
         },
         "source": {
-          "custom": ""
+          "custom": "",
+          "revision": 1,
+          "rules": "2024"
         },
         "identifier": "white-mage",
         "levels": 1,
@@ -647,7 +673,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 1
+              "cap": 1,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -669,7 +696,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 1
+              "cap": 1,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -691,7 +719,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 1
+              "cap": 1,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -713,7 +742,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 2
+              "cap": 2,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -752,70 +782,70 @@
               "type": null,
               "pool": [
                 {
-                  "uuid": "Item.7wHrjCrX6hzetFLV"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.kxqmlP2SSyqufLbl"
                 },
                 {
-                  "uuid": "Item.64ylBRuyvh9hxtLC"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.nFxrUC4iiOJC8kpk"
                 },
                 {
-                  "uuid": "Item.tDzFl4SqZhGeKqEf"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.YTzbOJ4hapcLFzcu"
                 },
                 {
-                  "uuid": "Item.kKMGCqMvoiwQ089b"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.P2E7DOnfG0AHscR8"
                 },
                 {
-                  "uuid": "Item.awu3jv6NmnDlojf4"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.l3WCtgcBKhz3AmO8"
                 },
                 {
-                  "uuid": "Item.xNkAebLEOeer8k8z"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cpPASiKB18TueYut"
                 },
                 {
-                  "uuid": "Item.ooKg5U1N5rJjCbVK"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.dga4opkQp6eRrjds"
                 },
                 {
-                  "uuid": "Item.8cjrlW6r2B1PBD5l"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.KSCYy8w0O9QO1btC"
                 },
                 {
-                  "uuid": "Item.zoOKdQOqw8BhTaGo"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TFLGzRHDabJIfYfW"
                 },
                 {
-                  "uuid": "Item.TZsa6h8PPZdIyO4J"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.m7gUDIzZ1YIi0XAk"
                 },
                 {
-                  "uuid": "Item.2zjOskSKpIT0f0j5"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0yBINX3UH0BmEstg"
                 },
                 {
-                  "uuid": "Item.nS0wcPs9sEsUE5V8"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.1lb8TZ3uQoyVmENi"
                 },
                 {
-                  "uuid": "Item.jo1kA1FVMCvUsTV5"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2K2aJ2fuoABOtFKg"
                 },
                 {
-                  "uuid": "Item.k9ITbirtpC02wA4O"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AZWIkbaogSC7VszC"
                 },
                 {
-                  "uuid": "Item.XxPBnkchfLrbh7pd"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.CV0d8g7fNssbB2rU"
                 },
                 {
-                  "uuid": "Item.FN2DmCGuBdYlhMzT"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Egca7jSQLqR0G4MB"
                 },
                 {
-                  "uuid": "Item.HrjrLYaBcMOcnTXi"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.O29XCkFWL3RV5Cyc"
                 },
                 {
-                  "uuid": "Item.yDlO2lQGy5HN2f1f"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.hqQ9NfbZRJzXoUuI"
                 },
                 {
-                  "uuid": "Item.nFq4BQO7zeaYH1uN"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.phV1tmxN2JUdz1Po"
                 },
                 {
-                  "uuid": "Item.b8hy9Pwzhqc1RZLY"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.k5ZvZtbIe5W3Z4r1"
                 },
                 {
-                  "uuid": "Item.3JougwwhSPDtComL"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.3xcKaffBtgGMOG7c"
                 },
                 {
-                  "uuid": "Item.4rIhNwkUvm5kP9qW"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cG5Vrwv6NP5ifChp"
                 }
               ],
               "spell": null,
@@ -841,7 +871,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 2
+              "cap": 2,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -853,12 +884,17 @@
         ],
         "spellcasting": {
           "progression": "none",
-          "ability": ""
+          "ability": "",
+          "preparation": {}
         },
         "wealth": "",
-        "startingEquipment": []
+        "startingEquipment": [],
+        "primaryAbility": {
+          "value": [],
+          "all": true
+        }
       },
-      "_key": "!actors.items!ZNwkztvzG57pQyDu.hvwvdpWWR8UCUuOG"
+      "_key": "!actors.items!ZNwkztvzG57pQyDu.rpFK2OSLJAQOO7tW"
     }
   ],
   "effects": [],
@@ -872,9 +908,9 @@
   "_stats": {
     "coreVersion": "12.331",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "4.0.4",
     "createdTime": 1709393283253,
-    "modifiedTime": 1724082251345,
+    "modifiedTime": 1728638332536,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.tnE1cbB7yEjjCvBD",
     "duplicateSource": null
@@ -1009,7 +1045,7 @@
       "alignment": "",
       "race": "",
       "background": "",
-      "originalClass": "hvwvdpWWR8UCUuOG",
+      "originalClass": "rpFK2OSLJAQOO7tW",
       "xp": {
         "value": 0,
         "min": 0,

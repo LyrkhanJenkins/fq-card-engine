@@ -5,7 +5,7 @@
   "img": "modules/fq-card-engine/images/classes/Concept_Art_green_ranger_archer_from_above_token_2.png",
   "items": [
     {
-      "_id": "2YtSecb6I6rSBHk4",
+      "_id": "BziOlMXuQYSbk3xZ",
       "name": "Trapper",
       "type": "class",
       "img": "modules/fq-card-engine/images/classes/craiyon_151523_green_archer_in_forest_with_wolf_pet_along_him.png",
@@ -22,9 +22,9 @@
         "duplicateSource": null,
         "coreVersion": "12.331",
         "systemId": "dnd5e",
-        "systemVersion": "3.3.1",
-        "createdTime": 1724079640242,
-        "modifiedTime": 1724079640242,
+        "systemVersion": "4.0.4",
+        "createdTime": 1728638322401,
+        "modifiedTime": 1728638322401,
         "lastModifiedBy": "dnd5ebuilder0000"
       },
       "ownership": {
@@ -36,7 +36,9 @@
           "chat": ""
         },
         "source": {
-          "custom": ""
+          "custom": "",
+          "revision": 1,
+          "rules": "2024"
         },
         "identifier": "trapper",
         "levels": 1,
@@ -64,7 +66,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 1
+              "cap": 1,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -86,7 +89,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 1
+              "cap": 1,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -108,7 +112,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 1
+              "cap": 1,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -130,7 +135,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 2
+              "cap": 2,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -169,70 +175,70 @@
               "type": null,
               "pool": [
                 {
-                  "uuid": "Item.64ylBRuyvh9hxtLC"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.kxqmlP2SSyqufLbl"
                 },
                 {
-                  "uuid": "Item.7wHrjCrX6hzetFLV"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.nFxrUC4iiOJC8kpk"
                 },
                 {
-                  "uuid": "Item.YG3pxPrE7eAWY9IX"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.YTzbOJ4hapcLFzcu"
                 },
                 {
-                  "uuid": "Item.tDzFl4SqZhGeKqEf"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.P2E7DOnfG0AHscR8"
                 },
                 {
-                  "uuid": "Item.kKMGCqMvoiwQ089b"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.B7dzwbJXYSLKFmpv"
                 },
                 {
-                  "uuid": "Item.awu3jv6NmnDlojf4"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.UDEbYZpX1RyQeRFy"
                 },
                 {
-                  "uuid": "Item.OwfYUtnXfxEE29iG"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Oq8yTrEfuuwxu8SI"
                 },
                 {
-                  "uuid": "Item.xNkAebLEOeer8k8z"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTtJPRZRuIJmmtHM"
                 },
                 {
-                  "uuid": "Item.XxPBnkchfLrbh7pd"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.o2IgHEIEdELHmZRr"
                 },
                 {
-                  "uuid": "Item.FN2DmCGuBdYlhMzT"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.g4sukxARWGqRWS53"
                 },
                 {
-                  "uuid": "Item.HrjrLYaBcMOcnTXi"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.m7gUDIzZ1YIi0XAk"
                 },
                 {
-                  "uuid": "Item.yDlO2lQGy5HN2f1f"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TFLGzRHDabJIfYfW"
                 },
                 {
-                  "uuid": "Item.w2ovhONTz8Jf2HHw"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.3Z6b6N6RcrFXMFF1"
                 },
                 {
-                  "uuid": "Item.afVVfgkQrdkfzOtc"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.g3WWPMnrflZSKFLv"
                 },
                 {
-                  "uuid": "Item.4h54ohmIwyNgp2QL"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.phV1tmxN2JUdz1Po"
                 },
                 {
-                  "uuid": "Item.s3ToGVEf3nvzgoM8"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.k5ZvZtbIe5W3Z4r1"
                 },
                 {
-                  "uuid": "Item.nS0wcPs9sEsUE5V8"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0yBINX3UH0BmEstg"
                 },
                 {
-                  "uuid": "Item.jo1kA1FVMCvUsTV5"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.1lb8TZ3uQoyVmENi"
                 },
                 {
-                  "uuid": "Item.nvufm6POcXfcZA4u"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2K2aJ2fuoABOtFKg"
                 },
                 {
-                  "uuid": "Item.lJVsOAWrOeM4YL6l"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AZWIkbaogSC7VszC"
                 },
                 {
-                  "uuid": "Item.R27G0Fe74mZuhuod"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.CV0d8g7fNssbB2rU"
                 },
                 {
-                  "uuid": "Item.PQF0zFA2blGgCzjd"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Egca7jSQLqR0G4MB"
                 }
               ],
               "spell": null,
@@ -258,7 +264,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 2
+              "cap": 2,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -270,12 +277,17 @@
         ],
         "spellcasting": {
           "progression": "none",
-          "ability": ""
+          "ability": "",
+          "preparation": {}
         },
         "wealth": "",
-        "startingEquipment": []
+        "startingEquipment": [],
+        "primaryAbility": {
+          "value": [],
+          "all": true
+        }
       },
-      "_key": "!actors.items!WNblzSeh6PnOMDNA.2YtSecb6I6rSBHk4"
+      "_key": "!actors.items!WNblzSeh6PnOMDNA.BziOlMXuQYSbk3xZ"
     }
   ],
   "effects": [],
@@ -289,9 +301,9 @@
   "_stats": {
     "coreVersion": "12.331",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "4.0.4",
     "createdTime": 1709393283252,
-    "modifiedTime": 1724082235021,
+    "modifiedTime": 1728638322457,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.YJrXLvkBMAihNVOi",
     "duplicateSource": null
@@ -426,7 +438,7 @@
       "alignment": "",
       "race": "",
       "background": "",
-      "originalClass": "2YtSecb6I6rSBHk4",
+      "originalClass": "BziOlMXuQYSbk3xZ",
       "xp": {
         "value": 0,
         "min": 0,

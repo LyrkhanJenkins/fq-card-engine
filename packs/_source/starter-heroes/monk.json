@@ -5,7 +5,7 @@
   "img": "modules/fq-card-engine/images/classes/Concept_Art_blue_monk_fighter_from_above_token_3.png",
   "items": [
     {
-      "_id": "vAw9Ij5eSpWqOWbJ",
+      "_id": "fHaGYr4RQcTrY92E",
       "name": "Monk",
       "type": "class",
       "img": "modules/fq-card-engine/images/classes/craiyon_153837_blue_monk_combatant_fantasy_martial_art.png",
@@ -22,9 +22,9 @@
         "duplicateSource": null,
         "coreVersion": "12.331",
         "systemId": "dnd5e",
-        "systemVersion": "3.3.1",
-        "createdTime": 1724079566772,
-        "modifiedTime": 1724079566772,
+        "systemVersion": "4.0.4",
+        "createdTime": 1728638313290,
+        "modifiedTime": 1728638313290,
         "lastModifiedBy": "dnd5ebuilder0000"
       },
       "ownership": {
@@ -36,7 +36,9 @@
           "chat": ""
         },
         "source": {
-          "custom": ""
+          "custom": "",
+          "revision": 1,
+          "rules": "2024"
         },
         "identifier": "monk",
         "levels": 1,
@@ -64,7 +66,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 1
+              "cap": 1,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -86,7 +89,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 1
+              "cap": 1,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -108,7 +112,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 1
+              "cap": 1,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -130,7 +135,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 2
+              "cap": 2,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -169,76 +175,76 @@
               "type": null,
               "pool": [
                 {
-                  "uuid": "Item.7wHrjCrX6hzetFLV"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.phV1tmxN2JUdz1Po"
                 },
                 {
-                  "uuid": "Item.Ls87uxgjqlDHW14q"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.k5ZvZtbIe5W3Z4r1"
                 },
                 {
-                  "uuid": "Item.ZoqSxJEqqRm6mpai"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.3xcKaffBtgGMOG7c"
                 },
                 {
-                  "uuid": "Item.1TwQnd4m3bpqfA7C"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cG5Vrwv6NP5ifChp"
                 },
                 {
-                  "uuid": "Item.jo1kA1FVMCvUsTV5"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.l3WCtgcBKhz3AmO8"
                 },
                 {
-                  "uuid": "Item.k9ITbirtpC02wA4O"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cpPASiKB18TueYut"
                 },
                 {
-                  "uuid": "Item.iGiQASxJ3pBobgdP"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.dga4opkQp6eRrjds"
                 },
                 {
-                  "uuid": "Item.MT5Hn3KrXXwIHmoa"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.KSCYy8w0O9QO1btC"
                 },
                 {
-                  "uuid": "Item.YG3pxPrE7eAWY9IX"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.xWBaR7H08l5th4nv"
                 },
                 {
-                  "uuid": "Item.tDzFl4SqZhGeKqEf"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.i1o7CxEmX16BsV4b"
                 },
                 {
-                  "uuid": "Item.kKMGCqMvoiwQ089b"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.3Z6b6N6RcrFXMFF1"
                 },
                 {
-                  "uuid": "Item.awu3jv6NmnDlojf4"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.r0eAl4WDCfzpyzOA"
                 },
                 {
-                  "uuid": "Item.nFq4BQO7zeaYH1uN"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.g3WWPMnrflZSKFLv"
                 },
                 {
-                  "uuid": "Item.b8hy9Pwzhqc1RZLY"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.uSL3hFUygS2zOS34"
                 },
                 {
-                  "uuid": "Item.3JougwwhSPDtComL"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.o2IgHEIEdELHmZRr"
                 },
                 {
-                  "uuid": "Item.4rIhNwkUvm5kP9qW"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.g4sukxARWGqRWS53"
                 },
                 {
-                  "uuid": "Item.owwfGInnEH7zyXUB"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.m7gUDIzZ1YIi0XAk"
                 },
                 {
-                  "uuid": "Item.c1EGwx1ZIxFSzyXe"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TYRgZdwa8kCog06t"
                 },
                 {
-                  "uuid": "Item.nvufm6POcXfcZA4u"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.OcFuz49XCTP2DiUy"
                 },
                 {
-                  "uuid": "Item.lJVsOAWrOeM4YL6l"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.1e4C1Hso0p23NxGq"
                 },
                 {
-                  "uuid": "Item.vrzgsT4Sg8MGXRBk"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0yBINX3UH0BmEstg"
                 },
                 {
-                  "uuid": "Item.Ljfj0eWzeMqYKaML"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.1lb8TZ3uQoyVmENi"
                 },
                 {
-                  "uuid": "Item.R27G0Fe74mZuhuod"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2K2aJ2fuoABOtFKg"
                 },
                 {
-                  "uuid": "Item.PQF0zFA2blGgCzjd"
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AZWIkbaogSC7VszC"
                 }
               ],
               "spell": null,
@@ -264,7 +270,8 @@
                 "wis": 0,
                 "cha": 0
               },
-              "cap": 2
+              "cap": 2,
+              "locked": []
             },
             "value": {
               "type": "asi"
@@ -276,12 +283,17 @@
         ],
         "spellcasting": {
           "progression": "none",
-          "ability": ""
+          "ability": "",
+          "preparation": {}
         },
         "wealth": "",
-        "startingEquipment": []
+        "startingEquipment": [],
+        "primaryAbility": {
+          "value": [],
+          "all": true
+        }
       },
-      "_key": "!actors.items!whuVEctj12yxGber.vAw9Ij5eSpWqOWbJ"
+      "_key": "!actors.items!whuVEctj12yxGber.fHaGYr4RQcTrY92E"
     }
   ],
   "effects": [],
@@ -295,9 +307,9 @@
   "_stats": {
     "coreVersion": "12.331",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "4.0.4",
     "createdTime": 1709393283258,
-    "modifiedTime": 1724082202864,
+    "modifiedTime": 1728638313336,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.aLCU8wbG8BaDblmj",
     "duplicateSource": null
@@ -432,7 +444,7 @@
       "alignment": "",
       "race": "",
       "background": "",
-      "originalClass": "vAw9Ij5eSpWqOWbJ",
+      "originalClass": "fHaGYr4RQcTrY92E",
       "xp": {
         "value": 0,
         "min": 0,
