@@ -1,3 +1,9 @@
+Update 1.0.1:
+    Feat:
+    - Add npc sheetV2 with FQ Attributes
+    Fix:
+    - Class features for starter heroes
+
 Update 1.0.0:
     Chore:
     - Add Unit Tests

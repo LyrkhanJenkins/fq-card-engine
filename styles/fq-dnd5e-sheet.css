@@ -12,6 +12,9 @@
     --fq8-color-zeal-3: #a12828;
     --fq8-color-zeal-4: #b57878;
 
+    --fq8-color-critical: #eaa373;
+    --fq8-color-evasion: #62abd3;
+
     --fq8-color-drop-1: #000000;
 
     --fq8-color-hp-1: #123b09;
@@ -20,6 +23,11 @@
 .dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.hit-points {
     height: 32px;
     font-size: 18px;
+}
+
+.dnd5e2.sheet.actor.npc .sheet-header .vitals .meter.hit-points {
+    height: 28px;
+    font-size: 16px;
 }
 
 .dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.hit-dice {
@@ -38,12 +46,34 @@
     border-radius: 4px 0 0 4px;
 }
 
+.dnd5e2.sheet.actor.npc .sheet-header .vitals .meter.action-points {
+    height: 18px;
+    font-size: 10px;
+}
+
+.dnd5e2 .meter.progress::before, .dnd5e2 .meter.action-points .progress::before {
+    background: linear-gradient(to right, var(--fq8-color-action-1) 0%, var(--fq8-color-action-2) 100%);
+    border-right: var(--border-width) solid var(--fq8-color-action-3);
+    border-radius: 4px 0 0 4px;
+}
+
 .dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.mana-points {
     height: 22px;
     font-size: 14px;
 }
 
 .dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.mana-points .progress::before {
+    background: linear-gradient(to right, var(--fq8-color-mana-1) 0%, var(--fq8-color-mana-2) 100%);
+    border-right: var(--border-width) solid var(--fq8-color-mana-3);
+    border-radius: 4px 0 0 4px;
+}
+
+.dnd5e2.sheet.actor.npc .sheet-header .vitals .meter.mana-points {
+    height: 18px;
+    font-size: 10px;
+}
+
+.dnd5e2 .meter.progress::before, .dnd5e2 .meter.mana-points .progress::before {
     background: linear-gradient(to right, var(--fq8-color-mana-1) 0%, var(--fq8-color-mana-2) 100%);
     border-right: var(--border-width) solid var(--fq8-color-mana-3);
     border-radius: 4px 0 0 4px;
@@ -60,9 +90,31 @@
     border-radius: 4px 0 0 4px;
 }
 
+
 .dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.sectioned > .zeal-init {
     flex: none;
     width: 25px;
+    color: var(--fq8-color-zeal-1);
+    background-color: var(--fq8-color-zeal-4);
+    border-right: 2px dashed var(--fq8-color-zeal-3);
+    text-align: center;
+    padding-top: 2px;
+}
+
+.dnd5e2.sheet.actor.npc .sheet-header .vitals .meter.zeal-points {
+    height: 18px;
+    font-size: 10px;
+}
+
+.dnd5e2 .meter.progress::before, .dnd5e2 .meter.zeal-points .progress::before {
+    background: linear-gradient(to right, var(--fq8-color-zeal-1) 0%, var(--fq8-color-zeal-2) 100%);
+    border-right: var(--border-width) solid var(--fq8-color-zeal-3);
+    border-radius: 4px 0 0 4px;
+}
+
+.dnd5e2.sheet.actor .meter.sectioned > .zeal-init {
+    flex: none;
+    width: 20px;
     color: var(--fq8-color-zeal-1);
     background-color: var(--fq8-color-zeal-4);
     border-right: 2px dashed var(--fq8-color-zeal-3);
@@ -84,6 +136,35 @@
     font-weight: 500
 }
 
+.pills-group.crit-area {
+    margin: 0 auto;
+    font-weight: bold;
+}
+
+.pills-group.crit-area .pill {
+    background: var(--dnd5e-color-light-gray)
+}
+
+.pills-group.crit-area .critical-score {
+    color: var(--fq8-color-critical)
+}
+
+.pills-group.crit-area .evasion-score {
+    color: var(--fq8-color-evasion)
+}
+
+.walk-square-value {
+    margin-left: auto;
+    margin-right: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.pills-group.crit-area .pill .value input {
+    width: 18px;
+    height: 18px;
+}
+
 .dnd5e2.sheet.actor.character .sheet-body .sidebar .card .stats .lozenges .lozenge .value {
     text-align: center;
     border: 0;
@@ -94,30 +175,30 @@
     border-bottom: var(--dnd5e-border-groove);
 }
 
-.dnd5e.sheet.item .section-fq .fq-cost  {
+.dnd5e.sheet.item .section-fq .fq-cost {
     display: flex;
     flex-direction: row;
     gap: 4px;
     justify-content: space-between;
 }
 
-.dnd5e.sheet.item .section-fq .action-cost  {
+.dnd5e.sheet.item .section-fq .action-cost {
     color: var(--fq8-color-action-1);
 }
 
-.dnd5e.sheet.item .section-fq .mana-cost  {
+.dnd5e.sheet.item .section-fq .mana-cost {
     color: var(--fq8-color-mana-1);
 }
 
-.dnd5e.sheet.item .section-fq .zeal-cost  {
+.dnd5e.sheet.item .section-fq .zeal-cost {
     color: var(--fq8-color-zeal-1);
 }
 
-.dnd5e.sheet.item .section-fq .drop-cost  {
+.dnd5e.sheet.item .section-fq .drop-cost {
     color: var(--fq8-color-drop-1);
 }
 
-.dnd5e.sheet.item .section-fq .hp-cost  {
+.dnd5e.sheet.item .section-fq .hp-cost {
     color: var(--fq8-color-hp-1);
 }
 
@@ -146,6 +227,7 @@ form .form-group .form-minions {
     display: flex;
     flex-direction: column;
 }
+
 form .form-group .minion-checkbox {
     margin: auto;
     display: flex;
