@@ -3,6 +3,7 @@ Update 1.0.1:
     - Add npc sheetV2 with FQ Attributes
     Fix:
     - Class features for starter heroes
+    - Cant modify fq attributes if Active Effects on this attributes
 
 Update 1.0.0:
     Chore:

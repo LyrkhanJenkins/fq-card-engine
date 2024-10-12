@@ -40,12 +40,6 @@
     font-size: 16px;
 }
 
-.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.action-points .progress::before {
-    background: linear-gradient(to right, var(--fq8-color-action-1) 0%, var(--fq8-color-action-2) 100%);
-    border-right: var(--border-width) solid var(--fq8-color-action-3);
-    border-radius: 4px 0 0 4px;
-}
-
 .dnd5e2.sheet.actor.npc .sheet-header .vitals .meter.action-points {
     height: 18px;
     font-size: 10px;
@@ -61,13 +55,6 @@
     height: 22px;
     font-size: 14px;
 }
-
-.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.mana-points .progress::before {
-    background: linear-gradient(to right, var(--fq8-color-mana-1) 0%, var(--fq8-color-mana-2) 100%);
-    border-right: var(--border-width) solid var(--fq8-color-mana-3);
-    border-radius: 4px 0 0 4px;
-}
-
 .dnd5e2.sheet.actor.npc .sheet-header .vitals .meter.mana-points {
     height: 18px;
     font-size: 10px;
@@ -82,23 +69,6 @@
 .dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.zeal-points {
     height: 22px;
     font-size: 14px;
-}
-
-.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.zeal-points .progress::before {
-    background: linear-gradient(to right, var(--fq8-color-zeal-1) 0%, var(--fq8-color-zeal-2) 100%);
-    border-right: var(--border-width) solid var(--fq8-color-zeal-3);
-    border-radius: 4px 0 0 4px;
-}
-
-
-.dnd5e2.sheet.actor.character .sheet-body .sidebar .card .meter.sectioned > .zeal-init {
-    flex: none;
-    width: 25px;
-    color: var(--fq8-color-zeal-1);
-    background-color: var(--fq8-color-zeal-4);
-    border-right: 2px dashed var(--fq8-color-zeal-3);
-    text-align: center;
-    padding-top: 2px;
 }
 
 .dnd5e2.sheet.actor.npc .sheet-header .vitals .meter.zeal-points {
@@ -145,11 +115,11 @@
     background: var(--dnd5e-color-light-gray)
 }
 
-.pills-group.crit-area .critical-score {
+.pills-group.crit-area .critical-score, .pills-group.crit-area .critical-score .value {
     color: var(--fq8-color-critical)
 }
 
-.pills-group.crit-area .evasion-score {
+.pills-group.crit-area .evasion-score, .pills-group.crit-area .evasion-score .value{
     color: var(--fq8-color-evasion)
 }
 
