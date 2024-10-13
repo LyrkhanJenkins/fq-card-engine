@@ -16,6 +16,7 @@
   "FQCARDENGINE.DeckList": "List of Hands",
   "FQCARDENGINE.OpenHand": "Stack Window",
   "FQCARDENGINE.OpenCardStack": "Card Stack",
+  "FQCARDENGINE.ValidatedCards": "Validated Cards",
   "FQCARDENGINE.Pass": "Pass Cards",
   "FQCARDENGINE.PassTo": "Pass To",
   "FQCARDENGINE.ChooseEffect": "Choose the effect",
@@ -70,6 +71,7 @@
   "FQCARDENGINE.StackShowSuccess": "Stack Shown to ",
   "FQCARDENGINE.allPlayers": " all players",
   "FQCARDENGINE.selectedPlayers": " selected players",
+  "FQCARDENGINE.Select": "Select",
   "FQCARDENGINE.Deal": "Deal",
   "FQCARDENGINE.Reset": "Reset",
   "FQCARDENGINE.Shuffle": "Shuffle",
@@ -99,6 +101,7 @@
   "FQCARDENGINE.DialogPlayFormErrorXXX": "No value for X",
   "FQCARDENGINE.DialogPlayFormErrorYYY": "No value for Y",
   "FQCARDENGINE.DialogPlayFormErrorMinionLocation": "Select right number of FREE minion location for this spell",
+  "FQCARDENGINE.ChoosingCardsTitle": "Select cards to add to your SpellBook",
 
   "FQCARDENGINE.ActionPoints": "Action Points",
   "FQCARDENGINE.ActionPointsCurrent": "Current Action Points",
@@ -172,6 +175,7 @@
   "FQCARDENGINE.InfoMsgPartCardOtherEffect": "Other Effect(s): ",
   "FQCARDENGINE.WarningMsgSpellUseInCombat": "The spell can only be used in combat!",
   "FQCARDENGINE.WarningMsgSpellUseOutCombat": "The spell can only be used out of combat!",
+  "FQCARDENGINE.WarningNotEnoughCardsSelected": "Not enough card selected",
 
   "FQCARDENGINE.MacroMsgCatchingBreath": "You catch your breath... Action points are now at maximum!",
   "FQCARDENGINE.MacroErrorMsgHustle": "You must have exactly one target, and it must be on a square adjacent to your character.",

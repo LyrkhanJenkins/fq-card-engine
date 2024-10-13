@@ -808,6 +808,10 @@ div#fq-card-engine-container {
     animation: shine 3s infinite;
 }
 
+.has-been-selected {
+    animation: shine-selected 2s infinite;
+}
+
 .fq-card-engine-card:hover.has-been-played {
     filter: saturate(35%) drop-shadow(2px 2px 3px limegreen);
 }
@@ -821,5 +825,17 @@ div#fq-card-engine-container {
     }
     100% {
         filter: saturate(35%) brightness(100%) drop-shadow(1px 1px 2px limegreen);
+    }
+}
+
+@keyframes shine-selected {
+    0% {
+        filter: saturate(65%) brightness(120%) drop-shadow(2px 2px 4px #d5c211);
+    }
+    50% {
+        filter: saturate(65%) brightness(150%) drop-shadow(4px 4px 8px #ffe909);
+    }
+    100% {
+        filter: saturate(65%) brightness(120%) drop-shadow(2px 2px 4px #d5c211);
     }
 }
