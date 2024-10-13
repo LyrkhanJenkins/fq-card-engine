@@ -132,6 +132,7 @@
   "FQCARDENGINE.SheetCharacter": "Feuille de Personnage FQ",
   "FQCARDENGINE.SheetNPC": "Feuille de PNJ FQ",
   "FQCARDENGINE.SheetItem": "Feuille d'objet FQ",
+  "FQCARDENGINE.SheetFQCardsConfig": "Feuille de deck FQ",
 
   "FQCARDENGINE.WarningMsgNotEnoughHp": "n'a pas assez de points de vie",
   "FQCARDENGINE.WarningMsgNotEnoughAction": "n'a pas assez de points d'actions",

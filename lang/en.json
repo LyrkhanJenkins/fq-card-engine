@@ -132,6 +132,7 @@
   "FQCARDENGINE.SheetCharacter": "FQ Character Sheet",
   "FQCARDENGINE.SheetNPC": "FQ NPC Sheet",
   "FQCARDENGINE.SheetItem": "FQ Item Sheet",
+  "FQCARDENGINE.SheetFQCardsConfig": "FQ Deck Sheet",
 
   "FQCARDENGINE.WarningMsgNotEnoughHp": "has not enough hit points",
   "FQCARDENGINE.WarningMsgNotEnoughAction": "has not enough action points",
