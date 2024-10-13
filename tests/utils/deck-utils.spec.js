@@ -1,7 +1,7 @@
-import AdvancementUtils from "../../scripts/utils/advancement-utils.js";
+import DeckUtils from "../../scripts/utils/deck-utils.js";
 
 
-describe('AdvancementUtils', () => {
+describe('DeckUtils', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -35,7 +35,7 @@ describe('AdvancementUtils', () => {
     it('should return true when there are no cards to create', () => {
         const to = {};
         const action = {};
-        expect(AdvancementUtils.canPassCardsToDeck(to, action)).toBe(true);
+        expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(true);
     });
 
     it('should return true when cards to create can be added to the deck', () => {
@@ -45,7 +45,7 @@ describe('AdvancementUtils', () => {
         const action = {
             toCreate: [{name: 'Card3'}]
         };
-        expect(AdvancementUtils.canPassCardsToDeck(to, action)).toBe(true);
+        expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(true);
     });
 
     it('should return false when cards to create exceed the max same card limit', () => {
@@ -55,7 +55,7 @@ describe('AdvancementUtils', () => {
         const action = {
             toCreate: [{name: 'Card1', flags: {maxSameCard: 2}}]
         };
-        expect(AdvancementUtils.canPassCardsToDeck(to, action)).toBe(false);
+        expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(false);
     });
 
     it('should return true when maxSameCard is not reached', () => {
@@ -65,7 +65,7 @@ describe('AdvancementUtils', () => {
         const action = {
             toCreate: [{name: 'Card1', flags: {maxSameCard: 3}}]
         };
-        expect(AdvancementUtils.canPassCardsToDeck(to, action)).toBe(true);
+        expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(true);
     });
 
     it('should handle cards without flags correctly', () => {
@@ -75,7 +75,7 @@ describe('AdvancementUtils', () => {
         const action = {
             toCreate: [{name: 'Card3'}, {name: 'Card4', flags: {maxSameCard: 1}}]
         };
-        expect(AdvancementUtils.canPassCardsToDeck(to, action)).toBe(true);
+        expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(true);
     });
 
 
@@ -98,7 +98,7 @@ describe('AdvancementUtils', () => {
         };
         const options = {isAdvancement: true};
 
-        const result = AdvancementUtils.checkIfCanUpdateClasses(document, options);
+        const result = DeckUtils.checkIfCanUpdateClasses(document, options);
 
         expect(result).toBe(true);
     });
@@ -113,7 +113,7 @@ describe('AdvancementUtils', () => {
         };
         const options = {isAdvancement: true};
 
-        const result = AdvancementUtils.checkIfCanUpdateClasses(document, options);
+        const result = DeckUtils.checkIfCanUpdateClasses(document, options);
 
         expect(result).toBe(false);
         expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.NoUserForActor", {localize: true});
@@ -122,7 +122,7 @@ describe('AdvancementUtils', () => {
     it('should return true if not an advancement', () => {
         const options = {isAdvancement: false};
 
-        const result = AdvancementUtils.checkIfCanUpdateClasses(document, options);
+        const result = DeckUtils.checkIfCanUpdateClasses(document, options);
 
         expect(result).toBe(true);
     });
@@ -131,7 +131,7 @@ describe('AdvancementUtils', () => {
         const options = {isAdvancement: true};
         const localDocument = {...document, flags: {}};
 
-        const result = AdvancementUtils.checkIfCanUpdateClasses(localDocument, options);
+        const result = DeckUtils.checkIfCanUpdateClasses(localDocument, options);
 
         expect(result).toBe(true);
     });
@@ -146,10 +146,10 @@ describe('AdvancementUtils', () => {
                 levels: 5,
             },
         };
-        const deleteDeckForUserMethodSpy = jest.spyOn(AdvancementUtils, 'deleteDeckForUser');
+        const deleteDeckForUserMethodSpy = jest.spyOn(DeckUtils, 'deleteDeckForUser');
         const options = {isAdvancement: true, parent: {id: 'parent-id'}};
 
-        await AdvancementUtils.updateDeckWhenChange(document, options);
+        await DeckUtils.updateDeckWhenChange(document, options);
 
         expect(deleteDeckForUserMethodSpy).toHaveBeenCalled();
     });
@@ -164,11 +164,11 @@ describe('AdvancementUtils', () => {
                 levels: 10,
             },
         };
-        const deleteDeckForUserMethodSpy = jest.spyOn(AdvancementUtils, 'deleteDeckForUser');
+        const deleteDeckForUserMethodSpy = jest.spyOn(DeckUtils, 'deleteDeckForUser');
 
         const options = {isAdvancement: true, parent: {id: 'parent-id'}};
 
-        await AdvancementUtils.updateDeckWhenChange(localDocument, options);
+        await DeckUtils.updateDeckWhenChange(localDocument, options);
 
         expect(deleteDeckForUserMethodSpy).not.toHaveBeenCalled();
     });
@@ -178,10 +178,10 @@ describe('AdvancementUtils', () => {
             flags: {}
         };
 
-        const deleteDeckForUserMethodSpy = jest.spyOn(AdvancementUtils, 'deleteDeckForUser');
+        const deleteDeckForUserMethodSpy = jest.spyOn(DeckUtils, 'deleteDeckForUser');
         const options = {isAdvancement: true, parent: {id: 'parent-id'}};
 
-        await AdvancementUtils.updateDeckWhenChange(localDocument, options);
+        await DeckUtils.updateDeckWhenChange(localDocument, options);
 
         expect(deleteDeckForUserMethodSpy).not.toHaveBeenCalled();
     });

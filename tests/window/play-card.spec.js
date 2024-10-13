@@ -1,4 +1,4 @@
-import PlayCard from "../../scripts/utils/play-card.js";
+import PlayCard from "../../scripts/window/play-card.js";
 
 jest.mock("../../scripts/fq-card-engine-module.js", () => ({
     socket: {
