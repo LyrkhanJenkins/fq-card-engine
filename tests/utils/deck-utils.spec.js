@@ -24,9 +24,9 @@ describe('DeckUtils', () => {
                 ].filter(callback)), // Simulate filter behavior
                 get: jest.fn((id) => ({ id, character: { id } })), // Simulate get behavior
                 find: jest.fn((id) => ({ id, character: { id } })) // Simulate get behavior
-            }
+            },
+            cards: []
         }
-
         global.Cards = {
             deleteDocuments: jest.fn()
         }
@@ -184,5 +184,64 @@ describe('DeckUtils', () => {
         await DeckUtils.updateDeckWhenChange(localDocument, options);
 
         expect(deleteDeckForUserMethodSpy).not.toHaveBeenCalled();
+    });
+
+    it('should return the first matching deck', function() {
+        const userId = "user123";
+        const fqType = "someType";
+
+        // Mock data
+        const cards = [
+            {
+                ownership: { "user123": 3 },
+                flags: { fqType: "someType", fqOwner: "user123" }
+            },
+            {
+                ownership: { "user123": 3 },
+                flags: { fqType: "someType", fqOwner: "user123" }
+            }
+        ];
+
+        global.game.cards = cards;
+
+        const result = DeckUtils.getFirstDeck(userId, fqType);
+
+        expect(result).toEqual(cards[0]);
+        expect(ui.notifications.warn).not.toHaveBeenCalled();
+    });
+
+    it('should warn if no deck is found', function() {
+        const userId = "user123";
+        const fqType = "someType";
+
+        // Empty list implies no matching deck
+        game.cards = [];
+
+        const result = DeckUtils.getFirstDeck(userId, fqType);
+
+        expect(result).toEqual(undefined);
+
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningDeckMissingForPlayer", { localize: true });
+    });
+
+    it('should warn if no matching deck is found', function() {
+        const userId = "user123";
+        const fqType = "someType";
+
+        // Data that does not match the criteria
+        const cards = [
+            {
+                ownership: { "user456": 3 },
+                flags: { fqType: "anotherType", fqOwner: "user456" }
+            }
+        ];
+
+        global.game.cards = cards;
+
+        const result = DeckUtils.getFirstDeck(userId, fqType);
+
+        expect(result).toEqual(undefined);
+
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningDeckMissingForPlayer", { localize: true });
     });
 });

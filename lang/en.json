@@ -103,6 +103,9 @@
   "FQCARDENGINE.DialogPlayFormErrorMinionLocation": "Select right number of FREE minion location for this spell",
   "FQCARDENGINE.ChoosingCardsTitle": "Select cards to add to your SpellBook",
 
+  "FQCARDENGINE.DeckError": "Deck Error",
+  "FQCARDENGINE.ErrorDuplicateCardSpellBook": "Card {cardName} cant be duplicate on spellbooks.",
+
   "FQCARDENGINE.ActionPoints": "Action Points",
   "FQCARDENGINE.ActionPointsCurrent": "Current Action Points",
   "FQCARDENGINE.ActionPointsMax": "Maximum Action Points",

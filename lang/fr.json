@@ -103,6 +103,9 @@
   "FQCARDENGINE.DialogPlayFormErrorMinionLocation": "Sélectionner le bon nombre d'emplacement libre pour l'invocation des minions",
   "FQCARDENGINE.ChoosingCardsTitle": "Choisissez des cartes à ajouter à votre bibliothèque",
 
+  "FQCARDENGINE.DeckError": "Deck Error",
+  "FQCARDENGINE.ErrorDuplicateCardSpellBook": "La carte {cardName} ne peut être dupliqué dans une bibliothèque",
+
   "FQCARDENGINE.ActionPoints": "Points d'Action",
   "FQCARDENGINE.ActionPointsCurrent": "Points d'Action Actuels",
   "FQCARDENGINE.ActionPointsMax": "Points d'Action Maximum",
