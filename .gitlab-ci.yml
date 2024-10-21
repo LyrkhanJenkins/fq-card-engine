@@ -18,6 +18,8 @@
 
 stages:          # List of stages for jobs, and their order of execution
   - build
+  - test
+  - lint
   - release
 
 image: node:20
@@ -30,11 +32,29 @@ build:       # This job runs in the build stage, which runs first.
   script:
     - echo "Compiling the code..."
     - npm install
-    - npm test
     - npm run build
     - echo "Compile complete."
   artifacts:
     untracked: true
+
+test:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - npm install  # In case dependencies are needed for tests, you might want to ensure they are installed
+    - npm test
+    - echo "Tests complete."
+  artifacts:
+    reports:
+      junit: test-results.xml  # Ensure your test framework outputs JUnit XML format reports
+
+lint:
+  stage: lint
+  script:
+    - echo "Running ESLint..."
+    - npm install
+    - npm run lint
+    - echo "ESLint complete."
 
 release:
   stage: release

@@ -6,7 +6,7 @@ jest.mock("../../scripts/fq-card-engine-module.js", () => ({
     }
 }));
 
-const FQUtils = require('../../scripts/utils/fq-utils.js');
+const FQUtils = require("../../scripts/utils/fq-utils.js");
 jest.mock("../../scripts/utils/fq-utils.js", () => ({
     replaceCardContentAbilitiesBonus: jest.fn(),
     prepareDataFromCard: jest.fn(),
@@ -48,19 +48,19 @@ global.CONFIG = {
 };
 
 global.ChatMessage = {
-    create: jest.fn().mockResolvedValue({id: '1234', content: 'Mocked message'}),
+    create: jest.fn().mockResolvedValue({id: "1234", content: "Mocked message"}),
     getSpeaker: jest.fn().mockResolvedValue({alias: "Test Character"}),
-}
+};
 
 global.renderTemplate = async (template, data) => `<div>${template} - ${JSON.stringify(data)}</div>`;
 
-describe('PlayCard', () => {
+describe("PlayCard", () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    describe('discardCard', () => {
-        test('should warn and not discard the card if card has been played', async () => {
+    describe("discardCard", () => {
+        test("should warn and not discard the card if card has been played", async () => {
             const cardContent = {hasBeenPlayed: true};
             const card = {};
             const currentCards = {
@@ -76,9 +76,9 @@ describe('PlayCard', () => {
             expect(currentCards.pass).not.toHaveBeenCalled();
         });
 
-        test('should discard the card if it has not been played', async () => {
+        test("should discard the card if it has not been played", async () => {
             const cardContent = {hasBeenPlayed: false};
-            const card = {id: 'mockCardId', _id: 'mockCardId', back: {img: 'mockImg'}, origin: {name: 'mockName'}};
+            const card = {id: "mockCardId", _id: "mockCardId", back: {img: "mockImg"}, origin: {name: "mockName"}};
             const currentCards = {
                 pass: jest.fn().mockResolvedValue(),
             };
@@ -88,14 +88,14 @@ describe('PlayCard', () => {
             expect(game.user.character.update).toHaveBeenCalledWith({
                 "system.fq.cards.currentDrop": 1,
             });
-            expect(currentCards.pass).toHaveBeenCalledWith({}, ['mockCardId'], expect.any(Object));
+            expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
     });
 
-    describe('callBackplayCard', () => {
-        test('should replace card content abilities bonus', async () => {
+    describe("callBackplayCard", () => {
+        test("should replace card content abilities bonus", async () => {
             const cardContent = {};
-            const card = {id: 'mockCardId', _id: 'mockCardId', back: {img: 'mockImg'}, origin: {name: 'mockName'}};
+            const card = {id: "mockCardId", _id: "mockCardId", back: {img: "mockImg"}, origin: {name: "mockName"}};
             const currentCards = {
                 pass: jest.fn().mockResolvedValue(),
             };
@@ -103,12 +103,12 @@ describe('PlayCard', () => {
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
             expect(FQUtils.replaceCardContentAbilitiesBonus).toHaveBeenCalledWith(cardContent);
-            expect(FQUtils.prepareDataFromCard).toHaveBeenCalledWith(cardContent, card);
+            expect(FQUtils.prepareDataFromCard).toHaveBeenCalledWith(cardContent);
         });
 
-        test('should apply card effect and pass the card if needed', async () => {
+        test("should apply card effect and pass the card if needed", async () => {
             const cardContent = {};
-            const card = {id: 'mockCardId', _id: 'mockCardId', back: {img: 'mockImg'}, origin: {name: 'mockName'}};
+            const card = {id: "mockCardId", _id: "mockCardId", back: {img: "mockImg"}, origin: {name: "mockName"}};
             const currentCards = {
                 pass: jest.fn().mockResolvedValue(),
             };
@@ -116,21 +116,21 @@ describe('PlayCard', () => {
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
             expect(FQUtils.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
-            expect(currentCards.pass).toHaveBeenCalledWith({}, ['mockCardId'], expect.any(Object));
+            expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
     });
 
-    describe('renderChatMessage', () => {
-        test('should render and create chat message', async () => {
+    describe("renderChatMessage", () => {
+        test("should render and create chat message", async () => {
             const card = {
                 face: null,
-                back: {img: 'mockBackImg'},
-                origin: {name: 'mockDeckName'},
-                name: 'mockCardName',
-                _id: 'mockCardId'
+                back: {img: "mockBackImg"},
+                origin: {name: "mockDeckName"},
+                name: "mockCardName",
+                _id: "mockCardId"
             };
 
-            await PlayCard.renderChatMessage({}, {}, card, 'FQCARDENGINE.CardPlayed');
+            await PlayCard.renderChatMessage({}, {}, card, "FQCARDENGINE.CardPlayed");
 
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.any(Object));
         });

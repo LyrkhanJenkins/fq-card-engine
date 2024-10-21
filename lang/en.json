@@ -63,7 +63,6 @@
   "FQCARDENGINE.Bar": "bar",
   "FQCARDENGINE.DragDropError": "Unable to Drag Drop",
   "FQCARDENGINE.DragDropUUIDError": "Cannot Drop Missing UUID",
-  "FQCARDENGINE.DragDropObjectError": "Cannot Drop that Type of Object Here",
   "FQCARDENGINE.ActionShow": "Show Players",
   "FQCARDENGINE.FoundryVersionSupport": "Your Version of Foundry Does not support this feature please upgrade",
   "FQCARDENGINE.ShowStackError": "Problem showing Stack to player",

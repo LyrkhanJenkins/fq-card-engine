@@ -27,7 +27,7 @@ jest.mock("../../scripts/utils/canvas-utils.js", () => ({
     getMinDistanceBetweenTwoToken: jest.fn()
 }));
 
-describe('FQUtils', () => {
+describe("FQUtils", () => {
     jest.clearAllMocks();
 
     beforeEach(() => {
@@ -40,7 +40,7 @@ describe('FQUtils', () => {
             this.formula = formula;
             this.total = Math.floor(Math.random() * 20) + 1; // Mock a random total
             this.evaluate = async () => this;
-            this.toMessage = jest.fn(async () => ({id: 'messageId'}));
+            this.toMessage = jest.fn(async () => ({id: "messageId"}));
         });
         global.game = {
             user: {
@@ -48,7 +48,7 @@ describe('FQUtils', () => {
                 targets: new Set([{document: {name: "Target1", actorId: "actor1"}}])
             },
             actors: {
-                get: jest.fn((id) => ({system: {fq: {attributes: {evasion: 3}}}}))
+                get: jest.fn(() => ({system: {fq: {attributes: {evasion: 3}}}}))
             },
             dice3d: {
                 waitFor3DAnimationByMessageID: jest.fn(async () => {
@@ -57,7 +57,7 @@ describe('FQUtils', () => {
             packs: {
                 get: jest.fn(() => ({
                     getDocuments: jest.fn(() => ([{
-                        name: 'minionName',
+                        name: "minionName",
                         system: {
                             attributes: {hp: {max: 10, value: 10}},
                             fq: {
@@ -77,21 +77,21 @@ describe('FQUtils', () => {
         };
     });
 
-    it('should roll a dice and return result', async () => {
-        const result = await FQUtils.rollResultAsync('1d20');
+    it("should roll a dice and return result", async () => {
+        const result = await FQUtils.rollResultAsync("1d20");
         expect(result).toBeGreaterThanOrEqual(1);
         expect(result).toBeLessThanOrEqual(20);
     });
 
-    it('should generate a random ID', () => {
+    it("should generate a random ID", () => {
         const id = FQUtils.generateRandomId(10);
         expect(id).toHaveLength(10);
     });
 
     // Similar test cases can be added for other static methods
 
-    it('should prepare data from card', async () => {
-        const cardContent = {minReach: '1', maxReach: '1+1d6', nbTargets: '1d3'};
+    it("should prepare data from card", async () => {
+        const cardContent = {minReach: "1", maxReach: "1+1d6", nbTargets: "1d3"};
         await FQUtils.prepareDataFromCard(cardContent);
 
         expect(cardContent.minReach).toBeGreaterThanOrEqual(1);
@@ -99,7 +99,7 @@ describe('FQUtils', () => {
         expect(cardContent.nbTargets).toBeGreaterThanOrEqual(1);
     });
 
-    it('should replace card content abilities bonus', () => {
+    it("should replace card content abilities bonus", () => {
         const cardContent = {
             key1: "some text with @str modifier",
             key2: {
@@ -122,22 +122,22 @@ describe('FQUtils', () => {
         expect(cardContent.key2.nestedKey).toBe("3 modifier");
     });
 
-    it('should handle sound effect in applyCardEffect', async () => {
+    it("should handle sound effect in applyCardEffect", async () => {
         const cardContent = {damage: "1d6", heal: "3+1d4", sound: "sound.mp3"};
         await FQUtils.applyCardEffect(cardContent, {}, {});
         expect(DamageUtils.handleSoundEffect).toHaveBeenCalledWith(cardContent.damage, cardContent.heal, expect.any(Array), cardContent.sound);
     });
 
-    it('should call socket.executeAsGM to add a new effect for actor', async () => {
+    it("should call socket.executeAsGM to add a new effect for actor", async () => {
         const currentEffect = {
             data: [{
-                label: 'test effect',
+                label: "test effect",
                 value: 10,
                 duration: {startTime: 1, rounds: 2, turns: 3}
             }]
         };
-        await FQUtils.applyNewEffects(currentEffect, 'actorId');
+        await FQUtils.applyNewEffects(currentEffect, "actorId");
 
-        expect(fqCardEngineModule.socket.executeAsGM).toHaveBeenCalledWith('addEffectForAnActor', expect.anything(), 'actorId');
+        expect(fqCardEngineModule.socket.executeAsGM).toHaveBeenCalledWith("addEffectForAnActor", expect.anything(), "actorId");
     });
 });

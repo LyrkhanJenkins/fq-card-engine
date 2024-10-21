@@ -63,7 +63,6 @@
   "FQCARDENGINE.Bar": "Barre",
   "FQCARDENGINE.DragDropError": "Impossible de faire un Drag and Drop",
   "FQCARDENGINE.DragDropUUIDError": "Impossible de Dropper Missing UUID",
-  "FQCARDENGINE.DragDropObjectError": "Impossible de Dropper ce type d\u0027objet ici",
   "FQCARDENGINE.ActionShow": "Afficher joueurs",
   "FQCARDENGINE.FoundryVersionSupport": "Votre version de Foundry ne supporte pas cet module, mettez \u00e0 jour",
   "FQCARDENGINE.ShowStackError": "Impossible d\u0027afficher la pile au joueur",
