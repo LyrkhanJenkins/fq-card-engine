@@ -1,9 +1,16 @@
-import DeckUtils from "../../scripts/utils/deck-utils.js";
+import DeckUtils, {DeckError} from "../../scripts/utils/deck-utils.js";
 
+const createEmbeddedDocumentsMock = jest.fn();
+const deck = {
+    flags: { fqType: '' },
+    cards: [],
+    createEmbeddedDocuments: createEmbeddedDocumentsMock,
+};
 
 describe('DeckUtils', () => {
 
     beforeEach(() => {
+
         jest.clearAllMocks();
         global.ui = {
             notifications: {
@@ -13,17 +20,18 @@ describe('DeckUtils', () => {
         };
         global.game = {
             i18n: {
-                localize: () => ""
+                localize: jest.fn(),
+                format: jest.fn(),
             },
-            users:  {
+            users: {
                 filter: jest.fn((callback) => [
                     {
                         id: 'parent-id',
-                        character: { id: 'parent-id' }
+                        character: {id: 'parent-id'}
                     }
                 ].filter(callback)), // Simulate filter behavior
-                get: jest.fn((id) => ({ id, character: { id } })), // Simulate get behavior
-                find: jest.fn((id) => ({ id, character: { id } })) // Simulate get behavior
+                get: jest.fn((id) => ({id, character: {id}})), // Simulate get behavior
+                find: jest.fn((id) => ({id, character: {id}})) // Simulate get behavior
             },
             cards: []
         }
@@ -186,19 +194,19 @@ describe('DeckUtils', () => {
         expect(deleteDeckForUserMethodSpy).not.toHaveBeenCalled();
     });
 
-    it('should return the first matching deck', function() {
+    it('should return the first matching deck', function () {
         const userId = "user123";
         const fqType = "someType";
 
         // Mock data
         const cards = [
             {
-                ownership: { "user123": 3 },
-                flags: { fqType: "someType", fqOwner: "user123" }
+                ownership: {"user123": 3},
+                flags: {fqType: "someType", fqOwner: "user123"}
             },
             {
-                ownership: { "user123": 3 },
-                flags: { fqType: "someType", fqOwner: "user123" }
+                ownership: {"user123": 3},
+                flags: {fqType: "someType", fqOwner: "user123"}
             }
         ];
 
@@ -210,7 +218,7 @@ describe('DeckUtils', () => {
         expect(ui.notifications.warn).not.toHaveBeenCalled();
     });
 
-    it('should warn if no deck is found', function() {
+    it('should warn if no deck is found', function () {
         const userId = "user123";
         const fqType = "someType";
 
@@ -221,18 +229,18 @@ describe('DeckUtils', () => {
 
         expect(result).toEqual(undefined);
 
-        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningDeckMissingForPlayer", { localize: true });
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningDeckMissingForPlayer", {localize: true});
     });
 
-    it('should warn if no matching deck is found', function() {
+    it('should warn if no matching deck is found', function () {
         const userId = "user123";
         const fqType = "someType";
 
         // Data that does not match the criteria
         const cards = [
             {
-                ownership: { "user456": 3 },
-                flags: { fqType: "anotherType", fqOwner: "user456" }
+                ownership: {"user456": 3},
+                flags: {fqType: "anotherType", fqOwner: "user456"}
             }
         ];
 
@@ -242,6 +250,153 @@ describe('DeckUtils', () => {
 
         expect(result).toEqual(undefined);
 
-        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningDeckMissingForPlayer", { localize: true });
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningDeckMissingForPlayer", {localize: true});
+    });
+
+    it('should add cards to the deck that are not duplicates and not already in the deck for SPELLBOOK_TYPE', async () => {
+        deck.flags.fqType = DeckUtils.SPELLBOOK_TYPE;
+        deck.cards = [{name: 'ExistingCard'}];
+
+        const cards = [
+            {name: 'Card1'},
+            {name: 'Card2'},
+            {name: 'Card3'},
+        ];
+
+        await DeckUtils.createCardsForDeck(deck, cards);
+
+        expect(ui.notifications.warn).not.toHaveBeenCalled();
+        expect(createEmbeddedDocumentsMock).toHaveBeenCalledWith('Card', cards, {keepId: false});
+    });
+
+    it('should warn when trying to add duplicate cards to SPELLBOOK_TYPE deck but create one anyway', async () => {
+        deck.flags.fqType = DeckUtils.SPELLBOOK_TYPE;
+        const cards = [
+            {name: 'Card1'},
+            {name: 'Card1'}, // Duplicate card
+        ];
+
+        await DeckUtils.createCardsForDeck(deck, cards);
+
+        expect(ui.notifications.warn).toHaveBeenCalled();
+        expect(createEmbeddedDocumentsMock).toHaveBeenCalledWith('Card', [{name: 'Card1'}], {keepId: false});
+    });
+
+    it('should throw an error when cards already exist in the SPELLBOOK_TYPE deck', async () => {
+        deck.flags.fqType = DeckUtils.SPELLBOOK_TYPE;
+        deck.cards = [{name: 'ExistingCard'}];
+
+        const cards = [{name: 'ExistingCard'}];
+
+        await expect(DeckUtils.createCardsForDeck(deck, cards)).rejects.toThrow(
+            new DeckError(game.i18n.format('FQCARDENGINE.ErrorDuplicateCardSpellBook', {cardName: ''}))
+        );
+
+        expect(createEmbeddedDocumentsMock).not.toHaveBeenCalled();
+    });
+
+    it('should add all cards to the deck for non-SPELLBOOK_TYPE', async () => {
+        deck.flags.fqType = 'OTHER_TYPE';
+
+        const cards = [
+            {name: 'Card1'},
+            {name: 'Card2'},
+        ];
+
+        await DeckUtils.createCardsForDeck(deck, cards);
+
+        expect(ui.notifications.warn).not.toHaveBeenCalled();
+        expect(createEmbeddedDocumentsMock).toHaveBeenCalledWith('Card', cards, {keepId: false});
+    });
+
+    it('should warn if the user has no character', async () => {
+
+        // Mock DeckUtils.getFirstDeck
+        const getFirstDeckMock = jest.fn();
+        DeckUtils.getFirstDeck = getFirstDeckMock;
+
+        // Mock game.users.get
+        const getUserMock = jest.fn();
+        game.users.get = getUserMock;
+        getUserMock.mockReturnValue({ character: null });
+
+        await DeckUtils.deleteDeckForUser('user1');
+
+        expect(ui.notifications.warn).toHaveBeenCalledWith(game.i18n.localize('FQCARDENGINE.NoOwnedCharacter'));
+        expect(Cards.deleteDocuments).not.toHaveBeenCalled();
+    });
+
+    it('should warn if the user\'s character has no main class', async () => {
+
+        // Mock DeckUtils.getFirstDeck
+        const getFirstDeckMock = jest.fn();
+        DeckUtils.getFirstDeck = getFirstDeckMock;
+        // Mock game.users.get
+        const getUserMock = jest.fn();
+        game.users.get = getUserMock;
+        getUserMock.mockReturnValue({
+            character: { name: 'CharacterName', classes: {} }
+        });
+
+        await DeckUtils.deleteDeckForUser('user1');
+
+        expect(ui.notifications.warn).toHaveBeenCalledWith(game.i18n.localize('FQCARDENGINE.NoMainClass'));
+        expect(Cards.deleteDocuments).not.toHaveBeenCalled();
+    });
+
+    it('should delete the deck if the conditions are met', async () => {
+
+        // Mock DeckUtils.getFirstDeck
+        const getFirstDeckMock = jest.fn();
+        DeckUtils.getFirstDeck = getFirstDeckMock;
+        // Mock game.users.get
+        const getUserMock = jest.fn();
+        game.users.get = getUserMock;
+        getUserMock.mockReturnValue({
+            id: 'user1',
+            character: {
+                name: 'CharacterName',
+                classes: {
+                    mainClass: {
+                        system: { isOriginalClass: true, levels: 5 }
+                    }
+                }
+            }
+        });
+
+        getFirstDeckMock.mockReturnValue({ id: 'deck1' });
+
+        await DeckUtils.deleteDeckForUser('user1');
+
+        expect(Cards.deleteDocuments).toHaveBeenCalledWith(['deck1']);
+        expect(ui.notifications.warn).not.toHaveBeenCalled();
+    });
+
+    it('should not delete the deck if main class level is greater than 5', async () => {
+
+        // Mock DeckUtils.getFirstDeck
+        const getFirstDeckMock = jest.fn();
+        DeckUtils.getFirstDeck = getFirstDeckMock;
+        // Mock game.users.get
+        const getUserMock = jest.fn();
+        game.users.get = getUserMock;
+        getUserMock.mockReturnValue({
+            id: 'user1',
+            character: {
+                name: 'CharacterName',
+                classes: {
+                    mainClass: {
+                        system: { isOriginalClass: true, levels: 6 }
+                    }
+                }
+            }
+        });
+
+        getFirstDeckMock.mockReturnValue({ id: 'deck1' });
+
+        await DeckUtils.deleteDeckForUser('user1');
+
+        expect(Cards.deleteDocuments).not.toHaveBeenCalled();
+        expect(ui.notifications.warn).not.toHaveBeenCalled();
     });
 });
