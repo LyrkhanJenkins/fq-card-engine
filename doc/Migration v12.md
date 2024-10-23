@@ -1,0 +1,22 @@
+User Stories :
+
+- Etude de la migration
+  - Modules impactés das le code de la v9
+  - Etude de remplacement de certaines fonctionnalités
+    - Déplacement -> 
+  - Planification
+- Fin de la campagne Saison 2
+- Packaging et archivage de la version 8.0
+- Création du repo git + Communication (public)
+- Création du monde et migration des assets + re-tri
+- Ajouts des modules essentiels
+- Migration des fiches et caractéristiques des personnages et PNJ
+- Migration des Macros
+- Migrations des cartes
+  - Migrations du code de fq-card-engine
+  - Migrations des cartes
+  - Migrations des conditions spécifiques par cartes
+  - Adaptation du script de génération pour les cartes
+- Migration des sorts et items passifs, (comment appliquer les mêmes lois qu'aux cartes)
+- Migration des compendiums restants
+- Création d'une nouvelle page d'accueil
