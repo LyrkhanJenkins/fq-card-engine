@@ -454,7 +454,7 @@
 .fq-card-engine-play-dialog-description,
 .fq-card-engine-play-dialog-face-description {
     text-align: center;
-    margin: 0px;
+    margin: 0;
     font-weight: normal;
     font-size: 12px;
 }
@@ -500,23 +500,17 @@ div.separator {
 
 #ui-bottom.fq-card-engine {
     display: grid;
-    grid-auto-rows: minmax(auto, auto);
 }
 
-.fq-card-engine-right {
-    grid-template-columns: minmax(auto, auto) minmax(220px, 220px);
+#ui-middle #ui-bottom.fq-card-engine {
+    height: unset; /*TODO Normal?*/
+    width: unset; /*TODO Normal?*/
+    margin: 10px auto;
 }
 
-.fq-card-engine-left {
-    grid-template-columns: minmax(220px, 220px) minmax(auto, auto);
-}
 
 .fq-card-engine #camera-views .camera-view {
     height: auto;
-}
-
-#ui-bottom.fq-card-engine div {
-    grid-row: 3;
 }
 
 #ui-bottom.fq-card-engine div#camera-views {
@@ -529,22 +523,54 @@ div#fq-card-engine-container {
     justify-content: end;
 }
 
+
 #ui-bottom.fq-card-engine div#fq-card-engine-container {
     grid-row: 1/4;
     grid-column: 2;
 }
 
-#ui-bottom.fq-card-engine-above-macros div#fq-card-engine-container {
-    grid-row: 2;
-    grid-column: 1 / span 2;
+#ui-bottom.fq-card-engine-above-macros {
+    grid-template-columns: 1fr;
 }
 
-#ui-bottom.fq-card-engine-left div#fq-card-engine-container {
+#ui-bottom.fq-card-engine-right {
+    grid-template-rows: 1fr;
+    grid-template-columns: minmax(auto, auto) minmax(220px, 220px);
+}
+
+#ui-bottom.fq-card-engine-left {
+    grid-template-rows: 1fr;
+    grid-template-columns: minmax(220px, 220px) minmax(auto, auto);
+}
+
+#ui-bottom.fq-card-engine-above-macros div#fq-card-engine-container {
+    grid-row: 1;
     grid-column: 1;
 }
 
-#ui-bottom.fq-card-engine-right div#fq-card-engine-container {
+#ui-bottom.fq-card-engine-above-macros aside#hotbar {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+#ui-bottom.fq-card-engine-left div#fq-card-engine-container {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+#ui-bottom.fq-card-engine-left aside#hotbar {
+    grid-row: 1;
     grid-column: 2;
+}
+
+#ui-bottom.fq-card-engine-right div#fq-card-engine-container {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+#ui-bottom.fq-card-engine-right aside#hotbar {
+    grid-row: 1;
+    grid-column: 1;
 }
 
 /* Window popup css*/
@@ -785,6 +811,10 @@ div#fq-card-engine-container {
     transform: translate(-25%, -600%) rotate(-45deg);
     width: 200%;
     padding: 10px 0;
+}
+
+.card-draw > img {
+    margin: 0 auto;
 }
 
 .window-fq-base-card-banner {
