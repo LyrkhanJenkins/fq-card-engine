@@ -1,7 +1,7 @@
 {
   "title": "FQ Card Engine",
   "description": "Module for Final Quest 8 Battle system based on fq-card-engine https://github.com/LyrkhanJenkins/fq-card-engine",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "languages": [
     {
       "lang": "en",
@@ -39,8 +39,12 @@
     "scripts/fq-item-use.js"
   ],
   "styles": [
-    "styles/fq-card-engine.css",
-    "styles/fq-dnd5e-sheet.css"
+    {
+      "src": "styles/fq-card-engine.css"
+    },
+    {
+      "src": "styles/fq-dnd5e-sheet.css"
+    }
   ],
   "socket": true,
   "url": "https://gitlab.com/final-quest/fq-card-engine",
@@ -48,8 +52,8 @@
   "download": "https://gitlab.com/final-quest/fq-card-engine/-/jobs/8143170227/artifacts/raw/fq-card-engine.zip",
   "id": "fq-card-engine",
   "compatibility": {
-    "minimum": "12",
-    "verified": "12.331"
+    "minimum": "13",
+    "verified": "13.336"
   },
   "relationships": {
     "systems": [
@@ -230,5 +234,6 @@
         "spells-npc"
       ]
     }
-  ]
+  ],
+  "flags": {}
 }
