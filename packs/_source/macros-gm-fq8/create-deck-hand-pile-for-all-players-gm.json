@@ -1,7 +1,7 @@
 {
   "name": "Create deck/hand/pile for all players (GM)",
   "type": "script",
-  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.createDeckForUser(user.id);\n   game.cards.find(c => c.flags.fqType === 'DECK' && c.ownership[user.id] === 3).sheet.render(true);\n});",
+  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.createDeckForUser(user.id);\n   game.cards.find(c => c.system.fq.type === 'DECK' && c.ownership[user.id] === 3)?.sheet.render(true);\n});",
   "img": "icons/magic/symbols/squares-3d-green.webp",
   "author": "SA6JKCaEua1JXSu4",
   "scope": "global",

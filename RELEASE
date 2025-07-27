@@ -1,3 +1,10 @@
+Update 1.1.0:
+    Chore:
+    - Migration v13
+        - Remove deprecated methods
+        - Migration cards flags to FQ typed system object
+    - Unit testing
+
 Update 1.0.1:
     Feat:
     - Add npc sheetV2 with FQ Attributes

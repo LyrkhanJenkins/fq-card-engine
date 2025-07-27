@@ -2,7 +2,7 @@ import DeckUtils, {DeckError} from "../../scripts/utils/deck-utils.js";
 
 const createEmbeddedDocumentsMock = jest.fn();
 const deck = {
-    flags: { fqType: '' },
+    system: {fq: {type: ''}},
     cards: [],
     createEmbeddedDocuments: createEmbeddedDocumentsMock,
 };
@@ -89,7 +89,7 @@ describe('DeckUtils', () => {
 
     const document = {
         flags: {
-            fqType: true,
+            fq: {},
         },
         parent: {
             id: 'parent-id',
@@ -135,9 +135,9 @@ describe('DeckUtils', () => {
         expect(result).toBe(true);
     });
 
-    it('should return true if document does not have fqType flag', () => {
+    it('should return true if document does not have type FQ system', () => {
         const options = {isAdvancement: true};
-        const localDocument = {...document, flags: {}};
+        const localDocument = {...document};
 
         const result = DeckUtils.checkIfCanUpdateClasses(localDocument, options);
 
@@ -146,13 +146,13 @@ describe('DeckUtils', () => {
 
     it('should call deleteDeckForUser and createDeckForUser when conditions are met', async () => {
         const document = {
-            flags: {
-                fqType: 'DECK',
-            },
             system: {
                 isOriginalClass: true,
                 levels: 5,
             },
+            flags: {
+                fq: {}
+            }
         };
         const deleteDeckForUserMethodSpy = jest.spyOn(DeckUtils, 'deleteDeckForUser');
         const options = {isAdvancement: true, parent: {id: 'parent-id'}};
@@ -164,13 +164,13 @@ describe('DeckUtils', () => {
 
     it('should not call deck methods if conditions are not met', async () => {
         const localDocument = {
-            flags: {
-                fqType: 'DECK',
-            },
             system: {
                 isOriginalClass: false,
                 levels: 10,
             },
+            flags: {
+                fq: {}
+            }
         };
         const deleteDeckForUserMethodSpy = jest.spyOn(DeckUtils, 'deleteDeckForUser');
 
@@ -181,7 +181,7 @@ describe('DeckUtils', () => {
         expect(deleteDeckForUserMethodSpy).not.toHaveBeenCalled();
     });
 
-    it('should not call deck methods if document does not have fqType flag', async () => {
+    it('should not call deck methods if document does not have fq type flag', async () => {
         const localDocument = {
             flags: {}
         };
@@ -196,23 +196,23 @@ describe('DeckUtils', () => {
 
     it('should return the first matching deck', function () {
         const userId = "user123";
-        const fqType = "someType";
+        const typeFQ = "someType";
 
         // Mock data
         const cards = [
             {
                 ownership: {"user123": 3},
-                flags: {fqType: "someType", fqOwner: "user123"}
+                system: {fq: {type: typeFQ, owner: "user123"}}
             },
             {
                 ownership: {"user123": 3},
-                flags: {fqType: "someType", fqOwner: "user123"}
+                system: {fq: {type: typeFQ, owner: "user123"}}
             }
         ];
 
         global.game.cards = cards;
 
-        const result = DeckUtils.getFirstDeck(userId, fqType);
+        const result = DeckUtils.getFirstDeck(userId, typeFQ);
 
         expect(result).toEqual(cards[0]);
         expect(ui.notifications.warn).not.toHaveBeenCalled();
@@ -220,12 +220,12 @@ describe('DeckUtils', () => {
 
     it('should warn if no deck is found', function () {
         const userId = "user123";
-        const fqType = "someType";
+        const typeFQ = "someType";
 
         // Empty list implies no matching deck
         game.cards = [];
 
-        const result = DeckUtils.getFirstDeck(userId, fqType);
+        const result = DeckUtils.getFirstDeck(userId, typeFQ);
 
         expect(result).toEqual(undefined);
 
@@ -234,19 +234,19 @@ describe('DeckUtils', () => {
 
     it('should warn if no matching deck is found', function () {
         const userId = "user123";
-        const fqType = "someType";
+        const typeFQ = "someType";
 
         // Data that does not match the criteria
         const cards = [
             {
                 ownership: {"user456": 3},
-                flags: {fqType: "anotherType", fqOwner: "user456"}
+                system: {fq: {type: "anotherType", owner: "user456"}}
             }
         ];
 
         global.game.cards = cards;
 
-        const result = DeckUtils.getFirstDeck(userId, fqType);
+        const result = DeckUtils.getFirstDeck(userId, typeFQ);
 
         expect(result).toEqual(undefined);
 
@@ -254,7 +254,7 @@ describe('DeckUtils', () => {
     });
 
     it('should add cards to the deck that are not duplicates and not already in the deck for SPELLBOOK_TYPE', async () => {
-        deck.flags.fqType = DeckUtils.SPELLBOOK_TYPE;
+        deck.system.fq.type = DeckUtils.SPELLBOOK_TYPE;
         deck.cards = [{name: 'ExistingCard'}];
 
         const cards = [
@@ -270,7 +270,7 @@ describe('DeckUtils', () => {
     });
 
     it('should warn when trying to add duplicate cards to SPELLBOOK_TYPE deck but create one anyway', async () => {
-        deck.flags.fqType = DeckUtils.SPELLBOOK_TYPE;
+        deck.system.fq.type = DeckUtils.SPELLBOOK_TYPE;
         const cards = [
             {name: 'Card1'},
             {name: 'Card1'}, // Duplicate card
@@ -283,7 +283,7 @@ describe('DeckUtils', () => {
     });
 
     it('should throw an error when cards already exist in the SPELLBOOK_TYPE deck', async () => {
-        deck.flags.fqType = DeckUtils.SPELLBOOK_TYPE;
+        deck.system.fq.type = DeckUtils.SPELLBOOK_TYPE;
         deck.cards = [{name: 'ExistingCard'}];
 
         const cards = [{name: 'ExistingCard'}];
@@ -296,7 +296,7 @@ describe('DeckUtils', () => {
     });
 
     it('should add all cards to the deck for non-SPELLBOOK_TYPE', async () => {
-        deck.flags.fqType = 'OTHER_TYPE';
+        deck.system.fq.type = 'OTHER_TYPE';
 
         const cards = [
             {name: 'Card1'},
@@ -318,7 +318,7 @@ describe('DeckUtils', () => {
         // Mock game.users.get
         const getUserMock = jest.fn();
         game.users.get = getUserMock;
-        getUserMock.mockReturnValue({ character: null });
+        getUserMock.mockReturnValue({character: null});
 
         await DeckUtils.deleteDeckForUser('user1');
 
@@ -335,7 +335,7 @@ describe('DeckUtils', () => {
         const getUserMock = jest.fn();
         game.users.get = getUserMock;
         getUserMock.mockReturnValue({
-            character: { name: 'CharacterName', classes: {} }
+            character: {name: 'CharacterName', classes: {}}
         });
 
         await DeckUtils.deleteDeckForUser('user1');
@@ -358,13 +358,13 @@ describe('DeckUtils', () => {
                 name: 'CharacterName',
                 classes: {
                     mainClass: {
-                        system: { isOriginalClass: true, levels: 5 }
+                        system: {isOriginalClass: true, levels: 5}
                     }
                 }
             }
         });
 
-        getFirstDeckMock.mockReturnValue({ id: 'deck1' });
+        getFirstDeckMock.mockReturnValue({id: 'deck1'});
 
         await DeckUtils.deleteDeckForUser('user1');
 
@@ -386,13 +386,13 @@ describe('DeckUtils', () => {
                 name: 'CharacterName',
                 classes: {
                     mainClass: {
-                        system: { isOriginalClass: true, levels: 6 }
+                        system: {isOriginalClass: true, levels: 6}
                     }
                 }
             }
         });
 
-        getFirstDeckMock.mockReturnValue({ id: 'deck1' });
+        getFirstDeckMock.mockReturnValue({id: 'deck1'});
 
         await DeckUtils.deleteDeckForUser('user1');
 
