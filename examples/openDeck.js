@@ -1,8 +1,8 @@
 socket = socketlib.registerModule(FqCardEngineModule.moduleName);
-await socket.executeAsGM('createDeckForUser', game.userId);
+socket.executeAsGM("createDeckForUser", game.userId);
 
 let deckName = "Deck de " + game.user.character.name;
-let deck = game.cards.find(c => c.name === deckName)
+let deck = game.cards.find(c => c.name === deckName);
 if (deck) {
     deck.sheet.render(true, {
         left: 110,
@@ -11,7 +11,7 @@ if (deck) {
 }
 
 let spellBookName = "Bibliothèque de " + game.user.character.name;
-let spellBook = game.cards.find(c => c.name === spellBookName)
+let spellBook = game.cards.find(c => c.name === spellBookName);
 if (spellBook) {
     spellBook.sheet.render(true, {
         left: 110 + deck.sheet.position.width,

@@ -21,7 +21,7 @@ const PACK_DEST = "packs";
 const PACK_SRC = "packs/_source";
 
 
-// eslint-disable-next-line
+ 
 const argv = yargs(hideBin(process.argv))
     .command(packageCommand())
     .help().alias("help", "h")
@@ -51,12 +51,12 @@ function packageCommand() {
         handler: async argv => {
             const {action, pack, entry} = argv;
             switch (action) {
-                case "clean":
-                    return await cleanPacks(pack, entry);
-                case "pack":
-                    return await compilePacks(pack);
-                case "unpack":
-                    return await extractPacks(pack, entry);
+            case "clean":
+                return await cleanPacks(pack, entry);
+            case "pack":
+                return await compilePacks(pack);
+            case "unpack":
+                return await extractPacks(pack, entry);
             }
         }
     };
@@ -121,7 +121,7 @@ function cleanPackEntry(data, {clearSourceId = true, ownership = 0} = {}) {
  * @returns {string}    The cleaned string.
  */
 function cleanString(str) {
-    return str.replace(/\u2060/gu, "").replace(/[‘’]/gu, "'").replace(/[“”]/gu, '"');
+    return str.replace(/\u2060/gu, "").replace(/[‘’]/gu, "'").replace(/[“”]/gu, "\"");
 }
 
 
