@@ -103,6 +103,7 @@
   "FQCARDENGINE.DeckError": "Deck Error",
   "FQCARDENGINE.ErrorDuplicateCardSpellBook": "Card {cardName} cant be duplicate on spellbooks.",
 
+  "FQCARDENGINE.ShortActionPoints": "AP",
   "FQCARDENGINE.ActionPoints": "Action Points",
   "FQCARDENGINE.ActionPointsCurrent": "Current Action Points",
   "FQCARDENGINE.ActionPointsMax": "Maximum Action Points",
@@ -126,6 +127,7 @@
   "FQCARDENGINE.Pick": "Pick",
   "FQCARDENGINE.CurrentDrop": "Discard Card During Turn",
   "FQCARDENGINE.Life": "Life",
+  "FQCARDENGINE.ShortDrop": "SD",
   "FQCARDENGINE.Drop": "Drop Cards",
   "FQCARDENGINE.CardFQBase": "Base card",
   "FQCARDENGINE.MaxSameCard": "Number of copies per deck",

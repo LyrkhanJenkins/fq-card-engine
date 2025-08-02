@@ -103,6 +103,7 @@
   "FQCARDENGINE.DeckError": "Deck Error",
   "FQCARDENGINE.ErrorDuplicateCardSpellBook": "La carte {cardName} ne peut être dupliqué dans une bibliothèque",
 
+  "FQCARDENGINE.ShortActionPoints": "PA",
   "FQCARDENGINE.ActionPoints": "Points d'Action",
   "FQCARDENGINE.ActionPointsCurrent": "Points d'Action Actuels",
   "FQCARDENGINE.ActionPointsMax": "Points d'Action Maximum",
@@ -126,6 +127,7 @@
   "FQCARDENGINE.Pick": "Pioche",
   "FQCARDENGINE.CurrentDrop": "Carte défaussée pendant le tour",
   "FQCARDENGINE.Life": "Vie",
+  "FQCARDENGINE.ShortDrop": "CD",
   "FQCARDENGINE.Drop": "Cartes défaussés",
   "FQCARDENGINE.CardFQBase": "Carte de base",
   "FQCARDENGINE.MaxSameCard": "Nombre d'exemplaire par deck",
