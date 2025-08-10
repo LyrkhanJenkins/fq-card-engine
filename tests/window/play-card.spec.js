@@ -138,7 +138,7 @@ describe("PlayCard", () => {
                 _id: "mockCardId",
                 back: {img: "mockImg"},
                 origin: {name: "mockName"},
-                flags: {isFQBase: true}
+                system: {fq: {isBase: true}}
             };
             const currentCards = {
                 pass: jest.fn().mockResolvedValue(),

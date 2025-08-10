@@ -61,7 +61,7 @@ describe("DeckUtils", () => {
             cards: [{name: "Card1"}, {name: "Card1"}, {name: "Card2"}]
         };
         const action = {
-            toCreate: [{name: "Card1", flags: {maxSameCard: 2}}]
+            toCreate: [{name: "Card1", system: {fq: {maxSameCard: 2}}}]
         };
         expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(false);
     });
@@ -71,7 +71,7 @@ describe("DeckUtils", () => {
             cards: [{name: "Card1"}, {name: "Card1"}, {name: "Card2"}]
         };
         const action = {
-            toCreate: [{name: "Card1", flags: {maxSameCard: 3}}]
+            toCreate: [{name: "Card1", system: {fq: {maxSameCard: 3}}}]
         };
         expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(true);
     });
@@ -81,7 +81,7 @@ describe("DeckUtils", () => {
             cards: [{name: "Card1"}, {name: "Card2"}]
         };
         const action = {
-            toCreate: [{name: "Card3"}, {name: "Card4", flags: {maxSameCard: 1}}]
+            toCreate: [{name: "Card3"}, {name: "Card4", system: {fq: {maxSameCard: 1}}}]
         };
         expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(true);
     });
