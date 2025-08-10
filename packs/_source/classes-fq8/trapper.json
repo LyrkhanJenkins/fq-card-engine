@@ -9,18 +9,18 @@
   "flags": {
     "cf": {
       "id": "temp_9hjmr9g6fcm"
-    },
-    "fq" : {}
+    }
   },
   "_stats": {
-    "coreVersion": "12.331",
+    "coreVersion": "13.347",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": null,
     "modifiedTime": 1724142810813,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "ownership": {
     "default": 0

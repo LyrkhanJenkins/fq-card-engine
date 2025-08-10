@@ -13,14 +13,15 @@
     "default": 0
   },
   "_stats": {
-    "coreVersion": "12.331",
+    "coreVersion": "13.347",
     "systemId": "dnd5e",
     "systemVersion": "3.0.4",
     "createdTime": 1710427482787,
     "modifiedTime": 1724165020410,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "_key": "!macros!WdbBjMn0rm3mel7X"
 }

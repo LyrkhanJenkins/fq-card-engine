@@ -39,12 +39,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": "dnd5e",
         "systemVersion": "3.3.1",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "exportSource": null
       },
       "name": "+1 zèle",
       "img": "icons/magic/fire/explosion-fireball-small-red.webp",
@@ -65,12 +66,13 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.331",
+    "coreVersion": "13.347",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": 1724140561707,
     "modifiedTime": 1724142513309,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "exportSource": null
   },
   "ownership": {
     "default": 0

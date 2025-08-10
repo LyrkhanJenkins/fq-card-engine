@@ -65,14 +65,15 @@
           },
           "tint": "#ffffff",
           "_stats": {
-            "coreVersion": "12.330",
+            "coreVersion": "13.347",
             "systemId": null,
             "systemVersion": null,
             "createdTime": null,
             "modifiedTime": null,
             "lastModifiedBy": null,
             "compendiumSource": null,
-            "duplicateSource": null
+            "duplicateSource": null,
+            "exportSource": null
           },
           "name": "Torch",
           "img": "icons/magic/fire/projectile-arrow-fire-orange.webp",
@@ -104,9 +105,6 @@
           "concentration": false,
           "toggleEffect": false
         },
-        "core": {
-          "sourceId": "Compendium.dnd5e.items.BnOCLuNWhVvzHLjl"
-        },
         "dnd5e": {
           "riders": {
             "activity": [],
@@ -115,14 +113,15 @@
         }
       },
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": "dnd5e",
         "systemVersion": "4.0.4",
         "createdTime": null,
         "modifiedTime": 1728638330081,
         "lastModifiedBy": "dnd5ebuilder0000",
         "compendiumSource": "Compendium.dnd5e.items.BnOCLuNWhVvzHLjl",
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "ownership": {
         "default": 0
@@ -211,9 +210,6 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Compendium.dnd5e.items.sSs3hSzkKBMNBgTs"
-        },
         "dnd5e": {
           "riders": {
             "activity": [],
@@ -222,14 +218,15 @@
         }
       },
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": "dnd5e",
         "systemVersion": "4.0.4",
         "createdTime": null,
         "modifiedTime": 1728638330081,
         "lastModifiedBy": "dnd5ebuilder0000",
         "compendiumSource": "Compendium.dnd5e.items.sSs3hSzkKBMNBgTs",
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "ownership": {
         "default": 0
@@ -349,9 +346,6 @@
           "concentration": false,
           "toggleEffect": false
         },
-        "core": {
-          "sourceId": "Compendium.dnd5e.items.BeKIrNIvNHRPQ4t5"
-        },
         "dnd5e": {
           "riders": {
             "activity": [],
@@ -360,14 +354,15 @@
         }
       },
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": "dnd5e",
         "systemVersion": "4.0.4",
         "createdTime": null,
         "modifiedTime": 1728638330081,
         "lastModifiedBy": "dnd5ebuilder0000",
         "compendiumSource": "Compendium.dnd5e.items.BeKIrNIvNHRPQ4t5",
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "ownership": {
         "default": 0
@@ -494,9 +489,6 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "core": {
-          "sourceId": "Compendium.dnd5e.items.DevmObXWP9MfwE2c"
-        },
         "dnd5e": {
           "riders": {
             "activity": [],
@@ -505,14 +497,15 @@
         }
       },
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": "dnd5e",
         "systemVersion": "4.0.4",
         "createdTime": null,
         "modifiedTime": 1728638330081,
         "lastModifiedBy": "dnd5ebuilder0000",
         "compendiumSource": "Compendium.dnd5e.items.DevmObXWP9MfwE2c",
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "ownership": {
         "default": 0
@@ -627,12 +620,13 @@
       "_stats": {
         "compendiumSource": "Compendium.fq-card-engine.classes-fq8.Item.CZbGyFtm5Igp32KW",
         "duplicateSource": null,
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": "dnd5e",
         "systemVersion": "4.0.4",
         "createdTime": 1728638332488,
         "modifiedTime": 1728638332488,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "dnd5ebuilder0000",
+        "exportSource": null
       },
       "ownership": {
         "default": 0
@@ -906,14 +900,15 @@
     }
   },
   "_stats": {
-    "coreVersion": "12.331",
+    "coreVersion": "13.347",
     "systemId": "dnd5e",
     "systemVersion": "4.0.4",
     "createdTime": 1709393283253,
-    "modifiedTime": 1728638332536,
+    "modifiedTime": 1754831593928,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.tnE1cbB7yEjjCvBD",
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "ownership": {
     "default": 0
@@ -1430,9 +1425,9 @@
     },
     "randomImg": false,
     "sight": {
-      "angle": 360,
-      "enabled": false,
-      "range": 0,
+      "angle": 160,
+      "enabled": true,
+      "range": 10,
       "visionMode": "basic",
       "color": null,
       "attenuation": 0.1,
@@ -1455,7 +1450,6 @@
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },
-    "hexagonalShape": 0,
     "detectionModes": [],
     "occludable": {
       "radius": 0
@@ -1466,12 +1460,19 @@
         "ring": null,
         "background": null
       },
-      "effects": 1,
+      "effects": 0,
       "subject": {
         "scale": 1,
         "texture": null
       }
-    }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null
   },
   "_key": "!actors!ZNwkztvzG57pQyDu"
 }

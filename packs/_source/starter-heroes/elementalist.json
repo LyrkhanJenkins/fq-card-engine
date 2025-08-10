@@ -20,12 +20,13 @@
       "_stats": {
         "compendiumSource": "Compendium.fq-card-engine.classes-fq8.Item.M1rQLgLCLFaAkX1Y",
         "duplicateSource": null,
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": "dnd5e",
         "systemVersion": "4.0.4",
         "createdTime": 1728638261030,
         "modifiedTime": 1728638261030,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "lastModifiedBy": "dnd5ebuilder0000",
+        "exportSource": null
       },
       "ownership": {
         "default": 0
@@ -349,14 +350,15 @@
     }
   },
   "_stats": {
-    "coreVersion": "12.331",
+    "coreVersion": "13.347",
     "systemId": "dnd5e",
     "systemVersion": "4.0.4",
     "createdTime": 1709393283249,
-    "modifiedTime": 1728638261081,
+    "modifiedTime": 1754831550460,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.R4n7ExCncbfmlX6S",
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "ownership": {
     "default": 0
@@ -849,7 +851,7 @@
       "attribute": "attributes.hp"
     },
     "bar2": {
-      "attribute": "attributes.mana"
+      "attribute": null
     },
     "flags": {
       "swarm": {
@@ -965,9 +967,9 @@
     },
     "randomImg": false,
     "sight": {
-      "angle": 360,
-      "enabled": false,
-      "range": 0,
+      "angle": 160,
+      "enabled": true,
+      "range": 10,
       "visionMode": "basic",
       "color": null,
       "attenuation": 0.1,
@@ -990,7 +992,6 @@
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },
-    "hexagonalShape": 0,
     "detectionModes": [],
     "occludable": {
       "radius": 0
@@ -1001,12 +1002,19 @@
         "ring": null,
         "background": null
       },
-      "effects": 1,
+      "effects": 0,
       "subject": {
         "scale": 1,
         "texture": null
       }
-    }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null
   },
   "_key": "!actors!0KiJSNiOBCToN6IC"
 }

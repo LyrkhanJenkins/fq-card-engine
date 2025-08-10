@@ -1,1 +1,1220 @@
-{"_id": "uekB5WjLxoQfmaf3", "name": "Trapper Lvl4 - fr", "type": "deck", "description": "", "img": "modules/fq-card-engine/images/cards/back_trapper.PNG", "cards": [{"_id": "ckWhf94Q8ISiGYxF", "name": "Precise Shot", "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": 7}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562724529, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.ckWhf94Q8ISiGYxF", "cards": []}, {"_id": "RcPSK0nF8ZNahkd9", "name": "Precise Shot", "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": 7}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562724529, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.RcPSK0nF8ZNahkd9", "cards": []}, {"_id": "aIAWTCxdix13kbNq", "name": "Precise Shot", "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": 7}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562724529, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.aIAWTCxdix13kbNq", "cards": []}, {"_id": "svSQcUWUrDHh15JM", "name": "Double Arrows", "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"8\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-7\",\n  \"mana\": \"-1\"\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/double_arrows.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 8, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562757945, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.svSQcUWUrDHh15JM", "cards": []}, {"_id": "GzOAf4zbzuLkMFfe", "name": "Tamed Wolf", "description": "{\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"sound\": \"modules/fq-card-engine/sounds/tamed_wolf.mp3\",\n  \"minions\": [\n    {\n      \"name\": \"Tamed Wolf\",\n      \"data\": {\n        \"hp\": \"10+@cha\",\n        \"damageBonus\": \"trunc(@cha/3)\",\n        \"movement\": \"5*(trunc(@cha/2)+4)\"\n      }\n    }\n  ],\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgMinionInvoked\",\n      \"arg\": {\n        \"minion\": \"Tamed Wolf\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/tamed_wolf.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 1, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562715219, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.GzOAf4zbzuLkMFfe", "cards": []}, {"_id": "rOE3L3itp6D4VPbL", "name": "Elite Marksman", "description": "{\n  \"action\": \"-10\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Elite Marksman\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Elite Marksman\",\n              \"icon\": \"icons/skills/ranged/person-archery-bow-attack-orange.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"10+@str\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"adjustment\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgCriticalBonus\",\n              \"arg\": {\n                \"critical\": \"@str + 10\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Elite Marksman\",\n                \"turn\": \"1\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/elite_marksman.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 9, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562763182, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.rOE3L3itp6D4VPbL", "cards": []}, {"_id": "oHoMyAmDY0DvTrsq", "name": "Rain of Arrows", "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"12\",\n  \"nbTargets\": \"5\",\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgSquareEffect\",\n          \"arg\": {\n            \"area\": \"3X3\"\n          }\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/rain_of_arrows.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 11, "flags": {"maxSameCard": 2}, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562775236, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.oHoMyAmDY0DvTrsq", "cards": []}, {"_id": "UUfN9b8JBFm9sMOB", "name": "Draw II", "description": "{\n  \"action\": \"-2\",\n  \"draw\": \"2\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgDrawCard\",\n      \"arg\": {\n        \"draw\": \"2\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/draw_ii.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 15, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562792952, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.UUfN9b8JBFm9sMOB", "cards": []}, {"_id": "Qidx1sKjwQ5n29VU", "name": "Mana Recovery II", "description": "{\n  \"action\": \"-3\",\n  \"mana\": \"+2\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"2\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/mana_recovery_ii.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 13, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562787615, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.Qidx1sKjwQ5n29VU", "cards": []}, {"_id": "AYEkI1JZT7WDyC1z", "name": "Trap", "description": "{\n  \"action\": \"-2\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@int + 1d4)[slashing]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"12\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Immobilization\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Immobilization\",\n              \"icon\": \"icons/magic/control/silhouette-grow-shrink-blue.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"0\",\n                  \"mode\": \"5\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"electric\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"1\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Immobilization\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/trap.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 10, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562770571, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.AYEkI1JZT7WDyC1z", "cards": []}, {"_id": "CHcxRD43BvDAgbRY", "name": "Precise Shot", "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": 7}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562724529, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.CHcxRD43BvDAgbRY", "cards": []}, {"_id": "0xiPcTG7dPcmIHKl", "name": "Reflex Shot", "description": "{\n  \"reactif\": true,\n  \"damage\": \"(@dex+1d6)[piercing]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"4\",\n  \"zeal\": \"-2\"\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/reflex_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 5, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562740428, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.0xiPcTG7dPcmIHKl", "cards": []}, {"_id": "Rh62EAL0sA5SSeSm", "name": "Poisoned Shot", "description": "{\n  \"action\": \"-5\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@dex+1d4)[poison]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Poison\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Poison @wis\",\n              \"icon\": \"icons/skills/melee/strike-scythe-fire-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glow\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Poison @wis\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/poisoned_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 0, "flags": {"maxSameCard": 3}, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562711033, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.Rh62EAL0sA5SSeSm", "cards": []}, {"_id": "f3g6WKsg8bQuUPqo", "name": "Poisoned Shot", "description": "{\n  \"action\": \"-5\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@dex+1d4)[poison]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Poison\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Poison @wis\",\n              \"icon\": \"icons/skills/melee/strike-scythe-fire-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glow\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Poison @wis\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/poisoned_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 0, "flags": {"maxSameCard": 3}, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562711033, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.f3g6WKsg8bQuUPqo", "cards": []}, {"_id": "jr6WfRSAnSl5oNrk", "name": "Piercing Shot", "description": "{\n  \"damage\": \"(@dex+1d6)[piercing]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-9\",\n  \"zeal\": \"+1\",\n  \"mana\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size !== 2 || ((Math.abs([...game.user.targets][0].x - [...game.user.targets][1].x) ===  game.canvas?.scene?.dimensions?.size &amp;&amp; [...game.user.targets][0].y === [...game.user.targets][1].y ) || (Math.abs([...game.user.targets][0].y - [...game.user.targets][1].y) ===  game.canvas?.scene?.dimensions?.size  &amp;&amp; [...game.user.targets][0].x === [...game.user.targets][1].x))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgTargetAdjacents\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/piercing_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 6, "flags": {"maxSameCard": 1}, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562747459, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.jr6WfRSAnSl5oNrk", "cards": []}, {"_id": "u922nZ6nRe1xZW7O", "name": "Draw II", "description": "{\n  \"action\": \"-2\",\n  \"draw\": \"2\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgDrawCard\",\n      \"arg\": {\n        \"draw\": \"2\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/draw_ii.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 15, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562792952, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.u922nZ6nRe1xZW7O", "cards": []}, {"_id": "VBTmBcb6QgeMGV3U", "name": "Precise Shot", "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": 7}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562724529, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.VBTmBcb6QgeMGV3U", "cards": []}, {"_id": "jDd2oWAq3kfP8fi4", "name": "Turn Booster IV", "description": "{\n  \"action\": \"+4\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgActionRecover\",\n      \"arg\": {\n        \"acrion\": \"4\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/turn_booster_iv.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 14, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562790761, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.jDd2oWAq3kfP8fi4", "cards": []}, {"_id": "YeQ87KiPjjHJbXY0", "name": "Elite Marksman", "description": "{\n  \"action\": \"-10\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Elite Marksman\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Elite Marksman\",\n              \"icon\": \"icons/skills/ranged/person-archery-bow-attack-orange.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"10+@str\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"adjustment\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgCriticalBonus\",\n              \"arg\": {\n                \"critical\": \"@str + 10\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Elite Marksman\",\n                \"turn\": \"1\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/elite_marksman.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 9, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562763182, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.YeQ87KiPjjHJbXY0", "cards": []}, {"_id": "lPJq3k5UDeeFYK2i", "name": "Turn Booster IV", "description": "{\n  \"action\": \"+4\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgActionRecover\",\n      \"arg\": {\n        \"acrion\": \"4\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/turn_booster_iv.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 14, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562790761, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.lPJq3k5UDeeFYK2i", "cards": []}, {"_id": "RscOorkgCgMhHzmR", "name": "Double Arrows", "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"8\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-7\",\n  \"mana\": \"-1\"\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/double_arrows.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 8, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562757945, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.RscOorkgCgMhHzmR", "cards": []}, {"_id": "tcLVwRiueij2iWpg", "name": "Precise Shot", "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": 7}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562724529, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.tcLVwRiueij2iWpg", "cards": []}, {"_id": "UbTkqT2im283lx02", "name": "Mana Recovery II", "description": "{\n  \"action\": \"-3\",\n  \"mana\": \"+2\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"2\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/mana_recovery_ii.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 13, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562787615, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.UbTkqT2im283lx02", "cards": []}, {"_id": "nYupAz7xLD7bmZTU", "name": "Ambush", "description": "{\n  \"name\": \"Ambush\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"fq.action.value\",\n  \"customEval\": [\n    {\n      \"test\": \"(!game.combat.flags.FQLogs || ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()) || ([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop().cardContent.name === 'Ambush')\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgOnlyThisSpellThisTurn\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Damage Bonus\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Damage Bonus +@wis\",\n              \"icon\": \"icons/skills/targeting/crosshair-scope-sniper-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.damage\",\n                  \"value\": \"+@wis\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageBonus\",\n              \"arg\": {\n                \"damage\": \"@wis\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Damage Bonus\",\n                \"turn\": \"2\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgAmbush\",\n      \"arg\": {}\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/ambush.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 4, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562730894, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.nYupAz7xLD7bmZTU", "cards": []}, {"_id": "YVlesfSzgZteiakk", "name": "Ambush", "description": "{\n  \"name\": \"Ambush\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"fq.action.value\",\n  \"customEval\": [\n    {\n      \"test\": \"(!game.combat.flags.FQLogs || ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()) || ([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop().cardContent.name === 'Ambush')\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgOnlyThisSpellThisTurn\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Damage Bonus\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Damage Bonus +@wis\",\n              \"icon\": \"icons/skills/targeting/crosshair-scope-sniper-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.damage\",\n                  \"value\": \"+@wis\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageBonus\",\n              \"arg\": {\n                \"damage\": \"@wis\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Damage Bonus\",\n                \"turn\": \"2\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgAmbush\",\n      \"arg\": {}\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/ambush.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 4, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562730894, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.YVlesfSzgZteiakk", "cards": []}, {"_id": "CII08NSXoWHEqjYd", "name": "Trap", "description": "{\n  \"action\": \"-2\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@int + 1d4)[slashing]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"12\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Immobilization\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Immobilization\",\n              \"icon\": \"icons/magic/control/silhouette-grow-shrink-blue.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"0\",\n                  \"mode\": \"5\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"electric\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"1\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Immobilization\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/trap.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 10, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562770571, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.CII08NSXoWHEqjYd", "cards": []}, {"_id": "zfgnx2QmC9DAcDQU", "name": "Rain of Arrows", "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"12\",\n  \"nbTargets\": \"5\",\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgSquareEffect\",\n          \"arg\": {\n            \"area\": \"3X3\"\n          }\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/rain_of_arrows.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 11, "flags": {"maxSameCard": 2}, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728562775236, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!uekB5WjLxoQfmaf3.zfgnx2QmC9DAcDQU", "cards": []}], "width": null, "height": null, "rotation": 0, "displayCount": false, "folder": null, "sort": 0, "flags": {}, "_stats": {"coreVersion": "12.330", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": null, "lastModifiedBy": null, "compendiumSource": null, "duplicateSource": null}, "ownership": {"default": 0}, "system": {}, "_key": "!cards!uekB5WjLxoQfmaf3"}
+{
+  "_id": "uekB5WjLxoQfmaf3",
+  "name": "Trapper Lvl4 - fr",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_trapper.PNG",
+  "cards": [
+    {
+      "_id": "ckWhf94Q8ISiGYxF",
+      "name": "Precise Shot",
+      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562724529,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.ckWhf94Q8ISiGYxF",
+      "cards": []
+    },
+    {
+      "_id": "RcPSK0nF8ZNahkd9",
+      "name": "Precise Shot",
+      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562724529,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.RcPSK0nF8ZNahkd9",
+      "cards": []
+    },
+    {
+      "_id": "aIAWTCxdix13kbNq",
+      "name": "Precise Shot",
+      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562724529,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.aIAWTCxdix13kbNq",
+      "cards": []
+    },
+    {
+      "_id": "svSQcUWUrDHh15JM",
+      "name": "Double Arrows",
+      "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"8\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-7\",\n  \"mana\": \"-1\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/double_arrows.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 8,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562757945,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.svSQcUWUrDHh15JM",
+      "cards": []
+    },
+    {
+      "_id": "GzOAf4zbzuLkMFfe",
+      "name": "Tamed Wolf",
+      "description": "{\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"sound\": \"modules/fq-card-engine/sounds/tamed_wolf.mp3\",\n  \"minions\": [\n    {\n      \"name\": \"Tamed Wolf\",\n      \"data\": {\n        \"hp\": \"10+@cha\",\n        \"damageBonus\": \"trunc(@cha/3)\",\n        \"movement\": \"5*(trunc(@cha/2)+4)\"\n      }\n    }\n  ],\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgMinionInvoked\",\n      \"arg\": {\n        \"minion\": \"Tamed Wolf\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/tamed_wolf.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562715219,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.GzOAf4zbzuLkMFfe",
+      "cards": []
+    },
+    {
+      "_id": "rOE3L3itp6D4VPbL",
+      "name": "Elite Marksman",
+      "description": "{\n  \"action\": \"-10\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Elite Marksman\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Elite Marksman\",\n              \"icon\": \"icons/skills/ranged/person-archery-bow-attack-orange.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"10+@str\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"adjustment\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgCriticalBonus\",\n              \"arg\": {\n                \"critical\": \"@str + 10\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Elite Marksman\",\n                \"turn\": \"1\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/elite_marksman.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 9,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562763182,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.rOE3L3itp6D4VPbL",
+      "cards": []
+    },
+    {
+      "_id": "oHoMyAmDY0DvTrsq",
+      "name": "Rain of Arrows",
+      "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"12\",\n  \"nbTargets\": \"5\",\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgSquareEffect\",\n          \"arg\": {\n            \"area\": \"3X3\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/rain_of_arrows.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 11,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562775236,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.oHoMyAmDY0DvTrsq",
+      "cards": []
+    },
+    {
+      "_id": "UUfN9b8JBFm9sMOB",
+      "name": "Draw II",
+      "description": "{\n  \"action\": \"-2\",\n  \"draw\": \"2\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgDrawCard\",\n      \"arg\": {\n        \"draw\": \"2\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/draw_ii.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 15,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562792952,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.UUfN9b8JBFm9sMOB",
+      "cards": []
+    },
+    {
+      "_id": "Qidx1sKjwQ5n29VU",
+      "name": "Mana Recovery II",
+      "description": "{\n  \"action\": \"-3\",\n  \"mana\": \"+2\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"2\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/mana_recovery_ii.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 13,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562787615,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.Qidx1sKjwQ5n29VU",
+      "cards": []
+    },
+    {
+      "_id": "AYEkI1JZT7WDyC1z",
+      "name": "Trap",
+      "description": "{\n  \"action\": \"-2\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@int + 1d4)[slashing]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"12\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Immobilization\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Immobilization\",\n              \"icon\": \"icons/magic/control/silhouette-grow-shrink-blue.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"0\",\n                  \"mode\": \"5\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"electric\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"1\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Immobilization\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/trap.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 10,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562770571,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.AYEkI1JZT7WDyC1z",
+      "cards": []
+    },
+    {
+      "_id": "CHcxRD43BvDAgbRY",
+      "name": "Precise Shot",
+      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562724529,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.CHcxRD43BvDAgbRY",
+      "cards": []
+    },
+    {
+      "_id": "0xiPcTG7dPcmIHKl",
+      "name": "Reflex Shot",
+      "description": "{\n  \"reactif\": true,\n  \"damage\": \"(@dex+1d6)[piercing]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"4\",\n  \"zeal\": \"-2\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/reflex_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 5,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562740428,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.0xiPcTG7dPcmIHKl",
+      "cards": []
+    },
+    {
+      "_id": "Rh62EAL0sA5SSeSm",
+      "name": "Poisoned Shot",
+      "description": "{\n  \"action\": \"-5\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@dex+1d4)[poison]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Poison\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Poison @wis\",\n              \"icon\": \"icons/skills/melee/strike-scythe-fire-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glow\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Poison @wis\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/poisoned_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562711033,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.Rh62EAL0sA5SSeSm",
+      "cards": []
+    },
+    {
+      "_id": "f3g6WKsg8bQuUPqo",
+      "name": "Poisoned Shot",
+      "description": "{\n  \"action\": \"-5\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@dex+1d4)[poison]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Poison\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Poison @wis\",\n              \"icon\": \"icons/skills/melee/strike-scythe-fire-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glow\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Poison @wis\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/poisoned_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562711033,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.f3g6WKsg8bQuUPqo",
+      "cards": []
+    },
+    {
+      "_id": "jr6WfRSAnSl5oNrk",
+      "name": "Piercing Shot",
+      "description": "{\n  \"damage\": \"(@dex+1d6)[piercing]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-9\",\n  \"zeal\": \"+1\",\n  \"mana\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size !== 2 || ((Math.abs([...game.user.targets][0].x - [...game.user.targets][1].x) ===  game.canvas?.scene?.dimensions?.size &amp;&amp; [...game.user.targets][0].y === [...game.user.targets][1].y ) || (Math.abs([...game.user.targets][0].y - [...game.user.targets][1].y) ===  game.canvas?.scene?.dimensions?.size  &amp;&amp; [...game.user.targets][0].x === [...game.user.targets][1].x))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgTargetAdjacents\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/piercing_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 6,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562747459,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.jr6WfRSAnSl5oNrk",
+      "cards": []
+    },
+    {
+      "_id": "u922nZ6nRe1xZW7O",
+      "name": "Draw II",
+      "description": "{\n  \"action\": \"-2\",\n  \"draw\": \"2\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgDrawCard\",\n      \"arg\": {\n        \"draw\": \"2\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/draw_ii.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 15,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562792952,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.u922nZ6nRe1xZW7O",
+      "cards": []
+    },
+    {
+      "_id": "VBTmBcb6QgeMGV3U",
+      "name": "Precise Shot",
+      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562724529,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.VBTmBcb6QgeMGV3U",
+      "cards": []
+    },
+    {
+      "_id": "jDd2oWAq3kfP8fi4",
+      "name": "Turn Booster IV",
+      "description": "{\n  \"action\": \"+4\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgActionRecover\",\n      \"arg\": {\n        \"acrion\": \"4\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/turn_booster_iv.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 14,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562790761,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.jDd2oWAq3kfP8fi4",
+      "cards": []
+    },
+    {
+      "_id": "YeQ87KiPjjHJbXY0",
+      "name": "Elite Marksman",
+      "description": "{\n  \"action\": \"-10\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Elite Marksman\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Elite Marksman\",\n              \"icon\": \"icons/skills/ranged/person-archery-bow-attack-orange.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"10+@str\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"adjustment\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgCriticalBonus\",\n              \"arg\": {\n                \"critical\": \"@str + 10\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Elite Marksman\",\n                \"turn\": \"1\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/elite_marksman.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 9,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562763182,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.YeQ87KiPjjHJbXY0",
+      "cards": []
+    },
+    {
+      "_id": "lPJq3k5UDeeFYK2i",
+      "name": "Turn Booster IV",
+      "description": "{\n  \"action\": \"+4\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgActionRecover\",\n      \"arg\": {\n        \"acrion\": \"4\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/turn_booster_iv.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 14,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562790761,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.lPJq3k5UDeeFYK2i",
+      "cards": []
+    },
+    {
+      "_id": "RscOorkgCgMhHzmR",
+      "name": "Double Arrows",
+      "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"8\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-7\",\n  \"mana\": \"-1\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/double_arrows.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 8,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562757945,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.RscOorkgCgMhHzmR",
+      "cards": []
+    },
+    {
+      "_id": "tcLVwRiueij2iWpg",
+      "name": "Precise Shot",
+      "description": "{\n  \"damage\": \"(4+2d3)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"9999\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"reach\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\"\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562724529,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.tcLVwRiueij2iWpg",
+      "cards": []
+    },
+    {
+      "_id": "UbTkqT2im283lx02",
+      "name": "Mana Recovery II",
+      "description": "{\n  \"action\": \"-3\",\n  \"mana\": \"+2\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"2\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/mana_recovery_ii.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 13,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562787615,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.UbTkqT2im283lx02",
+      "cards": []
+    },
+    {
+      "_id": "nYupAz7xLD7bmZTU",
+      "name": "Ambush",
+      "description": "{\n  \"name\": \"Ambush\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"fq.action.value\",\n  \"customEval\": [\n    {\n      \"test\": \"(!game.combat.flags.FQLogs || ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()) || ([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop().cardContent.name === 'Ambush')\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgOnlyThisSpellThisTurn\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Damage Bonus\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Damage Bonus +@wis\",\n              \"icon\": \"icons/skills/targeting/crosshair-scope-sniper-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.damage\",\n                  \"value\": \"+@wis\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageBonus\",\n              \"arg\": {\n                \"damage\": \"@wis\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Damage Bonus\",\n                \"turn\": \"2\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgAmbush\",\n      \"arg\": {}\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/ambush.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 4,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562730894,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.nYupAz7xLD7bmZTU",
+      "cards": []
+    },
+    {
+      "_id": "YVlesfSzgZteiakk",
+      "name": "Ambush",
+      "description": "{\n  \"name\": \"Ambush\",\n  \"action\": \"-XXX\",\n  \"xvalue\": \"fq.action.value\",\n  \"customEval\": [\n    {\n      \"test\": \"(!game.combat.flags.FQLogs || ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()) || ([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop().cardContent.name === 'Ambush')\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgOnlyThisSpellThisTurn\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Damage Bonus\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Damage Bonus +@wis\",\n              \"icon\": \"icons/skills/targeting/crosshair-scope-sniper-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.damage\",\n                  \"value\": \"+@wis\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"2\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageBonus\",\n              \"arg\": {\n                \"damage\": \"@wis\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Damage Bonus\",\n                \"turn\": \"2\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgAmbush\",\n      \"arg\": {}\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/ambush.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 4,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562730894,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.YVlesfSzgZteiakk",
+      "cards": []
+    },
+    {
+      "_id": "CII08NSXoWHEqjYd",
+      "name": "Trap",
+      "description": "{\n  \"action\": \"-2\",\n  \"zeal\": \"-1\",\n  \"damage\": \"(@int + 1d4)[slashing]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"12\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Immobilization\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Immobilization\",\n              \"icon\": \"icons/magic/control/silhouette-grow-shrink-blue.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"0\",\n                  \"mode\": \"5\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"electric\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"1\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Immobilization\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/trap.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 10,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562770571,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.CII08NSXoWHEqjYd",
+      "cards": []
+    },
+    {
+      "_id": "zfgnx2QmC9DAcDQU",
+      "name": "Rain of Arrows",
+      "description": "{\n  \"damage\": \"(@dex+1d8)[piercing]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"12\",\n  \"nbTargets\": \"5\",\n  \"action\": \"-8\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgSquareEffect\",\n          \"arg\": {\n            \"area\": \"3X3\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/rain_of_arrows.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 11,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728562775236,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!uekB5WjLxoQfmaf3.zfgnx2QmC9DAcDQU",
+      "cards": []
+    }
+  ],
+  "width": null,
+  "height": null,
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "13.347",
+    "systemId": null,
+    "systemVersion": null,
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {},
+  "_key": "!cards!uekB5WjLxoQfmaf3"
+}

@@ -1,1 +1,824 @@
-{"_id": "dOTdGd0seOIeU1uV", "name": "Elementalist Lvl3 - fr", "type": "deck", "description": "", "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG", "cards": [{"_id": "PgvbFVr5Hywf0Ftn", "name": "Fireball", "description": "{\n  \"damage\": \"4[fire]+@int[fire]+1d8[fire]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"6\",\n  \"action\": \"-8\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Burn\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Burn\",\n              \"icon\": \"icons/magic/fire/explosion-embers-evade-silhouette.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fire-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageEffect\",\n              \"arg\": {\n                \"effectName\": \"Burn\",\n                \"damage\": \"3\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/fireball.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 4, "flags": {"maxSameCard": 5}, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560464772, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.PgvbFVr5Hywf0Ftn", "cards": []}, {"_id": "1CbfBvQnsXU46e0z", "name": "Tornado", "description": "{\n  \"damage\": \"2[thunder]+@int[thunder]+1d6[thunder]\",\n  \"action\": \"-6\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"6\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Air Effect\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Air Effect\",\n              \"icon\": \"icons/magic/air/wind-tornado-spiral-teal-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"-5\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fumes\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Air Effect\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/tornado.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 0, "flags": {"maxSameCard": 5}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560253430, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.1CbfBvQnsXU46e0z", "cards": []}, {"_id": "MvpHitq37xK81cQG", "name": "Earth Fracture", "description": "{\n  \"damage\": \"1d@wis[force]+(2*XXX)[force]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"7\",\n  \"action\": \"-(2*XXX)\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\",\n  \"xmax\": \"3\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Earth Effect\",\n      \"formula\": \"1d(4-XXX)\",\n      \"effects\": [\n        {\n          \"result\": \"4-XXX\",\n          \"data\": [\n            {\n              \"label\": \"Earth Effect\",\n              \"icon\": \"icons/magic/earth/barrier-stone-explosion-debris.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"outline\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ]\n          }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/earth_fracture.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 0, "flags": {"maxSameCard": 5}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560251023, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.MvpHitq37xK81cQG", "cards": []}, {"_id": "0uzMfb4ubJyP24K1", "name": "Earth Fracture", "description": "{\n  \"damage\": \"1d@wis[force]+(2*XXX)[force]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"7\",\n  \"action\": \"-(2*XXX)\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\",\n  \"xmax\": \"3\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Earth Effect\",\n      \"formula\": \"1d(4-XXX)\",\n      \"effects\": [\n        {\n          \"result\": \"4-XXX\",\n          \"data\": [\n            {\n              \"label\": \"Earth Effect\",\n              \"icon\": \"icons/magic/earth/barrier-stone-explosion-debris.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"outline\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ]\n          }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/earth_fracture.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 0, "flags": {"maxSameCard": 5}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560251023, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.0uzMfb4ubJyP24K1", "cards": []}, {"_id": "0BG4YOexxijqAFvW", "name": "Frost Strike", "description": "{\n  \"damage\": \"1[cold]+@wis[cold]+1d3[cold]\",\n  \"action\": \"-4\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"mana\": \"-1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Frost\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Frost\",\n              \"icon\": \"icons/magic/water/barrier-ice-crystal-wall-faceted.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.action.max\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.action.value\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glacial-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/frost_strike.png", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": 5}, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560256143, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.0BG4YOexxijqAFvW", "cards": []}, {"_id": "RIWUazSViQJEUgg3", "name": "Frost Strike", "description": "{\n  \"damage\": \"1[cold]+@wis[cold]+1d3[cold]\",\n  \"action\": \"-4\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"mana\": \"-1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Frost\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Frost\",\n              \"icon\": \"icons/magic/water/barrier-ice-crystal-wall-faceted.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.action.max\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.action.value\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glacial-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/frost_strike.png", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": 5}, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560256143, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.RIWUazSViQJEUgg3", "cards": []}, {"_id": "yKpxmF4JeZxMK6DO", "name": "Mana Recovery III", "description": "{\n  \"action\":\"-5\",\n  \"mana\":\"+3\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"3\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/mana_recovery_iii.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 9, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560494820, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.yKpxmF4JeZxMK6DO", "cards": []}, {"_id": "GJSbk78u5vswhv4m", "name": "Draw III", "description": "{\n  \"action\": \"-3\",\n  \"draw\": \"3\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgDrawCard\",\n      \"arg\": {\n        \"draw\": \"3\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/draw_iii.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 5, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560470506, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.GJSbk78u5vswhv4m", "cards": []}, {"_id": "gX5VLtDVLGBQfS20", "name": "Mana Capture", "description": "{\n  \"zeal\": \"-1\",\n  \"reactif\": true,\n  \"mana\": \"@wis\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"@wis\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/mana_capture.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 6, "flags": {"maxSameCard": 3}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560474989, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.gX5VLtDVLGBQfS20", "cards": []}, {"_id": "B09BL1L1DDtWemp2", "name": "Frostfire", "description": "{\n  \"damage\": \"@int[fire]+1d10[fire]+4[cold]+@wis[cold]+1d4[cold]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"8\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length !== 1 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Frost').length).length \",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Burn\",\n            \"effectName2\": \"Frost\"\n          }\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/frostfire.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 8, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560484723, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.B09BL1L1DDtWemp2", "cards": []}, {"_id": "CTPpRkyQdVxT0YCg", "name": "Fog", "description": "{\n  \"action\": \"-5\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"99999999\",\n  \"nbTargets\": \"9999\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Air Effect' || e.name === 'Earth Effect').length).length \",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Air Effect\",\n            \"effectName2\": \"Earth Effect\"\n          }\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Fog\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Fog\",\n              \"icon\": \"icons/magic/air/fog-gas-smoke-gray.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"-@int\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fog\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgFogEffect\",\n              \"arg\": {\n                \"critical\": \"@int\",\n                \"evasion\": \"@wis\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/fog.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 7, "flags": {"maxSameCard": 1}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560481138, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.CTPpRkyQdVxT0YCg", "cards": []}, {"_id": "0XDNU2cJUI36t9Fb", "name": "Tornado", "description": "{\n  \"damage\": \"2[thunder]+@int[thunder]+1d6[thunder]\",\n  \"action\": \"-6\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"6\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Air Effect\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Air Effect\",\n              \"icon\": \"icons/magic/air/wind-tornado-spiral-teal-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"-5\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fumes\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Air Effect\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/tornado.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 0, "flags": {"maxSameCard": 5}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560253430, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.0XDNU2cJUI36t9Fb", "cards": []}, {"_id": "fzjNvheho19qzdj4", "name": "Turn Booster IV", "description": "{\n  \"action\": \"+4\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgActionRecover\",\n      \"arg\": {\n        \"action\": \"4\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/turn_booster_iv.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 9, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560505698, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.fzjNvheho19qzdj4", "cards": []}, {"_id": "rb5hVGU4eMqZ3BPa", "name": "Tornado", "description": "{\n  \"damage\": \"2[thunder]+@int[thunder]+1d6[thunder]\",\n  \"action\": \"-6\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"6\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Air Effect\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Air Effect\",\n              \"icon\": \"icons/magic/air/wind-tornado-spiral-teal-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"-5\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fumes\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Air Effect\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/tornado.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 0, "flags": {"maxSameCard": 5}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560253430, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.rb5hVGU4eMqZ3BPa", "cards": []}, {"_id": "KUgNXOC1AxnX1Ex0", "name": "Fireball", "description": "{\n  \"damage\": \"4[fire]+@int[fire]+1d8[fire]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"6\",\n  \"action\": \"-8\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Burn\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Burn\",\n              \"icon\": \"icons/magic/fire/explosion-embers-evade-silhouette.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fire-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageEffect\",\n              \"arg\": {\n                \"effectName\": \"Burn\",\n                \"damage\": \"3\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/fireball.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 4, "flags": {"maxSameCard": 5}, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560464772, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.KUgNXOC1AxnX1Ex0", "cards": []}, {"_id": "5CT6GeAlJccwraiN", "name": "Meteor", "description": "{\n  \"damage\": \"(2+@wis+1d4)[force]+(1+@int+1d4)[fire]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"10\",\n  \"nbTargets\": \"4\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length &lt; 1 || [...game.user.targets].length &gt; 9 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Earth Effect').length).length\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Earth Effect\",\n            \"effectName2\": \"Burn\"\n          }\n        }\n      ]\n    },\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgSquareEffect\",\n          \"arg\": {\n            \"area\": \"3x3\"\n          }\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/meteor.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 10, "flags": {"maxSameCard": 2}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560511774, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.5CT6GeAlJccwraiN", "cards": []}, {"_id": "vt5yZOsJspd049UK", "name": "Frost Strike", "description": "{\n  \"damage\": \"1[cold]+@wis[cold]+1d3[cold]\",\n  \"action\": \"-4\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"mana\": \"-1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Frost\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Frost\",\n              \"icon\": \"icons/magic/water/barrier-ice-crystal-wall-faceted.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.action.max\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.action.value\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glacial-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/frost_strike.png", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": 5}, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560256143, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.vt5yZOsJspd049UK", "cards": []}, {"_id": "NQVZaZmYKM97UlRy", "name": "Mana Capture", "description": "{\n  \"zeal\": \"-1\",\n  \"reactif\": true,\n  \"mana\": \"@wis\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"@wis\"\n      }\n    }\n  ]\n}", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/mana_capture.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 6, "flags": {"maxSameCard": 3}, "value": null, "system": {}, "_stats": {"coreVersion": "12.331", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": 1728560474989, "lastModifiedBy": "KVZBya4kkCkmlXbM", "compendiumSource": null, "duplicateSource": null}, "width": null, "height": null, "_key": "!cards.cards!dOTdGd0seOIeU1uV.NQVZaZmYKM97UlRy", "cards": []}], "width": null, "height": null, "rotation": 0, "displayCount": false, "folder": null, "sort": 0, "flags": {}, "_stats": {"coreVersion": "12.330", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": null, "lastModifiedBy": null, "compendiumSource": null, "duplicateSource": null}, "ownership": {"default": 0}, "system": {}, "_key": "!cards!dOTdGd0seOIeU1uV"}
+{
+  "_id": "dOTdGd0seOIeU1uV",
+  "name": "Elementalist Lvl3 - fr",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG",
+  "cards": [
+    {
+      "_id": "PgvbFVr5Hywf0Ftn",
+      "name": "Fireball",
+      "description": "{\n  \"damage\": \"4[fire]+@int[fire]+1d8[fire]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"6\",\n  \"action\": \"-8\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Burn\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Burn\",\n              \"icon\": \"icons/magic/fire/explosion-embers-evade-silhouette.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fire-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageEffect\",\n              \"arg\": {\n                \"effectName\": \"Burn\",\n                \"damage\": \"3\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/fireball.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 4,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560464772,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.PgvbFVr5Hywf0Ftn",
+      "cards": []
+    },
+    {
+      "_id": "1CbfBvQnsXU46e0z",
+      "name": "Tornado",
+      "description": "{\n  \"damage\": \"2[thunder]+@int[thunder]+1d6[thunder]\",\n  \"action\": \"-6\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"6\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Air Effect\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Air Effect\",\n              \"icon\": \"icons/magic/air/wind-tornado-spiral-teal-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"-5\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fumes\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Air Effect\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/tornado.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560253430,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.1CbfBvQnsXU46e0z",
+      "cards": []
+    },
+    {
+      "_id": "MvpHitq37xK81cQG",
+      "name": "Earth Fracture",
+      "description": "{\n  \"damage\": \"1d@wis[force]+(2*XXX)[force]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"7\",\n  \"action\": \"-(2*XXX)\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\",\n  \"xmax\": \"3\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Earth Effect\",\n      \"formula\": \"1d(4-XXX)\",\n      \"effects\": [\n        {\n          \"result\": \"4-XXX\",\n          \"data\": [\n            {\n              \"label\": \"Earth Effect\",\n              \"icon\": \"icons/magic/earth/barrier-stone-explosion-debris.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"outline\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ]\n          }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/earth_fracture.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560251023,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.MvpHitq37xK81cQG",
+      "cards": []
+    },
+    {
+      "_id": "0uzMfb4ubJyP24K1",
+      "name": "Earth Fracture",
+      "description": "{\n  \"damage\": \"1d@wis[force]+(2*XXX)[force]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"7\",\n  \"action\": \"-(2*XXX)\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\",\n  \"xmax\": \"3\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Earth Effect\",\n      \"formula\": \"1d(4-XXX)\",\n      \"effects\": [\n        {\n          \"result\": \"4-XXX\",\n          \"data\": [\n            {\n              \"label\": \"Earth Effect\",\n              \"icon\": \"icons/magic/earth/barrier-stone-explosion-debris.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"outline\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ]\n          }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/earth_fracture.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560251023,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.0uzMfb4ubJyP24K1",
+      "cards": []
+    },
+    {
+      "_id": "0BG4YOexxijqAFvW",
+      "name": "Frost Strike",
+      "description": "{\n  \"damage\": \"1[cold]+@wis[cold]+1d3[cold]\",\n  \"action\": \"-4\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"mana\": \"-1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Frost\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Frost\",\n              \"icon\": \"icons/magic/water/barrier-ice-crystal-wall-faceted.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.action.max\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.action.value\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glacial-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/frost_strike.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560256143,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.0BG4YOexxijqAFvW",
+      "cards": []
+    },
+    {
+      "_id": "RIWUazSViQJEUgg3",
+      "name": "Frost Strike",
+      "description": "{\n  \"damage\": \"1[cold]+@wis[cold]+1d3[cold]\",\n  \"action\": \"-4\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"mana\": \"-1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Frost\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Frost\",\n              \"icon\": \"icons/magic/water/barrier-ice-crystal-wall-faceted.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.action.max\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.action.value\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glacial-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/frost_strike.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560256143,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.RIWUazSViQJEUgg3",
+      "cards": []
+    },
+    {
+      "_id": "yKpxmF4JeZxMK6DO",
+      "name": "Mana Recovery III",
+      "description": "{\n  \"action\":\"-5\",\n  \"mana\":\"+3\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"3\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/mana_recovery_iii.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 9,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560494820,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.yKpxmF4JeZxMK6DO",
+      "cards": []
+    },
+    {
+      "_id": "GJSbk78u5vswhv4m",
+      "name": "Draw III",
+      "description": "{\n  \"action\": \"-3\",\n  \"draw\": \"3\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgDrawCard\",\n      \"arg\": {\n        \"draw\": \"3\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/draw_iii.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 5,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560470506,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.GJSbk78u5vswhv4m",
+      "cards": []
+    },
+    {
+      "_id": "gX5VLtDVLGBQfS20",
+      "name": "Mana Capture",
+      "description": "{\n  \"zeal\": \"-1\",\n  \"reactif\": true,\n  \"mana\": \"@wis\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"@wis\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/mana_capture.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 6,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560474989,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.gX5VLtDVLGBQfS20",
+      "cards": []
+    },
+    {
+      "_id": "B09BL1L1DDtWemp2",
+      "name": "Frostfire",
+      "description": "{\n  \"damage\": \"@int[fire]+1d10[fire]+4[cold]+@wis[cold]+1d4[cold]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"8\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length !== 1 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Frost').length).length \",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Burn\",\n            \"effectName2\": \"Frost\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/frostfire.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 8,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560484723,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.B09BL1L1DDtWemp2",
+      "cards": []
+    },
+    {
+      "_id": "CTPpRkyQdVxT0YCg",
+      "name": "Fog",
+      "description": "{\n  \"action\": \"-5\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"99999999\",\n  \"nbTargets\": \"9999\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Air Effect' || e.name === 'Earth Effect').length).length \",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Air Effect\",\n            \"effectName2\": \"Earth Effect\"\n          }\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Fog\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Fog\",\n              \"icon\": \"icons/magic/air/fog-gas-smoke-gray.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"-@int\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fog\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgFogEffect\",\n              \"arg\": {\n                \"critical\": \"@int\",\n                \"evasion\": \"@wis\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/fog.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 7,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560481138,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.CTPpRkyQdVxT0YCg",
+      "cards": []
+    },
+    {
+      "_id": "0XDNU2cJUI36t9Fb",
+      "name": "Tornado",
+      "description": "{\n  \"damage\": \"2[thunder]+@int[thunder]+1d6[thunder]\",\n  \"action\": \"-6\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"6\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Air Effect\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Air Effect\",\n              \"icon\": \"icons/magic/air/wind-tornado-spiral-teal-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"-5\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fumes\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Air Effect\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/tornado.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560253430,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.0XDNU2cJUI36t9Fb",
+      "cards": []
+    },
+    {
+      "_id": "fzjNvheho19qzdj4",
+      "name": "Turn Booster IV",
+      "description": "{\n  \"action\": \"+4\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgActionRecover\",\n      \"arg\": {\n        \"action\": \"4\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/turn_booster_iv.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 9,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560505698,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.fzjNvheho19qzdj4",
+      "cards": []
+    },
+    {
+      "_id": "rb5hVGU4eMqZ3BPa",
+      "name": "Tornado",
+      "description": "{\n  \"damage\": \"2[thunder]+@int[thunder]+1d6[thunder]\",\n  \"action\": \"-6\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"6\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Air Effect\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Air Effect\",\n              \"icon\": \"icons/magic/air/wind-tornado-spiral-teal-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"-5\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fumes\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Air Effect\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/tornado.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560253430,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.rb5hVGU4eMqZ3BPa",
+      "cards": []
+    },
+    {
+      "_id": "KUgNXOC1AxnX1Ex0",
+      "name": "Fireball",
+      "description": "{\n  \"damage\": \"4[fire]+@int[fire]+1d8[fire]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"6\",\n  \"action\": \"-8\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Burn\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Burn\",\n              \"icon\": \"icons/magic/fire/explosion-embers-evade-silhouette.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fire-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageEffect\",\n              \"arg\": {\n                \"effectName\": \"Burn\",\n                \"damage\": \"3\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/fireball.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 4,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560464772,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.KUgNXOC1AxnX1Ex0",
+      "cards": []
+    },
+    {
+      "_id": "5CT6GeAlJccwraiN",
+      "name": "Meteor",
+      "description": "{\n  \"damage\": \"(2+@wis+1d4)[force]+(1+@int+1d4)[fire]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"10\",\n  \"nbTargets\": \"4\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length &lt; 1 || [...game.user.targets].length &gt; 9 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Earth Effect').length).length\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Earth Effect\",\n            \"effectName2\": \"Burn\"\n          }\n        }\n      ]\n    },\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgSquareEffect\",\n          \"arg\": {\n            \"area\": \"3x3\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/meteor.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 10,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560511774,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.5CT6GeAlJccwraiN",
+      "cards": []
+    },
+    {
+      "_id": "vt5yZOsJspd049UK",
+      "name": "Frost Strike",
+      "description": "{\n  \"damage\": \"1[cold]+@wis[cold]+1d3[cold]\",\n  \"action\": \"-4\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"mana\": \"-1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Frost\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Frost\",\n              \"icon\": \"icons/magic/water/barrier-ice-crystal-wall-faceted.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.action.max\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.action.value\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glacial-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/frost_strike.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560256143,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.vt5yZOsJspd049UK",
+      "cards": []
+    },
+    {
+      "_id": "NQVZaZmYKM97UlRy",
+      "name": "Mana Capture",
+      "description": "{\n  \"zeal\": \"-1\",\n  \"reactif\": true,\n  \"mana\": \"@wis\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"@wis\"\n      }\n    }\n  ]\n}",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/elementalist/base/mana_capture.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 6,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {},
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": 1728560474989,
+        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!dOTdGd0seOIeU1uV.NQVZaZmYKM97UlRy",
+      "cards": []
+    }
+  ],
+  "width": null,
+  "height": null,
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "13.347",
+    "systemId": null,
+    "systemVersion": null,
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {},
+  "_key": "!cards!dOTdGd0seOIeU1uV"
+}

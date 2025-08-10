@@ -29,19 +29,20 @@
       "rotation": 0,
       "sort": 1,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562715219,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -72,19 +73,20 @@
       "rotation": 0,
       "sort": 3,
       "flags": {
-        "maxSameCard": 7
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562724529,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -115,19 +117,20 @@
       "rotation": 0,
       "sort": 9,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562763182,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -158,19 +161,20 @@
       "rotation": 0,
       "sort": 8,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562757945,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -202,18 +206,19 @@
       "rotation": 0,
       "sort": 11,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562775236,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -244,19 +249,20 @@
       "rotation": 0,
       "sort": 15,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562792952,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -287,19 +293,20 @@
       "rotation": 0,
       "sort": 13,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562787615,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -330,19 +337,20 @@
       "rotation": 0,
       "sort": 10,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562770571,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -373,19 +381,20 @@
       "rotation": 0,
       "sort": 5,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562740428,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -416,19 +425,20 @@
       "rotation": 0,
       "sort": 14,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562790761,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -460,18 +470,19 @@
       "rotation": 0,
       "sort": 0,
       "flags": {
-        "maxSameCard": 3
+        "maxSameCard": {}
       },
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562711033,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -503,18 +514,19 @@
       "rotation": 0,
       "sort": 6,
       "flags": {
-        "maxSameCard": 1
+        "maxSameCard": {}
       },
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562747459,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -545,19 +557,20 @@
       "rotation": 0,
       "sort": 12,
       "flags": {
-        "maxSameCard": 1
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562780462,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -588,19 +601,20 @@
       "rotation": 0,
       "sort": 4,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562730894,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -631,19 +645,20 @@
       "rotation": 0,
       "sort": 7,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562752215,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -674,19 +689,20 @@
       "rotation": 0,
       "sort": 2,
       "flags": {
-        "maxSameCard": 2
+        "maxSameCard": {}
       },
       "value": null,
       "system": {},
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.347",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": 1728562719716,
         "lastModifiedBy": "KVZBya4kkCkmlXbM",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
@@ -702,14 +718,15 @@
   "sort": 0,
   "flags": {},
   "_stats": {
-    "coreVersion": "12.330",
+    "coreVersion": "13.347",
     "systemId": null,
     "systemVersion": null,
     "createdTime": null,
     "modifiedTime": null,
     "lastModifiedBy": null,
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "ownership": {
     "default": 0

@@ -13,12 +13,13 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.331",
+    "coreVersion": "13.347",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": 1724162947951,
     "modifiedTime": 1724162947951,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "exportSource": null
   },
   "_id": "XUDoDunSa7zHNDAz",
   "sort": 0,

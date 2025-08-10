@@ -117,14 +117,15 @@
         "properties": []
       },
       "_stats": {
-        "coreVersion": "12.330",
+        "coreVersion": "13.347",
         "systemId": "dnd5e",
         "systemVersion": "3.0.3",
         "createdTime": null,
         "modifiedTime": null,
         "lastModifiedBy": null,
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!lcpIiyWfFT0pxJwa.A2fIjQGcwsNc1NfO"
     }
@@ -624,9 +625,9 @@
     "flags": {},
     "randomImg": false,
     "sight": {
-      "angle": 360,
+      "angle": 160,
       "enabled": true,
-      "range": 0,
+      "range": 10,
       "visionMode": "basic",
       "color": null,
       "attenuation": 0.1,
@@ -649,7 +650,6 @@
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },
-    "hexagonalShape": 0,
     "detectionModes": [],
     "occludable": {
       "radius": 0
@@ -660,24 +660,32 @@
         "ring": null,
         "background": null
       },
-      "effects": 1,
+      "effects": 0,
       "subject": {
         "scale": 1,
         "texture": null
       }
-    }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null
   },
   "_id": "lcpIiyWfFT0pxJwa",
   "sort": 0,
   "_stats": {
-    "coreVersion": "12.330",
+    "coreVersion": "13.347",
     "systemId": "dnd5e",
     "systemVersion": "3.0.3",
     "createdTime": 1709393662256,
-    "modifiedTime": 1709395379181,
+    "modifiedTime": 1754831778348,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "_key": "!actors!lcpIiyWfFT0pxJwa"
 }
