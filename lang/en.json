@@ -85,6 +85,11 @@
   "FQCARDENGINE.DraggableBarPositionSettingHintX": "X Position of the bar only when Draggable is enabled",
   "FQCARDENGINE.DraggableBarPositionSettingHintY": "Y Position of the bar only when Draggable is enabled",
 
+  "FQCARDENGINE.TABS.attributes": "FQ",
+  "FQCARDENGINE.TABS.details": "Details",
+  "FQCARDENGINE.TABS.faces": "Faces",
+  "FQCARDENGINE.TABS.back": "Back",
+
   "FQCARDENGINE.HandSizeSetting": "Window size",
   "FQCARDENGINE.HandSizeSettingHint": "Size of the window for hand's players, not possible if position of hand is above players, or at the left or right side to the macro bar",
   "FQCARDENGINE.HandSizeSmallSetting": "Small",
@@ -118,8 +123,12 @@
   "FQCARDENGINE.CriticalScore": "Critical",
   "FQCARDENGINE.EvasionScore": "Evasion",
   "FQCARDENGINE.Bonuses": "FQ Bonuses",
+  "FQCARDENGINE.MinReach": "Min Range",
+  "FQCARDENGINE.MaxReach": "Max Range",
   "FQCARDENGINE.RangeBonus": "Range Bonus",
+  "FQCARDENGINE.Damage": "Damage",
   "FQCARDENGINE.DamageBonus": "Damage Bonus",
+  "FQCARDENGINE.Heal": "Heal",
   "FQCARDENGINE.HealBonus": "Heal Bonus",
   "FQCARDENGINE.HitPointsOnTime": "Hit Points By Turns",
   "FQCARDENGINE.Cards": "Cards",
@@ -187,6 +196,17 @@
   "FQCARDENGINE.MacroMsgSheathe": "You sheathe your weapon and return your hand to the library.",
   "FQCARDENGINE.MacroErrorMsgUnsheathe": "You must have a positive hand score.",
   "FQCARDENGINE.MacroMsgUnsheathe": "You prepare your next spells by drawing your hand; this action \nmay be considered an act of aggression by those around the player.",
+
+  "FQCARDENGINE.CardsAttributeType": "Deck type",
+  "FQCARDENGINE.CardsAttributeOwner": "Deck Owner",
+
+  "FQCARDENGINE.CardAttributeAction": "Action points modifyer of the card",
+  "FQCARDENGINE.CardAttributeMana": "Mana modifyer of the card",
+  "FQCARDENGINE.CardAttributeZeal": "Zeal modifyer of the card",
+  "FQCARDENGINE.CardAttributeDamage": "Damage of the card",
+  "FQCARDENGINE.CardAttributeHeal": "Heal of the card",
+  "FQCARDENGINE.CardAttributeMinReach": "Minimum range of the card",
+  "FQCARDENGINE.CardAttributeMaxReach": "Maximum range of the card",
 
   "FQCARDENGINE.CardMsgAddingRoll": "Special roll to apply: \"{addingRollTitle}\"",
   "FQCARDENGINE.CardMsgAddingRollSuccess": "Special roll successful!",

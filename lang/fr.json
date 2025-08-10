@@ -85,6 +85,11 @@
   "FQCARDENGINE.DraggableBarPositionSettingHintX":"Position X Lorsque le déplacement est activé",
   "FQCARDENGINE.DraggableBarPositionSettingHintY":"Position Y Lorsque le déplacement est activé",
 
+  "FQCARDENGINE.TABS.attributes": "FQ",
+  "FQCARDENGINE.TABS.details": "Détails",
+  "FQCARDENGINE.TABS.faces": "Faces",
+  "FQCARDENGINE.TABS.bacj": "Back",
+
   "FQCARDENGINE.HandSizeSetting": "Taille de la fenêtre",
   "FQCARDENGINE.HandSizeSettingHint": "Fenêtre de la main des joueurs (Ne peut pas changer si à droite ou à gauche des macros ou si au dessus des noms des joueurs)",
   "FQCARDENGINE.HandSizeSmallSetting": "Petite",
@@ -118,8 +123,12 @@
   "FQCARDENGINE.CriticalScore": "Critique",
   "FQCARDENGINE.EvasionScore": "Esquive",
   "FQCARDENGINE.Bonuses": "Bonus FQ",
+  "FQCARDENGINE.MinReach": "Portée Min",
+  "FQCARDENGINE.MaxReach": "Portée Max",
   "FQCARDENGINE.RangeBonus": "Bonus De Portée",
+  "FQCARDENGINE.Damage": "Dégâts",
   "FQCARDENGINE.DamageBonus": "Bonus De Dégâts",
+  "FQCARDENGINE.Heal": "Soins",
   "FQCARDENGINE.HealBonus": "Bonus De Soins",
   "FQCARDENGINE.HitPointsOnTime": "Points de vie par tour",
   "FQCARDENGINE.Cards": "Cartes",
@@ -187,6 +196,17 @@
   "FQCARDENGINE.MacroMsgSheathe": "Vous rengainez et remettez votre main dans la bibliothèque",
   "FQCARDENGINE.MacroErrorMsgUnsheathe": "Vous devez avoir un score de main positif",
   "FQCARDENGINE.MacroMsgUnsheathe": "Vous préparez vos prochains sorts en piochant votre main, cette action \npeut être considérée comme un acte d'aggression par les personnes autour du joueur",
+
+  "FQCARDENGINE.CardsAttributeType": "Type de deck",
+  "FQCARDENGINE.CardsAttributeOwner": "Propriétaire de deck",
+
+  "FQCARDENGINE.CardAttributeAction": "Modificateur d'action de la carte",
+  "FQCARDENGINE.CardAttributeMana": "Modificateur de mana de la carte",
+  "FQCARDENGINE.CardAttributeZeal": "Modificateur de zèle de la carte",
+  "FQCARDENGINE.CardAttributeDamage": "Dégâts de la carte",
+  "FQCARDENGINE.CardAttributeHeal": "Soins de la carte",
+  "FQCARDENGINE.CardAttributeMinReach": "Portée minimale de la carte",
+  "FQCARDENGINE.CardAttributeMaxReach": "Portée maximale de la carte",
 
   "FQCARDENGINE.CardMsgAddingRoll": "Jet spécial pour appliquer : \"{addingRollTitle}\"",
   "FQCARDENGINE.CardMsgAddingRollSuccess": "Jet special réussi !",
