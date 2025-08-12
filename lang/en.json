@@ -148,6 +148,7 @@
   "FQCARDENGINE.SheetItem": "FQ Item Sheet",
   "FQCARDENGINE.SheetFQCardsConfig": "FQ Deck Sheet",
 
+  "FQCARDENGINE.WarningMsgCardNotImplemented": "Card is not implemented yet",
   "FQCARDENGINE.WarningMsgNotEnoughHp": "has not enough hit points",
   "FQCARDENGINE.WarningMsgNotEnoughAction": "has not enough action points",
   "FQCARDENGINE.WarningMsgNotEnoughMana": "has not enough mana",
@@ -200,6 +201,7 @@
   "FQCARDENGINE.CardsAttributeType": "Deck type",
   "FQCARDENGINE.CardsAttributeOwner": "Deck Owner",
 
+  "FQCARDENGINE.ChoiceName": "Choice name",
   "FQCARDENGINE.CardAttributeAction": "Action points modifyer of the card",
   "FQCARDENGINE.CardAttributeMana": "Mana modifyer of the card",
   "FQCARDENGINE.CardAttributeZeal": "Zeal modifyer of the card",

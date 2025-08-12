@@ -148,6 +148,7 @@
   "FQCARDENGINE.SheetItem": "Feuille d'objet FQ",
   "FQCARDENGINE.SheetFQCardsConfig": "Feuille de deck FQ",
 
+  "FQCARDENGINE.WarningMsgCardNotImplemented": "Card is not implemented yet",
   "FQCARDENGINE.WarningMsgNotEnoughHp": "n'a pas assez de points de vie",
   "FQCARDENGINE.WarningMsgNotEnoughAction": "n'a pas assez de points d'actions",
   "FQCARDENGINE.WarningMsgNotEnoughMana": "n'a pas assez de mana",
@@ -200,6 +201,7 @@
   "FQCARDENGINE.CardsAttributeType": "Type de deck",
   "FQCARDENGINE.CardsAttributeOwner": "Propriétaire de deck",
 
+  "FQCARDENGINE.ChoiceName": "Nom du choix",
   "FQCARDENGINE.CardAttributeAction": "Modificateur d'action de la carte",
   "FQCARDENGINE.CardAttributeMana": "Modificateur de mana de la carte",
   "FQCARDENGINE.CardAttributeZeal": "Modificateur de zèle de la carte",
