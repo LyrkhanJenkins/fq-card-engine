@@ -831,3 +831,8 @@ div#fq-card-engine-container {
         filter: saturate(65%) brightness(120%) drop-shadow(2px 2px 4px #d5c211);
     }
 }
+
+.fq-form-attributes {
+    max-height: 60vh;
+    overflow-y: auto;
+}
