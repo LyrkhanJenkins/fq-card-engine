@@ -836,3 +836,13 @@ div#fq-card-engine-container {
     max-height: 60vh;
     overflow-y: auto;
 }
+
+.effect-legend {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+
+    input {
+        width: 50px
+    }
+}
