@@ -252,6 +252,7 @@
   "FQCARDENGINE.WarningMsgSpellUseInCombat": "Le sort n'est utilisable qu'en combat!",
   "FQCARDENGINE.WarningMsgSpellUseOutCombat": "Le sort n'est utilisable qu'en dehors des combats!",
   "FQCARDENGINE.WarningNotEnoughCardsSelected": "Pas assez de cartes sélectionnées",
+  "FQCARDENGINE.WarningNoTokenInCanvas": "Le personnage n'est pas présent sur la scène",
 
   "FQCARDENGINE.MacroMsgCatchingBreath": "Vous reprenez votre souffle... Les points d'action sont désormais au maximum!",
   "FQCARDENGINE.MacroErrorMsgHustle": "Vous devez avoir une et une seule cible et elle doit se trouver sur une \ncase adjacente à votre personnage",
