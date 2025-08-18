@@ -11,6 +11,7 @@ les communs apparaissent avec un niveau d'attributs )
 - Card Viewer option
 - Faire un json avec tous les possibilité pour une classe
 - Carte Incantation et les passifs en générale pas très clair, réécrire ptetre les règle (coute 0 après première utilisation)
+- Migration des sons des macros avec les assets
 
 ~~- Droits joueurs limités~~
 
