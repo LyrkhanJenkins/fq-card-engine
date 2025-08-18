@@ -170,6 +170,7 @@
   "FQCARDENGINE.Formula": "Formule",
   "FQCARDENGINE.FormulaEffects": "Effets de la formule",
   "FQCARDENGINE.FormulaResultToApplyEffect": "Resultat attendu",
+  "FQCARDENGINE.SelfApplyEffect": "Appliquer au personnage",
   "FQCARDENGINE.EffectDatas": "Effect datas",
   "FQCARDENGINE.EffectLabel": "Label",
   "FQCARDENGINE.EffectIcon": "Icon",

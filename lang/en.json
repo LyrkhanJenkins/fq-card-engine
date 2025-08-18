@@ -170,6 +170,7 @@
   "FQCARDENGINE.Formula": "Formula",
   "FQCARDENGINE.FormulaEffects": "Formula effects",
   "FQCARDENGINE.FormulaResultToApplyEffect": "Expected result",
+  "FQCARDENGINE.SelfApplyEffect": "Apply to actor",
   "FQCARDENGINE.EffectDatas": "Données de l'effet",
   "FQCARDENGINE.EffectLabel": "Label",
   "FQCARDENGINE.EffectIcon": "Icône",
@@ -181,6 +182,8 @@
   "FQCARDENGINE.EffectStartTime": "Start time",
   "FQCARDENGINE.EffectRounds": "Rounds",
   "FQCARDENGINE.EffectTurns": "Turns",
+  "FQCARDENGINE.EffectMessages": "Effect messages",
+
   "FQCARDENGINE.MessageKey": "Message key",
   "FQCARDENGINE.MessageArg": "Message arg",
   "FQCARDENGINE.CustomEvalErrorMessages": "Error messages",
