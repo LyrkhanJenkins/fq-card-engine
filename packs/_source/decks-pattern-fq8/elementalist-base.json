@@ -8,7 +8,7 @@
     {
       "_id": "UCYOEqiF8N1AN8Sl",
       "name": "Earth Fracture",
-      "description": "{\n  \"damage\": \"1d@wis[force]+(2*XXX)[force]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"7\",\n  \"action\": \"-(2*XXX)\",\n  \"mana\": \"-1\",\n  \"zeal\": \"1\",\n  \"xmax\": \"3\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Earth Effect\",\n      \"formula\": \"1d(4-XXX)\",\n      \"effects\": [\n        {\n          \"result\": \"4-XXX\",\n          \"data\": [\n            {\n              \"label\": \"Earth Effect\",\n              \"icon\": \"icons/magic/earth/barrier-stone-explosion-debris.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"outline\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Earth Effect\"\n              }\n            }\n          ]\n          }\n      ]\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -32,14 +32,90 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "choices": [
+            {
+              "action": "-(2*XXX)",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "7",
+              "nbTargets": "",
+              "damage": "1d@wis[force]+(2*XXX)[force]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Earth Effect",
+                  "formula": "1d(4-XXX)",
+                  "effects": [
+                    {
+                      "result": "4-XXX",
+                      "data": [
+                        {
+                          "label": "Earth Effect",
+                          "icon": "icons/magic/earth/barrier-stone-explosion-debris.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "-1",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "macro.tokenMagic",
+                              "value": "outline",
+                              "mode": "0"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "0",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{ \"effectName\": \"Earth Effect\" }"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "minions": [],
+              "customEvals": []
+            }
+          ],
+          "maxSameCard": 5
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560251023,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755510161264,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -52,7 +128,7 @@
     {
       "_id": "qVyz2F79jPsA7xTy",
       "name": "Tornado",
-      "description": "{\n  \"damage\": \"2[thunder]+@int[thunder]+1d6[thunder]\",\n  \"action\": \"-6\",\n  \"minReach\": \"2\",\n  \"maxReach\": \"6\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Air Effect\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Air Effect\",\n              \"icon\": \"icons/magic/air/wind-tornado-spiral-teal-green.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.movement.walk\",\n                  \"value\": \"-5\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fumes\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"0\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Air Effect\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -76,14 +152,90 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "choices": [
+            {
+              "action": "-6",
+              "mana": "-2",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "2",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "2[thunder]+@int[thunder]+1d6[thunder]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Air Effect",
+                  "formula": "1d2",
+                  "effects": [
+                    {
+                      "result": "2",
+                      "data": [
+                        {
+                          "label": "Air Effect",
+                          "icon": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.movement.walk",
+                              "value": "-5",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "macro.tokenMagic",
+                              "value": "fumes",
+                              "mode": "0"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "0",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Air Effect\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "minions": [],
+              "customEvals": []
+            }
+          ],
+          "maxSameCard": 5
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560253430,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755510206731,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -96,7 +248,7 @@
     {
       "_id": "SOTzE1uX2WwLbeEr",
       "name": "Mana Recovery III",
-      "description": "{\n  \"action\":\"-5\",\n  \"mana\":\"+3\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"3\"\n      }\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -120,14 +272,55 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "3",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgManaRecover",
+                  "arg": "{\"mana\": \"3\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560494820,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755510922960,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -140,7 +333,7 @@
     {
       "_id": "kZQbFkLMnCb7brjU",
       "name": "Frost Strike",
-      "description": "{\n  \"damage\": \"1[cold]+@wis[cold]+1d3[cold]\",\n  \"action\": \"-4\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"9\",\n  \"mana\": \"-1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Frost\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Frost\",\n              \"icon\": \"icons/magic/water/barrier-ice-crystal-wall-faceted.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.action.max\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.action.value\",\n                  \"value\": \"-1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"glacial-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Frost\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "value": null,
@@ -164,14 +357,99 @@
       "flags": {
         "maxSameCard": {}
       },
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 5,
+          "choices": [
+            {
+              "action": "-4",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "3",
+              "maxReach": "9",
+              "nbTargets": "",
+              "damage": "1[cold]+@wis[cold]+1d3[cold]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Frost",
+                  "formula": "1d2",
+                  "effects": [
+                    {
+                      "result": "2",
+                      "data": [
+                        {
+                          "label": "Frost",
+                          "icon": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.action.max",
+                              "value": "-1",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "system.fq.action.value",
+                              "value": "-1",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "macro.tokenMagic",
+                              "value": "glacial-aura",
+                              "mode": "0"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "3",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{ \"effectName\": \"Frost\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "minions": [],
+              "customEvals": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560256143,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755510232288,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -184,7 +462,7 @@
     {
       "_id": "pZ02qHWvJS4kIbIY",
       "name": "Fireball",
-      "description": "{\n  \"damage\": \"4[fire]+@int[fire]+1d8[fire]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"6\",\n  \"action\": \"-8\",\n  \"mana\": \"-2\",\n  \"zeal\": \"1\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Burn\",\n      \"formula\": \"1d2\",\n      \"effects\": [\n        {\n          \"result\": \"2\",\n          \"data\": [\n            {\n              \"label\": \"Burn\",\n              \"icon\": \"icons/magic/fire/explosion-embers-evade-silhouette.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"1\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fire-aura\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamageEffect\",\n              \"arg\": {\n                \"effectName\": \"Burn\",\n                \"damage\": \"3\",\n                \"turn\": \"3\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "value": null,
@@ -208,14 +486,90 @@
       "flags": {
         "maxSameCard": {}
       },
-      "system": {},
+      "system": {
+        "fq": {
+          "choices": [
+            {
+              "action": "-8",
+              "mana": "-2",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "4[fire]+@int[fire]+1d8[fire]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Burn",
+                  "formula": "1d2",
+                  "effects": [
+                    {
+                      "result": "2",
+                      "data": [
+                        {
+                          "label": "Burn",
+                          "icon": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "1",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "macro.tokenMagic",
+                              "value": "fire-aura",
+                              "mode": "0"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "3",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{ \"effectName\": \"Burn\", \"damage\": \"3\",\"turn\": \"3\" }"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "customEvals": []
+            }
+          ],
+          "maxSameCard": 5
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560464772,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755510293541,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -228,7 +582,7 @@
     {
       "_id": "e6HICEkLS9HgEZbD",
       "name": "Draw III",
-      "description": "{\n  \"action\": \"-3\",\n  \"draw\": \"3\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgDrawCard\",\n      \"arg\": {\n        \"draw\": \"3\"\n      }\n    }\n  ]\n}",
+      "description": "<p>{ \"action\": \"-3\", \"draw\": \"3\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgDrawCard\", \"arg\": { \"draw\": \"3\" } } ] }</p>",
       "type": "base",
       "suit": "",
       "back": {
@@ -252,14 +606,55 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "3",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgDrawCard",
+                  "arg": "{ \"draw\": \"3\" }"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": []
+            }
+          ],
+          "maxSameCard": 2
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560470506,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755510357905,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -272,7 +667,7 @@
     {
       "_id": "ypg6iIljUHPuFOz7",
       "name": "Mana Capture",
-      "description": "{\n  \"zeal\": \"-1\",\n  \"reactif\": true,\n  \"mana\": \"@wis\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgManaRecover\",\n      \"arg\": {\n        \"mana\": \"@wis\"\n      }\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -296,14 +691,55 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "choices": [
+            {
+              "action": "",
+              "mana": "@wis",
+              "zeal": "-1",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgManaRecover",
+                  "arg": "{\"mana\": \"@wis\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560474989,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755510409759,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -316,7 +752,7 @@
     {
       "_id": "7vF29PgR3WHXhEb6",
       "name": "Fog",
-      "description": "{\n  \"action\": \"-5\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"99999999\",\n  \"nbTargets\": \"9999\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Air Effect' || e.name === 'Earth Effect').length).length \",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Air Effect\",\n            \"effectName2\": \"Earth Effect\"\n          }\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Fog\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Fog\",\n              \"icon\": \"icons/magic/air/fog-gas-smoke-gray.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.attributes.critical\",\n                  \"value\": \"-@int\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"system.fq.attributes.evasion\",\n                  \"value\": \"-@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"fog\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgFogEffect\",\n              \"arg\": {\n                \"critical\": \"@int\",\n                \"evasion\": \"@wis\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -340,14 +776,105 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "999999999",
+              "nbTargets": "999999999",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Fog",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "data": [
+                        {
+                          "label": "Fog",
+                          "icon": "icons/magic/air/fog-gas-smoke-gray.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.critical",
+                              "value": "-@int",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "-@wis",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "macro.tokenMagic",
+                              "value": "fog",
+                              "mode": "0"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "3",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgFogEffect",
+                          "arg": "{\"critical\":\"@int\",\"evasion\":\"@wis\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "![...game.user.targets].length || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Air Effect' || e.name === 'Earth Effect').length).length",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
+                      "arg": "{\"effectName1\":\"Air Effect\",\"effectName2\":\"Earth Effect\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560481138,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755510757526,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -360,7 +887,7 @@
     {
       "_id": "aXrcw2gqwFuTDo58",
       "name": "Frostfire",
-      "description": "{\n  \"damage\": \"@int[fire]+1d10[fire]+4[cold]+@wis[cold]+1d4[cold]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"8\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length !== 1 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Frost').length).length \",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Burn\",\n            \"effectName2\": \"Frost\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -384,14 +911,60 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-9",
+              "mana": "-2",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "8",
+              "nbTargets": "",
+              "damage": "@int[fire]+1d10[fire]+4[cold]+@wis[cold]+1d4[cold]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "[...game.user.targets].length !== 1 || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Burn' || e.name === 'Frost').length).length",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
+                      "arg": "{\"effectName1\":\"Burn\",\"effectName2\":\"Frost\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560484723,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755510883915,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -404,7 +977,7 @@
     {
       "_id": "5b97DVTONwBhLdAl",
       "name": "Turn Booster IV",
-      "description": "{\n  \"action\": \"+4\",\n  \"messages\": [\n    {\n      \"key\": \"FQCARDENGINE.CardMsgActionRecover\",\n      \"arg\": {\n        \"action\": \"4\"\n      }\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -428,14 +1001,55 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "4",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgActionRecover",
+                  "arg": "{\"action\": \"4\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560505698,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755510970310,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -448,7 +1062,7 @@
     {
       "_id": "866YLG5WLwU2OsaO",
       "name": "Meteor",
-      "description": "{\n  \"damage\": \"(2+@wis+1d4)[force]+(1+@int+1d4)[fire]\",\n  \"minReach\": \"3\",\n  \"maxReach\": \"10\",\n  \"nbTargets\": \"4\",\n  \"action\": \"-9\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"[...game.user.targets].length &lt; 1 || [...game.user.targets].length &gt; 9 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Earth Effect').length).length\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Earth Effect\",\n            \"effectName2\": \"Burn\"\n          }\n        }\n      ]\n    },\n    {\n      \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgSquareEffect\",\n          \"arg\": {\n            \"area\": \"3x3\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+      "description": "<p>{ \"damage\": \"(2+@wis+1d4)[force]+(1+@int+1d4)[fire]\", \"minReach\": \"3\", \"maxReach\": \"10\", \"nbTargets\": \"4\", \"action\": \"-9\", \"mana\": \"-2\", \"zeal\": \"-1\", \"customEval\": [ { \"test\": \"[...game.user.targets].length &lt; 1 || [...game.user.targets].length &gt; 9 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Earth Effect').length).length\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\", \"arg\": { \"effectName1\": \"Earth Effect\", \"effectName2\": \"Burn\" } } ] }, { \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgSquareEffect\", \"arg\": { \"area\": \"3x3\" } } ] } ] }</p>",
       "type": "base",
       "suit": "",
       "back": {
@@ -472,14 +1086,69 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-9",
+              "mana": "-2",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "3",
+              "maxReach": "10",
+              "nbTargets": "4",
+              "damage": "(2+@wis+1d4)[force]+(1+@int+1d4)[fire]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "[...game.user.targets].length < 1 || [...game.user.targets].length > 9 || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Burn' || e.name === 'Earth Effect').length).length",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
+                      "arg": "{\"effectName1\": \"Earth Effect\",\"effectName2\": \"Burn\"}"
+                    }
+                  ]
+                },
+                {
+                  "script": "game.user.targets.size === 1 || game.user.targets.size > 9 || ([...game.user.targets].map(t => t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)) && [...game.user.targets].map(t => t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)))",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgSquareEffect",
+                      "arg": "{\"area\": \"3x3\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560511774,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755511101462,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -492,7 +1161,7 @@
     {
       "_id": "qa9KGKFhhIRWkfHi",
       "name": "Void Assassin",
-      "description": "{\n  \"damage\": \"(2*@dex+3*YYY)[psychic]+1d(2*XXX)[psychic]\",\n  \"action\": \"-(XXX)\",\n  \"mana\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"1\",\n  \"zeal\": \"-(YYY)\",\n  \"xmax\": \"6\",\n  \"ymax\": \"4\",\n  \"customEval\": [\n    {\n      \"test\": \"![...game.user.targets].length || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Frost' || e.name === 'Earth Effect' || e.name === 'Air Effect').length &gt; 1).length\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingNbEffect\",\n          \"arg\": {\n            \"nbElement\": \"2\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -516,14 +1185,60 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "choices": [
+            {
+              "action": "-(XXX)",
+              "mana": "-1",
+              "zeal": "-(YYY)",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(2*@dex+3*YYY)[psychic]+1d(2*XXX)[psychic]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "6",
+              "ymin": "",
+              "ymax": "4",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "![...game.user.targets].length || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Burn' || e.name === 'Frost' || e.name === 'Earth Effect' || e.name === 'Air Effect').length > 1).length",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingNbEffect",
+                      "arg": "{\"nbElement\": \"2\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560515732,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755511183455,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -536,7 +1251,7 @@
     {
       "_id": "55tY0W7Dbd1OfKSQ",
       "name": "Incantation",
-      "description": "{\n  \"action\": \"-(3 + XXX)\",\n  \"xmax\": \"0+@int\",\n  \"replayable\": \"passif\",\n  \"addingRolls\": [\n    {\n      \"title\": \"Incantation\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Incantation +XXX\",\n              \"icon\": \"icons/magic/symbols/runes-carved-stone-yellow.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.action.max\",\n                  \"value\": \"XXX\",\n                  \"mode\": \"2\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"1\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgIncantationEffect\",\n              \"arg\": {\n                \"action\": \"XXX\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"afterFirstPlay\": {\n    \"action\": \"-(XXX)\",\n    \"xmax\": \"0+@int\",\n    \"replayable\": \"passif\",\n    \"hasBeenPlayed\": \"true\",\n    \"addingRolls\": [\n      {\n        \"title\": \"Incantation\",\n        \"formula\": \"1\",\n        \"effects\": [\n          {\n            \"result\": \"1\",\n            \"data\": [\n              {\n                \"label\": \"Incantation +XXX\",\n                \"icon\": \"icons/magic/symbols/runes-carved-stone-yellow.webp\",\n                \"changes\": [\n                  {\n                    \"key\": \"system.fq.action.max\",\n                    \"value\": \"XXX\",\n                    \"mode\": \"2\"\n                  }\n                ],\n                \"duration\": {\n                  \"startTime\": \"0\",\n                  \"rounds\": \"1\",\n                  \"turns\": \"0\"\n                }\n              }\n            ],\n            \"messages\": [\n              {\n                \"key\": \"FQCARDENGINE.CardMsgIncantationEffect\",\n                \"arg\": {\n                  \"action\": \"XXX\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -560,14 +1275,85 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "choices": [
+            {
+              "action": "-(3 + XXX)",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "0+@int",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Incantation",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "data": [
+                        {
+                          "label": "Incantation +XXX",
+                          "icon": "icons/magic/symbols/runes-carved-stone-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.action.max",
+                              "value": "XXX",
+                              "mode": "2"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "1",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgIncantationEffect",
+                          "arg": "{\"action\": \"XXX\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "passif",
+              "sound": "modules/fq-card-engine/sounds/specific_spells/incantation.mp3",
+              "afterFirstPlay": "{ \"action\": \"-(XXX)\", \"xmax\": \"0+@int\", \"replayable\": \"passif\", \"hasBeenPlayed\": \"true\", \"addingRolls\": [ { \"title\": \"Incantation\", \"formula\": \"1\", \"effects\": [ { \"result\": \"1\", \"data\": [ { \"label\": \"Incantation +XXX\", \"icon\": \"icons/magic/symbols/runes-carved-stone-yellow.webp\", \"changes\": [ { \"key\": \"system.fq.action.max\", \"value\": \"XXX\", \"mode\": \"2\" } ], \"duration\": { \"startTime\": \"0\", \"rounds\": \"1\", \"turns\": \"0\" } } ], \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgIncantationEffect\", \"arg\": { \"action\": \"XXX\" } } ] } ] } ] }",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "customEvals": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560521119,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755511916902,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -580,7 +1366,7 @@
     {
       "_id": "VwRiKk5Nv0wwXGtv",
       "name": "Magic Plastron",
-      "description": "{\n  \"minReach\": \"0\",\n  \"bonusCrit\": \"-9999\",\n  \"maxReach\": \"8\",\n  \"action\": \"-7\",\n  \"heal\": \"10 + 3*@cha\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.combat.combatants.filter(c =&gt; c.actor?.effects.filter(e =&gt; e?.data?.label === 'Earth Effect').length).length || game.combat.combatants.filter(c =&gt; c.actor?.data?.effects.filter(e =&gt; e?.data?.label === 'Frost').length).length\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Earth Effect\",\n            \"effectName2\": \"Frost\"\n          }\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Magic Plastron\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Magic Plastron\",\n              \"icon\": \"icons/magic/defensive/shield-barrier-flaming-pentagon-blue-yellow.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.attributes.hp.tempmax\",\n                  \"value\": \"10 + 3*@cha\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"air-field\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgApplyEffect\",\n              \"arg\": {\n                \"effectName\": \"Magic Plastron\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgTemporaryEffect\",\n              \"arg\": {\n                \"effectName\": \"Magic Plastron\",\n                \"turn\": \"3\"\n              }\n            },\n            {\n              \"key\": \"FQCARDENGINE.CardMsgGMActionDeleteEffect\",\n              \"arg\": {}\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -604,14 +1390,109 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "-2",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "8",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "10 + 3*@cha",
+              "bonusCrit": "-9999",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Magic Plastron",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "data": [
+                        {
+                          "label": "Magic Plastron",
+                          "icon": "icons/magic/defensive/shield-barrier-flaming-pentagon-blue-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.hp.tempmax",
+                              "value": "10 + 3*@cha",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "macro.tokenMagic",
+                              "value": "air-field",
+                              "mode": "0"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "3",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Magic Plastron\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Magic Plastron\",\"turn\": \"3\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgGMActionDeleteEffect",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "game.combat.combatants.filter(c => c.actor?.effects.filter(e => e?.name === 'Earth Effect').length).length || game.combat.combatants.filter(c => c.actor?.data?.effects.filter(e => e?.name === 'Frost').length).length",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
+                      "arg": "{\"effectName1\": \"Earth Effect\",\"effectName2\": \"Frost\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560524893,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755516733810,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -624,7 +1505,7 @@
     {
       "_id": "1nwTNnbbl8BeaUwJ",
       "name": "Ice Wave",
-      "description": "{\n  \"damage\": \"(1+@int+1d4)[thunder]+(1+@sag+1d4)[cold]\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"1\",\n  \"nbTargets\": \"4\",\n  \"action\": \"-7\",\n  \"mana\": \"-1\",\n  \"customEval\": [\n    {\n      \"test\": \"game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Air Effect' || e.name === 'Frost').length).length \",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Air Effect\",\n            \"effectName2\": \"Frost\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+      "description": "<p>{ \"damage\": \"(1+@int+1d4)[thunder]+(1+@sag+1d4)[cold]\", \"minReach\": \"1\", \"maxReach\": \"1\", \"nbTargets\": \"4\", \"action\": \"-7\", \"mana\": \"-1\", \"customEval\": [ { \"test\": \"game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Air Effect' || e.name === 'Frost').length).length \", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\", \"arg\": { \"effectName1\": \"Air Effect\", \"effectName2\": \"Frost\" } } ] } ] }</p>",
       "type": "base",
       "suit": "",
       "back": {
@@ -648,14 +1529,60 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "4",
+              "damage": "(1+@int+1d4)[thunder]+(1+@sag+1d4)[cold]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Air Effect' || e.name === 'Frost').length).length",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
+                      "arg": "{\"effectName1\": \"Air Effect\",\"effectName2\": \"Frost\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560530155,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755512287483,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -668,7 +1595,7 @@
     {
       "_id": "CPZ20TlYwqrMq3C1",
       "name": "Fire Shock",
-      "description": "{\n  \"damage\": \"(2*@int)[thunder]+2d8[fire]\",\n  \"minReach\": \"4\",\n  \"maxReach\": \"8\",\n  \"nbTargets\": \"2\",\n  \"action\": \"-10\",\n  \"mana\": \"-2\",\n  \"zeal\": \"-2\",\n  \"customEval\": [\n    {\n      \"test\": \"game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Air Effect').length).length \",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\",\n          \"arg\": {\n            \"effectName1\": \"Air Effect\",\n            \"effectName2\": \"Burn\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+      "description": "<p>{ \"damage\": \"(2*@int)[thunder]+2d8[fire]\", \"minReach\": \"4\", \"maxReach\": \"8\", \"nbTargets\": \"2\", \"action\": \"-10\", \"mana\": \"-2\", \"zeal\": \"-2\", \"customEval\": [ { \"test\": \"game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Air Effect').length).length \", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\", \"arg\": { \"effectName1\": \"Air Effect\", \"effectName2\": \"Burn\" } } ] } ] }</p>",
       "type": "base",
       "suit": "",
       "back": {
@@ -692,14 +1619,60 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "-2",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "4",
+              "maxReach": "8",
+              "nbTargets": "2",
+              "damage": "(2*@int)[thunder]+2d8[fire]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Burn' || e.name === 'Air Effect').length).length",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
+                      "arg": "{\"effectName1\": \"Air Effect\",\"effectName2\": \"Burn\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": []
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560533800,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755512410471,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -712,7 +1685,7 @@
     {
       "_id": "z3BMWtXMBCF996I2",
       "name": "Damage Propagation",
-      "description": "{\n  \"action\": \"-4\",\n  \"zeal\": \"-1\",\n  \"minReach\": \"1\",\n  \"maxReach\": \"9\",\n  \"replayable\": \"passif\",\n  \"customEval\": [\n    {\n      \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n      \"messages\": [\n        {\n          \"key\": \"FQCARDENGINE.CardWarningMsgDamagePropagation\",\n          \"arg\": {}\n        }\n      ]\n    }\n  ],\n  \"addingRolls\": [\n    {\n      \"title\": \"Damage Propagation\",\n      \"formula\": \"1\",\n      \"effects\": [\n        {\n          \"result\": \"1\",\n          \"data\": [\n            {\n              \"label\": \"Damage Propagation\",\n              \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n              \"changes\": [\n                {\n                  \"key\": \"system.fq.bonus.dot\",\n                  \"value\": \"@wis\",\n                  \"mode\": \"2\"\n                },\n                {\n                  \"key\": \"macro.tokenMagic\",\n                  \"value\": \"shockwave\",\n                  \"mode\": \"0\"\n                }\n              ],\n              \"duration\": {\n                \"startTime\": \"0\",\n                \"rounds\": \"3\",\n                \"turns\": \"0\"\n              }\n            }\n          ],\n          \"messages\": [\n            {\n              \"key\": \"FQCARDENGINE.CardMsgDamagePropagationEffect\",\n              \"arg\": {\n                \"damage\": \"@wis\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"afterFirstPlay\": {\n    \"minReach\": \"1\",\n    \"maxReach\": \"9\",\n    \"replayable\": \"passif\",\n    \"customEval\": [\n      {\n        \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\",\n        \"messages\": [\n          {\n            \"key\": \"FQCARDENGINE.CardWarningMsgDamagePropagation\",\n            \"arg\": {}\n          }\n        ]\n      }\n    ],\n    \"addingRolls\": [\n      {\n        \"title\": \"Damage Propagation\",\n        \"formula\": \"1\",\n        \"effects\": [\n          {\n            \"result\": \"1\",\n            \"data\": [\n              {\n                \"label\": \"Damage Propagation\",\n                \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\",\n                \"changes\": [\n                  {\n                    \"key\": \"system.fq.bonus.dot\",\n                    \"value\": \"@wis\",\n                    \"mode\": \"2\"\n                  },\n                  {\n                    \"key\": \"macro.tokenMagic\",\n                    \"value\": \"shockwave\",\n                    \"mode\": \"0\"\n                  }\n                ],\n                \"duration\": {\n                  \"startTime\": \"0\",\n                  \"rounds\": \"3\",\n                  \"turns\": \"0\"\n                }\n              }\n            ],\n            \"messages\": [\n              {\n                \"key\": \"FQCARDENGINE.CardMsgDamagePropagationEffect\",\n                \"arg\": {\n                  \"damage\": \"@wis\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+      "description": "<p>{ \"action\": \"-4\", \"zeal\": \"-1\", \"minReach\": \"1\", \"maxReach\": \"9\", \"replayable\": \"passif\", \"customEval\": [ { \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgDamagePropagation\", \"arg\": {} } ] } ], \"addingRolls\": [ { \"title\": \"Damage Propagation\", \"formula\": \"1\", \"effects\": [ { \"result\": \"1\", \"data\": [ { \"label\": \"Damage Propagation\", \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\", \"changes\": [ { \"key\": \"system.fq.bonus.dot\", \"value\": \"@wis\", \"mode\": \"2\" }, { \"key\": \"macro.tokenMagic\", \"value\": \"shockwave\", \"mode\": \"0\" } ], \"duration\": { \"startTime\": \"0\", \"rounds\": \"3\", \"turns\": \"0\" } } ], \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgDamagePropagationEffect\", \"arg\": { \"damage\": \"@wis\" } } ] } ] } ], \"afterFirstPlay\": { \"minReach\": \"1\", \"maxReach\": \"9\", \"replayable\": \"passif\", \"customEval\": [ { \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgDamagePropagation\", \"arg\": {} } ] } ], \"addingRolls\": [ { \"title\": \"Damage Propagation\", \"formula\": \"1\", \"effects\": [ { \"result\": \"1\", \"data\": [ { \"label\": \"Damage Propagation\", \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\", \"changes\": [ { \"key\": \"system.fq.bonus.dot\", \"value\": \"@wis\", \"mode\": \"2\" }, { \"key\": \"macro.tokenMagic\", \"value\": \"shockwave\", \"mode\": \"0\" } ], \"duration\": { \"startTime\": \"0\", \"rounds\": \"3\", \"turns\": \"0\" } } ], \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgDamagePropagationEffect\", \"arg\": { \"damage\": \"@wis\" } } ] } ] } ] } }</p>",
       "type": "base",
       "suit": "",
       "back": {
@@ -736,14 +1709,101 @@
         "maxSameCard": {}
       },
       "value": null,
-      "system": {},
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "choices": [
+            {
+              "action": "-4",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "9",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Damage Propagation",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "data": [
+                        {
+                          "label": "Damage Propagation",
+                          "icon": "icons/magic/sonic/explosion-impact-shock-wave.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "@wis",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "macro.tokenMagic",
+                              "value": "shockwave",
+                              "mode": "0"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "3",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamagePropagationEffect",
+                          "arg": "{\"damage\": \"@wis\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "!!game.combat.flags.fq?.logs && (!![...game.combat.flags.fq?.logs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent && ![...game.combat.flags.fq?.logs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets && !![...game.combat.flags.fq?.logs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.minReach && !![...game.combat.flags.fq?.logs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.damage && ![...game.user.targets].map(t => t.document.actorId).includes([...game.combat.flags.fq?.logs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.targetsId[0]))",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgDamagePropagation",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "afterFirstPlay": "{ \"minReach\": \"1\", \"maxReach\": \"9\", \"replayable\": \"passif\", \"customEval\": [ { \"test\": \"!!game.combat.flags.FQLogs && (!![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent && ![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets && !![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.minReach && !![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.damage && ![...game.user.targets].map(t => t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgDamagePropagation\", \"arg\": {} } ] } ], \"addingRolls\": [ { \"title\": \"Damage Propagation\", \"formula\": \"1\", \"effects\": [ { \"result\": \"1\", \"data\": [ { \"label\": \"Damage Propagation\", \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\", \"changes\": [ { \"key\": \"system.fq.bonus.dot\", \"value\": \"@wis\", \"mode\": \"2\" }, { \"key\": \"macro.tokenMagic\", \"value\": \"shockwave\", \"mode\": \"0\" } ], \"duration\": { \"startTime\": \"0\", \"rounds\": \"3\", \"turns\": \"0\" } } ], \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgDamagePropagationEffect\", \"arg\": { \"damage\": \"@wis\" } } ] } ] } ] }",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
       "_stats": {
         "coreVersion": "13.347",
-        "systemId": null,
-        "systemVersion": null,
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1728560538898,
-        "lastModifiedBy": "KVZBya4kkCkmlXbM",
+        "modifiedTime": 1755516110798,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null

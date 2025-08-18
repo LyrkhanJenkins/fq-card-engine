@@ -10,6 +10,7 @@ les communs apparaissent avec un niveau d'attributs )
 - Possibilité de choisir des cartes dans un changement de niveau
 - Card Viewer option
 - Faire un json avec tous les possibilité pour une classe
+- Carte Incantation et les passifs en générale pas très clair, réécrire ptetre les règle (coute 0 après première utilisation)
 
 ~~- Droits joueurs limités~~
 
@@ -48,12 +49,8 @@ les communs apparaissent avec un niveau d'attributs )
 
 - Macro 'Maîtriser' : il faut pouvoir lancer une macro qui ajout un effet à une autre cible sans les drotis comme avec game.dfreds
 - Lancez des sons différents ci plusieurs cibles touchés
-
-Clem problems non reproduit :
-
-- Problème de range sur les token trop gros
-- Probleme de decorerelation actor/token,
+- Logué ou trouver un moyen de logué tous les évenements de combat pour pouvoir les réutiliser dans les customEvals
 
 ### Very Low:
 
-- Effet de mort à appliquer automatiquement ---> Existe un module pour ça : Memento Mori
+- Gérer un forçage pour MJ des cartes si jamais il y a un problème d'implémentation dans la partie

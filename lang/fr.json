@@ -181,6 +181,8 @@
   "FQCARDENGINE.EffectStartTime": "Début de l'effet",
   "FQCARDENGINE.EffectRounds": "Rounds",
   "FQCARDENGINE.EffectTurns": "Tours",
+  "FQCARDENGINE.EffectMessages": "Messages de l'effet",
+
   "FQCARDENGINE.MessageKey": "Clé du message",
   "FQCARDENGINE.MessageArg": "Arg du message",
   "FQCARDENGINE.CustomEvalErrorMessages": "Messages d'erreur",
