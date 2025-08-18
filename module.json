@@ -73,6 +73,12 @@
         "id": "lib-wrapper",
         "type": "module",
         "compatibility": {}
+      },
+      {
+        "id": "sequencer",
+        "type": "module",
+        "manifest": "https://github.com/fantasycalendar/FoundryVTT-Sequencer/releases/latest/download/module.json",
+        "compatibility": {}
       }
     ]
   },

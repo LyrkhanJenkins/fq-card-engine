@@ -517,6 +517,7 @@
                   "effects": [
                     {
                       "result": "2",
+                      "self": false,
                       "data": [
                         {
                           "label": "Burn",
@@ -553,10 +554,12 @@
               ],
               "replayable": "",
               "sound": "",
+              "visual": "fq.fireball",
               "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
+              "hasBeenPlayed": false,
               "customEvals": []
             }
           ],
@@ -566,9 +569,9 @@
       "_stats": {
         "coreVersion": "13.347",
         "systemId": "dnd5e",
-        "systemVersion": "5.0.4",
+        "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755510293541,
+        "modifiedTime": 1755536131557,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
