@@ -44,12 +44,13 @@ les communs apparaissent avec un niveau d'attributs )
 - Ne pas utiliser de points d'actions quand hors combat
 - Vérifier qu'un GM est connecté pour pouvoir lancer les cartes
 - Lancer les sons des cartes sur un dossier plutôt qu'un fichier (lancer un fichier audio aléatoire d'un dossier)
-- Retrocompatibilité des feuilles : n'ajouter que la partie fq ou  toute la feuille?
+- Rétrocompatibilité des feuilles : n'ajouter que la partie fq ou toute la feuille ?
+- Permettre de remonter les points de vie/mana/zele courant même si éléments actifs
 
 ### Low:
 
 - Macro 'Maîtriser' : il faut pouvoir lancer une macro qui ajout un effet à une autre cible sans les drotis comme avec game.dfreds
-- Lancez des sons différents ci plusieurs cibles touchés
+- Lancez différents sons ci plusieurs cibles touchés
 - Logué ou trouver un moyen de logué tous les évenements de combat pour pouvoir les réutiliser dans les customEvals
 - Améliorer certaines cartes de mage blanc: light energy (json après utilisation)
 - Gérer les nb target infini et les portée infini?, les critique, els esquive? (light strike)
