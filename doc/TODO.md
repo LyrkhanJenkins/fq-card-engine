@@ -51,6 +51,8 @@ les communs apparaissent avec un niveau d'attributs )
 - Macro 'Maîtriser' : il faut pouvoir lancer une macro qui ajout un effet à une autre cible sans les drotis comme avec game.dfreds
 - Lancez des sons différents ci plusieurs cibles touchés
 - Logué ou trouver un moyen de logué tous les évenements de combat pour pouvoir les réutiliser dans les customEvals
+- Améliorer certaines cartes de mage blanc: light energy (json après utilisation)
+- Gérer les nb target infini et les portée infini?, les critique, els esquive? (light strike)
 
 ### Very Low:
 

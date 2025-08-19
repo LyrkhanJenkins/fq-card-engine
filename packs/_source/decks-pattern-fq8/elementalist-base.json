@@ -63,6 +63,7 @@
                   "effects": [
                     {
                       "result": "4-XXX",
+                      "self": false,
                       "data": [
                         {
                           "label": "Earth Effect",
@@ -72,11 +73,6 @@
                               "key": "system.fq.attributes.evasion",
                               "value": "-1",
                               "mode": "2"
-                            },
-                            {
-                              "key": "macro.tokenMagic",
-                              "value": "outline",
-                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -97,12 +93,20 @@
                   ]
                 }
               ],
-              "messages": [],
               "replayable": "",
               "sound": "",
+              "visual": {
+                "path": "fq.elementalist.earth-fracture",
+                "onTarget": true,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
               "afterFirstPlay": "",
               "name": "",
+              "messages": [],
               "minions": [],
+              "hasBeenPlayed": false,
               "customEvals": []
             }
           ],
@@ -112,9 +116,9 @@
       "_stats": {
         "coreVersion": "13.347",
         "systemId": "dnd5e",
-        "systemVersion": "5.0.4",
+        "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755510161264,
+        "modifiedTime": 1755616030693,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -183,6 +187,7 @@
                   "effects": [
                     {
                       "result": "2",
+                      "self": false,
                       "data": [
                         {
                           "label": "Air Effect",
@@ -192,11 +197,6 @@
                               "key": "system.attributes.movement.walk",
                               "value": "-5",
                               "mode": "2"
-                            },
-                            {
-                              "key": "macro.tokenMagic",
-                              "value": "fumes",
-                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -217,12 +217,20 @@
                   ]
                 }
               ],
-              "messages": [],
               "replayable": "",
               "sound": "",
+              "visual": {
+                "path": "fq.elementalist.tornado",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
               "afterFirstPlay": "",
               "name": "",
+              "messages": [],
               "minions": [],
+              "hasBeenPlayed": false,
               "customEvals": []
             }
           ],
@@ -232,9 +240,9 @@
       "_stats": {
         "coreVersion": "13.347",
         "systemId": "dnd5e",
-        "systemVersion": "5.0.4",
+        "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755510206731,
+        "modifiedTime": 1755616034303,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -327,8 +335,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.SOTzE1uX2WwLbeEr",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.SOTzE1uX2WwLbeEr"
     },
     {
       "_id": "kZQbFkLMnCb7brjU",
@@ -389,6 +397,7 @@
                   "effects": [
                     {
                       "result": "2",
+                      "self": false,
                       "data": [
                         {
                           "label": "Frost",
@@ -403,11 +412,6 @@
                               "key": "system.fq.action.value",
                               "value": "-1",
                               "mode": "2"
-                            },
-                            {
-                              "key": "macro.tokenMagic",
-                              "value": "glacial-aura",
-                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -432,12 +436,20 @@
                   ]
                 }
               ],
-              "messages": [],
               "replayable": "",
               "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
               "afterFirstPlay": "",
               "name": "",
+              "messages": [],
               "minions": [],
+              "hasBeenPlayed": false,
               "customEvals": []
             }
           ]
@@ -446,9 +458,9 @@
       "_stats": {
         "coreVersion": "13.347",
         "systemId": "dnd5e",
-        "systemVersion": "5.0.4",
+        "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755510232288,
+        "modifiedTime": 1755616038640,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -527,11 +539,6 @@
                               "key": "system.fq.bonus.dot",
                               "value": "1",
                               "mode": "2"
-                            },
-                            {
-                              "key": "macro.tokenMagic",
-                              "value": "fire-aura",
-                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -554,7 +561,13 @@
               ],
               "replayable": "",
               "sound": "",
-              "visual": "fq.fireball",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
               "afterFirstPlay": "",
               "name": "",
               "messages": [],
@@ -571,7 +584,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755536131557,
+        "modifiedTime": 1755616042352,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -664,8 +677,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.e6HICEkLS9HgEZbD",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.e6HICEkLS9HgEZbD"
     },
     {
       "_id": "ypg6iIljUHPuFOz7",
@@ -749,8 +762,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.ypg6iIljUHPuFOz7",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.ypg6iIljUHPuFOz7"
     },
     {
       "_id": "7vF29PgR3WHXhEb6",
@@ -811,6 +824,7 @@
                   "effects": [
                     {
                       "result": "1",
+                      "self": false,
                       "data": [
                         {
                           "label": "Fog",
@@ -825,11 +839,6 @@
                               "key": "system.fq.attributes.evasion",
                               "value": "-@wis",
                               "mode": "2"
-                            },
-                            {
-                              "key": "macro.tokenMagic",
-                              "value": "fog",
-                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -863,10 +872,18 @@
               ],
               "replayable": "",
               "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
               "afterFirstPlay": "",
               "name": "",
               "messages": [],
-              "minions": []
+              "minions": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -874,9 +891,9 @@
       "_stats": {
         "coreVersion": "13.347",
         "systemId": "dnd5e",
-        "systemVersion": "5.0.4",
+        "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755510757526,
+        "modifiedTime": 1755616053261,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -974,8 +991,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.aXrcw2gqwFuTDo58",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.aXrcw2gqwFuTDo58"
     },
     {
       "_id": "5b97DVTONwBhLdAl",
@@ -1059,8 +1076,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.5b97DVTONwBhLdAl",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.5b97DVTONwBhLdAl"
     },
     {
       "_id": "866YLG5WLwU2OsaO",
@@ -1150,7 +1167,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.0.4",
         "createdTime": null,
-        "modifiedTime": 1755511101462,
+        "modifiedTime": 1755616069520,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1248,8 +1265,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.qa9KGKFhhIRWkfHi",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.qa9KGKFhhIRWkfHi"
     },
     {
       "_id": "55tY0W7Dbd1OfKSQ",
@@ -1363,8 +1380,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.55tY0W7Dbd1OfKSQ",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.55tY0W7Dbd1OfKSQ"
     },
     {
       "_id": "VwRiKk5Nv0wwXGtv",
@@ -1502,8 +1519,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.VwRiKk5Nv0wwXGtv",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.VwRiKk5Nv0wwXGtv"
     },
     {
       "_id": "1nwTNnbbl8BeaUwJ",
@@ -1592,8 +1609,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.1nwTNnbbl8BeaUwJ",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.1nwTNnbbl8BeaUwJ"
     },
     {
       "_id": "CPZ20TlYwqrMq3C1",
@@ -1682,8 +1699,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.CPZ20TlYwqrMq3C1",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.CPZ20TlYwqrMq3C1"
     },
     {
       "_id": "z3BMWtXMBCF996I2",
@@ -1744,6 +1761,7 @@
                   "effects": [
                     {
                       "result": "1",
+                      "self": false,
                       "data": [
                         {
                           "label": "Damage Propagation",
@@ -1753,11 +1771,6 @@
                               "key": "system.fq.bonus.dot",
                               "value": "@wis",
                               "mode": "2"
-                            },
-                            {
-                              "key": "macro.tokenMagic",
-                              "value": "shockwave",
-                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -1791,6 +1804,13 @@
               ],
               "replayable": "passif",
               "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
               "afterFirstPlay": "{ \"minReach\": \"1\", \"maxReach\": \"9\", \"replayable\": \"passif\", \"customEval\": [ { \"test\": \"!!game.combat.flags.FQLogs && (!![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent && ![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets && !![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.minReach && !![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.damage && ![...game.user.targets].map(t => t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgDamagePropagation\", \"arg\": {} } ] } ], \"addingRolls\": [ { \"title\": \"Damage Propagation\", \"formula\": \"1\", \"effects\": [ { \"result\": \"1\", \"data\": [ { \"label\": \"Damage Propagation\", \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\", \"changes\": [ { \"key\": \"system.fq.bonus.dot\", \"value\": \"@wis\", \"mode\": \"2\" }, { \"key\": \"macro.tokenMagic\", \"value\": \"shockwave\", \"mode\": \"0\" } ], \"duration\": { \"startTime\": \"0\", \"rounds\": \"3\", \"turns\": \"0\" } } ], \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgDamagePropagationEffect\", \"arg\": { \"damage\": \"@wis\" } } ] } ] } ] }",
               "name": "",
               "messages": [],
@@ -1803,9 +1823,9 @@
       "_stats": {
         "coreVersion": "13.347",
         "systemId": "dnd5e",
-        "systemVersion": "5.0.4",
+        "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755516110798,
+        "modifiedTime": 1755616103953,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
