@@ -14,9 +14,9 @@
   "_stats": {
     "coreVersion": "13.347",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "5.1.2",
     "createdTime": null,
-    "modifiedTime": 1724142810813,
+    "modifiedTime": 1755619042582,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,
@@ -56,7 +56,9 @@
             "wis": 0,
             "cha": 0
           },
-          "cap": 1
+          "cap": 1,
+          "locked": [],
+          "recommendation": null
         },
         "value": {
           "type": "asi"
@@ -78,7 +80,9 @@
             "wis": 0,
             "cha": 0
           },
-          "cap": 1
+          "cap": 1,
+          "locked": [],
+          "recommendation": null
         },
         "value": {
           "type": "asi"
@@ -100,7 +104,9 @@
             "wis": 0,
             "cha": 0
           },
-          "cap": 1
+          "cap": 1,
+          "locked": [],
+          "recommendation": null
         },
         "value": {
           "type": "asi"
@@ -122,7 +128,9 @@
             "wis": 0,
             "cha": 0
           },
-          "cap": 2
+          "cap": 2,
+          "locked": [],
+          "recommendation": null
         },
         "value": {
           "type": "asi"
@@ -157,7 +165,7 @@
               "replacement": false
             }
           },
-          "allowDrops": true,
+          "allowDrops": false,
           "type": null,
           "pool": [
             {
@@ -228,7 +236,9 @@
             }
           ],
           "spell": null,
-          "restriction": {}
+          "restriction": {
+            "list": []
+          }
         },
         "value": {
           "added": {},
@@ -250,7 +260,9 @@
             "wis": 0,
             "cha": 0
           },
-          "cap": 2
+          "cap": 2,
+          "locked": [],
+          "recommendation": null
         },
         "value": {
           "type": "asi"
@@ -268,7 +280,10 @@
     },
     "spellcasting": {
       "progression": "none",
-      "ability": ""
+      "ability": "",
+      "preparation": {
+        "formula": ""
+      }
     },
     "wealth": ""
   },

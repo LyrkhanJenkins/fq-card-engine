@@ -14,9 +14,9 @@
   "_stats": {
     "coreVersion": "13.347",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "5.1.2",
     "createdTime": null,
-    "modifiedTime": 1724142590489,
+    "modifiedTime": 1755618989095,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,
@@ -44,53 +44,6 @@
         "value": {}
       },
       {
-        "_id": "5lahzhdra2kuoje6",
-        "type": "ScaleValue",
-        "configuration": {
-          "identifier": "",
-          "type": "string",
-          "distance": {
-            "units": ""
-          },
-          "scale": {}
-        },
-        "value": {}
-      },
-      {
-        "_id": "oXOKZHsflEkQx5h0",
-        "type": "ItemChoice",
-        "configuration": {
-          "choices": {},
-          "allowDrops": true,
-          "type": null,
-          "pool": [],
-          "spell": null,
-          "restriction": {}
-        },
-        "value": {
-          "added": {},
-          "replaced": {}
-        }
-      },
-      {
-        "_id": "WdosOMhQfB1PM6Y8",
-        "type": "ItemChoice",
-        "configuration": {
-          "choices": {},
-          "allowDrops": true,
-          "type": null,
-          "pool": [],
-          "spell": null,
-          "restriction": {}
-        },
-        "value": {
-          "added": {},
-          "replaced": {}
-        },
-        "title": "Caracteristics",
-        "hint": ""
-      },
-      {
         "_id": "tWeBheqq0F1Kuyjr",
         "type": "AbilityScoreImprovement",
         "configuration": {
@@ -103,7 +56,9 @@
             "wis": 0,
             "cha": 0
           },
-          "cap": 1
+          "cap": 1,
+          "locked": [],
+          "recommendation": null
         },
         "value": {
           "type": "asi"
@@ -125,7 +80,9 @@
             "wis": 0,
             "cha": 0
           },
-          "cap": 1
+          "cap": 1,
+          "locked": [],
+          "recommendation": null
         },
         "value": {
           "type": "asi"
@@ -147,7 +104,9 @@
             "wis": 0,
             "cha": 0
           },
-          "cap": 1
+          "cap": 1,
+          "locked": [],
+          "recommendation": null
         },
         "value": {
           "type": "asi"
@@ -169,7 +128,9 @@
             "wis": 0,
             "cha": 0
           },
-          "cap": 2
+          "cap": 2,
+          "locked": [],
+          "recommendation": null
         },
         "value": {
           "type": "asi"
@@ -204,7 +165,7 @@
               "replacement": false
             }
           },
-          "allowDrops": true,
+          "allowDrops": false,
           "type": "feat",
           "pool": [
             {
@@ -277,7 +238,8 @@
           "spell": null,
           "restriction": {
             "type": "",
-            "subtype": ""
+            "subtype": "",
+            "list": []
           }
         },
         "value": {
@@ -300,7 +262,9 @@
             "wis": 0,
             "cha": 0
           },
-          "cap": 2
+          "cap": 2,
+          "locked": [],
+          "recommendation": null
         },
         "value": {
           "type": "asi"
@@ -318,7 +282,10 @@
     },
     "spellcasting": {
       "progression": "none",
-      "ability": "int"
+      "ability": "int",
+      "preparation": {
+        "formula": ""
+      }
     },
     "wealth": ""
   },

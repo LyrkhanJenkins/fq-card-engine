@@ -1,1 +1,879 @@
-{"_id": "SD0UEPLiLrUUw18m", "name": "Elementalist Lvl1 - en", "type": "deck", "description": "", "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG", "cards": [{"_id": "cGZRVHPJRLJhRJ7e", "name": "Fireball", "description": "", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/en/elementalist/base/fireball.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 4, "flags": {"maxSameCard": {}}, "system": {"fq": {"choices": [{"action": "-8", "mana": "-2", "zeal": "1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "1", "maxReach": "6", "nbTargets": "", "damage": "4[fire]+@int[fire]+1d8[fire]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "applyEffectsFormulas": [{"title": "Burn", "formula": "1d2", "effects": [{"result": "2", "self": false, "data": [{"label": "Burn", "icon": "icons/magic/fire/explosion-embers-evade-silhouette.webp", "changes": [{"key": "system.fq.bonus.dot", "value": "1", "mode": "2"}], "duration": {"startTime": "0", "rounds": "3", "turns": "0"}, "expireOnDamage": false}], "messages": [{"key": "FQCARDENGINE.CardMsgDamageEffect", "arg": "{ \"effectName\": \"Burn\", \"damage\": \"3\",\"turn\": \"3\" }"}]}]}], "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}], "maxSameCard": 5}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616042352, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!SD0UEPLiLrUUw18m.cGZRVHPJRLJhRJ7e", "cards": []}, {"_id": "2dNkeMCOCz8AOJ3x", "name": "Tornado", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/en/elementalist/base/tornado.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 0, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"choices": [{"action": "-6", "mana": "-2", "zeal": "1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "2", "maxReach": "6", "nbTargets": "", "damage": "2[thunder]+@int[thunder]+1d6[thunder]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "applyEffectsFormulas": [{"title": "Air Effect", "formula": "1d2", "effects": [{"result": "2", "self": false, "data": [{"label": "Air Effect", "icon": "icons/magic/air/wind-tornado-spiral-teal-green.webp", "changes": [{"key": "system.attributes.movement.walk", "value": "-5", "mode": "2"}], "duration": {"startTime": "0", "rounds": "0", "turns": "0"}, "expireOnDamage": false}], "messages": [{"key": "FQCARDENGINE.CardMsgApplyEffect", "arg": "{\"effectName\": \"Air Effect\"}"}]}]}], "replayable": "", "sound": "", "visual": {"path": "fq.elementalist.tornado", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}], "maxSameCard": 5}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616034303, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!SD0UEPLiLrUUw18m.2dNkeMCOCz8AOJ3x", "cards": []}, {"_id": "NcGHnJM8r1FbQeMO", "name": "Earth Fracture", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/en/elementalist/base/earth_fracture.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 0, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"choices": [{"action": "-(2*XXX)", "mana": "-1", "zeal": "1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "1", "maxReach": "7", "nbTargets": "", "damage": "1d@wis[force]+(2*XXX)[force]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "3", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "applyEffectsFormulas": [{"title": "Earth Effect", "formula": "1d(4-XXX)", "effects": [{"result": "4-XXX", "self": false, "data": [{"label": "Earth Effect", "icon": "icons/magic/earth/barrier-stone-explosion-debris.webp", "changes": [{"key": "system.fq.attributes.evasion", "value": "-1", "mode": "2"}], "duration": {"startTime": "0", "rounds": "0", "turns": "0"}, "expireOnDamage": false}], "messages": [{"key": "FQCARDENGINE.CardMsgApplyEffect", "arg": "{ \"effectName\": \"Earth Effect\" }"}]}]}], "replayable": "", "sound": "", "visual": {"path": "fq.elementalist.earth-fracture", "onTarget": true, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}], "maxSameCard": 5}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616030693, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!SD0UEPLiLrUUw18m.NcGHnJM8r1FbQeMO", "cards": []}, {"_id": "4EpWLglFALci4xAF", "name": "Earth Fracture", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/en/elementalist/base/earth_fracture.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 0, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"choices": [{"action": "-(2*XXX)", "mana": "-1", "zeal": "1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "1", "maxReach": "7", "nbTargets": "", "damage": "1d@wis[force]+(2*XXX)[force]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "3", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "applyEffectsFormulas": [{"title": "Earth Effect", "formula": "1d(4-XXX)", "effects": [{"result": "4-XXX", "self": false, "data": [{"label": "Earth Effect", "icon": "icons/magic/earth/barrier-stone-explosion-debris.webp", "changes": [{"key": "system.fq.attributes.evasion", "value": "-1", "mode": "2"}], "duration": {"startTime": "0", "rounds": "0", "turns": "0"}, "expireOnDamage": false}], "messages": [{"key": "FQCARDENGINE.CardMsgApplyEffect", "arg": "{ \"effectName\": \"Earth Effect\" }"}]}]}], "replayable": "", "sound": "", "visual": {"path": "fq.elementalist.earth-fracture", "onTarget": true, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}], "maxSameCard": 5}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616030693, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!SD0UEPLiLrUUw18m.4EpWLglFALci4xAF", "cards": []}, {"_id": "4yGKBbT6FNSv8f4F", "name": "Frost Strike", "description": "", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/en/elementalist/base/frost_strike.png", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": {}}, "system": {"fq": {"maxSameCard": 5, "choices": [{"action": "-4", "mana": "-1", "zeal": "", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "3", "maxReach": "9", "nbTargets": "", "damage": "1[cold]+@wis[cold]+1d3[cold]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "applyEffectsFormulas": [{"title": "Frost", "formula": "1d2", "effects": [{"result": "2", "self": false, "data": [{"label": "Frost", "icon": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp", "changes": [{"key": "system.fq.action.max", "value": "-1", "mode": "2"}, {"key": "system.fq.action.value", "value": "-1", "mode": "2"}], "duration": {"startTime": "0", "rounds": "3", "turns": "0"}, "expireOnDamage": false}], "messages": [{"key": "FQCARDENGINE.CardMsgApplyEffect", "arg": "{ \"effectName\": \"Frost\"}"}, {"key": "FQCARDENGINE.CardMsgTemporaryEffect", "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"}]}]}], "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616038640, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!SD0UEPLiLrUUw18m.4yGKBbT6FNSv8f4F", "cards": []}, {"_id": "BUdNgILvSMYDgi2J", "name": "Frost Strike", "description": "", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/en/elementalist/base/frost_strike.png", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": {}}, "system": {"fq": {"maxSameCard": 5, "choices": [{"action": "-4", "mana": "-1", "zeal": "", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "3", "maxReach": "9", "nbTargets": "", "damage": "1[cold]+@wis[cold]+1d3[cold]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "applyEffectsFormulas": [{"title": "Frost", "formula": "1d2", "effects": [{"result": "2", "self": false, "data": [{"label": "Frost", "icon": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp", "changes": [{"key": "system.fq.action.max", "value": "-1", "mode": "2"}, {"key": "system.fq.action.value", "value": "-1", "mode": "2"}], "duration": {"startTime": "0", "rounds": "3", "turns": "0"}, "expireOnDamage": false}], "messages": [{"key": "FQCARDENGINE.CardMsgApplyEffect", "arg": "{ \"effectName\": \"Frost\"}"}, {"key": "FQCARDENGINE.CardMsgTemporaryEffect", "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"}]}]}], "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616038640, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!SD0UEPLiLrUUw18m.BUdNgILvSMYDgi2J", "cards": []}, {"_id": "8Zz9mxedV36s1qFp", "name": "Mana Recovery III", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/en/elementalist/base/mana_recovery_iii.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 9, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 2, "choices": [{"action": "-5", "mana": "3", "zeal": "", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "", "maxReach": "", "nbTargets": "", "damage": "", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "messages": [{"key": "FQCARDENGINE.CardMsgManaRecover", "arg": "{\"mana\": \"3\"}"}], "replayable": "", "sound": "", "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "minions": [], "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.0.4", "createdTime": null, "modifiedTime": 1755510922960, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "cards": [], "_key": "!cards.cards!SD0UEPLiLrUUw18m.8Zz9mxedV36s1qFp"}], "width": null, "height": null, "rotation": 0, "displayCount": false, "folder": null, "sort": 0, "flags": {}, "_stats": {"coreVersion": "13.347", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": null, "lastModifiedBy": null, "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "ownership": {"default": 0}, "system": {}, "_key": "!cards!SD0UEPLiLrUUw18m"}
+{
+  "_id": "SD0UEPLiLrUUw18m",
+  "name": "Elementalist Lvl1 - en",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG",
+  "cards": [
+    {
+      "_id": "cGZRVHPJRLJhRJ7e",
+      "name": "Fireball",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/fireball.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 4,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "choices": [
+            {
+              "action": "-8",
+              "mana": "-2",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "4[fire]+@int[fire]+1d8[fire]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Burn",
+                  "formula": "1d2",
+                  "effects": [
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "label": "Burn",
+                          "icon": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "1",
+                              "mode": "2"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "3",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{ \"effectName\": \"Burn\", \"damage\": \"3\",\"turn\": \"3\" }"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ],
+          "maxSameCard": 5
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616042352,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!SD0UEPLiLrUUw18m.cGZRVHPJRLJhRJ7e"
+    },
+    {
+      "_id": "2dNkeMCOCz8AOJ3x",
+      "name": "Tornado",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/tornado.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "choices": [
+            {
+              "action": "-6",
+              "mana": "-2",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "2",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "2[thunder]+@int[thunder]+1d6[thunder]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Air Effect",
+                  "formula": "1d2",
+                  "effects": [
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "label": "Air Effect",
+                          "icon": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.movement.walk",
+                              "value": "-5",
+                              "mode": "2"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "0",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Air Effect\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "fq.elementalist.tornado",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ],
+          "maxSameCard": 5
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616034303,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!SD0UEPLiLrUUw18m.2dNkeMCOCz8AOJ3x"
+    },
+    {
+      "_id": "NcGHnJM8r1FbQeMO",
+      "name": "Earth Fracture",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/earth_fracture.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "choices": [
+            {
+              "action": "-(2*XXX)",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "7",
+              "nbTargets": "",
+              "damage": "1d@wis[force]+(2*XXX)[force]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Earth Effect",
+                  "formula": "1d(4-XXX)",
+                  "effects": [
+                    {
+                      "result": "4-XXX",
+                      "self": false,
+                      "data": [
+                        {
+                          "label": "Earth Effect",
+                          "icon": "icons/magic/earth/barrier-stone-explosion-debris.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "-1",
+                              "mode": "2"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "0",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{ \"effectName\": \"Earth Effect\" }"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "fq.elementalist.earth-fracture",
+                "onTarget": true,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ],
+          "maxSameCard": 5
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616030693,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!SD0UEPLiLrUUw18m.NcGHnJM8r1FbQeMO"
+    },
+    {
+      "_id": "4EpWLglFALci4xAF",
+      "name": "Earth Fracture",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/earth_fracture.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "choices": [
+            {
+              "action": "-(2*XXX)",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "7",
+              "nbTargets": "",
+              "damage": "1d@wis[force]+(2*XXX)[force]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Earth Effect",
+                  "formula": "1d(4-XXX)",
+                  "effects": [
+                    {
+                      "result": "4-XXX",
+                      "self": false,
+                      "data": [
+                        {
+                          "label": "Earth Effect",
+                          "icon": "icons/magic/earth/barrier-stone-explosion-debris.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "-1",
+                              "mode": "2"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "0",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{ \"effectName\": \"Earth Effect\" }"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "fq.elementalist.earth-fracture",
+                "onTarget": true,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ],
+          "maxSameCard": 5
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616030693,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!SD0UEPLiLrUUw18m.4EpWLglFALci4xAF"
+    },
+    {
+      "_id": "4yGKBbT6FNSv8f4F",
+      "name": "Frost Strike",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/frost_strike.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 5,
+          "choices": [
+            {
+              "action": "-4",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "3",
+              "maxReach": "9",
+              "nbTargets": "",
+              "damage": "1[cold]+@wis[cold]+1d3[cold]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Frost",
+                  "formula": "1d2",
+                  "effects": [
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "label": "Frost",
+                          "icon": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.action.max",
+                              "value": "-1",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "system.fq.action.value",
+                              "value": "-1",
+                              "mode": "2"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "3",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{ \"effectName\": \"Frost\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616038640,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!SD0UEPLiLrUUw18m.4yGKBbT6FNSv8f4F"
+    },
+    {
+      "_id": "BUdNgILvSMYDgi2J",
+      "name": "Frost Strike",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/frost_strike.png",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 5,
+          "choices": [
+            {
+              "action": "-4",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "3",
+              "maxReach": "9",
+              "nbTargets": "",
+              "damage": "1[cold]+@wis[cold]+1d3[cold]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Frost",
+                  "formula": "1d2",
+                  "effects": [
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "label": "Frost",
+                          "icon": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.action.max",
+                              "value": "-1",
+                              "mode": "2"
+                            },
+                            {
+                              "key": "system.fq.action.value",
+                              "value": "-1",
+                              "mode": "2"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "3",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{ \"effectName\": \"Frost\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616038640,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!SD0UEPLiLrUUw18m.BUdNgILvSMYDgi2J"
+    },
+    {
+      "_id": "8Zz9mxedV36s1qFp",
+      "name": "Mana Recovery III",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/mana_recovery_iii.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 9,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "3",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgManaRecover",
+                  "arg": "{\"mana\": \"3\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.0.4",
+        "createdTime": null,
+        "modifiedTime": 1755510922960,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!SD0UEPLiLrUUw18m.8Zz9mxedV36s1qFp"
+    }
+  ],
+  "width": null,
+  "height": null,
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "13.347",
+    "systemId": null,
+    "systemVersion": null,
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {},
+  "_key": "!cards!SD0UEPLiLrUUw18m"
+}

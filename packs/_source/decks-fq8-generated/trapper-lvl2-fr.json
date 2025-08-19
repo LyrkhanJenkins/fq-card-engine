@@ -1,1 +1,1198 @@
-{"_id": "n82CdKDkGmf1bvOT", "name": "Trapper Lvl2 - fr", "type": "deck", "description": "", "img": "modules/fq-card-engine/images/cards/back_trapper.PNG", "cards": [{"_id": "OEyjPrioN2kBEiTv", "name": "Precise Shot", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 7, "choices": [{"action": "-XXX", "mana": "-1", "zeal": "1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "4", "maxReach": "9999", "nbTargets": "", "damage": "(4+2d3)[piercing]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "reach", "yvalue": "", "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616332663, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.OEyjPrioN2kBEiTv", "cards": []}, {"_id": "CFZ0AwM3BSOkZnnB", "name": "Precise Shot", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 7, "choices": [{"action": "-XXX", "mana": "-1", "zeal": "1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "4", "maxReach": "9999", "nbTargets": "", "damage": "(4+2d3)[piercing]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "reach", "yvalue": "", "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616332663, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.CFZ0AwM3BSOkZnnB", "cards": []}, {"_id": "maQE5rZP3E6vqubp", "name": "Precise Shot", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 7, "choices": [{"action": "-XXX", "mana": "-1", "zeal": "1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "4", "maxReach": "9999", "nbTargets": "", "damage": "(4+2d3)[piercing]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "reach", "yvalue": "", "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616332663, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.maQE5rZP3E6vqubp", "cards": []}, {"_id": "v90OvDviL1juXJBK", "name": "Double Arrows", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/double_arrows.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 8, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 2, "choices": [{"action": "-7", "mana": "-1", "zeal": "", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "2", "maxReach": "8", "nbTargets": "2", "damage": "(@dex+1d8)[piercing]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616648795, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.v90OvDviL1juXJBK", "cards": []}, {"_id": "Y63zBnfPrc3KkMpo", "name": "Tamed Wolf", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/tamed_wolf.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 1, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 2, "choices": [{"action": "-8", "mana": "", "zeal": "-1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "", "maxReach": "", "nbTargets": "", "damage": "", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "messages": [{"key": "FQCARDENGINE.CardMsgMinionInvoked", "arg": "{\"minion\": \"Tamed Wolf\"}"}], "minions": [{"name": "Tamed Wolf", "data": {"hp": "10+@cha", "damageBonus": "trunc(@cha/3)", "movement": "5*(trunc(@cha/2)+4)"}}], "replayable": "", "sound": "specific_spells/tamed_wolf.mp3", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616208579, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.Y63zBnfPrc3KkMpo", "cards": []}, {"_id": "iI3LamPQHLcmF6J5", "name": "Elite Marksman", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/elite_marksman.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 9, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 2, "choices": [{"action": "-10", "mana": "", "zeal": "1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "", "maxReach": "", "nbTargets": "", "damage": "", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "applyEffectsFormulas": [{"title": "Elite Marksman", "formula": "1", "effects": [{"result": "1", "self": false, "data": [{"label": "Elite Marksman", "icon": "icons/skills/ranged/person-archery-bow-attack-orange.webp", "changes": [{"key": "system.fq.attributes.critical", "value": "10+@str", "mode": "2"}], "duration": {"startTime": "0", "rounds": "2", "turns": "0"}, "expireOnDamage": false}], "messages": [{"key": "FQCARDENGINE.CardMsgCriticalBonus", "arg": "{\"critical\": \"@str + 10\"}"}, {"key": "FQCARDENGINE.CardMsgTemporaryEffect", "arg": "{\"effectName\": \"Elite Marksman\",\"turn\": \"1\"}"}]}]}], "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616730772, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.iI3LamPQHLcmF6J5", "cards": []}, {"_id": "osonAMVFpDld6BWD", "name": "Rain of Arrows", "description": "", "type": "base", "suit": "", "value": null, "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/rain_of_arrows.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 11, "flags": {"maxSameCard": {}}, "system": {"fq": {"maxSameCard": 2, "choices": [{"action": "-8", "mana": "", "zeal": "-1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "4", "maxReach": "12", "nbTargets": "5", "damage": "(@dex+1d8)[piercing]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "customEvals": [{"script": "game.user.targets.size === 1 || game.user.targets.size > 9 || ([...game.user.targets].map(t => t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)) && [...game.user.targets].map(t => t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)))", "errorMessages": [{"key": "FQCARDENGINE.CardWarningMsgSquareEffect", "arg": "{\"area\": \"3X3\"}"}]}], "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "messages": [], "minions": [], "hasBeenPlayed": false}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616853408, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.osonAMVFpDld6BWD", "cards": []}, {"_id": "1Vpvxby2pHuBZkEs", "name": "Draw II", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/draw_ii.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 15, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 2, "choices": [{"action": "-2", "mana": "", "zeal": "", "reactive": false, "hp": "", "draw": "2", "drop": "", "minReach": "", "maxReach": "", "nbTargets": "", "damage": "", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "messages": [{"key": "FQCARDENGINE.CardMsgDrawCard", "arg": "{\"draw\": \"2\"}"}], "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755617018688, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.1Vpvxby2pHuBZkEs", "cards": []}, {"_id": "S3hSfpv4gGVz0ShR", "name": "Mana Recovery II", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/mana_recovery_ii.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 13, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 2, "choices": [{"action": "-3", "mana": "2", "zeal": "", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "", "maxReach": "", "nbTargets": "", "damage": "", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "messages": [{"key": "FQCARDENGINE.CardMsgManaRecover", "arg": "{\"mana\": \"2\"}"}], "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616964439, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.S3hSfpv4gGVz0ShR", "cards": []}, {"_id": "TMFVf3n156KytCHe", "name": "Trap", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/trap.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 10, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 2, "choices": [{"action": "-2", "mana": "", "zeal": "-1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "1", "maxReach": "12", "nbTargets": "", "damage": "(@int + 1d4)[slashing]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "applyEffectsFormulas": [{"title": "Immobilization", "formula": "1", "effects": [{"result": "1", "self": false, "data": [{"label": "Immobilization", "icon": "icons/magic/control/silhouette-grow-shrink-blue.webp", "changes": [{"key": "system.attributes.movement.walk", "value": "0", "mode": "5"}], "duration": {"startTime": "0", "rounds": "1", "turns": "0"}, "expireOnDamage": false}], "messages": [{"key": "FQCARDENGINE.CardMsgApplyEffect", "arg": "{\"effectName\": \"Immobilization\"}"}]}]}], "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616795176, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.TMFVf3n156KytCHe", "cards": []}, {"_id": "K0IwDOlxX9DJbJJk", "name": "Precise Shot", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 3, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 7, "choices": [{"action": "-XXX", "mana": "-1", "zeal": "1", "reactive": false, "hp": "", "draw": "", "drop": "", "minReach": "4", "maxReach": "9999", "nbTargets": "", "damage": "(4+2d3)[piercing]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "reach", "yvalue": "", "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616332663, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.K0IwDOlxX9DJbJJk", "cards": []}, {"_id": "wLRrcD6DaOv8dx8B", "name": "Reflex Shot", "description": "", "type": "base", "suit": "", "back": {"name": "", "text": "", "img": null}, "faces": [{"name": "", "img": "modules/fq-card-engine/images/cards/fr/trapper/base/reflex_shot.PNG", "text": ""}], "face": 0, "drawn": false, "origin": null, "rotation": 0, "sort": 5, "flags": {"maxSameCard": {}}, "value": null, "system": {"fq": {"maxSameCard": 2, "choices": [{"action": "", "mana": "", "zeal": "-2", "reactive": true, "hp": "", "draw": "", "drop": "", "minReach": "1", "maxReach": "4", "nbTargets": "", "damage": "(@dex+1d6)[piercing]", "heal": "", "bonusCrit": "", "bonusEva": "", "xmin": "", "xmax": "", "ymin": "", "ymax": "", "xvalue": "", "yvalue": "", "replayable": "", "sound": "", "visual": {"path": "", "onTarget": false, "impactPath": "", "impactOnMiddle": false, "impactSize": ""}, "afterFirstPlay": "", "name": "", "applyEffectsFormulas": [], "messages": [], "minions": [], "hasBeenPlayed": false, "customEvals": []}]}}, "_stats": {"coreVersion": "13.347", "systemId": "dnd5e", "systemVersion": "5.1.2", "createdTime": null, "modifiedTime": 1755616492225, "lastModifiedBy": "ynIo5hURbsdbG4cp", "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "width": null, "height": null, "_key": "!cards.cards!n82CdKDkGmf1bvOT.wLRrcD6DaOv8dx8B", "cards": []}], "width": null, "height": null, "rotation": 0, "displayCount": false, "folder": null, "sort": 0, "flags": {}, "_stats": {"coreVersion": "13.347", "systemId": null, "systemVersion": null, "createdTime": null, "modifiedTime": null, "lastModifiedBy": null, "compendiumSource": null, "duplicateSource": null, "exportSource": null}, "ownership": {"default": 0}, "system": {}, "_key": "!cards!n82CdKDkGmf1bvOT"}
+{
+  "_id": "n82CdKDkGmf1bvOT",
+  "name": "Trapper Lvl2 - fr",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_trapper.PNG",
+  "cards": [
+    {
+      "_id": "OEyjPrioN2kBEiTv",
+      "name": "Precise Shot",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 7,
+          "choices": [
+            {
+              "action": "-XXX",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "4",
+              "maxReach": "9999",
+              "nbTargets": "",
+              "damage": "(4+2d3)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "reach",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616332663,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.OEyjPrioN2kBEiTv"
+    },
+    {
+      "_id": "CFZ0AwM3BSOkZnnB",
+      "name": "Precise Shot",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 7,
+          "choices": [
+            {
+              "action": "-XXX",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "4",
+              "maxReach": "9999",
+              "nbTargets": "",
+              "damage": "(4+2d3)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "reach",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616332663,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.CFZ0AwM3BSOkZnnB"
+    },
+    {
+      "_id": "maQE5rZP3E6vqubp",
+      "name": "Precise Shot",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 7,
+          "choices": [
+            {
+              "action": "-XXX",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "4",
+              "maxReach": "9999",
+              "nbTargets": "",
+              "damage": "(4+2d3)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "reach",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616332663,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.maQE5rZP3E6vqubp"
+    },
+    {
+      "_id": "v90OvDviL1juXJBK",
+      "name": "Double Arrows",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/double_arrows.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 8,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "2",
+              "maxReach": "8",
+              "nbTargets": "2",
+              "damage": "(@dex+1d8)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616648795,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.v90OvDviL1juXJBK"
+    },
+    {
+      "_id": "Y63zBnfPrc3KkMpo",
+      "name": "Tamed Wolf",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/tamed_wolf.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-8",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgMinionInvoked",
+                  "arg": "{\"minion\": \"Tamed Wolf\"}"
+                }
+              ],
+              "minions": [
+                {
+                  "name": "Tamed Wolf",
+                  "data": {
+                    "hp": "10+@cha",
+                    "damageBonus": "trunc(@cha/3)",
+                    "movement": "5*(trunc(@cha/2)+4)"
+                  }
+                }
+              ],
+              "replayable": "",
+              "sound": "specific_spells/tamed_wolf.mp3",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616208579,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.Y63zBnfPrc3KkMpo"
+    },
+    {
+      "_id": "iI3LamPQHLcmF6J5",
+      "name": "Elite Marksman",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/elite_marksman.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 9,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Elite Marksman",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "label": "Elite Marksman",
+                          "icon": "icons/skills/ranged/person-archery-bow-attack-orange.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.critical",
+                              "value": "10+@str",
+                              "mode": "2"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "2",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgCriticalBonus",
+                          "arg": "{\"critical\": \"@str + 10\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Elite Marksman\",\"turn\": \"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616730772,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.iI3LamPQHLcmF6J5"
+    },
+    {
+      "_id": "osonAMVFpDld6BWD",
+      "name": "Rain of Arrows",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/rain_of_arrows.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 11,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-8",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "4",
+              "maxReach": "12",
+              "nbTargets": "5",
+              "damage": "(@dex+1d8)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "game.user.targets.size === 1 || game.user.targets.size > 9 || ([...game.user.targets].map(t => t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)) && [...game.user.targets].map(t => t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)))",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgSquareEffect",
+                      "arg": "{\"area\": \"3X3\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616853408,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.osonAMVFpDld6BWD"
+    },
+    {
+      "_id": "1Vpvxby2pHuBZkEs",
+      "name": "Draw II",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/draw_ii.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 15,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-2",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "2",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgDrawCard",
+                  "arg": "{\"draw\": \"2\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755617018688,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.1Vpvxby2pHuBZkEs"
+    },
+    {
+      "_id": "S3hSfpv4gGVz0ShR",
+      "name": "Mana Recovery II",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/mana_recovery_ii.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 13,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "2",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgManaRecover",
+                  "arg": "{\"mana\": \"2\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616964439,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.S3hSfpv4gGVz0ShR"
+    },
+    {
+      "_id": "TMFVf3n156KytCHe",
+      "name": "Trap",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/trap.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 10,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "-2",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "12",
+              "nbTargets": "",
+              "damage": "(@int + 1d4)[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Immobilization",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "label": "Immobilization",
+                          "icon": "icons/magic/control/silhouette-grow-shrink-blue.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.movement.walk",
+                              "value": "0",
+                              "mode": "5"
+                            }
+                          ],
+                          "duration": {
+                            "startTime": "0",
+                            "rounds": "1",
+                            "turns": "0"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Immobilization\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616795176,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.TMFVf3n156KytCHe"
+    },
+    {
+      "_id": "K0IwDOlxX9DJbJJk",
+      "name": "Precise Shot",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/precise_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 7,
+          "choices": [
+            {
+              "action": "-XXX",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "4",
+              "maxReach": "9999",
+              "nbTargets": "",
+              "damage": "(4+2d3)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "reach",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616332663,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.K0IwDOlxX9DJbJJk"
+    },
+    {
+      "_id": "wLRrcD6DaOv8dx8B",
+      "name": "Reflex Shot",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/fr/trapper/base/reflex_shot.PNG",
+          "text": ""
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 5,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "-2",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "4",
+              "nbTargets": "",
+              "damage": "(@dex+1d6)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false,
+                "impactPath": "",
+                "impactOnMiddle": false,
+                "impactSize": ""
+              },
+              "afterFirstPlay": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "createdTime": null,
+        "modifiedTime": 1755616492225,
+        "lastModifiedBy": "ynIo5hURbsdbG4cp",
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!n82CdKDkGmf1bvOT.wLRrcD6DaOv8dx8B"
+    }
+  ],
+  "width": null,
+  "height": null,
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "13.347",
+    "systemId": null,
+    "systemVersion": null,
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {},
+  "_key": "!cards!n82CdKDkGmf1bvOT"
+}
