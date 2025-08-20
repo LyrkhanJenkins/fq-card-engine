@@ -1,0 +1,31 @@
+{
+  "name": "PersistAura",
+  "type": "script",
+  "author": "ynIo5hURbsdbG4cp",
+  "img": "icons/magic/holy/prayer-hands-glowing-yellow-green.webp",
+  "scope": "global",
+  "command": "const effectName = args[1];\nif (! effectName) {\n  return;\n}\n\n// Récupère le compteur stocké dans les flags du token\nlet flagData = token.document.getFlag(\"world\", effectName) || { count: 0 };\nlet count = flagData.count;\nif (args[0] === \"on\") {\n  count++;\n  await token.document.setFlag(\"world\", effectName, { count: count });\n\n  // Si c'est le premier effet, on lance l'animation\n  if (count === 1) {\n    new Sequence()\n      .effect()\n      .file(effectName) // <- change ton animation\n      .attachTo(token)\n      .persist()\n      .name(effectName)\n      .scaleToObject(1.3)\n      .play();\n  }\n\n} else if (args[0] === \"off\") {\n  count = Math.max(count - 1, 0);\n  await token.document.setFlag(\"world\", effectName, count);\n\n  // Si plus aucun effet actif, on arrête l'animation\n  if (count === 0) {\n    Sequencer.EffectManager.endEffects({ name: effectName, object: token });\n  }\n}",
+  "folder": null,
+  "flags": {
+    "advanced-macros": {
+      "runForSpecificUser": ""
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "dnd5e",
+    "systemVersion": "5.1.2",
+    "createdTime": 1755669327499,
+    "modifiedTime": 1755669327499,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "ownership": {
+    "default": 0
+  },
+  "_id": "RRxrheoVAnanD1R7",
+  "sort": 0,
+  "_key": "!macros!RRxrheoVAnanD1R7"
+}
