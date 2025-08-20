@@ -38,6 +38,8 @@ les communs apparaissent avec un niveau d'attributs )
 ### High:
 - Macro pour piocher un booster et le mettre dans la bibliotheque du joueur
 - Gestion de plusieurs modules pour les effets magiques de combat
+- Gérer des macros d'animations spéciales genre par exemple la téléportation autre que les auras
+- Permettre d'acoir un raccourci de partout fq. pour les effets récupérer comme j2ba.
 
 ### Medium:
 

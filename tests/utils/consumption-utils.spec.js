@@ -2,8 +2,8 @@ import ConsumptionUtils from "../../scripts/utils/consumption-utils.js";
 
 describe("ConsumptionUtils", () => {
 
-    var resources = {currentDrop: -1, action: -1, mana: -1, zeal: -1, hp: -1, drop: -1};
-    var actor = {
+    const resources = {currentDrop: -1, action: -1, mana: -1, zeal: -1, hp: -1, drop: -1};
+    const actor = {
         system: {
             fq: {
                 cards: {currentDrop: 2},

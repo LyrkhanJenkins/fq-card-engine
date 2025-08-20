@@ -1,12 +1,12 @@
 {
-  "_id": "SD0UEPLiLrUUw18m",
+  "_id": "j8sZeFt4twwoNcXI",
   "name": "Elementalist Lvl1 - en",
   "type": "deck",
   "description": "",
   "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG",
   "cards": [
     {
-      "_id": "cGZRVHPJRLJhRJ7e",
+      "_id": "J8CRpgDtKMwCC9uU",
       "name": "Fireball",
       "description": "",
       "type": "base",
@@ -73,6 +73,11 @@
                               "key": "system.fq.bonus.dot",
                               "value": "1",
                               "mode": "2"
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.fire_ring",
+                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -118,7 +123,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616042352,
+        "modifiedTime": 1755672305292,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -127,10 +132,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!SD0UEPLiLrUUw18m.cGZRVHPJRLJhRJ7e"
+      "_key": "!cards.cards!j8sZeFt4twwoNcXI.J8CRpgDtKMwCC9uU"
     },
     {
-      "_id": "2dNkeMCOCz8AOJ3x",
+      "_id": "F8G4kpX2yFYrBfGq",
       "name": "Tornado",
       "description": "",
       "type": "base",
@@ -197,6 +202,11 @@
                               "key": "system.attributes.movement.walk",
                               "value": "-5",
                               "mode": "2"
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.metal",
+                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -242,7 +252,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616034303,
+        "modifiedTime": 1755672544182,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -251,10 +261,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!SD0UEPLiLrUUw18m.2dNkeMCOCz8AOJ3x"
+      "_key": "!cards.cards!j8sZeFt4twwoNcXI.F8G4kpX2yFYrBfGq"
     },
     {
-      "_id": "NcGHnJM8r1FbQeMO",
+      "_id": "9gT8y5e3IfmMxbYY",
       "name": "Earth Fracture",
       "description": "",
       "type": "base",
@@ -321,6 +331,11 @@
                               "key": "system.fq.attributes.evasion",
                               "value": "-1",
                               "mode": "2"
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.wood",
+                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -366,7 +381,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616030693,
+        "modifiedTime": 1755672512703,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -375,10 +390,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!SD0UEPLiLrUUw18m.NcGHnJM8r1FbQeMO"
+      "_key": "!cards.cards!j8sZeFt4twwoNcXI.9gT8y5e3IfmMxbYY"
     },
     {
-      "_id": "4EpWLglFALci4xAF",
+      "_id": "ycZH3afnCVxHzSBd",
       "name": "Earth Fracture",
       "description": "",
       "type": "base",
@@ -445,6 +460,11 @@
                               "key": "system.fq.attributes.evasion",
                               "value": "-1",
                               "mode": "2"
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.wood",
+                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -490,7 +510,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616030693,
+        "modifiedTime": 1755672512703,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -499,10 +519,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!SD0UEPLiLrUUw18m.4EpWLglFALci4xAF"
+      "_key": "!cards.cards!j8sZeFt4twwoNcXI.ycZH3afnCVxHzSBd"
     },
     {
-      "_id": "4yGKBbT6FNSv8f4F",
+      "_id": "pGsE3e268Q2nzPWd",
       "name": "Frost Strike",
       "description": "",
       "type": "base",
@@ -575,6 +595,11 @@
                               "key": "system.fq.action.value",
                               "value": "-1",
                               "mode": "2"
+                            },
+                            {
+                              "key": "macro.executre",
+                              "value": "jb2a.aura_themed.01.orbit.loop.cold",
+                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -623,7 +648,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616038640,
+        "modifiedTime": 1755672468031,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -632,10 +657,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!SD0UEPLiLrUUw18m.4yGKBbT6FNSv8f4F"
+      "_key": "!cards.cards!j8sZeFt4twwoNcXI.pGsE3e268Q2nzPWd"
     },
     {
-      "_id": "BUdNgILvSMYDgi2J",
+      "_id": "mFWlZdH8r4gmhZs9",
       "name": "Frost Strike",
       "description": "",
       "type": "base",
@@ -708,6 +733,11 @@
                               "key": "system.fq.action.value",
                               "value": "-1",
                               "mode": "2"
+                            },
+                            {
+                              "key": "macro.executre",
+                              "value": "jb2a.aura_themed.01.orbit.loop.cold",
+                              "mode": "0"
                             }
                           ],
                           "duration": {
@@ -756,7 +786,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616038640,
+        "modifiedTime": 1755672468031,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -765,10 +795,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!SD0UEPLiLrUUw18m.BUdNgILvSMYDgi2J"
+      "_key": "!cards.cards!j8sZeFt4twwoNcXI.mFWlZdH8r4gmhZs9"
     },
     {
-      "_id": "8Zz9mxedV36s1qFp",
+      "_id": "tMlgp8VhIODmCBk0",
       "name": "Mana Recovery III",
       "description": "",
       "type": "base",
@@ -850,7 +880,7 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!SD0UEPLiLrUUw18m.8Zz9mxedV36s1qFp"
+      "_key": "!cards.cards!j8sZeFt4twwoNcXI.tMlgp8VhIODmCBk0"
     }
   ],
   "width": null,
@@ -875,5 +905,5 @@
     "default": 0
   },
   "system": {},
-  "_key": "!cards!SD0UEPLiLrUUw18m"
+  "_key": "!cards!j8sZeFt4twwoNcXI"
 }

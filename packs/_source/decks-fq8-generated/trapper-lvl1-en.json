@@ -1,12 +1,12 @@
 {
-  "_id": "sUpyQaMnLFhM7Olu",
+  "_id": "86vnwSuYG7WdU9zv",
   "name": "Trapper Lvl1 - en",
   "type": "deck",
   "description": "",
   "img": "modules/fq-card-engine/images/cards/back_trapper.PNG",
   "cards": [
     {
-      "_id": "YLshaBL5w2zknQfE",
+      "_id": "UVmUCpefb2u2Rm3v",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -91,10 +91,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!sUpyQaMnLFhM7Olu.YLshaBL5w2zknQfE"
+      "_key": "!cards.cards!86vnwSuYG7WdU9zv.UVmUCpefb2u2Rm3v"
     },
     {
-      "_id": "y9pkTTvNxZG0LwHU",
+      "_id": "qx39ivlp4bf1SnCG",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -179,10 +179,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!sUpyQaMnLFhM7Olu.y9pkTTvNxZG0LwHU"
+      "_key": "!cards.cards!86vnwSuYG7WdU9zv.qx39ivlp4bf1SnCG"
     },
     {
-      "_id": "KgSfrV68Y0j6YVaZ",
+      "_id": "1PUfERRObmM2G2zi",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -267,10 +267,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!sUpyQaMnLFhM7Olu.KgSfrV68Y0j6YVaZ"
+      "_key": "!cards.cards!86vnwSuYG7WdU9zv.1PUfERRObmM2G2zi"
     },
     {
-      "_id": "Knyz3VYI9ZZBj59U",
+      "_id": "OFyRG5iOLxSesvQs",
       "name": "Double Arrows",
       "description": "",
       "type": "base",
@@ -355,10 +355,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!sUpyQaMnLFhM7Olu.Knyz3VYI9ZZBj59U"
+      "_key": "!cards.cards!86vnwSuYG7WdU9zv.OFyRG5iOLxSesvQs"
     },
     {
-      "_id": "3CG87kBzOaede1yV",
+      "_id": "nDqHX98fko3Oi2xu",
       "name": "Tamed Wolf",
       "description": "",
       "type": "base",
@@ -457,10 +457,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!sUpyQaMnLFhM7Olu.3CG87kBzOaede1yV"
+      "_key": "!cards.cards!86vnwSuYG7WdU9zv.nDqHX98fko3Oi2xu"
     },
     {
-      "_id": "jnv17e0eyWn2fzUd",
+      "_id": "BPKltaFySoRDcV0L",
       "name": "Elite Marksman",
       "description": "",
       "type": "base",
@@ -585,10 +585,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!sUpyQaMnLFhM7Olu.jnv17e0eyWn2fzUd"
+      "_key": "!cards.cards!86vnwSuYG7WdU9zv.BPKltaFySoRDcV0L"
     },
     {
-      "_id": "GSLyAoaMTxFuI8wH",
+      "_id": "ioLiDyptJODbCdh4",
       "name": "Rain of Arrows",
       "description": "",
       "type": "base",
@@ -683,7 +683,7 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!sUpyQaMnLFhM7Olu.GSLyAoaMTxFuI8wH"
+      "_key": "!cards.cards!86vnwSuYG7WdU9zv.ioLiDyptJODbCdh4"
     }
   ],
   "width": null,
@@ -708,5 +708,5 @@
     "default": 0
   },
   "system": {},
-  "_key": "!cards!sUpyQaMnLFhM7Olu"
+  "_key": "!cards!86vnwSuYG7WdU9zv"
 }
