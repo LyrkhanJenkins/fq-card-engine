@@ -19,13 +19,13 @@
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1755669327499,
-    "modifiedTime": 1755669327499,
+    "modifiedTime": 1755685856933,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "ownership": {
     "default": 0
   },
   "_id": "RRxrheoVAnanD1R7",
-  "sort": 0,
+  "sort": 300000,
   "_key": "!macros!RRxrheoVAnanD1R7"
 }

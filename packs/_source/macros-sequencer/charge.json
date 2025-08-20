@@ -1,0 +1,31 @@
+{
+  "name": "Charge",
+  "type": "script",
+  "author": "ynIo5hURbsdbG4cp",
+  "img": "icons/skills/movement/arrow-upward-yellow.webp",
+  "scope": "global",
+  "command": "if (args[0] === \"on\") {\nconst target = game.user.targets.first();\nif (!target) {\n  ui.notifications.warn(\"Aucune cible sélectionnée !\");\n  return;\n}\n\n// Infos de grille\nconst gridSize = canvas.grid.size;\nconst tgtPosition = target.position;\n\n// Coordonnées de la case de base de la cible (arrondies à la grille)\nconst tgtX = tgtPosition.x;\nconst tgtY = tgtPosition.y;\n\n// Cases adjacentes (haut, bas, gauche, droite)\nconst adjacents = [\n  { x: tgtX,           y: tgtY - gridSize }, // haut\n  { x: tgtX,           y: tgtY + gridSize }, // bas\n  { x: tgtX - gridSize, y: tgtY },           // gauche\n  { x: tgtX + gridSize, y: tgtY }            // droite\n];\n\n// Position du token\nconst start = token.center;\n\n// Cherche la case adjacente la plus proche\nlet best = null;\nlet bestD2 = Infinity;\nfor (let pos of adjacents) {\n  const d2 = (pos.x - start.x) ** 2 + (pos.y - start.y) ** 2;\n  console.log(pos)\n  console.log(d2)\n  if (d2 < bestD2) { bestD2 = d2; best = pos; }\n}\n\n// Si pas trouvé\nif (!best) {\n  ui.notifications.error(\"Impossible de trouver une case adjacente !\");\n  return;\n}\n\n// Séquence de TP\nnew Sequence()\n  .effect()\n    .from(token)\n    .fadeIn(50)\n    .duration(300)\n    .fadeOut(150)\n    .filter(\"Blur\")\n    .elevation(0)\n  .effect()\n    .file(\"jb2a.gust_of_wind.veryfast\")\n    .atLocation(token)\n    .stretchTo(best)\n    .elevation(0)\n  .wait(100)\n  .animation()\n    .on(token)\n    .teleportTo(best)\n    .snapToGrid()\n    .waitUntilFinished()\n  .effect()\n    .file(\"jb2a.wind_lines.01.01\")\n    .atLocation(best)\n    .scaleToObject()\n  .play();\n}",
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "advanced-macros": {
+      "runForSpecificUser": ""
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "dnd5e",
+    "systemVersion": "5.1.2",
+    "createdTime": 1755685856909,
+    "modifiedTime": 1755685902542,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "_id": "3k3xLEM1mLstOHJD",
+  "sort": 200000,
+  "_key": "!macros!3k3xLEM1mLstOHJD"
+}

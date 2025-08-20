@@ -2,9 +2,9 @@
   "name": "FlashMove",
   "type": "script",
   "author": "ynIo5hURbsdbG4cp",
-  "img": "modules/fq-card-engine/images/cards/en/monk/base/flash_move.PNG",
+  "img": "icons/skills/movement/ball-spinning-blue.webp",
   "scope": "global",
-  "command": "if (args[0] === \"on\") {\nconst roll = await new Roll(args[1] || 7).evaluate();\nconst distance =  roll.total;\n\n// ⚠️ Vérifie qu'il y a une cible sélectionnée\nconst target = game.user.targets.first();\nif (!target) {\n  ui.notifications.warn(\"Aucune cible sélectionnée !\");\n  return;\n}\n// Position du token de départ\nconst startX = token.center.x;\nconst startY = token.center.y;\n\n// Position de la cible\nconst targetX = target.center.x;\nconst targetY = target.center.y;\n\n// Vecteur direction normalisé\nconst dx = targetX - startX;\nconst dy = targetY - startY;\nconst len = Math.hypot(dx, dy);\nconst dirX = dx / len;\nconst dirY = dy / len;\n\n// Conversion distance en pixels\nconst gridSize = canvas.grid.size;\nconst distPx = distance * gridSize; // 1 case = 1 grille\n  \n// Nouvelle position\nconst newPos = {\n  x: startX + dirX * distPx,\n  y: startY + dirY * distPx\n};\nconsole.log(newPos)\n\n// Séquence de téléportation\nnew Sequence()\n  .effect()\n    .from(token)\n    .fadeIn(50)\n    .duration(550)\n    .fadeOut(250)\n    .filter(\"Blur\")\n    .elevation(0)\n  .effect()\n    .file(\"jb2a.chain_lightning.secondary.blue\")\n    .atLocation(token)\n    .stretchTo(newPos)\n    .elevation(0)\n  .wait(100)\n  .animation()\n    .on(token)\n    .teleportTo(newPos)\n    .snapToGrid()\n    .waitUntilFinished()\n  .effect()\n    .file(\"jb2a.static_electricity.03.blue\")\n    .atLocation(newPos)\n    .scaleToObject()\n  .play();\n}",
+  "command": "if (args[0] === \"on\") {\nconst roll = await new Roll(args[1] || 7).evaluate();\nconst distance =  roll.total;\n\n// ⚠️ Vérifie qu'il y a une cible sélectionnée\nconst target = game.user.targets.first();\nif (!target) {\n  ui.notifications.warn(\"Aucune cible sélectionnée !\");\n  return;\n}\n// Position du token de départ\nconst startX = token.center.x;\nconst startY = token.center.y;\n\n// Position de la cible\nconst targetX = target.center.x;\nconst targetY = target.center.y;\n\n// Vecteur direction normalisé\nconst dx = targetX - startX;\nconst dy = targetY - startY;\nconst len = Math.hypot(dx, dy);\nconst dirX = dx / len;\nconst dirY = dy / len;\n\n// Conversion distance en pixels\nconst gridSize = canvas.grid.size;\nconst distPx = distance * gridSize; // 1 case = 1 grille\n  \n// Nouvelle position\nconst newPos = {\n  x: startX + dirX * distPx,\n  y: startY + dirY * distPx\n};\n\n// Séquence de téléportation\nnew Sequence()\n  .effect()\n    .from(token)\n    .fadeIn(50)\n    .duration(550)\n    .fadeOut(250)\n    .filter(\"Blur\")\n    .elevation(0)\n  .effect()\n    .file(\"jb2a.chain_lightning.secondary.blue\")\n    .atLocation(token)\n    .stretchTo(newPos)\n    .elevation(0)\n  .wait(100)\n  .animation()\n    .on(token)\n    .teleportTo(newPos)\n    .snapToGrid()\n    .waitUntilFinished()\n  .effect()\n    .file(\"jb2a.static_electricity.03.blue\")\n    .atLocation(newPos)\n    .scaleToObject()\n  .play();\n}",
   "folder": null,
   "ownership": {
     "default": 0
@@ -22,10 +22,10 @@
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1755676563047,
-    "modifiedTime": 1755676563047,
+    "modifiedTime": 1755685923146,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "_id": "JeTo06M10vPj8wh8",
-  "sort": 0,
+  "sort": 100000,
   "_key": "!macros!JeTo06M10vPj8wh8"
 }

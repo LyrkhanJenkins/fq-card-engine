@@ -622,11 +622,18 @@
     "bar2": {
       "attribute": null
     },
-    "flags": {},
+    "flags": {
+      "swarm": {
+        "isSwarm": false,
+        "swarmSize": 20,
+        "swarmSpeed": 1,
+        "animation": "circular"
+      }
+    },
     "randomImg": false,
     "sight": {
       "angle": 160,
-      "enabled": true,
+      "enabled": false,
       "range": 10,
       "visionMode": "basic",
       "color": null,
@@ -681,7 +688,7 @@
     "systemId": "dnd5e",
     "systemVersion": "3.0.3",
     "createdTime": 1709393662256,
-    "modifiedTime": 1754831778348,
+    "modifiedTime": 1755685834219,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,
