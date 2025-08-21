@@ -12,6 +12,7 @@ les communs apparaissent avec un niveau d'attributs )
 - Faire un json avec tous les possibilité pour une classe
 - Carte Incantation et les passifs en générale pas très clair, réécrire ptetre les règle (coute 0 après première utilisation)
 - Migration des sons des macros avec les assets
+- Correction des familiers pour utiliser leurs attaques
 
 ~~- Droits joueurs limités~~
 
@@ -40,6 +41,8 @@ les communs apparaissent avec un niveau d'attributs )
 - Gestion de plusieurs modules pour les effets magiques de combat
 - Gérer des macros d'animations spéciales genre par exemple la téléportation autre que les auras
 - Permettre d'acoir un raccourci de partout fq. pour les effets récupérer comme j2ba.
+- Repasse sur toutes les cartes (orthographe, gras , @str ou @for, faire des cartes communes pour points d'actions/mana/pioches?)
+- Rajouter 1 ou 2 cartes + 2 ou 3 cartes sup dans le deck niveau 1 (pour arriver à 40 cartes niveau 5)
 
 ### Medium:
 
@@ -48,6 +51,7 @@ les communs apparaissent avec un niveau d'attributs )
 - Lancer les sons des cartes sur un dossier plutôt qu'un fichier (lancer un fichier audio aléatoire d'un dossier)
 - Rétrocompatibilité des feuilles : n'ajouter que la partie fq ou toute la feuille ?
 - Permettre de remonter les points de vie/mana/zele courant même si éléments actifs
+- Supprimer les familier en fin de combat
 
 ### Low:
 

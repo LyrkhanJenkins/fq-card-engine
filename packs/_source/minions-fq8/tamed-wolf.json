@@ -132,11 +132,7 @@
   ],
   "effects": [],
   "folder": null,
-  "flags": {
-    "dnd5e": {
-      "showTokenPortrait": false
-    }
-  },
+  "flags": {},
   "ownership": {
     "default": 0
   },
@@ -574,8 +570,8 @@
         "dot": 0
       },
       "cards": {
-        "hand": 1,
-        "pick": 1,
+        "hand": 0,
+        "pick": 0,
         "currentDrop": 0
       }
     }
@@ -628,11 +624,14 @@
         "swarmSize": 20,
         "swarmSpeed": 1,
         "animation": "circular"
+      },
+      "wall-height": {
+        "tokenHeight": 0
       }
     },
     "randomImg": false,
     "sight": {
-      "angle": 160,
+      "angle": 360,
       "enabled": false,
       "range": 10,
       "visionMode": "basic",
@@ -682,13 +681,13 @@
     "movementAction": null
   },
   "_id": "lcpIiyWfFT0pxJwa",
-  "sort": 0,
+  "sort": 100000,
   "_stats": {
     "coreVersion": "13.347",
     "systemId": "dnd5e",
-    "systemVersion": "3.0.3",
+    "systemVersion": "5.1.2",
     "createdTime": 1709393662256,
-    "modifiedTime": 1755685834219,
+    "modifiedTime": 1755764436023,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,

@@ -913,7 +913,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1709393283253,
-    "modifiedTime": 1755685801642,
+    "modifiedTime": 1755762139528,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.tnE1cbB7yEjjCvBD",
     "duplicateSource": null,
@@ -1430,11 +1430,14 @@
             "ownerVisibility": 0
           }
         }
+      },
+      "wall-height": {
+        "tokenHeight": 0
       }
     },
     "randomImg": false,
     "sight": {
-      "angle": 160,
+      "angle": 360,
       "enabled": false,
       "range": 10,
       "visionMode": "basic",

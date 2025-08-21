@@ -317,7 +317,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1709393283251,
-    "modifiedTime": 1755685775638,
+    "modifiedTime": 1755762102631,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.rQuVifFJLCKiURDP",
     "duplicateSource": null,
@@ -871,11 +871,14 @@
         "token-combat-animation": "",
         "token-highlight": "",
         "bloodsplat-colour": ""
+      },
+      "wall-height": {
+        "tokenHeight": 0
       }
     },
     "randomImg": false,
     "sight": {
-      "angle": 160,
+      "angle": 360,
       "enabled": false,
       "range": 10,
       "visionMode": "basic",
