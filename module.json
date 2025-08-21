@@ -77,15 +77,31 @@
         "id": "lib-wrapper",
         "type": "module",
         "compatibility": {}
+      }
+    ],
+    "recommends": [
+      {
+        "id": "orcnog-card-viewer",
+        "type": "module",
+        "reason": "The Card module viewer enhanced quality of drawing cards",
+        "compatibility": {}
       },
       {
         "id": "sequencer",
         "type": "module",
+        "reason": "The Sequencer module provides beautiful visuals effects implemented with FQ cards",
         "compatibility": {}
       },
       {
         "id": "advanced-macros",
         "type": "module",
+        "reason": "The advanced macro module is used with Sequencer",
+        "compatibility": {}
+      },
+      {
+        "id": "JB2A_DnD5e",
+        "type": "module",
+        "reason": "The JB2A module is used with Sequencer",
         "compatibility": {}
       }
     ]

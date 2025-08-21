@@ -319,7 +319,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1709393283258,
-    "modifiedTime": 1755762121994,
+    "modifiedTime": 1755794791781,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.aLCU8wbG8BaDblmj",
     "duplicateSource": null,
@@ -877,7 +877,7 @@
     "randomImg": false,
     "sight": {
       "angle": 360,
-      "enabled": false,
+      "enabled": true,
       "range": 10,
       "visionMode": "basic",
       "color": null,

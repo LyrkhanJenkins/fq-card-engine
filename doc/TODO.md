@@ -1,4 +1,11 @@
 ## V1.1
+- Faire un point sur todos: Ramener toutes les notes écrites pendant les vacances + Tri de priorité et Roadmap
+- Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
+  - Pour le reste utiliser JB2A, gérer les sons et les jouer également si pas le module sequencer
+- Refacto pour s'affranchir du code de fq-card-engine
+- Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
+- Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (pour arriver à 40 cartes niveau 5)
+- Créer les classe Guardian et witch + 
 - Implémentation de deux nouvelles classes : Gardien et Sorcière
 - Implémenter les cartes communes pour le niveau 6 + 4 Sorts Ultime par classes ? OU que les boosters
 - Implémenter des cartes utilisable hors des combats et qui ne se défausse jamais (1/2 par classe ? + les communs,
@@ -13,6 +20,14 @@ les communs apparaissent avec un niveau d'attributs )
 - Carte Incantation et les passifs en générale pas très clair, réécrire ptetre les règle (coute 0 après première utilisation)
 - Migration des sons des macros avec les assets
 - Correction des familiers pour utiliser leurs attaques
+- Macro pour piocher un booster et le mettre dans la bibliotheque du joueur
+- Gestion de plusieurs modules pour les effets magiques de combat
+- Gérer des macros d'animations spéciales genre par exemple la téléportation autre que les auras
+- Permettre d'avoir un raccourci de partout fq. pour les effets récupérer comme j2ba.
+- Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points d'actions/mana/pioches?)
+
+## V1.1.1
+- Gérer jusqu'au niveau 10 les 7 classes
 
 ~~- Droits joueurs limités~~
 
@@ -37,12 +52,6 @@ les communs apparaissent avec un niveau d'attributs )
 ## Backlog
 
 ### High:
-- Macro pour piocher un booster et le mettre dans la bibliotheque du joueur
-- Gestion de plusieurs modules pour les effets magiques de combat
-- Gérer des macros d'animations spéciales genre par exemple la téléportation autre que les auras
-- Permettre d'acoir un raccourci de partout fq. pour les effets récupérer comme j2ba.
-- Repasse sur toutes les cartes (orthographe, gras , @str ou @for, faire des cartes communes pour points d'actions/mana/pioches?)
-- Rajouter 1 ou 2 cartes + 2 ou 3 cartes sup dans le deck niveau 1 (pour arriver à 40 cartes niveau 5)
 
 ### Medium:
 
