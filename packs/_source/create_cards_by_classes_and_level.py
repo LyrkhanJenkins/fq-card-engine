@@ -72,8 +72,14 @@ listes_cards = {
                         "Arcane Explosion"],
     'Monk Lvl1': ["Right Punch", "Right Punch", "Right Punch", "Right Punch", "Right Punch", "Right Punch",
                   "Left Punch", "Left Punch", "Left Punch", "Combo", "Combo", "Mana Recovery III", "Zealous Shield",
-                  "Zealous Shield"]
+                  "Zealous Shield"],
+    'Guardian Lvl1': ["Heroic strike","Heroic strike","Heroic strike", "Heroic strike", "Sharpening", "Sharpening", "Taunting Strike", "Taunting Strike"]
 }
+
+listes_cards['Guardian Lvl2'] = listes_cards['Guardian Lvl1'] + ["Charge", "Charge", "Draw II", "Turn Booster IV", "Hemorrhage", "Hemorrhage"]
+listes_cards['Guardian Lvl3'] = listes_cards['Guardian Lvl2'] + ["Heroic strike","Heroic strike", "Mana Surge", "Mana Recover I", "Blade Charging", "Armor Reinforcement", "Blade Whirlwind"]
+listes_cards['Guardian Lvl4'] = listes_cards['Guardian Lvl3'] + ["Mana Surge", "Draw II", "Turn Booster IV", "Shield Bash", "Shield Bash", "Hemorrhage", "Hemorrhage", "Ultimate Rage"]
+listes_cards['Guardian Lvl5'] = listes_cards['Guardian Lvl4'] + ["Mana Surge", "Mana Recover I", "Rage Surge", "Powerful Strike", "Powerful Strike", "Armor Reinforcement", "Blade Whirlwind"]
 
 listes_cards['Monk Lvl2'] = listes_cards['Monk Lvl1'] + ["Left Punch", "Left Punch", "Inhibiting Cape", "Quick Dodge"]
 listes_cards['Monk Lvl3'] = listes_cards['Monk Lvl2'] + ["Turn Booster V", "Inhibiting Cape", "Zen Meditation",

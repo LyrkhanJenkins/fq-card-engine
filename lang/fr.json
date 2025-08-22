@@ -265,6 +265,7 @@
   "FQCARDENGINE.WarningNoTokenInCanvas": "Le personnage n'est pas présent sur la scène",
   "FQCARDENGINE.WarningSpellOverloaded": "Le sort {spell} serait trop chargé",
   "FQCARDENGINE.WarningSpellNotLoaded": "La sort {spell} n'est pas encore chargé",
+  "FQCARDENGINE.WarningSpellNotCostingMana": "Le dernier sort joué ne coutait pas de mana",
 
   "FQCARDENGINE.MacroMsgCatchingBreath": "Vous reprenez votre souffle... Les points d'action sont désormais au maximum!",
   "FQCARDENGINE.MacroErrorMsgHustle": "Vous devez avoir une et une seule cible et elle doit se trouver sur une \ncase adjacente à votre personnage",
@@ -293,6 +294,7 @@
   "FQCARDENGINE.CardMsgHealthPointRecover": "Vous récupérez {hp} points de vie",
   "FQCARDENGINE.CardMsgCardCharging": "Vous chargez le sort {spell} de {action} points d'action",
   "FQCARDENGINE.CardMsgLoadScore": "Chargement actuel : ",
+  "FQCARDENGINE.CardMsgUltimateRage": "Vous entrez en rage augmentant vos dégâts de 2X{bonus}.\nVous subissez {bonus} dégâts par tour.",
 
   "FQCARDENGINE.CardMsgTemporaryEffect": "L'effet '{effectName}' dure {turn} tour(s)",
   "FQCARDENGINE.CardMsgApplyEffect": "L'Effet '{effectName}' a été appliqué aux cibles",

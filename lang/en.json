@@ -265,6 +265,7 @@
   "FQCARDENGINE.WarningNoTokenInCanvas": "The actor is not set on the scene",
   "FQCARDENGINE.WarningSpellOverloaded": "The spell {spell} is overloaded",
   "FQCARDENGINE.WarningSpellNotLoaded": "The spell {spell} is not loaded yet",
+  "FQCARDENGINE.WarningSpellNotCostingMana": "The last cast spell was not costing mana",
 
   "FQCARDENGINE.MacroMsgCatchingBreath": "You catch your breath... Action points are now at maximum!",
   "FQCARDENGINE.MacroErrorMsgHustle": "You must have exactly one target, and it must be on a square adjacent to your character.",
@@ -293,6 +294,7 @@
   "FQCARDENGINE.CardMsgHealthPointRecover": "You recover {hp} health points",
   "FQCARDENGINE.CardMsgCardCharging": "The spell {spell} is loading {action} points d'action",
   "FQCARDENGINE.CardMsgLoadScore": "Current loading : ",
+  "FQCARDENGINE.CardMsgUltimateRage": "You enter into a rage, increasing your damage by 2X{bonus}.\nYou take {bonus} damage per turn.",
 
   "FQCARDENGINE.CardMsgTemporaryEffect": "The effect '{effectName}' lasts {turn} turn(s)",
   "FQCARDENGINE.CardMsgApplyEffect": "The effect '{effectName}' has been applied to the targets",

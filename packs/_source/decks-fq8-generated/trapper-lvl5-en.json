@@ -1,12 +1,12 @@
 {
-  "_id": "crp065Dg634m3XzZ",
+  "_id": "oE0VvkFPoaMNVuWZ",
   "name": "Trapper Lvl5 - en",
   "type": "deck",
   "description": "",
   "img": "modules/fq-card-engine/images/cards/back_trapper.PNG",
   "cards": [
     {
-      "_id": "PryGw34oG9y6UtWa",
+      "_id": "6nb4jE4P2beKsPqx",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -91,10 +91,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.PryGw34oG9y6UtWa"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.6nb4jE4P2beKsPqx"
     },
     {
-      "_id": "0kPukCzmqv0lhG7r",
+      "_id": "DyvCmvN1PjMfG08e",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -179,10 +179,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.0kPukCzmqv0lhG7r"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.DyvCmvN1PjMfG08e"
     },
     {
-      "_id": "ZXBnArDXrMtlPBwz",
+      "_id": "aTeVE1bMqp9ECOXO",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -267,10 +267,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.ZXBnArDXrMtlPBwz"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.aTeVE1bMqp9ECOXO"
     },
     {
-      "_id": "cP4jMhPZo28TzOKO",
+      "_id": "4ngRdiVWqbOHXpNj",
       "name": "Double Arrows",
       "description": "",
       "type": "base",
@@ -355,10 +355,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.cP4jMhPZo28TzOKO"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.4ngRdiVWqbOHXpNj"
     },
     {
-      "_id": "BC3eiJBDL15X237X",
+      "_id": "r8z6q6NeHR9WsbX6",
       "name": "Tamed Wolf",
       "description": "",
       "type": "base",
@@ -457,10 +457,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.BC3eiJBDL15X237X"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.r8z6q6NeHR9WsbX6"
     },
     {
-      "_id": "82vypw1mxtdr7Sro",
+      "_id": "2OYuqX3HPh9vFFPA",
       "name": "Elite Marksman",
       "description": "",
       "type": "base",
@@ -585,10 +585,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.82vypw1mxtdr7Sro"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.2OYuqX3HPh9vFFPA"
     },
     {
-      "_id": "is1tqhxpAcyvqUTR",
+      "_id": "mKo0SkaNlGhVUGec",
       "name": "Rain of Arrows",
       "description": "",
       "type": "base",
@@ -683,10 +683,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.is1tqhxpAcyvqUTR"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.mKo0SkaNlGhVUGec"
     },
     {
-      "_id": "lmjpBpcX75hgOM7k",
+      "_id": "8NGBxTISDM6DHw1T",
       "name": "Draw II",
       "description": "",
       "type": "base",
@@ -776,10 +776,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.lmjpBpcX75hgOM7k"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.8NGBxTISDM6DHw1T"
     },
     {
-      "_id": "tjfmK01AQXY1EwID",
+      "_id": "fYCkbDGtFQoqoX2P",
       "name": "Mana Recovery II",
       "description": "",
       "type": "base",
@@ -869,10 +869,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.tjfmK01AQXY1EwID"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.fYCkbDGtFQoqoX2P"
     },
     {
-      "_id": "TtU33ljMr0fygRW4",
+      "_id": "ajezf5cLluQwc6P4",
       "name": "Trap",
       "description": "",
       "type": "base",
@@ -993,10 +993,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.TtU33ljMr0fygRW4"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.ajezf5cLluQwc6P4"
     },
     {
-      "_id": "xB481I7eDlau8veY",
+      "_id": "7pTwCoPp8Mm1hSrH",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -1081,10 +1081,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.xB481I7eDlau8veY"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.7pTwCoPp8Mm1hSrH"
     },
     {
-      "_id": "2KExeGPXs0YOfPd9",
+      "_id": "1KGUbMPzpTKMkffT",
       "name": "Reflex Shot",
       "description": "",
       "type": "base",
@@ -1169,10 +1169,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.2KExeGPXs0YOfPd9"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.1KGUbMPzpTKMkffT"
     },
     {
-      "_id": "7KuNavEFO3ovqEdp",
+      "_id": "kjl3q0dnCg4XIzjo",
       "name": "Poisoned Shot",
       "description": "",
       "type": "base",
@@ -1293,10 +1293,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.7KuNavEFO3ovqEdp"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.kjl3q0dnCg4XIzjo"
     },
     {
-      "_id": "OWmnrh4SRqtyT5Ns",
+      "_id": "HoNbavDtSyY7VrPv",
       "name": "Poisoned Shot",
       "description": "",
       "type": "base",
@@ -1417,10 +1417,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.OWmnrh4SRqtyT5Ns"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.HoNbavDtSyY7VrPv"
     },
     {
-      "_id": "68Kg3oCTDP2Kku5y",
+      "_id": "LbstQjjSiDmOqNMP",
       "name": "Piercing Shot",
       "description": "",
       "type": "base",
@@ -1515,10 +1515,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.68Kg3oCTDP2Kku5y"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.LbstQjjSiDmOqNMP"
     },
     {
-      "_id": "XR0klDwzZZv2cd0J",
+      "_id": "UL6BT1vsRPBzrIJY",
       "name": "Draw II",
       "description": "",
       "type": "base",
@@ -1608,10 +1608,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.XR0klDwzZZv2cd0J"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.UL6BT1vsRPBzrIJY"
     },
     {
-      "_id": "JJpDMHLCtphiuldJ",
+      "_id": "oveg5FOejLPdyzPN",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -1696,10 +1696,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.JJpDMHLCtphiuldJ"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.oveg5FOejLPdyzPN"
     },
     {
-      "_id": "evvdMop6sJuMZl21",
+      "_id": "CDSdtuo4zIoWfJn3",
       "name": "Turn Booster IV",
       "description": "",
       "type": "base",
@@ -1789,10 +1789,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.evvdMop6sJuMZl21"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.CDSdtuo4zIoWfJn3"
     },
     {
-      "_id": "lFrkI1q0zkUSKUnl",
+      "_id": "q3zQbqm5l8qpseXG",
       "name": "Elite Marksman",
       "description": "",
       "type": "base",
@@ -1917,10 +1917,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.lFrkI1q0zkUSKUnl"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.q3zQbqm5l8qpseXG"
     },
     {
-      "_id": "Tmq4C5Jt2k5nKam6",
+      "_id": "yU8tp4DGxeXiKOI5",
       "name": "Turn Booster IV",
       "description": "",
       "type": "base",
@@ -2010,10 +2010,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.Tmq4C5Jt2k5nKam6"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.yU8tp4DGxeXiKOI5"
     },
     {
-      "_id": "oBaAvVIoEUSYkGm9",
+      "_id": "Ftt5OzaMKHNQi2cM",
       "name": "Double Arrows",
       "description": "",
       "type": "base",
@@ -2098,10 +2098,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.oBaAvVIoEUSYkGm9"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.Ftt5OzaMKHNQi2cM"
     },
     {
-      "_id": "YZT99IgmjZBJbv3S",
+      "_id": "3ppcGIONR1Jp16DM",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -2186,10 +2186,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.YZT99IgmjZBJbv3S"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.3ppcGIONR1Jp16DM"
     },
     {
-      "_id": "KpcXDOo4oWJuNj1v",
+      "_id": "ZEehKviSAagDG7qD",
       "name": "Mana Recovery II",
       "description": "",
       "type": "base",
@@ -2279,10 +2279,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.KpcXDOo4oWJuNj1v"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.ZEehKviSAagDG7qD"
     },
     {
-      "_id": "Wmj0w7AUKKUI7Jzg",
+      "_id": "HtUp3aesm8bi83fo",
       "name": "Ambush",
       "description": "",
       "type": "base",
@@ -2422,10 +2422,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.Wmj0w7AUKKUI7Jzg"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.HtUp3aesm8bi83fo"
     },
     {
-      "_id": "zPf1p7rJ2vu2GyH6",
+      "_id": "eeuJWDO5nFJFOgnx",
       "name": "Ambush",
       "description": "",
       "type": "base",
@@ -2565,10 +2565,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.zPf1p7rJ2vu2GyH6"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.eeuJWDO5nFJFOgnx"
     },
     {
-      "_id": "YAPaoxqxXgAx5Nf5",
+      "_id": "DI8fDvYfLSZxuVse",
       "name": "Trap",
       "description": "",
       "type": "base",
@@ -2689,10 +2689,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.YAPaoxqxXgAx5Nf5"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.DI8fDvYfLSZxuVse"
     },
     {
-      "_id": "hT4UYyQGHgxWM68Y",
+      "_id": "pG2euLkc8eTnRcwl",
       "name": "Rain of Arrows",
       "description": "",
       "type": "base",
@@ -2787,10 +2787,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.hT4UYyQGHgxWM68Y"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.pG2euLkc8eTnRcwl"
     },
     {
-      "_id": "TlbS4CXaYQMTOBRg",
+      "_id": "j7KoVnjUopahCL5A",
       "name": "Reflex Shot",
       "description": "",
       "type": "base",
@@ -2875,10 +2875,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.TlbS4CXaYQMTOBRg"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.j7KoVnjUopahCL5A"
     },
     {
-      "_id": "0PhIdofJMhjfEsDn",
+      "_id": "8U1KObVJfT36SlOU",
       "name": "Supersonic Shot",
       "description": "",
       "type": "base",
@@ -2968,10 +2968,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.0PhIdofJMhjfEsDn"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.8U1KObVJfT36SlOU"
     },
     {
-      "_id": "VnNiOeePYntpVdsO",
+      "_id": "GV7ngEdoJlt3ehAM",
       "name": "Supersonic Shot",
       "description": "",
       "type": "base",
@@ -3061,10 +3061,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.VnNiOeePYntpVdsO"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.GV7ngEdoJlt3ehAM"
     },
     {
-      "_id": "I4UNYhcgK5A8lsTC",
+      "_id": "E3Vq4iDCmknfxAMs",
       "name": "Explosive Shot",
       "description": "",
       "type": "base",
@@ -3159,10 +3159,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.I4UNYhcgK5A8lsTC"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.E3Vq4iDCmknfxAMs"
     },
     {
-      "_id": "vRV4bKc1v5b2PpyX",
+      "_id": "CbwILZESGXKiPjUq",
       "name": "Explosive Shot",
       "description": "",
       "type": "base",
@@ -3257,10 +3257,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.vRV4bKc1v5b2PpyX"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.CbwILZESGXKiPjUq"
     },
     {
-      "_id": "xQI7lI51IlnZxnLn",
+      "_id": "85hjhf8oUqaA2Vse",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -3345,10 +3345,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.xQI7lI51IlnZxnLn"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.85hjhf8oUqaA2Vse"
     },
     {
-      "_id": "WmMYIJpG0hIgIeRx",
+      "_id": "iOSHKnnXdFxv7cUD",
       "name": "Tamed Wolf",
       "description": "",
       "type": "base",
@@ -3447,10 +3447,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.WmMYIJpG0hIgIeRx"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.iOSHKnnXdFxv7cUD"
     },
     {
-      "_id": "SXZY0f0SiEgRKSaD",
+      "_id": "QjezzaRFuDDkq0vg",
       "name": "Poisoned Shot",
       "description": "",
       "type": "base",
@@ -3571,10 +3571,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.SXZY0f0SiEgRKSaD"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.QjezzaRFuDDkq0vg"
     },
     {
-      "_id": "XXHK8gVi5H8xRVmR",
+      "_id": "C0G2Vgu3freUztcI",
       "name": "Weak Point Study",
       "description": "",
       "type": "base",
@@ -3710,7 +3710,7 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!crp065Dg634m3XzZ.XXHK8gVi5H8xRVmR"
+      "_key": "!cards.cards!oE0VvkFPoaMNVuWZ.C0G2Vgu3freUztcI"
     }
   ],
   "width": null,
@@ -3735,5 +3735,5 @@
     "default": 0
   },
   "system": {},
-  "_key": "!cards!crp065Dg634m3XzZ"
+  "_key": "!cards!oE0VvkFPoaMNVuWZ"
 }
