@@ -9,6 +9,7 @@ if (deck) {
         top: 100
     });
 }
+game.user.character.update({"flags.fq": { ...game.user.character.flags.fq, ...{ bladeCharging: charging } }})
 
 let spellBookName = "Bibliothèque de " + game.user.character.name;
 let spellBook = game.cards.find(c => c.name === spellBookName);

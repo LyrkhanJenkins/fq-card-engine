@@ -1,2 +1,6 @@
-!game.user.targets.size || ([...game.user.targets].filter(t => Math.abs(t.document.x - game.canvas?.scene?.tokens?.find(t => t.actor?.id === game.user?.character?.id).x)
-    === Math.abs(t.document.y - game.canvas?.scene?.tokens?.find(t => t.actor?.id === game.user?.character?.id).y)).length === [...game.user.targets].length);
+const charging = (game.user.character.flags.fq?.bladeCharging ? game.user.character.flags.fq.bladeCharging : 0) + Number(5);
+if (charging > 12) {
+    false;
+} else {
+    game.user.character.flags.fq = { ...game.user.character.flags.fq, ...{ bladeCharging: charging } };
+}

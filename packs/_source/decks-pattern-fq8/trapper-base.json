@@ -1289,7 +1289,7 @@
                           "changes": [
                             {
                               "key": "system.fq.bonus.damage",
-                              "value": "1",
+                              "value": "+1",
                               "mode": "2"
                             }
                           ],
@@ -1350,7 +1350,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616933276,
+        "modifiedTime": 1755849217415,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1428,7 +1428,7 @@
                           "changes": [
                             {
                               "key": "system.fq.bonus.damage",
-                              "value": "@wis",
+                              "value": "+@wis",
                               "mode": "2"
                             }
                           ],
@@ -1493,7 +1493,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616464283,
+        "modifiedTime": 1755849187491,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,

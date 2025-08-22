@@ -25,8 +25,13 @@ les communs apparaissent avec un niveau d'attributs )
 - Gérer des macros d'animations spéciales genre par exemple la téléportation autre que les auras
 - Permettre d'avoir un raccourci de partout fq. pour les effets récupérer comme j2ba.
 - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points d'actions/mana/pioches?)
+- Protéger l'utilisation de carte si pas de token controlé par le joueur
+- Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
+- Au choix du type de carte n'afficher ou pas les choix dans la dialog
 
-## V1.1.1
+## V1.2
+- Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
+- Gérer les cibles après coup?
 - Gérer jusqu'au niveau 10 les 7 classes
 
 ~~- Droits joueurs limités~~
@@ -53,6 +58,8 @@ les communs apparaissent avec un niveau d'attributs )
 
 ### High:
 
+- Se renseigner pour les problèmes d'audio de Foundry
+
 ### Medium:
 
 - Ne pas utiliser de points d'actions quand hors combat
@@ -69,6 +76,7 @@ les communs apparaissent avec un niveau d'attributs )
 - Logué ou trouver un moyen de logué tous les évenements de combat pour pouvoir les réutiliser dans les customEvals
 - Améliorer certaines cartes de mage blanc: light energy (json après utilisation)
 - Gérer les nb target infini et les portée infini?, les critique, els esquive? (light strike)
+- Gérer les cartes chargées directement dans le code natif et pas en script
 
 ### Very Low:
 

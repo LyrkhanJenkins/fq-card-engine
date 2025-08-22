@@ -246,6 +246,8 @@
   "FQCARDENGINE.WarningMsgErrorReadingCardSpecialCondition": "Unable to read the card's special usage conditions",
   "FQCARDENGINE.WarningMsgPlayNoReactiveCard": "Cannot play a non-reactive card outside of your combat turn",
   "FQCARDENGINE.WarningMsgPlayReactiveCard": "Cannot play a reactive card during your own combat turn",
+  "FQCARDENGINE.WarningMsgXValueInferiorXMin": "The value of X for this card cannot be below {xmin}",
+  "FQCARDENGINE.WarningMsgYValueInferiorYMin": "The value of Y for this card cannot be below {ymin}",
   "FQCARDENGINE.WarningMsgXValueSuperiorXMax": "The value of X for this card cannot exceed {xmax} or be negative",
   "FQCARDENGINE.WarningMsgYValueSuperiorYMax": "The value of Y for this card cannot exceed {ymax} or be negative",
   "FQCARDENGINE.WarningMsgNoMoreCardInDeck": "You have no more cards in the deck. Shuffle the played cards back into your deck and draw {pick} card(s).<br>The fatigue score has increased by 1",
@@ -261,6 +263,8 @@
   "FQCARDENGINE.WarningMsgSpellUseOutCombat": "The spell can only be used out of combat!",
   "FQCARDENGINE.WarningNotEnoughCardsSelected": "Not enough card selected",
   "FQCARDENGINE.WarningNoTokenInCanvas": "The actor is not set on the scene",
+  "FQCARDENGINE.WarningSpellOverloaded": "The spell {spell} is overloaded",
+  "FQCARDENGINE.WarningSpellNotLoaded": "The spell {spell} is not loaded yet",
 
   "FQCARDENGINE.MacroMsgCatchingBreath": "You catch your breath... Action points are now at maximum!",
   "FQCARDENGINE.MacroErrorMsgHustle": "You must have exactly one target, and it must be on a square adjacent to your character.",
@@ -287,6 +291,8 @@
   "FQCARDENGINE.CardMsgDamageBonus": "You increase your damage by {damage}",
   "FQCARDENGINE.CardMsgHealBonus": "You increase your healing by {heal}",
   "FQCARDENGINE.CardMsgHealthPointRecover": "You recover {hp} health points",
+  "FQCARDENGINE.CardMsgCardCharging": "The spell {spell} is loading {action} points d'action",
+  "FQCARDENGINE.CardMsgLoadScore": "Current loading : ",
 
   "FQCARDENGINE.CardMsgTemporaryEffect": "The effect '{effectName}' lasts {turn} turn(s)",
   "FQCARDENGINE.CardMsgApplyEffect": "The effect '{effectName}' has been applied to the targets",

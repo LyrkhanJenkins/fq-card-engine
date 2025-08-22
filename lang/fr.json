@@ -246,6 +246,8 @@
   "FQCARDENGINE.WarningMsgErrorReadingCardSpecialCondition": "Impossible de lire les conditions spéciales d'utilisation de la carte",
   "FQCARDENGINE.WarningMsgPlayNoReactiveCard": "Impossible de jouer une carte non réactive hors de son tour de combat",
   "FQCARDENGINE.WarningMsgPlayReactiveCard": "Impossible de jouer une carte réactive à son propre tour de combat",
+  "FQCARDENGINE.WarningMsgXValueInferiorXMin": "La valeur de X pour cette carte ne peut pas être en dessous de {xmin}",
+  "FQCARDENGINE.WarningMsgYValueInferiorYMin": "La valeur de Y pour cette carte ne peut pas être en dessous de {ymin}",
   "FQCARDENGINE.WarningMsgXValueSuperiorXMax": "La valeur de X pour cette carte ne peut pas dépasser {xmax} ou être négative",
   "FQCARDENGINE.WarningMsgYValueSuperiorYMax": "La valeur de Y pour cette carte ne peut pas dépasser {ymax} ou être négative",
   "FQCARDENGINE.WarningMsgNoMoreCardInDeck": "Vous n'avez plus de cartes dans le deck. Remettez les cartes jouées dans votre deck et piochez {pick} carte(s).<br>Le score de fatigue a été augmenté de 1`",
@@ -261,6 +263,8 @@
   "FQCARDENGINE.WarningMsgSpellUseOutCombat": "Le sort n'est utilisable qu'en dehors des combats!",
   "FQCARDENGINE.WarningNotEnoughCardsSelected": "Pas assez de cartes sélectionnées",
   "FQCARDENGINE.WarningNoTokenInCanvas": "Le personnage n'est pas présent sur la scène",
+  "FQCARDENGINE.WarningSpellOverloaded": "Le sort {spell} serait trop chargé",
+  "FQCARDENGINE.WarningSpellNotLoaded": "La sort {spell} n'est pas encore chargé",
 
   "FQCARDENGINE.MacroMsgCatchingBreath": "Vous reprenez votre souffle... Les points d'action sont désormais au maximum!",
   "FQCARDENGINE.MacroErrorMsgHustle": "Vous devez avoir une et une seule cible et elle doit se trouver sur une \ncase adjacente à votre personnage",
@@ -287,6 +291,8 @@
   "FQCARDENGINE.CardMsgDamageBonus": "Vous augmentez vos dégâts de {damage}",
   "FQCARDENGINE.CardMsgHealBonus": "Vous augmentez vos soins de {heal}",
   "FQCARDENGINE.CardMsgHealthPointRecover": "Vous récupérez {hp} points de vie",
+  "FQCARDENGINE.CardMsgCardCharging": "Vous chargez le sort {spell} de {action} points d'action",
+  "FQCARDENGINE.CardMsgLoadScore": "Chargement actuel : ",
 
   "FQCARDENGINE.CardMsgTemporaryEffect": "L'effet '{effectName}' dure {turn} tour(s)",
   "FQCARDENGINE.CardMsgApplyEffect": "L'Effet '{effectName}' a été appliqué aux cibles",
