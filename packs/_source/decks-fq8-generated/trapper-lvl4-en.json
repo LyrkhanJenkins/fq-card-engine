@@ -1,12 +1,12 @@
 {
-  "_id": "UufjYYEVxS865N3y",
+  "_id": "qpmUruIpU9uAbuf6",
   "name": "Trapper Lvl4 - en",
   "type": "deck",
   "description": "",
   "img": "modules/fq-card-engine/images/cards/back_trapper.PNG",
   "cards": [
     {
-      "_id": "LpwrnT5rgYRlCFV4",
+      "_id": "r40HzXJkExoB9Gas",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -19,7 +19,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/precise_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/precise_shot.PNG",
           "text": ""
         }
       ],
@@ -74,7 +74,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -82,7 +83,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616332663,
+        "modifiedTime": 1756127542055,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -91,10 +92,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.LpwrnT5rgYRlCFV4"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.r40HzXJkExoB9Gas"
     },
     {
-      "_id": "dBytJvInLpV0fj2K",
+      "_id": "KCoJqtEsa3WSwAMe",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -107,7 +108,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/precise_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/precise_shot.PNG",
           "text": ""
         }
       ],
@@ -162,7 +163,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -170,7 +172,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616332663,
+        "modifiedTime": 1756127542055,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -179,10 +181,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.dBytJvInLpV0fj2K"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.KCoJqtEsa3WSwAMe"
     },
     {
-      "_id": "pPRD7FcKXgGdT3RR",
+      "_id": "GTN0OmDG1M8nIMoL",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -195,7 +197,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/precise_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/precise_shot.PNG",
           "text": ""
         }
       ],
@@ -250,7 +252,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -258,7 +261,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616332663,
+        "modifiedTime": 1756127542055,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -267,10 +270,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.pPRD7FcKXgGdT3RR"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.GTN0OmDG1M8nIMoL"
     },
     {
-      "_id": "uai3yKjBlZAJcopl",
+      "_id": "aGDZhdvKCKUPhPqD",
       "name": "Double Arrows",
       "description": "",
       "type": "base",
@@ -283,7 +286,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/double_arrows.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/double_arrows.PNG",
           "text": ""
         }
       ],
@@ -338,7 +341,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -346,7 +350,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616648795,
+        "modifiedTime": 1756127584523,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -355,10 +359,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.uai3yKjBlZAJcopl"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.aGDZhdvKCKUPhPqD"
     },
     {
-      "_id": "9yFP9xVo8AbGHmkj",
+      "_id": "IHkDc69vXUeaOUID",
       "name": "Tamed Wolf",
       "description": "",
       "type": "base",
@@ -371,7 +375,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/tamed_wolf.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/tamed_wolf.PNG",
           "text": ""
         }
       ],
@@ -440,7 +444,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -448,7 +453,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616208579,
+        "modifiedTime": 1756127529660,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -457,10 +462,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.9yFP9xVo8AbGHmkj"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.IHkDc69vXUeaOUID"
     },
     {
-      "_id": "z2n23eNKpKnuO0Lb",
+      "_id": "kHGrQYgM0cjaSTTL",
       "name": "Elite Marksman",
       "description": "",
       "type": "base",
@@ -473,7 +478,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/elite_marksman.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/elite_marksman.PNG",
           "text": ""
         }
       ],
@@ -568,7 +573,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -576,7 +582,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616730772,
+        "modifiedTime": 1756127590568,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -585,10 +591,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.z2n23eNKpKnuO0Lb"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.kHGrQYgM0cjaSTTL"
     },
     {
-      "_id": "05oJGnGcW178RmLw",
+      "_id": "utbdMhvrIl4OHKF9",
       "name": "Rain of Arrows",
       "description": "",
       "type": "base",
@@ -602,7 +608,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/rain_of_arrows.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/rain_of_arrows.PNG",
           "text": ""
         }
       ],
@@ -666,7 +672,8 @@
               "minions": [],
               "hasBeenPlayed": false
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -674,7 +681,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616853408,
+        "modifiedTime": 1756127606891,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -683,10 +690,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.05oJGnGcW178RmLw"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.utbdMhvrIl4OHKF9"
     },
     {
-      "_id": "aTV7BcX88FN1KoEf",
+      "_id": "R1l6zakgIF71yTzp",
       "name": "Draw II",
       "description": "",
       "type": "base",
@@ -699,7 +706,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/draw_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/draw_ii.PNG",
           "text": ""
         }
       ],
@@ -759,7 +766,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 2
         }
       },
       "_stats": {
@@ -767,7 +775,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755617018688,
+        "modifiedTime": 1756127633239,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -776,10 +784,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.aTV7BcX88FN1KoEf"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.R1l6zakgIF71yTzp"
     },
     {
-      "_id": "NjOwtzM5xpEJB1fo",
+      "_id": "afTet8XewbEgj6zP",
       "name": "Mana Recovery II",
       "description": "",
       "type": "base",
@@ -792,7 +800,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/mana_recovery_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/mana_recovery_ii.PNG",
           "text": ""
         }
       ],
@@ -852,7 +860,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 2
         }
       },
       "_stats": {
@@ -860,7 +869,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616964439,
+        "modifiedTime": 1756127620037,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -869,10 +878,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.NjOwtzM5xpEJB1fo"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.afTet8XewbEgj6zP"
     },
     {
-      "_id": "K8S1PqNn1MU00frB",
+      "_id": "KW5fgWhRQt9XOO95",
       "name": "Trap",
       "description": "",
       "type": "base",
@@ -885,7 +894,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/trap.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/trap.PNG",
           "text": ""
         }
       ],
@@ -976,7 +985,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 2
         }
       },
       "_stats": {
@@ -984,7 +994,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616795176,
+        "modifiedTime": 1756127600145,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -993,10 +1003,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.K8S1PqNn1MU00frB"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.KW5fgWhRQt9XOO95"
     },
     {
-      "_id": "8r72V5eBjYJcN11O",
+      "_id": "0h9BA4OF8XDhRUcL",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -1009,7 +1019,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/precise_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/precise_shot.PNG",
           "text": ""
         }
       ],
@@ -1064,7 +1074,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -1072,7 +1083,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616332663,
+        "modifiedTime": 1756127542055,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1081,10 +1092,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.8r72V5eBjYJcN11O"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.0h9BA4OF8XDhRUcL"
     },
     {
-      "_id": "dZVdhZwQHTcvkZcr",
+      "_id": "CXiAd6GW6mW83DDK",
       "name": "Reflex Shot",
       "description": "",
       "type": "base",
@@ -1097,7 +1108,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/reflex_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/reflex_shot.PNG",
           "text": ""
         }
       ],
@@ -1152,7 +1163,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 4
         }
       },
       "_stats": {
@@ -1160,7 +1172,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616492225,
+        "modifiedTime": 1756127561495,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1169,10 +1181,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.dZVdhZwQHTcvkZcr"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.CXiAd6GW6mW83DDK"
     },
     {
-      "_id": "BKrf9MvWLgxIOMCT",
+      "_id": "SAYjyACiFMJt07Zm",
       "name": "Poisoned Shot",
       "description": "",
       "type": "base",
@@ -1186,7 +1198,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/poisoned_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/poisoned_shot.PNG",
           "text": ""
         }
       ],
@@ -1276,7 +1288,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 3
         }
       },
       "_stats": {
@@ -1284,7 +1297,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755615846326,
+        "modifiedTime": 1756127524847,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1293,10 +1306,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.BKrf9MvWLgxIOMCT"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.SAYjyACiFMJt07Zm"
     },
     {
-      "_id": "BKDO50pmIzUJ963L",
+      "_id": "hl8XCNP6BSZAPLBV",
       "name": "Poisoned Shot",
       "description": "",
       "type": "base",
@@ -1310,7 +1323,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/poisoned_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/poisoned_shot.PNG",
           "text": ""
         }
       ],
@@ -1400,7 +1413,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 3
         }
       },
       "_stats": {
@@ -1408,7 +1422,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755615846326,
+        "modifiedTime": 1756127524847,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1417,10 +1431,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.BKDO50pmIzUJ963L"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.hl8XCNP6BSZAPLBV"
     },
     {
-      "_id": "PruGlkTnt1Berbhk",
+      "_id": "w1ZKNS7UZNeHGEqP",
       "name": "Piercing Shot",
       "description": "",
       "type": "base",
@@ -1434,7 +1448,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/piercing_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/piercing_shot.PNG",
           "text": ""
         }
       ],
@@ -1498,7 +1512,8 @@
               "minions": [],
               "hasBeenPlayed": false
             }
-          ]
+          ],
+          "level": 3
         }
       },
       "_stats": {
@@ -1506,7 +1521,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616560578,
+        "modifiedTime": 1756127570004,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1515,10 +1530,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.PruGlkTnt1Berbhk"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.w1ZKNS7UZNeHGEqP"
     },
     {
-      "_id": "cnxF3gp2Yxl0PC55",
+      "_id": "9ykCKVRUNaXpL8Fb",
       "name": "Draw II",
       "description": "",
       "type": "base",
@@ -1531,7 +1546,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/draw_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/draw_ii.PNG",
           "text": ""
         }
       ],
@@ -1591,7 +1606,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 2
         }
       },
       "_stats": {
@@ -1599,7 +1615,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755617018688,
+        "modifiedTime": 1756127633239,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1608,10 +1624,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.cnxF3gp2Yxl0PC55"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.9ykCKVRUNaXpL8Fb"
     },
     {
-      "_id": "5Z9FXD1Im0opzzYo",
+      "_id": "lcNyDcaDNQiqheIU",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -1624,7 +1640,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/precise_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/precise_shot.PNG",
           "text": ""
         }
       ],
@@ -1679,7 +1695,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -1687,7 +1704,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616332663,
+        "modifiedTime": 1756127542055,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1696,10 +1713,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.5Z9FXD1Im0opzzYo"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.lcNyDcaDNQiqheIU"
     },
     {
-      "_id": "3rminfRR5j3Xan7s",
+      "_id": "nA0mtG9ik8sq7dgg",
       "name": "Turn Booster IV",
       "description": "",
       "type": "base",
@@ -1712,7 +1729,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/turn_booster_iv.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/turn_booster_iv.PNG",
           "text": ""
         }
       ],
@@ -1772,7 +1789,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 3
         }
       },
       "_stats": {
@@ -1780,7 +1798,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616992308,
+        "modifiedTime": 1756127625142,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1789,10 +1807,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.3rminfRR5j3Xan7s"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.nA0mtG9ik8sq7dgg"
     },
     {
-      "_id": "aye1bO7XwSItPe6J",
+      "_id": "ncvVQzGnvT4ZZWmH",
       "name": "Elite Marksman",
       "description": "",
       "type": "base",
@@ -1805,7 +1823,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/elite_marksman.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/elite_marksman.PNG",
           "text": ""
         }
       ],
@@ -1900,7 +1918,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -1908,7 +1927,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616730772,
+        "modifiedTime": 1756127590568,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -1917,10 +1936,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.aye1bO7XwSItPe6J"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.ncvVQzGnvT4ZZWmH"
     },
     {
-      "_id": "HCDvRF3M0ROnATa9",
+      "_id": "Fl4rGiLTO8zZ07qK",
       "name": "Turn Booster IV",
       "description": "",
       "type": "base",
@@ -1933,7 +1952,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/turn_booster_iv.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/turn_booster_iv.PNG",
           "text": ""
         }
       ],
@@ -1993,7 +2012,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 3
         }
       },
       "_stats": {
@@ -2001,7 +2021,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616992308,
+        "modifiedTime": 1756127625142,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -2010,10 +2030,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.HCDvRF3M0ROnATa9"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.Fl4rGiLTO8zZ07qK"
     },
     {
-      "_id": "eH3FrClLRToMHzfP",
+      "_id": "ZNzWEFhmU8D580VB",
       "name": "Double Arrows",
       "description": "",
       "type": "base",
@@ -2026,7 +2046,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/double_arrows.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/double_arrows.PNG",
           "text": ""
         }
       ],
@@ -2081,7 +2101,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -2089,7 +2110,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616648795,
+        "modifiedTime": 1756127584523,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -2098,10 +2119,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.eH3FrClLRToMHzfP"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.ZNzWEFhmU8D580VB"
     },
     {
-      "_id": "en5YP7uy1VCDQvMm",
+      "_id": "LvPWl5OYhFQ09RBp",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -2114,7 +2135,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/precise_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/precise_shot.PNG",
           "text": ""
         }
       ],
@@ -2169,7 +2190,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -2177,7 +2199,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616332663,
+        "modifiedTime": 1756127542055,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -2186,10 +2208,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.en5YP7uy1VCDQvMm"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.LvPWl5OYhFQ09RBp"
     },
     {
-      "_id": "Fc4vS0zNkYZnWMwL",
+      "_id": "GbrxHkBNNbNN5Vwh",
       "name": "Mana Recovery II",
       "description": "",
       "type": "base",
@@ -2202,7 +2224,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/mana_recovery_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/mana_recovery_ii.PNG",
           "text": ""
         }
       ],
@@ -2262,7 +2284,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 2
         }
       },
       "_stats": {
@@ -2270,7 +2293,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616964439,
+        "modifiedTime": 1756127620037,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -2279,10 +2302,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.Fc4vS0zNkYZnWMwL"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.GbrxHkBNNbNN5Vwh"
     },
     {
-      "_id": "FSNw0m6Mi8Dlw1i4",
+      "_id": "irrwm78S8Ezugqp1",
       "name": "Ambush",
       "description": "",
       "type": "base",
@@ -2295,7 +2318,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/ambush.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/ambush.PNG",
           "text": ""
         }
       ],
@@ -2405,7 +2428,8 @@
               "minions": [],
               "hasBeenPlayed": false
             }
-          ]
+          ],
+          "level": 4
         }
       },
       "_stats": {
@@ -2413,7 +2437,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755849187491,
+        "modifiedTime": 1756127548272,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -2422,10 +2446,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.FSNw0m6Mi8Dlw1i4"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.irrwm78S8Ezugqp1"
     },
     {
-      "_id": "fHfkvRwVAiPol3HS",
+      "_id": "kj0UCovmbCevjWJH",
       "name": "Ambush",
       "description": "",
       "type": "base",
@@ -2438,7 +2462,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/ambush.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/ambush.PNG",
           "text": ""
         }
       ],
@@ -2548,7 +2572,8 @@
               "minions": [],
               "hasBeenPlayed": false
             }
-          ]
+          ],
+          "level": 4
         }
       },
       "_stats": {
@@ -2556,7 +2581,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755849187491,
+        "modifiedTime": 1756127548272,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -2565,10 +2590,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.fHfkvRwVAiPol3HS"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.kj0UCovmbCevjWJH"
     },
     {
-      "_id": "oZ8fPUwIIjk14h1U",
+      "_id": "WCCnoWgYVaroayen",
       "name": "Trap",
       "description": "",
       "type": "base",
@@ -2581,7 +2606,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/trap.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/trap.PNG",
           "text": ""
         }
       ],
@@ -2672,7 +2697,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 2
         }
       },
       "_stats": {
@@ -2680,7 +2706,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616795176,
+        "modifiedTime": 1756127600145,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -2689,10 +2715,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.oZ8fPUwIIjk14h1U"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.WCCnoWgYVaroayen"
     },
     {
-      "_id": "on1mwGttGpidRzhb",
+      "_id": "S2aQWWbiGKS6aVzj",
       "name": "Rain of Arrows",
       "description": "",
       "type": "base",
@@ -2706,7 +2732,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/trapper/base/rain_of_arrows.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/trapper/rain_of_arrows.PNG",
           "text": ""
         }
       ],
@@ -2770,7 +2796,8 @@
               "minions": [],
               "hasBeenPlayed": false
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -2778,7 +2805,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755616853408,
+        "modifiedTime": 1756127606891,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -2787,7 +2814,7 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!UufjYYEVxS865N3y.on1mwGttGpidRzhb"
+      "_key": "!cards.cards!qpmUruIpU9uAbuf6.S2aQWWbiGKS6aVzj"
     }
   ],
   "width": null,
@@ -2812,5 +2839,5 @@
     "default": 0
   },
   "system": {},
-  "_key": "!cards!UufjYYEVxS865N3y"
+  "_key": "!cards!qpmUruIpU9uAbuf6"
 }

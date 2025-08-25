@@ -1,12 +1,12 @@
 {
-  "_id": "9SEWg1bQO5HjxDdZ",
+  "_id": "fbJzjmj7QjhAtqZn",
   "name": "Elementalist Lvl1 - en",
   "type": "deck",
   "description": "",
   "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG",
   "cards": [
     {
-      "_id": "MyoXvSiGRIrXw8Ah",
+      "_id": "x6WSJJwiFuBuPSdN",
       "name": "Fireball",
       "description": "",
       "type": "base",
@@ -20,7 +20,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/fireball.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/fireball.PNG",
           "text": ""
         }
       ],
@@ -115,7 +115,8 @@
               "customEvals": []
             }
           ],
-          "maxSameCard": 5
+          "maxSameCard": 5,
+          "level": 1
         }
       },
       "_stats": {
@@ -123,7 +124,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755672305292,
+        "modifiedTime": 1756126805978,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -132,10 +133,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!9SEWg1bQO5HjxDdZ.MyoXvSiGRIrXw8Ah"
+      "_key": "!cards.cards!fbJzjmj7QjhAtqZn.x6WSJJwiFuBuPSdN"
     },
     {
-      "_id": "hOyIatvqtYPzjelM",
+      "_id": "SCmKuaowWwJmYwEn",
       "name": "Tornado",
       "description": "",
       "type": "base",
@@ -148,7 +149,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/tornado.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/tornado.PNG",
           "text": ""
         }
       ],
@@ -244,7 +245,8 @@
               "customEvals": []
             }
           ],
-          "maxSameCard": 5
+          "maxSameCard": 5,
+          "level": 1
         }
       },
       "_stats": {
@@ -252,7 +254,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755672544182,
+        "modifiedTime": 1756126800975,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -261,10 +263,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!9SEWg1bQO5HjxDdZ.hOyIatvqtYPzjelM"
+      "_key": "!cards.cards!fbJzjmj7QjhAtqZn.SCmKuaowWwJmYwEn"
     },
     {
-      "_id": "bhGJJvZGUyfmDYf3",
+      "_id": "PiQUcgGZsXxrgbju",
       "name": "Earth Fracture",
       "description": "",
       "type": "base",
@@ -277,7 +279,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/earth_fracture.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/earth_fracture.PNG",
           "text": ""
         }
       ],
@@ -373,7 +375,8 @@
               "customEvals": []
             }
           ],
-          "maxSameCard": 5
+          "maxSameCard": 4,
+          "level": 1
         }
       },
       "_stats": {
@@ -381,7 +384,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755672512703,
+        "modifiedTime": 1756126747343,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -390,10 +393,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!9SEWg1bQO5HjxDdZ.bhGJJvZGUyfmDYf3"
+      "_key": "!cards.cards!fbJzjmj7QjhAtqZn.PiQUcgGZsXxrgbju"
     },
     {
-      "_id": "3cz06riwXFQ5mXZM",
+      "_id": "uRegCtyLN6Q7LQnW",
       "name": "Earth Fracture",
       "description": "",
       "type": "base",
@@ -406,7 +409,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/earth_fracture.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/earth_fracture.PNG",
           "text": ""
         }
       ],
@@ -502,7 +505,8 @@
               "customEvals": []
             }
           ],
-          "maxSameCard": 5
+          "maxSameCard": 4,
+          "level": 1
         }
       },
       "_stats": {
@@ -510,7 +514,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755672512703,
+        "modifiedTime": 1756126747343,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -519,10 +523,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!9SEWg1bQO5HjxDdZ.3cz06riwXFQ5mXZM"
+      "_key": "!cards.cards!fbJzjmj7QjhAtqZn.uRegCtyLN6Q7LQnW"
     },
     {
-      "_id": "7sdrYZcjYrArGTRd",
+      "_id": "M1zJ6bzzKeUDPgoS",
       "name": "Frost Strike",
       "description": "",
       "type": "base",
@@ -536,7 +540,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/frost_strike.png",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/frost_strike.png",
           "text": ""
         }
       ],
@@ -640,7 +644,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -648,7 +653,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755672468031,
+        "modifiedTime": 1756126803350,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -657,10 +662,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!9SEWg1bQO5HjxDdZ.7sdrYZcjYrArGTRd"
+      "_key": "!cards.cards!fbJzjmj7QjhAtqZn.M1zJ6bzzKeUDPgoS"
     },
     {
-      "_id": "OwoDto5ONIPopmg3",
+      "_id": "E2hiZtMm6itJwZXP",
       "name": "Frost Strike",
       "description": "",
       "type": "base",
@@ -674,7 +679,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/frost_strike.png",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/frost_strike.png",
           "text": ""
         }
       ],
@@ -778,7 +783,8 @@
               "hasBeenPlayed": false,
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
@@ -786,7 +792,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755672468031,
+        "modifiedTime": 1756126803350,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -795,10 +801,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!9SEWg1bQO5HjxDdZ.OwoDto5ONIPopmg3"
+      "_key": "!cards.cards!fbJzjmj7QjhAtqZn.E2hiZtMm6itJwZXP"
     },
     {
-      "_id": "AVH7T8N5s7aFnmXH",
+      "_id": "gzEE8XlZG1CCYSwF",
       "name": "Mana Recovery III",
       "description": "",
       "type": "base",
@@ -811,7 +817,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/base/mana_recovery_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/en/elementalist/mana_recovery_iii.PNG",
           "text": ""
         }
       ],
@@ -863,15 +869,16 @@
               "minions": [],
               "customEvals": []
             }
-          ]
+          ],
+          "level": 1
         }
       },
       "_stats": {
         "coreVersion": "13.347",
         "systemId": "dnd5e",
-        "systemVersion": "5.0.4",
+        "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1755510922960,
+        "modifiedTime": 1756126845815,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -880,7 +887,7 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!9SEWg1bQO5HjxDdZ.AVH7T8N5s7aFnmXH"
+      "_key": "!cards.cards!fbJzjmj7QjhAtqZn.gzEE8XlZG1CCYSwF"
     }
   ],
   "width": null,
@@ -895,7 +902,7 @@
     "systemId": null,
     "systemVersion": null,
     "createdTime": null,
-    "modifiedTime": 1755765360830,
+    "modifiedTime": 1756127922891,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,
@@ -905,5 +912,5 @@
     "default": 0
   },
   "system": {},
-  "_key": "!cards!9SEWg1bQO5HjxDdZ"
+  "_key": "!cards!fbJzjmj7QjhAtqZn"
 }

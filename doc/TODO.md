@@ -77,6 +77,7 @@ les communs apparaissent avec un niveau d'attributs )
 - Améliorer certaines cartes de mage blanc: light energy (json après utilisation)
 - Gérer les nb target infini et les portée infini?, les critique, els esquive? (light strike)
 - Gérer les cartes chargées directement dans le code natif et pas en script
+- Gérer les dissipation d'effet dans un select qui récupère tous les effets des cibles
 
 ### Very Low:
 

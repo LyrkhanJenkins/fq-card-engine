@@ -141,6 +141,7 @@
   "FQCARDENGINE.ShortDrop": "SD",
   "FQCARDENGINE.Drop": "Drop Cards",
   "FQCARDENGINE.CardFQBase": "Base card",
+  "FQCARDENGINE.CardLevel": "Level",
   "FQCARDENGINE.MaxSameCard": "Number of copies per deck",
   "FQCARDENGINE.CardFQBaseShort": "Base",
   "FQCARDENGINE.MaxSameCardShort": "Nb max",
