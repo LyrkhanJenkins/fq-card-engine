@@ -1,12 +1,12 @@
 {
-  "_id": "Ji7rGnDk6S9ni1R4",
+  "_id": "c76ENanALGgCtjaA",
   "name": "Elementalist Lvl1 - fr",
   "type": "deck",
   "description": "",
   "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG",
   "cards": [
     {
-      "_id": "CeuKSfJLkvgh5hTO",
+      "_id": "snKcGIywbzMcTF1c",
       "name": "Fireball",
       "description": "",
       "type": "base",
@@ -133,10 +133,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!Ji7rGnDk6S9ni1R4.CeuKSfJLkvgh5hTO"
+      "_key": "!cards.cards!c76ENanALGgCtjaA.snKcGIywbzMcTF1c"
     },
     {
-      "_id": "mcZbgA3Wi0cb1EbK",
+      "_id": "2ozEF6UUQ4V6xIPb",
       "name": "Tornado",
       "description": "",
       "type": "base",
@@ -263,10 +263,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!Ji7rGnDk6S9ni1R4.mcZbgA3Wi0cb1EbK"
+      "_key": "!cards.cards!c76ENanALGgCtjaA.2ozEF6UUQ4V6xIPb"
     },
     {
-      "_id": "e5Yzjst17KXIrav0",
+      "_id": "x7EmyZHK2nERRlLb",
       "name": "Earth Fracture",
       "description": "",
       "type": "base",
@@ -393,10 +393,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!Ji7rGnDk6S9ni1R4.e5Yzjst17KXIrav0"
+      "_key": "!cards.cards!c76ENanALGgCtjaA.x7EmyZHK2nERRlLb"
     },
     {
-      "_id": "VKffkswtVgDkn80H",
+      "_id": "kZbaQD7IiDP4kMTA",
       "name": "Earth Fracture",
       "description": "",
       "type": "base",
@@ -523,10 +523,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!Ji7rGnDk6S9ni1R4.VKffkswtVgDkn80H"
+      "_key": "!cards.cards!c76ENanALGgCtjaA.kZbaQD7IiDP4kMTA"
     },
     {
-      "_id": "QZU9Km66zJ6hFq0S",
+      "_id": "OdIr7ByQ8IANR8Zn",
       "name": "Frost Strike",
       "description": "",
       "type": "base",
@@ -662,10 +662,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!Ji7rGnDk6S9ni1R4.QZU9Km66zJ6hFq0S"
+      "_key": "!cards.cards!c76ENanALGgCtjaA.OdIr7ByQ8IANR8Zn"
     },
     {
-      "_id": "jj9QmTUbndXRjIcs",
+      "_id": "rX1ETkhunAzEkoFn",
       "name": "Frost Strike",
       "description": "",
       "type": "base",
@@ -801,10 +801,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!Ji7rGnDk6S9ni1R4.jj9QmTUbndXRjIcs"
+      "_key": "!cards.cards!c76ENanALGgCtjaA.rX1ETkhunAzEkoFn"
     },
     {
-      "_id": "fpvJRcfmnC7kScKP",
+      "_id": "6qEpQ3mmBKh7vbSi",
       "name": "Mana Recovery III",
       "description": "",
       "type": "base",
@@ -887,7 +887,7 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!Ji7rGnDk6S9ni1R4.fpvJRcfmnC7kScKP"
+      "_key": "!cards.cards!c76ENanALGgCtjaA.6qEpQ3mmBKh7vbSi"
     }
   ],
   "width": null,
@@ -912,5 +912,5 @@
     "default": 0
   },
   "system": {},
-  "_key": "!cards!Ji7rGnDk6S9ni1R4"
+  "_key": "!cards!c76ENanALGgCtjaA"
 }

@@ -1,4 +1,6 @@
 ## V1.1
+- Gérer du ciblage speciale : Zone , et surtout skeleton pour la witch
+- Créer un sort passif qui sacrifie des squelettes, et gérer une bar spécial pour les squelettes?
 - Faire un point sur todos: Ramener toutes les notes écrites pendant les vacances + Tri de priorité et Roadmap
 - Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
   - Pour le reste utiliser JB2A, gérer les sons et les jouer également si pas le module sequencer
@@ -12,6 +14,7 @@
 les communs apparaissent avec un niveau d'attributs ) 
 - Les sorts communs apparaissent au changement de niveau dans la bibliothèque
 - Migrations objets dnd5e v FQ
+- Gérer le bonus de dégâts pour gérer l'invulnérabilité (ou autre solution)
 - Refacto : ne plus utiliser le script python pour générer les cartes
 - Ajouter des cartes aléatoires d'un compendium vers une bibliothèque
 - Possibilité de choisir des cartes dans un changement de niveau
