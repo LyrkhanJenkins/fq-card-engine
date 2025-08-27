@@ -137,6 +137,8 @@
   "FQCARDENGINE.Hand": "Hand",
   "FQCARDENGINE.Pick": "Pick",
   "FQCARDENGINE.CurrentDrop": "Discard Card During Turn",
+  "FQCARDENGINE.SpecialAttributes": "Special attributes for players",
+  "FQCARDENGINE.SacrificedSkeleton": "Number of sacrificed skeleton",
   "FQCARDENGINE.Life": "Life",
   "FQCARDENGINE.ShortDrop": "SD",
   "FQCARDENGINE.Drop": "Drop Cards",
@@ -337,5 +339,10 @@
   "FQCARDENGINE.SpellBookPrefixName": "Spellbook of ",
   "FQCARDENGINE.DeckPrefixName": "Deck of ",
   "FQCARDENGINE.HandPrefixName": "Hand of ",
-  "FQCARDENGINE.PilePrefixName": "Discard of "
+  "FQCARDENGINE.PilePrefixName": "Discard of ",
+
+  "FQCARDENGINE.SacrifySkeletonButton": "Sacrify Skeleton",
+  "FQCARDENGINE.SacrifySkeletonMsg": "Skeleton has been sacrificed, your sacrifice score is {sacrifice}",
+  "FQCARDENGINE.TokenDamageButton": "Apply weapon damage",
+  "FQCARDENGINE.TokenDamageNoWeaponWarningMsg": "⚠️ No weapon equipped !"
 }

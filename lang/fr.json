@@ -137,6 +137,8 @@
   "FQCARDENGINE.Hand": "Main",
   "FQCARDENGINE.Pick": "Pioche",
   "FQCARDENGINE.CurrentDrop": "Carte défaussée pendant le tour",
+  "FQCARDENGINE.SpecialAttributes": "Champs spéciaux des joueurs",
+  "FQCARDENGINE.SacrificedSkeleton": "Nombre de squelettes sacrifiés",
   "FQCARDENGINE.Life": "Vie",
   "FQCARDENGINE.ShortDrop": "CD",
   "FQCARDENGINE.Drop": "Cartes défaussés",
@@ -337,5 +339,10 @@
   "FQCARDENGINE.SpellBookPrefixName": "Bibliothèque de ",
   "FQCARDENGINE.DeckPrefixName": "Deck de ",
   "FQCARDENGINE.HandPrefixName": "Main de ",
-  "FQCARDENGINE.PilePrefixName": "Défausse de "
+  "FQCARDENGINE.PilePrefixName": "Défausse de ",
+
+  "FQCARDENGINE.SacrifySkeletonButton": "Sacrifier le squelette",
+  "FQCARDENGINE.SacrifySkeletonMsg": "Un squelette a été sacrifié, votre score de sacrifice est à {sacrifice}",
+  "FQCARDENGINE.TokenDamageButton": "Appliquer les dégâts des armes équipés",
+  "FQCARDENGINE.TokenDamageNoWeaponWarningMsg": "⚠️ Aucune arme équipée !"
 }

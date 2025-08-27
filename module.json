@@ -36,6 +36,7 @@
     "scripts/fq-card-engine-module.js",
     "scripts/fq-combat.js",
     "scripts/fq-trading-cards.js",
+    "scripts/fq-hud.js",
     "scripts/fq-item-use.js"
   ],
   "styles": [
