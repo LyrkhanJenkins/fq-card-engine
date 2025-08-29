@@ -31,6 +31,7 @@ les communs apparaissent avec un niveau d'attributs )
 - Protéger l'utilisation de carte si pas de token controlé par le joueur
 - Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
+- Verifier si currentDrop utilisable hors combat sans drop de card et checker si SecretWeapons du moine enlève bien le score de current Drop
 
 ## V1.2
 - Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
