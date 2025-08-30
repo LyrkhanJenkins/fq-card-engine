@@ -5,7 +5,7 @@ module.exports = [
 
     // Remplacez ces paramètres par ceux que vous souhaitez utiliser
     {
-        files: ["**/*.js", "**/*.mjs"],
+        files: ["**/*.js"],
 
         languageOptions: {
             ecmaVersion: 2021,

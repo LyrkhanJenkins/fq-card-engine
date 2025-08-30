@@ -1,4 +1,5 @@
 import DeckUtils, {DeckError, SPELLBOOK_TYPE} from "../../scripts/utils/deck-utils.js";
+import setGlobal from "../before-each.js";
 
 const createEmbeddedDocumentsMock = jest.fn();
 const deck = {
@@ -10,34 +11,8 @@ const deck = {
 describe("DeckUtils", () => {
 
     beforeEach(() => {
-
         jest.clearAllMocks();
-        global.ui = {
-            notifications: {
-                error: jest.fn(),
-                warn: jest.fn(),
-            },
-        };
-        global.game = {
-            i18n: {
-                localize: jest.fn(),
-                format: jest.fn(),
-            },
-            users: {
-                filter: jest.fn((callback) => [
-                    {
-                        id: "parent-id",
-                        character: {id: "parent-id"}
-                    }
-                ].filter(callback)), // Simulate filter behavior
-                get: jest.fn((id) => ({id, character: {id}})), // Simulate get behavior
-                find: jest.fn((id) => ({id, character: {id}})) // Simulate get behavior
-            },
-            cards: []
-        };
-        global.Cards = {
-            deleteDocuments: jest.fn()
-        };
+        setGlobal();
     });
 
     it("should return true when there are no cards to create", () => {

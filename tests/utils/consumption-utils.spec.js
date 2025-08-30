@@ -1,4 +1,5 @@
 import ConsumptionUtils from "../../scripts/utils/consumption-utils.js";
+import setGlobal from "../before-each.js";
 
 describe("ConsumptionUtils", () => {
 
@@ -18,15 +19,7 @@ describe("ConsumptionUtils", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        global.game = {
-            i18n: {
-                localize: () => ""
-            }
-        };
-        global.ChatMessage = {
-            create: jest.fn().mockResolvedValue({id: "1234", content: "Mocked message"}),
-            getSpeaker: jest.fn().mockResolvedValue(null),
-        };
+        setGlobal()
     });
 
     test("checkResourcesNoActor", () => {
@@ -66,7 +59,7 @@ describe("ConsumptionUtils", () => {
         expect(result).toEqual(false);
     });
 
-    test("checkResourcesNotEnoughZeal", () => {
+    test("checkResourcesNotEnoughCurrentDrop", () => {
         const result = ConsumptionUtils.checkResources(
             {drop: -7},
             {system: {fq: {cards: {currentDrop: 6}}}});

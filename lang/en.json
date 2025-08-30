@@ -125,6 +125,7 @@
   "FQCARDENGINE.EvasionScore": "Evasion",
   "FQCARDENGINE.BonusEva": "Evasion bonuses",
   "FQCARDENGINE.Bonuses": "FQ Bonuses",
+  "FQCARDENGINE.TargetType": "Target type",
   "FQCARDENGINE.MinReach": "Min Range",
   "FQCARDENGINE.MaxReach": "Max Range",
   "FQCARDENGINE.RangeBonus": "Range Bonus",

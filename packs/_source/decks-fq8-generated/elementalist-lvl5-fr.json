@@ -1,12 +1,12 @@
 {
-  "_id": "PBtZYr4hO3Y6LFgm",
+  "_id": "IS8vzLGXsDMMP7Rf",
   "name": "Elementalist Lvl5 - fr",
   "type": "deck",
   "description": "",
   "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG",
   "cards": [
     {
-      "_id": "DAql5ej5PIXCLSxa",
+      "_id": "V5Ta2XjjPwOrW9j8",
       "name": "Fireball",
       "description": "",
       "type": "base",
@@ -133,10 +133,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.DAql5ej5PIXCLSxa"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.V5Ta2XjjPwOrW9j8"
     },
     {
-      "_id": "nVBgbMC3E9kMdX4z",
+      "_id": "86wriQO0wky9yjC6",
       "name": "Tornado",
       "description": "",
       "type": "base",
@@ -263,10 +263,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.nVBgbMC3E9kMdX4z"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.86wriQO0wky9yjC6"
     },
     {
-      "_id": "j33JFR3buI51IuUw",
+      "_id": "k3LUQA5H32ERGiU8",
       "name": "Earth Fracture",
       "description": "",
       "type": "base",
@@ -393,10 +393,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.j33JFR3buI51IuUw"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.k3LUQA5H32ERGiU8"
     },
     {
-      "_id": "V04Q9jM66UGplax3",
+      "_id": "JFq5AAtuNDXDB4tm",
       "name": "Earth Fracture",
       "description": "",
       "type": "base",
@@ -523,10 +523,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.V04Q9jM66UGplax3"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.JFq5AAtuNDXDB4tm"
     },
     {
-      "_id": "8OLZVxQ5UrKz1oI9",
+      "_id": "bczpG6ejfwLV99mJ",
       "name": "Frost Strike",
       "description": "",
       "type": "base",
@@ -662,10 +662,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.8OLZVxQ5UrKz1oI9"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.bczpG6ejfwLV99mJ"
     },
     {
-      "_id": "e5TwYByJj4ytl0G1",
+      "_id": "vtrR8wxGrqKhC0um",
       "name": "Frost Strike",
       "description": "",
       "type": "base",
@@ -801,10 +801,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.e5TwYByJj4ytl0G1"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.vtrR8wxGrqKhC0um"
     },
     {
-      "_id": "ziG7PyzTKP86Qb83",
+      "_id": "3CFDYlSH0PACKCIG",
       "name": "Mana Recovery III",
       "description": "",
       "type": "base",
@@ -887,10 +887,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.ziG7PyzTKP86Qb83"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.3CFDYlSH0PACKCIG"
     },
     {
-      "_id": "pDYn1SjpoJrxEtlD",
+      "_id": "jmGr1OEJhiS07Fc0",
       "name": "Draw III",
       "description": "<p>{ \"action\": \"-3\", \"draw\": \"3\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgDrawCard\", \"arg\": { \"draw\": \"3\" } } ] }</p>",
       "type": "base",
@@ -973,10 +973,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.pDYn1SjpoJrxEtlD"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.jmGr1OEJhiS07Fc0"
     },
     {
-      "_id": "yYk2bVRreBrXOmzM",
+      "_id": "VLi89GXYx5Ul2Hhk",
       "name": "Mana Capture",
       "description": "",
       "type": "base",
@@ -1059,10 +1059,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.yYk2bVRreBrXOmzM"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.VLi89GXYx5Ul2Hhk"
     },
     {
-      "_id": "tNnvoppELWLs3meG",
+      "_id": "236lQfCeH4B2ssnE",
       "name": "Frostfire",
       "description": "",
       "type": "base",
@@ -1150,10 +1150,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.tNnvoppELWLs3meG"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.236lQfCeH4B2ssnE"
     },
     {
-      "_id": "tpuOfualqqjKbhag",
+      "_id": "pjJ9npCnNzrkaEmt",
       "name": "Fog",
       "description": "",
       "type": "base",
@@ -1290,10 +1290,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.tpuOfualqqjKbhag"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.pjJ9npCnNzrkaEmt"
     },
     {
-      "_id": "XHATnScxPp0GJMdC",
+      "_id": "lb7YB6xoMlSnJT0b",
       "name": "Tornado",
       "description": "",
       "type": "base",
@@ -1420,10 +1420,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.XHATnScxPp0GJMdC"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.lb7YB6xoMlSnJT0b"
     },
     {
-      "_id": "WB4u8uocMIJpNFyz",
+      "_id": "F5l02PTaa4EMbRfa",
       "name": "Turn Booster IV",
       "description": "",
       "type": "base",
@@ -1506,10 +1506,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.WB4u8uocMIJpNFyz"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.F5l02PTaa4EMbRfa"
     },
     {
-      "_id": "KSyvAwcL4xCcV2gV",
+      "_id": "J4P6T20yejyKtqAh",
       "name": "Tornado",
       "description": "",
       "type": "base",
@@ -1636,10 +1636,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.KSyvAwcL4xCcV2gV"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.J4P6T20yejyKtqAh"
     },
     {
-      "_id": "cPyMF9AWNwWfe4fj",
+      "_id": "OILtCHzs0sgyUuZk",
       "name": "Fireball",
       "description": "",
       "type": "base",
@@ -1766,10 +1766,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.cPyMF9AWNwWfe4fj"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.OILtCHzs0sgyUuZk"
     },
     {
-      "_id": "QCuAueUEGQQxAS9m",
+      "_id": "iqIybBQkhKIV9LLN",
       "name": "Meteor",
       "description": "<p>{ \"damage\": \"(2+@wis+1d4)[force]+(1+@int+1d4)[fire]\", \"minReach\": \"3\", \"maxReach\": \"10\", \"nbTargets\": \"4\", \"action\": \"-9\", \"mana\": \"-2\", \"zeal\": \"-1\", \"customEval\": [ { \"test\": \"[...game.user.targets].length &lt; 1 || [...game.user.targets].length &gt; 9 || game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Earth Effect').length).length\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\", \"arg\": { \"effectName1\": \"Earth Effect\", \"effectName2\": \"Burn\" } } ] }, { \"test\": \"game.user.targets.size === 1 || game.user.targets.size &gt; 9 || ([...game.user.targets].map(t =&gt; t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)) &amp;&amp; [...game.user.targets].map(t =&gt; t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) =&gt; arr.every((v, i) =&gt; i === index || Math.abs(val - v) &lt;= 2)))\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgSquareEffect\", \"arg\": { \"area\": \"3x3\" } } ] } ] }</p>",
       "type": "base",
@@ -1866,10 +1866,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.QCuAueUEGQQxAS9m"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.iqIybBQkhKIV9LLN"
     },
     {
-      "_id": "mHPwPXZMqeZsN7eF",
+      "_id": "MCl6h1gJ7aBVtMBZ",
       "name": "Frost Strike",
       "description": "",
       "type": "base",
@@ -2005,10 +2005,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.mHPwPXZMqeZsN7eF"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.MCl6h1gJ7aBVtMBZ"
     },
     {
-      "_id": "nDXvZc0KS5XJyxjw",
+      "_id": "h17sRSfSN31QaWqJ",
       "name": "Mana Capture",
       "description": "",
       "type": "base",
@@ -2091,10 +2091,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.nDXvZc0KS5XJyxjw"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.h17sRSfSN31QaWqJ"
     },
     {
-      "_id": "jydEfs5ffZbTIxel",
+      "_id": "UIUwOCNJCG5VgvqI",
       "name": "Earth Fracture",
       "description": "",
       "type": "base",
@@ -2221,10 +2221,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.jydEfs5ffZbTIxel"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.UIUwOCNJCG5VgvqI"
     },
     {
-      "_id": "VO0eBL4yAwNOfWQu",
+      "_id": "p5PUEvY5MwNHDS9v",
       "name": "Incantation",
       "description": "",
       "type": "base",
@@ -2337,10 +2337,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.VO0eBL4yAwNOfWQu"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.p5PUEvY5MwNHDS9v"
     },
     {
-      "_id": "x0jeLpUX5leQ7ALE",
+      "_id": "SNw3vbv5rxQvEq39",
       "name": "Incantation",
       "description": "",
       "type": "base",
@@ -2453,10 +2453,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.x0jeLpUX5leQ7ALE"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.SNw3vbv5rxQvEq39"
     },
     {
-      "_id": "rJGTFTVAfB91VqTI",
+      "_id": "wdYrXQRNpS0WAuAR",
       "name": "Draw III",
       "description": "<p>{ \"action\": \"-3\", \"draw\": \"3\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgDrawCard\", \"arg\": { \"draw\": \"3\" } } ] }</p>",
       "type": "base",
@@ -2539,10 +2539,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.rJGTFTVAfB91VqTI"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.wdYrXQRNpS0WAuAR"
     },
     {
-      "_id": "8hMLbn7sGOLQlTZK",
+      "_id": "5xSzwCzWXTcYcMyE",
       "name": "Fireball",
       "description": "",
       "type": "base",
@@ -2669,10 +2669,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.8hMLbn7sGOLQlTZK"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.5xSzwCzWXTcYcMyE"
     },
     {
-      "_id": "MAhKT196sCoj9x4d",
+      "_id": "UdGY046xtMmKDY9x",
       "name": "Ice Wave",
       "description": "<p>{ \"damage\": \"(1+@int+1d4)[thunder]+(1+@sag+1d4)[cold]\", \"minReach\": \"1\", \"maxReach\": \"1\", \"nbTargets\": \"4\", \"action\": \"-7\", \"mana\": \"-1\", \"customEval\": [ { \"test\": \"game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Air Effect' || e.name === 'Frost').length).length \", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\", \"arg\": { \"effectName1\": \"Air Effect\", \"effectName2\": \"Frost\" } } ] } ] }</p>",
       "type": "base",
@@ -2760,10 +2760,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.MAhKT196sCoj9x4d"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.UdGY046xtMmKDY9x"
     },
     {
-      "_id": "rZNomqX4ttelWnh7",
+      "_id": "m98IAS48EAFRcZh1",
       "name": "Damage Propagation",
       "description": "<p>{ \"action\": \"-4\", \"zeal\": \"-1\", \"minReach\": \"1\", \"maxReach\": \"9\", \"replayable\": \"passif\", \"customEval\": [ { \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgDamagePropagation\", \"arg\": {} } ] } ], \"addingRolls\": [ { \"title\": \"Damage Propagation\", \"formula\": \"1\", \"effects\": [ { \"result\": \"1\", \"data\": [ { \"label\": \"Damage Propagation\", \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\", \"changes\": [ { \"key\": \"system.fq.bonus.dot\", \"value\": \"@wis\", \"mode\": \"2\" }, { \"key\": \"macro.tokenMagic\", \"value\": \"shockwave\", \"mode\": \"0\" } ], \"duration\": { \"startTime\": \"0\", \"rounds\": \"3\", \"turns\": \"0\" } } ], \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgDamagePropagationEffect\", \"arg\": { \"damage\": \"@wis\" } } ] } ] } ], \"afterFirstPlay\": { \"minReach\": \"1\", \"maxReach\": \"9\", \"replayable\": \"passif\", \"customEval\": [ { \"test\": \"!!game.combat.flags.FQLogs &amp;&amp; (!![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent &amp;&amp; ![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.minReach &amp;&amp; !![...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.cardContent.damage &amp;&amp; ![...game.user.targets].map(t =&gt; t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log =&gt; log.round === game.combat.round &amp;&amp; log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgDamagePropagation\", \"arg\": {} } ] } ], \"addingRolls\": [ { \"title\": \"Damage Propagation\", \"formula\": \"1\", \"effects\": [ { \"result\": \"1\", \"data\": [ { \"label\": \"Damage Propagation\", \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\", \"changes\": [ { \"key\": \"system.fq.bonus.dot\", \"value\": \"@wis\", \"mode\": \"2\" }, { \"key\": \"macro.tokenMagic\", \"value\": \"shockwave\", \"mode\": \"0\" } ], \"duration\": { \"startTime\": \"0\", \"rounds\": \"3\", \"turns\": \"0\" } } ], \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgDamagePropagationEffect\", \"arg\": { \"damage\": \"@wis\" } } ] } ] } ] } }</p>",
       "type": "base",
@@ -2895,10 +2895,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.rZNomqX4ttelWnh7"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.m98IAS48EAFRcZh1"
     },
     {
-      "_id": "QIsp1LzDKVuXtlIs",
+      "_id": "nYNxDWLA8mp333ve",
       "name": "Fire Shock",
       "description": "<p>{ \"damage\": \"(2*@int)[thunder]+2d8[fire]\", \"minReach\": \"4\", \"maxReach\": \"8\", \"nbTargets\": \"2\", \"action\": \"-10\", \"mana\": \"-2\", \"zeal\": \"-2\", \"customEval\": [ { \"test\": \"game.actors.filter(a1 =&gt; [...game.user.targets].map(t =&gt; t.document.actorId).includes(a1.id)).filter(a =&gt; a.effects.filter(e =&gt; e.name === 'Burn' || e.name === 'Air Effect').length).length \", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgMissingEffect\", \"arg\": { \"effectName1\": \"Air Effect\", \"effectName2\": \"Burn\" } } ] } ] }</p>",
       "type": "base",
@@ -2986,10 +2986,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.QIsp1LzDKVuXtlIs"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.nYNxDWLA8mp333ve"
     },
     {
-      "_id": "DFdWIwmfTRynaI7t",
+      "_id": "asbqiFzUtVO4zIux",
       "name": "Turn Booster IV",
       "description": "",
       "type": "base",
@@ -3072,10 +3072,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.DFdWIwmfTRynaI7t"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.asbqiFzUtVO4zIux"
     },
     {
-      "_id": "W4UVuzal562jHGw8",
+      "_id": "3YwUfcIgSk2TIJQx",
       "name": "Mana Capture",
       "description": "",
       "type": "base",
@@ -3158,10 +3158,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.W4UVuzal562jHGw8"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.3YwUfcIgSk2TIJQx"
     },
     {
-      "_id": "OkcQonIs4c9yrdHH",
+      "_id": "0tsPWCOfK0qO739L",
       "name": "Tornado",
       "description": "",
       "type": "base",
@@ -3288,10 +3288,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.OkcQonIs4c9yrdHH"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.0tsPWCOfK0qO739L"
     },
     {
-      "_id": "4SyLqPPy8vFWempz",
+      "_id": "T1j784vm1kQksJw0",
       "name": "Earth Fracture",
       "description": "",
       "type": "base",
@@ -3418,10 +3418,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.4SyLqPPy8vFWempz"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.T1j784vm1kQksJw0"
     },
     {
-      "_id": "OxJdSmhS8cZvGFVI",
+      "_id": "EcNX1JD88EUtb9lq",
       "name": "Frost Strike",
       "description": "",
       "type": "base",
@@ -3557,10 +3557,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.OxJdSmhS8cZvGFVI"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.EcNX1JD88EUtb9lq"
     },
     {
-      "_id": "iK2spuKmgAUV34fY",
+      "_id": "dzfAsNREa6qTeQ19",
       "name": "Fireball",
       "description": "",
       "type": "base",
@@ -3687,10 +3687,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.iK2spuKmgAUV34fY"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.dzfAsNREa6qTeQ19"
     },
     {
-      "_id": "gXzV1Xwi8YtdKUeG",
+      "_id": "yTUVQ0E5sSFnZCKm",
       "name": "Mana Recovery III",
       "description": "",
       "type": "base",
@@ -3773,10 +3773,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.gXzV1Xwi8YtdKUeG"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.yTUVQ0E5sSFnZCKm"
     },
     {
-      "_id": "IgGZQl3dBHdhFvr3",
+      "_id": "mKbh1bHz20KS5tTX",
       "name": "Void Assassin",
       "description": "",
       "type": "base",
@@ -3864,10 +3864,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.IgGZQl3dBHdhFvr3"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.mKbh1bHz20KS5tTX"
     },
     {
-      "_id": "xv1veC9nF89ewtNE",
+      "_id": "gB4WkMUlmtBMeJsj",
       "name": "Incantation",
       "description": "",
       "type": "base",
@@ -3980,10 +3980,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.xv1veC9nF89ewtNE"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.gB4WkMUlmtBMeJsj"
     },
     {
-      "_id": "WOaMBTTJWmGXT777",
+      "_id": "sPHdow3pXpOm326S",
       "name": "Magic Plastron",
       "description": "",
       "type": "base",
@@ -4120,7 +4120,7 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!PBtZYr4hO3Y6LFgm.WOaMBTTJWmGXT777"
+      "_key": "!cards.cards!IS8vzLGXsDMMP7Rf.sPHdow3pXpOm326S"
     }
   ],
   "width": null,
@@ -4128,14 +4128,14 @@
   "rotation": 0,
   "displayCount": false,
   "folder": null,
-  "sort": 600000,
+  "sort": 700000,
   "flags": {},
   "_stats": {
     "coreVersion": "13.347",
     "systemId": null,
     "systemVersion": null,
     "createdTime": null,
-    "modifiedTime": 1756127922891,
+    "modifiedTime": 1756542601234,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,
@@ -4145,5 +4145,5 @@
     "default": 0
   },
   "system": {},
-  "_key": "!cards!PBtZYr4hO3Y6LFgm"
+  "_key": "!cards!IS8vzLGXsDMMP7Rf"
 }

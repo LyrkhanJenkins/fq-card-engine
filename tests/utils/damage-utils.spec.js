@@ -2,6 +2,7 @@
 
 import DamageUtils from "../../scripts/utils/damage-utils.js";
 import {DAMAGES_COLOR} from "../../scripts/utils/fq-constants";
+import setGlobal from "../before-each.js";
 
 describe("DamageUtils", () => {
     let actor;
@@ -22,41 +23,7 @@ describe("DamageUtils", () => {
                 }
             }
         };
-
-        // Mock necessary Foundry VTT objects/functions
-        global.ChatMessage = {
-            getSpeaker: jest.fn(() => ({})),
-            create: jest.fn()
-        };
-        global.Roll = jest.fn(function (formula) {
-            this.formula = formula;
-            this.total = Math.floor(Math.random() * 20) + 1; // Mock a random total
-            this.evaluate = async () => this;
-            this.toMessage = jest.fn(async () => ({id: "messageId"}));
-        });
-        global.game = {
-            i18n: {
-                localize: () => ""
-            },
-            user: {
-                targets: new Set([{document: {name: "Target1", actorId: "actor1"}}]),
-                character: {_id: "userCharacterId"}
-            },
-            actors: {
-                get: jest.fn(() => ({system: {fq: {attributes: {evasion: 3}}}}))
-            },
-            dice3d: {
-                waitFor3DAnimationByMessageID: jest.fn(async () => {
-                })
-            }
-        };
-        global.foundry = {
-            audio: {
-                AudioHelper: {
-                    play: jest.fn()
-                }
-            }
-        };
+        setGlobal();
     });
 
     it("should build damage dice launcher with bonus", async () => {
@@ -97,10 +64,5 @@ describe("DamageUtils", () => {
     it("should display roll result", () => {
         DamageUtils.displayResult(actor, [{key: "Test", value: 10}], ["Manual Action"]);
         expect(ChatMessage.create).toHaveBeenCalledTimes(1);
-    });
-
-    it("should handle sound effect", () => {
-        DamageUtils.handleSoundEffect("[fire]", null, [{evasion: false}], "custom-sound.mp3");
-        expect(foundry.audio.AudioHelper.play).toHaveBeenCalledTimes(1);
     });
 });

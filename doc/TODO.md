@@ -1,7 +1,4 @@
-## V1.1
-- Gérer du ciblage speciale : Zone , et surtout skeleton pour la witch
-- Créer un sort passif qui sacrifie des squelettes, et gérer une bar spécial pour les squelettes?
-- Faire un point sur todos: Ramener toutes les notes écrites pendant les vacances + Tri de priorité et Roadmap
+## V1.1.0
 - Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
   - Pour le reste utiliser JB2A, gérer les sons et les jouer également si pas le module sequencer
 - Refacto pour s'affranchir du code de fq-card-engine
@@ -32,11 +29,14 @@ les communs apparaissent avec un niveau d'attributs )
 - Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
 - Verifier si currentDrop utilisable hors combat sans drop de card et checker si SecretWeapons du moine enlève bien le score de current Drop
+- Terminer les cartes jusqu'au niveau 6
+- Faire les classes jusqu'au niveau 6
+- Faire un point sur todos: Ramener toutes les notes écrites pendant les vacances + Tri de priorité et Roadmap
+- Gérer mieux les 1d@for car ça peut valoir -1 -2 et tout casser
 
-## V1.2
-- Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
-- Gérer les cibles après coup?
-- Gérer jusqu'au niveau 10 les 7 classes
+~~- Créer un sort passif qui sacrifie des squelettes, et gérer une bar spécial pour les squelettes?~~
+
+~~- Gérer du ciblage speciale : Skeletons~~
 
 ~~- Droits joueurs limités~~
 
@@ -58,6 +58,13 @@ les communs apparaissent avec un niveau d'attributs )
 
 ~~- Automatiser la montée de niveau jusqu'au niveau 5 (utiliser la macro )~~
 
+
+## V1.1.1
+- Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
+- Gérer les cibles après coup?
+- Gérer jusqu'au niveau 10 les 7 classes
+
+
 ## Backlog
 
 ### High:
@@ -66,6 +73,7 @@ les communs apparaissent avec un niveau d'attributs )
 
 ### Medium:
 
+- Gérer du ciblage speciale : Zone
 - Ne pas utiliser de points d'actions quand hors combat
 - Vérifier qu'un GM est connecté pour pouvoir lancer les cartes
 - Lancer les sons des cartes sur un dossier plutôt qu'un fichier (lancer un fichier audio aléatoire d'un dossier)

@@ -1,12 +1,12 @@
 {
-  "_id": "HDjQQNymkTxAhPzs",
+  "_id": "QrZBw2BMiYseP4HC",
   "name": "Trapper Base - en",
   "type": "deck",
   "description": "",
   "img": "modules/fq-card-engine/images/cards/back_trapper.PNG",
   "cards": [
     {
-      "_id": "kTBVIdbwpUpv4gpd",
+      "_id": "HkoDeSVA0yQkhEPe",
       "name": "Tamed Wolf",
       "description": "",
       "type": "base",
@@ -106,10 +106,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.kTBVIdbwpUpv4gpd"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.HkoDeSVA0yQkhEPe"
     },
     {
-      "_id": "3mmaif9tRN8w2Njk",
+      "_id": "1YknNcRtVGQFVH3U",
       "name": "Precise Shot",
       "description": "",
       "type": "base",
@@ -195,10 +195,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.3mmaif9tRN8w2Njk"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.1YknNcRtVGQFVH3U"
     },
     {
-      "_id": "5lFdzoR8ItCeS7fs",
+      "_id": "PnLqaA5ASkYL98QO",
       "name": "Elite Marksman",
       "description": "",
       "type": "base",
@@ -324,10 +324,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.5lFdzoR8ItCeS7fs"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.PnLqaA5ASkYL98QO"
     },
     {
-      "_id": "3MrnRGeMpry1slW5",
+      "_id": "WxqTOaSV4hL4HPg4",
       "name": "Double Arrows",
       "description": "",
       "type": "base",
@@ -413,10 +413,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.3MrnRGeMpry1slW5"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.WxqTOaSV4hL4HPg4"
     },
     {
-      "_id": "o3WWE18hD2fok8mE",
+      "_id": "dQD7zIiD5dlRjMdK",
       "name": "Rain of Arrows",
       "description": "",
       "type": "base",
@@ -512,10 +512,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.o3WWE18hD2fok8mE"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.dQD7zIiD5dlRjMdK"
     },
     {
-      "_id": "vgw9S6E7eX3i6Xsa",
+      "_id": "7jXkomPXYAMy33kX",
       "name": "Draw II",
       "description": "",
       "type": "base",
@@ -606,10 +606,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.vgw9S6E7eX3i6Xsa"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.7jXkomPXYAMy33kX"
     },
     {
-      "_id": "hAOIEXwzJ2ZJtJAK",
+      "_id": "BPkkNgIYOSugY2VF",
       "name": "Mana Recovery II",
       "description": "",
       "type": "base",
@@ -700,10 +700,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.hAOIEXwzJ2ZJtJAK"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.BPkkNgIYOSugY2VF"
     },
     {
-      "_id": "fskmL55ovS5S3LCm",
+      "_id": "Kz3m3PFCckFfzPFn",
       "name": "Trap",
       "description": "",
       "type": "base",
@@ -825,10 +825,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.fskmL55ovS5S3LCm"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.Kz3m3PFCckFfzPFn"
     },
     {
-      "_id": "NRQNVsYqXjASQuJs",
+      "_id": "k3WXHVOsn9h9mOzO",
       "name": "Reflex Shot",
       "description": "",
       "type": "base",
@@ -914,10 +914,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.NRQNVsYqXjASQuJs"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.k3WXHVOsn9h9mOzO"
     },
     {
-      "_id": "BWB1OeKDUx12B3uI",
+      "_id": "VUPULpnmiBCrZY6J",
       "name": "Turn Booster IV",
       "description": "",
       "type": "base",
@@ -1008,10 +1008,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.BWB1OeKDUx12B3uI"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.VUPULpnmiBCrZY6J"
     },
     {
-      "_id": "SKastDXuIWgx2iSq",
+      "_id": "MxpXOYGuHWQOuOi1",
       "name": "Poisoned Shot",
       "description": "",
       "type": "base",
@@ -1133,10 +1133,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.SKastDXuIWgx2iSq"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.MxpXOYGuHWQOuOi1"
     },
     {
-      "_id": "AR3xiNJqpbz0zVC5",
+      "_id": "LrKBeLmEu9FfXC46",
       "name": "Piercing Shot",
       "description": "",
       "type": "base",
@@ -1232,10 +1232,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.AR3xiNJqpbz0zVC5"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.LrKBeLmEu9FfXC46"
     },
     {
-      "_id": "TPAmXDGhPpljk8lr",
+      "_id": "TQvMT0F3Uim8qPG4",
       "name": "Weak Point Study",
       "description": "",
       "type": "base",
@@ -1372,10 +1372,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.TPAmXDGhPpljk8lr"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.TQvMT0F3Uim8qPG4"
     },
     {
-      "_id": "bNssYO580ED89S0t",
+      "_id": "BoNs8Jzf4IwXnkic",
       "name": "Ambush",
       "description": "",
       "type": "base",
@@ -1516,10 +1516,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.bNssYO580ED89S0t"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.BoNs8Jzf4IwXnkic"
     },
     {
-      "_id": "229krMPEZrhqF3fK",
+      "_id": "3UDQtVJbTL6PjzrX",
       "name": "Supersonic Shot",
       "description": "",
       "type": "base",
@@ -1610,10 +1610,10 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.229krMPEZrhqF3fK"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.3UDQtVJbTL6PjzrX"
     },
     {
-      "_id": "Z8HQx4pcO5uSvHa4",
+      "_id": "MCFUHrzbP3dXLjOz",
       "name": "Explosive Shot",
       "description": "",
       "type": "base",
@@ -1709,7 +1709,7 @@
       "width": null,
       "height": null,
       "cards": [],
-      "_key": "!cards.cards!HDjQQNymkTxAhPzs.Z8HQx4pcO5uSvHa4"
+      "_key": "!cards.cards!QrZBw2BMiYseP4HC.MCFUHrzbP3dXLjOz"
     }
   ],
   "width": null,
@@ -1717,14 +1717,14 @@
   "rotation": 0,
   "displayCount": false,
   "folder": null,
-  "sort": 100000,
+  "sort": 400000,
   "flags": {},
   "_stats": {
     "coreVersion": "13.347",
     "systemId": null,
     "systemVersion": null,
     "createdTime": null,
-    "modifiedTime": 1755765360830,
+    "modifiedTime": 1756542601234,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,
@@ -1734,5 +1734,5 @@
     "default": 0
   },
   "system": {},
-  "_key": "!cards!HDjQQNymkTxAhPzs"
+  "_key": "!cards!QrZBw2BMiYseP4HC"
 }

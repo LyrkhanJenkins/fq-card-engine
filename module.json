@@ -94,15 +94,15 @@
         "compatibility": {}
       },
       {
-        "id": "advanced-macros",
-        "type": "module",
-        "reason": "The advanced macro module is used with Sequencer",
-        "compatibility": {}
-      },
-      {
         "id": "JB2A_DnD5e",
         "type": "module",
         "reason": "The JB2A module is used with Sequencer",
+        "compatibility": {}
+      },
+      {
+        "id": "dae",
+        "type": "module",
+        "reason": "The DAE module is used with to make actor's effect with visual FX",
         "compatibility": {}
       }
     ]

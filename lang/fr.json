@@ -125,6 +125,7 @@
   "FQCARDENGINE.EvasionScore": "Esquive",
   "FQCARDENGINE.BonusEva": "Bonus d'Esquive",
   "FQCARDENGINE.Bonuses": "Bonus FQ",
+  "FQCARDENGINE.TargetType": "Type de cible",
   "FQCARDENGINE.MinReach": "Portée Min",
   "FQCARDENGINE.MaxReach": "Portée Max",
   "FQCARDENGINE.RangeBonus": "Bonus De Portée",

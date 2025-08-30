@@ -1,20 +1,14 @@
 import CanvasUtils from "../../scripts/utils/canvas-utils.js";
+import setGlobal from "../before-each";
 
 describe("CanvasUtils", () => {
     const token = {actorId: "charId", x: 5, y: 5};
-    const tokenToLeft = {actorId: "otherId", x: 0, y: 5};
     const squareSize = 5;
 
 
     beforeEach(() => {
         jest.clearAllMocks();
-        global.game = {
-            canvas: {
-                scene: {
-                    dimensions: {size: squareSize}, tokens: [token, tokenToLeft]
-                }
-            }, scenes: [{active: true, tokens: [token, tokenToLeft]}], user: {character: {id: "charId"}}
-        };
+        setGlobal()
     });
 
     test("getAllSquaresOccupiedByToken", () => {
@@ -36,12 +30,12 @@ describe("CanvasUtils", () => {
     });
 
     test("getXAdjacentLocation", () => {
-        const result = CanvasUtils.getXAdjacentLocation(token, "left");
+        const result = CanvasUtils.getXAdjacentLocation({actorId: "charId", x: 5, y: 5}, "left");
         expect(result).toEqual(token.x - squareSize);
     });
 
     test("getYAdjacentLocation", () => {
-        const result = CanvasUtils.getYAdjacentLocation(token, "up");
+        const result = CanvasUtils.getYAdjacentLocation({actorId: "charId", x: 5, y: 5}, "up");
         expect(result).toEqual(token.y - squareSize);
     });
 
