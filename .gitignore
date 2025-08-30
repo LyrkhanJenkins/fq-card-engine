@@ -19,5 +19,4 @@ assets/*
 node_modules/
 
 # Temporary
-/doc/archives/
 /coverage/
