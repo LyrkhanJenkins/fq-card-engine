@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "build": "npm run build:db",
+    "build": "npm run build:generateCards && npm run build:db",
     "build:db": "node ./utils/packs.mjs package pack",
+    "build:generateCards": "node utils/create_cards_by_classes_and_level.js",
     "build:json": "node ./utils/packs.mjs package unpack",
     "test": "jest",
     "lint": "eslint ./scripts ./tests",
@@ -22,7 +23,9 @@
     "fs-extra": "^11.2.0"
   },
   "jest": {
-    "setupFiles": ["./jest.setup.js"],
+    "setupFiles": [
+      "./jest.setup.js"
+    ],
     "transform": {
       "^.+\\.m?[tj]s$": "babel-jest"
     }

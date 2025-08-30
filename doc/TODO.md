@@ -1,30 +1,25 @@
 ## V1.1.0
 
-- Implémentation de deux nouvelles classes : Gardien et Sorcière
-- Implémenter les cartes communes pour le niveau 6 + 4 Sorts Ultime par classes ? OU que les boosters
-- Implémenter des cartes utilisable hors des combats et qui ne se défausse jamais (1/2 par classe ? + les communs,
-les communs apparaissent avec un niveau d'attributs ) 
-- Les sorts communs apparaissent au changement de niveau dans la bibliothèque
-- Migrations objets dnd5e v FQ
-- Gérer le bonus de dégâts pour gérer l'invulnérabilité (ou autre solution)
-- Refacto : ne plus utiliser le script python pour générer les cartes
 - Ajouter des cartes aléatoires d'un compendium vers une bibliothèque
 - Possibilité de choisir des cartes dans un changement de niveau
 - Card Viewer option
 - Faire un json avec tous les possibilités pour une classe
-- Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première utilisation)
+- Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
+  utilisation)
 - Migration des sons des macros avec les assets
 - Correction des familiers pour utiliser leurs attaques
 - Macro pour piocher un booster et le mettre dans la bibliotheque du joueur
 - Gestion de plusieurs modules pour les effets magiques de combat
 - Gérer des macros d'animations spéciales genre par exemple la téléportation autre que les auras
 - Permettre d'avoir un raccourci de partout fq. pour les effets récupérer comme j2ba.
-- Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points d'actions/mana/pioches?)
+- Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
+  d'actions/mana/pioches?)
 - Protéger l'utilisation de carte si pas de token controlé par le joueur
 - Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
-- Verifier si currentDrop utilisable hors combat sans drop de card et checker si SecretWeapons du moine enlève bien le score de current Drop
-- Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (pour arriver à 40 cartes niveau 5)
+- Verifier si currentDrop utilisable hors combat sans drop de card et checker si SecretWeapons du moine enlève bien le
+  score de current Drop
+- Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (soit 40 cartes niveau 5)
 - Terminer les cartes jusqu'au niveau 6
 - Faire les classes jusqu'au niveau 6
 - Faire un point sur todos: Ramener toutes les notes écrites pendant les vacances + Tri de priorité et Roadmap
@@ -37,6 +32,17 @@ les communs apparaissent avec un niveau d'attributs )
 - Faire au propre les images des cartes de la sorcière
 - Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
 - Rajouter des armes aux starters heroes
+
+~~- Ne plus commité les cartes générées?~~
+
+~~- Refacto : ne plus utiliser le script python pour générer les cartes~~
+
+~~- Gérer l'invulnérabilité~~
+
+~~- Implémenter des cartes utilisable hors des combats et qui ne se défausse jamais (1/2 par classe ? + les communs,
+les communs apparaissent avec un niveau d'attributs )~~
+
+~~- Implémentation de deux nouvelles classes : Gardien et Sorcière~~
 
 ~~- Créer les classe Guardian et witch~~
 
@@ -56,7 +62,8 @@ les communs apparaissent avec un niveau d'attributs )
 
 ~~- Empêcher une carte d'une bibliothèque d'aller ailleurs que dans le deck~~
 
-~~- Quand une carte va d'une bibliothèque à un deck, en créer une nouvelle à la place (sauf si on dépasse le nombre max)~~
+~~- Quand une carte va d'une bibliothèque à un deck, en créer une nouvelle à la place (sauf si on dépasse le nombre
+max)~~
 
 ~~- Créer une bibliothèque à partir du pattern et non pas du niveau 5.~~
 
@@ -64,12 +71,12 @@ les communs apparaissent avec un niveau d'attributs )
 
 ~~- Automatiser la montée de niveau jusqu'au niveau 5 (utiliser la macro )~~
 
-
 ## V1.1.1
+
 - Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
 - Gérer les cibles après coup?
 - Gérer jusqu'au niveau 10 les 7 classes
-
+- Migrations objets dnd5e v FQ
 
 ## Backlog
 
@@ -89,7 +96,8 @@ les communs apparaissent avec un niveau d'attributs )
 
 ### Low:
 
-- Macro 'Maîtriser' : il faut pouvoir lancer une macro qui ajout un effet à une autre cible sans les drotis comme avec game.dfreds
+- Macro 'Maîtriser' : il faut pouvoir lancer une macro qui ajout un effet à une autre cible sans les drotis comme avec
+  game.dfreds
 - Lancez différents sons ci plusieurs cibles touchés
 - Logué ou trouver un moyen de logué tous les évenements de combat pour pouvoir les réutiliser dans les customEvals
 - Améliorer certaines cartes de mage blanc: light energy (json après utilisation)
