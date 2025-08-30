@@ -605,41 +605,39 @@
       "_key": "!actors.items!ZNwkztvzG57pQyDu.UXzmGXZ2Y69oNFCW"
     },
     {
-      "_id": "9k4UwtdrWloUnkuM",
       "name": "White-Mage",
       "type": "class",
       "img": "modules/fq-card-engine/images/classes/craiyon_154837_White_and_yellow_mage_healing_fantasy.png",
       "effects": [],
       "folder": null,
-      "sort": 0,
       "flags": {
         "cf": {
           "id": "temp_9hjmr9g6fcm"
         }
       },
       "_stats": {
-        "compendiumSource": "Compendium.fq-card-engine.classes-fq8.Item.CZbGyFtm5Igp32KW",
+        "compendiumSource": "Compendium.fq-card-engine.classes-fq8.Item.amz18w2EubVq16pj",
         "duplicateSource": null,
         "exportSource": null,
         "coreVersion": "13.347",
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
-        "createdTime": 1755619175259,
-        "modifiedTime": 1755619175259,
+        "createdTime": 1756555018159,
+        "modifiedTime": 1756555018159,
         "lastModifiedBy": "dnd5ebuilder0000"
-      },
-      "ownership": {
-        "default": 0
       },
       "system": {
         "description": {
-          "value": "<p class=\"MsoNormal\" style=\"margin-bottom:.0001pt;text-align:right\"><span style=\"color:#2e74b5;mso-themecolor:accent1;mso-themeshade:191\">La White-Mage est le meilleur soigneur et protecteur mais ces malédictions ne sont pas à prendre à la légère et peuvent infliger d'important dégâts sur la durée</span></p>",
+          "value": "<p>Le Mage Blanc est le meilleur soigneur et protecteur mais ces malédictions ne sont pas à prendre à la légère et peuvent infliger d'important dégâts sur la durée</p>",
           "chat": ""
         },
         "source": {
-          "custom": "",
+          "custom": "FQ",
           "revision": 1,
-          "rules": "2024"
+          "rules": "2024",
+          "book": "",
+          "page": "",
+          "license": ""
         },
         "identifier": "white-mage",
         "levels": 1,
@@ -651,102 +649,6 @@
             "value": {
               "1": "max"
             }
-          },
-          {
-            "_id": "3M5NP4M9RnvQSfUT",
-            "type": "AbilityScoreImprovement",
-            "configuration": {
-              "points": 1,
-              "fixed": {
-                "str": 0,
-                "dex": 0,
-                "con": 0,
-                "int": 0,
-                "wis": 0,
-                "cha": 0
-              },
-              "cap": 1,
-              "locked": [],
-              "recommendation": null
-            },
-            "value": {
-              "type": "asi"
-            },
-            "level": 2,
-            "title": "",
-            "hint": ""
-          },
-          {
-            "_id": "f8O15dOdgbusvjWs",
-            "type": "AbilityScoreImprovement",
-            "configuration": {
-              "points": 1,
-              "fixed": {
-                "str": 0,
-                "dex": 0,
-                "con": 0,
-                "int": 0,
-                "wis": 0,
-                "cha": 0
-              },
-              "cap": 1,
-              "locked": [],
-              "recommendation": null
-            },
-            "value": {
-              "type": "asi"
-            },
-            "level": 3,
-            "title": "",
-            "hint": ""
-          },
-          {
-            "_id": "kFeYqHWF2PMXMDmZ",
-            "type": "AbilityScoreImprovement",
-            "configuration": {
-              "points": 1,
-              "fixed": {
-                "str": 0,
-                "dex": 0,
-                "con": 0,
-                "int": 0,
-                "wis": 0,
-                "cha": 0
-              },
-              "cap": 1,
-              "locked": [],
-              "recommendation": null
-            },
-            "value": {
-              "type": "asi"
-            },
-            "level": 4,
-            "title": "",
-            "hint": ""
-          },
-          {
-            "_id": "93INEK2KTSvFb3dX",
-            "type": "AbilityScoreImprovement",
-            "configuration": {
-              "points": 2,
-              "fixed": {
-                "str": 0,
-                "dex": 0,
-                "con": 0,
-                "int": 0,
-                "wis": 0,
-                "cha": 0
-              },
-              "cap": 2,
-              "locked": [],
-              "recommendation": null
-            },
-            "value": {
-              "type": "asi"
-            },
-            "level": 5,
-            "title": "",
-            "hint": ""
           },
           {
             "_id": "I0jWzmZMKZG3T9A2",
@@ -766,11 +668,15 @@
                   "replacement": false
                 },
                 "5": {
-                  "count": 3,
+                  "count": 2,
                   "replacement": false
                 },
                 "6": {
-                  "count": 3,
+                  "count": 2,
+                  "replacement": false
+                },
+                "7": {
+                  "count": 2,
                   "replacement": false
                 }
               },
@@ -854,7 +760,8 @@
               "replaced": {}
             },
             "title": "",
-            "hint": ""
+            "hint": "",
+            "classRestriction": "primary"
           },
           {
             "_id": "roK5zMcqSYsyzWaG",
@@ -879,6 +786,536 @@
             "level": 6,
             "title": "",
             "hint": ""
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "_id": "PX1SZ6XMb6tllkyf",
+            "configuration": {
+              "cap": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "locked": [],
+              "points": 2,
+              "recommendation": null,
+              "max": null
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 2,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "_id": "QOYW4d92fNVW6Dqp",
+            "configuration": {
+              "cap": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "locked": [],
+              "points": 2,
+              "recommendation": null,
+              "max": null
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 4,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "_id": "2VpcJf0LXvFznMtb",
+            "configuration": {
+              "cap": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "locked": [],
+              "points": 2,
+              "recommendation": null,
+              "max": null
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 8,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "_id": "xyGpgdzOQb7Qlq9j",
+            "configuration": {
+              "cap": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "locked": [],
+              "points": 2,
+              "recommendation": null,
+              "max": null
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 10,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "_id": "m029E4cXYePu4ogT",
+            "configuration": {
+              "cap": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "locked": [],
+              "points": 2,
+              "recommendation": null,
+              "max": null
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 12,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "_id": "dlBOQBGFkU8fpJdX",
+            "configuration": {
+              "cap": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "locked": [],
+              "points": 2,
+              "recommendation": null,
+              "max": null
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 14,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "_id": "cWvUlSUiJueRdC0F",
+            "configuration": {
+              "cap": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "locked": [],
+              "points": 2,
+              "recommendation": null,
+              "max": null
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 16,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "_id": "93JROcnCc7C3X4Y1",
+            "configuration": {
+              "cap": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "locked": [],
+              "points": 2,
+              "recommendation": null,
+              "max": null
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 18,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "type": "AbilityScoreImprovement",
+            "_id": "1gIQN56mJpuGE78w",
+            "configuration": {
+              "cap": 2,
+              "fixed": {
+                "str": 0,
+                "dex": 0,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              },
+              "locked": [],
+              "points": 2,
+              "recommendation": null,
+              "max": null
+            },
+            "value": {
+              "type": "asi"
+            },
+            "level": 20,
+            "title": "",
+            "hint": ""
+          },
+          {
+            "type": "ItemChoice",
+            "_id": "42ndyciGiVgUMjQg",
+            "configuration": {
+              "allowDrops": false,
+              "choices": {
+                "1": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "2": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "3": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "4": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "5": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "6": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "7": {
+                  "count": 2,
+                  "replacement": false
+                }
+              },
+              "pool": [
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0NL73PtlsL6sPZwn"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.pl28LFHBL1IvPmOA"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.b0NtKuwtI0giJlq1"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.s2VyJFUbedDJ1rTc"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.tTJ2piR9WJ1dy2fJ"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.6VXD4LYLNjWXDd3E"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.GVKZiJK1m1v6WZdb"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.YlWICWTAVlsIhvqk"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.IpIUOTKHqwoc0QiE"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AueSPbCtPL1nTO4L"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cyZhMIyEwL29fYqg"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TUqVNrtRQmoOqx0F"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0t6uhrhyysxPmkoB"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.RAOpoyEANC5a2MUh"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.tV0SF4kNL1lrRARy"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2RDku776Ds6m3Imx"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.fHi7TCQweUM9bjDS"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Wwf2VWxGPZngUkZC"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.GmHyxsmMjVKcB1ru"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Nrf2zOlpTVyczRUE"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.h8HCqm0GVy04obwE"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.oZlLtsPZhx3nRNIR"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.52rj98jVQYX29WsI"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Oq8yTrEfuuwxu8SI"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTtJPRZRuIJmmtHM"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTwJ88F0oJUQvuhS"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.R63FEsMi4wGxeyxu"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.CAgvv3YP5HrcjF2A"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.ImUWHWiudZDO6gmR"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.lgVAINp270hxLUno"
+                }
+              ],
+              "restriction": {
+                "list": []
+              },
+              "spell": null,
+              "type": null
+            },
+            "value": {
+              "added": {},
+              "replaced": {}
+            },
+            "title": "",
+            "hint": "",
+            "classRestriction": "secondary"
+          },
+          {
+            "type": "ItemChoice",
+            "configuration": {
+              "allowDrops": false,
+              "choices": {
+                "8": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "9": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "10": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "11": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "12": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "13": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "14": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "15": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "16": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "17": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "18": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "19": {
+                  "count": 2,
+                  "replacement": false
+                },
+                "20": {
+                  "count": 2,
+                  "replacement": false
+                }
+              },
+              "pool": [
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0NL73PtlsL6sPZwn"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.pl28LFHBL1IvPmOA"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.b0NtKuwtI0giJlq1"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.s2VyJFUbedDJ1rTc"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.tTJ2piR9WJ1dy2fJ"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.6VXD4LYLNjWXDd3E"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.GVKZiJK1m1v6WZdb"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.YlWICWTAVlsIhvqk"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.IpIUOTKHqwoc0QiE"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AueSPbCtPL1nTO4L"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cyZhMIyEwL29fYqg"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TUqVNrtRQmoOqx0F"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0t6uhrhyysxPmkoB"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.RAOpoyEANC5a2MUh"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.tV0SF4kNL1lrRARy"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2RDku776Ds6m3Imx"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.fHi7TCQweUM9bjDS"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Wwf2VWxGPZngUkZC"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.GmHyxsmMjVKcB1ru"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Nrf2zOlpTVyczRUE"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.h8HCqm0GVy04obwE"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.oZlLtsPZhx3nRNIR"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.52rj98jVQYX29WsI"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Oq8yTrEfuuwxu8SI"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTtJPRZRuIJmmtHM"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTwJ88F0oJUQvuhS"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.R63FEsMi4wGxeyxu"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.CAgvv3YP5HrcjF2A"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.ImUWHWiudZDO6gmR"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.lgVAINp270hxLUno"
+                }
+              ],
+              "restriction": {
+                "list": []
+              },
+              "spell": null,
+              "type": null
+            },
+            "value": {
+              "added": {},
+              "replaced": {}
+            },
+            "title": "",
+            "hint": "",
+            "_id": "xBqdiz0pSlA8VnXG"
           }
         ],
         "spellcasting": {
@@ -896,12 +1333,20 @@
         },
         "startingEquipment": [],
         "primaryAbility": {
-          "value": [],
+          "value": [
+            "con",
+            "wis"
+          ],
           "all": true
         },
         "properties": []
       },
-      "_key": "!actors.items!ZNwkztvzG57pQyDu.9k4UwtdrWloUnkuM"
+      "_id": "MI2j9n4hvAPJ2zCL",
+      "sort": 106250,
+      "ownership": {
+        "default": 0
+      },
+      "_key": "!actors.items!ZNwkztvzG57pQyDu.MI2j9n4hvAPJ2zCL"
     }
   ],
   "effects": [],
@@ -913,7 +1358,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1709393283253,
-    "modifiedTime": 1755794804007,
+    "modifiedTime": 1756555018230,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.tnE1cbB7yEjjCvBD",
     "duplicateSource": null,
@@ -1049,7 +1494,7 @@
       "alignment": "",
       "race": "",
       "background": "",
-      "originalClass": "9k4UwtdrWloUnkuM",
+      "originalClass": "MI2j9n4hvAPJ2zCL",
       "xp": {
         "value": 0,
         "min": 0,

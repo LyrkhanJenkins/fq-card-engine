@@ -1,0 +1,121 @@
+{
+  "name": "+1 action point (21) - M",
+  "type": "feat",
+  "img": "icons/magic/light/explosion-star-glow-orange.webp",
+  "effects": [
+    {
+      "_id": "gLxh9IhVmNUCs9pM",
+      "changes": [
+        {
+          "key": "system.fq.action.max",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "origin": "Item.oSfpFdarEM0Sll9K",
+      "transfer": true,
+      "flags": {
+        "dae": {
+          "selfTarget": false,
+          "stackable": "multi",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [],
+          "transfer": true
+        }
+      },
+      "tint": "#ffffff",
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.2",
+        "lastModifiedBy": null
+      },
+      "name": "+1 point d'action",
+      "img": "icons/magic/light/explosion-star-glow-orange.webp",
+      "type": "base",
+      "system": {},
+      "description": "",
+      "statuses": [],
+      "sort": 0,
+      "_key": "!items.effects!mWQXof3FN0r6Nwnx.gLxh9IhVmNUCs9pM"
+    }
+  ],
+  "folder": null,
+  "flags": {
+    "cf": {
+      "id": "temp_fmyn85q4rtg"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "dnd5e",
+    "systemVersion": "5.1.2",
+    "createdTime": 1756552300688,
+    "modifiedTime": 1756552300744,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "system": {
+    "description": {
+      "value": "",
+      "chat": ""
+    },
+    "source": {
+      "custom": "",
+      "revision": 1,
+      "rules": "2024"
+    },
+    "uses": {
+      "max": "",
+      "spent": 0,
+      "recovery": []
+    },
+    "requirements": "",
+    "cover": null,
+    "crewed": false,
+    "fq": {
+      "action": 0,
+      "mana": 0,
+      "zeal": 0,
+      "drop": 0,
+      "hp": 0
+    },
+    "type": {
+      "value": "",
+      "subtype": ""
+    },
+    "prerequisites": {
+      "level": null,
+      "items": [],
+      "repeatable": false
+    },
+    "properties": [],
+    "activities": {},
+    "advancement": [],
+    "identifier": "1-action-point-8",
+    "enchant": {}
+  },
+  "_id": "mWQXof3FN0r6Nwnx",
+  "sort": 5600000,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!mWQXof3FN0r6Nwnx"
+}

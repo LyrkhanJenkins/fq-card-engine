@@ -1,10 +1,5 @@
 ## V1.1.0
-- Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
-  - Pour le reste utiliser JB2A, gérer les sons et les jouer également si pas le module sequencer
-- Refacto pour s'affranchir du code de fq-card-engine
-- Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
-- Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (pour arriver à 40 cartes niveau 5)
-- Créer les classe Guardian et witch + 
+
 - Implémentation de deux nouvelles classes : Gardien et Sorcière
 - Implémenter les cartes communes pour le niveau 6 + 4 Sorts Ultime par classes ? OU que les boosters
 - Implémenter des cartes utilisable hors des combats et qui ne se défausse jamais (1/2 par classe ? + les communs,
@@ -16,8 +11,8 @@ les communs apparaissent avec un niveau d'attributs )
 - Ajouter des cartes aléatoires d'un compendium vers une bibliothèque
 - Possibilité de choisir des cartes dans un changement de niveau
 - Card Viewer option
-- Faire un json avec tous les possibilité pour une classe
-- Carte Incantation et les passifs en générale pas très clair, réécrire ptetre les règle (coute 0 après première utilisation)
+- Faire un json avec tous les possibilités pour une classe
+- Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première utilisation)
 - Migration des sons des macros avec les assets
 - Correction des familiers pour utiliser leurs attaques
 - Macro pour piocher un booster et le mettre dans la bibliotheque du joueur
@@ -29,10 +24,21 @@ les communs apparaissent avec un niveau d'attributs )
 - Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
 - Verifier si currentDrop utilisable hors combat sans drop de card et checker si SecretWeapons du moine enlève bien le score de current Drop
+- Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (pour arriver à 40 cartes niveau 5)
 - Terminer les cartes jusqu'au niveau 6
 - Faire les classes jusqu'au niveau 6
 - Faire un point sur todos: Ramener toutes les notes écrites pendant les vacances + Tri de priorité et Roadmap
 - Gérer mieux les 1d@for car ça peut valoir -1 -2 et tout casser
+- Refacto pour s'affranchir du code de fq-card-engine
+- Rendre le cardContent accessible de partout
+- Gérer plusieurs sons libre de droit
+- Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
+    - Pour le reste utiliser JB2A, gérer les sons et les jouer également si pas le module sequencer
+- Faire au propre les images des cartes de la sorcière
+- Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
+- Rajouter des armes aux starters heroes
+
+~~- Créer les classe Guardian et witch~~
 
 ~~- Créer un sort passif qui sacrifie des squelettes, et gérer une bar spécial pour les squelettes?~~
 

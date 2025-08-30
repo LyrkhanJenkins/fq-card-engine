@@ -1,13 +1,13 @@
 {
-  "name": "+1 critical (8)",
+  "name": "+1 mana (19)  - M",
   "type": "feat",
-  "img": "icons/magic/symbols/rune-sigil-hook-white-red.webp",
+  "img": "icons/magic/light/explosion-star-teal-purple.webp",
   "effects": [
     {
-      "_id": "gLxh9IhVmNUCs9pM",
+      "_id": "Ua6iA2h8Qwrjv5Re",
       "changes": [
         {
-          "key": "system.fq.attributes.critical",
+          "key": "system.fq.mana.max",
           "mode": 2,
           "value": "1",
           "priority": null
@@ -47,14 +47,14 @@
         "lastModifiedBy": null,
         "exportSource": null
       },
-      "name": "+1 critique",
-      "img": "icons/magic/symbols/rune-sigil-hook-white-red.webp",
+      "name": "+1 mana",
+      "img": "icons/magic/light/explosion-star-teal-purple.webp",
       "type": "base",
       "system": {},
       "description": "",
       "statuses": [],
       "sort": 0,
-      "_key": "!items.effects!LTtJPRZRuIJmmtHM.gLxh9IhVmNUCs9pM"
+      "_key": "!items.effects!tV0SF4kNL1lrRARy.Ua6iA2h8Qwrjv5Re"
     }
   ],
   "folder": null,
@@ -69,8 +69,8 @@
     "coreVersion": "13.347",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
-    "createdTime": 1724074030996,
-    "modifiedTime": 1724141430569,
+    "createdTime": 1724140540596,
+    "modifiedTime": 1756552300744,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
@@ -165,7 +165,7 @@
     },
     "properties": []
   },
-  "_id": "LTtJPRZRuIJmmtHM",
-  "sort": 2700000,
-  "_key": "!items!LTtJPRZRuIJmmtHM"
+  "_id": "tV0SF4kNL1lrRARy",
+  "sort": 3600000,
+  "_key": "!items!tV0SF4kNL1lrRARy"
 }

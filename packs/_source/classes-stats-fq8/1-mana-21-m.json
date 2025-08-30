@@ -1,13 +1,13 @@
 {
-  "name": "+1 evasion (8)",
+  "name": "+1 mana (21)  - M",
   "type": "feat",
-  "img": "icons/magic/symbols/rune-sigil-horned-blue.webp",
+  "img": "icons/magic/light/explosion-star-teal-purple.webp",
   "effects": [
     {
-      "_id": "gLxh9IhVmNUCs9pM",
+      "_id": "usXBuzyWJI9KNFVn",
       "changes": [
         {
-          "key": "system.fq.attributes.evasion",
+          "key": "system.fq.mana.max",
           "mode": 2,
           "value": "1",
           "priority": null
@@ -47,14 +47,14 @@
         "lastModifiedBy": null,
         "exportSource": null
       },
-      "name": "+1 esquive",
-      "img": "icons/magic/symbols/rune-sigil-horned-blue.webp",
+      "name": "+1 mana",
+      "img": "icons/magic/light/explosion-star-teal-purple.webp",
       "type": "base",
       "system": {},
       "description": "",
       "statuses": [],
       "sort": 0,
-      "_key": "!items.effects!R63FEsMi4wGxeyxu.gLxh9IhVmNUCs9pM"
+      "_key": "!items.effects!fHi7TCQweUM9bjDS.usXBuzyWJI9KNFVn"
     }
   ],
   "folder": null,
@@ -69,8 +69,8 @@
     "coreVersion": "13.347",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
-    "createdTime": 1724074032441,
-    "modifiedTime": 1724142344761,
+    "createdTime": 1724140540596,
+    "modifiedTime": 1756552300744,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
@@ -165,7 +165,7 @@
     },
     "properties": []
   },
-  "_id": "R63FEsMi4wGxeyxu",
-  "sort": 2800000,
-  "_key": "!items!R63FEsMi4wGxeyxu"
+  "_id": "fHi7TCQweUM9bjDS",
+  "sort": 2700000,
+  "_key": "!items!fHi7TCQweUM9bjDS"
 }

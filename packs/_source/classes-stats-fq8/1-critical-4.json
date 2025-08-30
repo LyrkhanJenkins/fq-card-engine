@@ -70,7 +70,7 @@
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": 1724140510138,
-    "modifiedTime": 1724141404684,
+    "modifiedTime": 1756552300744,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
@@ -166,6 +166,6 @@
     "properties": []
   },
   "_id": "P2E7DOnfG0AHscR8",
-  "sort": 1700000,
+  "sort": 7700000,
   "_key": "!items!P2E7DOnfG0AHscR8"
 }
