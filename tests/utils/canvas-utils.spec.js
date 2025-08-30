@@ -8,7 +8,7 @@ describe("CanvasUtils", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        setGlobal()
+        setGlobal();
     });
 
     test("getAllSquaresOccupiedByToken", () => {

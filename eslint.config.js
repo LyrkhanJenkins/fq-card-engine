@@ -1,32 +1,26 @@
 const js = require("@eslint/js");
 
-
 module.exports = [
-
-    // Remplacez ces paramètres par ceux que vous souhaitez utiliser
     {
         files: ["**/*.js"],
-
         languageOptions: {
-            ecmaVersion: 2021,
+            ecmaVersion: "latest",
             sourceType: "module",
         },
     },
 
-    // Utiliser les extensions recommandées d'ESLint
     js.configs.recommended,
 
-    // Si vous avez des règles personnalisées, ajoutez-les ici
     {
-
         rules: {
             "no-undef": "off",
             "no-unused-vars": [
                 "error",
-                {argsIgnorePattern: "^_*", varsIgnorePattern: "^_*"},
+                { argsIgnorePattern: "^_*", varsIgnorePattern: "^_*",
+                    caughtErrorsIgnorePattern: "^_*" },
             ],
             "no-prototype-builtins": "off",
-            "indent": ["error", 4, {"ignoredNodes": ["TemplateLiteral *"]}],
+            "indent": ["error", 4, { "ignoredNodes": ["TemplateLiteral *"] }],
             "quotes": ["error", "double", { "allowTemplateLiterals": true }],
             "semi": ["error", "always"]
         }

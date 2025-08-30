@@ -19,7 +19,7 @@ describe("ConsumptionUtils", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        setGlobal()
+        setGlobal();
     });
 
     test("checkResourcesNoActor", () => {
