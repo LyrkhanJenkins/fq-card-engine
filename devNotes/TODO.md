@@ -1,9 +1,8 @@
 ## V1.1.0
 
-- Gardian non terminé: J'en suis à la stance shift (pas oublier de pousser le frappe provocatrice)
+- A implémenter:  Frappe provocatrice + Infusion de Mana + Niveau 6 Gardien/Illusioniste/MageBlanc/Moine
 - Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (soit 40 cartes niveau 5)
 - Terminer les cartes jusqu'au niveau 6
-- Faire les classes jusqu'au niveau 6
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
 - Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
 - Rajouter des armes aux starters heroes
