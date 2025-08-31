@@ -1,9 +1,9 @@
 ## V1.1.0
 
+- Gérer plusieurs sons pour chaque type de dégâts libre de droit
 - Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (soit 40 cartes niveau 5)
 - Terminer les cartes jusqu'au niveau 6
 - Faire les classes jusqu'au niveau 6
-- Gérer plusieurs sons libre de droit
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
 - Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
     - Pour le reste utiliser JB2A, gérer les sons et les jouer également si pas le module sequencer
@@ -21,9 +21,11 @@
 - Refacto pour s'affranchir du code de fq-card-engine
 - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
   d'actions/mana/pioches?)
+- Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
 
-## V1.1.1
+## V1.2
 
+- Faire des cartes qui coutent plus que 10 points d'actions, plus forte
 - Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
 - Gérer les cibles après coup?
 - Gérer jusqu'au niveau 10 les 7 classes

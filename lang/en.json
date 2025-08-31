@@ -84,12 +84,10 @@
   "FQCARDENGINE.DraggableBarPositionSettingX": "X Position",
   "FQCARDENGINE.DraggableBarPositionSettingHintX": "X Position of the bar only when Draggable is enabled",
   "FQCARDENGINE.DraggableBarPositionSettingHintY": "Y Position of the bar only when Draggable is enabled",
-
   "FQCARDENGINE.TABS.attributes": "FQ",
   "FQCARDENGINE.TABS.details": "Details",
   "FQCARDENGINE.TABS.faces": "Faces",
   "FQCARDENGINE.TABS.back": "Back",
-
   "FQCARDENGINE.HandSizeSetting": "Window size",
   "FQCARDENGINE.HandSizeSettingHint": "Size of the window for hand's players, not possible if position of hand is above players, or at the left or right side to the macro bar",
   "FQCARDENGINE.HandSizeSmallSetting": "Small",
@@ -98,16 +96,13 @@
   "FQCARDENGINE.HandSizeMaxSetting": "Max",
   "FQCARDENGINE.GMUsingCardsSetting": "GM using cards without discarding them",
   "FQCARDENGINE.GMUsingCardsSettingHint": "Uncheck this if you want that the GM never pass the cards front the hand to an other pile but play them anyway",
-
   "FQCARDENGINE.DialogPlayFormError": "Form Error",
   "FQCARDENGINE.DialogPlayFormErrorXXX": "No value for X",
   "FQCARDENGINE.DialogPlayFormErrorYYY": "No value for Y",
   "FQCARDENGINE.DialogPlayFormErrorMinionLocation": "Select right number of FREE minion location for this spell",
   "FQCARDENGINE.ChoosingCardsTitle": "Select cards to add to your SpellBook",
-
   "FQCARDENGINE.DeckError": "Deck Error",
   "FQCARDENGINE.ErrorDuplicateCardSpellBook": "Card {cardName} cant be duplicate on spellbooks.",
-
   "FQCARDENGINE.ShortActionPoints": "AP",
   "FQCARDENGINE.ActionPoints": "Action Points",
   "FQCARDENGINE.ActionPointsCurrent": "Current Action Points",
@@ -192,7 +187,6 @@
   "FQCARDENGINE.EffectRounds": "Rounds",
   "FQCARDENGINE.EffectTurns": "Turns",
   "FQCARDENGINE.EffectMessages": "Effect messages",
-
   "FQCARDENGINE.MessageKey": "Message key",
   "FQCARDENGINE.MessageArg": "Message arg",
   "FQCARDENGINE.CustomEvalErrorMessages": "Error messages",
@@ -201,7 +195,6 @@
   "FQCARDENGINE.CardTargeting": "Targeting",
   "FQCARDENGINE.AttributeModifiers": "Attribute Modifiers",
   "FQCARDENGINE.OtherCardAttributes": "Other card options",
-
   "FQCARDENGINE.AddChoice": "Add a choice",
   "FQCARDENGINE.DeleteChoice": "Delete the choice",
   "FQCARDENGINE.AddAdditionalMessage": "Add an additional message",
@@ -218,12 +211,10 @@
   "FQCARDENGINE.DeleteMinion": "Delete the minion",
   "FQCARDENGINE.AddCustomEval": "Add custom script",
   "FQCARDENGINE.DeleteCustomEval": "Delete the custom script",
-
   "FQCARDENGINE.SheetCharacter": "FQ Character Sheet",
   "FQCARDENGINE.SheetNPC": "FQ NPC Sheet",
   "FQCARDENGINE.SheetItem": "FQ Item Sheet",
   "FQCARDENGINE.SheetFQCardsConfig": "FQ Deck Sheet",
-
   "FQCARDENGINE.WarningMsgCardNotImplemented": "Card is not implemented yet",
   "FQCARDENGINE.WarningMsgNotEnoughHp": "has not enough hit points",
   "FQCARDENGINE.WarningMsgNotEnoughAction": "has not enough action points",
@@ -243,8 +234,8 @@
   "FQCARDENGINE.ChatMessageCardEffectChoice": "Card effect choice: {nameContent}",
   "FQCARDENGINE.WarningMsgCantDropPlayedCard": "Cannot discard a card that has already been played (Charge Spell or Passive Spell)",
   "FQCARDENGINE.WarningMsgCantPlayPlayedCard": "Cannot play a card that has already been played this turn (Charge Spell or Passive Spell)",
-  "FQCARDENGINE.InfoMsgRemainingCharge": "{remainingCharge} remaining charge(s)",
-  "FQCARDENGINE.InfoMsgPassiveSpell": "Passive Spell",
+  "FQCARDENGINE.InfoMsgRemainingCharge": "Card has charges and remain in your hand: {remainingCharge} remaining charge(s)",
+  "FQCARDENGINE.InfoMsgPassiveSpell": "Passive Spell: The card remain in your hand",
   "FQCARDENGINE.InfoMsgNoAddedEffect": "This card has no additional effect",
   "FQCARDENGINE.WarningMsgCardConditionNotMet": "Card condition(s) not met",
   "FQCARDENGINE.WarningMsgErrorReadingCardSpecialCondition": "Unable to read the card's special usage conditions",
@@ -270,7 +261,6 @@
   "FQCARDENGINE.WarningSpellOverloaded": "The spell {spell} is overloaded",
   "FQCARDENGINE.WarningSpellNotLoaded": "The spell {spell} is not loaded yet",
   "FQCARDENGINE.WarningSpellNotCostingMana": "The last cast spell was not costing mana",
-
   "FQCARDENGINE.MacroMsgCatchingBreath": "You catch your breath... Action points are now at maximum!",
   "FQCARDENGINE.MacroErrorMsgHustle": "You must have exactly one target, and it must be on a square adjacent to your character.",
   "FQCARDENGINE.MacroMsgHustle": "You use your action to shove \"{targetName}\" 1 square in front of your character.",
@@ -279,13 +269,10 @@
   "FQCARDENGINE.MacroMsgSheathe": "You sheathe your weapon and return your hand to the library.",
   "FQCARDENGINE.MacroErrorMsgUnsheathe": "You must have a positive hand score.",
   "FQCARDENGINE.MacroMsgUnsheathe": "You prepare your next spells by drawing your hand; this action \nmay be considered an act of aggression by those around the player.",
-
   "FQCARDENGINE.DeckType": "Deck type",
   "FQCARDENGINE.DeckOwner": "Deck Owner",
-
   "FQCARDENGINE.CardMsgApplyEffectsFormulas": "Special formula to apply: \"{applyEffectsFormulasTitle}\"",
   "FQCARDENGINE.CardMsgApplyEffectsFormulasSuccess": "Special formula successful!",
-
   "FQCARDENGINE.CardMsgManaRecover": "You gain {mana} mana points",
   "FQCARDENGINE.CardMsgActionRecover": "You gain {action} action points",
   "FQCARDENGINE.CardMsgDrawCard": "You draw {draw} cards",
@@ -299,7 +286,6 @@
   "FQCARDENGINE.CardMsgCardCharging": "The spell {spell} is loading {action} points d'action",
   "FQCARDENGINE.CardMsgLoadScore": "Current loading : ",
   "FQCARDENGINE.CardMsgUltimateRage": "You enter into a rage, increasing your damage by 2X{bonus}.\nYou take {bonus} damage per turn.",
-
   "FQCARDENGINE.CardMsgTemporaryEffect": "The effect '{effectName}' lasts {turn} turn(s)",
   "FQCARDENGINE.CardMsgApplyEffect": "The effect '{effectName}' has been applied to the targets",
   "FQCARDENGINE.CardWarningMsgSquareEffect": "Targets must be within a {area} square",
@@ -312,7 +298,6 @@
   "FQCARDENGINE.CardWarningMsgOnlyThisSpellThisTurn": "Cannot play this spell if a card has already been played this turn",
   "FQCARDENGINE.CardMsgGMActionDeleteEffect": "GM Action: Remove the effect corresponding to the spell",
   "FQCARDENGINE.CardWarningMsgNeedEffect": "You do not have an active effect to play this spell",
-
   "FQCARDENGINE.CardMsgFogEffect": "'Fog' effect applied to all targets, reducing critical by {critical} and evasion by {evasion}",
   "FQCARDENGINE.CardMsgIncantationEffect": "You incant {action} action point(s) for the next turn",
   "FQCARDENGINE.CardMsgDamagePropagationEffect": "{damage} damage is propagated to the target each turn for 3 turns",
@@ -336,12 +321,10 @@
   "FQCARDENGINE.CardMsgAmbush": "Your action points are now at 0, you MUST end your turn now or play another 'Ambush' card",
   "FQCARDENGINE.CardMsgSupersonicStrike": "Move the target by {score} in the desired direction",
   "FQCARDENGINE.CardMsgLightStrike": "Recast the spell a second time (at no cost) to heal the targets of your choice",
-
   "FQCARDENGINE.SpellBookPrefixName": "Spellbook of ",
   "FQCARDENGINE.DeckPrefixName": "Deck of ",
   "FQCARDENGINE.HandPrefixName": "Hand of ",
   "FQCARDENGINE.PilePrefixName": "Discard of ",
-
   "FQCARDENGINE.SacrifySkeletonButton": "Sacrify Skeleton",
   "FQCARDENGINE.SacrifySkeletonMsg": "Skeleton has been sacrificed, your sacrifice score is {sacrifice}",
   "FQCARDENGINE.TokenDamageButton": "Apply weapon damage",

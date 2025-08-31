@@ -1,5 +1,6 @@
 v1.1:
 
+- Correction bug des passifs et carte rejouable qui traine depuis longtemps
 - Gestion de modules optionnels pour les effets speciaux (Sequencer, j2ba, DAE, Card Viewer)
 - Correction des familiers pour utiliser leurs attaques
 - Ne plus commité les cartes générées
