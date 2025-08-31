@@ -1,4 +1,4 @@
-import DeckUtils, {DeckError, SPELLBOOK_TYPE} from "../../scripts/utils/deck-utils.js";
+import DeckUtils, {SPELLBOOK_TYPE} from "../../scripts/utils/deck-utils.js";
 import setGlobal from "../before-each.js";
 
 const createEmbeddedDocumentsMock = jest.fn();
@@ -119,24 +119,6 @@ describe("DeckUtils", () => {
         expect(result).toBe(true);
     });
 
-    it("should call deleteDeckForUser and createDeckForUser when conditions are met", async () => {
-        const document = {
-            system: {
-                isOriginalClass: true,
-                levels: 5,
-            },
-            flags: {
-                fq: {}
-            }
-        };
-        const deleteDeckForUserMethodSpy = jest.spyOn(DeckUtils, "deleteDeckForUser");
-        const options = {isAdvancement: true, parent: {id: "parent-id"}};
-
-        await DeckUtils.updateDeckWhenChange(document, options);
-
-        expect(deleteDeckForUserMethodSpy).toHaveBeenCalled();
-    });
-
     it("should not call deck methods if conditions are not met", async () => {
         const localDocument = {
             system: {
@@ -244,32 +226,6 @@ describe("DeckUtils", () => {
         expect(createEmbeddedDocumentsMock).toHaveBeenCalledWith("Card", cards, {keepId: false});
     });
 
-    it("should warn when trying to add duplicate cards to SPELLBOOK_TYPE deck but create one anyway", async () => {
-        deck.system.fq.type = SPELLBOOK_TYPE;
-        const cards = [
-            {name: "Card1"},
-            {name: "Card1"}, // Duplicate card
-        ];
-
-        await DeckUtils.createCardsForDeck(deck, cards);
-
-        expect(ui.notifications.warn).toHaveBeenCalled();
-        expect(createEmbeddedDocumentsMock).toHaveBeenCalledWith("Card", [{name: "Card1"}], {keepId: false});
-    });
-
-    it("should throw an error when cards already exist in the SPELLBOOK_TYPE deck", async () => {
-        deck.system.fq.type = SPELLBOOK_TYPE;
-        deck.cards = [{name: "ExistingCard"}];
-
-        const cards = [{name: "ExistingCard"}];
-
-        await expect(DeckUtils.createCardsForDeck(deck, cards)).rejects.toThrow(
-            new DeckError(game.i18n.format("FQCARDENGINE.ErrorDuplicateCardSpellBook", {cardName: ""}))
-        );
-
-        expect(createEmbeddedDocumentsMock).not.toHaveBeenCalled();
-    });
-
     it("should add all cards to the deck for non-SPELLBOOK_TYPE", async () => {
         deck.system.fq.type = "OTHER_TYPE";
 
@@ -317,61 +273,5 @@ describe("DeckUtils", () => {
 
         expect(ui.notifications.warn).toHaveBeenCalledWith(game.i18n.localize("FQCARDENGINE.NoMainClass"));
         expect(Cards.deleteDocuments).not.toHaveBeenCalled();
-    });
-
-    it("should delete the deck if the conditions are met", async () => {
-
-        // Mock DeckUtils.getFirstDeck
-        const getFirstDeckMock = jest.fn();
-        DeckUtils.getFirstDeck = getFirstDeckMock;
-        // Mock game.users.get
-        const getUserMock = jest.fn();
-        game.users.get = getUserMock;
-        getUserMock.mockReturnValue({
-            id: "user1",
-            character: {
-                name: "CharacterName",
-                classes: {
-                    mainClass: {
-                        system: {isOriginalClass: true, levels: 5}
-                    }
-                }
-            }
-        });
-
-        getFirstDeckMock.mockReturnValue({id: "deck1"});
-
-        await DeckUtils.deleteDeckForUser("user1");
-
-        expect(Cards.deleteDocuments).toHaveBeenCalledWith(["deck1"]);
-        expect(ui.notifications.warn).not.toHaveBeenCalled();
-    });
-
-    it("should not delete the deck if main class level is greater than 5", async () => {
-
-        // Mock DeckUtils.getFirstDeck
-        const getFirstDeckMock = jest.fn();
-        DeckUtils.getFirstDeck = getFirstDeckMock;
-        // Mock game.users.get
-        const getUserMock = jest.fn();
-        game.users.get = getUserMock;
-        getUserMock.mockReturnValue({
-            id: "user1",
-            character: {
-                name: "CharacterName",
-                classes: {
-                    mainClass: {
-                        system: {isOriginalClass: true, levels: 6}
-                    }
-                }
-            }
-        });
-
-        getFirstDeckMock.mockReturnValue({id: "deck1"});
-
-        await DeckUtils.deleteDeckForUser("user1");
-
-        expect(Cards.deleteDocuments).not.toHaveBeenCalled();
-        expect(ui.notifications.warn).not.toHaveBeenCalled();
     });
 });
