@@ -113,7 +113,7 @@ listesCards["Illusionist Lvl3"] = listesCards["Illusionist Lvl2"].concat(["Draw 
 listesCards["Illusionist Lvl4"] = listesCards["Illusionist Lvl3"].concat(["Magic Reach", "Magic Reach", "Apothecary I", "Diagonal Attack", "Black Plague", "Communicating Vessels", "Fevered Dance", "Mirror Images"]);
 listesCards["Illusionist Lvl5"] = listesCards["Illusionist Lvl4"].concat(["Fevered Dance", "Dagger Cloud", "Shuriken Volley", "Apothecary II", "Backflip Strike", "Circle Attack", "Illusory Strike", "Backstab"]);
 
-listesCards["Elementalist Lvl2"] = listesCards["Elementalist Lvl1"].concat(["Draw III", "Mana Capture", "Frostfire", "Fog", "Tornado"]);
+listesCards["Elementalist Lvl2"] = listesCards["Elementalist Lvl1"].concat(["Elemental Magic", "Draw III", "Mana Capture", "Frostfire", "Fog", "Tornado"]);
 listesCards["Elementalist Lvl3"] = listesCards["Elementalist Lvl2"].concat(["Turn Booster IV", "Tornado", "Fireball", "Meteor", "Frost Strike", "Mana Capture"]);
 listesCards["Elementalist Lvl4"] = listesCards["Elementalist Lvl3"].concat(["Earth Fracture", "Incantation", "Incantation", "Draw III", "Fireball", "Ice Wave", "Damage Propagation", "Fire Shock"]);
 listesCards["Elementalist Lvl5"] = listesCards["Elementalist Lvl4"].concat(["Turn Booster IV", "Mana Capture", "Tornado", "Earth Fracture", "Frost Strike", "Fireball", "Mana Recovery III", "Void Assassin", "Incantation", "Magic Plastron"]);
