@@ -1,0 +1,9 @@
+{
+  "fq": {
+    "generics": {
+      "melee": {
+        "acid": "modules/fq-card-engine/visuals/generics/melee/acid.webm"
+      }
+    }
+  }
+}

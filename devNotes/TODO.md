@@ -1,18 +1,14 @@
 ## V1.1.0
 
-- Gérer plusieurs sons pour chaque type de dégâts libre de droit
 - Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (soit 40 cartes niveau 5)
 - Terminer les cartes jusqu'au niveau 6
 - Faire les classes jusqu'au niveau 6
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
-- Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
-    - Pour le reste utiliser JB2A, gérer les sons et les jouer également si pas le module sequencer
 - Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
 - Rajouter des armes aux starters heroes
 - Gérer mieux Card Viewer (forcer les options pour ne voir que à la pioche du deck)
 - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
   utilisation)
-- Comment gérer les effets visuels de base ? Faut-il les passer moulinette IA ou utiliser que j2ba
 
 ## V1.1.1 (Stabilisation et refacto)
 
@@ -22,6 +18,7 @@
 - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
   d'actions/mana/pioches?)
 - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
+- Moulinette IA des visuels
 
 ## V1.2
 
@@ -46,6 +43,7 @@
 - Rétrocompatibilité des feuilles : n'ajouter que la partie fq ou toute la feuille ?
 - Permettre de remonter les points de vie/mana/zele courant même si éléments actifs
 - Supprimer les familier en fin de combat
+- Comment gérer les effets visuels si le fichier n'existe pas?
 
 ### Low:
 

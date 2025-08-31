@@ -43,6 +43,7 @@
               "hp": "",
               "draw": "",
               "drop": "",
+              "targetType": "Default",
               "minReach": "1",
               "maxReach": "7",
               "nbTargets": "",
@@ -101,7 +102,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "fq.elementalist.earth-fracture",
+                "path": "fq.elementalist.earthFracture",
                 "onTarget": true,
                 "impactPath": "",
                 "impactOnMiddle": false,
@@ -124,7 +125,7 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": null,
-        "modifiedTime": 1756126747343,
+        "modifiedTime": 1756630834420,
         "lastModifiedBy": "ynIo5hURbsdbG4cp",
         "compendiumSource": null,
         "duplicateSource": null,
@@ -132,8 +133,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.UCYOEqiF8N1AN8Sl"
+      "_key": "!cards.cards!e1DaIi1WtdeZqmXn.UCYOEqiF8N1AN8Sl",
+      "cards": []
     },
     {
       "_id": "qVyz2F79jPsA7xTy",
