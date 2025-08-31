@@ -1,5 +1,6 @@
 ## V1.1.0
 
+- Gardian non terminé: J'en suis à la stance shift (pas oublier de pousser le frappe provocatrice)
 - Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (soit 40 cartes niveau 5)
 - Terminer les cartes jusqu'au niveau 6
 - Faire les classes jusqu'au niveau 6
