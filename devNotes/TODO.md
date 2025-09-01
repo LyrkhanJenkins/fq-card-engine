@@ -1,6 +1,7 @@
 ## V1.1.0
 
-- A implémenter:  Frappe provocatrice + Infusion de Mana + Niveau 6 Gardien/Illusioniste/MageBlanc/Moine
+- A implémenter:  Frappe provocatrice + Infusion de Mana + Niveau 6 A implementer, les
+  traductions en anglais ' + Trappeur + Sorcière ne sont pas migré en images png
 - Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (soit 40 cartes niveau 5)
 - Terminer les cartes jusqu'au niveau 6
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
@@ -27,12 +28,14 @@
 - Gérer les cibles après coup?
 - Gérer jusqu'au niveau 10 les 7 classes
 - Migrations objets dnd5e v FQ
+- Gérer les auras avec une portée?
 
 ## Backlog
 
 ### High:
 
 - Se renseigner pour les problèmes d'audio de Foundry
+- Comment faire en sorte que les jets de dés aillent plus vite
 
 ### Medium:
 
@@ -44,6 +47,7 @@
 - Permettre de remonter les points de vie/mana/zele courant même si éléments actifs
 - Supprimer les familier en fin de combat
 - Comment gérer les effets visuels si le fichier n'existe pas?
+- Limiter la taille de la main? ne pas piocher si arriver à cette limite
 
 ### Low:
 
