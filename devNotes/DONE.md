@@ -1,5 +1,6 @@
 v1.1:
 
+- Exposition des constantes à la racine de FqCardEngineModule
 - Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
 - Gérer plusieurs sons pour chaque type de dégâts libre de droit
 - Correction bug des passifs et carte rejouable qui traine depuis longtemps

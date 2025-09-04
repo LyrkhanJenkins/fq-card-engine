@@ -1,6 +1,6 @@
 ## V1.1.0
 
-- Implémenation cartes 6/7/base: Elementaliste terminé, J'en suis à la levée de bouclier + intervention
+- Implémentation cartes 6/7/base: Elementaliste terminé, J'en suis à la posture de berzerker
 - Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (soit 40 cartes niveau 5)
 - Terminer les cartes jusqu'au niveau 6
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
