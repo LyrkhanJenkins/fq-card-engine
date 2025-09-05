@@ -306,6 +306,7 @@
   "FQCARDENGINE.CardMsgDamagePropagationEffect": "{damage} dégâts sont propagés à la cible chaque tour pendant 3 tours",
   "FQCARDENGINE.CardWarningMsgDamagePropagation": "Vous ne pouvez jouer ce sort qu'après avoir lancé un sort monocible et sur une cible différente de votre dernier sort",
   "FQCARDENGINE.CardWarningMsgMissingEffect": "Vous devez avoir un effet '{effectName1}' ou un effet '{effectName2}' actif sur au moins une cible pour lancer ce sort",
+  "FQCARDENGINE.CardWarningMsgMissing1Effect": "Vous devez avoir un effet '{effectName}' actif sur au moins une cible pour lancer ce sort",
   "FQCARDENGINE.CardWarningMsgMissingNbEffect": "Vous n'avez pas {nbElement} élément(s) actif(s) sur la cible",
   "FQCARDENGINE.CardMsgRecoilEffect": "Reculez de {recoil} case(s) dans le sens opposé à la cible",
   "FQCARDENGINE.CardMsgSongEffect": "Vous augmentez le critique de toutes les cibles de {critical}",

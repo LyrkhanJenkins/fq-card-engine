@@ -306,6 +306,7 @@
   "FQCARDENGINE.CardMsgDamagePropagationEffect": "{damage} damage is propagated to the target each turn for 3 turns",
   "FQCARDENGINE.CardWarningMsgDamagePropagation": "You can only play this spell after casting a single-target spell and on a different target from your last spell",
   "FQCARDENGINE.CardWarningMsgMissingEffect": "You must have an active '{effectName1}' or '{effectName2}' effect on at least one target to cast this spell",
+  "FQCARDENGINE.CardWarningMsgMissing1Effect": "You must have an active '{effectName}' effect on at least one target to cast this spellt",
   "FQCARDENGINE.CardWarningMsgMissingNbEffect": "You do not have {nbElement} active element(s) on the target",
   "FQCARDENGINE.CardMsgRecoilEffect": "Move back {recoil} space(s) in the opposite direction of the target",
   "FQCARDENGINE.CardMsgSongEffect": "You increase the critical of all targets by {critical}",
