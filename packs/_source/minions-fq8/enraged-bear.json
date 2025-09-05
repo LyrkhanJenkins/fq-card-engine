@@ -1,7 +1,7 @@
 {
-  "name": "Tamed Wolf",
+  "name": "Enraged Bear",
   "type": "character",
-  "img": "modules/fq-card-engine/images/token/wolf_18.png",
+  "img": "modules/fq-card-engine/images/token/Enraged_bear.png",
   "items": [
     {
       "name": "Morsure",
@@ -65,14 +65,12 @@
                 {
                   "custom": {
                     "enabled": true,
-                    "formula": "1d6"
+                    "formula": "3d6"
                   },
                   "number": null,
                   "denomination": null,
                   "bonus": "",
-                  "types": [
-                    "slashing"
-                  ]
+                  "types": []
                 }
               ]
             },
@@ -161,9 +159,6 @@
       "effects": [],
       "folder": null,
       "sort": 0,
-      "ownership": {
-        "default": 0
-      },
       "flags": {
         "dnd5e": {
           "riders": {
@@ -178,75 +173,162 @@
         "exportSource": null,
         "coreVersion": "13.347",
         "systemId": "dnd5e",
-        "systemVersion": "5.1.2",
-        "createdTime": 1756307888284,
-        "modifiedTime": 1756308217062,
-        "lastModifiedBy": "dnd5ebuilder0000"
+        "systemVersion": "5.1.4",
+        "lastModifiedBy": "dnd5ebuilder0000",
+        "modifiedTime": 1757067346245
       },
-      "_key": "!actors.items!lcpIiyWfFT0pxJwa.3bYPKNmXpI1gupE1"
+      "ownership": {
+        "default": 0
+      },
+      "_key": "!actors.items!iU50kcueEWY7ZoU7.3bYPKNmXpI1gupE1"
     }
   ],
   "effects": [],
   "folder": null,
-  "flags": {},
-  "ownership": {
-    "default": 0
+  "flags": {
+    "dnd5e": {
+      "showTokenPortrait": true
+    }
   },
   "system": {
     "abilities": {
       "str": {
-        "value": 8,
+        "value": 20,
         "proficient": 0,
         "bonuses": {
           "check": "",
           "save": ""
         },
-        "max": null
+        "max": null,
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
       },
       "dex": {
-        "value": 16,
+        "value": 12,
         "proficient": 0,
         "bonuses": {
           "check": "",
           "save": ""
         },
-        "max": null
+        "max": null,
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
       },
       "con": {
-        "value": 14,
+        "value": 20,
         "proficient": 0,
         "bonuses": {
           "check": "",
           "save": ""
         },
-        "max": null
+        "max": null,
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
       },
       "int": {
-        "value": 4,
-        "proficient": 0,
-        "bonuses": {
-          "check": "",
-          "save": ""
-        },
-        "max": null
-      },
-      "wis": {
-        "value": 2,
-        "proficient": 0,
-        "bonuses": {
-          "check": "",
-          "save": ""
-        },
-        "max": null
-      },
-      "cha": {
         "value": 6,
         "proficient": 0,
         "bonuses": {
           "check": "",
           "save": ""
         },
-        "max": null
+        "max": null,
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "wis": {
+        "value": 4,
+        "proficient": 0,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "max": null,
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
+      },
+      "cha": {
+        "value": 12,
+        "proficient": 0,
+        "bonuses": {
+          "check": "",
+          "save": ""
+        },
+        "max": null,
+        "check": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        },
+        "save": {
+          "roll": {
+            "min": null,
+            "max": null,
+            "mode": 0
+          }
+        }
       }
     },
     "attributes": {
@@ -256,14 +338,23 @@
         "formula": ""
       },
       "hp": {
-        "value": 8,
-        "max": 8,
+        "value": 35,
+        "max": 35,
         "temp": null,
         "tempmax": null,
-        "bonuses": {}
+        "bonuses": {
+          "level": "",
+          "overall": ""
+        }
       },
       "init": {
-        "bonus": "0"
+        "bonus": "0",
+        "ability": "",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        }
       },
       "movement": {
         "burrow": 0,
@@ -272,7 +363,8 @@
         "swim": 0,
         "walk": 30,
         "units": "ft",
-        "hover": false
+        "hover": false,
+        "ignoredDifficultTerrain": []
       },
       "attunement": {
         "max": 3
@@ -288,10 +380,31 @@
       "spellcasting": "int",
       "death": {
         "success": 0,
-        "failure": 0
+        "failure": 0,
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "bonuses": {
+          "save": ""
+        }
       },
       "exhaustion": 0,
-      "inspiration": false
+      "inspiration": false,
+      "concentration": {
+        "ability": "",
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
+        },
+        "bonuses": {
+          "save": ""
+        },
+        "limit": 1
+      },
+      "loyalty": {}
     },
     "details": {
       "biography": {
@@ -342,11 +455,16 @@
       },
       "languages": {
         "value": [],
-        "custom": ""
+        "custom": "",
+        "communication": {}
       },
       "weaponProf": {
         "value": [],
-        "custom": ""
+        "custom": "",
+        "mastery": {
+          "value": [],
+          "bonus": []
+        }
       },
       "armorProf": {
         "value": [],
@@ -371,6 +489,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "ani": {
@@ -379,6 +502,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "arc": {
@@ -387,6 +515,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "ath": {
@@ -395,6 +528,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "dec": {
@@ -403,6 +541,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "his": {
@@ -411,6 +554,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "ins": {
@@ -419,6 +567,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "itm": {
@@ -427,6 +580,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "inv": {
@@ -435,6 +593,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "med": {
@@ -443,6 +606,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "nat": {
@@ -451,6 +619,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "prc": {
@@ -459,6 +632,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "prf": {
@@ -467,6 +645,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "per": {
@@ -475,6 +658,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "rel": {
@@ -483,6 +671,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "slt": {
@@ -491,6 +684,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "ste": {
@@ -499,6 +697,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       },
       "sur": {
@@ -507,6 +710,11 @@
         "bonuses": {
           "check": "",
           "passive": ""
+        },
+        "roll": {
+          "min": null,
+          "max": null,
+          "mode": 0
         }
       }
     },
@@ -618,22 +826,31 @@
         "init": 0
       },
       "attributes": {
-        "critical": 1,
-        "evasion": 1
+        "critical": 3,
+        "evasion": 3
       },
       "bonus": {
         "range": 0,
-        "dot": 0
+        "dot": 0,
+        "damage": "",
+        "heal": ""
       },
       "cards": {
         "hand": 0,
         "pick": 0,
         "currentDrop": 0
+      },
+      "special": {
+        "sacrificedSkeleton": 1
       }
+    },
+    "bastion": {
+      "name": "",
+      "description": ""
     }
   },
   "prototypeToken": {
-    "name": "Tamed Wolf",
+    "name": "Enraged Bear",
     "displayName": 0,
     "actorLink": true,
     "width": 1,
@@ -700,14 +917,14 @@
     "appendNumber": false,
     "prependAdjective": false,
     "texture": {
-      "src": "modules/fq-card-engine/images/token/wolf_18.png",
+      "src": "modules/fq-card-engine/images/token/Enraged_bear.png",
       "anchorX": 0.5,
       "anchorY": 0.5,
       "offsetX": 0,
       "offsetY": 0,
       "fit": "contain",
-      "scaleX": 1,
-      "scaleY": 1,
+      "scaleX": 1.3,
+      "scaleY": 1.3,
       "rotation": 0,
       "tint": "#ffffff",
       "alphaThreshold": 0.75
@@ -736,18 +953,21 @@
     },
     "movementAction": null
   },
-  "_id": "lcpIiyWfFT0pxJwa",
-  "sort": 400000,
   "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
     "coreVersion": "13.347",
     "systemId": "dnd5e",
     "systemVersion": "5.1.4",
-    "createdTime": 1709393662256,
-    "modifiedTime": 1757069886221,
-    "lastModifiedBy": "dnd5ebuilder0000",
-    "compendiumSource": null,
-    "duplicateSource": null,
-    "exportSource": null
+    "createdTime": 1757065023268,
+    "modifiedTime": 1757065023349,
+    "lastModifiedBy": "dnd5ebuilder0000"
   },
-  "_key": "!actors!lcpIiyWfFT0pxJwa"
+  "ownership": {
+    "default": 0
+  },
+  "_id": "iU50kcueEWY7ZoU7",
+  "sort": 200000,
+  "_key": "!actors!iU50kcueEWY7ZoU7"
 }

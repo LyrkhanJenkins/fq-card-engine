@@ -39,14 +39,14 @@ describe("DamageUtils", () => {
     });
 
     it("should add bonuses to heal", async () => {
-        const result = await DamageUtils.addBonusesToHeal(actor, 10, 1);
+        const result = await DamageUtils.addCriticalToHeal(actor, 10, 1);
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
         expect(result[0].value >= 10).toBe(true); // Either 10 or 20, depending on crit
     });
 
     it("should add bonuses to damage", async () => {
-        const result = await DamageUtils.addBonusesToDamage(actor, 10, 1, -999); // No eva
+        const result = await DamageUtils.addCriticalEvasionToDamage(actor, 10, 1, -999); // No eva
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
         expect(result[0].value >= 10).toBe(true); // Either 0, 10 or 20, depending on evasion and crit
