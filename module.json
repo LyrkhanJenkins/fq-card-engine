@@ -182,6 +182,18 @@
       "flags": {}
     },
     {
+      "label": "Items FQ8",
+      "type": "Item",
+      "name": "items-fq8",
+      "path": "packs/items-fq8",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
       "label": "Macros FQ8",
       "type": "Macro",
       "name": "macros-fq8",
@@ -284,7 +296,8 @@
       ],
       "packs": [
         "minions-fq8",
-        "spells-npc"
+        "spells-npc",
+        "items-fq8"
       ]
     }
   ],

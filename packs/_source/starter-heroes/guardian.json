@@ -1485,6 +1485,481 @@
         "default": 0
       },
       "_key": "!actors.items!ErOVbIGY5ZjHQ2UT.5haEgtJ2W2rTi75Q"
+    },
+    {
+      "name": "Epée simple",
+      "type": "weapon",
+      "img": "icons/weapons/swords/sword-guard-engraved-worn.webp",
+      "system": {
+        "activities": {
+          "dqt77nczUd0g5RwZ": {
+            "type": "damage",
+            "_id": "dqt77nczUd0g5RwZ",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "override": false,
+              "condition": ""
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft",
+                "type": ""
+              },
+              "affects": {
+                "choice": false,
+                "type": ""
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": [],
+              "max": ""
+            },
+            "damage": {
+              "critical": {
+                "allow": false
+              },
+              "parts": [
+                {
+                  "custom": {
+                    "enabled": true,
+                    "formula": "@abilities.str.mod + 1d6"
+                  },
+                  "number": null,
+                  "denomination": null,
+                  "bonus": "",
+                  "types": [
+                    "slashing"
+                  ],
+                  "scaling": {
+                    "number": 1
+                  }
+                }
+              ]
+            },
+            "name": ""
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": [],
+          "max": ""
+        },
+        "fq": {
+          "action": -9,
+          "mana": 0,
+          "zeal": 0,
+          "drop": 0,
+          "hp": 0
+        },
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "identifier": "new-item",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "identified": true,
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "quantity": 1,
+        "weight": {
+          "value": 2,
+          "units": "lb"
+        },
+        "price": {
+          "value": 3,
+          "denomination": "gp"
+        },
+        "rarity": "",
+        "attunement": "",
+        "crewed": false,
+        "ammunition": {},
+        "armor": {},
+        "damage": {
+          "base": {
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            },
+            "number": null,
+            "denomination": null,
+            "bonus": ""
+          },
+          "versatile": {
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            }
+          }
+        },
+        "properties": [],
+        "proficient": null,
+        "range": {
+          "reach": null,
+          "units": ""
+        },
+        "type": {
+          "value": "simpleM",
+          "baseItem": ""
+        },
+        "mastery": "",
+        "attuned": false,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "flags": {
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          },
+          "last": {
+            "dqt77nczUd0g5RwZ": {
+              "damageType": {
+                "0": "bludgeoning"
+              }
+            }
+          }
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.fq-card-engine.items-fq8.Item.zQBMc8i3qg9cKsUQ",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.4",
+        "createdTime": 1757092763965,
+        "modifiedTime": 1757092765440,
+        "lastModifiedBy": "dnd5ebuilder0000"
+      },
+      "_id": "TQwuijBBAdSmUTSK",
+      "sort": 106250,
+      "ownership": {
+        "default": 0
+      },
+      "_key": "!actors.items!ErOVbIGY5ZjHQ2UT.TQwuijBBAdSmUTSK"
+    },
+    {
+      "name": "Bouclier",
+      "type": "equipment",
+      "img": "icons/equipment/shield/round-wooden-boss-steel-brown.webp",
+      "system": {
+        "description": {
+          "value": "<p>A shield is made from wood or metal and is carried in one hand. Wielding a shield increases your Armor Class by 2. You can benefit from only one shield at a time.</p>",
+          "chat": ""
+        },
+        "source": {
+          "custom": "",
+          "book": "SRD 5.1",
+          "page": "",
+          "license": "CC-BY-4.0",
+          "rules": "2014",
+          "revision": 1
+        },
+        "quantity": 1,
+        "weight": {
+          "value": 6,
+          "units": "lb"
+        },
+        "price": {
+          "value": 10,
+          "denomination": "gp"
+        },
+        "attunement": "",
+        "rarity": "",
+        "identified": true,
+        "cover": null,
+        "crewed": false,
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "armor": {
+          "value": 2,
+          "dex": null,
+          "magicalBonus": null
+        },
+        "hp": {
+          "value": 0,
+          "max": 0,
+          "dt": null,
+          "conditions": ""
+        },
+        "speed": {
+          "value": null,
+          "conditions": ""
+        },
+        "strength": null,
+        "proficient": null,
+        "type": {
+          "value": "shield",
+          "baseItem": "shield"
+        },
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "properties": [],
+        "activities": {},
+        "identifier": "shield",
+        "fq": {
+          "action": -10,
+          "mana": 0,
+          "zeal": 0,
+          "drop": 0,
+          "hp": 0
+        },
+        "attuned": false,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": "Compendium.fq-card-engine.items-fq8.Item.YppyuTbRpPV3jM3O",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.4",
+        "createdTime": 1757092766998,
+        "modifiedTime": 1757092770133,
+        "lastModifiedBy": "dnd5ebuilder0000"
+      },
+      "_id": "CkQQvwEeonPE1CsS",
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "_key": "!actors.items!ErOVbIGY5ZjHQ2UT.CkQQvwEeonPE1CsS"
+    },
+    {
+      "name": "Mains nues",
+      "type": "weapon",
+      "img": "icons/skills/melee/unarmed-punch-fist-white.webp",
+      "system": {
+        "activities": {
+          "dqt77nczUd0g5RwZ": {
+            "type": "damage",
+            "_id": "dqt77nczUd0g5RwZ",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "override": false,
+              "condition": ""
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft",
+                "type": ""
+              },
+              "affects": {
+                "choice": false,
+                "type": ""
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": [],
+              "max": ""
+            },
+            "damage": {
+              "critical": {
+                "allow": false
+              },
+              "parts": [
+                {
+                  "custom": {
+                    "enabled": true,
+                    "formula": "max(@abilities.str.mod,0,@abilities.dex.mod)"
+                  },
+                  "number": null,
+                  "denomination": null,
+                  "bonus": "",
+                  "types": [
+                    "bludgeoning"
+                  ],
+                  "scaling": {
+                    "number": 1
+                  }
+                }
+              ]
+            },
+            "name": ""
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": [],
+          "max": ""
+        },
+        "fq": {
+          "action": -5,
+          "mana": 0,
+          "zeal": 0,
+          "drop": 0,
+          "hp": 0
+        },
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "identifier": "new-item",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "identified": true,
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "quantity": 1,
+        "weight": {
+          "value": 0,
+          "units": "lb"
+        },
+        "price": {
+          "value": 0,
+          "denomination": "gp"
+        },
+        "rarity": "",
+        "attunement": "",
+        "crewed": false,
+        "ammunition": {},
+        "armor": {},
+        "damage": {
+          "base": {
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            },
+            "number": null,
+            "denomination": null,
+            "bonus": ""
+          },
+          "versatile": {
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            }
+          }
+        },
+        "properties": [],
+        "proficient": null,
+        "range": {
+          "reach": null,
+          "units": ""
+        },
+        "type": {
+          "value": "simpleM",
+          "baseItem": ""
+        },
+        "mastery": "",
+        "attuned": false,
+        "equipped": false
+      },
+      "effects": [],
+      "folder": null,
+      "flags": {
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          },
+          "last": {
+            "dqt77nczUd0g5RwZ": {
+              "damageType": {
+                "0": "bludgeoning"
+              }
+            }
+          }
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.fq-card-engine.items-fq8.Item.vGazM16ZQhWGZvEa",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.4",
+        "createdTime": 1757092901727,
+        "modifiedTime": 1757092901727,
+        "lastModifiedBy": "dnd5ebuilder0000"
+      },
+      "_id": "LDgM4Acq59Wd5HSG",
+      "sort": 103125,
+      "ownership": {
+        "default": 0
+      },
+      "_key": "!actors.items!ErOVbIGY5ZjHQ2UT.LDgM4Acq59Wd5HSG"
     }
   ],
   "effects": [],

@@ -1,5 +1,6 @@
 v1.1:
 
+- Rajouter des armes aux starters heroes
 - Tests Passe 1
 - Implémentation des cartes 6/7/base
 - Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?

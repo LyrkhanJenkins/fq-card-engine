@@ -1,7 +1,6 @@
 ## V1.1.0
 
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
-- Rajouter des armes aux starters heroes
 - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
   utilisation)
 - Gérer les 1d(négatif)

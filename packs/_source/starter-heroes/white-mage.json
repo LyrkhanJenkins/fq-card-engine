@@ -5,606 +5,6 @@
   "img": "modules/fq-card-engine/images/classes/Concept_Art_yellow_mage_healing_male_from_above_token_1.png",
   "items": [
     {
-      "_id": "KmIFBIFfR2PYvLfo",
-      "name": "Torche",
-      "type": "consumable",
-      "img": "icons/sundries/lights/torch-black.webp",
-      "effects": [
-        {
-          "_id": "P92He1YWkjAlCk6D",
-          "changes": [
-            {
-              "key": "ATL.light.color",
-              "mode": 5,
-              "value": "#eb8c34",
-              "priority": 20
-            },
-            {
-              "key": "ATL.light.dim",
-              "mode": 2,
-              "value": "20",
-              "priority": 20
-            },
-            {
-              "key": "ATL.light.bright",
-              "mode": 2,
-              "value": "14",
-              "priority": 20
-            },
-            {
-              "key": "ATL.light.animation",
-              "mode": 2,
-              "value": "{\"type\": \"torch\",\"speed\": 1,\"intensity\": 1}",
-              "priority": 20
-            }
-          ],
-          "disabled": false,
-          "duration": {
-            "startTime": null,
-            "seconds": 3600,
-            "combat": null,
-            "rounds": null,
-            "turns": null,
-            "startRound": null,
-            "startTurn": null
-          },
-          "origin": "Compendium.dnd5e.items.BnOCLuNWhVvzHLjl",
-          "transfer": false,
-          "flags": {
-            "dae": {
-              "selfTarget": true,
-              "stackable": "none",
-              "durationExpression": "",
-              "macroRepeat": "none",
-              "specialDuration": [],
-              "transfer": false
-            },
-            "core": {
-              "statusId": ""
-            }
-          },
-          "tint": "#ffffff",
-          "_stats": {
-            "coreVersion": "13.347",
-            "systemId": null,
-            "systemVersion": null,
-            "createdTime": null,
-            "modifiedTime": null,
-            "lastModifiedBy": null,
-            "compendiumSource": null,
-            "duplicateSource": null,
-            "exportSource": null
-          },
-          "name": "Torch",
-          "img": "icons/magic/fire/projectile-arrow-fire-orange.webp",
-          "type": "base",
-          "system": {},
-          "description": "",
-          "statuses": [],
-          "sort": 0,
-          "_key": "!actors.items.effects!ZNwkztvzG57pQyDu.KmIFBIFfR2PYvLfo.P92He1YWkjAlCk6D"
-        }
-      ],
-      "folder": null,
-      "sort": 0,
-      "flags": {
-        "midi-qol": {
-          "fumbleThreshold": null,
-          "effectActivation": true,
-          "forceCEOn": false,
-          "forceCEOff": false
-        },
-        "midiProperties": {
-          "nodam": false,
-          "fulldam": false,
-          "halfdam": false,
-          "rollOther": false,
-          "critOther": false,
-          "magicdam": false,
-          "magiceffect": false,
-          "concentration": false,
-          "toggleEffect": false
-        },
-        "dnd5e": {
-          "riders": {
-            "activity": [],
-            "effect": []
-          }
-        }
-      },
-      "_stats": {
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "4.0.4",
-        "createdTime": null,
-        "modifiedTime": 1728638330081,
-        "lastModifiedBy": "dnd5ebuilder0000",
-        "compendiumSource": "Compendium.dnd5e.items.BnOCLuNWhVvzHLjl",
-        "duplicateSource": null,
-        "exportSource": null
-      },
-      "ownership": {
-        "default": 0
-      },
-      "system": {
-        "description": {
-          "value": "<p>Une torche dure 1 heure et éclaire à 20 pieds</p>",
-          "chat": "",
-          "unidentified": ""
-        },
-        "source": "PHB pg. 153",
-        "quantity": 3,
-        "weight": 1,
-        "price": 0.01,
-        "attunement": 0,
-        "equipped": false,
-        "rarity": "common",
-        "identified": true,
-        "activation": {
-          "type": "none",
-          "cost": null,
-          "condition": ""
-        },
-        "duration": {
-          "value": 1,
-          "units": "hour"
-        },
-        "target": {
-          "value": null,
-          "width": null,
-          "units": "",
-          "type": ""
-        },
-        "range": {
-          "value": null,
-          "long": null,
-          "units": "self"
-        },
-        "uses": {
-          "value": 1,
-          "max": "1",
-          "per": "charges",
-          "autoDestroy": true,
-          "autoUse": true
-        },
-        "consume": {
-          "type": "",
-          "target": "",
-          "amount": null
-        },
-        "ability": "",
-        "actionType": "other",
-        "attackBonus": "0",
-        "chatFlavor": "",
-        "critical": {
-          "threshold": null,
-          "damage": ""
-        },
-        "damage": {
-          "parts": [],
-          "versatile": ""
-        },
-        "formula": "",
-        "save": {
-          "ability": "",
-          "dc": null,
-          "scaling": "spell"
-        },
-        "consumableType": "trinket",
-        "cost": {
-          "action": 2,
-          "mana": null,
-          "zeal": null,
-          "drop": null,
-          "hp": null
-        }
-      },
-      "_key": "!actors.items!ZNwkztvzG57pQyDu.KmIFBIFfR2PYvLfo"
-    },
-    {
-      "_id": "TXFBKeCGzoMVZZQ5",
-      "name": "Bouclier rond",
-      "type": "equipment",
-      "img": "icons/equipment/shield/round-wooden-boss-steel-red.webp",
-      "effects": [],
-      "folder": null,
-      "sort": 0,
-      "flags": {
-        "dnd5e": {
-          "riders": {
-            "activity": [],
-            "effect": []
-          }
-        }
-      },
-      "_stats": {
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "4.0.4",
-        "createdTime": null,
-        "modifiedTime": 1728638330081,
-        "lastModifiedBy": "dnd5ebuilder0000",
-        "compendiumSource": "Compendium.dnd5e.items.sSs3hSzkKBMNBgTs",
-        "duplicateSource": null,
-        "exportSource": null
-      },
-      "ownership": {
-        "default": 0
-      },
-      "system": {
-        "description": {
-          "value": "<p>+1 en esquive</p>",
-          "chat": "",
-          "unidentified": ""
-        },
-        "source": "PHB pg. 144",
-        "quantity": 1,
-        "weight": 10,
-        "price": 10,
-        "attunement": 0,
-        "equipped": true,
-        "rarity": "common",
-        "identified": true,
-        "activation": {
-          "type": "",
-          "cost": null,
-          "condition": ""
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": null,
-          "width": null,
-          "units": "",
-          "type": ""
-        },
-        "range": {
-          "value": null,
-          "long": null,
-          "units": ""
-        },
-        "uses": {
-          "value": null,
-          "max": "",
-          "per": null
-        },
-        "consume": {
-          "type": "",
-          "target": null,
-          "amount": null
-        },
-        "ability": null,
-        "actionType": "",
-        "attackBonus": 0,
-        "chatFlavor": "",
-        "critical": {
-          "threshold": null,
-          "damage": ""
-        },
-        "damage": {
-          "parts": [],
-          "versatile": ""
-        },
-        "formula": "",
-        "save": {
-          "ability": "",
-          "dc": null,
-          "scaling": "spell"
-        },
-        "armor": {
-          "value": 2,
-          "type": "shield",
-          "dex": null
-        },
-        "hp": {
-          "value": 0,
-          "max": 0,
-          "dt": null,
-          "conditions": ""
-        },
-        "baseItem": "",
-        "speed": {
-          "value": null,
-          "conditions": ""
-        },
-        "strength": null,
-        "stealth": false,
-        "proficient": false,
-        "cost": {
-          "action": null,
-          "mana": null,
-          "zeal": null,
-          "drop": null,
-          "hp": null
-        }
-      },
-      "_key": "!actors.items!ZNwkztvzG57pQyDu.TXFBKeCGzoMVZZQ5"
-    },
-    {
-      "_id": "ccIdkw20K885eIhw",
-      "name": "Bâton simple",
-      "type": "weapon",
-      "img": "icons/weapons/staves/staff-forked-wood.webp",
-      "effects": [],
-      "folder": null,
-      "sort": 0,
-      "flags": {
-        "midi-qol": {
-          "fumbleThreshold": null,
-          "effectActivation": false
-        },
-        "midiProperties": {
-          "nodam": false,
-          "fulldam": false,
-          "halfdam": false,
-          "rollOther": false,
-          "critOther": false,
-          "magicdam": false,
-          "magiceffect": false,
-          "concentration": false,
-          "toggleEffect": false
-        },
-        "dnd5e": {
-          "riders": {
-            "activity": [],
-            "effect": []
-          }
-        }
-      },
-      "_stats": {
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "4.0.4",
-        "createdTime": null,
-        "modifiedTime": 1728638330081,
-        "lastModifiedBy": "dnd5ebuilder0000",
-        "compendiumSource": "Compendium.dnd5e.items.BeKIrNIvNHRPQ4t5",
-        "duplicateSource": null,
-        "exportSource": null
-      },
-      "ownership": {
-        "default": 0
-      },
-      "system": {
-        "description": {
-          "value": "<p>A gnarled or polished staff of wood, bone, or more exotic materials like crystal. Such implements are frequently used by spellcasters to hone their arcane focus.</p>",
-          "chat": "",
-          "unidentified": ""
-        },
-        "source": "PHB pg. 151",
-        "quantity": 1,
-        "weight": 4,
-        "price": 5,
-        "attunement": 0,
-        "equipped": false,
-        "rarity": "common",
-        "identified": true,
-        "activation": {
-          "type": "action",
-          "cost": 1,
-          "condition": ""
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": null,
-          "width": null,
-          "units": "",
-          "type": ""
-        },
-        "range": {
-          "value": 5,
-          "long": null,
-          "units": "ft"
-        },
-        "uses": {
-          "value": null,
-          "max": "",
-          "per": ""
-        },
-        "consume": {
-          "type": "",
-          "target": "",
-          "amount": null
-        },
-        "ability": "",
-        "actionType": "mwak",
-        "attackBonus": "0",
-        "chatFlavor": "",
-        "critical": {
-          "threshold": null,
-          "damage": ""
-        },
-        "damage": {
-          "parts": [
-            [
-              "1d4 + @mod-3",
-              "bludgeoning"
-            ]
-          ],
-          "versatile": "",
-          "value": ""
-        },
-        "formula": "",
-        "save": {
-          "ability": "",
-          "dc": null,
-          "scaling": "spell"
-        },
-        "armor": {
-          "value": 10
-        },
-        "hp": {
-          "value": 0,
-          "max": 0,
-          "dt": null,
-          "conditions": ""
-        },
-        "weaponType": "simpleM",
-        "baseItem": "",
-        "properties": {
-          "value": "",
-          "foc": true,
-          "amm": false,
-          "hvy": false,
-          "fin": false,
-          "fir": false,
-          "lgt": false,
-          "lod": false,
-          "rch": false,
-          "rel": false,
-          "ret": false,
-          "spc": false,
-          "thr": false,
-          "two": false,
-          "ver": false,
-          "mgc": true,
-          "ada": false,
-          "sil": false
-        },
-        "proficient": false,
-        "attributes": {
-          "spelldc": 10
-        },
-        "cost": {
-          "action": 7,
-          "mana": null,
-          "zeal": null,
-          "drop": null,
-          "hp": null
-        }
-      },
-      "_key": "!actors.items!ZNwkztvzG57pQyDu.ccIdkw20K885eIhw"
-    },
-    {
-      "_id": "UXzmGXZ2Y69oNFCW",
-      "name": "Vêtement de lin",
-      "type": "equipment",
-      "img": "icons/equipment/chest/shirt-collared-brown.webp",
-      "effects": [],
-      "folder": null,
-      "sort": 0,
-      "flags": {
-        "dnd5e": {
-          "riders": {
-            "activity": [],
-            "effect": []
-          }
-        }
-      },
-      "_stats": {
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "4.0.4",
-        "createdTime": null,
-        "modifiedTime": 1728638330081,
-        "lastModifiedBy": "dnd5ebuilder0000",
-        "compendiumSource": "Compendium.dnd5e.items.DevmObXWP9MfwE2c",
-        "duplicateSource": null,
-        "exportSource": null
-      },
-      "ownership": {
-        "default": 0
-      },
-      "system": {
-        "description": {
-          "value": "<p>Uniforme traditionnelle de l'Académie des mages.</p>",
-          "chat": "",
-          "unidentified": "",
-          "type": "String",
-          "label": "Description"
-        },
-        "source": "DMG pg. 150",
-        "quantity": 1,
-        "weight": 3,
-        "price": "5",
-        "attunement": 0,
-        "equipped": true,
-        "rarity": "uncommon",
-        "identified": true,
-        "activation": {
-          "type": "",
-          "cost": null,
-          "condition": ""
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": null,
-          "width": null,
-          "units": "",
-          "type": ""
-        },
-        "range": {
-          "value": null,
-          "long": null,
-          "units": ""
-        },
-        "uses": {
-          "value": null,
-          "max": "",
-          "per": null
-        },
-        "consume": {
-          "type": "",
-          "target": null,
-          "amount": null
-        },
-        "ability": null,
-        "actionType": "",
-        "attackBonus": 0,
-        "chatFlavor": "",
-        "critical": {
-          "threshold": null,
-          "damage": ""
-        },
-        "damage": {
-          "parts": [],
-          "versatile": ""
-        },
-        "formula": "",
-        "save": {
-          "ability": "",
-          "dc": null,
-          "scaling": "spell"
-        },
-        "armor": {
-          "value": 10,
-          "type": "light",
-          "dex": 2,
-          "label": "Armor Value"
-        },
-        "hp": {
-          "value": 0,
-          "max": 0,
-          "dt": null,
-          "conditions": ""
-        },
-        "baseItem": "",
-        "speed": {
-          "value": null,
-          "conditions": ""
-        },
-        "strength": null,
-        "stealth": false,
-        "proficient": false,
-        "cost": {
-          "action": null,
-          "mana": null,
-          "zeal": null,
-          "drop": null,
-          "hp": null
-        }
-      },
-      "_key": "!actors.items!ZNwkztvzG57pQyDu.UXzmGXZ2Y69oNFCW"
-    },
-    {
       "name": "White-Mage",
       "type": "class",
       "img": "modules/fq-card-engine/images/classes/craiyon_154837_White_and_yellow_mage_healing_fantasy.png",
@@ -1347,6 +747,386 @@
         "default": 0
       },
       "_key": "!actors.items!ZNwkztvzG57pQyDu.MI2j9n4hvAPJ2zCL"
+    },
+    {
+      "name": "Sceptre de sage",
+      "type": "weapon",
+      "img": "icons/weapons/staves/staff-simple-blue.webp",
+      "system": {
+        "activities": {
+          "dqt77nczUd0g5RwZ": {
+            "type": "damage",
+            "_id": "dqt77nczUd0g5RwZ",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "override": false,
+              "condition": ""
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft",
+                "type": ""
+              },
+              "affects": {
+                "choice": false,
+                "type": ""
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": [],
+              "max": ""
+            },
+            "damage": {
+              "critical": {
+                "allow": false
+              },
+              "parts": [
+                {
+                  "custom": {
+                    "enabled": true,
+                    "formula": "@abilities.str.mod + 1d4"
+                  },
+                  "number": null,
+                  "denomination": null,
+                  "bonus": "",
+                  "types": [
+                    "bludgeoning"
+                  ],
+                  "scaling": {
+                    "number": 1
+                  }
+                }
+              ]
+            },
+            "name": ""
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": [],
+          "max": ""
+        },
+        "fq": {
+          "action": -10,
+          "mana": 0,
+          "zeal": 0,
+          "drop": 0,
+          "hp": 0
+        },
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "identifier": "new-item",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "identified": true,
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "quantity": 1,
+        "weight": {
+          "value": 4,
+          "units": "lb"
+        },
+        "price": {
+          "value": 3,
+          "denomination": "gp"
+        },
+        "rarity": "",
+        "attunement": "",
+        "crewed": false,
+        "ammunition": {},
+        "armor": {},
+        "damage": {
+          "base": {
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            },
+            "number": null,
+            "denomination": null,
+            "bonus": ""
+          },
+          "versatile": {
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            }
+          }
+        },
+        "properties": [],
+        "proficient": null,
+        "range": {
+          "reach": null,
+          "units": ""
+        },
+        "type": {
+          "value": "simpleM",
+          "baseItem": ""
+        },
+        "mastery": "",
+        "attuned": false,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "flags": {
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          },
+          "last": {
+            "dqt77nczUd0g5RwZ": {
+              "damageType": {
+                "0": "bludgeoning"
+              }
+            }
+          }
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.fq-card-engine.items-fq8.Item.xiVhybZjLtRaQYt5",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.4",
+        "createdTime": 1757093067931,
+        "modifiedTime": 1757093071294,
+        "lastModifiedBy": "dnd5ebuilder0000"
+      },
+      "_id": "Vqa8fxAHqq1EbyqX",
+      "sort": 101563,
+      "ownership": {
+        "default": 0
+      },
+      "_key": "!actors.items!ZNwkztvzG57pQyDu.Vqa8fxAHqq1EbyqX"
+    },
+    {
+      "name": "Mains nues",
+      "type": "weapon",
+      "img": "icons/skills/melee/unarmed-punch-fist-white.webp",
+      "system": {
+        "activities": {
+          "dqt77nczUd0g5RwZ": {
+            "type": "damage",
+            "_id": "dqt77nczUd0g5RwZ",
+            "sort": 0,
+            "activation": {
+              "type": "action",
+              "override": false,
+              "condition": ""
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "range": {
+              "units": "self",
+              "override": false
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft",
+                "type": ""
+              },
+              "affects": {
+                "choice": false,
+                "type": ""
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": [],
+              "max": ""
+            },
+            "damage": {
+              "critical": {
+                "allow": false
+              },
+              "parts": [
+                {
+                  "custom": {
+                    "enabled": true,
+                    "formula": "max(@abilities.str.mod,0,@abilities.dex.mod)"
+                  },
+                  "number": null,
+                  "denomination": null,
+                  "bonus": "",
+                  "types": [
+                    "bludgeoning"
+                  ],
+                  "scaling": {
+                    "number": 1
+                  }
+                }
+              ]
+            },
+            "name": ""
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": [],
+          "max": ""
+        },
+        "fq": {
+          "action": -5,
+          "mana": 0,
+          "zeal": 0,
+          "drop": 0,
+          "hp": 0
+        },
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "identifier": "new-item",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "identified": true,
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "quantity": 1,
+        "weight": {
+          "value": 0,
+          "units": "lb"
+        },
+        "price": {
+          "value": 0,
+          "denomination": "gp"
+        },
+        "rarity": "",
+        "attunement": "",
+        "crewed": false,
+        "ammunition": {},
+        "armor": {},
+        "damage": {
+          "base": {
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            },
+            "number": null,
+            "denomination": null,
+            "bonus": ""
+          },
+          "versatile": {
+            "types": [],
+            "custom": {
+              "enabled": false
+            },
+            "scaling": {
+              "number": 1
+            }
+          }
+        },
+        "properties": [],
+        "proficient": null,
+        "range": {
+          "reach": null,
+          "units": ""
+        },
+        "type": {
+          "value": "simpleM",
+          "baseItem": ""
+        },
+        "mastery": "",
+        "attuned": false,
+        "equipped": false
+      },
+      "effects": [],
+      "folder": null,
+      "flags": {
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          },
+          "last": {
+            "dqt77nczUd0g5RwZ": {
+              "damageType": {
+                "0": "bludgeoning"
+              }
+            }
+          }
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.fq-card-engine.items-fq8.Item.vGazM16ZQhWGZvEa",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "dnd5e",
+        "systemVersion": "5.1.4",
+        "createdTime": 1757093070141,
+        "modifiedTime": 1757093070141,
+        "lastModifiedBy": "dnd5ebuilder0000"
+      },
+      "_id": "7sWcWEZxfERfnOzs",
+      "sort": 103125,
+      "ownership": {
+        "default": 0
+      },
+      "_key": "!actors.items!ZNwkztvzG57pQyDu.7sWcWEZxfERfnOzs"
     }
   ],
   "effects": [],
