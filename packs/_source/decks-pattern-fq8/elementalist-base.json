@@ -2956,7 +2956,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1757053104506,
-    "modifiedTime": 1757053104506,
+    "modifiedTime": 1757058627401,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "system": {
@@ -2969,6 +2969,6 @@
     "default": 0
   },
   "_id": "mKBoI9SVzwkSxUy6",
-  "sort": 0,
+  "sort": 100000,
   "_key": "!cards!mKBoI9SVzwkSxUy6"
 }
