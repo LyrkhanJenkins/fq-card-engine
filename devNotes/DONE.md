@@ -1,5 +1,7 @@
 v1.1:
 
+- Tests Passe 1
+- Implémentation des cartes 6/7/base
 - Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
 - Exposition des constantes à la racine de FqCardEngineModule
 - Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
