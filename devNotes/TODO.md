@@ -1,6 +1,6 @@
 ## V1.1.0
 
-- Implémentation cartes 6/7/base: Elementaliste et Gardien et Illusioniste et Moine et Trappeur Terminé
+- Implémentation cartes 6/7/base: Elementaliste et Gardien et Illusioniste et Moine et Trappeur e Mage Blanc Terminé
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
 - Rajouter des armes aux starters heroes
 - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
