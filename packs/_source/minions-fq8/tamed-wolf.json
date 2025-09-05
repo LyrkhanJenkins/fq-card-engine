@@ -667,7 +667,7 @@
       "attenuation": 0.5
     },
     "disposition": 1,
-    "displayBars": 0,
+    "displayBars": 40,
     "bar1": {
       "attribute": "attributes.hp"
     },
@@ -743,7 +743,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1709393662256,
-    "modifiedTime": 1755794812975,
+    "modifiedTime": 1757060890494,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,

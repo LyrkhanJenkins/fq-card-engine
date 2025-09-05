@@ -321,6 +321,7 @@
   "FQCARDENGINE.CardMsgAmbush": "Your action points are now at 0, you MUST end your turn now or play another 'Ambush' card",
   "FQCARDENGINE.CardMsgSupersonicStrike": "Move the target by {score} in the desired direction",
   "FQCARDENGINE.CardMsgLightStrike": "Recast the spell a second time (at no cost) to heal the targets of your choice",
+  "FQCARDENGINE.CardMsgTaunting": "Target must choose you as its target on its next turn (GM Action)",
   "FQCARDENGINE.TargetNoDamageThisTurn": "Target did not suffer any damage this turn",
   "FQCARDENGINE.SpellBookPrefixName": "Spellbook of ",
   "FQCARDENGINE.DeckPrefixName": "Deck of ",

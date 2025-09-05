@@ -321,6 +321,7 @@
   "FQCARDENGINE.CardMsgAmbush": "Vos points d'action sont maintenant à 0, Vous DEVEZ passez votre tour maintenant ou jouez une autre carte 'Embuscade'",
   "FQCARDENGINE.CardMsgSupersonicStrike": "Déplacez la cible de {score} dans la direction souhaitée",
   "FQCARDENGINE.CardMsgLightStrike": "Relancez le sort une seconde fois (sans coût) pour soignez les cibles que vous souhaitez",
+  "FQCARDENGINE.CardMsgTaunting": "La cible est obligée de vous ciblez au prochain tour (Action MJ)",
   "FQCARDENGINE.TargetNoDamageThisTurn": "Target did not suffer any damage this turn",
   "FQCARDENGINE.SpellBookPrefixName": "Bibliothèque de ",
   "FQCARDENGINE.DeckPrefixName": "Deck de ",
