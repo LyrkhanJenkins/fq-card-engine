@@ -1,5 +1,6 @@
 v1.1:
 
+- Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
 - Exposition des constantes à la racine de FqCardEngineModule
 - Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
 - Gérer plusieurs sons pour chaque type de dégâts libre de droit

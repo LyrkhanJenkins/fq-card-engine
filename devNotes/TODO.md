@@ -1,17 +1,16 @@
 ## V1.1.0
 
-- Implémentation cartes 6/7/base: Elementaliste terminé, J'en suis à la posture de berzerker
-- Rajouter 1 ou 2 cartes de bases par classes + 2 ou 3 cartes sup dans le deck niveau 1 (soit 40 cartes niveau 5)
-- Terminer les cartes jusqu'au niveau 6
+- Implémentation cartes 6/7/base: Elementaliste et Gardien Terminé
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
-- Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
 - Rajouter des armes aux starters heroes
-- Gérer mieux Card Viewer (forcer les options pour ne voir que à la pioche du deck)
 - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
   utilisation)
+- Tests Passe 1
+- Tests Passe 2
 
 ## V1.1.1 (Stabilisation et refacto)
 
+- Nouvelle version Dnd5e et Foundry v13
 - Rendre le cardContent accessible de partout
 - Faire un point sur todos: Ramener toutes les notes écrites pendant les vacances + Tri de priorité et Roadmap
 - Refacto pour s'affranchir du code de fq-card-engine
@@ -19,6 +18,10 @@
   d'actions/mana/pioches?)
 - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
 - Moulinette IA des visuels
+- Tests Passe 1
+- Tests Passe 2
+- Tests Passe 3
+- Tests Passe 4
 
 ## V1.2
 
