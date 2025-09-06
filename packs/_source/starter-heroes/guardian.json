@@ -673,7 +673,7 @@
     "rotation": 0,
     "alpha": 1,
     "disposition": 1,
-    "displayBars": 0,
+    "displayBars": 50,
     "bar1": {
       "attribute": "attributes.hp"
     },
@@ -726,7 +726,7 @@
         "ring": null,
         "background": null
       },
-      "effects": 1,
+      "effects": 0,
       "subject": {
         "scale": 1,
         "texture": null
@@ -1977,7 +1977,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1756555031936,
-    "modifiedTime": 1756556156490,
+    "modifiedTime": 1757140970248,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "_key": "!actors!ErOVbIGY5ZjHQ2UT"
