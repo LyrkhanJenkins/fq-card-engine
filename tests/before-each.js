@@ -8,8 +8,7 @@ export default function setGlobal() {
     };
     global.ui = {
         notifications: {
-            error: jest.fn(),
-            warn: jest.fn(),
+            error: jest.fn(), warn: jest.fn(),
         },
     };
     global.Cards = {
@@ -35,12 +34,9 @@ export default function setGlobal() {
         },
         scenes: [{active: true, tokens: [{actorId: "userCharacterId", x: 5, y: 5}, {actorId: "otherId", x: 0, y: 5}]}],
         users: {
-            filter: jest.fn((callback) => [
-                {
-                    id: "parent-id",
-                    character: {id: "parent-id"}
-                }
-            ].filter(callback)), // Simulate filter behavior
+            filter: jest.fn((callback) => [{
+                id: "parent-id", character: {id: "parent-id"}
+            }].filter(callback)), // Simulate filter behavior
             get: jest.fn((id) => ({id, character: {id}})), // Simulate get behavior
             find: jest.fn((id) => ({id, character: {id}})) // Simulate get behavior
         },
@@ -51,28 +47,24 @@ export default function setGlobal() {
                 _id: "userCharacterId",
                 id: "userCharacterId",
                 system: {attributes: {}, abilities: {}, fq: {bonus: {range: 0}}}
-            },
-            targets: new Set([{document: {name: "Target1", actorId: "actor1"}}])
+            }, targets: new Set([{id: "token1", document: {name: "Target1", actorId: "actor1"}}])
         },
         actors: {
-            get: jest.fn(() => ({system: {fq: {attributes: {evasion: 3}}}}))
+            get: jest.fn(() => ({id: "actor1", _id: "actor1", system: {fq: {attributes: {evasion: 3}}}}))
         },
         dice3d: {
             waitFor3DAnimationByMessageID: jest.fn(async () => {
             })
         },
         combat: {
-            combatants: [
-                {actorId: "userCharacterId"},   // correspond à game.user.character.id
+            combatants: [{actorId: "userCharacterId"},   // correspond à game.user.character.id
             ],
         },
         packs: {
             get: jest.fn(() => ({
                 getDocuments: jest.fn(() => ([{
-                    name: "minionName",
-                    system: {
-                        attributes: {hp: {max: 10, value: 10}},
-                        fq: {
+                    name: "minionName", system: {
+                        attributes: {hp: {max: 10, value: 10}}, fq: {
                             attributes: {critical: 1, evasion: 1},
                             action: {max: 1, value: 1},
                             mana: {max: 1, value: 1},
@@ -83,8 +75,7 @@ export default function setGlobal() {
             }))
         },
         i18n: {
-            localize: jest.fn(str => str),
-            format: jest.fn((str, args) => str + JSON.stringify(args))
+            localize: jest.fn(str => str), format: jest.fn((str, args) => str + JSON.stringify(args))
         }
     };
 }

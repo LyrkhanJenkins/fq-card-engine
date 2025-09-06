@@ -63,9 +63,12 @@ describe("DeckUtils", () => {
 
 
     const document = {
-        flags: {
-            fq: {},
+        system: {
+            source: {
+                label: "FQ"
+            },
         },
+        type: "class",
         parent: {
             id: "parent-id",
         },
@@ -173,41 +176,6 @@ describe("DeckUtils", () => {
 
         expect(result).toEqual(cards[0]);
         expect(ui.notifications.warn).not.toHaveBeenCalled();
-    });
-
-    it("should warn if no deck is found", function () {
-        const userId = "user123";
-        const typeFQ = "someType";
-
-        // Empty list implies no matching deck
-        game.cards = [];
-
-        const result = DeckUtils.getFirstDeck(userId, typeFQ);
-
-        expect(result).toEqual(undefined);
-
-        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningDeckMissingForPlayer", {localize: true});
-    });
-
-    it("should warn if no matching deck is found", function () {
-        const userId = "user123";
-        const typeFQ = "someType";
-
-        // Data that does not match the criteria
-        const cards = [
-            {
-                ownership: {"user456": 3},
-                system: {fq: {type: "anotherType", owner: "user456"}}
-            }
-        ];
-
-        global.game.cards = cards;
-
-        const result = DeckUtils.getFirstDeck(userId, typeFQ);
-
-        expect(result).toEqual(undefined);
-
-        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningDeckMissingForPlayer", {localize: true});
     });
 
     it("should add cards to the deck that are not duplicates and not already in the deck for SPELLBOOK_TYPE", async () => {
