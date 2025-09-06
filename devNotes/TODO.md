@@ -1,13 +1,11 @@
 ## V1.1.0
 
-- Au choix du type de carte n'afficher ou pas les choix dans la dialog
-- Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
-  utilisation)
-- Gérer les 1d(négatif)
 - Tests Passe 2
 
 ## V1.1.1 (Stabilisation et refacto)
 
+- Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
+  utilisation)
 - Nouvelle version Dnd5e et Foundry v13
 - Rendre le cardContent accessible de partout
 - Faire un point sur todos: Ramener toutes les notes écrites pendant les vacances + Tri de priorité et Roadmap
@@ -34,6 +32,7 @@
 
 ### High:
 
+- Au choix du type de carte n'afficher ou pas les choix dans la dialog
 - Se renseigner pour les problèmes d'audio de Foundry
 - Comment faire en sorte que les jets de dés aillent plus vite
 

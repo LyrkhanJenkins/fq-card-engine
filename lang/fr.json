@@ -225,6 +225,7 @@
   "FQCARDENGINE.WarningHandMissingForPlayer": "Le joueur n'a pas de main configurée",
   "FQCARDENGINE.WarningDeckMissingForPlayer": "Le joueur n'a pas de deck configuré",
   "FQCARDENGINE.WarningPileMissingForPlayer": "Le joueur n'a pas de pile configurée",
+  "FQCARDENGINE.WarningSpellBookMissingForPlayer": "Le joueur n'a pas de bibliothèque configurée",
   "FQCARDENGINE.WarningOnlyCopyCardFromSpellBookToDeck": "On ne peut copier des cartes que de la bibliothèque vers son deck",
   "FQCARDENGINE.WarningReachMaxCardsForDeck": "Impossible d'ajouter la carte, Nombre maximum atteint",
   "FQCARDENGINE.NoOwnedCharacter": "Le joueur n'a pas de personnage configuré",
