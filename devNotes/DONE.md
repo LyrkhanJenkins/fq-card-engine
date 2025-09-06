@@ -1,5 +1,6 @@
 v1.1:
 
+- Gestion des avancements des classes même en multiclassing
 - Rajouter des armes aux starters heroes
 - Tests Passe 1
 - Implémentation des cartes 6/7/base
