@@ -1,8 +1,8 @@
-import json
 import copy
+import json
+import os
 import secrets
 import string
-import os
 
 
 def write_location_decks(originFile, language):
@@ -79,9 +79,11 @@ listes_cards = {
                    "Green-Shadow Bolt", "Green-Shadow Bolt"]
 }
 
-listes_cards['Witch Lvl2'] = listes_cards['Witch Lvl1'] + ["Life Surge", "Mana Surge", "Square of Skeletons",
+listes_cards['Witch Lvl2'] = listes_cards['Witch Lvl1'] + ["Shadow Spell", "Life Surge", "Mana Surge",
+                                                           "Square of Skeletons",
                                                            "Turn Booster IV", "Bone Shield", "Green-Shadow Bolt"]
-listes_cards['Witch Lvl3'] = listes_cards['Witch Lvl2'] + ["Life Surge", "Mana Recover II", "Shadow Explosion",
+listes_cards['Witch Lvl3'] = listes_cards['Witch Lvl2'] + ["Osteology", "Life Surge", "Mana Recover II",
+                                                           "Shadow Explosion",
                                                            "Necromancy", "Draw II", "Giant Skeleton",
                                                            "Green-Shadow Bolt"]
 listes_cards['Witch Lvl4'] = listes_cards['Witch Lvl3'] + ["Life Surge", "Shadow Channeling", "Shadow Channeling",
@@ -93,7 +95,8 @@ listes_cards['Witch Lvl5'] = listes_cards['Witch Lvl4'] + ["Mana Surge", "Power 
 
 listes_cards['Guardian Lvl2'] = listes_cards['Guardian Lvl1'] + ["Charge", "Charge", "Draw II", "Turn Booster IV",
                                                                  "Hemorrhage", "Hemorrhage"]
-listes_cards['Guardian Lvl3'] = listes_cards['Guardian Lvl2'] + ["Heroic strike", "Heroic strike", "Mana Surge",
+listes_cards['Guardian Lvl3'] = listes_cards['Guardian Lvl2'] + ["Stance Shift", "Heroic strike", "Heroic strike",
+                                                                 "Mana Surge",
                                                                  "Mana Recover I", "Blade Charging",
                                                                  "Armor Reinforcement", "Blade Whirlwind"]
 listes_cards['Guardian Lvl4'] = listes_cards['Guardian Lvl3'] + ["Mana Surge", "Draw II", "Turn Booster IV",
@@ -106,12 +109,13 @@ listes_cards['Guardian Lvl5'] = listes_cards['Guardian Lvl4'] + ["Mana Surge", "
 listes_cards['Monk Lvl2'] = listes_cards['Monk Lvl1'] + ["Left Punch", "Left Punch", "Inhibiting Cape", "Quick Dodge"]
 listes_cards['Monk Lvl3'] = listes_cards['Monk Lvl2'] + ["Turn Booster V", "Inhibiting Cape", "Zen Meditation",
                                                          "Zealous Shield", "Mana Recovery III", "Phantom Blade"]
-listes_cards['Monk Lvl4'] = listes_cards['Monk Lvl3'] + ["Inhibiting Cape", "Combo", "Concealment", "Conversion",
+listes_cards['Monk Lvl4'] = listes_cards['Monk Lvl3'] + ["Chi Master", "Inhibiting Cape", "Combo", "Concealment",
+                                                         "Conversion",
                                                          "Ki Breath", "Turn Booster V"]
 listes_cards['Monk Lvl5'] = listes_cards['Monk Lvl4'] + ["Secret Weapons", "Quick Dodge", "Concealment",
                                                          "Zen Meditation", "Flash Move", "Phantom Blade"]
 
-listes_cards['White-Mage Lvl2'] = listes_cards['White-Mage Lvl1'] + ["Light Energy", "Light Energy", "Curse",
+listes_cards['White-Mage Lvl2'] = listes_cards['White-Mage Lvl1'] + ["Heal", "Light Energy", "Light Energy", "Curse",
                                                                      "Magic Shield", "Mana Recovery III",
                                                                      "Arcane Explosion"]
 listes_cards['White-Mage Lvl3'] = listes_cards['White-Mage Lvl2'] + ["Draw III", "Light Energy", "Magic Shield",
@@ -121,12 +125,13 @@ listes_cards['White-Mage Lvl4'] = listes_cards['White-Mage Lvl3'] + ["Magic Shie
                                                                      "Instant Curse", "Turn Booster V",
                                                                      "Vengeful Shield", "Empathetic Shield",
                                                                      "Arcane Explosion"]
-listes_cards['White-Mage Lvl5'] = listes_cards['White-Mage Lvl4'] + ["Draw III", "Instant Curse", "Turn Booster V",
+listes_cards['White-Mage Lvl5'] = listes_cards['White-Mage Lvl4'] + ["Good And Evil", "Draw III", "Instant Curse",
+                                                                     "Turn Booster V",
                                                                      "Epiphany", "Epiphany", "Light Strike",
                                                                      "Divine Shield", "Mana Shield"]
 
-listes_cards['Trapper Lvl2'] = listes_cards['Trapper Lvl1'] + ["Draw II", "Mana Recovery II", "Trap", "Precise Shot",
-                                                               "Reflex Shot"]
+listes_cards['Trapper Lvl2'] = listes_cards['Trapper Lvl1'] + ["Adjusted Shot", "Draw II", "Mana Recovery II", "Trap",
+                                                               "Precise Shot", "Reflex Shot"]
 listes_cards['Trapper Lvl3'] = listes_cards['Trapper Lvl2'] + ["Poisoned Shot", "Poisoned Shot", "Piercing Shot",
                                                                "Draw II", "Precise Shot", "Turn Booster IV"]
 listes_cards['Trapper Lvl4'] = listes_cards['Trapper Lvl3'] + ["Elite Marksman", "Turn Booster IV", "Double Arrows",
@@ -136,8 +141,8 @@ listes_cards['Trapper Lvl5'] = listes_cards['Trapper Lvl4'] + ["Reflex Shot", "S
                                                                "Explosive Shot", "Explosive Shot", "Precise Shot",
                                                                "Tamed Wolf", "Poisoned Shot", "Weak Point Study"]
 
-listes_cards['Illusionist Lvl2'] = listes_cards['Illusionist Lvl1'] + ["Mirror Images", "Sung Inspiration",
-                                                                       "Side Attack", "Draw II"]
+listes_cards['Illusionist Lvl2'] = listes_cards['Illusionist Lvl1'] + ["Enchanted Rapier", "Mirror Images",
+                                                                       "Sung Inspiration", "Side Attack", "Draw II"]
 listes_cards['Illusionist Lvl3'] = listes_cards['Illusionist Lvl2'] + ["Draw III", "Mana Drain",
                                                                        "Ethereal Plane Passage", "Shuriken", "Shuriken",
                                                                        "Poisoned Shuriken"]
@@ -150,8 +155,8 @@ listes_cards['Illusionist Lvl5'] = listes_cards['Illusionist Lvl4'] + ["Fevered 
                                                                        "Backflip Strike", "Circle Attack",
                                                                        "Illusory Strike", "Backstab"]
 
-listes_cards['Elementalist Lvl2'] = listes_cards['Elementalist Lvl1'] + ["Draw III", "Mana Capture", "Frostfire", "Fog",
-                                                                         "Tornado"]
+listes_cards['Elementalist Lvl2'] = listes_cards['Elementalist Lvl1'] + ["Elemental Magic", "Draw III", "Mana Capture",
+                                                                         "Frostfire", "Fog", "Tornado"]
 listes_cards['Elementalist Lvl3'] = listes_cards['Elementalist Lvl2'] + ["Turn Booster IV", "Tornado", "Fireball",
                                                                          "Meteor", "Frost Strike", "Mana Capture"]
 listes_cards['Elementalist Lvl4'] = listes_cards['Elementalist Lvl3'] + ["Earth Fracture", "Incantation", "Incantation",
