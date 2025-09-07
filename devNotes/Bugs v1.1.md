@@ -1,3 +1,9 @@
 - Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
 - SecretWeapons du moine n'enlève pas le score de current Drop
-- Gérer mieux les 1d@for car ça peut valoir -1 -2 et tout casser
+- Charge ne fonctionne pas .from() is deprecated, please use .copySprite()
+- Message buguée : green bolt, charge
+- Bug cards message d'erreurs
+- Pas de possibilité de supprimer les cartes de son deck pour les joueurs
+- Arrivé a invoquer un squelette par dessus un autre skelette
+- Les joueurs peuvent jouer leurs armes hors de leur tour
+- Impossible de supprimer le squelette pour les joueurs
