@@ -1,6 +1,7 @@
 ## V1.1.0
 
-- Tests Passe 2
+- Objectif Stable pendant 1h de test
+- OU Nouvelle version -> déployé pour l'ancienne
 
 ## V1.1.1 (Stabilisation et refacto)
 

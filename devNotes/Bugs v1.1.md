@@ -7,3 +7,4 @@
 - Arrivé a invoquer un squelette par dessus un autre skelette
 - Les joueurs peuvent jouer leurs armes hors de leur tour
 - Impossible de supprimer le squelette pour les joueurs
+- Ne plus utiliser game.actors.get pour éviter la décorélation, utiliser que les ids de token pour les targets
