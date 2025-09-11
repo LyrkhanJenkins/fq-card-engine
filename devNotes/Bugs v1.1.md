@@ -6,5 +6,5 @@
 - Pas de possibilité de supprimer les cartes de son deck pour les joueurs
 - Arrivé a invoquer un squelette par dessus un autre skelette
 - Les joueurs peuvent jouer leurs armes hors de leur tour
-- Impossible de supprimer le squelette pour les joueurs
+- Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
 - Ne plus utiliser game.actors.get pour éviter la décorélation, utiliser que les ids de token pour les targets
