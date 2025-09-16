@@ -15,6 +15,7 @@
   d'actions/mana/pioches?)
 - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
 - Moulinette IA des visuels
+- Gestions des principales Custom eval dans des méthodes
 - Tests Passe 1
 - Tests Passe 2
 - Tests Passe 3
@@ -39,6 +40,11 @@
 
 ### Medium:
 
+- Cartes niv 7 Gladiateur -> resource spécial pour les armes?, renommer en maître d'armes?
+- Ajouter également une fleche raccourci pour passer une carte du spellbook vers le deck
+- AJouts des dégâts de l'arme équipé pour les sorts de CàC
+  - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en premier
+- Gérer un nombre d'utilisation pour des armes.
 - Gérer du ciblage speciale : Zone
 - Ne pas utiliser de points d'actions quand hors combat
 - Vérifier qu'un GM est connecté pour pouvoir lancer les cartes
@@ -51,6 +57,8 @@
 
 ### Low:
 
+- QUe faire des cartes communes implémentés?
+- Prise en compte des resistances
 - Macro 'Maîtriser' : il faut pouvoir lancer une macro qui ajout un effet à une autre cible sans les drotis comme avec
   game.dfreds
 - Lancez différents sons ci plusieurs cibles touchés
@@ -60,6 +68,7 @@
 - Gérer les cartes chargées directement dans le code natif et pas en script
 - Gérer les dissipation d'effet dans un select qui récupère tous les effets des cibles
 - Gérer de l'aléatoire dans les cartes recues en montée de niveau à la manière de booster
+- Gestion d'une monnaie entre le spellbook et le deck?
 
 ### Very Low:
 
