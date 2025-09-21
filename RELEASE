@@ -1,9 +1,29 @@
 Update 1.1.0:
+    Feat:
+        - Add 2 new classes : The Witch and the Guardian
+        - Handle Advancements up to level 20
+        - Implements cards up to level 7
+        - Refactor form to implements cards
+        - New type of cards: Base Cards
+        - Handle visual and sound effect with Sequencer, J2BA and DAE
+        - Handle special attributes for Witch : Skeleton sacrifice
+        - Shortcuts to use first equipped weapons and sacrifice skeleton
+        - Handle first special targeting: skeleton
+        - Restrict HUD for players
+        - Show max number and level of cards
+        - Distinct deux type of deck: FQ Library and FQ Deck
+        - FQ Library can't be populated by cards from other source
+        - FQ Deck can be populated with Library's cards as long as the 'max number' is not exceeded
+        - Cards moving from FQ Library to FQ Deck creat a new card instead
+        - Restrict rights in deck for players
+        - Macro to automate the creation of a FQ Deck and a FQ Library (deck replaced and generated up to level 5, single-classed)
+        - Handle different behavior out of combat (currentDrop, draw and pick cards)
     Chore:
     - Migration v13
         - Remove deprecated methods
         - Migration cards flags to FQ typed system object
     - Unit testing
+    - Add test world
 
 Update 1.0.1:
     Feat:

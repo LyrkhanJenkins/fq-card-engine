@@ -1,8 +1,3 @@
-## V1.1.0
-
-- Objectif Stable pendant 1h de test
-- OU Nouvelle version -> déployé pour l'ancienne
-
 ## V1.1.1 (Stabilisation et refacto)
 
 - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
@@ -42,8 +37,9 @@
 
 - Cartes niv 7 Gladiateur -> resource spécial pour les armes?, renommer en maître d'armes?
 - Ajouter également une fleche raccourci pour passer une carte du spellbook vers le deck
-- AJouts des dégâts de l'arme équipé pour les sorts de CàC
-  - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en premier
+- Ajouts des dégâts de l'arme équipé pour les sorts de CàC
+    - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en
+      premier
 - Gérer un nombre d'utilisation pour des armes.
 - Gérer du ciblage speciale : Zone
 - Ne pas utiliser de points d'actions quand hors combat
