@@ -6,6 +6,8 @@
     "build:json": "node ./utils/packs.mjs package unpack",
     "test": "jest",
     "testWorld": "node tests/script/copy-world.mjs",
+    "lint": "eslint ./scripts ./tests",
+    "lint:fix": "eslint ./scripts ./tests --fix",
     "lint:html": "eslint ./scripts ./tests -f html -o eslint-report.html"
   },
   "devDependencies": {
