@@ -5,16 +5,13 @@
     "build:generateCards": "node utils/create_cards_by_classes_and_level.js",
     "build:json": "node ./utils/packs.mjs package unpack",
     "test": "jest",
-    "playwright": "npx playwright test --project=chromium",
-    "playwright:debug": "npx playwright test --project=chromium --debug",
-    "lint": "eslint ./scripts ./tests",
+    "testWorld": "node tests/script/copy-world.mjs",
     "lint:html": "eslint ./scripts ./tests -f html -o eslint-report.html"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
     "@foundryvtt/foundryvtt-cli": "^1.0.0-rc.4",
-    "@playwright/test": "^1.55.0",
     "@types/node": "^24.3.1",
     "babel-core": "^7.0.0-bridge.0",
     "eslint": "^9.13.0",
