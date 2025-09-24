@@ -2403,8 +2403,12 @@
                       ],
                       "messages": [
                         {
-                          "key": "",
-                          "arg": ""
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{ \"effectName\": \"Air Effect\" }"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
                         }
                       ]
                     }

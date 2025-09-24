@@ -1,3 +1,9 @@
+v1.1.1:
+
+- Correction de la Charge:  ne fonctionne pas .from() is deprecated, please use .copySprite() + utilise les targets du
+  GM
+- Rajout de messages des effets manquants pour Guardian et Elementalist
+
 v1.1:
 
 - Gestion des avancements des classes même en multiclassing

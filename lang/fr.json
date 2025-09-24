@@ -292,6 +292,7 @@
   "FQCARDENGINE.CardMsgTemporaryEffect": "L'effet '{effectName}' dure {turn} tour(s)",
   "FQCARDENGINE.CardWarningLastDamageCritical": "Les derniers dégâts ne doivent pas être un critique",
   "FQCARDENGINE.CardMsgApplyEffect": "L'Effet '{effectName}' a été appliqué aux cibles",
+  "FQCARDENGINE.CardMsgSelfApplyEffect": "L'Effet special de '{effectName}' a été appliqué au personnage",
   "FQCARDENGINE.CardWarningMsgSquareEffect": "Les cibles doivent être contenues dans un carré {area}",
   "FQCARDENGINE.CardMsgDamageEffect": "L'effet {effectName} a été appliqué, la cible subit {damage} dégâts par tour pendant {turn} tours",
   "FQCARDENGINE.CardWarningMsgSameLine": "Les cibles doivent être sur la même ligne que le lanceur de sort",
