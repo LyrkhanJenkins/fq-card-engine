@@ -83,32 +83,32 @@ let listesCards = {
     "Witch Lvl1": ["Mana Recover II", "Necromancy", "Green-Shadow Bolt", "Green-Shadow Bolt", "Green-Shadow Bolt", "Green-Shadow Bolt", "Green-Shadow Bolt"]
 };
 
-listesCards["Witch Lvl2"] = listesCards["Witch Lvl1"].concat(["Life Surge", "Mana Surge", "Square of Skeletons", "Turn Booster IV", "Bone Shield", "Green-Shadow Bolt"]);
-listesCards["Witch Lvl3"] = listesCards["Witch Lvl2"].concat(["Life Surge", "Mana Recover II", "Shadow Explosion", "Necromancy", "Draw II", "Giant Skeleton", "Green-Shadow Bolt"]);
+listesCards["Witch Lvl2"] = listesCards["Witch Lvl1"].concat(["Shadow Spell", "Life Surge", "Mana Surge", "Square of Skeletons", "Turn Booster IV", "Bone Shield", "Green-Shadow Bolt"]);
+listesCards["Witch Lvl3"] = listesCards["Witch Lvl2"].concat(["Osteology", "Life Surge", "Mana Recover II", "Shadow Explosion", "Necromancy", "Draw II", "Giant Skeleton", "Green-Shadow Bolt"]);
 listesCards["Witch Lvl4"] = listesCards["Witch Lvl3"].concat(["Life Surge", "Shadow Channeling", "Shadow Channeling", "Square of Skeletons", "Turn Booster IV", "Necromancy", "Giant Skeleton", "Green-Shadow Bolt"]);
 listesCards["Witch Lvl5"] = listesCards["Witch Lvl4"].concat(["Mana Surge", "Power Surge", "Shadow Form", "Shadow Form", "Agility Surge", "Bone Shield", "Draw II", "Green-Shadow Bolt"]);
 
 listesCards["Guardian Lvl2"] = listesCards["Guardian Lvl1"].concat(["Charge", "Charge", "Draw II", "Turn Booster IV", "Hemorrhage", "Hemorrhage"]);
-listesCards["Guardian Lvl3"] = listesCards["Guardian Lvl2"].concat(["Heroic strike", "Heroic strike", "Mana Surge", "Mana Recover I", "Blade Charging", "Armor Reinforcement", "Blade Whirlwind"]);
+listesCards["Guardian Lvl3"] = listesCards["Guardian Lvl2"].concat(["Stance Shift", "Heroic strike", "Heroic strike", "Mana Surge", "Mana Recover I", "Blade Charging", "Armor Reinforcement", "Blade Whirlwind"]);
 listesCards["Guardian Lvl4"] = listesCards["Guardian Lvl3"].concat(["Mana Surge", "Draw II", "Turn Booster IV", "Shield Bash", "Shield Bash", "Hemorrhage", "Hemorrhage", "Ultimate Rage"]);
 listesCards["Guardian Lvl5"] = listesCards["Guardian Lvl4"].concat(["Mana Surge", "Mana Recover I", "Rage Surge", "Powerful Strike", "Powerful Strike", "Armor Reinforcement", "Blade Whirlwind"]);
 
 listesCards["Monk Lvl2"] = listesCards["Monk Lvl1"].concat(["Left Punch", "Left Punch", "Inhibiting Cape", "Quick Dodge"]);
 listesCards["Monk Lvl3"] = listesCards["Monk Lvl2"].concat(["Turn Booster V", "Inhibiting Cape", "Zen Meditation", "Zealous Shield", "Mana Recovery III", "Phantom Blade"]);
-listesCards["Monk Lvl4"] = listesCards["Monk Lvl3"].concat(["Inhibiting Cape", "Combo", "Concealment", "Conversion", "Ki Breath", "Turn Booster V"]);
+listesCards["Monk Lvl4"] = listesCards["Monk Lvl3"].concat(["Chi Master", "Inhibiting Cape", "Combo", "Concealment", "Conversion", "Ki Breath", "Turn Booster V"]);
 listesCards["Monk Lvl5"] = listesCards["Monk Lvl4"].concat(["Secret Weapons", "Quick Dodge", "Concealment", "Zen Meditation", "Flash Move", "Phantom Blade"]);
 
-listesCards["White-Mage Lvl2"] = listesCards["White-Mage Lvl1"].concat(["Light Energy", "Light Energy", "Curse", "Magic Shield", "Mana Recovery III", "Arcane Explosion"]);
+listesCards["White-Mage Lvl2"] = listesCards["White-Mage Lvl1"].concat(["Heal", "Light Energy", "Light Energy", "Curse", "Magic Shield", "Mana Recovery III", "Arcane Explosion"]);
 listesCards["White-Mage Lvl3"] = listesCards["White-Mage Lvl2"].concat(["Draw III", "Light Energy", "Magic Shield", "Instant Curse", "Mana Recovery III", "Emergency Healing", "Mana Infusion"]);
 listesCards["White-Mage Lvl4"] = listesCards["White-Mage Lvl3"].concat(["Magic Shield", "Exorcism", "Exorcism", "Instant Curse", "Turn Booster V", "Vengeful Shield", "Empathetic Shield", "Arcane Explosion"]);
-listesCards["White-Mage Lvl5"] = listesCards["White-Mage Lvl4"].concat(["Draw III", "Instant Curse", "Turn Booster V", "Epiphany", "Epiphany", "Light Strike", "Divine Shield", "Mana Shield"]);
+listesCards["White-Mage Lvl5"] = listesCards["White-Mage Lvl4"].concat(["Good And Evil", "Draw III", "Instant Curse", "Turn Booster V", "Epiphany", "Epiphany", "Light Strike", "Divine Shield", "Mana Shield"]);
 
-listesCards["Trapper Lvl2"] = listesCards["Trapper Lvl1"].concat(["Draw II", "Mana Recovery II", "Trap", "Precise Shot", "Reflex Shot"]);
+listesCards["Trapper Lvl2"] = listesCards["Trapper Lvl1"].concat(["Adjusted Shot", "Draw II", "Mana Recovery II", "Trap", "Precise Shot", "Reflex Shot"]);
 listesCards["Trapper Lvl3"] = listesCards["Trapper Lvl2"].concat(["Poisoned Shot", "Poisoned Shot", "Piercing Shot", "Draw II", "Precise Shot", "Turn Booster IV"]);
 listesCards["Trapper Lvl4"] = listesCards["Trapper Lvl3"].concat(["Elite Marksman", "Turn Booster IV", "Double Arrows", "Precise Shot", "Mana Recovery II", "Ambush", "Ambush", "Trap", "Rain of Arrows"]);
 listesCards["Trapper Lvl5"] = listesCards["Trapper Lvl4"].concat(["Reflex Shot", "Supersonic Shot", "Supersonic Shot", "Explosive Shot", "Explosive Shot", "Precise Shot", "Tamed Wolf", "Poisoned Shot", "Weak Point Study"]);
 
-listesCards["Illusionist Lvl2"] = listesCards["Illusionist Lvl1"].concat(["Mirror Images", "Sung Inspiration", "Side Attack", "Draw II"]);
+listesCards["Illusionist Lvl2"] = listesCards["Illusionist Lvl1"].concat(["Enchanted Rapier", "Mirror Images", "Sung Inspiration", "Side Attack", "Draw II"]);
 listesCards["Illusionist Lvl3"] = listesCards["Illusionist Lvl2"].concat(["Draw III", "Mana Drain", "Ethereal Plane Passage", "Shuriken", "Shuriken", "Poisoned Shuriken"]);
 listesCards["Illusionist Lvl4"] = listesCards["Illusionist Lvl3"].concat(["Magic Reach", "Magic Reach", "Apothecary I", "Diagonal Attack", "Black Plague", "Communicating Vessels", "Fevered Dance", "Mirror Images"]);
 listesCards["Illusionist Lvl5"] = listesCards["Illusionist Lvl4"].concat(["Fevered Dance", "Dagger Cloud", "Shuriken Volley", "Apothecary II", "Backflip Strike", "Circle Attack", "Illusory Strike", "Backstab"]);

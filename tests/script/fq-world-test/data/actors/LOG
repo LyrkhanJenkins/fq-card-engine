@@ -1,14 +1,16 @@
-2025/09/21-16:25:51.731 1a80 Recovering log #10
-2025/09/21-16:25:51.781 1a80 Delete type=0 #10
-2025/09/21-16:25:51.781 1a80 Delete type=3 #9
-2025/09/21-16:30:34.537 36d8 Level-0 table #14: started
-2025/09/21-16:30:34.575 36d8 Level-0 table #14: 23760 bytes OK
-2025/09/21-16:30:34.604 36d8 Delete type=0 #12
-2025/09/21-16:30:34.629 36d8 Manual compaction at level-0 from '!actors!6BBSIxKYAGaFYk2Z' @ 72057594037927935 : 1 .. '!actors.items!nPQDMhi3maaMscbe.Vqa8fxAHqq1EbyqX' @ 0 : 0; will stop at '!actors.items!nPQDMhi3maaMscbe.Vqa8fxAHqq1EbyqX' @ 19 : 1
-2025/09/21-16:30:34.629 36d8 Compacting 2@0 + 0@1 files
-2025/09/21-16:30:34.664 36d8 Generated table #15@0: 28 keys, 57947 bytes
-2025/09/21-16:30:34.664 36d8 Compacted 2@0 + 0@1 files => 57947 bytes
-2025/09/21-16:30:34.695 36d8 compacted to: files[ 0 1 0 0 0 0 0 ]
-2025/09/21-16:30:34.695 36d8 Delete type=2 #8
-2025/09/21-16:30:34.695 36d8 Delete type=2 #14
-2025/09/21-16:30:34.813 36d8 Manual compaction at level-0 from '!actors.items!nPQDMhi3maaMscbe.Vqa8fxAHqq1EbyqX' @ 19 : 1 .. '!actors.items!nPQDMhi3maaMscbe.Vqa8fxAHqq1EbyqX' @ 0 : 0; will stop at (end)
+2025/09/24-16:52:00.327 2d4 Recovering log #18
+2025/09/24-16:52:00.328 2d4 Level-0 table #20: started
+2025/09/24-16:52:00.411 2d4 Level-0 table #20: 221255 bytes OK
+2025/09/24-16:52:00.479 2d4 Delete type=0 #18
+2025/09/24-16:52:00.479 2d4 Delete type=3 #17
+2025/09/24-16:52:41.438 1c7c Level-0 table #23: started
+2025/09/24-16:52:41.438 1c7c Level-0 table #23: 0 bytes OK
+2025/09/24-16:52:41.462 1c7c Delete type=0 #21
+2025/09/24-16:52:41.512 1c7c Manual compaction at level-0 from '!actors!6BBSIxKYAGaFYk2Z' @ 72057594037927935 : 1 .. '!actors.items!nPQDMhi3maaMscbe.Vqa8fxAHqq1EbyqX' @ 0 : 0; will stop at '!actors.items!nPQDMhi3maaMscbe.Vqa8fxAHqq1EbyqX' @ 39 : 1
+2025/09/24-16:52:41.512 1c7c Compacting 2@0 + 0@1 files
+2025/09/24-16:52:41.542 1c7c Generated table #24@0: 28 keys, 58655 bytes
+2025/09/24-16:52:41.542 1c7c Compacted 2@0 + 0@1 files => 58655 bytes
+2025/09/24-16:52:41.578 1c7c compacted to: files[ 0 1 0 0 0 0 0 ]
+2025/09/24-16:52:41.579 1c7c Delete type=2 #15
+2025/09/24-16:52:41.579 1c7c Delete type=2 #20
+2025/09/24-16:52:41.671 1c7c Manual compaction at level-0 from '!actors.items!nPQDMhi3maaMscbe.Vqa8fxAHqq1EbyqX' @ 39 : 1 .. '!actors.items!nPQDMhi3maaMscbe.Vqa8fxAHqq1EbyqX' @ 0 : 0; will stop at (end)

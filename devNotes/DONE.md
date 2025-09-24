@@ -1,8 +1,11 @@
 v1.1.1:
+Fix :
 
 - Correction de la Charge:  ne fonctionne pas .from() is deprecated, please use .copySprite() + utilise les targets du
   GM
 - Rajout de messages des effets manquants pour Guardian et Elementalist
+- Correction Open/Create Deck Macros
+- Fix cartes de base dans les decks générés
 
 v1.1:
 

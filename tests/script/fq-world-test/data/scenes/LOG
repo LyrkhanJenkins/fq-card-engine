@@ -1,14 +1,13 @@
-2025/09/21-16:25:52.400 3528 Recovering log #10
-2025/09/21-16:25:52.455 3528 Delete type=0 #10
-2025/09/21-16:25:52.455 3528 Delete type=3 #9
-2025/09/21-16:30:35.112 36d8 Level-0 table #14: started
-2025/09/21-16:30:35.112 36d8 Level-0 table #14: 0 bytes OK
-2025/09/21-16:30:35.137 36d8 Delete type=0 #12
-2025/09/21-16:30:35.287 36d8 Manual compaction at level-0 from '!scenes!Pl5kNER7PeAwjkHI' @ 72057594037927935 : 1 .. '!scenes.tokens.delta!Pl5kNER7PeAwjkHI.vYgjzgbl9k9V1UsC.vYgjzgbl9k9V1UsC' @ 0 : 0; will stop at '!scenes!x35wbjRbaquFgNRP' @ 1 : 1
-2025/09/21-16:30:35.287 36d8 Compacting 2@0 + 0@1 files
-2025/09/21-16:30:35.304 36d8 Generated table #15@0: 15 keys, 7522 bytes
-2025/09/21-16:30:35.304 36d8 Compacted 2@0 + 0@1 files => 7522 bytes
-2025/09/21-16:30:35.337 36d8 compacted to: files[ 0 1 0 0 0 0 0 ]
-2025/09/21-16:30:35.337 36d8 Delete type=2 #4
-2025/09/21-16:30:35.337 36d8 Delete type=2 #8
-2025/09/21-16:30:35.496 36d8 Manual compaction at level-0 from '!scenes!x35wbjRbaquFgNRP' @ 1 : 1 .. '!scenes.tokens.delta!Pl5kNER7PeAwjkHI.vYgjzgbl9k9V1UsC.vYgjzgbl9k9V1UsC' @ 0 : 0; will stop at (end)
+2025/09/24-16:52:01.171 3c94 Recovering log #18
+2025/09/24-16:52:01.221 3c94 Delete type=0 #18
+2025/09/24-16:52:01.221 3c94 Delete type=3 #17
+2025/09/24-16:52:42.088 1c7c Level-0 table #22: started
+2025/09/24-16:52:42.088 1c7c Level-0 table #22: 0 bytes OK
+2025/09/24-16:52:42.112 1c7c Delete type=0 #20
+2025/09/24-16:52:42.313 1c7c Manual compaction at level-0 from '!scenes!Pl5kNER7PeAwjkHI' @ 72057594037927935 : 1 .. '!scenes.tokens.delta!Pl5kNER7PeAwjkHI.vYgjzgbl9k9V1UsC.vYgjzgbl9k9V1UsC' @ 0 : 0; will stop at '!scenes.tokens.delta!Pl5kNER7PeAwjkHI.vYgjzgbl9k9V1UsC.vYgjzgbl9k9V1UsC' @ 62 : 1
+2025/09/24-16:52:42.313 1c7c Compacting 1@0 + 0@1 files
+2025/09/24-16:52:42.355 1c7c Generated table #23@0: 15 keys, 7522 bytes
+2025/09/24-16:52:42.355 1c7c Compacted 1@0 + 0@1 files => 7522 bytes
+2025/09/24-16:52:42.395 1c7c compacted to: files[ 0 1 0 0 0 0 0 ]
+2025/09/24-16:52:42.396 1c7c Delete type=2 #15
+2025/09/24-16:52:42.460 1c7c Manual compaction at level-0 from '!scenes.tokens.delta!Pl5kNER7PeAwjkHI.vYgjzgbl9k9V1UsC.vYgjzgbl9k9V1UsC' @ 62 : 1 .. '!scenes.tokens.delta!Pl5kNER7PeAwjkHI.vYgjzgbl9k9V1UsC.vYgjzgbl9k9V1UsC' @ 0 : 0; will stop at (end)

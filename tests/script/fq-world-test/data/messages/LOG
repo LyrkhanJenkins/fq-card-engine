@@ -1,14 +1,16 @@
-2025/09/21-16:25:51.844 3528 Recovering log #10
-2025/09/21-16:25:51.897 3528 Delete type=0 #10
-2025/09/21-16:25:51.898 3528 Delete type=3 #9
-2025/09/21-16:30:34.605 36d8 Level-0 table #14: started
-2025/09/21-16:30:34.606 36d8 Level-0 table #14: 0 bytes OK
-2025/09/21-16:30:34.629 36d8 Delete type=0 #12
-2025/09/21-16:30:34.695 36d8 Manual compaction at level-0 from '!messages!39gM5HtT8QA6cBJ9' @ 72057594037927935 : 1 .. '!messages!tJnGALkqznUYqvys' @ 0 : 0; will stop at '!messages!tJnGALkqznUYqvys' @ 4 : 1
-2025/09/21-16:30:34.695 36d8 Compacting 2@0 + 0@1 files
-2025/09/21-16:30:34.750 36d8 Generated table #15@0: 4 keys, 3894 bytes
-2025/09/21-16:30:34.750 36d8 Compacted 2@0 + 0@1 files => 3894 bytes
-2025/09/21-16:30:34.778 36d8 compacted to: files[ 0 1 0 0 0 0 0 ]
-2025/09/21-16:30:34.778 36d8 Delete type=2 #4
-2025/09/21-16:30:34.778 36d8 Delete type=2 #8
-2025/09/21-16:30:34.813 36d8 Manual compaction at level-0 from '!messages!tJnGALkqznUYqvys' @ 4 : 1 .. '!messages!tJnGALkqznUYqvys' @ 0 : 0; will stop at (end)
+2025/09/24-16:52:00.648 2d4 Recovering log #18
+2025/09/24-16:52:00.648 2d4 Level-0 table #20: started
+2025/09/24-16:52:00.684 2d4 Level-0 table #20: 2095 bytes OK
+2025/09/24-16:52:00.738 2d4 Delete type=0 #18
+2025/09/24-16:52:00.739 2d4 Delete type=3 #17
+2025/09/24-16:52:41.487 1c7c Level-0 table #23: started
+2025/09/24-16:52:41.487 1c7c Level-0 table #23: 0 bytes OK
+2025/09/24-16:52:41.512 1c7c Delete type=0 #21
+2025/09/24-16:52:41.579 1c7c Manual compaction at level-0 from '!messages!39gM5HtT8QA6cBJ9' @ 72057594037927935 : 1 .. '!messages!unN0oPtlSadrlsy4' @ 0 : 0; will stop at '!messages!unN0oPtlSadrlsy4' @ 9 : 1
+2025/09/24-16:52:41.579 1c7c Compacting 2@0 + 0@1 files
+2025/09/24-16:52:41.629 1c7c Generated table #24@0: 11 keys, 5515 bytes
+2025/09/24-16:52:41.629 1c7c Compacted 2@0 + 0@1 files => 5515 bytes
+2025/09/24-16:52:41.671 1c7c compacted to: files[ 0 1 0 0 0 0 0 ]
+2025/09/24-16:52:41.671 1c7c Delete type=2 #15
+2025/09/24-16:52:41.671 1c7c Delete type=2 #20
+2025/09/24-16:52:41.704 1c7c Manual compaction at level-0 from '!messages!unN0oPtlSadrlsy4' @ 9 : 1 .. '!messages!unN0oPtlSadrlsy4' @ 0 : 0; will stop at (end)
