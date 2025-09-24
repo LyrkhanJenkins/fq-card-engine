@@ -10,6 +10,7 @@ describe("DamageUtils", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         actor = {
+            _id: "targetActorId",
             system: {
                 fq: {
                     bonus: {

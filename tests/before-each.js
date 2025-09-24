@@ -47,7 +47,11 @@ export default function setGlobal() {
                 _id: "userCharacterId",
                 id: "userCharacterId",
                 system: {attributes: {}, abilities: {}, fq: {bonus: {range: 0}}}
-            }, targets: new Set([{id: "token1", document: {name: "Target1", actorId: "actor1"}}])
+            }, targets: new Set([{
+                id: "token1",
+                actor: {id: "actor1", _id: "actor1", system: {fq: {attributes: {evasion: 3}}}},
+                document: {name: "Target1", actorId: "actor1"}
+            }])
         },
         actors: {
             get: jest.fn(() => ({id: "actor1", _id: "actor1", system: {fq: {attributes: {evasion: 3}}}}))

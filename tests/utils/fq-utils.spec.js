@@ -87,7 +87,11 @@ describe("FQUtils", () => {
     it("should handle sound effect in applyCardEffect", async () => {
         const cardContent = {damage: "1d6", heal: "3+1d4", sound: "sound.mp3"};
         await FQUtils.applyCardEffect(cardContent, {}, {});
-        expect(FxUtils.handleSpecialEffect).toHaveBeenCalledWith(cardContent, expect.any(Array), {"actorId": "userCharacterId", "x": 5, "y": 5}, null); // TODO Mettre les grosse global dans un fichier séparé
+        expect(FxUtils.handleSpecialEffect).toHaveBeenCalledWith(cardContent, expect.any(Array), {
+            "actorId": "userCharacterId",
+            "x": 5,
+            "y": 5
+        }, null); // TODO Mettre les grosse global dans un fichier séparé
     });
 
     it("should call socket.executeAsGM to add a new effect for actor", async () => {
@@ -98,8 +102,8 @@ describe("FQUtils", () => {
                 duration: {startTime: 1, rounds: 2, turns: 3}
             }]
         };
-        await FQUtils.applyNewEffects(currentEffect, "actorId");
+        await FQUtils.applyNewEffects(currentEffect, "targetId");
 
-        expect(fqCardEngineModule.socket.executeAsGM).toHaveBeenCalledWith("addEffectForAnActor", expect.anything(), "actorId");
+        expect(fqCardEngineModule.socket.executeAsGM).toHaveBeenCalledWith("addEffectForTarget", expect.anything(), "targetId");
     });
 });
