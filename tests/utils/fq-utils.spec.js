@@ -1,7 +1,7 @@
 import FQUtils from "../../scripts/utils/fq-utils.js";
-import * as fqCardEngineModule from "../../scripts/fq-card-engine-module";
 import FxUtils from "../../scripts/utils/fx-utils.js";
 import setGlobal from "../before-each.js";
+
 
 jest.mock("../../scripts/fq-card-engine-module.js", () => ({
     socket: {
@@ -24,7 +24,8 @@ jest.mock("../../scripts/utils/damage-utils.js", () => ({
 }));
 
 jest.mock("../../scripts/utils/fx-utils.js", () => ({
-    handleSpecialEffect: jest.fn()
+    handleSpecialEffect: jest.fn(),
+    importMacroFromCompendium: jest.fn()
 }));
 
 jest.mock("../../scripts/utils/canvas-utils.js", () => ({
@@ -94,16 +95,60 @@ describe("FQUtils", () => {
         }, null); // TODO Mettre les grosse global dans un fichier séparé
     });
 
-    it("should call socket.executeAsGM to add a new effect for actor", async () => {
-        const currentEffect = {
-            data: [{
-                label: "test effect",
-                value: 10,
-                duration: {startTime: 1, rounds: 2, turns: 3}
-            }]
+    it("appelle numerizeEffectObjValue pour chaque effet et recopie label → name si manquant", async () => {
+        const input = {
+            data: [
+                {label: "Effet A", changes: []},
+                {label: "Ignoré", name: "Déjà nommé", changes: []},
+            ],
         };
-        await FQUtils.applyNewEffects(currentEffect, "targetId");
 
-        expect(fqCardEngineModule.socket.executeAsGM).toHaveBeenCalledWith("addEffectForTarget", expect.anything(), "targetId");
+        const result = await FQUtils.createEffectsFromData(input);
+
+        expect(result[0].name).toBe("Effet A");
+        expect(result[1].name).toBe("Déjà nommé");
+    });
+
+    it("mappe duration (startTime/rounds/turns) et définit origin", async () => {
+        const input = {
+            data: [
+                {
+                    label: "Durée",
+                    duration: {startTime: 10, rounds: 2, turns: 1},
+                    changes: [],
+                },
+            ],
+        };
+
+        const [res] = await FQUtils.createEffectsFromData(input);
+
+        expect(res.startTime).toBe(10);
+        expect(res.rounds).toBe(2);
+        expect(res.turns).toBe(1);
+        expect(res.origin).toBe("FQ Effect");
+    });
+
+    it("n’évalue pas quand key ∈ [\"system.fq.bonus.damage\",\"system.fq.bonus.heal\"]", async () => {
+        const input = {
+            data: [
+                {
+                    label: "NoEval",
+                    changes: [
+                        {key: "system.fq.bonus.damage", value: "1+2"},
+                        {key: "system.fq.bonus.heal", value: "2+3"},
+                    ],
+                },
+            ],
+        };
+
+        const [res] = await FQUtils.createEffectsFromData(input);
+
+        expect(res.changes[0].value).toBe("1+2");
+        expect(res.changes[1].value).toBe("2+3");
+
+        // Vérifie qu’aucun Roll n’a été instancié pour ces expressions
+        const calls = global.Roll.mock.calls.map((c) => c[0]);
+        expect(calls).not.toContain("1+2");
+        expect(calls).not.toContain("2+3");
     });
 });

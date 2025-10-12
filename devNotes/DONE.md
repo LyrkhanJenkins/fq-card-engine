@@ -1,6 +1,7 @@
 v1.1.1:
 Fix :
 
+- Ne plus utiliser game.actors.get pour éviter la décorélation, utiliser que les ids de token pour les targets
 - Correction de la Charge:  ne fonctionne pas .from() is deprecated, please use .copySprite() + utilise les targets du
   GM
 - Rajout de messages des effets manquants pour Guardian et Elementalist

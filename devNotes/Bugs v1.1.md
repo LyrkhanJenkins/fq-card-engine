@@ -7,9 +7,11 @@ MINOR:
 - Arrivé a invoquer un squelette par dessus un autre skelette
 - Les joueurs peuvent jouer leurs armes hors de leur tour
 - Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
-- Ne plus utiliser game.actors.get pour éviter la décorélation, utiliser que les ids de token pour les targets
+- Empecher de jouer une carte de base 2 fois dans un tour
 
 VERY MINOR:
 
 - Problématique quand on passe directement du niveau 1 à 7 (est-ce que s'en ai vraiment une) -> pas de regénération du
   deck
+- Montée de version 350
+- Problème d'effet? le clignottement a fait disparaitre un de mes token à un moment donné
