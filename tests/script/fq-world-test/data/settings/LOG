@@ -1,17 +1,5 @@
-2025/09/24-16:52:01.229 2d4 Recovering log #19
-2025/09/24-16:52:01.230 2d4 Level-0 table #21: started
-2025/09/24-16:52:01.258 2d4 Level-0 table #21: 1401 bytes OK
-2025/09/24-16:52:01.305 2d4 Delete type=0 #19
-2025/09/24-16:52:01.305 2d4 Delete type=3 #18
-2025/09/24-16:52:42.113 1c7c Level-0 table #24: started
-2025/09/24-16:52:42.156 1c7c Level-0 table #24: 6995 bytes OK
-2025/09/24-16:52:42.196 1c7c Delete type=0 #22
-2025/09/24-16:52:42.396 1c7c Manual compaction at level-0 from '!settings!1LKwFxCoCoPxEhSo' @ 72057594037927935 : 1 .. '!settings!z1nGphXVMGTGbqUW' @ 0 : 0; will stop at '!settings!w6GwiXELMGVsJqL3' @ 19 : 1
-2025/09/24-16:52:42.396 1c7c Compacting 3@0 + 0@1 files
-2025/09/24-16:52:42.425 1c7c Generated table #25@0: 61 keys, 8075 bytes
-2025/09/24-16:52:42.426 1c7c Compacted 3@0 + 0@1 files => 8075 bytes
-2025/09/24-16:52:42.460 1c7c compacted to: files[ 0 1 0 0 0 0 0 ]
-2025/09/24-16:52:42.460 1c7c Delete type=2 #16
-2025/09/24-16:52:42.460 1c7c Delete type=2 #21
-2025/09/24-16:52:42.460 1c7c Delete type=2 #24
-2025/09/24-16:52:42.460 1c7c Manual compaction at level-0 from '!settings!w6GwiXELMGVsJqL3' @ 19 : 1 .. '!settings!z1nGphXVMGTGbqUW' @ 0 : 0; will stop at (end)
+2025/10/16-18:40:11.339 584c Recovering log #28
+2025/10/16-18:40:11.339 584c Level-0 table #30: started
+2025/10/16-18:40:11.364 584c Level-0 table #30: 1403 bytes OK
+2025/10/16-18:40:11.371 584c Delete type=0 #28
+2025/10/16-18:40:11.371 584c Delete type=3 #27
