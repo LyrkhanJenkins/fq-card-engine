@@ -242,7 +242,7 @@
   "FQCARDENGINE.InfoMsgHealBonus": "Add a healing bonus of {heal}",
   "FQCARDENGINE.WarningMsgCardConditionNotMet": "Card condition(s) not met",
   "FQCARDENGINE.WarningMsgErrorReadingCardSpecialCondition": "Unable to read the card's special usage conditions",
-  "FQCARDENGINE.WarningMsgPlayNoReactiveCard": "Cannot play a non-reactive card outside of your combat turn",
+  "FQCARDENGINE.WarningMsgPlayOutOfHisRound": "Cannot use this spell outside of your combat turn",
   "FQCARDENGINE.WarningMsgPlayReactiveCard": "Cannot play a reactive card during your own combat turn",
   "FQCARDENGINE.WarningMsgXValueInferiorXMin": "The value of X for this card cannot be below {xmin}",
   "FQCARDENGINE.WarningMsgYValueInferiorYMin": "The value of Y for this card cannot be below {ymin}",

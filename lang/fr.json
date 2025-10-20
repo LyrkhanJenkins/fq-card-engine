@@ -242,7 +242,7 @@
   "FQCARDENGINE.InfoMsgHealBonus": "Ajout d'un bonus aux soins de {heal}",
   "FQCARDENGINE.WarningMsgCardConditionNotMet": "Condition(s) de carte non rempli(s)",
   "FQCARDENGINE.WarningMsgErrorReadingCardSpecialCondition": "Impossible de lire les conditions spéciales d'utilisation de la carte",
-  "FQCARDENGINE.WarningMsgPlayNoReactiveCard": "Impossible de jouer une carte non réactive hors de son tour de combat",
+  "FQCARDENGINE.WarningMsgPlayOutOfHisRound": "Impossible de jouer ce sort hors de son tour de combat",
   "FQCARDENGINE.WarningMsgPlayReactiveCard": "Impossible de jouer une carte réactive à son propre tour de combat",
   "FQCARDENGINE.WarningMsgXValueInferiorXMin": "La valeur de X pour cette carte ne peut pas être en dessous de {xmin}",
   "FQCARDENGINE.WarningMsgYValueInferiorYMin": "La valeur de Y pour cette carte ne peut pas être en dessous de {ymin}",

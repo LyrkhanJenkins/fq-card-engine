@@ -1,10 +1,9 @@
 MAJOR:
-
+- RETESTER TOUTES LES CORRECTIONS (pas pu tester au moins 2 (arme à son tour et montée de version))
 MINOR:
 
 - Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
 - Arrivé a invoquer un squelette par dessus un autre skelette
-- Les joueurs peuvent jouer leurs armes hors de leur tour
 - Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
 - Empecher de jouer une carte de base 2 fois dans un tour
 

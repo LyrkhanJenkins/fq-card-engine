@@ -1,6 +1,8 @@
 v1.1.1:
+Chore :
+- Montée de version 13.350
 Fix :
-- Montée de version 350
+- Les joueurs ne peuvent plus jouer leurs armes hors de leur tour
 - Si xvalue ou yvalue est positionner sur currentDrop, on le vide pour le personnage
 - Ne plus utiliser game.actors.get pour éviter la décorélation, utiliser que les ids de token pour les targets
 - Correction de la Charge:  ne fonctionne pas .from() is deprecated, please use .copySprite() + utilise les targets du
