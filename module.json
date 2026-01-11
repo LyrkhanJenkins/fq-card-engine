@@ -55,7 +55,7 @@
   "download": "https://gitlab.com/final-quest/fq-card-engine/-/jobs/11431910740/artifacts/raw/fq-card-engine.zip",
   "compatibility": {
     "minimum": "13",
-    "verified": "13.350"
+    "verified": "13.351"
   },
   "relationships": {
     "systems": [
@@ -64,7 +64,7 @@
         "type": "system",
         "compatibility": {
           "minimum": "5.0.4",
-          "verified": "5.1.10",
+          "verified": "5.2.4",
           "maximum": "5.9.99"
         }
       }
