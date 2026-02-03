@@ -228,6 +228,7 @@
   "FQCARDENGINE.WarningSpellBookMissingForPlayer": "Player has no spellbook",
   "FQCARDENGINE.WarningOnlyCopyCardFromSpellBookToDeck": "Cards can only be copied from the SpellBook to your Deck.",
   "FQCARDENGINE.WarningReachMaxCardsForDeck": "Unable to add the card, Maximum reached.",
+  "FQCARDENGINE.WarningCombattantsWithNoActor": "Some combatants has no actor linked",
   "FQCARDENGINE.NoOwnedCharacter": "Player has no owned character",
   "FQCARDENGINE.NoUserForActor": "Actor is not used by any player",
   "FQCARDENGINE.NoMainClass": "Character's player has no main FQ main class implemented",

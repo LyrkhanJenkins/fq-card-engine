@@ -3,7 +3,6 @@
   "title": "FQ Card Engine",
   "description": "Module for Final Quest 8 Battle system based on fq-card-engine https://github.com/LyrkhanJenkins/fq-card-engine",
   "version": "1.1.1",
-  "sequencer": "modules/fq-card-engine/sequencer",
   "languages": [
     {
       "lang": "en",
@@ -55,7 +54,7 @@
   "download": "https://gitlab.com/final-quest/fq-card-engine/-/jobs/11431910740/artifacts/raw/fq-card-engine.zip",
   "compatibility": {
     "minimum": "13",
-    "verified": "13.351"
+    "verified": "14.353"
   },
   "relationships": {
     "systems": [
@@ -63,8 +62,8 @@
         "id": "dnd5e",
         "type": "system",
         "compatibility": {
-          "minimum": "5.0.4",
-          "verified": "5.2.4",
+          "minimum": "5.3.0",
+          "verified": "5.3.0",
           "maximum": "5.9.99"
         }
       }
