@@ -2,14 +2,15 @@
   "title": "fq-world-test",
   "id": "fq-world-test",
   "system": "dnd5e",
-  "coreVersion": "13.350",
+  "coreVersion": "14.353",
   "compatibility": {
-    "minimum": "13",
-    "verified": "13.350"
+    "minimum": "14",
+    "verified": "14.353"
   },
-  "systemVersion": "5.1.10",
-  "lastPlayed": "Thu Oct 16 2025 18:40:11 GMT+0200 (heure d’été d’Europe centrale)",
+  "systemVersion": "5.3.0",
+  "lastPlayed": "Tue Feb 03 2026 15:08:30 GMT+0100 (heure normale d’Europe centrale)",
   "playtime": 625,
+  "safeMode": false,
   "description": "",
   "flags": {}
 }
