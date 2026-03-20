@@ -53,8 +53,8 @@
   "manifest": "https://gitlab.com/final-quest/fq-card-engine/-/raw/final-quest-8/module.json",
   "download": "https://gitlab.com/final-quest/fq-card-engine/-/jobs/11431910740/artifacts/raw/fq-card-engine.zip",
   "compatibility": {
-    "minimum": "13",
-    "verified": "14.353"
+    "minimum": "14",
+    "verified": "14.356"
   },
   "relationships": {
     "systems": [
