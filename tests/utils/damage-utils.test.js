@@ -1,5 +1,4 @@
-// DamageUtils.spec.js
-
+import {beforeEach, describe, expect, it, vi} from "vitest";
 import DamageUtils from "../../scripts/utils/damage-utils.js";
 import {DAMAGES_COLOR} from "../../scripts/utils/fq-constants";
 import setGlobal from "../before-each.js";
@@ -8,7 +7,7 @@ describe("DamageUtils", () => {
     let actor;
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         actor = {
             _id: "targetActorId",
             system: {
@@ -43,14 +42,14 @@ describe("DamageUtils", () => {
         const result = await DamageUtils.addCriticalToHeal(actor, 10, 1);
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
-        expect(result[0].value >= 10).toBe(true); // Either 10 or 20, depending on crit
+        expect(result[0].value >= 10).toBe(true);
     });
 
     it("should add bonuses to damage", async () => {
-        const result = await DamageUtils.addCriticalEvasionToDamage(actor, 10, 1, -999); // No eva
+        const result = await DamageUtils.addCriticalEvasionToDamage(actor, 10, 1, -999);
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
-        expect(result[0].value >= 10).toBe(true); // Either 0, 10 or 20, depending on evasion and crit
+        expect(result[0].value >= 10).toBe(true);
     });
 
     it("should roll with success value result", async () => {

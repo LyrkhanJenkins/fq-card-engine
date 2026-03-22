@@ -1,6 +1,17 @@
-const glob = require("glob");
-const fs = require("fs-extra");
-// Fonction pour vérifier les imports dans un fichier
+import {beforeEach, describe, expect, test, vi} from "vitest";
+import fs from "fs";
+import path from "path";
+
+function getJsFilesRecursive(dir) {
+    const entries = fs.readdirSync(dir, {withFileTypes: true});
+    return entries.flatMap(entry => {
+        const fullPath = path.join(dir, entry.name);
+        return entry.isDirectory()
+            ? getJsFilesRecursive(fullPath)
+            : entry.name.endsWith(".js") ? [fullPath] : [];
+    });
+}
+
 function checkImportsInFile(filePath) {
     const content = fs.readFileSync(filePath, "utf-8");
     const importRegex = /import\s+.*\s+from\s+['"](.*)['"]/g;
@@ -9,8 +20,13 @@ function checkImportsInFile(filePath) {
 
     while ((match = importRegex.exec(content)) !== null) {
         const importPath = match[1];
-        if (!importPath.endsWith(".js") && !importPath.endsWith(".mjs") && !importPath.startsWith("http") && !importPath.startsWith("./node_modules")) {
-            console.error(`L'import '${importPath}' dans le fichier '${filePath}' n'a pas l'extension .js`);
+        if (
+            !importPath.endsWith(".js") &&
+            !importPath.endsWith(".mjs") &&
+            !importPath.startsWith("http") &&
+            !importPath.startsWith("./node_modules")
+        ) {
+            console.error(`L'import '${importPath}' dans '${filePath}' n'a pas l'extension .js`);
             hasError = true;
         }
     }
@@ -18,38 +34,21 @@ function checkImportsInFile(filePath) {
     return hasError;
 }
 
-// Fonction pour vérifier tous les fichiers source
-async function checkAllImports(baseDir = "./scripts") {
-    return new Promise((resolve, reject) => {
-        glob(`${baseDir}/**/*.js`, async (err, files) => {
-            if (err) {
-                return reject("Erreur lors de la recherche des fichiers:", err);
-            }
-
-            let overallError = false;
-
-            for (const file of files) {
-                if (await checkImportsInFile(file)) {
-                    overallError = true;
-                }
-            }
-
-            return resolve(overallError);
-        });
-    });
+function checkAllImports(baseDir = "./scripts") {
+    const files = getJsFilesRecursive(baseDir);
+    return files.some(file => checkImportsInFile(file));
 }
 
 describe("Check Imports", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     describe("checkImports", () => {
-        test("should warn if imports without suffix .js", async () => {
-
-            let hasImportErrors = await checkAllImports();
+        test("should warn if imports without suffix .js", () => {
+            const hasImportErrors = checkAllImports();
             console.log(`Has Import Errors: ${hasImportErrors}`);
-            expect(hasImportErrors).toBe(false); // Le test échoue si des erreurs d'importation sont trouvées
+            expect(hasImportErrors).toBe(false);
         });
     });
 });

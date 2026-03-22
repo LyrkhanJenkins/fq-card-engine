@@ -1,42 +1,50 @@
+import {beforeEach, describe, expect, it, vi} from "vitest";
 import FQUtils from "../../scripts/utils/fq-utils.js";
 import FxUtils from "../../scripts/utils/fx-utils.js";
 import setGlobal from "../before-each.js";
 
-
-jest.mock("../../scripts/fq-card-engine-module.js", () => ({
+vi.mock("../../scripts/fq-card-engine-module.js", () => ({
+    default: {},
     socket: {
-        executeAsGM: jest.fn()
+        executeAsGM: vi.fn()
     }
 }));
 
-jest.mock("../../scripts/utils/consumption-utils.js", () => ({
-    consumeResources: jest.fn(),
-    checkIfCanCardCanReachTargets: jest.fn(),
-    createUserWarningMessage: jest.fn(),
-    checkResources: jest.fn()
+vi.mock("../../scripts/utils/consumption-utils.js", () => ({
+    default: {
+        consumeResources: vi.fn(),
+        checkIfCanCardCanReachTargets: vi.fn(),
+        createUserWarningMessage: vi.fn(),
+        checkResources: vi.fn()
+    }
 }));
 
-jest.mock("../../scripts/utils/damage-utils.js", () => ({
-    buildDamageDiceLauncher: jest.fn(async () => ([])),
-    buildHealDiceLauncher: jest.fn(async () => ([])),
-    handleSoundEffect: jest.fn(),
-    displayResult: jest.fn()
+vi.mock("../../scripts/utils/damage-utils.js", () => ({
+    default: {
+        buildDamageDiceLauncher: vi.fn(async () => ([])),
+        buildHealDiceLauncher: vi.fn(async () => ([])),
+        handleSoundEffect: vi.fn(),
+        displayResult: vi.fn()
+    }
 }));
 
-jest.mock("../../scripts/utils/fx-utils.js", () => ({
-    handleSpecialEffect: jest.fn(),
-    importMacroFromCompendium: jest.fn()
+vi.mock("../../scripts/utils/fx-utils.js", () => ({
+    default: {
+        handleSpecialEffect: vi.fn(),
+        importMacroFromCompendium: vi.fn()
+    }
 }));
 
-jest.mock("../../scripts/utils/canvas-utils.js", () => ({
-    locationIsOccupied: jest.fn(),
-    getMinDistanceBetweenTwoToken: jest.fn()
+vi.mock("../../scripts/utils/canvas-utils.js", () => ({
+    default: {
+        locationIsOccupied: vi.fn(),
+        getMinDistanceBetweenTwoToken: vi.fn()
+    }
 }));
-
 describe("FQUtils", () => {
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         setGlobal();
     });
 
@@ -50,8 +58,6 @@ describe("FQUtils", () => {
         const id = FQUtils.generateRandomId(10);
         expect(id).toHaveLength(10);
     });
-
-    // Similar test cases can be added for other static methods
 
     it("should prepare data from card", async () => {
         const cardContent = {minReach: "1", maxReach: "1+1d6", nbTargets: "1d3"};
@@ -92,7 +98,7 @@ describe("FQUtils", () => {
             "actorId": "userCharacterId",
             "x": 5,
             "y": 5
-        }, null); // TODO Mettre les grosse global dans un fichier séparé
+        }, null);
     });
 
     it("appelle numerizeEffectObjValue pour chaque effet et recopie label → name si manquant", async () => {
@@ -128,7 +134,7 @@ describe("FQUtils", () => {
         expect(res.origin).toBe("FQ Effect");
     });
 
-    it("n’évalue pas quand key ∈ [\"system.fq.bonus.damage\",\"system.fq.bonus.heal\"]", async () => {
+    it("n'évalue pas quand key ∈ [\"system.fq.bonus.damage\",\"system.fq.bonus.heal\"]", async () => {
         const input = {
             data: [
                 {
@@ -146,7 +152,6 @@ describe("FQUtils", () => {
         expect(res.changes[0].value).toBe("1+2");
         expect(res.changes[1].value).toBe("2+3");
 
-        // Vérifie qu’aucun Roll n’a été instancié pour ces expressions
         const calls = global.Roll.mock.calls.map((c) => c[0]);
         expect(calls).not.toContain("1+2");
         expect(calls).not.toContain("2+3");

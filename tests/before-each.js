@@ -1,44 +1,54 @@
+import {vi} from "vitest";
+
 export default function setGlobal() {
     global.foundry = {
         audio: {
             AudioHelper: {
-                play: jest.fn()
+                play: vi.fn()
             }
         }
     };
     global.ui = {
         notifications: {
-            error: jest.fn(), warn: jest.fn(),
+            error: vi.fn(), warn: vi.fn(),
         },
     };
     global.Cards = {
-        deleteDocuments: jest.fn()
+        deleteDocuments: vi.fn()
     };
     global.ChatMessage = {
-        create: jest.fn().mockResolvedValue({id: "1234", content: "Mocked message"}),
-        getSpeaker: jest.fn().mockResolvedValue(null),
+        create: vi.fn().mockResolvedValue({id: "1234", content: "Mocked message"}),
+        getSpeaker: vi.fn().mockResolvedValue(null),
     };
-    global.Roll = jest.fn(function (formula) {
+    global.Roll = vi.fn(function (formula) {
         this.formula = formula;
-        this.total = Math.floor(Math.random() * 20) + 1; // Mock a random total
+        this.total = Math.floor(Math.random() * 20) + 1;
         this.evaluate = async () => this;
-        this.toMessage = jest.fn(async () => ({id: "messageId"}));
+        this.toMessage = vi.fn(async () => ({id: "messageId"}));
     });
     global.game = {
-
         canvas: {
             scene: {
                 dimensions: {size: 5},
-                tokens: [{actorId: "userCharacterId", x: 5, y: 5}, {actorId: "otherId", x: 0, y: 5}]
+                tokens: [
+                    {actorId: "userCharacterId", x: 5, y: 5},
+                    {actorId: "otherId", x: 0, y: 5}
+                ]
             }
         },
-        scenes: [{active: true, tokens: [{actorId: "userCharacterId", x: 5, y: 5}, {actorId: "otherId", x: 0, y: 5}]}],
+        scenes: [{
+            active: true,
+            tokens: [
+                {actorId: "userCharacterId", x: 5, y: 5},
+                {actorId: "otherId", x: 0, y: 5}
+            ]
+        }],
         users: {
-            filter: jest.fn((callback) => [{
+            filter: vi.fn((callback) => [{
                 id: "parent-id", character: {id: "parent-id"}
-            }].filter(callback)), // Simulate filter behavior
-            get: jest.fn((id) => ({id, character: {id}})), // Simulate get behavior
-            find: jest.fn((id) => ({id, character: {id}})) // Simulate get behavior
+            }].filter(callback)),
+            get: vi.fn((id) => ({id, character: {id}})),
+            find: vi.fn((id) => ({id, character: {id}}))
         },
         cards: [],
         modules: new Map(),
@@ -47,28 +57,30 @@ export default function setGlobal() {
                 _id: "userCharacterId",
                 id: "userCharacterId",
                 system: {attributes: {}, abilities: {}, fq: {bonus: {range: 0}}}
-            }, targets: new Set([{
+            },
+            targets: new Set([{
                 id: "token1",
                 actor: {id: "actor1", _id: "actor1", system: {fq: {attributes: {evasion: 3}}}},
                 document: {name: "Target1", actorId: "actor1"}
             }])
         },
         actors: {
-            get: jest.fn(() => ({id: "actor1", _id: "actor1", system: {fq: {attributes: {evasion: 3}}}}))
+            get: vi.fn(() => ({id: "actor1", _id: "actor1", system: {fq: {attributes: {evasion: 3}}}}))
         },
         dice3d: {
-            waitFor3DAnimationByMessageID: jest.fn(async () => {
+            waitFor3DAnimationByMessageID: vi.fn(async () => {
             })
         },
         combat: {
-            combatants: [{actorId: "userCharacterId"},   // correspond à game.user.character.id
-            ],
+            combatants: [{actorId: "userCharacterId"}],
         },
         packs: {
-            get: jest.fn(() => ({
-                getDocuments: jest.fn(() => ([{
-                    name: "minionName", system: {
-                        attributes: {hp: {max: 10, value: 10}}, fq: {
+            get: vi.fn(() => ({
+                getDocuments: vi.fn(() => ([{
+                    name: "minionName",
+                    system: {
+                        attributes: {hp: {max: 10, value: 10}},
+                        fq: {
                             attributes: {critical: 1, evasion: 1},
                             action: {max: 1, value: 1},
                             mana: {max: 1, value: 1},
@@ -79,7 +91,8 @@ export default function setGlobal() {
             }))
         },
         i18n: {
-            localize: jest.fn(str => str), format: jest.fn((str, args) => str + JSON.stringify(args))
+            localize: vi.fn(str => str),
+            format: vi.fn((str, args) => str + JSON.stringify(args))
         }
     };
 }
