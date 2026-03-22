@@ -1,7 +1,6 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
 import FQUtils from "../../scripts/utils/fq-utils.js";
 import FxUtils from "../../scripts/utils/fx-utils.js";
-import setGlobal from "../before-each.js";
 
 vi.mock("../../scripts/fq-card-engine-module.js", () => ({
     default: {},
@@ -45,7 +44,6 @@ describe("FQUtils", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
-        setGlobal();
     });
 
     it("should roll a dice and return result", async () => {

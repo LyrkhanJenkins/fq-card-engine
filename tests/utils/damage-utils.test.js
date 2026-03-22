@@ -1,7 +1,6 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
 import DamageUtils from "../../scripts/utils/damage-utils.js";
 import {DAMAGES_COLOR} from "../../scripts/utils/fq-constants";
-import setGlobal from "../before-each.js";
 
 describe("DamageUtils", () => {
     let actor;
@@ -23,7 +22,6 @@ describe("DamageUtils", () => {
                 }
             }
         };
-        setGlobal();
     });
 
     it("should build damage dice launcher with bonus", async () => {

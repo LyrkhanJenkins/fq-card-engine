@@ -1,6 +1,5 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
 import ConsumptionUtils from "../../scripts/utils/consumption-utils.js";
-import setGlobal from "../before-each.js";
 
 describe("ConsumptionUtils", () => {
 
@@ -20,7 +19,6 @@ describe("ConsumptionUtils", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
-        setGlobal();
     });
 
     test("checkResourcesNoActor", () => {

@@ -1,14 +1,12 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
 import CanvasUtils from "../../scripts/utils/canvas-utils.js";
-import setGlobal from "../before-each";
 
 describe("CanvasUtils", () => {
     const token = {actorId: "charId", x: 5, y: 5};
     const squareSize = 5;
 
     beforeEach(() => {
-        vi.clearAllMocks();  // jest. → vi.
-        setGlobal();
+        vi.clearAllMocks();
     });
 
     test("getAllSquaresOccupiedByToken", () => {
