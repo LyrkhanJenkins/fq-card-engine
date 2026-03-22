@@ -1,0 +1,27 @@
+{
+  "name": "Delete all card stacks (GM)",
+  "type": "script",
+  "command": "game.cards.forEach(async cardStack => {\n   await Cards.deleteDocuments([cardStack.id]);\n})",
+  "img": "icons/magic/fire/barrier-wall-explosion-orange.webp",
+  "author": "uUbINdqSmS5ll9IK",
+  "scope": "global",
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.356",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.0",
+    "createdTime": 1774168767598,
+    "modifiedTime": 1774168767598,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "exportSource": null,
+    "compendiumSource": null,
+    "duplicateSource": null
+  },
+  "_id": "LdPhMHRZYRTgMtU8",
+  "sort": 0,
+  "_key": "!macros!LdPhMHRZYRTgMtU8"
+}

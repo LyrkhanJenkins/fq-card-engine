@@ -171,7 +171,7 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "14.353",
         "systemId": "dnd5e",
         "systemVersion": "5.1.4",
         "lastModifiedBy": "dnd5ebuilder0000",
@@ -929,7 +929,7 @@
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },
-    "detectionModes": [],
+    "detectionModes": {},
     "occludable": {
       "radius": 0
     },
@@ -951,13 +951,14 @@
       "src": null,
       "disposition": false
     },
-    "movementAction": null
+    "movementAction": null,
+    "depth": 1
   },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.347",
+    "coreVersion": "14.353",
     "systemId": "dnd5e",
     "systemVersion": "5.1.4",
     "createdTime": 1757065023268,

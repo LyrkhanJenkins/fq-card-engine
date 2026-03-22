@@ -1,5 +1,14 @@
 ## V1.2
 
+### Fix:
+
+- Migration 14: Problématique au niveau de la génération des decks:
+    - Duplication des cartes dans les bibliothèque
+    - Problématique sur blank world ?
+    - Ajout de macros GM de génération de cartes pour les tests
+    - Supprimer la génération jusqu'au niveau 5 monoclassé: comment faire?
+    - Ajout de test
+
 ### Feature:
 
 - Ajout de spécialisation pour les 7 classes jusqu'au niveau 10
@@ -30,9 +39,6 @@
 
 - Moulinette IA des visuels
 - Migration des librairies + script dnd5e pour les compendiums a revérifier
-
-### Fix:
-
 - Gestions des principales Custom eval dans des méthodes
 
 ## Backlog

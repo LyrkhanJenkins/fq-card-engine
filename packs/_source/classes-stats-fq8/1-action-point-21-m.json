@@ -5,23 +5,12 @@
   "effects": [
     {
       "_id": "gLxh9IhVmNUCs9pM",
-      "changes": [
-        {
-          "key": "system.fq.action.max",
-          "mode": 2,
-          "value": "1",
-          "priority": null
-        }
-      ],
       "disabled": false,
       "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
       },
       "origin": "Item.oSfpFdarEM0Sll9K",
       "transfer": true,
@@ -40,7 +29,7 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "14.353",
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "lastModifiedBy": null
@@ -48,10 +37,22 @@
       "name": "+1 point d'action",
       "img": "icons/magic/light/explosion-star-glow-orange.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.fq.action.max",
+            "value": 1,
+            "priority": null,
+            "type": "add"
+          }
+        ]
+      },
       "description": "",
       "statuses": [],
       "sort": 0,
+      "start": null,
+      "showIcon": 1,
+      "folder": null,
       "_key": "!items.effects!mWQXof3FN0r6Nwnx.gLxh9IhVmNUCs9pM"
     }
   ],
@@ -65,7 +66,7 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.347",
+    "coreVersion": "14.353",
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1756552300688,

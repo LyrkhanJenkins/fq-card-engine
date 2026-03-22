@@ -4,10 +4,11 @@ import {constants as FS} from "node:fs";
 import path from "node:path";
 
 const MODULE_DIR = process.cwd();
+const worldName = process.argv[2];
 
 // Monde template (dans le repo) et destination (dans le DataPath)
-const SRC_WORLD_DIR = path.join(MODULE_DIR, "tests", "script", "fq-world-test");
-const TARGET_WORLD_DIR = path.join(MODULE_DIR, "..", "..", "worlds", "fq-world-test");
+const SRC_WORLD_DIR = path.join(MODULE_DIR, "tests", "script", worldName);
+const TARGET_WORLD_DIR = path.join(MODULE_DIR, "..", "..", "worlds", worldName);
 
 // ====== utils ======
 async function exists(p) {
@@ -21,7 +22,7 @@ async function exists(p) {
 
 // ====== Main orchestration ======
 async function main() {
-    console.log("== E2E :: préparation DataPath ==");
+    console.log(`== E2E :: préparation DataPath (monde: ${worldName}) ==`);
 
     // Copie du monde template
     if (!(await exists(SRC_WORLD_DIR))) {
@@ -32,7 +33,7 @@ async function main() {
         await rm(TARGET_WORLD_DIR, {recursive: true, force: true});
     }
     await cp(SRC_WORLD_DIR, TARGET_WORLD_DIR, {recursive: true});
-    console.log("Monde 'fq-world-test' copié dans le repertoire " + TARGET_WORLD_DIR);
+    console.log(`Monde '${worldName}' copié dans ${TARGET_WORLD_DIR}`);
 }
 
 main().catch(async (err) => {

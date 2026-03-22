@@ -5,23 +5,12 @@
   "effects": [
     {
       "_id": "GAovKs5myMuEHA08",
-      "changes": [
-        {
-          "key": "system.attributes.movement.walk",
-          "mode": 2,
-          "value": "5",
-          "priority": 20
-        }
-      ],
       "disabled": false,
       "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
       },
       "origin": "Item.oSfpFdarEM0Sll9K",
       "transfer": true,
@@ -42,7 +31,7 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "14.353",
         "systemId": "dnd5e",
         "systemVersion": "3.3.1",
         "createdTime": null,
@@ -53,10 +42,22 @@
       "name": "+1 déplacement",
       "img": "icons/skills/movement/feet-spurred-boots-brown.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.movement.walk",
+            "value": 5,
+            "priority": 20,
+            "type": "add"
+          }
+        ]
+      },
       "description": "",
       "statuses": [],
       "sort": 0,
+      "start": null,
+      "showIcon": 1,
+      "folder": null,
       "_key": "!items.effects!ZTP8M7MTawuzhvkp.GAovKs5myMuEHA08"
     }
   ],
@@ -69,7 +70,7 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "13.347",
+    "coreVersion": "14.353",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": 1724140557025,

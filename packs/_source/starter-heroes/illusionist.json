@@ -19,7 +19,7 @@
         "compendiumSource": "Compendium.fq-card-engine.classes-fq8.Item.nL5P2PkvrKrQoP89",
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "14.353",
         "systemId": "dnd5e",
         "systemVersion": "5.1.2",
         "createdTime": 1756554924976,
@@ -924,7 +924,7 @@
         "compendiumSource": "Compendium.fq-card-engine.items-fq8.Item.vGazM16ZQhWGZvEa",
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "14.353",
         "systemId": "dnd5e",
         "systemVersion": "5.1.4",
         "createdTime": 1757092924563,
@@ -1114,7 +1114,7 @@
         "compendiumSource": "Compendium.fq-card-engine.items-fq8.Item.nNxWvippBkEZmFAT",
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "14.353",
         "systemId": "dnd5e",
         "systemVersion": "5.1.4",
         "createdTime": 1757092956243,
@@ -1138,7 +1138,7 @@
     }
   },
   "_stats": {
-    "coreVersion": "13.347",
+    "coreVersion": "14.353",
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1709393283251,
@@ -1728,7 +1728,7 @@
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },
-    "detectionModes": [],
+    "detectionModes": {},
     "occludable": {
       "radius": 0
     },
@@ -1750,7 +1750,8 @@
       "src": null,
       "disposition": false
     },
-    "movementAction": null
+    "movementAction": null,
+    "depth": 1
   },
   "_key": "!actors!DXP6pf6gl0rrwHrx"
 }

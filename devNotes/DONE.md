@@ -1,7 +1,13 @@
+v1.2:
+Chore :
+
+- Montée de version 14.356 ... (en cours)
+
 v1.1.1:
 Chore :
+
 - Montée de version 13.350
-Fix :
+  Fix :
 - Les joueurs ne peuvent plus jouer leurs armes hors de leur tour
 - Si xvalue ou yvalue est positionner sur currentDrop, on le vide pour le personnage
 - Ne plus utiliser game.actors.get pour éviter la décorélation, utiliser que les ids de token pour les targets

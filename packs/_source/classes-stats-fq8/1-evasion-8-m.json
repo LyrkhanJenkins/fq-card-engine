@@ -5,23 +5,12 @@
   "effects": [
     {
       "_id": "gLxh9IhVmNUCs9pM",
-      "changes": [
-        {
-          "key": "system.fq.attributes.evasion",
-          "mode": 2,
-          "value": "1",
-          "priority": null
-        }
-      ],
       "disabled": false,
       "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
       },
       "origin": "Item.oSfpFdarEM0Sll9K",
       "transfer": true,
@@ -39,7 +28,7 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "14.353",
         "systemId": "dnd5e",
         "systemVersion": "3.3.1",
         "createdTime": null,
@@ -50,10 +39,22 @@
       "name": "+1 esquive",
       "img": "icons/magic/symbols/rune-sigil-horned-blue.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.fq.attributes.evasion",
+            "value": 1,
+            "priority": null,
+            "type": "add"
+          }
+        ]
+      },
       "description": "",
       "statuses": [],
       "sort": 0,
+      "start": null,
+      "showIcon": 1,
+      "folder": null,
       "_key": "!items.effects!R63FEsMi4wGxeyxu.gLxh9IhVmNUCs9pM"
     }
   ],
@@ -66,7 +67,7 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "13.347",
+    "coreVersion": "14.353",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": 1724074032441,
