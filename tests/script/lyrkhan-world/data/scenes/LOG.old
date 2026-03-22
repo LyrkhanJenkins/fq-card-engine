@@ -1,13 +1,2 @@
-2026/02/03-15:08:30.019 658 Recovering log #32
-2026/02/03-15:08:30.019 658 Level-0 table #34: started
-2026/02/03-15:08:30.039 658 Level-0 table #34: 8591 bytes OK
-2026/02/03-15:08:30.099 658 Delete type=0 #32
-2026/02/03-15:08:30.099 658 Delete type=3 #30
-2026/02/03-15:08:30.099 22c0 Compacting 4@0 + 0@1 files
-2026/02/03-15:08:30.149 22c0 Generated table #36@0: 18 keys, 9173 bytes
-2026/02/03-15:08:30.149 22c0 Compacted 4@0 + 0@1 files => 9173 bytes
-2026/02/03-15:08:30.179 22c0 compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/02/03-15:08:30.189 22c0 Delete type=2 #23
-2026/02/03-15:08:30.189 22c0 Delete type=2 #28
-2026/02/03-15:08:30.189 22c0 Delete type=2 #31
-2026/02/03-15:08:30.189 22c0 Delete type=2 #34
+2026/03/22-11:09:07.807 744 Table #36: 18 entries OK
+2026/03/22-11:09:07.893 744 **** Repaired leveldb F:/Documents/FoundryVTT/Data/worlds/blank-world/data/scenes; recovered 1 files; 9173 bytes. Some data may have been lost. ****

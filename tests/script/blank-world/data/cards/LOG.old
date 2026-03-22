@@ -1,5 +1,4 @@
-2026/02/03-15:08:29.103 369c Recovering log #23
-2026/02/03-15:08:29.109 369c Level-0 table #25: started
-2026/02/03-15:08:29.205 369c Level-0 table #25: 286522 bytes OK
-2026/02/03-15:08:29.254 369c Delete type=0 #23
-2026/02/03-15:08:29.254 369c Delete type=3 #21
+2026/03/22-11:09:06.382 744 Table #15: 449 entries OK
+2026/03/22-11:09:06.384 744 Table #22: 449 entries OK
+2026/03/22-11:09:06.387 744 Table #25: 449 entries OK
+2026/03/22-11:09:06.426 744 **** Repaired leveldb F:/Documents/FoundryVTT/Data/worlds/blank-world/data/cards; recovered 3 files; 859551 bytes. Some data may have been lost. ****

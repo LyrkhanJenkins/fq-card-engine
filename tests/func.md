@@ -12,4 +12,7 @@ Blank World:
 - Affichage des mains
 - Monter d'un niveau monoclassé
 - Monter d'un niveau multiclassé
-- Macro de création/suppression des decks 
+- Macro de création/suppression des decks
+- Ajouter des joueurs dans un combat
+- Jet d'initiative (option coché)
+- Carte de la main pioché

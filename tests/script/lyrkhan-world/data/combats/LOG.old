@@ -1,3 +1,1 @@
-2026/02/03-15:08:29.390 369c Recovering log #18
-2026/02/03-15:08:29.484 369c Delete type=0 #18
-2026/02/03-15:08:29.484 369c Delete type=3 #17
+2026/03/22-11:09:06.691 3438 **** Repaired leveldb F:/Documents/FoundryVTT/Data/worlds/blank-world/data/combats; recovered 0 files; 0 bytes. Some data may have been lost. ****

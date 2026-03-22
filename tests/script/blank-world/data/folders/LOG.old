@@ -1,3 +1,2 @@
-2026/02/03-15:08:29.589 880 Recovering log #30
-2026/02/03-15:08:29.639 880 Delete type=0 #30
-2026/02/03-15:08:29.639 880 Delete type=3 #29
+2026/03/22-11:09:06.864 3438 Table #23: 9 entries OK
+2026/03/22-11:09:06.917 3438 **** Repaired leveldb F:/Documents/FoundryVTT/Data/worlds/blank-world/data/folders; recovered 1 files; 1025 bytes. Some data may have been lost. ****

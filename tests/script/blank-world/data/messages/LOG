@@ -1,3 +1,12 @@
-2026/03/20-09:33:22.463 32a0 Recovering log #36
-2026/03/20-09:33:22.605 32a0 Delete type=0 #36
-2026/03/20-09:33:22.605 32a0 Delete type=3 #34
+2026/03/22-11:09:06.625 6ec Delete type=3 #1
+2026/03/22-11:11:07.926 24ac Level-0 table #41: started
+2026/03/22-11:11:08.008 24ac Level-0 table #41: 6458 bytes OK
+2026/03/22-11:11:08.049 24ac Delete type=0 #39
+2026/03/22-11:11:08.108 24ac Manual compaction at level-0 from '!messages!1CkrZBpfQKoM9qUM' @ 72057594037927935 : 1 .. '!messages!zeHLN7nwa9wUDHbf' @ 0 : 0; will stop at '!messages!zbn3cMyec8ajpv8w' @ 64 : 1
+2026/03/22-11:11:08.108 24ac Compacting 2@0 + 0@1 files
+2026/03/22-11:11:08.154 24ac Generated table #42@0: 44 keys, 15137 bytes
+2026/03/22-11:11:08.154 24ac Compacted 2@0 + 0@1 files => 15137 bytes
+2026/03/22-11:11:08.191 24ac compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/03/22-11:11:08.191 24ac Delete type=2 #37
+2026/03/22-11:11:08.192 24ac Delete type=2 #41
+2026/03/22-11:11:08.242 24ac Manual compaction at level-0 from '!messages!zbn3cMyec8ajpv8w' @ 64 : 1 .. '!messages!zeHLN7nwa9wUDHbf' @ 0 : 0; will stop at (end)
