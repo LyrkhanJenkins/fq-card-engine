@@ -2,7 +2,7 @@
   "id": "fq-card-engine",
   "title": "FQ Card Engine",
   "description": "Module for Final Quest 8 Battle system based on fq-card-engine https://github.com/LyrkhanJenkins/fq-card-engine",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "languages": [
     {
       "lang": "en",
@@ -54,7 +54,7 @@
   "download": "https://gitlab.com/final-quest/fq-card-engine/-/jobs/11431910740/artifacts/raw/fq-card-engine.zip",
   "compatibility": {
     "minimum": "14",
-    "verified": "14.356"
+    "verified": "14.357"
   },
   "relationships": {
     "systems": [
@@ -72,12 +72,20 @@
       {
         "id": "socketlib",
         "type": "module",
-        "compatibility": {}
+        "compatibility": {
+          "minimum": "1.1.3",
+          "verified": "1.1.3",
+          "maximum": "1.9.99"
+        }
       },
       {
         "id": "lib-wrapper",
         "type": "module",
-        "compatibility": {}
+        "compatibility": {
+          "minimum": "1.13.4.0",
+          "verified": "1.13.4.0",
+          "maximum": "1.9.99"
+        }
       }
     ],
     "recommends": [
@@ -85,25 +93,41 @@
         "id": "orcnog-card-viewer",
         "type": "module",
         "reason": "The Card module viewer enhanced quality of drawing cards",
-        "compatibility": {}
+        "compatibility": {
+          "minimum": "0.4.1",
+          "verified": "0.4.1",
+          "maximum": "0.9.99"
+        }
       },
       {
         "id": "sequencer",
         "type": "module",
         "reason": "The Sequencer module provides beautiful visuals effects implemented with FQ cards",
-        "compatibility": {}
+        "compatibility": {
+          "minimum": "3.1.4",
+          "verified": "3.1.4",
+          "maximum": "3.9.99"
+        }
       },
       {
         "id": "JB2A_DnD5e",
         "type": "module",
         "reason": "The JB2A module is used with Sequencer",
-        "compatibility": {}
+        "compatibility": {
+          "minimum": "0.8.8",
+          "verified": "0.8.8",
+          "maximum": "0.9.99"
+        }
       },
       {
         "id": "dae",
         "type": "module",
         "reason": "The DAE module is used with to make actor's effect with visual FX",
-        "compatibility": {}
+        "compatibility": {
+          "minimum": "13.0.25",
+          "verified": "13.0.25",
+          "maximum": "14.9.99"
+        }
       }
     ]
   },
