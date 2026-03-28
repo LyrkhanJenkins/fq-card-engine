@@ -1,12 +1,18 @@
-2026/03/22-11:09:08.101 6ec Delete type=3 #1
-2026/03/22-11:11:08.568 24ac Level-0 table #42: started
-2026/03/22-11:11:08.608 24ac Level-0 table #42: 1310 bytes OK
-2026/03/22-11:11:08.642 24ac Delete type=0 #40
-2026/03/22-11:11:08.801 24ac Manual compaction at level-0 from '!settings!1LKwFxCoCoPxEhSo' @ 72057594037927935 : 1 .. '!settings!z1nGphXVMGTGbqUW' @ 0 : 0; will stop at '!settings!w6GwiXELMGVsJqL3' @ 84 : 1
-2026/03/22-11:11:08.801 24ac Compacting 2@0 + 0@1 files
-2026/03/22-11:11:08.834 24ac Generated table #43@0: 62 keys, 7988 bytes
-2026/03/22-11:11:08.834 24ac Compacted 2@0 + 0@1 files => 7988 bytes
-2026/03/22-11:11:08.867 24ac compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/03/22-11:11:08.868 24ac Delete type=2 #38
-2026/03/22-11:11:08.868 24ac Delete type=2 #42
-2026/03/22-11:11:09.051 24ac Manual compaction at level-0 from '!settings!w6GwiXELMGVsJqL3' @ 84 : 1 .. '!settings!z1nGphXVMGTGbqUW' @ 0 : 0; will stop at (end)
+2026/03/28-07:39:57.497 268c Recovering log #53
+2026/03/28-07:39:57.497 268c Level-0 table #55: started
+2026/03/28-07:39:57.557 268c Level-0 table #55: 1090 bytes OK
+2026/03/28-07:39:57.714 268c Delete type=0 #53
+2026/03/28-07:39:57.714 268c Delete type=3 #51
+2026/03/28-07:41:09.326 5cc Level-0 table #58: started
+2026/03/28-07:41:09.353 5cc Level-0 table #58: 1568 bytes OK
+2026/03/28-07:41:09.402 5cc Delete type=0 #56
+2026/03/28-07:41:09.544 5cc Manual compaction at level-0 from '!settings!1LKwFxCoCoPxEhSo' @ 72057594037927935 : 1 .. '!settings!z1nGphXVMGTGbqUW' @ 0 : 0; will stop at '!settings!w6GwiXELMGVsJqL3' @ 90 : 1
+2026/03/28-07:41:09.544 5cc Compacting 3@0 + 1@1 files
+2026/03/28-07:41:09.595 5cc Generated table #59@0: 62 keys, 8270 bytes
+2026/03/28-07:41:09.601 5cc Compacted 3@0 + 1@1 files => 8270 bytes
+2026/03/28-07:41:09.650 5cc compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/03/28-07:41:09.650 5cc Delete type=2 #48
+2026/03/28-07:41:09.651 5cc Delete type=2 #52
+2026/03/28-07:41:09.651 5cc Delete type=2 #55
+2026/03/28-07:41:09.651 5cc Delete type=2 #58
+2026/03/28-07:41:09.651 5cc Manual compaction at level-0 from '!settings!w6GwiXELMGVsJqL3' @ 90 : 1 .. '!settings!z1nGphXVMGTGbqUW' @ 0 : 0; will stop at (end)

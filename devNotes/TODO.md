@@ -1,5 +1,10 @@
 ## V1.2
 
+Après nouvelle interface :
+
+- Revoir css, homogeneiser fonts...
+- changer les noms des templates et supprimer l'inutile
+
 ### Fix:
 
 - Migration 14: Problématique au niveau de la génération des decks:

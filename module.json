@@ -54,7 +54,7 @@
   "download": "https://gitlab.com/final-quest/fq-card-engine/-/jobs/11431910740/artifacts/raw/fq-card-engine.zip",
   "compatibility": {
     "minimum": "14",
-    "verified": "14.357"
+    "verified": "14.358"
   },
   "relationships": {
     "systems": [
@@ -73,18 +73,12 @@
         "id": "socketlib",
         "type": "module",
         "compatibility": {
-          "minimum": "1.1.3",
-          "verified": "1.1.3",
-          "maximum": "1.9.99"
         }
       },
       {
         "id": "lib-wrapper",
         "type": "module",
         "compatibility": {
-          "minimum": "1.13.4.0",
-          "verified": "1.13.4.0",
-          "maximum": "1.9.99"
         }
       }
     ],
@@ -94,9 +88,6 @@
         "type": "module",
         "reason": "The Card module viewer enhanced quality of drawing cards",
         "compatibility": {
-          "minimum": "0.4.1",
-          "verified": "0.4.1",
-          "maximum": "0.9.99"
         }
       },
       {
@@ -104,9 +95,6 @@
         "type": "module",
         "reason": "The Sequencer module provides beautiful visuals effects implemented with FQ cards",
         "compatibility": {
-          "minimum": "3.1.4",
-          "verified": "3.1.4",
-          "maximum": "3.9.99"
         }
       },
       {
@@ -114,9 +102,6 @@
         "type": "module",
         "reason": "The JB2A module is used with Sequencer",
         "compatibility": {
-          "minimum": "0.8.8",
-          "verified": "0.8.8",
-          "maximum": "0.9.99"
         }
       },
       {
@@ -124,9 +109,6 @@
         "type": "module",
         "reason": "The DAE module is used with to make actor's effect with visual FX",
         "compatibility": {
-          "minimum": "13.0.25",
-          "verified": "13.0.25",
-          "maximum": "14.9.99"
         }
       }
     ]

@@ -2,14 +2,14 @@
   "title": "lyrkhan-world",
   "id": "lyrkhan-world",
   "system": "dnd5e",
-  "coreVersion": "14.356",
+  "coreVersion": "14.358",
   "compatibility": {
     "minimum": "14",
-    "verified": "14.356"
+    "verified": "14.358"
   },
   "systemVersion": "5.3.0",
-  "lastPlayed": "Sun Mar 22 2026 11:11:06 GMT+0100 (heure normale d’Europe centrale)",
-  "playtime": 733,
+  "lastPlayed": "Sat Mar 28 2026 07:41:07 GMT+0100 (heure normale d’Europe centrale)",
+  "playtime": 795,
   "safeMode": false,
   "description": "",
   "flags": {}

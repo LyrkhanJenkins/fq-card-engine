@@ -1,2 +1,3 @@
-2026/03/22-11:09:07.340 744 Table #23: 7 entries OK
-2026/03/22-11:09:07.409 744 **** Repaired leveldb F:/Documents/FoundryVTT/Data/worlds/blank-world/data/macros; recovered 1 files; 2159 bytes. Some data may have been lost. ****
+2026/03/28-07:37:52.947 3b60 Recovering log #34
+2026/03/28-07:37:53.103 3b60 Delete type=0 #34
+2026/03/28-07:37:53.104 3b60 Delete type=3 #33

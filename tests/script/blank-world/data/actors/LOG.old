@@ -1,2 +1,7 @@
-2026/03/22-11:09:06.237 6ec Table #37: 36 entries OK
-2026/03/22-11:09:06.309 6ec **** Repaired leveldb F:/Documents/FoundryVTT/Data/worlds/blank-world/data/actors; recovered 1 files; 85613 bytes. Some data may have been lost. ****
+2026/03/28-07:34:06.673 3938 Recovering log #40
+2026/03/28-07:34:06.806 3938 Delete type=0 #40
+2026/03/28-07:34:06.807 3938 Delete type=3 #38
+2026/03/28-07:34:28.071 34ec Level-0 table #46: started
+2026/03/28-07:34:28.071 34ec Level-0 table #46: 0 bytes OK
+2026/03/28-07:34:28.135 34ec Delete type=0 #44
+2026/03/28-07:34:28.136 34ec Manual compaction at level-0 from '!actors!6BBSIxKYAGaFYk2Z' @ 72057594037927935 : 1 .. '!actors.items!s4YAfKgfQ4svWAe3.zXlhSCOaWHqUDFPL' @ 0 : 0; will stop at (end)

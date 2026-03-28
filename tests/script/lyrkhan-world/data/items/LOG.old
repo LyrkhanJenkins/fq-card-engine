@@ -1,1 +1,3 @@
-2026/03/22-11:09:07.117 2f64 **** Repaired leveldb F:/Documents/FoundryVTT/Data/worlds/blank-world/data/items; recovered 0 files; 0 bytes. Some data may have been lost. ****
+2026/03/28-07:37:52.583 ab8 Recovering log #10
+2026/03/28-07:37:52.736 ab8 Delete type=0 #10
+2026/03/28-07:37:52.736 ab8 Delete type=3 #9

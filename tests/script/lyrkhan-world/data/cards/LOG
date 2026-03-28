@@ -1,12 +1,7 @@
-2026/03/22-11:09:06.484 744 Delete type=3 #1
-2026/03/22-11:11:09.160 24ac Level-0 table #29: started
-2026/03/22-11:11:09.227 24ac Level-0 table #29: 11356 bytes OK
-2026/03/22-11:11:09.266 24ac Delete type=0 #27
-2026/03/22-11:11:09.267 24ac Compacting 4@0 + 0@1 files
-2026/03/22-11:11:09.270 24ac Compacted 4@0 + 0@1 files => 0 bytes
-2026/03/22-11:11:09.308 24ac compacted to: files[ 0 0 0 0 0 0 0 ]
-2026/03/22-11:11:09.308 24ac Delete type=2 #15
-2026/03/22-11:11:09.308 24ac Delete type=2 #22
-2026/03/22-11:11:09.308 24ac Delete type=2 #25
-2026/03/22-11:11:09.309 24ac Delete type=2 #29
-2026/03/22-11:11:09.309 24ac Manual compaction at level-0 from 'undefined' @ 72057594037927935 : 1 .. 'undefined' @ 0 : 0; will stop at (end)
+2026/03/28-07:39:55.588 268c Recovering log #37
+2026/03/28-07:39:55.835 268c Delete type=0 #37
+2026/03/28-07:39:55.835 268c Delete type=3 #36
+2026/03/28-07:41:08.770 5cc Level-0 table #41: started
+2026/03/28-07:41:08.770 5cc Level-0 table #41: 0 bytes OK
+2026/03/28-07:41:08.801 5cc Delete type=0 #39
+2026/03/28-07:41:08.826 5cc Manual compaction at level-0 from 'undefined' @ 72057594037927935 : 1 .. 'undefined' @ 0 : 0; will stop at (end)

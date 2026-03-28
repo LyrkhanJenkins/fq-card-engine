@@ -564,11 +564,7 @@
 .fq-card-face {
     position: absolute;
     inset: 0;
-    border-radius: 5px;
-    border: 1px solid rgba(201, 168, 76, 0.2);
     background-size: cover;
-    background-position: center;
-    background-color: #0e0a04;
     overflow: hidden;
     transition: border-color 0.2s;
 }
@@ -678,7 +674,6 @@
 
 .fq-card-is-base {
     filter: saturate(50%) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.85));
-    margin-left: 0 !important;
 }
 
 @keyframes fq-played-pulse {
@@ -885,3 +880,407 @@ div.separator {
     width: 160px;
     max-width: 160px;
 }
+
+/* ============================================================
+   DIALOG JOUER UNE CARTE — overlay plein écran
+   ============================================================ */
+
+/* Cache tout le chrome Foundry */
+.app.dialog:has(.fq-play-dialog) {
+    display: contents !important;
+}
+
+.app.dialog:has(.fq-play-dialog) .window-header,
+.app.dialog:has(.fq-play-dialog) .window-resizable-handle {
+    display: none !important;
+}
+
+.app.dialog:has(.fq-play-dialog) .window-content {
+    all: unset !important;
+}
+
+/* Layout overlay : carte au centre, boutons sur les côtés */
+.fq-play-dialog {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 1fr auto;
+    align-items: center;
+    justify-items: center;
+    box-shadow: inset 0 0 100vh 100vh rgb(0 0 0 / 88%);
+    transition: box-shadow 500ms;
+    pointer-events: all;
+    padding: 40px;
+    gap: 24px;
+}
+
+.fq-play-card-stage {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    padding: 0;
+    position: relative;
+}
+
+.fq-play-card-stage::before {
+    display: none;
+}
+
+/* Carte — relief 3D sans bordure dorée */
+.fq-play-card-img {
+    display: block;
+    max-height: 60vh;
+    width: auto;
+    border: transparent;
+    border-radius: 3%;
+    transform: perspective(800px) rotateY(6deg) rotateX(4deg);
+    animation: floatCard 12s linear infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: rgba(201, 168, 76, 0.6);
+    box-shadow: 0 0 30px 10px rgba(201, 168, 76, 0.6);
+    color: rgb(255 255 255 / 53%);
+    will-change: transform, box-shadow;
+}
+
+@keyframes floatCard {
+    0% {
+        transform: perspective(900px) rotateY(8deg) rotateX(8deg);
+        box-shadow: 0 0 30px 10px rgba(201, 168, 76, 0.6);
+    }
+
+    10% {
+        transform: perspective(900px) rotateY(5deg) rotateX(6deg);
+        box-shadow: 0 0 30px 11px rgba(201, 168, 76, 0.62);
+    }
+
+    20% {
+        transform: perspective(900px) rotateY(3deg) rotateX(4deg);
+        box-shadow: 0 0 28px 12px rgba(201, 168, 76, 0.65);
+    }
+
+    30% {
+        transform: perspective(900px) rotateY(0deg) rotateX(2deg);
+        box-shadow: 0 0 26px 13px rgba(201, 168, 76, 0.7);
+    }
+
+    40% {
+        transform: perspective(900px) rotateY(-3deg) rotateX(0deg);
+        box-shadow: 0 0 24px 14px rgba(201, 168, 76, 0.75);
+    }
+
+    50% {
+        transform: perspective(900px) rotateY(-6deg) rotateX(-2deg);
+        box-shadow: 0 0 22px 15px rgba(201, 168, 76, 0.8);
+    }
+
+    60% {
+        transform: perspective(900px) rotateY(-5deg) rotateX(0deg);
+        box-shadow: 0 0 24px 14px rgba(201, 168, 76, 0.75);
+    }
+
+    70% {
+        transform: perspective(900px) rotateY(-4deg) rotateX(2deg);
+        box-shadow: 0 0 26px 13px rgba(201, 168, 76, 0.7);
+    }
+
+    80% {
+        transform: perspective(900px) rotateY(2deg) rotateX(4deg);
+        box-shadow: 0 0 28px 12px rgba(201, 168, 76, 0.65);
+    }
+
+    90% {
+        transform: perspective(900px) rotateY(4deg) rotateX(6deg);
+        box-shadow: 0 0 30px 11px rgba(201, 168, 76, 0.62);
+    }
+
+    100% {
+        transform: perspective(900px) rotateY(8deg) rotateX(8deg);
+        box-shadow: 0 0 30px 10px rgba(201, 168, 76, 0.6);
+    }
+}
+
+.fq-play-card-wrap:hover .fq-play-card-img {
+    transform: perspective(800px) rotateY(0deg) rotateX(0deg);
+}
+
+.fq-play-card-wrap.is-exhausted .fq-play-card-img {
+    filter: saturate(0) brightness(0.6);
+}
+
+.fq-play-card-wrap.is-played .fq-play-card-img {
+    filter: saturate(0.35) brightness(0.85);
+}
+
+.fq-play-card-name {
+    margin-top: 14px;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: rgba(201, 168, 76, 0.6);
+    text-transform: uppercase;
+    font-style: italic;
+}
+
+/* Options flottantes sous la carte */
+.fq-play-options {
+    grid-column: 2;
+    grid-row: 2;
+    background: none;
+    border: none;
+}
+
+.fq-play-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    align-items: center;
+}
+
+/* Champs (select, input) restylés pour flotter sur le fond sombre */
+.fq-play-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 220px;
+}
+
+.fq-play-field--row {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.fq-play-label {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    color: rgba(201, 168, 76, 0.45);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.fq-play-select {
+    background: rgba(0, 0, 0, 0.7);
+    border: 0.5px solid rgba(90, 66, 32, 0.7);
+    border-radius: 4px;
+    color: #e8d090;
+    font-family: Georgia, serif;
+    font-size: 24px;
+    height: 54px;
+    padding: 5px 10px;
+    width: 100%;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+.fq-play-select option {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.fq-play-input {
+    background: rgba(0, 0, 0, 0.7);
+    border: 0.5px solid rgba(90, 66, 32, 0.7);
+    border-radius: 4px;
+    color: #e8d090;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    padding: 5px 8px;
+    width: 60px;
+    text-align: center;
+}
+
+/* Remplace tout le bloc dialog-buttons */
+.app.dialog:has(.fq-play-dialog) .dialog-buttons {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 50%;
+    justify-content: space-between;
+    padding: 0 60px;
+    background: none;
+    border: none;
+    pointer-events: none;
+    z-index: 10000;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button {
+    pointer-events: all;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(90, 66, 32, 0.8);
+    border-radius: 6px;
+    color: #e8d090;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    padding: 12px 32px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+    position: static;
+    transform: none;
+    top: auto;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button:hover {
+    background: rgba(201, 168, 76, 0.15);
+    border-color: rgba(201, 168, 76, 0.7);
+    color: #fff;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button[data-button="ok"] {
+    border-color: rgba(201, 168, 76, 0.6);
+    background: rgba(201, 168, 76, 0.12);
+    margin-left: auto;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button[data-button="ok"]:hover {
+    background: rgba(201, 168, 76, 0.25);
+    border-color: rgba(201, 168, 76, 0.9);
+    color: #fff;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button[data-button="discard"] {
+    border-color: rgba(140, 40, 40, 0.6);
+    color: #c07070;
+    margin-right: auto;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button[data-button="discard"]:hover {
+    background: rgba(140, 40, 40, 0.2);
+    border-color: rgba(200, 60, 60, 0.7);
+    color: #e09090;
+}
+
+/* Statuts */
+.fq-play-status {
+    font-family: Georgia, serif;
+    font-size: 11px;
+    font-style: italic;
+    text-align: center;
+    padding: 5px 14px;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+}
+
+.fq-play-status--warn {
+    background: rgba(80, 20, 20, 0.5);
+    border: 0.5px solid rgba(200, 60, 60, 0.4);
+    color: #e09090;
+}
+
+.fq-play-status--ok {
+    background: rgba(20, 60, 20, 0.5);
+    border: 0.5px solid rgba(60, 160, 60, 0.4);
+    color: #90c090;
+}
+
+/* Badges */
+.fq-play-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+}
+
+.fq-play-badge--base {
+    background: rgba(122, 94, 34, 0.9);
+    color: #f0d898;
+    border: 0.5px solid rgba(201, 168, 76, 0.4);
+}
+
+.fq-play-badge--exhausted {
+    background: rgba(80, 20, 20, 0.9);
+    color: #e09090;
+    border: 0.5px solid rgba(200, 60, 60, 0.4);
+}
+
+.fq-play-badge--played {
+    background: rgba(20, 60, 20, 0.9);
+    color: #90c090;
+    border: 0.5px solid rgba(60, 160, 60, 0.4);
+}
+
+/* Minions, facedown, drop count — inchangés */
+.fq-play-minions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.fq-play-minion-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fq-play-minion-center {
+    color: rgba(201, 168, 76, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+.fq-play-minion-cb, .fq-play-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: #c9a84c;
+    cursor: pointer;
+}
+
+.fq-play-field--facedown {
+    padding-top: 4px;
+    border-top: 0.5px solid rgba(90, 66, 32, 0.25);
+}
+
+.fq-play-drop-count {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-style: italic;
+    color: rgba(201, 168, 76, 0.3);
+    text-align: center;
+    margin-top: 4px;
+}
+
+.fq-play-drop-count strong {
+    color: rgba(201, 168, 76, 0.55);
+}
+
+.fq-play-close {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.6);
+    border: 0.5px solid rgba(90, 66, 32, 0.6);
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(201, 168, 76, 0.5);
+    backdrop-filter: blur(8px);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.fq-play-close:hover {
+    background: rgba(180, 30, 30, 0.3);
+    border-color: rgba(200, 60, 60, 0.6);
+    color: #e09090;
+}
+
