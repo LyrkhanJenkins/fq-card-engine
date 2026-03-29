@@ -15,8 +15,7 @@
     --fq-gold-glow: rgba(201, 168, 76, 0.45);
     --fq-border: rgba(90, 66, 32, 0.75);
     --fq-border-subtle: rgba(90, 66, 32, 0.4);
-    --fq-bg-panel: rgba(10, 8, 5, 0.92);
-    --fq-bg-sidebar: rgba(6, 4, 2, 0.7);
+    --fq-bg-sidebar: rgba(0, 0, 0, 0.85);
 
     /* Taille fluide pilotée par le slider */
     --fq-scale: 1.0;
@@ -212,16 +211,13 @@
     width: 100%;
 }
 
-/* Dans votre CSS existant, remplacez/ajoutez */
 #fq-card-engine-container:not(.fq-card-engine-draggable) {
     position: fixed;
     left: 1vw;
     right: var(--sidebar-full-width, 300px);
     bottom: 74px;
-    z-index: 60;
-    /* Supprime les règles de flux héritées */
     align-items: flex-start;
-    pointer-events: none; /* déjà géré par les enfants */
+    pointer-events: none;
 }
 
 #fq-card-engine-container.fq-card-engine-draggable .fq-top-bar {
@@ -287,7 +283,7 @@
     pointer-events: all;
     position: relative;
     color: var(--fq-gold-light);
-    width: calc(98vw - var(--sidebar-full-width, 300px));
+    width: 100vw;
     max-height: none !important;
     margin: 0 !important;
 }
@@ -298,12 +294,12 @@
     align-items: center;
     gap: 6px;
     padding: 2px 8px;
-    background: rgba(0, 0, 0, 0.65);
-    border: 1px solid var(--fq-border);
+    background: var(--fq-bg-sidebar);
+    border: 2px solid var(--fq-player-color);
     border-bottom: none;
     border-radius: 6px 6px 0 0;
     height: 20px;
-    width: 100%;
+    width: fit-content;
 }
 
 #fq-card-engine-container.show-names .fq-hand-toolbar {
@@ -312,10 +308,11 @@
 
 /* Nom de la main */
 .fq-hand-name {
-    font-size: 9px;
+    font-size: 11px;
     font-family: 'Palatino Linotype', Georgia, serif;
     letter-spacing: 0.14em;
     text-transform: uppercase;
+    font-weight: 700;
     color: var(--fq-gold-dark);
     white-space: nowrap;
     overflow: hidden;
@@ -354,12 +351,7 @@
 .fq-card-engine-hand-inner {
     display: flex;
     align-items: stretch;
-    background: var(--fq-bg-panel);
-    border: 1px solid var(--fq-border);
-    border-radius: 0 0 8px 8px;
     overflow: visible;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(201, 168, 76, 0.07);
     position: relative;
     /* Hauteur fixe — identique avec ou sans cartes */
     height: var(--fq-panel-h);
@@ -379,11 +371,15 @@
     flex-direction: column;
     background: var(--fq-bg-sidebar) !important;
     background-image: none !important;
+    border: 2px solid var(--fq-player-color);
+    border-right: none;
+    border-top: none;
     width: 28px;
     flex-shrink: 0;
     align-items: center;
     justify-content: space-evenly;
     padding: 6px 0;
+    overflow-y: hidden;
 }
 
 .fq-hand-sidebar--left,
@@ -392,18 +388,11 @@
     border-radius: 0 0 0 7px;
 }
 
-.fq-hand-sidebar--right,
-.fq-card-engine-actions {
-    border-left: 1px solid var(--fq-border-subtle);
-    border-radius: 0 7px 7px 0;
-}
-
 /* Boutons sidebar */
 .fq-side-btn,
 .fq-card-engine-settings-hand,
 .fq-card-engine-settings-choose,
 .fq-card-engine-draw,
-.fq-card-engine-pass,
 .fq-card-engine-reset {
     background: none !important;
     background-image: none !important;
@@ -426,8 +415,7 @@
 .fq-side-btn:hover,
 .fq-card-engine-settings-hand:hover,
 .fq-card-engine-settings-choose:hover,
-.fq-card-engine-draw:hover,
-.fq-card-engine-pass:hover {
+.fq-card-engine-draw:hover {
     opacity: 1;
     background: rgba(201, 168, 76, 0.12) !important;
     border-color: var(--fq-gold-dark);
@@ -438,7 +426,6 @@
 .fq-card-engine-settings-hand::before,
 .fq-card-engine-settings-choose::before,
 .fq-card-engine-draw::before,
-.fq-card-engine-pass::before,
 .fq-card-engine-reset::before {
     display: none !important;
     content: none !important;
@@ -704,13 +691,6 @@
     filter: saturate(0) brightness(0.6);
 }
 
-/* ── Couleur joueur GM ── */
-.fq-card-engine-hand-inner[style*="--fq-player-color"] {
-    box-shadow: 0 0 0 1px var(--fq-player-color),
-    0 2px 20px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 rgba(201, 168, 76, 0.07) !important;
-}
-
 /* ============================================================
    MESSAGES CHAT
    ============================================================ */
@@ -737,7 +717,7 @@
     background-repeat: no-repeat;
     cursor: pointer;
     border-radius: 4px;
-    filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.5));F
+    filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.5));
     transition: transform 0.2s;
 }
 
