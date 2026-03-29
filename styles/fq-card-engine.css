@@ -106,24 +106,8 @@
     filter: none !important;
 }
 
-/* Groupe caché — visible au hover */
-.fq-toolbar-actions,
-.fq-card-engine-hidden-buttons {
-    display: none;
-    align-items: center;
-    gap: 4px;
-}
-
-.fq-toolbar:hover .fq-toolbar-actions,
-.fq-toolbar:hover .fq-card-engine-hidden-buttons,
-.fq-card-engine-buttons-container:hover .fq-card-engine-hidden-buttons,
-.fq-card-engine-buttons-container.expanded .fq-card-engine-hidden-buttons {
-    display: flex;
-}
-
 /* Boutons toolbar */
-.fq-toolbar-btn,
-.fq-card-engine-hidden-buttons * {
+.fq-toolbar-btn {
     background: none !important;
     border: 0.5px solid var(--fq-border-subtle);
     border-radius: 4px;
@@ -144,8 +128,7 @@
     text-shadow: none;
 }
 
-.fq-toolbar-btn:hover,
-.fq-card-engine-hidden-buttons *:hover {
+.fq-toolbar-btn:hover *:hover {
     opacity: 1;
     background: rgba(201, 168, 76, 0.12) !important;
     border-color: var(--fq-gold-dark);
@@ -431,18 +414,6 @@
     content: none !important;
 }
 
-/* Annule les hauteurs fixes héritées */
-.fq-card-engine-settings-small,
-.fq-card-engine-settings-medium,
-.fq-card-engine-settings-large,
-.fq-card-engine-settings-max,
-.fq-card-engine-button-small,
-.fq-card-engine-button-medium,
-.fq-card-engine-button-large,
-.fq-card-engine-button-max {
-    height: 22px !important;
-    width: 22px !important;
-}
 
 .fq-side-empty,
 .fq-card-engine-no-action {
@@ -512,13 +483,9 @@
     position: relative;
     filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.85));
     z-index: 10;
-
-    /* Overlap entre cartes */
     margin-left: calc(-1 * var(--fq-card-w) * var(--fq-scale) * 0.24);
 
     transform-origin: bottom center;
-    transition: transform 0.25s cubic-bezier(0.22, 0.68, 0, 1.25),
-    filter 0.2s ease;
     will-change: transform;
 
     /* Annule les anciens background directs sur la carte */
@@ -532,23 +499,32 @@
     margin-left: 0 !important;
 }
 
-/* Hover : scale sans déformation */
-.fq-card:hover,
-.fq-card-engine-card:hover {
+/* Le visuel se déplace sans affecter le hit-test */
+.fq-card-inner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.85));
+    transition: transform 0.25s cubic-bezier(0.22, 0.68, 0, 1.25),
+    filter 0.2s ease;
+    transform-origin: bottom center;
+    will-change: transform;
+}
+
+.fq-card:hover .fq-card-inner,
+.fq-card-engine-card:hover .fq-card-inner {
     transform: rotate(0deg) translateY(-28px) scale(1.25) !important;
-    z-index: 100 !important;
+    z-index: 100;
     filter: drop-shadow(0 0 8px rgba(201, 168, 76, 0.5)) drop-shadow(0 6px 16px rgba(0, 0, 0, 0.95)) !important;
 }
 
-/* Annule les anciens sizes */
-.fq-card-engine-card-small,
-.fq-card-engine-card-medium,
-.fq-card-engine-card-large,
-.fq-card-engine-card-max {
-    width: calc(var(--fq-card-w) * var(--fq-scale)) !important;
-    height: calc(var(--fq-card-h) * var(--fq-scale)) !important;
-    background-size: 0 !important;
+/* Le tooltip suit l'inner */
+.fq-card-inner .fq-card-tooltip {
+    bottom: calc(100% + 8px);
 }
+
 
 /* ── Face ── */
 .fq-card-face {
