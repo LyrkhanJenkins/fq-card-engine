@@ -212,6 +212,18 @@
     width: 100%;
 }
 
+/* Dans votre CSS existant, remplacez/ajoutez */
+#fq-card-engine-container:not(.fq-card-engine-draggable) {
+    position: fixed;
+    left: 1vw;
+    right: var(--sidebar-full-width, 300px);
+    bottom: 74px;
+    z-index: 60;
+    /* Supprime les règles de flux héritées */
+    align-items: flex-start;
+    pointer-events: none; /* déjà géré par les enfants */
+}
+
 #fq-card-engine-container.fq-card-engine-draggable .fq-top-bar {
     display: flex;
 }
@@ -275,10 +287,7 @@
     pointer-events: all;
     position: relative;
     color: var(--fq-gold-light);
-    width: 100%;
-    min-width: 25vw;
-    /* Annule toutes les anciennes contraintes */
-    max-width: none !important;
+    width: calc(98vw - var(--sidebar-full-width, 300px));
     max-height: none !important;
     margin: 0 !important;
 }
@@ -465,7 +474,6 @@
 .fq-card-engine-card-container {
     display: flex;
     align-items: flex-end;
-    justify-content: center;
     flex: 1;
     min-width: 0;
     overflow: visible;
@@ -482,8 +490,7 @@
     border: none !important;
     background: none !important;
     box-shadow: none !important;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: calc(20px * var(--fq-scale));
 }
 
 /* Message main vide — même hauteur que les mains avec cartes */
