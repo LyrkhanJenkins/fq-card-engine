@@ -23,7 +23,7 @@
     --fq-card-h: 130px;
 
     /* Dépassement éventail au-dessus du container */
-    --fq-overflow: 30px;
+    --fq-overflow: 15px;
 
     /* Hauteur fixe du panel (cartes + overflow) */
     --fq-panel-h: calc(var(--fq-card-h) * var(--fq-scale) + var(--fq-overflow) + 12px);
@@ -171,8 +171,8 @@
 }
 
 .fq-move-pip {
-    width: 3px;
-    height: 3px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: var(--fq-gold-dark);
     opacity: 0.6;
@@ -191,13 +191,12 @@
     justify-content: center;
     height: 12px;
     pointer-events: all;
-    width: 100%;
+    width: 100px;
 }
 
 #fq-card-engine-container:not(.fq-card-engine-draggable) {
     position: fixed;
-    left: 1vw;
-    right: var(--sidebar-full-width, 300px);
+    left: 16px;
     bottom: 74px;
     align-items: flex-start;
     pointer-events: none;
@@ -598,7 +597,7 @@
     background: var(--fq-gold-dark);
     color: #f0d898;
     padding: 1px 4px;
-    font-size: 7px;
+    font-size: 10px;
     font-family: Georgia, serif;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -1083,7 +1082,7 @@ div.separator {
     top: 8px;
     left: 8px;
     font-family: 'Palatino Linotype', Georgia, serif;
-    font-size: 10px;
+    font-size: 18px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 2px 8px;
