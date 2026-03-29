@@ -47,7 +47,7 @@ describe("Check Imports", () => {
     describe("checkImports", () => {
         test("should warn if imports without suffix .js", () => {
             const hasImportErrors = checkAllImports();
-            console.log(`Has Import Errors: ${hasImportErrors}`);
+            console.error(`Has Import Errors: ${hasImportErrors}`);
             expect(hasImportErrors).toBe(false);
         });
     });

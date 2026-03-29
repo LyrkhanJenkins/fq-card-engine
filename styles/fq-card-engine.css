@@ -709,74 +709,6 @@
 }
 
 /* ============================================================
-   FENÊTRE POPUP
-   ============================================================ */
-
-.fq-card-engine-hand-popout .window-content {
-    background: transparent;
-}
-
-.fq-card-engine-window {
-    height: 100%;
-}
-
-.fq-card-engine-window-cards {
-    max-width: 100%;
-    height: calc(100% - 33px);
-    display: flex;
-    flex-grow: 1;
-}
-
-.fq-card-engine-window-cards.deck,
-.fq-card-engine-window-cards.pile {
-    flex-flow: wrap;
-}
-
-.fq-card-engine-window-cards.hand {
-    width: 100%;
-}
-
-.fq-card-engine-window-card {
-    background-size: contain;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    filter: drop-shadow(0 0 6px #000);
-    width: 220px;
-    height: 300px;
-    border: none;
-    border-radius: 8px;
-    transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.fq-card-engine-window-card:hover {
-    transform: scale(1.04);
-    filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.4)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
-}
-
-.fq-card-engine-window-buttons {
-    display: flex;
-    padding-bottom: 3px;
-    gap: 4px;
-}
-
-.fq-card-engine-window-button {
-    flex-grow: 1;
-    max-width: 33%;
-    background: url(../../../ui/parchment.jpg) repeat;
-    border: 1px solid var(--color-border-light-primary);
-    border-radius: 4px;
-    font-size: var(--font-size-14);
-    line-height: 28px;
-    font-family: var(--font-primary);
-    cursor: pointer;
-    text-align: center;
-}
-
-.fq-card-engine-window-button:hover {
-    box-shadow: 0 0 5px var(--color-shadow-primary);
-}
-
-/* ============================================================
    MESSAGES CHAT
    ============================================================ */
 
@@ -802,7 +734,7 @@
     background-repeat: no-repeat;
     cursor: pointer;
     border-radius: 4px;
-    filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.5));F
     transition: transform 0.2s;
 }
 
@@ -931,10 +863,9 @@ div.separator {
     display: none;
 }
 
-/* Carte — relief 3D sans bordure dorée */
 .fq-play-card-img {
     display: block;
-    max-height: 60vh;
+    max-height: 55vh;
     width: auto;
     border: transparent;
     border-radius: 3%;
@@ -1058,7 +989,7 @@ div.separator {
 
 .fq-play-label {
     font-family: Georgia, serif;
-    font-size: 20px;
+    font-size: 24px;
     color: rgba(201, 168, 76, 0.45);
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1097,12 +1028,12 @@ div.separator {
 /* Remplace tout le bloc dialog-buttons */
 .app.dialog:has(.fq-play-dialog) .dialog-buttons {
     position: fixed;
-    top: 50%;
+    top: 75%;
     left: 0;
     right: 0;
     transform: translateY(-50%);
-    display: flex;
-    gap: 50%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     justify-content: space-between;
     padding: 0 60px;
     background: none;
@@ -1118,9 +1049,9 @@ div.separator {
     border-radius: 6px;
     color: #e8d090;
     font-family: 'Palatino Linotype', Georgia, serif;
-    font-size: 22px;
-    letter-spacing: 0.1em;
-    padding: 12px 32px;
+    font-size: 34px;
+    letter-spacing: 0.2em;
+    padding: 18px 12px;
     cursor: pointer;
     backdrop-filter: blur(8px);
     transition: background 0.15s, border-color 0.15s, color 0.15s;
@@ -1137,6 +1068,8 @@ div.separator {
 }
 
 .app.dialog:has(.fq-play-dialog) .dialog-buttons button[data-button="ok"] {
+    grid-column: 4;
+    grid-row: 1;
     border-color: rgba(201, 168, 76, 0.6);
     background: rgba(201, 168, 76, 0.12);
     margin-left: auto;
@@ -1149,6 +1082,8 @@ div.separator {
 }
 
 .app.dialog:has(.fq-play-dialog) .dialog-buttons button[data-button="discard"] {
+    grid-column: 1;
+    grid-row: 1;
     border-color: rgba(140, 40, 40, 0.6);
     color: #c07070;
     margin-right: auto;
@@ -1248,7 +1183,7 @@ div.separator {
 
 .fq-play-drop-count {
     font-family: Georgia, serif;
-    font-size: 20px;
+    font-size: 24px;
     font-style: italic;
     color: rgba(201, 168, 76, 0.3);
     text-align: center;
@@ -1284,3 +1219,87 @@ div.separator {
     color: #e09090;
 }
 
+.fq-play-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.55);
+    border: 0.5px solid rgba(90, 66, 32, 0.55);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(201, 168, 76, 0.45);
+    backdrop-filter: blur(8px);
+    transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.fq-play-nav--prev {
+    left: 32px;
+}
+
+.fq-play-nav--next {
+    right: 32px;
+}
+
+.fq-play-nav:hover {
+    background: rgba(201, 168, 76, 0.1);
+    border-color: rgba(201, 168, 76, 0.5);
+    color: rgba(201, 168, 76, 0.9);
+    transform: translateY(-50%) scale(1.08);
+}
+
+.fq-play-nav:disabled {
+    opacity: 0.2;
+    cursor: default;
+    pointer-events: none;
+}
+
+.fq-play-actions {
+    grid-column: 2;
+    grid-row: 3;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.fq-play-btn {
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(90, 66, 32, 0.8);
+    border-radius: 6px;
+    color: #e8d090;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    padding: 10px 28px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.fq-play-btn--ok {
+    border-color: rgba(201, 168, 76, 0.6);
+    background: rgba(201, 168, 76, 0.12);
+}
+
+.fq-play-btn--ok:hover {
+    background: rgba(201, 168, 76, 0.25);
+    border-color: rgba(201, 168, 76, 0.9);
+    color: #fff;
+}
+
+.fq-play-btn--discard {
+    border-color: rgba(140, 40, 40, 0.6);
+    color: #c07070;
+}
+
+.fq-play-btn--discard:hover {
+    background: rgba(140, 40, 40, 0.2);
+    border-color: rgba(200, 60, 60, 0.7);
+    color: #e09090;
+}
