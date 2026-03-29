@@ -43,6 +43,8 @@
   "FQCARDENGINE.ChooseUser": "Select a Player for the Toolbar",
   "FQCARDENGINE.ResetToolbarDialogTitle": "Reset Toolbar",
   "FQCARDENGINE.ResetToolbarDialogQuestion": "Reset The Toolbar back to default?",
+  "FQCARDENGINE.DraggableSetting": "Hand Container Draggable",
+  "FQCARDENGINE.DraggableSettingHint": "Hand container is draggable on the screen",
   "FQCARDENGINE.CardClickBehavior": "Card Click Behavior",
   "FQCARDENGINE.CardClickBehaviorHint": "Select what happens when a card in the bar is clicked",
   "FQCARDENGINE.CardClickPlayCard": "Play Card Dialog",
