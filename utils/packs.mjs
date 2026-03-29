@@ -21,14 +21,12 @@ const PACK_DEST = "packs";
 const PACK_SRC = "packs/_source";
 
 
- 
 const argv = yargs(hideBin(process.argv))
     .command(packageCommand())
     .help().alias("help", "h")
     .argv;
 
 
- 
 function packageCommand() {
     return {
         command: "package [action] [pack] [entry]",
@@ -160,7 +158,7 @@ async function cleanPacks(packName, entryName) {
             const json = JSON.parse(await readFile(src, {encoding: "utf8"}));
             if (entryName && (entryName !== json.name.toLowerCase())) continue;
             if (!json._id || !json._key) {
-                console.log(`Failed to clean \x1b[31m${src}\x1b[0m, must have _id and _key.`);
+                console.warn(`Failed to clean \x1b[31m${src}\x1b[0m, must have _id and _key.`);
                 continue;
             }
             cleanPackEntry(json);

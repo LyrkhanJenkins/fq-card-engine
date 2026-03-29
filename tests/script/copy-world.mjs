@@ -22,7 +22,7 @@ async function exists(p) {
 
 // ====== Main orchestration ======
 async function main() {
-    console.log(`== E2E :: préparation DataPath (monde: ${worldName}) ==`);
+    console.info(`== E2E :: préparation DataPath (monde: ${worldName}) ==`);
 
     // Copie du monde template
     if (!(await exists(SRC_WORLD_DIR))) {
@@ -33,7 +33,7 @@ async function main() {
         await rm(TARGET_WORLD_DIR, {recursive: true, force: true});
     }
     await cp(SRC_WORLD_DIR, TARGET_WORLD_DIR, {recursive: true});
-    console.log(`Monde '${worldName}' copié dans ${TARGET_WORLD_DIR}`);
+    console.info(`Monde '${worldName}' copié dans ${TARGET_WORLD_DIR}`);
 }
 
 main().catch(async (err) => {

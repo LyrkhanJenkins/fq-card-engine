@@ -146,4 +146,4 @@ for (const language of supportedLanguages) {
     }
 }
 
-console.log("✅ Decks générés !");
+console.info("✅ Decks générés !");

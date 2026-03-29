@@ -200,10 +200,10 @@ describe("DeckUtils", () => {
         // Mocker directement sur l'objet game existant après beforeEach
         const getMock = vi.fn().mockReturnValue({character: null, isGM: false});
         game.users = {...game.users, get: getMock};
-        console.log("user retourné:", game.users.get("user1"));
+        console.info("user retourné:", game.users.get("user1"));
 
         await DeckUtils.deleteDeckForUser("user1");
-        console.log("warn appelé:", ui.notifications.warn.mock.calls);
+        console.info("warn appelé:", ui.notifications.warn.mock.calls);
 
         expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.NoOwnedCharacter");
         expect(Cards.deleteDocuments).not.toHaveBeenCalled();
