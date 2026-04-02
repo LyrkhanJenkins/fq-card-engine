@@ -1,49 +1,56 @@
-## V1.2
+## V2.0
 
-Après nouvelle interface :
-
+### Priorité
+Migration Foundry v14:
+- Ramener toutes les notes écrites
 - Revoir css, homogeneiser fonts...
 - changer les noms des templates et supprimer l'inutile
+- Repasser sur tous les TODO
+- Faire un point sur todos.
+- Couverture de test avec rapport > 80%
+- Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de
+  fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
+- Script de migration json a ajouter avec fq-eizh-assets (est ce qu'on commence a y mettre les cartes?)
 
 ### Fix:
 
 - Migration 14: Problématique au niveau de la génération des decks:
-    - Duplication des cartes dans les bibliothèque
     - Problématique sur blank world ?
     - Ajout de macros GM de génération de cartes pour les tests
-    - Supprimer la génération jusqu'au niveau 5 monoclassé: comment faire?
     - Ajout de test
 
 ### Feature:
 
-- Ajout de spécialisation pour les 7 classes jusqu'au niveau 10
-- Faire des cartes qui coutent plus que 10 points d'actions, plus forte
-- Faire des synergie de cartes a faible cout
-- PLus spécialisés les classes et refonte
-- Migrations objets dnd5e v FQ
-- Ajout des dégâts armes pour les cartes
-- Prise en compte du niveau d'armure
+- Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
+
+- Refonte des cartes : 
+    - Nouveau générateur de cartes pour remplacer Word? (pas sur)
+      - Possible de le faire directement avec le formulaire sur Foundry?
+      - Ou simplement utiliser autre chose que Word
+    - Faire des cartes qui coutent plus que 10 points d'actions, plus forte
+    - Faire des synergies de cartes a faible cout 
+    - Les spécificités des classes doivent être plus marqués et ne pas retrouvé trop les mêmes sorts pour chacunes des
+  classes
+    - Ajout des dégâts armes pour les cartes :
+      - Ajouts des dégâts de l'arme équipé pour les sorts de CàC
+      - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en
+           premier
+      - Afficher sur la carte
+- Prise en compte la classe d'armure de DND5E -> Est que l'esquive devient plus qu'une demi-esquive?
+- Migrations objets dnd5e v FQ OU comment plus les mettre en avant?
 - Gérer les passifs hors de la main, comme les pouvoirs ...
     - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
       utilisation), réécriture des passifs
-    -
-        - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
+    - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
           d'actions/mana/pioches?)
-- Refonte de l'interface de jeu
+- Ajout de spécialisation pour les 7 classes jusqu'au niveau 10
 - Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
--
+- Prise en compte des resistances
 
 ### Chore:
 
-- Faire un point sur todos: Ramener toutes les notes écrites pendant les vacances + Tri de priorité et Roadmap
-- Nouvelle version Dnd5e et Foundry v14
 - Migration Eizh complète avec les niveaux
-- Couverture de test 100%
-- Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de
-  fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
-
 - Moulinette IA des visuels
-- Migration des librairies + script dnd5e pour les compendiums a revérifier
 - Gestions des principales Custom eval dans des méthodes
 
 ## Backlog
@@ -52,15 +59,10 @@ Après nouvelle interface :
 
 - Au choix du type de carte n'afficher ou pas les choix dans la dialog
 - Se renseigner pour les problèmes d'audio de Foundry
-- Comment faire en sorte que les jets de dés aillent plus vite
 
 ### Medium:
 
-- Cartes niv 7 Gladiateur -> resource spécial pour les armes?, renommer en maître d'armes?
-- Ajouter également une fleche raccourci pour passer une carte du spellbook vers le deck
-- Ajouts des dégâts de l'arme équipé pour les sorts de CàC
-    - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en
-      premier
+- Gladiateur -> resource spécial pour les armes?, renommer en maître d'armes
 - Gérer un nombre d'utilisation pour des armes.
 - Gérer du ciblage speciale : Zone
 - Ne pas utiliser de points d'actions quand hors combat
@@ -73,17 +75,14 @@ Après nouvelle interface :
 - Limiter la taille de la main? ne pas piocher si arriver à cette limite
 
 ### Low:
-
-- QUe faire des cartes communes implémentés?
-- Prise en compte des resistances
-- Macro 'Maîtriser' : il faut pouvoir lancer une macro qui ajout un effet à une autre cible sans les drotis comme avec
-  game.dfreds
+- Ajouter également une fleche raccourci pour passer une carte du spellbook vers le deck
+- Que faire des cartes communes implémentés?
 - Lancez différents sons ci plusieurs cibles touchés
 - Logué ou trouver un moyen de logué tous les évenements de combat pour pouvoir les réutiliser dans les customEvals
 - Améliorer certaines cartes de mage blanc: light energy (json après utilisation)
 - Gérer les nb target infini et les portée infini?, les critique, els esquive? (light strike)
 - Gérer les cartes chargées directement dans le code natif et pas en script
-- Gérer les dissipation d'effet dans un select qui récupère tous les effets des cibles
+- Gérer les dissipations d'effet dans un select qui récupère tous les effets des cibles
 - Gérer de l'aléatoire dans les cartes recues en montée de niveau à la manière de booster
 - Gestion d'une monnaie entre le spellbook et le deck?
 

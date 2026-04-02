@@ -2,7 +2,7 @@
   "id": "fq-card-engine",
   "title": "FQ Card Engine",
   "description": "Module for Final Quest 8 Battle system based on fq-card-engine https://github.com/LyrkhanJenkins/fq-card-engine",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "languages": [
     {
       "lang": "en",
@@ -22,13 +22,6 @@
       "name": "Lyrkhan",
       "email": "lyrkhanjenkins@gmail.com",
       "url": "https://gitlab.com/lyrkhanjenkins",
-      "discord": "lyrkhanjenkins",
-      "flags": {}
-    },
-    {
-      "name": "Lyrkhan",
-      "email": "lyrkhanjenkins@gmail.com",
-      "url": "https://github.com/LyrkhanJenkins",
       "discord": "lyrkhanjenkins",
       "flags": {}
     }
@@ -54,7 +47,7 @@
   "download": "https://gitlab.com/final-quest/fq-card-engine/-/jobs/11431910740/artifacts/raw/fq-card-engine.zip",
   "compatibility": {
     "minimum": "14",
-    "verified": "14.358"
+    "verified": "14.359"
   },
   "relationships": {
     "systems": [

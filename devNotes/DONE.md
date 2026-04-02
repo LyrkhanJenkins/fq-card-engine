@@ -1,7 +1,9 @@
-v1.2:
+v2.0.0:
+Feat :
+- Refonte de l'UI de la main d'un joueur
+- Refonte de l'UI de la dialog pour jouer une carte
 Chore :
-
-- Montée de version 14.356 ... (en cours)
+- Montée de version 14.359 ... (en cours)
 
 v1.1.1:
 Chore :
