@@ -5,6 +5,7 @@ Migration Foundry v14:
 - Ramener toutes les notes écrites
 - Revoir css, homogeneiser fonts...
 - changer les noms des templates et supprimer l'inutile
+- Déplacer les templates
 - Repasser sur tous les TODO
 - Faire un point sur todos.*
 - Passage en typescript

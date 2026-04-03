@@ -1,6 +1,6 @@
 import {socket} from "./socket-lib.js";
-import {OriginFQEffectLabel, WARNING_COLOR} from "../utils/fq-constants.js";
-import DeckUtils, {DECK_TYPE, HAND_TYPE} from "../utils/deck-utils.js";
+import {OriginFQEffectLabel, WARNING_COLOR} from "../domain/utils/fq-constants.js";
+import DeckUtils, {DECK_TYPE, HAND_TYPE} from "../domain/utils/deck-utils.js";
 
 //TODO Renommer les fichiers js qui font des hooks globaux (à déplacer dans des dossiers?)
 Hooks.on("deleteCombat", async function (combat, _delta) {

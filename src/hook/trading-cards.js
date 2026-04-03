@@ -1,4 +1,4 @@
-import DeckUtils, {DECK_TYPE, SPELLBOOK_TYPE} from "../utils/deck-utils.js";
+import DeckUtils, {DECK_TYPE, SPELLBOOK_TYPE} from "../domain/utils/deck-utils.js";
 
 Hooks.on("dealCards", (_origin, _destinations, _context) => {
     // Nothing

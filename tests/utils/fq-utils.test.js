@@ -1,6 +1,6 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import FQUtils from "../../src/utils/fq-utils.js";
-import FxUtils from "../../src/utils/fx-utils.js";
+import FQUtils from "../../src/domain/utils/fq-utils.js";
+import FxUtils from "../../src/domain/utils/fx-utils.js";
 
 vi.mock("../../src/fq-card-engine-module.js", () => ({
     default: {},

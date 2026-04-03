@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
-import PlayCard from "../../src/utils/play-card.js";
+import PlayCard from "../../src/domain/utils/play-card.js";
 
 vi.mock("../../src/fq-card-engine-module.js", () => ({
     socket: {
@@ -7,7 +7,7 @@ vi.mock("../../src/fq-card-engine-module.js", () => ({
     }
 }));
 
-const FQUtils = await import("../../src/utils/fq-utils.js");
+const FQUtils = await import("../../src/domain/utils/fq-utils.js");
 vi.mock("../../src/utils/fq-utils.js", () => ({
     default: {
         replaceCardContentAbilitiesBonus: vi.fn(),

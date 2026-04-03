@@ -1,5 +1,5 @@
 import FqConstants from "./fq-constants.js";
-import {socket} from "../hook/socket-lib.js";
+import {socket} from "../../hook/socket-lib.js";
 
 /**
  * Based on Sequencer and advanced macros

@@ -1,10 +1,10 @@
-import ConsumptionUtils from "../utils/consumption-utils.js";
-import DamageUtils from "../utils/damage-utils.js";
+import ConsumptionUtils from "../domain/utils/consumption-utils.js";
+import DamageUtils from "../domain/utils/damage-utils.js";
 import {socket} from "./socket-lib.js";
-import DeckUtils from "../utils/deck-utils.js";
-import FqConstants from "../utils/fq-constants.js";
-import FxUtils from "../utils/fx-utils.js";
-import {visualEffectData} from "../system/fx/visualEffectData.js";
+import DeckUtils from "../domain/utils/deck-utils.js";
+import FqConstants from "../domain/utils/fq-constants.js";
+import FxUtils from "../domain/utils/fx-utils.js";
+import {visualEffectData} from "../domain/system/fx/visualEffectData.js";
 
 const notApplyFQOnActivity = (activity) => {
     //TODO voir si il y a une action

@@ -1,6 +1,6 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import DamageUtils from "../../src/utils/damage-utils.js";
-import {DAMAGES_COLOR} from "../../src/utils/fq-constants";
+import DamageUtils from "../../src/domain/utils/damage-utils.js";
+import {DAMAGES_COLOR} from "../../src/domain/utils/fq-constants";
 
 describe("DamageUtils", () => {
     let actor;

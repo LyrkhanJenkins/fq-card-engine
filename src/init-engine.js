@@ -1,21 +1,21 @@
 // TODO Verifier les options
-import FqConstants from "./utils/fq-constants.js";
-import FqHand from "./window/fq-hand.js";
-import DeckUtils, {PILE_TYPE} from "./utils/deck-utils.js";
-import FQUtils from "./utils/fq-utils.js";
-import PlayCard from "./utils/play-card.js";
+import FqConstants from "./domain/utils/fq-constants.js";
+import FqHand from "./domain/window/fq-hand.js";
+import DeckUtils, {PILE_TYPE} from "./domain/utils/deck-utils.js";
+import FQUtils from "./domain/utils/fq-utils.js";
+import PlayCard from "./domain/utils/play-card.js";
 import {mergeSchema} from "./core/utils/schema.utils.js";
 import FormError from "./core/error/form-error.model.js";
-import CharacterDataFQ from "./system/actors/character-fq.mjs";
-import ActionFQTemplate from "./system/items/item-action-fq.mjs";
-import CardsFqSystem from "./system/cards/cards-fq-system.mjs";
-import CardFqSystem from "./system/cards/card-fq-system.mjs";
-import NPCDataFQ from "./system/actors/npc-fq.mjs";
-import FqCharacterSheet from "./sheet/actor/fq-character-sheet.js";
-import FqNpcSheet from "./sheet/actor/fq-npc-sheet.js";
-import FqItemSheet from "./sheet/items/fq-item-sheet.js";
-import FqCardsSheet from "./sheet/cards/fq-cards-sheet.js";
-import FqCardSheet from "./sheet/cards/fq-card-sheet.js";
+import CharacterDataFQ from "./domain/system/actors/character-fq.mjs";
+import ActionFQTemplate from "./domain/system/items/item-action-fq.mjs";
+import CardsFqSystem from "./domain/system/cards/cards-fq-system.mjs";
+import CardFqSystem from "./domain/system/cards/card-fq-system.mjs";
+import NPCDataFQ from "./domain/system/actors/npc-fq.mjs";
+import FqCharacterSheet from "./domain/sheet/actor/fq-character-sheet.js";
+import FqNpcSheet from "./domain/sheet/actor/fq-npc-sheet.js";
+import FqItemSheet from "./domain/sheet/items/fq-item-sheet.js";
+import FqCardsSheet from "./domain/sheet/cards/fq-cards-sheet.js";
+import FqCardSheet from "./domain/sheet/cards/fq-card-sheet.js";
 
 CONFIG.FqCardEngine = {
     options: {

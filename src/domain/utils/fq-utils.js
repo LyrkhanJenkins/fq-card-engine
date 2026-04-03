@@ -10,7 +10,7 @@ import FqConstants, {
 } from "./fq-constants.js";
 import FxUtils from "./fx-utils.js";
 import CardFqSystem from "../system/cards/card-fq-system.mjs";
-import {socket} from "../hook/socket-lib.js";
+import {socket} from "../../hook/socket-lib.js";
 
 export default class FQUtils {
 

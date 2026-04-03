@@ -1,8 +1,8 @@
 
 //TODO faire mieux pour exposé socket?
-import DamageUtils from "../utils/damage-utils.js";
-import DeckUtils from "../utils/deck-utils.js";
-import FQUtils from "../utils/fq-utils.js";
+import DamageUtils from "../domain/utils/damage-utils.js";
+import DeckUtils from "../domain/utils/deck-utils.js";
+import FQUtils from "../domain/utils/fq-utils.js";
 import {deleteToken} from "./render-token.js"; // relocate
 
 export let socket;

@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
-import ConsumptionUtils from "../../src/utils/consumption-utils.js";
+import ConsumptionUtils from "../../src/domain/utils/consumption-utils.js";
 
 describe("ConsumptionUtils", () => {
 
