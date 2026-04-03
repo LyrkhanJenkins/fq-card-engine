@@ -1,11 +1,25 @@
-/* ============================================================
-   FQ CARD ENGINE — Modern CSS v3
-   - Position fixe above_macros (+ draggable optionnel)
-   - Largeur : 100% barre macro / libre en draggable
-   - Hauteur main : fixe avec ou sans cartes
-   - Taille via --fq-scale uniquement (slider)
-   - Classes JS originales conservées
-   ============================================================ */
+:root {
+    --fq8-color-action-1: #333102;
+    --fq8-color-action-2: #e0d607;
+    --fq8-color-action-3: #7d7700;
+
+    --fq8-color-mana-1: #0c2759;
+    --fq8-color-mana-2: #4886f7;
+    --fq8-color-mana-3: #275dc2;
+
+    --fq8-color-zeal-1: #3b0909;
+    --fq8-color-zeal-2: #ed5555;
+    --fq8-color-zeal-3: #a12828;
+    --fq8-color-zeal-4: #b57878;
+
+    --fq8-color-critical: #eaa373;
+    --fq8-color-evasion: #62abd3;
+
+    --fq8-color-drop-1: #000000;
+
+    --fq8-color-hp-1: #123b09;
+    --fq8-color-hp-2: #4dd82b;
+}
 
 /* ── Variables ── */
 #fq-card-engine-container {
@@ -1260,4 +1274,192 @@ div.separator {
     background: rgba(140, 40, 40, 0.2);
     border-color: rgba(200, 60, 60, 0.7);
     color: #e09090;
+}
+
+/* ── Jauges personnage ── */
+.fq-play-charStats {
+    position: fixed;
+    left: 40px;
+    top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.fq-play-char-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.fq-play-char-img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid rgba(201, 168, 76, 0.4);
+    object-fit: cover;
+}
+
+.fq-play-char-name {
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    color: rgba(201, 168, 76, 0.7);
+    text-transform: uppercase;
+}
+
+/* ── Jauge générique ── */
+.fq-play-gauge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.fq-play-gauge-label {
+    font-size: 22px;
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.fq-play-gauge-bar {
+    width: 240px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.fq-play-gauge-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.fq-play-gauge-val {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.4);
+    min-width: 72px;
+}
+
+/*!* Couleurs par stat *!*/
+/*.fq-gauge-hp {*/
+/*    color: var(--fq8-color-hp-2);*/
+/*}*/
+
+/*.fq-gauge-action {*/
+/*    color: var(--fq8-color-action-2);*/
+/*}*/
+
+/*.fq-gauge-mana {*/
+/*    color: var(--fq8-color-mana-2);*/
+/*}*/
+
+/*.fq-gauge-zeal {*/
+/*    color: var(--fq8-color-zeal-2);*/
+/*}*/
+
+/*.fq-gauge-fill-hp {*/
+/*    color: var(--fq8-color-hp-1);*/
+/*}*/
+
+/*.fq-gauge-fill-action {*/
+/*    color: var(--fq8-color-action-1);*/
+/*}*/
+
+/*.fq-gauge-fill-mana {*/
+/*    color: var(--fq8-color-mana-1);*/
+/*}*/
+
+/*.fq-gauge-fill-zeal {*/
+/*    color: var(--fq8-color-zeal-1);*/
+/*}*/
+
+/* Couleurs par stat */
+.fq-gauge-hp {
+    color: #e05555;
+}
+
+.fq-gauge-action {
+    color: #e8c850;
+}
+
+.fq-gauge-mana {
+    color: #5588e8;
+}
+
+.fq-gauge-zeal {
+    color: #e8a050;
+}
+
+.fq-gauge-fill-hp {
+    background: #c04040;
+}
+
+.fq-gauge-fill-action {
+    background: #c8a830;
+}
+
+.fq-gauge-fill-mana {
+    background: #3868c8;
+}
+
+.fq-gauge-fill-zeal {
+    background: #c88030;
+}
+
+/* ── Cibles ── */
+.fq-play-targets {
+    position: fixed;
+    right: 140px;
+    top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10000;
+    pointer-events: none;
+    align-items: flex-end;
+}
+
+.fq-play-targets-title {
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 20px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.4);
+    text-align: right;
+}
+
+.fq-play-target {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-direction: row-reverse;
+}
+
+.fq-play-target-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(200, 60, 60, 0.5);
+    object-fit: cover;
+}
+
+.fq-play-target-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.fq-play-target-name {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.06em;
 }

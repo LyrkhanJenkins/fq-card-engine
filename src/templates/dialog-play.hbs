@@ -1,4 +1,67 @@
 <div class="fq-play-dialog">
+    {{!-- Jauges personnage (gauche) --}}
+    {{#if charStats}}
+        <div class="fq-play-charStats">
+            <div class="fq-play-char-header">
+                <img class="fq-play-char-img" src="{{charStats.img}}" alt="{{charStats.name}}"/>
+                <span class="fq-play-char-name">{{charStats.name}}</span>
+            </div>
+
+            <div class="fq-play-gauge">
+                <span class="fq-play-gauge-label fq-gauge-hp">❤</span>
+                <div class="fq-play-gauge-bar">
+                    <div class="fq-play-gauge-fill fq-gauge-fill-hp" style="width: {{charStats.hpPct}}%"></div>
+                </div>
+                <span class="fq-play-gauge-val">{{charStats.hpValue}}/{{charStats.hpMax}}</span>
+            </div>
+
+            <div class="fq-play-gauge">
+                <span class="fq-play-gauge-label fq-gauge-action">⚡</span>
+                <div class="fq-play-gauge-bar">
+                    <div class="fq-play-gauge-fill fq-gauge-fill-action" style="width: {{charStats.actionPct}}%"></div>
+                </div>
+                <span class="fq-play-gauge-val">{{charStats.actionValue}}/{{charStats.actionMax}}</span>
+            </div>
+
+            <div class="fq-play-gauge">
+                <span class="fq-play-gauge-label fq-gauge-mana">✦</span>
+                <div class="fq-play-gauge-bar">
+                    <div class="fq-play-gauge-fill fq-gauge-fill-mana" style="width: {{charStats.manaPct}}%"></div>
+                </div>
+                <span class="fq-play-gauge-val">{{charStats.manaValue}}/{{charStats.manaMax}}</span>
+            </div>
+
+            <div class="fq-play-gauge">
+                <span class="fq-play-gauge-label fq-gauge-zeal">☀</span>
+                <div class="fq-play-gauge-bar">
+                    <div class="fq-play-gauge-fill fq-gauge-fill-zeal" style="width: {{charStats.zealPct}}%"></div>
+                </div>
+                <span class="fq-play-gauge-val">{{charStats.zealValue}}/{{charStats.zealMax}}</span>
+            </div>
+        </div>
+    {{/if}}
+
+    {{!-- Cibles (droite) --}}
+    {{#if targets.length}}
+        <div class="fq-play-targets">
+            <span class="fq-play-targets-title">Cibles</span>
+            {{#each targets}}
+                <div class="fq-play-target">
+                    <img class="fq-play-target-img" src="{{img}}" alt="{{name}}"/>
+                    <div class="fq-play-target-info">
+                        <span class="fq-play-target-name">{{name}}</span>
+                        <div class="fq-play-gauge">
+                            <span class="fq-play-gauge-label fq-gauge-hp">❤</span>
+                            <div class="fq-play-gauge-bar">
+                                <div class="fq-play-gauge-fill fq-gauge-fill-hp" style="width: {{hpPct}}%"></div>
+                            </div>
+                            <span class="fq-play-gauge-val">{{hpValue}}/{{hpMax}}</span>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    {{/if}}
 
     <button class="fq-play-close" onclick="$(this).closest('.app').find('.header-button.close').trigger('click')">
         <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">

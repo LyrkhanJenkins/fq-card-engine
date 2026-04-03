@@ -386,9 +386,37 @@ window.FqCardEngineModule = {
             return;
         }
 
+        const character = game.user.character;
+        const targets = [...game.user.targets].map(t => ({
+            name: t.name,
+            img: t.document.texture?.src,
+            hpValue: t.actor?.system?.attributes?.hp?.value ?? 0,
+            hpMax: t.actor?.system?.attributes?.hp?.max ?? 1,
+            hpPct: Math.round(((t.actor?.system?.attributes?.hp?.value ?? 0) / (t.actor?.system?.attributes?.hp?.max ?? 1)) * 100),
+        }));
+
+        const charStats = character ? {
+            name: character.name,
+            img: character.img,
+            hpValue: character.system?.attributes?.hp?.value ?? 0,
+            hpMax: character.system?.attributes?.hp?.max ?? 1,
+            hpPct: Math.round(((character.system?.attributes?.hp?.value ?? 0) / (character.system?.attributes?.hp?.max ?? 1)) * 100),
+            actionValue: character.system?.fq?.action?.value ?? 0,
+            actionMax: character.system?.fq?.action?.max ?? 1,
+            actionPct: Math.round(((character.system?.fq?.action?.value ?? 0) / (character.system?.fq?.action?.max ?? 1)) * 100),
+            manaValue: character.system?.fq?.mana?.value ?? 0,
+            manaMax: character.system?.fq?.mana?.max ?? 1,
+            manaPct: Math.round(((character.system?.fq?.mana?.value ?? 0) / (character.system?.fq?.mana?.max ?? 1)) * 100),
+            zealValue: character.system?.fq?.zeal?.value ?? 0,
+            zealMax: character.system?.fq?.zeal?.max ?? 1,
+            zealPct: Math.round(((character.system?.fq?.zeal?.value ?? 0) / (character.system?.fq?.zeal?.max ?? 1)) * 100),
+        } : null;
+
         const html = await foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/dialog-play.hbs", {
             card,
             cards,
+            targets,
+            charStats,
             hasSeveralTargets: cards.length > 1,
             cardContents,
             actorFQ: FqConstants.actorFQ,
@@ -789,7 +817,6 @@ Hooks.on("init", function () {
         base: CardFqSystem
     };
 });
-
 
 
 Hooks.on("ready", function () {
