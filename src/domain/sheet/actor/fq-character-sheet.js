@@ -6,7 +6,7 @@ export default class FqCharacterSheet extends dnd5e.applications.actor.Character
         ...{
             sidebar: {
                 container: {classes: ["main-content"], id: "main"},
-                template: `modules/fq-card-engine/templates/actors/fq-character-sidebar.hbs`
+                template: `modules/fq-card-engine/src/templates/actors/fq-character-sidebar.hbs`
             }
         }
     };

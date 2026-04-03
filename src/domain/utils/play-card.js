@@ -111,7 +111,8 @@ export default class PlayCard {
                 action: game.i18n.localize(actionLabel)
             };
 
-            renderTemplate("modules/fq-card-engine/templates/chat-message.html", renderData).then(content => {
+            //TODO refacto Chat-Messages
+            foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/chat-message.html", renderData).then(content => {
                 const messageData = {
                     speaker: {
                         scene: game.scenes?.active?.id, actor: game.userId, token: null, alias: null,

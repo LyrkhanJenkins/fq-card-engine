@@ -1,0 +1,127 @@
+<div class="fq-play-dialog">
+
+    <button class="fq-play-close" onclick="$(this).closest('.app').find('.header-button.close').trigger('click')">
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+            <path d="M1 1L11 11M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+    </button>
+    <button class="fq-play-nav fq-play-nav--prev" data-action="prev">
+        <svg viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="32">
+            <path d="M8 2L2 8L8 14" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round"/>
+        </svg>
+    </button>
+    {{!-- Fond sombre avec la carte en vedette --}}
+    <div class="fq-play-card-stage">
+
+        {{!-- Carte --}}
+        <div class="fq-play-card-wrap{{#if isFQBase}} is-base{{/if}}{{#if
+                hasBeenPlayedOnRound}} is-exhausted{{else}}{{#if hasBeenPlayed}} is-played{{/if}}{{/if}}">
+            <img class="fq-play-card-img" src="{{card.img}}" alt="{{card.name}}"/>
+            {{#if isFQBase}}
+                <span class="fq-play-badge fq-play-badge--base">Base</span>
+            {{/if}}
+            {{#if hasBeenPlayedOnRound}}
+                <span class="fq-play-badge fq-play-badge--exhausted">Épuisée ce tour</span>
+            {{else}}
+                {{#if hasBeenPlayed}}
+                    <span class="fq-play-badge fq-play-badge--played">Déjà jouée</span>
+                {{/if}}
+            {{/if}}
+        </div>
+
+    </div>
+
+    <button class="fq-play-nav fq-play-nav--next" data-action="next">
+        <svg viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="32">
+            <path d="M2 2L8 8L2 14" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round"/>
+        </svg>
+    </button>
+
+    {{!-- Zone des options flottantes --}}
+    <div class="fq-play-options">
+
+        <form class="cards-dialog fq-play-form">
+
+            {{!-- Statut --}}
+            {{#if hasBeenPlayed}}
+                {{#if hasBeenPlayedOnRound}}
+                    <div class="fq-play-status fq-play-status--warn">
+                        Cette carte n'est plus utilisable à ce tour
+                    </div>
+                {{else}}
+                    <div class="fq-play-status fq-play-status--ok">
+                        Vous pouvez rejouer cette carte ce tour-ci
+                    </div>
+                {{/if}}
+            {{/if}}
+
+            {{!-- Cible --}}
+            {{#if hasSeveralTargets}}
+                <div class="fq-play-field">
+                    <label class="fq-play-label">{{localize "FQCARDENGINE.PassTo"}}</label>
+                    <select name="to" class="fq-play-select">
+                        {{selectOptions cards nameAttr="id" labelAttr="name" valueAttr="id"}}
+                    </select>
+                </div>
+            {{/if}}
+
+            {{!-- Choix d'effet --}}
+            {{#if severalChoices}}
+                <div class="fq-play-field">
+                    <label class="fq-play-label">{{localize "FQCARDENGINE.ChooseEffect"}}</label>
+                    <select name="nameContent" class="fq-play-select">
+                        {{selectOptions cardContents nameAttr="name" labelAttr="name" valueAttr="name"}}
+                    </select>
+                </div>
+            {{/if}}
+
+            {{!-- Variables X / Y --}}
+            {{#if hasVariables}}
+                <div class="fq-play-field fq-play-field--row">
+                    {{#if hasXVariable}}
+                        <label class="fq-play-label">X =
+                            <input class="fq-play-input" required type="number" name="XXX"/>
+                        </label>
+                    {{/if}}
+                    {{#if hasYVariable}}
+                        <label class="fq-play-label">Y =
+                            <input class="fq-play-input" required type="number" name="YYY"/>
+                        </label>
+                    {{/if}}
+                </div>
+            {{/if}}
+
+            {{!-- Placement de sbires --}}
+            {{#if minions}}
+                <div class="fq-play-field">
+                    <label class="fq-play-label">{{localize "FQCARDENGINE.InvokeMinion"}}</label>
+                    <div class="fq-play-minions">
+                        <input class="fq-play-minion-cb" type="checkbox" name="minionUp"/>
+                        <div class="fq-play-minion-row">
+                            <input class="fq-play-minion-cb" type="checkbox" name="minionLeft"/>
+                            <span class="fq-play-minion-center">
+              <svg viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="16">
+                <circle cx="7" cy="4" r="3" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M1 15c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="1.2"
+                      stroke-linecap="round"/>
+              </svg>
+            </span>
+                            <input class="fq-play-minion-cb" type="checkbox" name="minionRight"/>
+                        </div>
+                        <input class="fq-play-minion-cb" type="checkbox" name="minionDown"/>
+                    </div>
+                </div>
+            {{/if}}
+
+            {{!-- Compteur défausse --}}
+            <div class="fq-play-drop-count">
+                Score de défausse : <strong>{{actorFQ.cards.currentDrop}}</strong>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

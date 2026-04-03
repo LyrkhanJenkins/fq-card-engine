@@ -1,0 +1,28 @@
+<div>
+    <section class="item-section-fq">
+        <div class="fq-cost flexrow">
+            <div class="item-cost-fq action-cost flexcol">
+                <label data-tooltip="FQCARDENGINE.ActionPoints">{{ localize 'FQCARDENGINE.ShortActionPoints' }}</label>
+                {{numberInput system.fq.action name="system.fq.action"}}
+            </div>
+            <div class="item-cost-fq mana-cost flexcol">
+                <label>{{ localize 'FQCARDENGINE.ManaPoints' }}</label>
+                {{numberInput system.fq.mana name="system.fq.mana"}}
+            </div>
+            <div class="item-cost-fq zeal-cost flexcol">
+                <label>{{ localize 'FQCARDENGINE.ZealPoints' }}</label>
+                {{numberInput system.fq.zeal name="system.fq.zeal"}}
+            </div>
+            <div class="item-cost-fq flexcol">
+                <label data-tooltip="FQCARDENGINE.Drop">{{ localize 'FQCARDENGINE.ShortDrop' }}</label>
+                {{numberInput system.fq.drop name="system.fq.drop"}}
+            </div>
+            <div class="item-cost-fq hp-cost flexcol">
+                <label>{{ localize 'FQCARDENGINE.Life' }}</label>
+                <span>{{numberInput system.fq.hp name="system.fq.hp"}}</span>
+            </div>
+        </div>
+    </section>
+    {{> "src/templates/generic/tab-navigation.hbs" }}
+    <hr class="ampersand">
+</div>

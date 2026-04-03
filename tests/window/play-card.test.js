@@ -52,7 +52,7 @@ global.ChatMessage = {
     create: vi.fn().mockResolvedValue({id: "1234", content: "Mocked message"}),
     getSpeaker: vi.fn().mockResolvedValue({alias: "Test Character"}),
 };
-global.renderTemplate = async (template, data) => `<div>${template} - ${JSON.stringify(data)}</div>`;
+global.foundry.applications.handlebars.renderTemplate = async (template, data) => `<div>${template} - ${JSON.stringify(data)}</div>`;
 
 describe("PlayCard", () => {
     beforeEach(() => {

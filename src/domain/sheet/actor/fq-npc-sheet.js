@@ -8,11 +8,11 @@ export default class FqNpcSheet extends dnd5e.applications.actor.NPCActorSheet {
         ... dnd5e.applications.actor.NPCActorSheet.PARTS,
         ... {
             header: {
-                template: `modules/fq-card-engine/templates/actors/fq-npc-header.hbs`
+                template: `modules/fq-card-engine/src/templates/actors/fq-npc-header.hbs`
             },
             sidebar: {
                 container: {classes: ["main-content"], id: "main"},
-                template: `modules/fq-card-engine/templates/actors/fq-npc-sidebar.hbs`
+                template: `modules/fq-card-engine/src/templates/actors/fq-npc-sidebar.hbs`
             }
         }
     };

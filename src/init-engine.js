@@ -1,6 +1,6 @@
 // TODO Verifier les options
 import FqConstants from "./domain/utils/fq-constants.js";
-import FqHand from "./domain/window/fq-hand.js";
+import HandBoard from "./domain/board/hand-board.js";
 import DeckUtils, {PILE_TYPE} from "./domain/utils/deck-utils.js";
 import FQUtils from "./domain/utils/fq-utils.js";
 import PlayCard from "./domain/utils/play-card.js";
@@ -29,7 +29,7 @@ CONFIG.FqCardEngine = {
         size: "",
         positionDefault: "right_bar",
         cardClick: "play_card"
-    }, documentClass: FqHand
+    }, documentClass: HandBoard
 };
 
 window.FqCardEngineModule = {
@@ -187,7 +187,7 @@ window.FqCardEngineModule = {
         } else if (value > FqCardEngineModule.handMiniBarList.length) {
             let more = value - FqCardEngineModule.handMiniBarList.length;
             for (let i = 0; i < more; i++) {
-                FqCardEngineModule.handMiniBarList.push(new FqHand(FqCardEngineModule.handMiniBarList.length));
+                FqCardEngineModule.handMiniBarList.push(new HandBoard(FqCardEngineModule.handMiniBarList.length));
             }
         } else {//remove some may need additional cleanup
             let less = FqCardEngineModule.handMiniBarList.length - value;
@@ -386,7 +386,7 @@ window.FqCardEngineModule = {
             return;
         }
 
-        const html = await foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/templates/dialog-play.hbs", {
+        const html = await foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/dialog-play.hbs", {
             card,
             cards,
             hasSeveralTargets: cards.length > 1,
@@ -803,7 +803,17 @@ Hooks.on("ready", function () {
 
 Hooks.on("setup", function () {
     // Pre Load templates.
-    const templatePaths = ["modules/fq-card-engine/templates/actors/fq-character-sidebar.hbs", "modules/fq-card-engine/templates/actors/fq-npc-header.hbs", "modules/fq-card-engine/templates/actors/fq-npc-sidebar.hbs", "modules/fq-card-engine/templates/items/fq-item-tabs.hbs", "modules/fq-card-engine/templates/card.html", "modules/fq-card-engine/templates/chat-message.html", "modules/fq-card-engine/templates/dialog-play.hbs", "modules/fq-card-engine/templates/dialog-show.html", "modules/fq-card-engine/templates/empty-hand-message.html", "modules/fq-card-engine/templates/hand-container.html", "modules/fq-card-engine/templates/hand.html", "modules/fq-card-engine/templates/window-hand.html"];
+    const templatePaths = [
+        "modules/fq-card-engine/src/templates/actors/fq-character-sidebar.hbs",
+        "modules/fq-card-engine/src/templates/actors/fq-npc-header.hbs",
+        "modules/fq-card-engine/src/templates/actors/fq-npc-sidebar.hbs",
+        "modules/fq-card-engine/src/templates/items/fq-item-tabs.hbs",
+        "modules/fq-card-engine/src/templates/board/card.html",
+        "modules/fq-card-engine/src/templates/board/hand-container.html",
+        "modules/fq-card-engine/src/templates/board/hand.html",
+        "modules/fq-card-engine/src/templates/chat-message.html",
+        "modules/fq-card-engine/src/templates/dialog-play.hbs",
+        "modules/fq-card-engine/src/templates/empty-hand-message.html"];
 
     foundry.applications.handlebars.loadTemplates(templatePaths).then(() => {
         console.info("Better Hand templates preloaded");
@@ -832,7 +842,7 @@ Hooks.on("setup", function () {
     });
 
     // Creates the outer container
-    foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/templates/hand-container.html", {}).then(content => {
+    foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand-container.html", {}).then(content => {
         content = $(content);
         $("#ui-bottom").append(content);
         CONFIG.FqCardEngine.options.draggable = game.settings.get(FqCardEngineModule.moduleName, "Draggable");
@@ -849,7 +859,7 @@ Hooks.on("setup", function () {
             count = FqCardEngineModule.handMax;
         }
         for (let i = 0; i < count; i++) {
-            new FqHand(i);
+            new HandBoard(i);
         }
         if (game.settings.get(FqCardEngineModule.moduleName, "DisplayHandName") == true) {
             $("#fq-card-engine-container").addClass("show-names");

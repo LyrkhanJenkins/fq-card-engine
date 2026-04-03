@@ -1,39 +1,16 @@
 import {DECK_TYPE, SPELLBOOK_TYPE} from "../utils/deck-utils.js";
 
-export default class FqHand {
+export default class HandBoard {
     constructor(id) {
-        /**
-         * an integer to identify this hand so we can have multiple on the screen
-         */
         this.id = id;
-
-        /**
-         * current hand object from FoundryVTT (Cards Object)
-         */
         this.currentCards = undefined;
-
-        /**
-         * current user used to identify they user associated with the hand for GMs
-         */
         this.currentUser = undefined;
-
-        /**
-         * Wether or not this object is re-rendering
-         */
         this.updating = false;
-
-        /**
-         * HTML hook for this hand
-         */
         this.html = undefined;
-
-        /**
-         * GMs can have multiple hands for each player matching the bar on the players side
-         */
         this.playerBarCount = 0;
-
         let t = this;
-        foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/templates/hand.html", {
+
+        foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand.html", {
             id: this.id, manualActions: CONFIG.FqCardEngine.options.playerLimitCardsRight === false || game.user.isGM
         }).then(content => {
             content = $(content);
@@ -92,7 +69,6 @@ export default class FqHand {
         FqCardEngineModule.handMiniBarList.push(this);
     }
 
-    //renders the cards within the hand template
     renderCards(resolve) {
         let t = this;
         let length = 0;
@@ -131,7 +107,7 @@ export default class FqHand {
                     img: img,
                     name: (c.face !== null) ? c.name : game.i18n.localize("FQCARDENGINE.CardBack"),
                 };
-                foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/templates/card.html", renderData).then(content => {
+                foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/card.html", renderData).then(content => {
                     content = $(content);
                     content.click(function (e) {
                         t.cardClicked(e);
@@ -195,7 +171,7 @@ export default class FqHand {
             //check if player is selected but not a hand yet then display color and player name
             this.updateTitle();
             this.updatePlayerColor();
-            foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/templates/empty-hand-message.html", {}).then(content => {
+            foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/empty-hand-message.html", {}).then(content => {
                 $("#fq-card-engine-card-container-" + t.id).html(content);
                 t.updatePlayerColor();
             });
@@ -210,7 +186,6 @@ export default class FqHand {
         FqCardEngineModule.drop.call(this, event);
     }
 
-    //sets and renders the cards based on users choice
     setCardsOption(choice) {
         this.currentCards = choice;
         if (!choice) {
@@ -232,7 +207,6 @@ export default class FqHand {
         }
     }
 
-    //sets the user, only available to GMs
     setUserOption(choice) {
         this.currentUser = choice;
         this.storeUserID(this.currentUser._id ? this.currentUser._id : this.currentUser.data._id);
@@ -253,7 +227,6 @@ export default class FqHand {
         }
     }
 
-    //sets and renders the cards based on the id
     setCardsID(id) {
         if (!id) {
             this.currentCards = undefined;
@@ -268,7 +241,6 @@ export default class FqHand {
         }
     }
 
-    //sets and renders the cards based on the id
     setUserID(id) {
         if (!id) {
             this.currentUser = undefined;
@@ -426,7 +398,6 @@ export default class FqHand {
         });
     }
 
-    //Opens a Window with larger cards
     async openStackWindow() {
         if (this.currentCards == undefined) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoHandSelected"));
@@ -435,7 +406,6 @@ export default class FqHand {
         FqCardEngineModule.openHand(this.currentCards);
     }
 
-    //Opens a Window with larger cards
     async openDeck() {
         const userId = this.currentUser?._id ?? this.currentUser?.data?._id ?? game.userId;
         const deck = game.cards.find(c => c.system.fq.type === DECK_TYPE && c.ownership[userId] === 3);
@@ -458,7 +428,6 @@ export default class FqHand {
         }
     }
 
-    //Draws a card into this hand
     async drawCard() {
         if (this.currentCards == undefined) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoHandSelected"));
@@ -467,7 +436,6 @@ export default class FqHand {
         this.currentCards.drawDialog();
     }
 
-    //updates the title of the bar
     updateTitle() {
         let t = this;
         let handTitle = "";
@@ -509,7 +477,6 @@ export default class FqHand {
         this.playerBarCount = count;
     }
 
-    //Only tries to update the player color if GM this may change in the future
     updatePlayerColor() {
         if (game.user.isGM) {
             const panel = this.html?.[0]?.querySelector(".fq-hand-toolbar");
@@ -527,60 +494,50 @@ export default class FqHand {
         }
     }
 
-    //one of the cards was clicked, based on options pick what to do
     async cardClicked(e) {
         let id = $(e.target).closest("[data-card-id]").data("card-id");
         let card = this.currentCards.cards.get(id);
         FqCardEngineModule.cardClicked(this.currentCards, card);
     }
 
-    //Flip the card the player right clicked on
     async flipCard(e) {
         let id = $(e.target).closest("[data-card-id]").data("card-id");
         let card = this.currentCards.cards.get(id);
         FqCardEngineModule.flipCard(card);
     }
 
-    //Gets any stored CardsID
     restore() {
         this.setCardsID(this.getStoredCardsID());
         this.setUserID(this.getStoredUserID());
         this.update();
     }
 
-    //stores the current cards ID
     storeCardsID(id) {
         game.user.setFlag(FqCardEngineModule.moduleName, "CardsID-" + this.id, id);
     }
 
-    //reset the current cards ID
     resetCardsID() {
         game.user.unsetFlag(FqCardEngineModule.moduleName, "CardsID-" + this.id);
         this.currentCards = undefined;
     }
 
-    //gets the previously selected cards ID
     getStoredCardsID() {
         return game.user.getFlag(FqCardEngineModule.moduleName, "CardsID-" + this.id);
     }
 
-    //stores the User (for GMs)
     storeUserID(id) {
         game.user.setFlag(FqCardEngineModule.moduleName, "UserID-" + this.id, id);
     }
 
-    //reset the User (for GMs)
     resetUserID() {
         game.user.unsetFlag(FqCardEngineModule.moduleName, "UserID-" + this.id);
         this.currentUser = undefined;
     }
 
-    //gets the User (for GMs)
     getStoredUserID() {
         return game.user.getFlag(FqCardEngineModule.moduleName, "UserID-" + this.id);
     }
 
-    //Resets the Toolbar
     reset() {
         this.resetCardsID();
         this.resetUserID();
@@ -589,7 +546,6 @@ export default class FqHand {
         FqCardEngineModule.updatePlayerHandsDelayed();
     }
 
-    //Removes the html element from the screen
     remove() {
         if (this.html) {
             this.html.remove();
