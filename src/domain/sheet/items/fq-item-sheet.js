@@ -8,7 +8,7 @@ export default class FqItemSheet extends dnd5e.applications.item.ItemSheet5e {
         ... {
             tabs: {
                 template: `modules/fq-card-engine/src/templates/items/fq-item-tabs.hbs`,
-                templates: ["src/templates/generic/tab-navigation.hbs"]
+                templates: ["templates/generic/tab-navigation.hbs"]
             },
         }
     };

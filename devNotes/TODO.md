@@ -3,6 +3,8 @@
 ### Priorité
 Migration Foundry v14:
 - Ramener toutes les notes écrites
+- Afficher les ressources FQ Directement dans la play dialog et dans la hand-container
+- Mettre à jour avec les feuilles de persos dnd5 (5.3>)
 - Revoir css, homogeneiser fonts...
 - changer les noms des templates et supprimer l'inutile
 - Déplacer les templates

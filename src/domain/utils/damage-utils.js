@@ -8,7 +8,6 @@ import FqConstants, {
     SUCCESS_COLOR
 } from "./fq-constants.js";
 
-
 export default class DamageUtils {
     static async buildDamageDiceLauncher(actor, cardContent) {
         let damageFormula = DamageUtils.getDamageWithBonus(actor, cardContent.damage);

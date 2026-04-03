@@ -5,11 +5,11 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
 
     /** @override */
     static PARTS = {
-        header: {template: "src/templates/cards/deck/header.hbs"},
-        tabs: {template: "src/templates/generic/tab-navigation.hbs"},
-        details: {template: "src/templates/cards/deck/details.hbs"},
+        header: {template: "templates/cards/deck/header.hbs"},
+        tabs: {template: "templates/generic/tab-navigation.hbs"},
+        details: {template: "templates/cards/deck/details.hbs"},
         cards: {template: `modules/fq-card-engine/src/templates/cards/cards/cards.hbs`, scrollable: ["ol[data-cards]"]},
-        footer: {template: "src/templates/generic/form-footer.hbs"}
+        footer: {template: "templates/generic/form-footer.hbs"}
     };
 
     /** @inheritDoc */

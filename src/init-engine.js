@@ -480,7 +480,7 @@ window.FqCardEngineModule = {
 
     getCardContent(html, cardContents, cards) {
         const form = html.querySelector("form.cards-dialog");
-        let fde = new FormDataExtended(form);
+        let fde = new foundry.applications.ux.FormDataExtended(form);
         let fd = fde.object;
         if (!fd) {
             fd = fde.toObject();
