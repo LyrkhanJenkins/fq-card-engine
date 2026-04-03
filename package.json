@@ -30,13 +30,5 @@
   },
   "dependencies": {
     "fs-extra": "^11.2.0"
-  },
-  "jest": {
-    "setupFiles": [
-      "./jest.setup.js"
-    ],
-    "transform": {
-      "^.+\\.m?[tj]s$": "babel-jest"
-    }
   }
 }

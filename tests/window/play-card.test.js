@@ -1,14 +1,14 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
 import PlayCard from "../../src/domain/utils/play-card.js";
 
-vi.mock("../../src/fq-card-engine-module.js", () => ({
+vi.mock("../../src/hook/socket-lib.js", () => ({
     socket: {
         executeAsGM: vi.fn()
     }
 }));
 
 const FQUtils = await import("../../src/domain/utils/fq-utils.js");
-vi.mock("../../src/utils/fq-utils.js", () => ({
+vi.mock("../../src/domain/utils/fq-utils.js", () => ({
     default: {
         replaceCardContentAbilitiesBonus: vi.fn(),
         prepareDataFromCard: vi.fn(),
@@ -52,7 +52,6 @@ global.ChatMessage = {
     create: vi.fn().mockResolvedValue({id: "1234", content: "Mocked message"}),
     getSpeaker: vi.fn().mockResolvedValue({alias: "Test Character"}),
 };
-global.foundry.applications.handlebars.renderTemplate = async (template, data) => `<div>${template} - ${JSON.stringify(data)}</div>`;
 
 describe("PlayCard", () => {
     beforeEach(() => {

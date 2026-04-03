@@ -7,6 +7,11 @@ const mockField = () => vi.fn().mockImplementation((opts = {}) => ({...opts}));
 // ─── Foundry core — chargé une seule fois ────────────────────────────────────
 
 globalThis.foundry = {
+    applications: {
+        handlebars: {
+            renderTemplate : async (template, data) => `<div>${template} - ${JSON.stringify(data)}</div>`
+        }
+    },
     utils: {
         debounce: (fn, delay) => {
             let timer;
