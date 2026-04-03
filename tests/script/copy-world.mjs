@@ -1,4 +1,3 @@
-// scripts/e2e-run.mjs
 import {access, cp, rm} from "node:fs/promises";
 import {constants as FS} from "node:fs";
 import path from "node:path";

@@ -1,15 +1,15 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import FQUtils from "../../scripts/utils/fq-utils.js";
-import FxUtils from "../../scripts/utils/fx-utils.js";
+import FQUtils from "../../src/utils/fq-utils.js";
+import FxUtils from "../../src/utils/fx-utils.js";
 
-vi.mock("../../scripts/fq-card-engine-module.js", () => ({
+vi.mock("../../src/fq-card-engine-module.js", () => ({
     default: {},
     socket: {
         executeAsGM: vi.fn()
     }
 }));
 
-vi.mock("../../scripts/utils/consumption-utils.js", () => ({
+vi.mock("../../src/utils/consumption-utils.js", () => ({
     default: {
         consumeResources: vi.fn(),
         checkIfCanCardCanReachTargets: vi.fn(),
@@ -18,7 +18,7 @@ vi.mock("../../scripts/utils/consumption-utils.js", () => ({
     }
 }));
 
-vi.mock("../../scripts/utils/damage-utils.js", () => ({
+vi.mock("../../src/utils/damage-utils.js", () => ({
     default: {
         buildDamageDiceLauncher: vi.fn(async () => ([])),
         buildHealDiceLauncher: vi.fn(async () => ([])),
@@ -27,14 +27,14 @@ vi.mock("../../scripts/utils/damage-utils.js", () => ({
     }
 }));
 
-vi.mock("../../scripts/utils/fx-utils.js", () => ({
+vi.mock("../../src/utils/fx-utils.js", () => ({
     default: {
         handleSpecialEffect: vi.fn(),
         importMacroFromCompendium: vi.fn()
     }
 }));
 
-vi.mock("../../scripts/utils/canvas-utils.js", () => ({
+vi.mock("../../src/utils/canvas-utils.js", () => ({
     default: {
         locationIsOccupied: vi.fn(),
         getMinDistanceBetweenTwoToken: vi.fn()

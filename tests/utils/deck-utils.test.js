@@ -1,6 +1,6 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import DeckUtils, {SPELLBOOK_TYPE} from "../../scripts/utils/deck-utils.js";
-import FqConstants from "../../scripts/utils/fq-constants.js";
+import DeckUtils, {SPELLBOOK_TYPE} from "../../src/utils/deck-utils.js";
+import FqConstants from "../../src/utils/fq-constants.js";
 
 const createEmbeddedDocumentsMock = vi.fn();
 const deck = {

@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
-import CanvasUtils from "../../scripts/utils/canvas-utils.js";
+import CanvasUtils from "../../src/utils/canvas-utils.js";
 
 describe("CanvasUtils", () => {
     const token = {actorId: "charId", x: 5, y: 5};

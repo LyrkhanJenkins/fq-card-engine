@@ -6,14 +6,17 @@ Migration Foundry v14:
 - Revoir css, homogeneiser fonts...
 - changer les noms des templates et supprimer l'inutile
 - Repasser sur tous les TODO
-- Faire un point sur todos.
+- Faire un point sur todos.*
+- Passage en typescript
 - Couverture de test avec rapport > 80%
+- Rajouter des règles d'architectures
 - Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de
   fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
 - Script de migration json a ajouter avec fq-eizh-assets (est ce qu'on commence a y mettre les cartes?)
 
 ### Fix:
 
+- le hud ne fonctionne pas (render-token.js)
 - Migration 14: Problématique au niveau de la génération des decks:
     - Problématique sur blank world ?
     - Ajout de macros GM de génération de cartes pour les tests
@@ -49,6 +52,7 @@ Migration Foundry v14:
 
 ### Chore:
 
+- Mettre à jour readme et page Foundry
 - Migration Eizh complète avec les niveaux
 - Moulinette IA des visuels
 - Gestions des principales Custom eval dans des méthodes

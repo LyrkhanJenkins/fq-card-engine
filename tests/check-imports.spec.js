@@ -34,7 +34,7 @@ function checkImportsInFile(filePath) {
     return hasError;
 }
 
-function checkAllImports(baseDir = "./scripts") {
+function checkAllImports(baseDir = "./src") {
     const files = getJsFilesRecursive(baseDir);
     return files.some(file => checkImportsInFile(file));
 }

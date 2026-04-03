@@ -3,8 +3,6 @@
 
 The FQ Card Engine is a combat system for Final Quest 8 combined with DnD5e rules.
 
-Based on the work of Lyrkhan : FQ Card Engine (https://github.com/LyrkhanJenkins/fq-card-engine)
-
 ## Mandatory modules
 - socketlib https://foundryvtt.com/packages/socketlib
 - lib-wrapper https://foundryvtt.com/packages/lib-wrapper
@@ -43,7 +41,6 @@ Based on the work of Lyrkhan : FQ Card Engine (https://github.com/LyrkhanJenkins
 ![img_3.png](images/doc/create-decks.png)
 
 (Note: Decks are generated up to level 5. After that, decks are customizable and cannot be destroyed by the macros.)
-To display the hand, use the configuration from the FQ Card Engine. This module uses Lyrkhan’s work from the FQ Card Engine.!
 
 [img_5.png](images/doc/assign-hand-toolbar.png)
 

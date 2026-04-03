@@ -4,6 +4,7 @@ Feat :
 - Refonte de l'UI de la dialog pour jouer une carte
 Chore :
 - Montée de version 14.359 ... (en cours)
+- Refactorisation (en cours)
 
 v1.1.1:
 Chore :

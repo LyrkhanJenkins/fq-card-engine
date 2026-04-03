@@ -73,7 +73,6 @@
   "FQCARDENGINE.Reset": "Reset",
   "FQCARDENGINE.Shuffle": "Shuffle",
   "FQCARDENGINE.Draw": "Draw",
-  "FQCARDENGINE.FlipAllCards": "Flip All",
   "FQCARDENGINE.BarPositionDraggablePlayersSetting": "Draggable",
   "FQCARDENGINE.BarPositionAboveMacrosSetting": "Above Macros",
   "FQCARDENGINE.Move": "Move",
