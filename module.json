@@ -35,12 +35,9 @@
     "src/hook/item-use.js"
   ],
   "styles": [
-    {
-      "src": "styles/fq-card-engine.css"
-    },
-    {
-      "src": "styles/fq-dnd5e-sheet.css"
-    }
+    "styles/globals.css",
+    "styles/fq-card-engine.css",
+    "styles/fq-dnd5e-sheet.css"
   ],
   "socket": true,
   "url": "https://gitlab.com/final-quest/fq-card-engine",
@@ -67,6 +64,9 @@
         "id": "socketlib",
         "type": "module",
         "compatibility": {
+          "minimum": "1.1.0",
+          "verified": "1.1.4",
+          "maximum": "1.9.99"
         }
       },
       {

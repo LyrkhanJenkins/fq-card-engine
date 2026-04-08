@@ -16,6 +16,7 @@ Migration Foundry v14:
 - Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de
   fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
 - Script de migration json a ajouter avec fq-eizh-assets (est ce qu'on commence a y mettre les cartes?)
+- Redecoupage et vérification CSS
 
 ### Fix:
 

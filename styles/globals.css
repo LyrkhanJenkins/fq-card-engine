@@ -1,0 +1,23 @@
+:root {
+    --fq8-color-action-1: #333102;
+    --fq8-color-action-2: #e0d607;
+    --fq8-color-action-3: #7d7700;
+
+    --fq8-color-mana-1: #0c2759;
+    --fq8-color-mana-2: #4886f7;
+    --fq8-color-mana-3: #275dc2;
+
+    --fq8-color-zeal-1: #3b0909;
+    --fq8-color-zeal-2: #ed5555;
+    --fq8-color-zeal-3: #a12828;
+    --fq8-color-zeal-4: #b57878;
+
+    --fq8-color-critical: #eaa373;
+    --fq8-color-evasion: #62abd3;
+
+    --fq8-color-drop-1: #000000;
+
+    --fq8-color-hp-1: #123b09;
+    --fq8-color-hp-2: #4dd82b;
+    --fq8-color-hp-3: #33871b;
+}
