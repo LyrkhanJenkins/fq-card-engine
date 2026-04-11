@@ -188,7 +188,7 @@
 #fq-card-engine-container:not(.fq-card-engine-draggable) {
     position: fixed;
     left: 16px;
-    bottom: 74px;
+    bottom: 80px;
     align-items: flex-start;
     pointer-events: none;
 }
@@ -1324,39 +1324,6 @@ div.separator {
     min-width: 72px;
 }
 
-/*!* Couleurs par stat *!*/
-/*.fq-gauge-hp {*/
-/*    color: var(--fq8-color-hp-2);*/
-/*}*/
-
-/*.fq-gauge-action {*/
-/*    color: var(--fq8-color-action-2);*/
-/*}*/
-
-/*.fq-gauge-mana {*/
-/*    color: var(--fq8-color-mana-2);*/
-/*}*/
-
-/*.fq-gauge-zeal {*/
-/*    color: var(--fq8-color-zeal-2);*/
-/*}*/
-
-/*.fq-gauge-fill-hp {*/
-/*    color: var(--fq8-color-hp-1);*/
-/*}*/
-
-/*.fq-gauge-fill-action {*/
-/*    color: var(--fq8-color-action-1);*/
-/*}*/
-
-/*.fq-gauge-fill-mana {*/
-/*    color: var(--fq8-color-mana-1);*/
-/*}*/
-
-/*.fq-gauge-fill-zeal {*/
-/*    color: var(--fq8-color-zeal-1);*/
-/*}*/
-
 /* Couleurs par stat */
 .fq-gauge-hp {
     color: var(--fq8-color-hp-2);
@@ -1439,4 +1406,83 @@ div.separator {
     font-size: 20px;
     color: rgba(255, 255, 255, 0.5);
     letter-spacing: 0.06em;
+}
+
+.fq-toolbar-sep {
+    width: 2px;
+    height: 18px;
+    background: rgba(90, 66, 32, 0.35);
+    margin: 0 4px;
+    flex-shrink: 0;
+}
+
+.fq-char-gauges {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fq-cg-avatar-wrap {
+    flex-shrink: 0;
+}
+
+.fq-cg-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    object-fit: cover;
+    display: block;
+}
+
+.fq-cg-bars {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.fq-cg-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fq-cg-icon {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.fq-cg-track {
+    width: 70px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.fq-cg-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.fq-cg-val {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.35);
+    min-width: 28px;
+    height: 20px;
+    line-height: 1;
+}
+
+#fq-char-gauges-toggle {
+    transition: opacity 0.2s;
+}
+
+#fq-char-gauges-toggle:hover {
+    opacity: 1 !important;
 }

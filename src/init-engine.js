@@ -39,6 +39,46 @@ window.FqCardEngineModule = {
     eventName: "module.fq-card-engine",
     playerPlayedProp: "player-played",
     handMax: 10,
+    updateCharGauges: function () {
+        const character = game.user?.character;
+        const gauges    = document.getElementById("fq-char-gauges");
+        const toggle    = document.getElementById("fq-char-gauges-toggle");
+        if (!gauges) return;
+
+        const visible = game.settings.get(FqCardEngineModule.moduleName, "ShowCharGauges") ?? true;
+        gauges.style.display = (visible && character) ? "flex" : "none";
+        if (toggle) toggle.style.opacity = visible ? "1" : "0.35";
+
+        if (!character || !visible) return;
+
+        const avatar = document.getElementById("fq-cg-avatar");
+        if (avatar) avatar.src = character.img;
+
+        const set = (id, valId, value, max) => {
+            const pct  = max > 0 ? Math.round((value / max) * 100) : 0;
+            const fill = document.getElementById(id);
+            const val  = document.getElementById(valId);
+            if (fill) fill.style.width = pct + "%";
+            if (val)  val.textContent = `${value}/${max}`;
+        };
+
+        const hp     = character.system?.attributes?.hp;
+        const action = character.system?.fq?.action;
+        const mana   = character.system?.fq?.mana;
+        const zeal   = character.system?.fq?.zeal;
+
+        set("fq-cg-hp",     "fq-cg-hp-val",     hp?.value     ?? 0, hp?.max     ?? 1);
+        set("fq-cg-action", "fq-cg-action-val", action?.value  ?? 0, action?.max ?? 1);
+        set("fq-cg-mana",   "fq-cg-mana-val",   mana?.value    ?? 0, mana?.max   ?? 1);
+        set("fq-cg-zeal",   "fq-cg-zeal-val",   zeal?.value    ?? 0, zeal?.max   ?? 1);
+    },
+
+    toggleCharGauges: function () {
+        const current = game.settings.get(FqCardEngineModule.moduleName, "ShowCharGauges") ?? true;
+        game.settings.set(FqCardEngineModule.moduleName, "ShowCharGauges", !current).then(() => {
+            FqCardEngineModule.updateCharGauges();
+        });
+    },
     updateSize: function () {
         const slider = document.getElementById("fq-size-slider");
         const scale = slider ? parseFloat(slider.value) : 1.0;
@@ -410,6 +450,7 @@ window.FqCardEngineModule = {
             zealValue: character.system?.fq?.zeal?.value ?? 0,
             zealMax: character.system?.fq?.zeal?.max ?? 1,
             zealPct: Math.round(((character.system?.fq?.zeal?.value ?? 0) / (character.system?.fq?.zeal?.max ?? 1)) * 100),
+            currentDrop: character.system?.fq?.cards?.currentDrop ?? 0,
         } : null;
 
         const html = await foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/dialog-play.hbs", {
@@ -417,9 +458,8 @@ window.FqCardEngineModule = {
             cards,
             targets,
             charStats,
-            hasSeveralTargets: cards.length > 1,
+            hasSeveralTargets: targets.length > 1,
             cardContents,
-            actorFQ: FqConstants.actorFQ,
             hasVariables,
             hasXVariable,
             hasYVariable,
@@ -723,6 +763,12 @@ Hooks.on("init", function () {
         },
         filePicker: false,  // set true with a String `type` to use a file picker input
     });
+    game.settings.register(FqCardEngineModule.moduleName, "ShowCharGauges", {
+        scope: "client",
+        config: false,
+        type: Boolean,
+        default: true,
+    });
     game.settings.register(FqCardEngineModule.moduleName, "Draggable", {
         name: game.i18n.localize("FQCARDENGINE.DraggableSetting"),
         hint: game.i18n.localize("FQCARDENGINE.DraggableSettingHint"),
@@ -951,6 +997,19 @@ Hooks.on("setup", function () {
             }
         });
         FqCardEngineModule.restore();
+
+        FqCardEngineModule.updateCharGauges();
+        $(document).on("click", "#fq-char-gauges-toggle", () => {
+            FqCardEngineModule.toggleCharGauges();
+        });
+
+        Hooks.on("updateActor", (actor) => {
+            if (game.user?.character?.id === actor.id) {
+                FqCardEngineModule.updateCharGauges();
+            }
+        });
+        Hooks.on("controlToken", () => FqCardEngineModule.updateCharGauges());
+        
         FqCardEngineModule.updatePlayerHands();
 
         const savedScale = game.settings.get(FqCardEngineModule.moduleName, "HandScaleFloat") ?? 1.0;
