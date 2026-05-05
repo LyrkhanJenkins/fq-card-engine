@@ -17,6 +17,7 @@ Migration Foundry v14:
   fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
 - Script de migration json a ajouter avec fq-eizh-assets (est ce qu'on commence a y mettre les cartes?)
 - Redecoupage et vérification CSS
+- Supprimer la notion de joueur par main?
 
 ### Fix:
 
