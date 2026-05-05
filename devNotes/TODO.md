@@ -20,6 +20,7 @@ Migration Foundry v14:
 
 ### Fix:
 
+- Problème avec la largeur des mains
 - le hud ne fonctionne pas (render-token.js)
 - Migration 14: Problématique au niveau de la génération des decks:
     - Problématique sur blank world ?
