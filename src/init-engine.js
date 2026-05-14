@@ -376,12 +376,12 @@ window.FqCardEngineModule = {
     },
 
     //one of the cards was clicked, based on options pick what to do
-    cardClicked: async function (cards, card) {
+    cardClicked: async function (currentCards, card) {
         let option = CONFIG.FqCardEngine.options.cardClick;
         if (option === "play_card") {
-            this.playDialog(cards, card);
+            this.playDialog(currentCards, card);
         } else if (option === "open_hand") {
-            this.openHand(cards);
+            this.openHand(currentCards);
         } else if (option === "card_image") {
             this.showCardImage(card);
         }
@@ -400,9 +400,9 @@ window.FqCardEngineModule = {
         const handCards = [...currentCards.cards].sort(FqCardEngineModule.cardSort); // toutes les cartes de la main courante
         const currentIndex = handCards.findIndex(c => c.id === card.id);
 
-        const cards = game.cards.filter(c => (c !== currentCards) && (c.system.fq.type === PILE_TYPE) && c.testUserPermission(game.user, "LIMITED"));
+        const discards = game.cards.filter(c => (c !== currentCards) && (c.system.fq.type === PILE_TYPE) && c.testUserPermission(game.user, "LIMITED"));
 
-        if (!cards.length) return ui.notifications.warn("FQCARDENGINE.WarningPileMissingForPlayer", {localize: true});
+        if (!discards.length) return ui.notifications.warn("FQCARDENGINE.WarningPileMissingForPlayer", {localize: true});
         if (currentCards.permission !== CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {
             return ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoPermission"));
         }
@@ -455,10 +455,10 @@ window.FqCardEngineModule = {
 
         const html = await foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/dialog-play.hbs", {
             card,
-            cards,
+            discards,
             targets,
             charStats,
-            hasSeveralTargets: targets.length > 1,
+            hasSeveralDiscards: discards.length > 1,
             cardContents,
             hasVariables,
             hasXVariable,
@@ -475,7 +475,7 @@ window.FqCardEngineModule = {
                 icon: `<i class="fas fa-bolt"></i>`,
                 label: game.i18n.localize("FQCARDENGINE.PlayCard"),
                 callback: html => {
-                    const {to, fd, cardContent} = this.getCardContent(html[0], cardContents, cards);
+                    const {to, fd, cardContent} = this.getCardContent(html[0], cardContents, discards);
                     if (firstChoice.minions?.length && firstChoice.minions.length !== FQUtils.getNbValideMinionLocationSelected(fd)) {
                         throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorMinionLocation"));
                     }
@@ -498,7 +498,7 @@ window.FqCardEngineModule = {
                     icon: `<i class="fas fa-trash"></i>`,
                     label: game.i18n.localize("FQCARDENGINE.DiscardCard"),
                     callback: html => {
-                        const {to, fd, cardContent} = this.getCardContent(html[0], cardContents, cards);
+                        const {to, fd, cardContent} = this.getCardContent(html[0], cardContents, discards);
                         PlayCard.discardCard(to, fd, cardContent, card, currentCards);
                     }
                 }
@@ -546,15 +546,15 @@ window.FqCardEngineModule = {
 
     },
 
-    getCardContent(html, cardContents, cards) {
+    getCardContent(html, cardContents, discards) {
         const form = html.querySelector("form.cards-dialog");
         let fde = new foundry.applications.ux.FormDataExtended(form);
         let fd = fde.object;
         if (!fd) {
             fd = fde.toObject();
         }
-        let to = cards[0];
-        if (cards.length > 1) {
+        let to = discards[0];
+        if (discards.length > 1) {
             to = game.cards.get(fd.to);
         }
         const cardContent = cardContents.length === 1 ? cardContents[0] : cardContents.filter(cc => cc.name === fd.nameContent)[0];

@@ -121,11 +121,11 @@
             {{/if}}
 
             {{!-- Cible --}}
-            {{#if hasSeveralTargets}}
+            {{#if hasSeveralDiscards}}
                 <div class="fq-play-field">
                     <label class="fq-play-label">{{localize "FQCARDENGINE.PassTo"}}</label>
                     <select name="to" class="fq-play-select">
-                        {{selectOptions cards nameAttr="id" labelAttr="name" valueAttr="id"}}
+                        {{selectOptions discards nameAttr="id" labelAttr="name" valueAttr="id"}}
                     </select>
                 </div>
             {{/if}}
