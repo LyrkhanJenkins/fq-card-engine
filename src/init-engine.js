@@ -41,8 +41,8 @@ window.FqCardEngineModule = {
     handMax: 10,
     updateCharGauges: function () {
         const character = game.user?.character;
-        const gauges    = document.getElementById("fq-char-gauges");
-        const toggle    = document.getElementById("fq-char-gauges-toggle");
+        const gauges = document.getElementById("fq-char-gauges");
+        const toggle = document.getElementById("fq-char-gauges-toggle");
         if (!gauges) return;
 
         const visible = game.settings.get(FqCardEngineModule.moduleName, "ShowCharGauges") ?? true;
@@ -55,22 +55,22 @@ window.FqCardEngineModule = {
         if (avatar) avatar.src = character.img;
 
         const set = (id, valId, value, max) => {
-            const pct  = max > 0 ? Math.round((value / max) * 100) : 0;
+            const pct = max > 0 ? Math.round((value / max) * 100) : 0;
             const fill = document.getElementById(id);
-            const val  = document.getElementById(valId);
+            const val = document.getElementById(valId);
             if (fill) fill.style.width = pct + "%";
-            if (val)  val.textContent = `${value}/${max}`;
+            if (val) val.textContent = `${value}/${max}`;
         };
 
-        const hp     = character.system?.attributes?.hp;
+        const hp = character.system?.attributes?.hp;
         const action = character.system?.fq?.action;
-        const mana   = character.system?.fq?.mana;
-        const zeal   = character.system?.fq?.zeal;
+        const mana = character.system?.fq?.mana;
+        const zeal = character.system?.fq?.zeal;
 
-        set("fq-cg-hp",     "fq-cg-hp-val",     hp?.value     ?? 0, hp?.max     ?? 1);
-        set("fq-cg-action", "fq-cg-action-val", action?.value  ?? 0, action?.max ?? 1);
-        set("fq-cg-mana",   "fq-cg-mana-val",   mana?.value    ?? 0, mana?.max   ?? 1);
-        set("fq-cg-zeal",   "fq-cg-zeal-val",   zeal?.value    ?? 0, zeal?.max   ?? 1);
+        set("fq-cg-hp", "fq-cg-hp-val", hp?.value ?? 0, hp?.max ?? 1);
+        set("fq-cg-action", "fq-cg-action-val", action?.value ?? 0, action?.max ?? 1);
+        set("fq-cg-mana", "fq-cg-mana-val", mana?.value ?? 0, mana?.max ?? 1);
+        set("fq-cg-zeal", "fq-cg-zeal-val", zeal?.value ?? 0, zeal?.max ?? 1);
     },
 
     toggleCharGauges: function () {
@@ -476,9 +476,17 @@ window.FqCardEngineModule = {
                 label: game.i18n.localize("FQCARDENGINE.PlayCard"),
                 callback: html => {
                     const {to, fd, cardContent} = this.getCardContent(html[0], cardContents, discards);
-                    if (firstChoice.minions?.length && firstChoice.minions.length !== FQUtils.getNbValideMinionLocationSelected(fd)) {
+
+                    const nbSelectedMinionLocations = FQUtils.getNbMinionLocationSelected(fd);
+                    const nbValideMinionLocations = FQUtils.getNbValideMinionLocationSelected(fd);
+
+                    if (firstChoice.minions?.length &&
+                        ((nbSelectedMinionLocations === 0) ||
+                            (firstChoice.minions?.length < nbValideMinionLocations) ||
+                            (nbSelectedMinionLocations !== nbValideMinionLocations))) {
                         throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorMinionLocation"));
                     }
+
                     if (fd.XXX === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorXXX"));
                     if (fd.YYY === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorYYY"));
                     if (cardContents.length > 1) {
@@ -1009,7 +1017,7 @@ Hooks.on("setup", function () {
             }
         });
         Hooks.on("controlToken", () => FqCardEngineModule.updateCharGauges());
-        
+
         FqCardEngineModule.updatePlayerHands();
 
         const savedScale = game.settings.get(FqCardEngineModule.moduleName, "HandScaleFloat") ?? 1.0;

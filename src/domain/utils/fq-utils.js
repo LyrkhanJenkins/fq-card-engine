@@ -576,6 +576,14 @@ export default class FQUtils {
             (fd.minionRight && !CanvasUtils.locationIsOccupied("right") ? 1 : 0);
     }
 
+    static getNbMinionLocationSelected(fd) {
+        return (fd.minionUp ? 1 : 0) +
+            (fd.minionDown ? 1 : 0) +
+            (fd.minionLeft ? 1 : 0) +
+            (fd.minionRight ? 1 : 0);
+    }
+
+
     static getTempActorFolder() {
         return game.folders.find(fol => fol.type === "Actor" && fol.name === "Temporaire");
     }

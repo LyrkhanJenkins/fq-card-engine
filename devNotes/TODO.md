@@ -62,6 +62,7 @@ Migration Foundry v14:
 
 ### Medium:
 
+- Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens
 - Gladiateur -> resource spécial pour les armes?, renommer en maître d'armes
 - Gérer un nombre d'utilisation pour des armes.
 - Gérer du ciblage speciale : Zone
