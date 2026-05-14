@@ -1,7 +1,5 @@
-2026/03/28-07:34:08.054 3938 Recovering log #26
-2026/03/28-07:34:08.206 3938 Delete type=0 #26
-2026/03/28-07:34:08.206 3938 Delete type=3 #24
-2026/03/28-07:34:28.809 34ec Level-0 table #32: started
-2026/03/28-07:34:28.810 34ec Level-0 table #32: 0 bytes OK
-2026/03/28-07:34:28.885 34ec Delete type=0 #30
-2026/03/28-07:34:28.951 34ec Manual compaction at level-0 from '!macros!2jcHuFlVw7JqnznF' @ 72057594037927935 : 1 .. '!macros!pi5l0hbWIyesEJHn' @ 0 : 0; will stop at (end)
+2026/05/14-11:04:27.789 2d20 Log #35: 0 ops saved to Table #36 OK
+2026/05/14-11:04:27.790 2d20 Archiving F:/Documents/FoundryVTT/Data/worlds/blank-world/data/macros/000035.log: OK
+2026/05/14-11:04:27.805 2d20 Table #28: 8 entries OK
+2026/05/14-11:04:27.899 2d20 Archiving F:/Documents/FoundryVTT/Data/worlds/blank-world/data/macros/MANIFEST-000033: OK
+2026/05/14-11:04:27.974 2d20 **** Repaired leveldb F:/Documents/FoundryVTT/Data/worlds/blank-world/data/macros; recovered 1 files; 2384 bytes. Some data may have been lost. ****

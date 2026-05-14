@@ -1,14 +1,5 @@
-2026/03/28-07:34:08.582 3938 Recovering log #39
-2026/03/28-07:34:08.732 3938 Delete type=0 #39
-2026/03/28-07:34:08.732 3938 Delete type=3 #37
-2026/03/28-07:34:29.177 34ec Level-0 table #45: started
-2026/03/28-07:34:29.243 34ec Level-0 table #45: 9097 bytes OK
-2026/03/28-07:34:29.318 34ec Delete type=0 #43
-2026/03/28-07:34:29.393 34ec Manual compaction at level-0 from '!scenes!Pl5kNER7PeAwjkHI' @ 72057594037927935 : 1 .. '!scenes.tokens.delta!Pl5kNER7PeAwjkHI.vYgjzgbl9k9V1UsC.vYgjzgbl9k9V1UsC' @ 0 : 0; will stop at '!scenes.tokens.delta!Pl5kNER7PeAwjkHI.vYgjzgbl9k9V1UsC.vYgjzgbl9k9V1UsC' @ 277 : 1
-2026/03/28-07:34:29.393 34ec Compacting 1@0 + 1@1 files
-2026/03/28-07:34:29.569 34ec Generated table #46@0: 18 keys, 9097 bytes
-2026/03/28-07:34:29.569 34ec Compacted 1@0 + 1@1 files => 9097 bytes
-2026/03/28-07:34:29.718 34ec compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/03/28-07:34:29.718 34ec Delete type=2 #41
-2026/03/28-07:34:29.718 34ec Delete type=2 #45
-2026/03/28-07:34:30.243 34ec Manual compaction at level-0 from '!scenes.tokens.delta!Pl5kNER7PeAwjkHI.vYgjzgbl9k9V1UsC.vYgjzgbl9k9V1UsC' @ 277 : 1 .. '!scenes.tokens.delta!Pl5kNER7PeAwjkHI.vYgjzgbl9k9V1UsC.vYgjzgbl9k9V1UsC' @ 0 : 0; will stop at (end)
+2026/05/14-11:04:28.877 2d20 Log #49: 0 ops saved to Table #50 OK
+2026/05/14-11:04:28.878 2d20 Archiving F:/Documents/FoundryVTT/Data/worlds/blank-world/data/scenes/000049.log: OK
+2026/05/14-11:04:28.879 2d20 Table #46: 18 entries OK
+2026/05/14-11:04:28.998 2d20 Archiving F:/Documents/FoundryVTT/Data/worlds/blank-world/data/scenes/MANIFEST-000047: OK
+2026/05/14-11:04:29.074 2d20 **** Repaired leveldb F:/Documents/FoundryVTT/Data/worlds/blank-world/data/scenes; recovered 1 files; 9097 bytes. Some data may have been lost. ****

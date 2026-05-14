@@ -63,8 +63,6 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
-    width: 100%;
-    pointer-events: all;
     overflow: visible;
     padding-top: var(--fq-overflow);
     padding-bottom: 4px;
@@ -253,10 +251,8 @@
 .fq-card-engine-hand {
     display: flex;
     flex-direction: column;
-    pointer-events: all;
     position: relative;
     color: var(--fq-gold-light);
-    width: 100vw;
     max-height: none !important;
     margin: 0 !important;
 }
@@ -326,6 +322,8 @@
     align-items: stretch;
     overflow: visible;
     position: relative;
+    width: fit-content;
+    pointer-events: all;
     /* Hauteur fixe — identique avec ou sans cartes */
     height: var(--fq-panel-h);
     min-height: var(--fq-panel-h);

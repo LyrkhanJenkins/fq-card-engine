@@ -1,7 +1,4 @@
-2026/03/28-07:34:07.872 48c Recovering log #3
-2026/03/28-07:34:08.039 48c Delete type=0 #3
-2026/03/28-07:34:08.039 48c Delete type=3 #1
-2026/03/28-07:34:28.660 34ec Level-0 table #8: started
-2026/03/28-07:34:28.660 34ec Level-0 table #8: 0 bytes OK
-2026/03/28-07:34:28.809 34ec Delete type=0 #6
-2026/03/28-07:34:28.951 34ec Manual compaction at level-0 from 'undefined' @ 72057594037927935 : 1 .. 'undefined' @ 0 : 0; will stop at (end)
+2026/05/14-11:04:27.463 3abc Log #11: 0 ops saved to Table #12 OK
+2026/05/14-11:04:27.464 3abc Archiving F:/Documents/FoundryVTT/Data/worlds/blank-world/data/journal/000011.log: OK
+2026/05/14-11:04:27.532 3abc Archiving F:/Documents/FoundryVTT/Data/worlds/blank-world/data/journal/MANIFEST-000009: OK
+2026/05/14-11:04:27.599 3abc **** Repaired leveldb F:/Documents/FoundryVTT/Data/worlds/blank-world/data/journal; recovered 0 files; 0 bytes. Some data may have been lost. ****
