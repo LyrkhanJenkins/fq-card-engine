@@ -2,6 +2,7 @@
 
 ### Priorité
 Migration Foundry v14:
+- Besoin de gros tests de non regression de partout + avec toutes les cartes?
 - Ramener toutes les notes écrites
 - Revoir css, homogeneiser fonts...
 - changer les noms des templates et supprimer l'inutile

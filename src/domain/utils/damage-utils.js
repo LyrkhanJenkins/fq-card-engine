@@ -7,6 +7,7 @@ import FqConstants, {
     HEAL_COLOR,
     SUCCESS_COLOR
 } from "./fq-constants.js";
+import CanvasUtils from "./canvas-utils.js";
 
 export default class DamageUtils {
     static async buildDamageDiceLauncher(actor, cardContent) {
