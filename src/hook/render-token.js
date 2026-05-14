@@ -96,13 +96,11 @@ function addDamageButton(column, token) {
     bouton.dataset.tooltip = game.i18n.localize("FQCARDENGINE.TokenDamageButton");
     bouton.innerHTML = `<img src="icons/svg/sword.svg" width="36" height="36">`;
     bouton.addEventListener("click", async () => {
-        if (ConsumptionUtils.validateUseSpellInTurn(actor)) {
+        if (!ConsumptionUtils.validateUseSpellInTurn(actor)) {
             return;
         }
         const armes = actor.items.filter(i => i.type === "weapon" && i.system.equipped);
-
         if (!armes.length) return ui.notifications.warn(game.i18n.localize("FQCARDENGINE.TokenDamageNoWeaponWarningMsg"));
-
         for (let arme of armes) {
             arme.use();
         }

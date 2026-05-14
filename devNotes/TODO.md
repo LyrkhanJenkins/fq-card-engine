@@ -3,8 +3,6 @@
 ### Priorité
 Migration Foundry v14:
 - Ramener toutes les notes écrites
-- Afficher les ressources FQ Directement dans la play dialog et dans la hand-container
-- Mettre à jour avec les feuilles de persos dnd5 (5.3>)
 - Revoir css, homogeneiser fonts...
 - changer les noms des templates et supprimer l'inutile
 - Déplacer les templates
@@ -18,15 +16,6 @@ Migration Foundry v14:
 - Script de migration json a ajouter avec fq-eizh-assets (est ce qu'on commence a y mettre les cartes?)
 - Redecoupage et vérification CSS
 - Supprimer la notion de joueur par main?
-
-### Fix:
-
-- Problème avec la largeur des mains
-- le hud ne fonctionne pas (render-token.js)
-- Migration 14: Problématique au niveau de la génération des decks:
-    - Problématique sur blank world ?
-    - Ajout de macros GM de génération de cartes pour les tests
-    - Ajout de test
 
 ### Feature:
 
