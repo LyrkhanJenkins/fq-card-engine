@@ -166,7 +166,7 @@ window.FqCardEngineModule = {
         const onMove = (e) => {
             const sidebarW = 56 + 16;                         // 2×28px + 2×8px padding zone
             const availableW = panel.getBoundingClientRect().width - sidebarW;
-            const activateScrollPct = 0.65;
+            const activateScrollPct = 0.5;
             const maxOffset = availableW - (e.clientX * activateScrollPct);
 
             if (maxOffset <= 0) {

@@ -445,7 +445,7 @@
     border: none !important;
     background: none !important;
     box-shadow: none !important;
-    padding-left: calc(20px * var(--fq-scale));
+    padding-left: calc(28px * var(--fq-scale));
 }
 
 /* Message main vide — même hauteur que les mains avec cartes */
