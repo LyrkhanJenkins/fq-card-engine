@@ -183,10 +183,19 @@
     width: 100px;
 }
 
+/* ── Override player ui to not overflow #fq-card-engine-container ── */
+#players {
+    height: 75px;
+    overflow-y: scroll;
+    overflow-x: clip;
+    width: fit-content;
+    gap: 0
+}
+
 #fq-card-engine-container:not(.fq-card-engine-draggable) {
     position: fixed;
     left: 16px;
-    bottom: 80px;
+    bottom: 95px;
     align-items: flex-start;
     pointer-events: none;
 }
