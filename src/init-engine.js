@@ -163,38 +163,23 @@ window.FqCardEngineModule = {
             }
         };
 
-        const getMaxOffset = () => {
-            const cards = zone.querySelectorAll(".fq-card, .fq-card-engine-card");
-            if (!cards.length) return 0;
-
-            // Calcul mathématique depuis les variables CSS — pas de mesure DOM instable
-            const container = document.getElementById("fq-card-engine-container");
-            const scale = parseFloat(getComputedStyle(container).getPropertyValue("--fq-scale")) || 1;
-            const cardW = 94 * scale;                        // --fq-card-w
-            const effective = cardW * (1 - 0.05);                // overlap 5%
-            const contentW = cardW + (cards.length - 1) * effective;
-
+        const onMove = (e) => {
             const sidebarW = 56 + 16;                         // 2×28px + 2×8px padding zone
             const availableW = panel.getBoundingClientRect().width - sidebarW;
+            const activateScrollPct = 0.65;
+            const maxOffset = availableW - (e.clientX * activateScrollPct);
 
-            return Math.max(0, contentW - availableW);
-        };
-
-        const onMove = (e) => {
-            const maxOffset = getMaxOffset();
             if (maxOffset <= 0) {
                 targetX = 0;
             } else {
-                const rect = panel.getBoundingClientRect();
-                const pct = (e.clientX - rect.left) / rect.width;
+                const pct = e.clientX / window.innerWidth;
 
-                if (pct <= 0.45) {
-                    // Moitié gauche : position neutre
+                if (pct <= activateScrollPct) {
                     targetX = 0;
                 } else {
-                    // Moitié droite : scroll de 0 à -maxOffset
-                    const rightPct = (pct - 0.45) / 0.45; // remappe 0.5-1 → 0-1
-                    targetX = -(rightPct * maxOffset);
+                    const rightPct = (pct - activateScrollPct) / (1 - activateScrollPct);
+                    const eased = (1 - Math.cos(rightPct * Math.PI)) / 2; // ease-in-out, pic à 0.5
+                    targetX = -(eased * maxOffset);
                 }
             }
             if (!rafId) rafId = requestAnimationFrame(tick);

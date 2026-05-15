@@ -2,6 +2,7 @@
 
 ### Priorité
 Migration Foundry v14:
+- Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Besoin de gros tests de non regression de partout + avec toutes les cartes?
 - Ramener toutes les notes écrites
 - Revoir css, homogeneiser fonts...
@@ -21,6 +22,8 @@ Migration Foundry v14:
 ### Feature:
 
 - Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
+- Ajouter du ciblage si oublié dans la dialog-play?
+- Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
 
 - Refonte des cartes : 
     - Nouveau générateur de cartes pour remplacer Word? (pas sur)
@@ -43,7 +46,6 @@ Migration Foundry v14:
     - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
           d'actions/mana/pioches?)
 - Ajout de spécialisation pour les 7 classes jusqu'au niveau 10
-- Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
 - Prise en compte des resistances
 
 ### Chore:
