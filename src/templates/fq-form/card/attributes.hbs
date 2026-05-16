@@ -11,6 +11,9 @@
         <label>{{localize "FQCARDENGINE.CardFQBaseShort"}}</label>
         {{formInput fields.fq.fields.isBase value=source.system.fq.isBase name="system.fq.isBase"
                     rootId=rootId}}
+        <label>{{localize "FQCARDENGINE.Class"}}</label>
+        {{formInput fields.fq.fields.class value=source.system.fq.class name="system.fq.class"
+                    rootId=rootId}}
     </div>
     {{#each source.system.fq.choices as |choice i|}}
         <fieldset data-choice data-index="{{i}}">

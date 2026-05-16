@@ -9,10 +9,21 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static DEFAULT_ICON = "icons/consumables/drinks/alcohol-beer-mug-yellow.webp";
     static TARGET_TYPE_SKELETON = "Skeletons";
     static TARGET_TYPE_DEFAULT = "Default";
+    static NEUTRAL_CLASS = "neutral";
     // TODO A localisé?
     static TARGET_TYPE_CHOICE = {
         "Default": this.TARGET_TYPE_DEFAULT,
         "Skeletons": this.TARGET_TYPE_SKELETON
+    };
+    static CLASS_CHOICE = {
+        "neutral": this.NEUTRAL_CLASS,
+        "elementalist": "elementalist",
+        "guardian": "guardian",
+        "illusionist": "illusionist",
+        "monk": "monk",
+        "trapper": "trapper",
+        "white-mage": "white-mage",
+        "witch": "witch"
     };
 
     /** @inheritdoc */
@@ -20,6 +31,11 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         return {
             fq: new SchemaField({
                 maxSameCard: new NumberField({required: true, label: "FQCARDENGINE.MaxSameCard"}),
+                class: new StringField({
+                    required: true, label: "FQCARDENGINE.Class",
+                    choices: this.CLASS_CHOICE,
+                    initial: () => this.NEUTRAL_CLASS
+                }),
                 level: new NumberField({required: true, label: "FQCARDENGINE.CardLevel"}),
                 isBase: new BooleanField({required: true, label: "FQCARDENGINE.CardFQBase"}),
                 choices: new ArrayField(this.getChoiceSchema())

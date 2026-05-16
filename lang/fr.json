@@ -328,6 +328,7 @@
   "FQCARDENGINE.SacrificedScoreSkeletonMsg": "Votre score de sacrifice est à {sacrifice}",
   "FQCARDENGINE.TokenDamageButton": "Appliquer les dégâts des armes équipés",
   "FQCARDENGINE.TokenDamageNoWeaponWarningMsg": "⚠️ Aucune arme équipée !",
+  "FQCARDENGINE.Class": "Classe",
 
 
   "FQCARDTITLE.Fireball" : "Boule de feu",

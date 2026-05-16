@@ -100,6 +100,7 @@ export default class HandBoard {
                     minReach : DisplayCard.getFirstNumberForCardSvg(cardContent.minReach),
                     maxReach : DisplayCard.getFirstNumberForCardSvg(cardContent.maxReach),
                     maxSameCard : c.system.fq?.maxSameCard,
+                    fqClass : c.system.fq?.class,
                     hasBeenPlayed: cardContent?.hasBeenPlayed,
                     hasBeenPlayedOnRound: cardContent?.playedRound && cardContent?.playedRound?.toString() === game.combat?.round?.toString(),
                     isFQBase: c.system?.fq?.isBase,

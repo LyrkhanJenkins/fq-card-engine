@@ -326,7 +326,7 @@
   "FQCARDENGINE.SacrifySkeletonMsg": "Skeleton has been sacrificed, your sacrifice score is {sacrifice}",
   "FQCARDENGINE.TokenDamageButton": "Apply weapon damage",
   "FQCARDENGINE.TokenDamageNoWeaponWarningMsg": "⚠️ No weapon equipped !",
-
+  "FQCARDENGINE.Class": "Class",
 
   "FQCARDTITLE.Fireball" : "Fireball",
   "FQCARDDESCRIPTION.Fireball" : "Deals 4 + @int + 1d8 damage.\n\n1d2 chance to burn the target, dealing 3 damage over 3 turns (stackable up to 2 times).\n",

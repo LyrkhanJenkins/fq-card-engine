@@ -4,16 +4,6 @@
     <defs>
 
         <!-- Background textures -->
-        <linearGradient id="headerGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#a6cf63"></stop>
-            <stop offset="100%" stop-color="#4f9b63"></stop>
-        </linearGradient>
-
-        <linearGradient id="boxGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#a8d968"></stop>
-            <stop offset="100%" stop-color="#4d8c5d"></stop>
-        </linearGradient>
-
         <radialGradient id="goldMana">
             <stop offset="0%" stop-color="#ffe7a3"></stop>
             <stop offset="100%" stop-color="#d29012"></stop>
@@ -33,25 +23,52 @@
             <stop offset="0%" stop-color="#ffffff"></stop>
             <stop offset="100%" stop-color="#9f968d"></stop>
         </radialGradient>
+        <pattern id="neutral" patternUnits="userSpaceOnUse" width="500" height="500">
+            <image href="modules/fq-card-engine/images/cards/texture/neutral.png" x="0" y="0" width="500"
+                   height="500" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+
+        <pattern id="elementalist" patternUnits="userSpaceOnUse" width="500" height="500">
+            <image href="modules/fq-card-engine/images/cards/texture/elementalist.png" x="0" y="0" width="500"
+                   height="500" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+
+        <pattern id="guardian" patternUnits="userSpaceOnUse" width="500" height="500">
+            <image href="modules/fq-card-engine/images/cards/texture/guardian.png" x="0" y="0" width="500"
+                   height="500" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+
+        <pattern id="illusionist" patternUnits="userSpaceOnUse" width="500" height="500">
+            <image href="modules/fq-card-engine/images/cards/texture/illusionist.png" x="0" y="0" width="500"
+                   height="500" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+
+        <pattern id="monk" patternUnits="userSpaceOnUse" width="500" height="500">
+            <image href="modules/fq-card-engine/images/cards/texture/monk.png" x="0" y="0" width="500"
+                   height="500" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+
+        <pattern id="trapper" patternUnits="userSpaceOnUse" width="500" height="500">
+            <image href="modules/fq-card-engine/images/cards/texture/trapper.png" x="0" y="0" width="500"
+                   height="500" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+        <pattern id="white-mage" patternUnits="userSpaceOnUse" width="500" height="500">
+            <image href="modules/fq-card-engine/images/cards/texture/white-mage.png" x="0" y="0" width="500"
+                   height="500" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+
+        <pattern id="witch" patternUnits="userSpaceOnUse" width="500" height="500">
+            <image href="modules/fq-card-engine/images/cards/texture/witch.png" x="0" y="0" width="500"
+                   height="500" preserveAspectRatio="xMidYMid slice"/>
+        </pattern>
+
+
         <pattern id="{{ img }}"
                  patternUnits="userSpaceOnUse"
                  width="500"
                  height="500">
 
             <image href="{{ img }}"
-                   x="0"
-                   y="0"
-                   width="500"
-                   height="500"
-                   preserveAspectRatio="xMidYMid slice"/>
-        </pattern>
-
-        <pattern id="imgBackgroundPattern"
-                 patternUnits="userSpaceOnUse"
-                 width="500"
-                 height="500">
-
-            <image href="modules/fq-card-engine/images/texture_bleue.png"
                    x="0"
                    y="0"
                    width="500"
@@ -66,7 +83,7 @@
           stroke-width="2"></rect>
 
     <!-- Header -->
-    <rect x="24" y="20" width="460" height="70" rx="24" fill="url(#imgBackgroundPattern)"
+    <rect x="24" y="20" width="460" height="70" rx="24" fill="url(#{{ fqClass }})"
           stroke="#1b1b1b"
           stroke-width="4"></rect>
 
@@ -107,20 +124,20 @@
       Q 80 360 170 400
       L 25 400
       Z
-    " fill="url(#imgBackgroundPattern)"></path>
+    " fill="url(#{{ fqClass }})"></path>
 
     <!-- Green number square -->
     <g transform="translate(-75,300) rotate(25, 8, 300)">
         <rect width="44" height="68" rx="12"
-              fill="url(#imgBackgroundPattern)" stroke="black" stroke-width="3"/>
+              fill="url(#{{ fqClass }})" stroke="black" stroke-width="3"/>
     </g>
     <g transform="translate(-15,335) rotate(10, 81, 300)">
         <rect width="44" height="68" rx="12"
-              fill="url(#imgBackgroundPattern)" stroke="black" stroke-width="3"/>
+              fill="url(#{{ fqClass }})" stroke="black" stroke-width="3"/>
     </g>
     <g transform="translate(25,330) rotate(0, 81, 339)">
         <rect width="44" height="68" rx="12"
-              fill="url(#imgBackgroundPattern)" stroke="black" stroke-width="4"/>
+              fill="url(#{{ fqClass }})" stroke="black" stroke-width="4"/>
         <text x="21" y="40"
               text-anchor="middle"
               font-size="30"
@@ -165,7 +182,7 @@
     </text>
 
     <!-- Mana -->
-    <rect x="23" y="408" width="462" height="262" rx="14" fill="url(#imgBackgroundPattern)"
+    <rect x="23" y="408" width="462" height="262" rx="14" fill="url(#{{ fqClass }})"
           stroke="black"
           stroke-width="5"></rect>
 
