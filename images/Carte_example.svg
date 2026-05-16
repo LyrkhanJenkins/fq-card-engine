@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink" width="508" height="693" viewBox="0 0 508 693">
+
+    <defs>
+
+        <!-- Background textures -->
+        <linearGradient id="headerGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#a6cf63"></stop>
+            <stop offset="100%" stop-color="#4f9b63"></stop>
+        </linearGradient>
+
+        <linearGradient id="boxGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#a8d968"></stop>
+            <stop offset="100%" stop-color="#4d8c5d"></stop>
+        </linearGradient>
+
+        <radialGradient id="goldMana">
+            <stop offset="0%" stop-color="#ffe7a3"></stop>
+            <stop offset="100%" stop-color="#d29012"></stop>
+        </radialGradient>
+
+        <radialGradient id="blueMana">
+            <stop offset="0%" stop-color="#c7ddf5"></stop>
+            <stop offset="100%" stop-color="#7fa6cf"></stop>
+        </radialGradient>
+
+        <radialGradient id="redMana">
+            <stop offset="0%" stop-color="#f06b6b"></stop>
+            <stop offset="100%" stop-color="#7e2424"></stop>
+        </radialGradient>
+
+        <radialGradient id="whiteMana">
+            <stop offset="0%" stop-color="#ffffff"></stop>
+            <stop offset="100%" stop-color="#9f968d"></stop>
+        </radialGradient>
+        <pattern id="imgPattern"
+                 patternUnits="userSpaceOnUse"
+                 width="500"
+                 height="500">
+
+            <image href="./../images/Skeleton_sorcerer.png"
+                   x="0"
+                   y="0"
+                   width="500"
+                   height="500"
+                   preserveAspectRatio="xMidYMid slice" />
+        </pattern>
+
+        <pattern id="imgBackgroundPattern"
+                 patternUnits="userSpaceOnUse"
+                 width="500"
+                 height="500">
+
+            <image href="./../images/texture_verte.png"
+                   x="0"
+                   y="0"
+                   width="500"
+                   height="500"
+                   preserveAspectRatio="xMidYMid slice" />
+        </pattern>
+
+    </defs>
+
+    <!-- Outer card -->
+    <rect x="10" y="10" width="488" height="673" rx="34" fill="black" stroke="#2a2a2a" stroke-width="2"></rect>
+
+    <!-- Header -->
+    <rect x="24" y="20" width="460" height="70" rx="24" fill="url(#imgBackgroundPattern)" stroke="#1b1b1b"
+          stroke-width="4"></rect>
+
+    <!-- Title -->
+    <foreignObject x="0" y="37" width="500" height="240">
+        <div xmlns="http://www.w3.org/1999/xhtml"
+             style="font-family: Lucida Calligraphy; font-style: italic;
+              font-size: 30px; text-align: center;">
+            Récupération de mana II
+        </div>
+    </foreignObject>
+
+    <!-- Main black area -->
+    <path d="
+      M 40 95
+      L 448 95
+      Q 482 95 482 120
+      L 482 375
+
+      Q 482 400 432 400
+
+      Q 402 400 375 400
+
+      Q 314 400 304 400
+      Q 296 400 262 400
+
+      Q 105 400 220 400
+
+      Q 100 400 195 400
+
+      Q 0 400 195 400
+      Q 30 192 40 95"
+          fill="url(#imgPattern)" stroke="#4b4b4b" stroke-width="2"></path>
+
+    <!-- Green left triangle -->
+    <path d="
+      M 25 260
+      Q 80 360 170 400
+      L 25 400
+      Z
+    " fill="url(#imgBackgroundPattern)" ></path>
+
+    <!-- Green number square -->
+    <g transform="translate(-75,300) rotate(25, 8, 300)">
+        <rect width="44" height="68" rx="12"
+              fill="url(#imgBackgroundPattern)"  stroke="black" stroke-width="3"/>
+    </g>
+    <g transform="translate(-15,335) rotate(10, 81, 300)">
+        <rect width="44" height="68" rx="12"
+              fill="url(#imgBackgroundPattern)"  stroke="black" stroke-width="3"/>
+    </g>
+    <g transform="translate(25,330) rotate(0, 81, 339)">
+        <rect width="44" height="68" rx="12"
+              fill="url(#imgBackgroundPattern)"  stroke="black" stroke-width="4"/>
+        <text x="21" y="40"
+              text-anchor="middle"
+              font-size="30"
+              font-weight="700"
+              font-family="Lucida Calligraphy"
+              fill="black">4</text>
+    </g>
+
+    <!-- Portée -->
+    <circle cx="58" cy="135" r="42" fill="url(#whiteMana)" stroke="#1f1f1f" stroke-width="5"></circle>
+
+    <circle cx="58" cy="142" r="14" fill="#736b63"></circle>
+
+    <line x1="58" y1="99" x2="58" y2="173" stroke="#625b53" stroke-width="2"></line>
+
+    <line x1="22" y1="137" x2="94" y2="137" stroke="#625b53" stroke-width="2"></line>
+
+    <text x="56" y="142" text-anchor="middle" font-size="28" font-weight="700" font-family="Lucida Calligraphy"
+          fill="black">
+        2 | 5
+    </text>
+
+    <!-- Points d'actions-->
+    <circle cx="68" cy="222" r="42" fill="url(#goldMana)" stroke="#1f1f1f" stroke-width="5"></circle>
+    <text x="67" y="231" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy"
+          fill="black">
+        0
+    </text>
+
+    <!-- Mana -->
+    <circle cx="112" cy="298" r="42" fill="url(#blueMana)" stroke="#1f1f1f" stroke-width="6"></circle>
+
+    <text x="110" y="307" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy"
+          fill="black">
+        0
+    </text>
+
+    <!-- Mana -->
+    <rect x="23" y="408" width="462" height="262" rx="14" fill="url(#imgBackgroundPattern)" stroke="black" stroke-width="5"></rect>
+
+    <foreignObject x="23" y="404" width="462" height="266">
+        <div xmlns="http://www.w3.org/1999/xhtml"
+             style=" font-family: Lucida Calligraphy,serif; font-style: italic; font-size: 33px;
+          text-align: center; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+            <span>Récupérez 2 points de mana</span>
+        </div>
+    </foreignObject>
+
+    <!-- Zèle -->
+    <circle cx="180" cy="357" r="42" fill="url(#redMana)" stroke="#1f1f1f" stroke-width="6"></circle>
+
+    <text x="179" y="366" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy" fill="black">
+        0
+    </text>
+</svg>
