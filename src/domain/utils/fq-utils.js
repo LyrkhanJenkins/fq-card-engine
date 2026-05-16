@@ -625,4 +625,31 @@ export default class FQUtils {
             return null;
         }
     }
+
+    static getFirstNumberForCardSvg(str) {
+        if (str === "") {
+            return "0";
+        }
+        const matches = str.match(/\d+/g);
+        if (!matches) return "0";
+        if (matches.length > 1) return "S";
+        return matches[0];
+    }
+
+    static getDescriptionSizeForCardSvg(description) {
+        let descriptionSize = {1: 40, 80: 36, 110: 34, 145: 30, 200: 26, 290: 22, 340: 20, 440: 18, 9999: 16};
+        return descriptionSize[Object.keys(descriptionSize)
+            .map(Number)
+            .sort((a, b) => a - b)
+            .find(limit => description.length <= limit)];
+    }
+
+    static getTitleSizeForCardSvg(title) {
+        let titleSize = {1: 34, 20: 32, 25: 28, 30: 24, 9999: 20};
+
+        return titleSize[Object.keys(titleSize)
+            .map(Number)
+            .sort((a, b) => a - b)
+            .find(limit => title.length <= limit)];
+    }
 }

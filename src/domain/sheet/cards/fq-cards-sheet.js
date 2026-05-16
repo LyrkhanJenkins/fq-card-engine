@@ -8,7 +8,7 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
         header: {template: "templates/cards/deck/header.hbs"},
         tabs: {template: "templates/generic/tab-navigation.hbs"},
         details: {template: "templates/cards/deck/details.hbs"},
-        cards: {template: `modules/fq-card-engine/src/templates/cards/cards/cards.hbs`, scrollable: ["ol[data-cards]"]},
+        cards: {template: `modules/fq-card-engine/src/templates/fq-form/cards/cards.hbs`, scrollable: ["ol[data-cards]"]},
         footer: {template: "templates/generic/form-footer.hbs"}
     };
 

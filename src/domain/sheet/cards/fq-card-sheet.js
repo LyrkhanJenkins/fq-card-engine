@@ -48,7 +48,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     static PARTS = {
         header: {template: "templates/cards/card/header.hbs"},
         tabs: {template: "templates/generic/tab-navigation.hbs"},
-        attributes: {template: `modules/fq-card-engine/src/templates/cards/card/attributes.hbs`},
+        attributes: {template: `modules/fq-card-engine/src/templates/fq-form/card/attributes.hbs`},
         details: {template: "templates/cards/card/details.hbs"},
         faces: {template: "templates/cards/card/faces.hbs", scrollable: [""]},
         back: {template: "templates/cards/card/back.hbs"},

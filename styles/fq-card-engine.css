@@ -808,6 +808,7 @@ div.separator {
     grid-column: 2;
     grid-row: 1;
     display: flex;
+    width: 22vw;
     flex-direction: column;
     align-items: center;
     background: none;
@@ -821,7 +822,6 @@ div.separator {
 
 .fq-play-card-img {
     display: block;
-    max-height: 55vh;
     width: auto;
     border: transparent;
     border-radius: 3%;
@@ -889,6 +889,10 @@ div.separator {
         transform: perspective(900px) rotateY(8deg) rotateX(8deg);
         box-shadow: 0 0 30px 10px rgba(201, 168, 76, 0.6);
     }
+}
+
+.fq-play-card-wrap {
+    width: 100%;
 }
 
 .fq-play-card-wrap:hover .fq-play-card-img {

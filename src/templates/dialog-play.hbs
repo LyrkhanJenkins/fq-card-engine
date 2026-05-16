@@ -80,7 +80,21 @@
         {{!-- Carte --}}
         <div class="fq-play-card-wrap{{#if isFQBase}} is-base{{/if}}{{#if
                 hasBeenPlayedOnRound}} is-exhausted{{else}}{{#if hasBeenPlayed}} is-played{{/if}}{{/if}}">
-            <img class="fq-play-card-img" src="{{card.img}}" alt="{{card.name}}"/>
+            <div class="fq-play-card-img">
+
+                {{> "modules/fq-card-engine/src/templates/partials/card-svg.hbs"
+                        img=img
+                        name=name
+                        action=action
+                        mana=mana
+                        zeal=zeal
+                        minReach=minReach
+                        maxReach=maxReach
+                        description=description
+                        titleSize=titleSize
+                        descriptionSize=descriptionSize
+                }}
+            </div>
             {{#if isFQBase}}
                 <span class="fq-play-badge fq-play-badge--base">Base</span>
             {{/if}}

@@ -381,6 +381,22 @@ window.FqCardEngineModule = {
     },
 
     async playDialog(currentCards, card) {
+        let img = card.back.img;
+        let description = card.back.text;
+        let name = (card.face !== null) ? card.name : game.i18n.localize("FQCARDENGINE.CardBack");
+        if (card.face != null) {
+            if (!card.faces) {
+                img = undefined;
+                description = undefined;
+            } else {
+                img = card.faces[card.face].img;
+                description = card.faces[card.face].text;
+            }
+        }
+        if (card.face && !img) {
+            img = card.data.faces[card.data.face].img;
+            description = card.data.faces[card.data.face].text;
+        }
         // ── Récupération des cartes navigables (mêmes filtres que la main) ──
         const handCards = [...currentCards.cards].sort(FqCardEngineModule.cardSort); // toutes les cartes de la main courante
         const currentIndex = handCards.findIndex(c => c.id === card.id);
@@ -440,6 +456,16 @@ window.FqCardEngineModule = {
 
         const html = await foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/dialog-play.hbs", {
             card,
+            img: img,
+            name: name,
+            description: description,
+            descriptionSize: FQUtils.getDescriptionSizeForCardSvg(description),
+            titleSize: FQUtils.getTitleSizeForCardSvg(name),
+            action : FQUtils.getFirstNumberForCardSvg(firstChoice.action),
+            mana : FQUtils.getFirstNumberForCardSvg(firstChoice.mana),
+            zeal : FQUtils.getFirstNumberForCardSvg(firstChoice.zeal),
+            minReach : FQUtils.getFirstNumberForCardSvg(firstChoice.minReach),
+            maxReach : FQUtils.getFirstNumberForCardSvg(firstChoice.maxReach),
             discards,
             targets,
             charStats,
@@ -870,11 +896,12 @@ Hooks.on("ready", function () {
 Hooks.on("setup", function () {
     // Pre Load templates.
     const templatePaths = [
+        "modules/fq-card-engine/src/templates/partials/card-svg.hbs",
         "modules/fq-card-engine/src/templates/actors/fq-character-sidebar.hbs",
         "modules/fq-card-engine/src/templates/actors/fq-npc-header.hbs",
         "modules/fq-card-engine/src/templates/actors/fq-npc-sidebar.hbs",
         "modules/fq-card-engine/src/templates/items/fq-item-tabs.hbs",
-        "modules/fq-card-engine/src/templates/board/card.html",
+        "modules/fq-card-engine/src/templates/board/card.hbs",
         "modules/fq-card-engine/src/templates/board/hand-container.html",
         "modules/fq-card-engine/src/templates/board/hand.html",
         "modules/fq-card-engine/src/templates/chat-message.html",

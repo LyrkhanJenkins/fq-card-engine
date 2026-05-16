@@ -1,4 +1,5 @@
 import {DECK_TYPE, SPELLBOOK_TYPE} from "../utils/deck-utils.js";
+import FQUtils from "../utils/fq-utils.js";
 
 export default class HandBoard {
     constructor(id) {
@@ -85,19 +86,32 @@ export default class HandBoard {
             }
             $(this.currentCards.cards.contents.sort(FqCardEngineModule.cardSort)).each(function (i, c) {
                 let img = c.back.img;
+                let description = c.back.text;
+                let name = (c.face !== null) ? c.name : game.i18n.localize("FQCARDENGINE.CardBack");
                 if (c.face != null) {
                     if (!c.faces) {
                         img = undefined;
+                        description = undefined;
                     } else {
                         img = c.faces[c.face].img;
+                        description = c.faces[c.face].text;
                     }
                 }
                 if (c.face && !img) {
                     img = c.data.faces[c.data.face].img;
+                    description = c.data.faces[c.data.face].text;
                 }
                 let cardContent = c.system.fq?.choices?.length ? c.system.fq?.choices[0] : {};
                 let renderData = {
                     id: c._id ? c._id : c.data._id,
+                    description: description,
+                    descriptionSize: FQUtils.getDescriptionSizeForCardSvg(description),
+                    titleSize: FQUtils.getTitleSizeForCardSvg(name),
+                    action : FQUtils.getFirstNumberForCardSvg(cardContent.action),
+                    mana : FQUtils.getFirstNumberForCardSvg(cardContent.mana),
+                    zeal : FQUtils.getFirstNumberForCardSvg(cardContent.zeal),
+                    minReach : FQUtils.getFirstNumberForCardSvg(cardContent.minReach),
+                    maxReach : FQUtils.getFirstNumberForCardSvg(cardContent.maxReach),
                     hasBeenPlayed: cardContent?.hasBeenPlayed,
                     hasBeenPlayedOnRound: cardContent?.playedRound && cardContent?.playedRound?.toString() === game.combat?.round?.toString(),
                     isFQBase: c.system?.fq?.isBase,
@@ -105,9 +119,9 @@ export default class HandBoard {
                     uuid: c.uuid,
                     back: (c.face == null),
                     img: img,
-                    name: (c.face !== null) ? c.name : game.i18n.localize("FQCARDENGINE.CardBack"),
+                    name: name,
                 };
-                foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/card.html", renderData).then(content => {
+                foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/card.hbs", renderData).then(content => {
                     content = $(content);
                     content.click(function (e) {
                         t.cardClicked(e);
