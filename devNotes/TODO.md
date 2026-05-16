@@ -23,6 +23,7 @@ Migration Foundry v14:
 
 - Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
 - Ajouter du ciblage si oublié dans la dialog-play?
+- Ne pas cliquer sur dialog-play si pas de cible sur une carte en nécessitant
 - Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
 
 - Refonte des cartes : 

@@ -16,6 +16,7 @@ import FqNpcSheet from "./domain/sheet/actor/fq-npc-sheet.js";
 import FqItemSheet from "./domain/sheet/items/fq-item-sheet.js";
 import FqCardsSheet from "./domain/sheet/cards/fq-cards-sheet.js";
 import FqCardSheet from "./domain/sheet/cards/fq-card-sheet.js";
+import DisplayCard from "./domain/utils/display-card.js";
 
 CONFIG.FqCardEngine = {
     options: {
@@ -381,22 +382,9 @@ window.FqCardEngineModule = {
     },
 
     async playDialog(currentCards, card) {
-        let img = card.back.img;
-        let description = card.back.text;
-        let name = (card.face !== null) ? card.name : game.i18n.localize("FQCARDENGINE.CardBack");
-        if (card.face != null) {
-            if (!card.faces) {
-                img = undefined;
-                description = undefined;
-            } else {
-                img = card.faces[card.face].img;
-                description = card.faces[card.face].text;
-            }
-        }
-        if (card.face && !img) {
-            img = card.data.faces[card.data.face].img;
-            description = card.data.faces[card.data.face].text;
-        }
+        let img = DisplayCard.getImgFromCard(card);
+        let description = DisplayCard.getDescriptionFromCard(card);
+        let name = DisplayCard.getNameFromCard(card);
         // ── Récupération des cartes navigables (mêmes filtres que la main) ──
         const handCards = [...currentCards.cards].sort(FqCardEngineModule.cardSort); // toutes les cartes de la main courante
         const currentIndex = handCards.findIndex(c => c.id === card.id);
@@ -459,13 +447,14 @@ window.FqCardEngineModule = {
             img: img,
             name: name,
             description: description,
-            descriptionSize: FQUtils.getDescriptionSizeForCardSvg(description),
-            titleSize: FQUtils.getTitleSizeForCardSvg(name),
-            action : FQUtils.getFirstNumberForCardSvg(firstChoice.action),
-            mana : FQUtils.getFirstNumberForCardSvg(firstChoice.mana),
-            zeal : FQUtils.getFirstNumberForCardSvg(firstChoice.zeal),
-            minReach : FQUtils.getFirstNumberForCardSvg(firstChoice.minReach),
-            maxReach : FQUtils.getFirstNumberForCardSvg(firstChoice.maxReach),
+            descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
+            titleSize: DisplayCard.getTitleSizeForCardSvg(name),
+            action : DisplayCard.getFirstNumberForCardSvg(firstChoice.action),
+            mana : DisplayCard.getFirstNumberForCardSvg(firstChoice.mana),
+            zeal : DisplayCard.getFirstNumberForCardSvg(firstChoice.zeal),
+            minReach : DisplayCard.getFirstNumberForCardSvg(firstChoice.minReach),
+            maxReach : DisplayCard.getFirstNumberForCardSvg(firstChoice.maxReach),
+            maxSameCard : c.system.fq?.maxSameCard,
             discards,
             targets,
             charStats,

@@ -1,5 +1,5 @@
 import {DECK_TYPE, SPELLBOOK_TYPE} from "../utils/deck-utils.js";
-import FQUtils from "../utils/fq-utils.js";
+import DisplayCard from "../utils/display-card.js";
 
 export default class HandBoard {
     constructor(id) {
@@ -85,33 +85,21 @@ export default class HandBoard {
                 });
             }
             $(this.currentCards.cards.contents.sort(FqCardEngineModule.cardSort)).each(function (i, c) {
-                let img = c.back.img;
-                let description = c.back.text;
-                let name = (c.face !== null) ? c.name : game.i18n.localize("FQCARDENGINE.CardBack");
-                if (c.face != null) {
-                    if (!c.faces) {
-                        img = undefined;
-                        description = undefined;
-                    } else {
-                        img = c.faces[c.face].img;
-                        description = c.faces[c.face].text;
-                    }
-                }
-                if (c.face && !img) {
-                    img = c.data.faces[c.data.face].img;
-                    description = c.data.faces[c.data.face].text;
-                }
+                let img = DisplayCard.getImgFromCard(c);
+                let description = DisplayCard.getDescriptionFromCard(c);
+                let name = DisplayCard.getNameFromCard(c);
                 let cardContent = c.system.fq?.choices?.length ? c.system.fq?.choices[0] : {};
                 let renderData = {
                     id: c._id ? c._id : c.data._id,
                     description: description,
-                    descriptionSize: FQUtils.getDescriptionSizeForCardSvg(description),
-                    titleSize: FQUtils.getTitleSizeForCardSvg(name),
-                    action : FQUtils.getFirstNumberForCardSvg(cardContent.action),
-                    mana : FQUtils.getFirstNumberForCardSvg(cardContent.mana),
-                    zeal : FQUtils.getFirstNumberForCardSvg(cardContent.zeal),
-                    minReach : FQUtils.getFirstNumberForCardSvg(cardContent.minReach),
-                    maxReach : FQUtils.getFirstNumberForCardSvg(cardContent.maxReach),
+                    descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
+                    titleSize: DisplayCard.getTitleSizeForCardSvg(name),
+                    action : DisplayCard.getFirstNumberForCardSvg(cardContent.action),
+                    mana : DisplayCard.getFirstNumberForCardSvg(cardContent.mana),
+                    zeal : DisplayCard.getFirstNumberForCardSvg(cardContent.zeal),
+                    minReach : DisplayCard.getFirstNumberForCardSvg(cardContent.minReach),
+                    maxReach : DisplayCard.getFirstNumberForCardSvg(cardContent.maxReach),
+                    maxSameCard : c.system.fq?.maxSameCard,
                     hasBeenPlayed: cardContent?.hasBeenPlayed,
                     hasBeenPlayedOnRound: cardContent?.playedRound && cardContent?.playedRound?.toString() === game.combat?.round?.toString(),
                     isFQBase: c.system?.fq?.isBase,
