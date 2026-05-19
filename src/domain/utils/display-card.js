@@ -1,13 +1,18 @@
 
 export default class DisplayCard {
+    // TODO Reactif, Replayable, couleurs pour les gains ou pertes des bullles, changer la taille des fonts des bulles également
+
     static getFirstNumberForCardSvg(str) {
-        //TODO Handle X and Y
         if (str === "") {
             return "0";
         }
-        const matches = str.match(/\d+/g);
+        if (str.includes("XXX") || str.includes("YYY")) {
+            return str.replace("XXX","X").replace("YYY","Y").replace("(","").replace(")","").replace("*","");
+        }
+        const matches = str.match(/-?\d+/g);
         if (!matches) return "0";
         if (matches.length > 1) return "S";
+        if (matches[0] > 99) return "∞";
         return matches[0];
     }
 
