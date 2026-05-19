@@ -33,6 +33,7 @@
       "value": null,
       "system": {
         "fq": {
+          "class": "elementalist",
           "choices": [
             {
               "action": "-(2*XXX)",
@@ -163,6 +164,7 @@
       "value": null,
       "system": {
         "fq": {
+          "class": "elementalist",
           "choices": [
             {
               "action": "-6",
@@ -278,7 +280,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/elementalist/mana_recovery_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.PNG",
           "text": ""
         }
       ],
@@ -294,6 +296,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "neutral",
           "choices": [
             {
               "action": "-5",
@@ -388,6 +391,7 @@
       "system": {
         "fq": {
           "maxSameCard": 5,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-4",
@@ -521,6 +525,7 @@
       },
       "system": {
         "fq": {
+          "class": "elementalist",
           "choices": [
             {
               "action": "-8",
@@ -636,7 +641,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/elementalist/draw_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.PNG",
           "text": ""
         }
       ],
@@ -651,6 +656,7 @@
       "value": null,
       "system": {
         "fq": {
+          "class": "neutral",
           "choices": [
             {
               "action": "-3",
@@ -746,6 +752,7 @@
       "system": {
         "fq": {
           "maxSameCard": 3,
+          "class": "elementalist",
           "choices": [
             {
               "action": "",
@@ -840,6 +847,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-5",
@@ -980,6 +988,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-9",
@@ -1063,7 +1072,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/elementalist/turn_booster_iv.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
           "text": ""
         }
       ],
@@ -1079,6 +1088,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "neutral",
           "choices": [
             {
               "action": "4",
@@ -1173,6 +1183,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-9",
@@ -1281,6 +1292,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-(XXX)",
@@ -1380,6 +1392,7 @@
       "system": {
         "fq": {
           "maxSameCard": 3,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-(3 + XXX)",
@@ -1505,6 +1518,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-7",
@@ -1653,6 +1667,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-7",
@@ -1752,6 +1767,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-10",
@@ -1851,6 +1867,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-4",
@@ -1974,6 +1991,7 @@
           "maxSameCard": 1,
           "level": 2,
           "isBase": true,
+          "class": "elementalist",
           "choices": [
             {
               "name": "Fire Element",
@@ -2346,6 +2364,7 @@
           "maxSameCard": 2,
           "level": 6,
           "isBase": false,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-5",
@@ -2478,6 +2497,7 @@
           "maxSameCard": 2,
           "level": 6,
           "isBase": false,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-(4*XXX)",
@@ -2606,6 +2626,7 @@
           "maxSameCard": 2,
           "level": 6,
           "isBase": false,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-2",
@@ -2734,6 +2755,7 @@
           "maxSameCard": 2,
           "level": 6,
           "isBase": false,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-10",
@@ -2866,6 +2888,7 @@
           "maxSameCard": 1,
           "level": 7,
           "isBase": false,
+          "class": "elementalist",
           "choices": [
             {
               "action": "-16",

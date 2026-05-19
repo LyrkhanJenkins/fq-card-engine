@@ -34,6 +34,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "trapper",
           "choices": [
             {
               "action": "-8",
@@ -137,6 +138,7 @@
       "system": {
         "fq": {
           "maxSameCard": 7,
+          "class": "trapper",
           "choices": [
             {
               "action": "-XXX",
@@ -226,6 +228,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "trapper",
           "choices": [
             {
               "action": "-10",
@@ -355,6 +358,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "trapper",
           "choices": [
             {
               "action": "-7",
@@ -444,6 +448,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "trapper",
           "choices": [
             {
               "action": "-8",
@@ -527,7 +532,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/draw_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.PNG",
           "text": ""
         }
       ],
@@ -543,6 +548,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "neutral",
           "choices": [
             {
               "action": "-2",
@@ -621,7 +627,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/mana_recovery_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_ii.PNG",
           "text": ""
         }
       ],
@@ -637,6 +643,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "neutral",
           "choices": [
             {
               "action": "-3",
@@ -731,6 +738,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "trapper",
           "choices": [
             {
               "action": "-2",
@@ -856,6 +864,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "trapper",
           "choices": [
             {
               "action": "",
@@ -929,7 +938,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/turn_booster_iv.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
           "text": ""
         }
       ],
@@ -945,6 +954,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "neutral",
           "choices": [
             {
               "action": "4",
@@ -1039,6 +1049,7 @@
       "system": {
         "fq": {
           "maxSameCard": 3,
+          "class": "trapper",
           "choices": [
             {
               "action": "-5",
@@ -1168,6 +1179,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
+          "class": "trapper",
           "choices": [
             {
               "action": "-9",
@@ -1267,6 +1279,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
+          "class": "trapper",
           "choices": [
             {
               "action": "",
@@ -1407,6 +1420,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "trapper",
           "choices": [
             {
               "action": "-XXX",
@@ -1551,6 +1565,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "trapper",
           "choices": [
             {
               "action": "-9",
@@ -1645,6 +1660,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
+          "class": "trapper",
           "choices": [
             {
               "action": "-8",
@@ -1732,6 +1748,7 @@
           "maxSameCard": 1,
           "level": 7,
           "isBase": false,
+          "class": "trapper",
           "choices": [
             {
               "action": "-16",
@@ -1833,6 +1850,7 @@
           "maxSameCard": 1,
           "level": 2,
           "isBase": true,
+          "class": "trapper",
           "choices": [
             {
               "action": "-3",
@@ -1970,6 +1988,7 @@
           "maxSameCard": 3,
           "level": 6,
           "isBase": false,
+          "class": "trapper",
           "choices": [
             {
               "action": "",
@@ -2057,6 +2076,7 @@
           "maxSameCard": 3,
           "level": 6,
           "isBase": false,
+          "class": "trapper",
           "choices": [
             {
               "action": "",
@@ -2184,6 +2204,7 @@
           "maxSameCard": 2,
           "level": 6,
           "isBase": false,
+          "class": "trapper",
           "choices": [
             {
               "action": "-8",
@@ -2322,6 +2343,7 @@
           "maxSameCard": 1,
           "level": 6,
           "isBase": false,
+          "class": "trapper",
           "choices": [
             {
               "action": "-10",
