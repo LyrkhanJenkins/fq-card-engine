@@ -140,7 +140,7 @@ export default class DeckUtils {
         let mainClass = allFQClasses.find(c => c.system.isOriginalClass);
 
         const compendium = await game.packs.get(FqCardEngineModule.moduleName + ".decks-fq8-generated").getDocuments();
-        const nameOriginDeck = mainClass?.name + " Lvl" + (mainClass?.system?.levels > 5 ? 5 : mainClass?.system?.levels) + " - " + game.i18n.lang;
+        const nameOriginDeck = mainClass?.name + " Lvl" + (mainClass?.system?.levels > 5 ? 5 : mainClass?.system?.levels);
         const originDeck = compendium.find(pack => pack.name === nameOriginDeck);
         if (!mainClass || !originDeck) {
             if (!user.isGM) ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoMainClass"));

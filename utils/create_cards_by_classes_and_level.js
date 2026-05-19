@@ -9,7 +9,7 @@ function randomId(length = 16) {
 }
 
 // 📦 Génère un deck localisé à partir d’un fichier modèle
-function writeLocationDecks(originFile, language) {
+function writeLocationDecks(originFile) {
     try {
         const raw = fs.readFileSync(originFile, "utf-8");
         const donneesJson = JSON.parse(raw);
@@ -17,20 +17,15 @@ function writeLocationDecks(originFile, language) {
 
         const deckId = randomId();
         newCards._id = deckId;
-        newCards.name = `${newCards.name} - ${language}`;
+        newCards.name = `${newCards.name}`;
         newCards._key = `!cards!${deckId}`;
         newCards.cards = [];
-        newCards.img = newCards.img.replace("/en/", `/${language}/`);
 
         for (const card of donneesJson.cards) {
             const newCard = structuredClone(card);
             const cardId = randomId();
             newCard._id = cardId;
             newCard._key = `!cards.cards!${deckId}.${cardId}`;
-
-            for (const face of newCard.faces) {
-                face.img = face.img.replace("/en/", `/${language}/`);
-            }
             newCards.cards.push(newCard);
         }
 
@@ -122,28 +117,15 @@ listesCards["Elementalist Lvl5"] = listesCards["Elementalist Lvl4"].concat(["Tur
 // 📂 Répertoires
 const packsSource = "./packs/_source/";
 const cardsGeneratedPackFolder = packsSource + "./decks-fq8-generated/";
-const cardsPackFolder = packsSource + "./decks-fq8/";
 const cardsOriginPackFolder = packsSource + "./decks-pattern-fq8/";
-const supportedLanguages = ["en", "fr"];
 
 // Assure que les dossiers existent
-fs.mkdirSync(cardsPackFolder, {recursive: true});
 fs.mkdirSync(cardsGeneratedPackFolder, {recursive: true});
-// 🔄 Boucle principale
-for (const language of supportedLanguages) {
-    for (const filename of fs.readdirSync(cardsOriginPackFolder)) {
-        const originPath = path.join(cardsOriginPackFolder, filename);
-        const outputPath = path.join(cardsPackFolder, `${filename.slice(0, -5)}-${language}.json`);
-        const data = writeLocationDecks(originPath, language);
-        fs.writeFileSync(outputPath, data, "utf-8");
-    }
 
-    for (const [cle, liste] of Object.entries(listesCards)) {
-        const nameFile = `${cle.toLowerCase().split(" ")[0]}-base-${language}.json`;
-        const outputPath = path.join(cardsGeneratedPackFolder, `${cle.toLowerCase().replace(/ /g, "-")}-${language}.json`);
-        const data = writeGeneratedDecks(`${cle} - ${language}`, liste, nameFile, cardsPackFolder);
-        fs.writeFileSync(outputPath, data, "utf-8");
-    }
+for (const [cle, liste] of Object.entries(listesCards)) {
+    const nameFile = `${cle.toLowerCase().split(" ")[0]}-base.json`;
+    const outputPath = path.join(cardsGeneratedPackFolder, `${cle.toLowerCase().replace(/ /g, "-")}.json`);
+    const data = writeGeneratedDecks(`${cle}`, liste, nameFile, cardsOriginPackFolder);
+    fs.writeFileSync(outputPath, data, "utf-8");
 }
-
 console.info("✅ Decks générés !");

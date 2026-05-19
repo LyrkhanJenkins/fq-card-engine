@@ -18,7 +18,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/earth_fracture.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/earth_fracture.PNG",
           "text": ""
         }
       ],
@@ -148,7 +148,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/tornado.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/tornado.PNG",
           "text": ""
         }
       ],
@@ -278,7 +278,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/mana_recovery_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/mana_recovery_iii.PNG",
           "text": ""
         }
       ],
@@ -373,7 +373,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/frost_strike.png",
+          "img": "modules/fq-card-engine/images/cards/elementalist/frost_strike.png",
           "text": ""
         }
       ],
@@ -507,7 +507,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/fireball.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/fireball.PNG",
           "text": ""
         }
       ],
@@ -636,7 +636,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/draw_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/draw_iii.PNG",
           "text": ""
         }
       ],
@@ -730,7 +730,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/mana_capture.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/mana_capture.PNG",
           "text": ""
         }
       ],
@@ -824,7 +824,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/fog.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/fog.PNG",
           "text": ""
         }
       ],
@@ -964,7 +964,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/frostfire.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/frostfire.PNG",
           "text": ""
         }
       ],
@@ -1063,7 +1063,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/turn_booster_iv.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/turn_booster_iv.PNG",
           "text": ""
         }
       ],
@@ -1157,7 +1157,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/meteor.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/meteor.PNG",
           "text": ""
         }
       ],
@@ -1265,7 +1265,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/void_assassin.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/void_assassin.PNG",
           "text": ""
         }
       ],
@@ -1364,7 +1364,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/incantation.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/incantation.PNG",
           "text": ""
         }
       ],
@@ -1489,7 +1489,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/magic_plastron.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/magic_plastron.PNG",
           "text": ""
         }
       ],
@@ -1637,7 +1637,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/ice_wave.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/ice_wave.PNG",
           "text": ""
         }
       ],
@@ -1736,7 +1736,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/fire_shock.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/fire_shock.PNG",
           "text": ""
         }
       ],
@@ -1835,7 +1835,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/damage_propagation.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/damage_propagation.PNG",
           "text": ""
         }
       ],
@@ -1960,7 +1960,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/elemental_magic.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/elemental_magic.PNG",
           "text": ""
         }
       ],
@@ -2332,7 +2332,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/vortex.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/vortex.PNG",
           "text": ""
         }
       ],
@@ -2464,7 +2464,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/rock_throw.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/rock_throw.PNG",
           "text": ""
         }
       ],
@@ -2592,7 +2592,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/burning_hand.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/burning_hand.PNG",
           "text": ""
         }
       ],
@@ -2720,7 +2720,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/giant_stalactite.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/giant_stalactite.PNG",
           "text": ""
         }
       ],
@@ -2852,7 +2852,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/en/elementalist/magic_missiles.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/magic_missiles.PNG",
           "text": ""
         }
       ],
@@ -2923,7 +2923,7 @@
       "value": null,
       "back": {
         "text": "",
-        "img": "modules/fq-card-engine/images/cards/en/elementalist/magic_missiles.PNG",
+        "img": "modules/fq-card-engine/images/cards/elementalist/magic_missiles.PNG",
         "name": ""
       },
       "drawn": false,

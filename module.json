@@ -124,18 +124,6 @@
       "flags": {}
     },
     {
-      "name": "decks-fq8",
-      "label": "Decks FQ8",
-      "path": "packs/decks-fq8",
-      "type": "Cards",
-      "system": "dnd5e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      },
-      "flags": {}
-    },
-    {
       "name": "decks-fq8-generated",
       "label": "Decks FQ8 (Generated)",
       "path": "packs/decks-fq8-generated",
