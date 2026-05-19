@@ -8,33 +8,6 @@ function randomId(length = 16) {
     return Array.from({length}, () => chars[Math.floor(Math.random() * chars.length)]).join("");
 }
 
-// 📦 Génère un deck localisé à partir d’un fichier modèle
-function writeLocationDecks(originFile) {
-    try {
-        const raw = fs.readFileSync(originFile, "utf-8");
-        const donneesJson = JSON.parse(raw);
-        const newCards = structuredClone(donneesJson);
-
-        const deckId = randomId();
-        newCards._id = deckId;
-        newCards.name = `${newCards.name}`;
-        newCards._key = `!cards!${deckId}`;
-        newCards.cards = [];
-
-        for (const card of donneesJson.cards) {
-            const newCard = structuredClone(card);
-            const cardId = randomId();
-            newCard._id = cardId;
-            newCard._key = `!cards.cards!${deckId}.${cardId}`;
-            newCards.cards.push(newCard);
-        }
-
-        return JSON.stringify(newCards);
-    } catch (err) {
-        console.error(`Le fichier ${originFile} n'existe pas ou est invalide.`);
-    }
-}
-
 // 📦 Génère un deck filtré selon une liste de noms
 function writeGeneratedDecks(name, tableau, cards, targetFolder) {
     try {
@@ -51,7 +24,7 @@ function writeGeneratedDecks(name, tableau, cards, targetFolder) {
 
         for (const mot of tableau) {
             for (const card of donneesJson.cards) {
-                if (card.name.toLowerCase().trim() === mot.toLowerCase().trim()) {
+                if (card.name === mot) {
                     const newCard = structuredClone(card);
                     const cardId = randomId();
                     newCard._id = cardId;
@@ -63,56 +36,384 @@ function writeGeneratedDecks(name, tableau, cards, targetFolder) {
 
         return JSON.stringify(newCards);
     } catch (err) {
-        console.error(`Le fichier ${cards} n'existe pas ou est invalide.`);
+        console.error(err);
     }
 }
 
-// ⚙️ Définition des listes (copiées depuis ton script Python)
 let listesCards = {
-    "Elementalist Lvl1": ["Fireball", "Tornado", "Earth Fracture", "Earth Fracture", "Frost Strike", "Frost Strike", "Mana Recovery III"],
-    "Illusionist Lvl1": ["Backflip Strike", "Illusory Strike", "Illusory Strike", "Enchanted Whip", "Enchanted Whip", "Enchanted Whip", "Sung Inspiration", "Magic Reach", "Communicating Vessels", "Poisoned Shuriken"],
-    "Trapper Lvl1": ["Precise Shot", "Precise Shot", "Precise Shot", "Double Arrows", "Tamed Wolf", "Elite Marksman", "Rain of Arrows"],
-    "White-Mage Lvl1": ["Light Energy", "Light Energy", "Light Energy", "Curse", "Curse", "Magic Shield", "Arcane Explosion"],
-    "Monk Lvl1": ["Right Punch", "Right Punch", "Right Punch", "Right Punch", "Right Punch", "Right Punch", "Left Punch", "Left Punch", "Left Punch", "Combo", "Combo", "Mana Recovery III", "Zealous Shield", "Zealous Shield"],
-    "Guardian Lvl1": ["Heroic strike", "Heroic strike", "Heroic strike", "Heroic strike", "Sharpening", "Sharpening", "Taunting Strike", "Taunting Strike"],
-    "Witch Lvl1": ["Mana Recover II", "Necromancy", "Green-Shadow Bolt", "Green-Shadow Bolt", "Green-Shadow Bolt", "Green-Shadow Bolt", "Green-Shadow Bolt"]
+    "Elementalist Lvl1": [
+        "FQCARDTITLE.Fireball",
+        "FQCARDTITLE.Tornado",
+        "FQCARDTITLE.EarthFracture",
+        "FQCARDTITLE.EarthFracture",
+        "FQCARDTITLE.FrostStrike",
+        "FQCARDTITLE.FrostStrike",
+        "FQCARDTITLE.ManaRecoveryIII"
+    ],
+
+    "Illusionist Lvl1": [
+        "FQCARDTITLE.BackflipStrike",
+        "FQCARDTITLE.IllusoryStrike",
+        "FQCARDTITLE.IllusoryStrike",
+        "FQCARDTITLE.EnchantedWhip",
+        "FQCARDTITLE.EnchantedWhip",
+        "FQCARDTITLE.EnchantedWhip",
+        "FQCARDTITLE.SungInspiration",
+        "FQCARDTITLE.MagicReach",
+        "FQCARDTITLE.CommunicatingVessels",
+        "FQCARDTITLE.PoisonedShuriken"
+    ],
+
+    "Trapper Lvl1": [
+        "FQCARDTITLE.PreciseShot",
+        "FQCARDTITLE.PreciseShot",
+        "FQCARDTITLE.PreciseShot",
+        "FQCARDTITLE.DoubleArrows",
+        "FQCARDTITLE.TamedWolf",
+        "FQCARDTITLE.EliteMarksman",
+        "FQCARDTITLE.RainOfArrows"
+    ],
+
+    "White-Mage Lvl1": [
+        "FQCARDTITLE.LightEnergy",
+        "FQCARDTITLE.LightEnergy",
+        "FQCARDTITLE.LightEnergy",
+        "FQCARDTITLE.Curse",
+        "FQCARDTITLE.Curse",
+        "FQCARDTITLE.MagicShield",
+        "FQCARDTITLE.ArcaneExplosion"
+    ],
+
+    "Monk Lvl1": [
+        "FQCARDTITLE.RightPunch",
+        "FQCARDTITLE.RightPunch",
+        "FQCARDTITLE.RightPunch",
+        "FQCARDTITLE.RightPunch",
+        "FQCARDTITLE.RightPunch",
+        "FQCARDTITLE.RightPunch",
+        "FQCARDTITLE.LeftPunch",
+        "FQCARDTITLE.LeftPunch",
+        "FQCARDTITLE.LeftPunch",
+        "FQCARDTITLE.Combo",
+        "FQCARDTITLE.Combo",
+        "FQCARDTITLE.ManaRecoveryIII",
+        "FQCARDTITLE.ZealousShield",
+        "FQCARDTITLE.ZealousShield"
+    ],
+
+    "Guardian Lvl1": [
+        "FQCARDTITLE.HeroicStrike",
+        "FQCARDTITLE.HeroicStrike",
+        "FQCARDTITLE.HeroicStrike",
+        "FQCARDTITLE.HeroicStrike",
+        "FQCARDTITLE.Sharpening",
+        "FQCARDTITLE.Sharpening",
+        "FQCARDTITLE.TauntingStrike",
+        "FQCARDTITLE.TauntingStrike"
+    ],
+
+    "Witch Lvl1": [
+        "FQCARDTITLE.ManaRecoveryII",
+        "FQCARDTITLE.Necromancy",
+        "FQCARDTITLE.GreenShadowBolt",
+        "FQCARDTITLE.GreenShadowBolt",
+        "FQCARDTITLE.GreenShadowBolt",
+        "FQCARDTITLE.GreenShadowBolt",
+        "FQCARDTITLE.GreenShadowBolt"
+    ]
 };
 
-listesCards["Witch Lvl2"] = listesCards["Witch Lvl1"].concat(["Shadow Spell", "Life Surge", "Mana Surge", "Square of Skeletons", "Turn Booster IV", "Bone Shield", "Green-Shadow Bolt"]);
-listesCards["Witch Lvl3"] = listesCards["Witch Lvl2"].concat(["Osteology", "Life Surge", "Mana Recover II", "Shadow Explosion", "Necromancy", "Draw II", "Giant Skeleton", "Green-Shadow Bolt"]);
-listesCards["Witch Lvl4"] = listesCards["Witch Lvl3"].concat(["Life Surge", "Shadow Channeling", "Shadow Channeling", "Square of Skeletons", "Turn Booster IV", "Necromancy", "Giant Skeleton", "Green-Shadow Bolt"]);
-listesCards["Witch Lvl5"] = listesCards["Witch Lvl4"].concat(["Mana Surge", "Power Surge", "Shadow Form", "Shadow Form", "Agility Surge", "Bone Shield", "Draw II", "Green-Shadow Bolt"]);
+// WITCH
+listesCards["Witch Lvl2"] = listesCards["Witch Lvl1"].concat([
+    "FQCARDTITLE.ShadowSpell",
+    "FQCARDTITLE.LifeInflux",
+    "FQCARDTITLE.ManaInflux",
+    "FQCARDTITLE.SquareOfSkeletons",
+    "FQCARDTITLE.TurnBoosterIV",
+    "FQCARDTITLE.BoneShield",
+    "FQCARDTITLE.GreenShadowBolt"
+]);
 
-listesCards["Guardian Lvl2"] = listesCards["Guardian Lvl1"].concat(["Charge", "Charge", "Draw II", "Turn Booster IV", "Hemorrhage", "Hemorrhage"]);
-listesCards["Guardian Lvl3"] = listesCards["Guardian Lvl2"].concat(["Stance Shift", "Heroic strike", "Heroic strike", "Mana Surge", "Mana Recover I", "Blade Charging", "Armor Reinforcement", "Blade Whirlwind"]);
-listesCards["Guardian Lvl4"] = listesCards["Guardian Lvl3"].concat(["Mana Surge", "Draw II", "Turn Booster IV", "Shield Bash", "Shield Bash", "Hemorrhage", "Hemorrhage", "Ultimate Rage"]);
-listesCards["Guardian Lvl5"] = listesCards["Guardian Lvl4"].concat(["Mana Surge", "Mana Recover I", "Rage Surge", "Powerful Strike", "Powerful Strike", "Armor Reinforcement", "Blade Whirlwind"]);
+listesCards["Witch Lvl3"] = listesCards["Witch Lvl2"].concat([
+    "FQCARDTITLE.Osteology",
+    "FQCARDTITLE.LifeInflux",
+    "FQCARDTITLE.ManaRecoveryII",
+    "FQCARDTITLE.ShadowExplosion",
+    "FQCARDTITLE.Necromancy",
+    "FQCARDTITLE.DrawII",
+    "FQCARDTITLE.GiantSkeleton",
+    "FQCARDTITLE.GreenShadowBolt"
+]);
 
-listesCards["Monk Lvl2"] = listesCards["Monk Lvl1"].concat(["Left Punch", "Left Punch", "Inhibiting Cape", "Quick Dodge"]);
-listesCards["Monk Lvl3"] = listesCards["Monk Lvl2"].concat(["Turn Booster V", "Inhibiting Cape", "Zen Meditation", "Zealous Shield", "Mana Recovery III", "Phantom Blade"]);
-listesCards["Monk Lvl4"] = listesCards["Monk Lvl3"].concat(["Chi Master", "Inhibiting Cape", "Combo", "Concealment", "Conversion", "Ki Breath", "Turn Booster V"]);
-listesCards["Monk Lvl5"] = listesCards["Monk Lvl4"].concat(["Secret Weapons", "Quick Dodge", "Concealment", "Zen Meditation", "Flash Move", "Phantom Blade"]);
+listesCards["Witch Lvl4"] = listesCards["Witch Lvl3"].concat([
+    "FQCARDTITLE.LifeInflux",
+    "FQCARDTITLE.ShadowChanneling",
+    "FQCARDTITLE.ShadowChanneling",
+    "FQCARDTITLE.SquareOfSkeletons",
+    "FQCARDTITLE.TurnBoosterIV",
+    "FQCARDTITLE.Necromancy",
+    "FQCARDTITLE.GiantSkeleton",
+    "FQCARDTITLE.GreenShadowBolt"
+]);
 
-listesCards["White-Mage Lvl2"] = listesCards["White-Mage Lvl1"].concat(["Heal", "Light Energy", "Light Energy", "Curse", "Magic Shield", "Mana Recovery III", "Arcane Explosion"]);
-listesCards["White-Mage Lvl3"] = listesCards["White-Mage Lvl2"].concat(["Draw III", "Light Energy", "Magic Shield", "Instant Curse", "Mana Recovery III", "Emergency Healing", "Mana Infusion"]);
-listesCards["White-Mage Lvl4"] = listesCards["White-Mage Lvl3"].concat(["Magic Shield", "Exorcism", "Exorcism", "Instant Curse", "Turn Booster V", "Vengeful Shield", "Empathetic Shield", "Arcane Explosion"]);
-listesCards["White-Mage Lvl5"] = listesCards["White-Mage Lvl4"].concat(["Good And Evil", "Draw III", "Instant Curse", "Turn Booster V", "Epiphany", "Epiphany", "Light Strike", "Divine Shield", "Mana Shield"]);
+listesCards["Witch Lvl5"] = listesCards["Witch Lvl4"].concat([
+    "FQCARDTITLE.ManaInflux",
+    "FQCARDTITLE.PowerInflux",
+    "FQCARDTITLE.ShadowForm",
+    "FQCARDTITLE.ShadowForm",
+    "FQCARDTITLE.AgilityInflux",
+    "FQCARDTITLE.BoneShield",
+    "FQCARDTITLE.DrawII",
+    "FQCARDTITLE.Green-ShadowBolt"
+]);
 
-listesCards["Trapper Lvl2"] = listesCards["Trapper Lvl1"].concat(["Adjusted Shot", "Draw II", "Mana Recovery II", "Trap", "Precise Shot", "Reflex Shot"]);
-listesCards["Trapper Lvl3"] = listesCards["Trapper Lvl2"].concat(["Poisoned Shot", "Poisoned Shot", "Piercing Shot", "Draw II", "Precise Shot", "Turn Booster IV"]);
-listesCards["Trapper Lvl4"] = listesCards["Trapper Lvl3"].concat(["Elite Marksman", "Turn Booster IV", "Double Arrows", "Precise Shot", "Mana Recovery II", "Ambush", "Ambush", "Trap", "Rain of Arrows"]);
-listesCards["Trapper Lvl5"] = listesCards["Trapper Lvl4"].concat(["Reflex Shot", "Supersonic Shot", "Supersonic Shot", "Explosive Shot", "Explosive Shot", "Precise Shot", "Tamed Wolf", "Poisoned Shot", "Weak Point Study"]);
+// GUARDIAN
+listesCards["Guardian Lvl2"] = listesCards["Guardian Lvl1"].concat([
+    "FQCARDTITLE.Charge",
+    "FQCARDTITLE.Charge",
+    "FQCARDTITLE.DrawII",
+    "FQCARDTITLE.TurnBoosterIV",
+    "FQCARDTITLE.Hemorrhage",
+    "FQCARDTITLE.Hemorrhage"
+]);
 
-listesCards["Illusionist Lvl2"] = listesCards["Illusionist Lvl1"].concat(["Enchanted Rapier", "Mirror Images", "Sung Inspiration", "Side Attack", "Draw II"]);
-listesCards["Illusionist Lvl3"] = listesCards["Illusionist Lvl2"].concat(["Draw III", "Mana Drain", "Ethereal Plane Passage", "Shuriken", "Shuriken", "Poisoned Shuriken"]);
-listesCards["Illusionist Lvl4"] = listesCards["Illusionist Lvl3"].concat(["Magic Reach", "Magic Reach", "Apothecary I", "Diagonal Attack", "Black Plague", "Communicating Vessels", "Fevered Dance", "Mirror Images"]);
-listesCards["Illusionist Lvl5"] = listesCards["Illusionist Lvl4"].concat(["Fevered Dance", "Dagger Cloud", "Shuriken Volley", "Apothecary II", "Backflip Strike", "Circle Attack", "Illusory Strike", "Backstab"]);
+listesCards["Guardian Lvl3"] = listesCards["Guardian Lvl2"].concat([
+    "FQCARDTITLE.StanceShift",
+    "FQCARDTITLE.HeroicStrike",
+    "FQCARDTITLE.HeroicStrike",
+    "FQCARDTITLE.ManaSurge",
+    "FQCARDTITLE.ManaRecoveryI",
+    "FQCARDTITLE.BladeCharging",
+    "FQCARDTITLE.ArmorReinforcement",
+    "FQCARDTITLE.BladeWhirlwind"
+]);
 
-listesCards["Elementalist Lvl2"] = listesCards["Elementalist Lvl1"].concat(["Elemental Magic", "Draw III", "Mana Capture", "Frostfire", "Fog", "Tornado"]);
-listesCards["Elementalist Lvl3"] = listesCards["Elementalist Lvl2"].concat(["Turn Booster IV", "Tornado", "Fireball", "Meteor", "Frost Strike", "Mana Capture"]);
-listesCards["Elementalist Lvl4"] = listesCards["Elementalist Lvl3"].concat(["Earth Fracture", "Incantation", "Incantation", "Draw III", "Fireball", "Ice Wave", "Damage Propagation", "Fire Shock"]);
-listesCards["Elementalist Lvl5"] = listesCards["Elementalist Lvl4"].concat(["Turn Booster IV", "Mana Capture", "Tornado", "Earth Fracture", "Frost Strike", "Fireball", "Mana Recovery III", "Void Assassin", "Incantation", "Magic Plastron"]);
+listesCards["Guardian Lvl4"] = listesCards["Guardian Lvl3"].concat([
+    "FQCARDTITLE.ManaSurge",
+    "FQCARDTITLE.DrawII",
+    "FQCARDTITLE.TurnBoosterIV",
+    "FQCARDTITLE.ShieldBash",
+    "FQCARDTITLE.ShieldBash",
+    "FQCARDTITLE.Hemorrhage",
+    "FQCARDTITLE.Hemorrhage",
+    "FQCARDTITLE.UltimateRage"
+]);
 
+listesCards["Guardian Lvl5"] = listesCards["Guardian Lvl4"].concat([
+    "FQCARDTITLE.ManaSurge",
+    "FQCARDTITLE.ManaRecoveryI",
+    "FQCARDTITLE.RageSurge",
+    "FQCARDTITLE.PowerfulStrike",
+    "FQCARDTITLE.PowerfulStrike",
+    "FQCARDTITLE.ArmorReinforcement",
+    "FQCARDTITLE.BladeWhirlwind"
+]);
+
+// MONK
+listesCards["Monk Lvl2"] = listesCards["Monk Lvl1"].concat([
+    "FQCARDTITLE.LeftPunch",
+    "FQCARDTITLE.LeftPunch",
+    "FQCARDTITLE.InhibitingCape",
+    "FQCARDTITLE.QuickDodge"
+]);
+
+listesCards["Monk Lvl3"] = listesCards["Monk Lvl2"].concat([
+    "FQCARDTITLE.TurnBoosterV",
+    "FQCARDTITLE.InhibitingCape",
+    "FQCARDTITLE.ZenMeditation",
+    "FQCARDTITLE.ZealousShield",
+    "FQCARDTITLE.ManaRecoveryIII",
+    "FQCARDTITLE.PhantomBlade"
+]);
+
+listesCards["Monk Lvl4"] = listesCards["Monk Lvl3"].concat([
+    "FQCARDTITLE.ChiMaster",
+    "FQCARDTITLE.InhibitingCape",
+    "FQCARDTITLE.Combo",
+    "FQCARDTITLE.Concealment",
+    "FQCARDTITLE.Conversion",
+    "FQCARDTITLE.KiBreath",
+    "FQCARDTITLE.TurnBoosterV"
+]);
+
+listesCards["Monk Lvl5"] = listesCards["Monk Lvl4"].concat([
+    "FQCARDTITLE.SecretWeapons",
+    "FQCARDTITLE.QuickDodge",
+    "FQCARDTITLE.Concealment",
+    "FQCARDTITLE.ZenMeditation",
+    "FQCARDTITLE.FlashMove",
+    "FQCARDTITLE.PhantomBlade"
+]);
+
+// WHITE MAGE
+listesCards["White-Mage Lvl2"] = listesCards["White-Mage Lvl1"].concat([
+    "FQCARDTITLE.Heal",
+    "FQCARDTITLE.LightEnergy",
+    "FQCARDTITLE.LightEnergy",
+    "FQCARDTITLE.Curse",
+    "FQCARDTITLE.MagicShield",
+    "FQCARDTITLE.ManaRecoveryIII",
+    "FQCARDTITLE.ArcaneExplosion"
+]);
+
+listesCards["White-Mage Lvl3"] = listesCards["White-Mage Lvl2"].concat([
+    "FQCARDTITLE.DrawIII",
+    "FQCARDTITLE.LightEnergy",
+    "FQCARDTITLE.MagicShield",
+    "FQCARDTITLE.InstantCurse",
+    "FQCARDTITLE.ManaRecoveryIII",
+    "FQCARDTITLE.EmergencyHealing",
+    "FQCARDTITLE.ManaInfusion"
+]);
+
+listesCards["White-Mage Lvl4"] = listesCards["White-Mage Lvl3"].concat([
+    "FQCARDTITLE.MagicShield",
+    "FQCARDTITLE.Exorcism",
+    "FQCARDTITLE.Exorcism",
+    "FQCARDTITLE.InstantCurse",
+    "FQCARDTITLE.TurnBoosterV",
+    "FQCARDTITLE.VengefulShield",
+    "FQCARDTITLE.EmpatheticShield",
+    "FQCARDTITLE.ArcaneExplosion"
+]);
+
+listesCards["White-Mage Lvl5"] = listesCards["White-Mage Lvl4"].concat([
+    "FQCARDTITLE.GoodAndEvil",
+    "FQCARDTITLE.DrawIII",
+    "FQCARDTITLE.InstantCurse",
+    "FQCARDTITLE.TurnBoosterV",
+    "FQCARDTITLE.Epiphany",
+    "FQCARDTITLE.Epiphany",
+    "FQCARDTITLE.LightStrike",
+    "FQCARDTITLE.DivineShield",
+    "FQCARDTITLE.ManaShield"
+]);
+
+// TRAPPER
+listesCards["Trapper Lvl2"] = listesCards["Trapper Lvl1"].concat([
+    "FQCARDTITLE.AdjustedShot",
+    "FQCARDTITLE.DrawII",
+    "FQCARDTITLE.ManaRecoveryII",
+    "FQCARDTITLE.Trap",
+    "FQCARDTITLE.PreciseShot",
+    "FQCARDTITLE.ReflexShot"
+]);
+
+listesCards["Trapper Lvl3"] = listesCards["Trapper Lvl2"].concat([
+    "FQCARDTITLE.PoisonedShot",
+    "FQCARDTITLE.PoisonedShot",
+    "FQCARDTITLE.PiercingShot",
+    "FQCARDTITLE.DrawII",
+    "FQCARDTITLE.PreciseShot",
+    "FQCARDTITLE.TurnBoosterIV"
+]);
+
+listesCards["Trapper Lvl4"] = listesCards["Trapper Lvl3"].concat([
+    "FQCARDTITLE.EliteMarksman",
+    "FQCARDTITLE.TurnBoosterIV",
+    "FQCARDTITLE.DoubleArrows",
+    "FQCARDTITLE.PreciseShot",
+    "FQCARDTITLE.ManaRecoveryII",
+    "FQCARDTITLE.Ambush",
+    "FQCARDTITLE.Ambush",
+    "FQCARDTITLE.Trap",
+    "FQCARDTITLE.RainOfArrows"
+]);
+
+listesCards["Trapper Lvl5"] = listesCards["Trapper Lvl4"].concat([
+    "FQCARDTITLE.ReflexShot",
+    "FQCARDTITLE.SupersonicShot",
+    "FQCARDTITLE.SupersonicShot",
+    "FQCARDTITLE.ExplosiveShot",
+    "FQCARDTITLE.ExplosiveShot",
+    "FQCARDTITLE.PreciseShot",
+    "FQCARDTITLE.TamedWolf",
+    "FQCARDTITLE.PoisonedShot",
+    "FQCARDTITLE.WeakPointStudy"
+]);
+
+// ILLUSIONIST
+listesCards["Illusionist Lvl2"] = listesCards["Illusionist Lvl1"].concat([
+    "FQCARDTITLE.EnchantedRapier",
+    "FQCARDTITLE.MirrorImages",
+    "FQCARDTITLE.SungInspiration",
+    "FQCARDTITLE.SideAttack",
+    "FQCARDTITLE.DrawII"
+]);
+
+listesCards["Illusionist Lvl3"] = listesCards["Illusionist Lvl2"].concat([
+    "FQCARDTITLE.DrawIII",
+    "FQCARDTITLE.ManaDrain",
+    "FQCARDTITLE.EtherealPlanePassage",
+    "FQCARDTITLE.Shuriken",
+    "FQCARDTITLE.Shuriken",
+    "FQCARDTITLE.PoisonedShuriken"
+]);
+
+listesCards["Illusionist Lvl4"] = listesCards["Illusionist Lvl3"].concat([
+    "FQCARDTITLE.MagicReach",
+    "FQCARDTITLE.MagicReach",
+    "FQCARDTITLE.ApothecaryI",
+    "FQCARDTITLE.DiagonalAttack",
+    "FQCARDTITLE.BlackPlague",
+    "FQCARDTITLE.CommunicatingVessels",
+    "FQCARDTITLE.FeveredDance",
+    "FQCARDTITLE.MirrorImages"
+]);
+
+listesCards["Illusionist Lvl5"] = listesCards["Illusionist Lvl4"].concat([
+    "FQCARDTITLE.FeveredDance",
+    "FQCARDTITLE.DaggerCloud",
+    "FQCARDTITLE.ShurikenVolley",
+    "FQCARDTITLE.ApothecaryII",
+    "FQCARDTITLE.BackflipStrike",
+    "FQCARDTITLE.CircleAttack",
+    "FQCARDTITLE.IllusoryStrike",
+    "FQCARDTITLE.Backstab"
+]);
+
+// ELEMENTALIST
+listesCards["Elementalist Lvl2"] = listesCards["Elementalist Lvl1"].concat([
+    "FQCARDTITLE.ElementalMagic",
+    "FQCARDTITLE.DrawIII",
+    "FQCARDTITLE.ManaCapture",
+    "FQCARDTITLE.Frostfire",
+    "FQCARDTITLE.Fog",
+    "FQCARDTITLE.Tornado"
+]);
+
+listesCards["Elementalist Lvl3"] = listesCards["Elementalist Lvl2"].concat([
+    "FQCARDTITLE.TurnBoosterIV",
+    "FQCARDTITLE.Tornado",
+    "FQCARDTITLE.Fireball",
+    "FQCARDTITLE.Meteor",
+    "FQCARDTITLE.FrostStrike",
+    "FQCARDTITLE.ManaCapture"
+]);
+
+listesCards["Elementalist Lvl4"] = listesCards["Elementalist Lvl3"].concat([
+    "FQCARDTITLE.EarthFracture",
+    "FQCARDTITLE.Incantation",
+    "FQCARDTITLE.Incantation",
+    "FQCARDTITLE.DrawIII",
+    "FQCARDTITLE.Fireball",
+    "FQCARDTITLE.IceWave",
+    "FQCARDTITLE.DamagePropagation",
+    "FQCARDTITLE.FireShock"
+]);
+
+listesCards["Elementalist Lvl5"] = listesCards["Elementalist Lvl4"].concat([
+    "FQCARDTITLE.TurnBoosterIV",
+    "FQCARDTITLE.ManaCapture",
+    "FQCARDTITLE.Tornado",
+    "FQCARDTITLE.EarthFracture",
+    "FQCARDTITLE.FrostStrike",
+    "FQCARDTITLE.Fireball",
+    "FQCARDTITLE.ManaRecoveryIII",
+    "FQCARDTITLE.VoidAssassin",
+    "FQCARDTITLE.Incantation",
+    "FQCARDTITLE.MagicPlastron"
+]);
 
 // 📂 Répertoires
 const packsSource = "./packs/_source/";

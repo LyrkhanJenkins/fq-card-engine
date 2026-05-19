@@ -22,8 +22,8 @@
     <ol class="cards scrollable" data-cards>
         {{#each cards as |card|}}
             <li class="flexrow" data-card-id="{{card.id}}">
-                <img class="face" src="{{card.img}}" alt="{{card.name}}" loading="lazy">
-                <strong class="name">{{card.name}}</strong>
+                <img class="face" src="{{card.img}}" alt="{{localize card.name}}" loading="lazy">
+                <strong class="name">{{localize card.name}}</strong>
                 <div class="drawn">{{card.system.fq.level}}</div>
                 <div class="drawn">{{card.system.fq.maxSameCard}}</div>
                 <div class="drawn">

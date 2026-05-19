@@ -6,8 +6,8 @@
   "cards": [
     {
       "_id": "LzHqYEFgrxqastbP",
-      "name": "Tamed Wolf",
-      "description": "",
+      "name": "FQCARDTITLE.TamedWolf",
+      "description": "FQCARDDESCRIPTION.TamedWolf",
       "type": "base",
       "suit": "",
       "back": {
@@ -109,8 +109,8 @@
     },
     {
       "_id": "xxGZsuFYGxI43mCv",
-      "name": "Precise Shot",
-      "description": "",
+      "name": "FQCARDTITLE.PreciseShot",
+      "description": "FQCARDDESCRIPTION.PreciseShot",
       "type": "base",
       "suit": "",
       "back": {
@@ -198,8 +198,8 @@
     },
     {
       "_id": "DCt1oSEftWInrgdK",
-      "name": "Elite Marksman",
-      "description": "",
+      "name": "FQCARDTITLE.EliteMarksman",
+      "description": "FQCARDDESCRIPTION.EliteMarksman",
       "type": "base",
       "suit": "",
       "back": {
@@ -327,8 +327,8 @@
     },
     {
       "_id": "rpEgS6rliEd7wdmk",
-      "name": "Double Arrows",
-      "description": "",
+      "name": "FQCARDTITLE.DoubleArrows",
+      "description": "FQCARDDESCRIPTION.DoubleArrows",
       "type": "base",
       "suit": "",
       "back": {
@@ -416,8 +416,8 @@
     },
     {
       "_id": "6e9JXQETf8xFiGsD",
-      "name": "Rain of Arrows",
-      "description": "",
+      "name": "FQCARDTITLE.RainOfArrows",
+      "description": "FQCARDDESCRIPTION.RainOfArrows",
       "type": "base",
       "suit": "",
       "value": null,
@@ -515,8 +515,8 @@
     },
     {
       "_id": "TbtTu61BXBeVPMv9",
-      "name": "Draw II",
-      "description": "",
+      "name": "FQCARDTITLE.DrawII",
+      "description": "FQCARDDESCRIPTION.DrawII",
       "type": "base",
       "suit": "",
       "back": {
@@ -609,8 +609,8 @@
     },
     {
       "_id": "v78d7KDq6VOXnSLV",
-      "name": "Mana Recovery II",
-      "description": "",
+      "name": "FQCARDTITLE.ManaRecoveryII",
+      "description": "FQCARDDESCRIPTION.ManaRecoveryII",
       "type": "base",
       "suit": "",
       "back": {
@@ -703,8 +703,8 @@
     },
     {
       "_id": "tuFdGBt4UqZwBOUj",
-      "name": "Trap",
-      "description": "",
+      "name": "FQCARDTITLE.Trap",
+      "description": "FQCARDDESCRIPTION.Trap",
       "type": "base",
       "suit": "",
       "back": {
@@ -828,8 +828,8 @@
     },
     {
       "_id": "mAzmCBtGQ4WFYJFp",
-      "name": "Reflex Shot",
-      "description": "",
+      "name": "FQCARDTITLE.ReflexShot",
+      "description": "FQCARDDESCRIPTION.ReflexShot",
       "type": "base",
       "suit": "",
       "back": {
@@ -917,8 +917,8 @@
     },
     {
       "_id": "gr3Rb8L46u3aWxbN",
-      "name": "Turn Booster IV",
-      "description": "",
+      "name": "FQCARDTITLE.TurnBoosterIV",
+      "description": "FQCARDDESCRIPTION.TurnBoosterIV",
       "type": "base",
       "suit": "",
       "back": {
@@ -1011,8 +1011,8 @@
     },
     {
       "_id": "TUED8ErQyqo0kYlQ",
-      "name": "Poisoned Shot",
-      "description": "",
+      "name": "FQCARDTITLE.PoisonedShot",
+      "description": "FQCARDDESCRIPTION.PoisonedShot",
       "type": "base",
       "suit": "",
       "value": null,
@@ -1140,8 +1140,8 @@
     },
     {
       "_id": "BZw54yeZmO8xM8m0",
-      "name": "Piercing Shot",
-      "description": "",
+      "name": "FQCARDTITLE.PiercingShot",
+      "description": "FQCARDDESCRIPTION.PiercingShot",
       "type": "base",
       "suit": "",
       "value": null,
@@ -1239,8 +1239,8 @@
     },
     {
       "_id": "4BMct7X4bIncTuH9",
-      "name": "Weak Point Study",
-      "description": "",
+      "name": "FQCARDTITLE.WeakPointStudy",
+      "description": "FQCARDDESCRIPTION.WeakPointStudy",
       "type": "base",
       "suit": "",
       "back": {
@@ -1379,8 +1379,8 @@
     },
     {
       "_id": "YN7Tv6sNrlx3GH91",
-      "name": "Ambush",
-      "description": "",
+      "name": "FQCARDTITLE.Ambush",
+      "description": "FQCARDDESCRIPTION.Ambush",
       "type": "base",
       "suit": "",
       "back": {
@@ -1523,8 +1523,8 @@
     },
     {
       "_id": "g9dJaW71y084DeoU",
-      "name": "Supersonic Shot",
-      "description": "",
+      "name": "FQCARDTITLE.SupersonicShot",
+      "description": "FQCARDDESCRIPTION.SupersonicShot",
       "type": "base",
       "suit": "",
       "back": {
@@ -1617,8 +1617,8 @@
     },
     {
       "_id": "FZWgsMc8hAgycB1O",
-      "name": "Explosive Shot",
-      "description": "",
+      "name": "FQCARDTITLE.ExplosiveShot",
+      "description": "FQCARDDESCRIPTION.ExplosiveShot",
       "type": "base",
       "suit": "",
       "back": {
@@ -1723,9 +1723,9 @@
         }
       ],
       "face": 0,
-      "name": "Enraged Bear",
+      "name": "FQCARDTITLE.EnragedBear",
+      "description": "FQCARDDESCRIPTION.EnragedBear",
       "_id": "1jkFPs6RlXohLgFI",
-      "description": "",
       "type": "base",
       "system": {
         "fq": {
@@ -1824,9 +1824,9 @@
         }
       ],
       "face": 0,
-      "name": "Adjusted Shot",
+      "name": "FQCARDTITLE.AdjustedShot",
+      "description": "FQCARDDESCRIPTION.AdjustedShot",
       "_id": "AoaqcFI0OZ4CE9oK",
-      "description": "",
       "type": "base",
       "system": {
         "fq": {
@@ -1961,9 +1961,9 @@
         }
       ],
       "face": 0,
-      "name": "Spike Trap",
+      "name": "FQCARDTITLE.SpikeTrap",
+      "description": "FQCARDDESCRIPTION.SpikeTrap",
       "_id": "fgehvq9BIao1kZaC",
-      "description": "",
       "type": "base",
       "system": {
         "fq": {
@@ -2048,9 +2048,9 @@
         }
       ],
       "face": 0,
-      "name": "Poison Trap",
+      "name": "FQCARDTITLE.PoisonTrap",
+      "description": "FQCARDDESCRIPTION.PoisonTrap",
       "_id": "OGwM2c8o6DzstWdl",
-      "description": "",
       "type": "base",
       "system": {
         "fq": {
@@ -2175,9 +2175,9 @@
         }
       ],
       "face": 0,
-      "name": "Rooted Shot",
+      "name": "FQCARDTITLE.RootedShot",
+      "description": "FQCARDDESCRIPTION.RootedShot",
       "_id": "uDLCs9Kr31l9KTih",
-      "description": "",
       "type": "base",
       "system": {
         "fq": {
@@ -2313,9 +2313,9 @@
         }
       ],
       "face": 0,
-      "name": "Regain Strength",
+      "name": "FQCARDTITLE.RegainStrength",
+      "description": "FQCARDDESCRIPTION.RegainStrength",
       "_id": "WQNFcupFcEzGd9TS",
-      "description": "",
       "type": "base",
       "system": {
         "fq": {
