@@ -2,6 +2,7 @@
 
 ### Priorité
 Migration Foundry v14:
+- Texte a trou dans la description des cartes remplis par les caractéristiques
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Besoin de gros tests de non regression de partout + avec toutes les cartes?
 - Ramener toutes les notes écrites
