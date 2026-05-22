@@ -454,6 +454,8 @@ window.FqCardEngineModule = {
             zeal : DisplayCard.getFirstNumberForCardSvg(firstChoice.zeal),
             minReach : DisplayCard.getFirstNumberForCardSvg(firstChoice.minReach),
             maxReach : DisplayCard.getFirstNumberForCardSvg(firstChoice.maxReach),
+            reactive : firstChoice.reactive,
+            replayable : firstChoice?.replayable === "passif" ? "P" : !firstChoice?.replayable ? null : DisplayCard.getFirstNumberForCardSvg(firstChoice?.replayable),
             maxSameCard : card.system.fq?.maxSameCard,
             fqClass : card.system.fq?.class,
             discards,

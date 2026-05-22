@@ -19,6 +19,7 @@ Migration Foundry v14:
 - Script de migration json a ajouter avec fq-eizh-assets (est ce qu'on commence a y mettre les cartes?)
 - Redecoupage et vérification CSS
 - Supprimer la notion de joueur par main?
+- Chercher dans votre défausse action
 
 ### Feature:
 

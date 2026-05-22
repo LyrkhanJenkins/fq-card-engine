@@ -99,6 +99,8 @@ export default class HandBoard {
                     zeal : DisplayCard.getFirstNumberForCardSvg(cardContent.zeal),
                     minReach : DisplayCard.getFirstNumberForCardSvg(cardContent.minReach),
                     maxReach : DisplayCard.getFirstNumberForCardSvg(cardContent.maxReach),
+                    reactive : cardContent.reactive,
+                    replayable : cardContent?.replayable === "passif" ? "P" : !cardContent?.replayable ? null : DisplayCard.getFirstNumberForCardSvg(cardContent?.replayable),
                     maxSameCard : c.system.fq?.maxSameCard,
                     fqClass : c.system.fq?.class,
                     hasBeenPlayed: cardContent?.hasBeenPlayed,

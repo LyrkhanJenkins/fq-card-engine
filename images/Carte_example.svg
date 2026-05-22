@@ -33,6 +33,22 @@
             <stop offset="0%" stop-color="#ffffff"></stop>
             <stop offset="100%" stop-color="#9f968d"></stop>
         </radialGradient>
+
+        <radialGradient id="orangeMana">
+            <stop offset="0%" stop-color="#ffffff"></stop>
+            <stop offset="100%" stop-color="#ad5600"></stop>
+        </radialGradient>
+
+        <radialGradient id="greenMana">
+            <stop offset="0%" stop-color="#ffffff"></stop>
+            <stop offset="100%" stop-color="#1c7200"></stop>
+        </radialGradient>
+
+        <radialGradient id="purpleMana">
+            <stop offset="0%" stop-color="#ffffff"></stop>
+            <stop offset="100%" stop-color="#9f568d"></stop>
+        </radialGradient>
+
         <pattern id="imgPattern"
                  patternUnits="userSpaceOnUse"
                  width="500"
@@ -43,7 +59,7 @@
                    y="0"
                    width="500"
                    height="500"
-                   preserveAspectRatio="xMidYMid slice" />
+                   preserveAspectRatio="xMidYMid slice"/>
         </pattern>
 
         <pattern id="imgBackgroundPattern"
@@ -56,9 +72,12 @@
                    y="0"
                    width="500"
                    height="500"
-                   preserveAspectRatio="xMidYMid slice" />
+                   preserveAspectRatio="xMidYMid slice"/>
         </pattern>
 
+        <clipPath id="socleClip">
+            <rect x="138" y="360" width="347" height="45"/>
+        </clipPath>
     </defs>
 
     <!-- Outer card -->
@@ -98,6 +117,12 @@
       Q 0 400 195 400
       Q 30 192 40 95"
           fill="url(#imgPattern)" stroke="#4b4b4b" stroke-width="2"></path>
+    <path fill-rule="evenodd" fill="black" clip-path="url(#socleClip)"
+          d="M 138,357 L 485,357 L 585,402 L 138,402 Z
+         M 138,357 A 42,38 0 1,0 222,357 A 42,38 0 1,0 138,357 Z
+         M 226,360 A 42,38 0 1,0 310,360 A 42,38 0 1,0 226,360 Z
+         M 313,360 A 42,38 0 1,0 397,360 A 42,38 0 1,0 313,360 Z
+         M 401,358 A 42,38 0 1,0 485,358 A 42,38 0 1,0 401,358 Z"/>
 
     <!-- Green left triangle -->
     <path d="
@@ -105,26 +130,27 @@
       Q 80 360 170 400
       L 25 400
       Z
-    " fill="url(#imgBackgroundPattern)" ></path>
+    " fill="url(#imgBackgroundPattern)"></path>
 
     <!-- Green number square -->
     <g transform="translate(-75,300) rotate(25, 8, 300)">
         <rect width="44" height="68" rx="12"
-              fill="url(#imgBackgroundPattern)"  stroke="black" stroke-width="3"/>
+              fill="url(#imgBackgroundPattern)" stroke="black" stroke-width="3"/>
     </g>
     <g transform="translate(-15,335) rotate(10, 81, 300)">
         <rect width="44" height="68" rx="12"
-              fill="url(#imgBackgroundPattern)"  stroke="black" stroke-width="3"/>
+              fill="url(#imgBackgroundPattern)" stroke="black" stroke-width="3"/>
     </g>
     <g transform="translate(25,330) rotate(0, 81, 339)">
         <rect width="44" height="68" rx="12"
-              fill="url(#imgBackgroundPattern)"  stroke="black" stroke-width="4"/>
+              fill="url(#imgBackgroundPattern)" stroke="black" stroke-width="4"/>
         <text x="21" y="40"
               text-anchor="middle"
               font-size="30"
               font-weight="700"
               font-family="Lucida Calligraphy"
-              fill="black">4</text>
+              fill="black">4
+        </text>
     </g>
 
     <!-- Portée -->
@@ -157,7 +183,8 @@
     </text>
 
     <!-- Mana -->
-    <rect x="23" y="408" width="462" height="262" rx="14" fill="url(#imgBackgroundPattern)" stroke="black" stroke-width="5"></rect>
+    <rect x="23" y="408" width="462" height="262" rx="14" fill="url(#imgBackgroundPattern)" stroke="black"
+          stroke-width="5"></rect>
 
     <foreignObject x="23" y="404" width="462" height="266">
         <div xmlns="http://www.w3.org/1999/xhtml"
@@ -166,11 +193,34 @@
             <span>Récupérez 2 points de mana</span>
         </div>
     </foreignObject>
-
     <!-- Zèle -->
     <circle cx="180" cy="357" r="42" fill="url(#redMana)" stroke="#1f1f1f" stroke-width="6"></circle>
 
-    <text x="179" y="366" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy" fill="black">
+    <text x="179" y="366" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy"
+          fill="black">
         0
     </text>
+
+
+<!--    &lt;!&ndash; Réactif &ndash;&gt;-->
+<!--    <circle cx="268" cy="360" r="42" fill="url(#orangeMana)" stroke="#1f1f1f" stroke-width="6"></circle>-->
+
+<!--    <text x="265" y="372" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy"-->
+<!--          fill="black">-->
+<!--        R-->
+<!--    </text>-->
+<!--    &lt;!&ndash; Passif &ndash;&gt;-->
+<!--    <circle cx="355" cy="360" r="42" fill="url(#greenMana)" stroke="#1f1f1f" stroke-width="6"></circle>-->
+
+<!--    <text x="353" y="372" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy"-->
+<!--          fill="black">-->
+<!--        P-->
+<!--    </text>-->
+<!--    &lt;!&ndash; Passif &ndash;&gt;-->
+<!--    <circle cx="443" cy="358" r="42" fill="url(#purpleMana)" stroke="#1f1f1f" stroke-width="6"></circle>-->
+
+<!--    <text x="353" y="372" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy"-->
+<!--          fill="black">-->
+<!--        P-->
+<!--    </text>-->
 </svg>
