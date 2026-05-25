@@ -34,7 +34,7 @@ export default class DisplayCard {
             .find(limit => title.length <= limit)];
     }
 
-    static getDescriptionFromCard(c, cardContent) {
+    static getDescriptionFromCard(c) {
         let description = "";
         if (c.face != null) {
             if (!c.faces) {
@@ -46,7 +46,12 @@ export default class DisplayCard {
         if (c.face && !description) {
             description = c.data.faces[c.data.face].text;
         }
-        return game.i18n.format(description, DisplayCard.transformForDescription(cardContent));
+        const flat = Object.fromEntries(
+            c.system.fq?.choices.flatMap((choice, i) =>
+                Object.entries(choice).map(([k, v]) => [`${i}_${k}`, v])
+            )
+        );
+        return DisplayCard.transformForDescription(game.i18n.format(description, flat));
     }
 
     static getNameFromCard(c) {
@@ -92,12 +97,6 @@ export default class DisplayCard {
                 .replace(/\[radiant]/g, "[☀️]")
                 .replace(/\[slashing]/g, "[🗡️]")
                 .replace(/\[thunder]/g, "[🌪️]");
-        } else if (Array.isArray(val)) {
-            return val.map(DisplayCard.transformForDescription);
-        } else if (val !== null && typeof val === "object") {
-            return Object.fromEntries(
-                Object.entries(val).map(([k, v]) => [DisplayCard.transformForDescription(k), DisplayCard.transformForDescription(v)])
-            );
         }
         return val;
     }

@@ -88,7 +88,7 @@ export default class HandBoard {
                 let img = DisplayCard.getImgFromCard(c);
                 let name = DisplayCard.getNameFromCard(c);
                 let cardContent = c.system.fq?.choices?.length ? c.system.fq?.choices[0] : {};
-                let description = DisplayCard.getDescriptionFromCard(c, cardContent);
+                let description = DisplayCard.getDescriptionFromCard(c);
                 let renderData = {
                     id: c._id ? c._id : c.data._id,
                     description: description,

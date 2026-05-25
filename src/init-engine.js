@@ -441,7 +441,7 @@ window.FqCardEngineModule = {
             currentDrop: character.system?.fq?.cards?.currentDrop ?? 0,
         } : null;
 
-        let description = DisplayCard.getDescriptionFromCard(card, firstChoice);
+        let description = DisplayCard.getDescriptionFromCard(card);
 
         const html = await foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/dialog-play.hbs", {
             card,
