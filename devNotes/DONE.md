@@ -3,9 +3,15 @@ Feat :
 - Refonte de l'UI de la main d'un joueur
 - Refonte de l'UI de la dialog pour jouer une carte
 - Afficher les ressources FQ Directement dans la play dialog et dans la hand-container
+- Formulaire de création de carte plutôt qu'une string transformé en JSON
+- Les cartes sont générés dynamiquement avec le formulaire des cartes FQ via un SVG
+- Localisation (FR et EN) de toutes les cartes
+- Refonte des illustrations de toutes les cartes à jouer
+- Nouvelles gestions FX (avec JB2A) et sons originaux (plusieurs sons par type de dégâts)
 Chore :
-- Montée de version 14 ... (en cours)
-- Refactorisation (en cours)
+- Montée de version 14.362
+- Refacto des templates et objets FQ raccordé aux object DND5E (Feuilles de personnage) et Foundry (carte et decks)
+- Refacto des classes et methodes statiques pour ne garder que le strict nécessaire
 
 v1.1.1:
 Chore :

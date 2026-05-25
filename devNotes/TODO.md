@@ -1,21 +1,19 @@
 ## V2.0
 ### Fix Prioritaire
 - Empêcher de jouer une carte de base 2 fois dans un tour
-- Bug sort 'Nécromancie' rejouable indéfiniement: Sort passif utilisable qu'une fois par tour!
+  - Bug sort 'Nécromancie' rejouable indéfiniement : Sort passif utilisable qu'une fois par tour!
 - Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
-- Arrivé a invoquer un squelette par dessus un autre squelette
 - Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
 - Revoir Canalisation des Ombres
 - Remplacer certaines valeurs sur les cartes par les vrais valeurs (exemple X si xvalue)
 
 ### Priorité
 Migration Foundry v14:
-- Finir Texte a trou dans la description des cartes remplis par les caractéristiques
 - Macro pour générer un deck avec toutes les cartes
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Mettre à jour des mondes de tests pour plusieurs cas
 - Tests fonctionnels 2 + montée de version jusqu'à la dernière v14
-- Mettre à jour readme et page Foundry
+- Mettre à jour readme et page Foundry et DONE.md
 - MAJOR--> RELEASE
 
 - SPIKE Meilleurs tests à faire pour de la non-regression ?
@@ -32,6 +30,7 @@ Migration Foundry v14:
 - Repasser sur tous les TODO
 - Faire un point sur todos.*
 - Tests fonctionnels + montée dernière version
+- Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
 - PATCH--> RELEASE
 
 - Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de
@@ -42,87 +41,71 @@ Migration Foundry v14:
 - Tests fonctionnels + montée dernière version
 - PATCH--> RELEASE
 
-- Chercher dans votre défausse action
-- Refaire des cartes pour chacune des classes qui ont trop de sorts les mêmes et bien les diviser par chaque niveau
- et en distribuer la moitié du nombre max. Bien faire la différenceciation des classes
-- Gérer les cartes incolores
-- Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
-- Ajouter du ciblage si oublié dans la dialog-play?
-- Ne pas cliquer sur dialog-play si pas de cible sur une carte en nécessitant
-- Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
-- Supprimer la notion de joueur par main?
+- Bug tornade effet magique
+- Revoir les effets visuels et audio
+- Gestions des principales Custom eval dans des méthodes
+- PATCH--> RELEASE
 
-- Gérer les passifs hors de la main, comme les pouvoirs ...
+- Refonte des cartes :
+  - Ajout de cartes par classes pour caractérisation + de réactif et de passif?
+  - Refaire des cartes pour chacune des classes qui ont trop de sorts les mêmes et bien les diviser par chaque niveau
+    et en distribuer la moitié du nombre max. Bien faire la différenceciation des classes
+  - Les spécificités des classes doivent être plus marqués et ne pas retrouvé trop les mêmes sorts pour chacunes des classes
+  - Ajout des dégâts armes pour les cartes :
+    - Ajouts des dégâts de l'arme équipé pour les sorts de CàC
+    - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en premier
+    - Afficher sur la carte
+  - Gérer les passifs hors de la main, comme les pouvoirs ...
     - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
       utilisation), réécriture des passifs
     - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
       d'actions/mana/pioches?)
+- MINOR--> RELEASE
+
+- Chercher dans votre défausse action
+- Gérer les cartes incolores
+- Ajouter du ciblage si oublié dans la dialog-play?
+- Ne pas cliquer sur dialog-play si pas de cible sur une carte en nécessitant
+- Proposer des cibles pas encore choisi 0dans dialog-play
+- Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
+- Supprimer la notion de joueur par main?
 - Tests fonctionnels + montée dernière version
 - MINOR--> RELEASE
 
-- Refonte des cartes :
-  - Ajout de cartes par classes pour caractérisation + de réactif et de passif?
-  - Faire des cartes qui coutent plus que 10 points d'actions, plus forte
-  - Faire des synergies de cartes a faible cout
-  - Les spécificités des classes doivent être plus marqués et ne pas retrouvé trop les mêmes sorts pour chacunes des classes
-  - Ajout des dégâts armes pour les cartes :
-      - Ajouts des dégâts de l'arme équipé pour les sorts de CàC
-      - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en premier
-      - Afficher sur la carte
-- MINOR--> RELEASE
-
-### Fix mineure
-
-- Problématique quand on passe directement du niveau 1 à 7 (est-ce que s'en ai vraiment une) -> pas de regénération du
-  deck
-- Problème d'effet? le clignottement a fait disparaitre un de mes token à un moment donné
- - Bug tornade effet magique
-
-### Feature:
+- Finir Texte a trou dans la description des cartes remplis par les caractéristiques
+- PATCH--> RELEASE
 
 - Prise en compte la classe d'armure de DND5E -> Est que l'esquive devient plus qu'une demi-esquive?
 - Migrations objets dnd5e v FQ OU comment plus les mettre en avant?
 - Ajout de spécialisation pour les 7 classes jusqu'au niveau 10
 - Prise en compte des resistances
+- MINOR--> RELEASE
+### Fix mineure
 
 ### Chore:
 
 - Migration Eizh complète avec les niveaux
-- Gestions des principales Custom eval dans des méthodes
 
 ## Backlog
 
 ### High:
 
-- Au choix du type de carte n'afficher ou pas les choix dans la dialog
-- Se renseigner pour les problèmes d'audio de Foundry
+- Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens
+- Gérer un nombre max d'utilisation pour des armes.
 
 ### Medium:
 
-- Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens
 - Gladiateur -> resource spécial pour les armes?, renommer en maître d'armes
-- Gérer un nombre d'utilisation pour des armes.
 - Gérer du ciblage speciale : Zone
 - Ne pas utiliser de points d'actions quand hors combat
 - Vérifier qu'un GM est connecté pour pouvoir lancer les cartes
-- Lancer les sons des cartes sur un dossier plutôt qu'un fichier (lancer un fichier audio aléatoire d'un dossier)
-- Rétrocompatibilité des feuilles : n'ajouter que la partie fq ou toute la feuille ?
-- Permettre de remonter les points de vie/mana/zele courant même si éléments actifs
-- Supprimer les familier en fin de combat
 - Comment gérer les effets visuels si le fichier n'existe pas?
 - Limiter la taille de la main? ne pas piocher si arriver à cette limite
 
+
 ### Low:
 - Ajouter également une fleche raccourci pour passer une carte du spellbook vers le deck
-- Que faire des cartes communes implémentés?
-- Lancez différents sons ci plusieurs cibles touchés
-- Logué ou trouver un moyen de logué tous les évenements de combat pour pouvoir les réutiliser dans les customEvals
-- Améliorer certaines cartes de mage blanc: light energy (json après utilisation)
-- Gérer les nb target infini et les portée infini?, les critique, els esquive? (light strike)
-- Gérer les cartes chargées directement dans le code natif et pas en script
-- Gérer les dissipations d'effet dans un select qui récupère tous les effets des cibles
-- Gérer de l'aléatoire dans les cartes recues en montée de niveau à la manière de booster
-- Gestion d'une monnaie entre le spellbook et le deck?
+- Plus de sound effects differents
 
 ### Very Low:
 
