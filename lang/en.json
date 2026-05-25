@@ -549,7 +549,7 @@
   "FQCARDTITLE.Vortex" : "Vortex",
   "FQCARDDESCRIPTION.Vortex" : "Deal 2 × @int + 1d8 damage, and the range is also increased by @int.\n\n1d4 chance to apply an air effect that immobilizes the target for 2 turns.\n",
   "FQCARDTITLE.RockThrow" : "Rock Throw",
-  "FQCARDDESCRIPTION.RockThrow" : "Deal X × @wis + Xd6 damage.\n\n1d3 chance to apply an earth effect that reduces the target’s critical hit by 1 + @wis for 2 × @wis turns.\n",
+  "FQCARDDESCRIPTION.RockThrow" : "Deal X × @wis + Xd6 damage.\n\n1d3 chance to apply an earth effect that reduces the target’s critical hit by 1 + @wis for 2 × @wis turns. Xmax = 4",
   "FQCARDTITLE.BurningHand" : "Burning Hand",
   "FQCARDDESCRIPTION.BurningHand" : "Deal @int + 1d4 damage, then draw a card.\n\n1d8 chance to burn the target, dealing 9 damage over 3 turns\n(stackable up to 2 times).\n",
   "FQCARDTITLE.GiantStalactite" : "Giant Stalactite",

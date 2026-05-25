@@ -20,6 +20,27 @@ Migration Foundry v14:
 - Redecoupage et vérification CSS
 - Supprimer la notion de joueur par main?
 - Chercher dans votre défausse action
+- Ajout de quelques cartes par classes pour caractérisation + de réactif et de passif?
+
+### Fix
+MAJOR:
+- RETESTER TOUTES LES CORRECTIONS (pas pu tester au moins 2 (arme à son tour et montée de version))
+  MINOR:
+
+- Remplacer certaines valeurs sur les cartes par les vrais valeurs (exemple X si xvalue)
+- Bug reach bonus du fouet enchantée
+- Bug sort 'Nécromancie' rejouable indéfiniement: Sort passif utilisable qu'une fois par tour!
+- Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
+- Arrivé a invoquer un squelette par dessus un autre skelette
+- Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
+- Empecher de jouer une carte de base 2 fois dans un tour
+
+VERY MINOR:
+
+- Problématique quand on passe directement du niveau 1 à 7 (est-ce que s'en ai vraiment une) -> pas de regénération du
+  deck
+- Problème d'effet? le clignottement a fait disparaitre un de mes token à un moment donné
+ - Bug tornade effet magique
 
 ### Feature:
 

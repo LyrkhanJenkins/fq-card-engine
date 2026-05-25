@@ -549,7 +549,7 @@
   "FQCARDTITLE.Vortex" : "Tourbillon",
   "FQCARDDESCRIPTION.Vortex" : "Inflige 2*@int + 1d8 points de dégâts, la portée est également augmenté de @int\n\n1d4 de chance d’appliquer un effet d’air immobilisant la cible pendant 2 tours\n",
   "FQCARDTITLE.RockThrow" : "Jet De Roche",
-  "FQCARDDESCRIPTION.RockThrow" : "Inflige X*@sag + Xd6 points de dégâts\n\n1d3 de chance d’appliquer un effet de terre réduisant de 1+@wis le critique de la cible pendant 2x@wis tours\n",
+  "FQCARDDESCRIPTION.RockThrow" : "Inflige X*@sag + Xd6 points de dégâts\n\n1d3 de chance d’appliquer un effet de terre réduisant de 1+@wis le critique de la cible pendant 2x@wis tours. Xmax = 4",
   "FQCARDTITLE.BurningHand" : "Main Brulante",
   "FQCARDDESCRIPTION.BurningHand" : "Inflige @int + 1d4 points de dégâts, piochez une carte\n\n1d8 de chance de brûler la cible infligeant 9 dégâts en 3 tours\n(cumulable 2 fois)\n",
   "FQCARDTITLE.GiantStalactite" : "Stalactite Géante",

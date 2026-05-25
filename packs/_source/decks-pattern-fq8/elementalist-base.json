@@ -2489,7 +2489,7 @@
       ],
       "face": 0,
       "name": "FQCARDTITLE.RockThrow",
-      "description": "FQCARDDESCRIPTION.RockThrow",
+      "description": "<p>FQCARDDESCRIPTION.RockThrow</p>",
       "_id": "bYMgKHMKw0TS0EPm",
       "type": "base",
       "system": {
@@ -2515,8 +2515,8 @@
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
-              "xmin": "",
-              "xmax": "",
+              "xmin": "1",
+              "xmax": "4",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
@@ -2598,15 +2598,17 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "14.362",
         "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1779684596440,
+        "modifiedTime": 1779684596440
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!7lD7zopd27M1kL0c.bYMgKHMKw0TS0EPm"
+      "_key": "!cards.cards!7lD7zopd27M1kL0c.bYMgKHMKw0TS0EPm",
+      "cards": []
     },
     {
       "faces": [
