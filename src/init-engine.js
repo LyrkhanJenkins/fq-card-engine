@@ -383,7 +383,6 @@ window.FqCardEngineModule = {
 
     async playDialog(currentCards, card) {
         let img = DisplayCard.getImgFromCard(card);
-        let description = DisplayCard.getDescriptionFromCard(card);
         let name = DisplayCard.getNameFromCard(card);
         // ── Récupération des cartes navigables (mêmes filtres que la main) ──
         const handCards = [...currentCards.cards].sort(FqCardEngineModule.cardSort); // toutes les cartes de la main courante
@@ -441,6 +440,8 @@ window.FqCardEngineModule = {
             zealPct: Math.round(((character.system?.fq?.zeal?.value ?? 0) / (character.system?.fq?.zeal?.max ?? 1)) * 100),
             currentDrop: character.system?.fq?.cards?.currentDrop ?? 0,
         } : null;
+
+        let description = DisplayCard.getDescriptionFromCard(card, firstChoice);
 
         const html = await foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/dialog-play.hbs", {
             card,
