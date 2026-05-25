@@ -86,21 +86,21 @@ export default class HandBoard {
             }
             $(this.currentCards.cards.contents.sort(FqCardEngineModule.cardSort)).each(function (i, c) {
                 let img = DisplayCard.getImgFromCard(c);
-                let description = DisplayCard.getDescriptionFromCard(c);
                 let name = DisplayCard.getNameFromCard(c);
                 let cardContent = c.system.fq?.choices?.length ? c.system.fq?.choices[0] : {};
+                let description = DisplayCard.getDescriptionFromCard(c, cardContent);
                 let renderData = {
                     id: c._id ? c._id : c.data._id,
                     description: description,
                     descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
                     titleSize: DisplayCard.getTitleSizeForCardSvg(name),
-                    action : DisplayCard.getFirstNumberForCardSvg(cardContent.action),
-                    mana : DisplayCard.getFirstNumberForCardSvg(cardContent.mana),
-                    zeal : DisplayCard.getFirstNumberForCardSvg(cardContent.zeal),
-                    minReach : DisplayCard.getFirstNumberForCardSvg(cardContent.minReach),
-                    maxReach : DisplayCard.getFirstNumberForCardSvg(cardContent.maxReach),
+                    action : DisplayCard.getNumberForBubbleCardSvg(cardContent.action, cardContent),
+                    mana : DisplayCard.getNumberForBubbleCardSvg(cardContent.mana, cardContent),
+                    zeal : DisplayCard.getNumberForBubbleCardSvg(cardContent.zeal, cardContent),
+                    minReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.minReach, cardContent),
+                    maxReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.maxReach, cardContent),
                     reactive : cardContent.reactive,
-                    replayable : cardContent?.replayable === "passif" ? "P" : !cardContent?.replayable ? null : DisplayCard.getFirstNumberForCardSvg(cardContent?.replayable),
+                    replayable : cardContent?.replayable === "passif" ? "P" : !cardContent?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(cardContent?.replayable, cardContent),
                     maxSameCard : c.system.fq?.maxSameCard,
                     fqClass : c.system.fq?.class,
                     hasBeenPlayed: cardContent?.hasBeenPlayed,

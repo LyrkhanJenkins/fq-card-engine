@@ -1,12 +1,13 @@
+import FqConstants from "./fq-constants.js";
 
 export default class DisplayCard {
     // TODO Reactif, Replayable, couleurs pour les gains ou pertes des bullles, changer la taille des fonts des bulles également
 
-    static getFirstNumberForCardSvg(str) {
+    static getNumberForBubbleCardSvg(str, cardContent) {
         if (str === "") {
             return "0";
         }
-        if (str.includes("XXX") || str.includes("YYY")) {
+        if ((str.includes("XXX") && !cardContent.xvalue) || (str.includes("YYY") && !cardContent.yvalue)) {
             return str.replace("XXX","X").replace("YYY","Y").replace("(","").replace(")","").replace("*","");
         }
         const matches = str.match(/-?\d+/g);
@@ -33,7 +34,7 @@ export default class DisplayCard {
             .find(limit => title.length <= limit)];
     }
 
-    static getDescriptionFromCard(c) {
+    static getDescriptionFromCard(c, cardContent) {
         let description = "";
         if (c.face != null) {
             if (!c.faces) {
@@ -45,7 +46,7 @@ export default class DisplayCard {
         if (c.face && !description) {
             description = c.data.faces[c.data.face].text;
         }
-        return game.i18n.localize(description);
+        return game.i18n.format(description, DisplayCard.transformForDescription(cardContent));
     }
 
     static getNameFromCard(c) {
@@ -66,5 +67,38 @@ export default class DisplayCard {
             img = c.data.faces[c.data.face].img;
         }
         return img;
+    }
+
+    static transformForDescription(val) {
+        const abilities = FqConstants.actorAbi;
+        if (typeof val === "string") {
+            return  val.replace("XXX","X").replace("YYY","Y")
+                .replace(/@int/g, abilities?.int?.mod + "🧠")
+                .replace(/@wis/g, abilities?.wis?.mod + "🦉")
+                .replace(/@cha/g, abilities?.cha?.mod + "✨️")
+                .replace(/@str/g, abilities?.str?.mod + "💪")
+                .replace(/@dex/g, abilities?.dex?.mod + "🎯")
+                .replace(/@con/g, abilities?.con?.mod + "❤️")
+                .replace(/\[acid]/g, "🧪")
+                .replace(/\[bludgeoning]/g, "⚒️")
+                .replace(/\[cold]/g, "🧊")
+                .replace(/\[fire]/g, "🔥")
+                .replace(/\[force]/g, "🌀")
+                .replace(/\[lightning]/g, "🌩️")
+                .replace(/\[necrotic]/g, "🩸")
+                .replace(/\[piercing]/g, "🏹")
+                .replace(/\[poison]/g, "☠️")
+                .replace(/\[psychic]/g, "👁️")
+                .replace(/\[radiant]/g, "☀️")
+                .replace(/\[slashing]/g, "🗡️")
+                .replace(/\[thunder]/g, "🌪️");
+        } else if (Array.isArray(val)) {
+            return val.map(DisplayCard.transformForDescription);
+        } else if (val !== null && typeof val === "object") {
+            return Object.fromEntries(
+                Object.entries(val).map(([k, v]) => [DisplayCard.transformForDescription(k), DisplayCard.transformForDescription(v)])
+            );
+        }
+        return val;
     }
 }
