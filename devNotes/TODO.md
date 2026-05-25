@@ -1,42 +1,77 @@
 ## V2.0
+### Fix Prioritaire
+- Empêcher de jouer une carte de base 2 fois dans un tour
+- Bug sort 'Nécromancie' rejouable indéfiniement: Sort passif utilisable qu'une fois par tour!
+- Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
+- Arrivé a invoquer un squelette par dessus un autre squelette
+- Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
+- Revoir Canalisation des Ombres
+- Remplacer certaines valeurs sur les cartes par les vrais valeurs (exemple X si xvalue)
 
 ### Priorité
 Migration Foundry v14:
-- Texte a trou dans la description des cartes remplis par les caractéristiques
+- Finir Texte a trou dans la description des cartes remplis par les caractéristiques
+- Macro pour générer un deck avec toutes les cartes
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
-- Besoin de gros tests de non regression de partout + avec toutes les cartes?
+- Mettre à jour des mondes de tests pour plusieurs cas
+- Tests fonctionnels 2 + montée de version jusqu'à la dernière v14
+- Mettre à jour readme et page Foundry
+- MAJOR--> RELEASE
+
+- SPIKE Meilleurs tests à faire pour de la non-regression ?
+- Test haut-niveau avec toutes les cartes, Besoin de gros tests de non regression de partout + avec toutes les cartes?
+- Couverture de test avec rapport > 80%
+- Tests fonctionnels + montée de version jusqu'à la dernière v14
+- A partir de là, montée de version majeure possible : Faire un plan de pmontée de version majeure : Mettre à jour les
+  cartes dans les compendiums et relance des tests par exemple
+- PATCH--> RELEASE
+
 - Ramener toutes les notes écrites
-- Revoir css, homogeneiser fonts...
-- changer les noms des templates et supprimer l'inutile
-- Déplacer les templates
+- Revoir css, homogénéiser fonts...
+- Redecoupage et vérification CSS
 - Repasser sur tous les TODO
 - Faire un point sur todos.*
-- Passage en typescript
-- Couverture de test avec rapport > 80%
-- Rajouter des règles d'architectures
+- Tests fonctionnels + montée dernière version
+- PATCH--> RELEASE
+
 - Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de
   fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
-- Script de migration json a ajouter avec fq-eizh-assets (est ce qu'on commence a y mettre les cartes?)
-- Redecoupage et vérification CSS
-- Supprimer la notion de joueur par main?
+- Verifier 
+- Passage en typescript?
+- Rajouter des règles d'architectures
+- Tests fonctionnels + montée dernière version
+- PATCH--> RELEASE
+
 - Chercher dans votre défausse action
-- Ajout de quelques cartes par classes pour caractérisation + de réactif et de passif?
 - Refaire des cartes pour chacune des classes qui ont trop de sorts les mêmes et bien les diviser par chaque niveau
  et en distribuer la moitié du nombre max. Bien faire la différenceciation des classes
 - Gérer les cartes incolores
+- Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
+- Ajouter du ciblage si oublié dans la dialog-play?
+- Ne pas cliquer sur dialog-play si pas de cible sur une carte en nécessitant
+- Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
+- Supprimer la notion de joueur par main?
 
-### Fix
-MAJOR:
-- RETESTER TOUTES LES CORRECTIONS (pas pu tester au moins 2 (arme à son tour et montée de version))
-  MINOR:
-- Remplacer certaines valeurs sur les cartes par les vrais valeurs (exemple X si xvalue)
-- Bug sort 'Nécromancie' rejouable indéfiniement: Sort passif utilisable qu'une fois par tour!
-- Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
-- Arrivé a invoquer un squelette par dessus un autre skelette
-- Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
-- Empecher de jouer une carte de base 2 fois dans un tour
+- Gérer les passifs hors de la main, comme les pouvoirs ...
+    - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
+      utilisation), réécriture des passifs
+    - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
+      d'actions/mana/pioches?)
+- Tests fonctionnels + montée dernière version
+- MINOR--> RELEASE
 
-VERY MINOR:
+- Refonte des cartes :
+  - Ajout de cartes par classes pour caractérisation + de réactif et de passif?
+  - Faire des cartes qui coutent plus que 10 points d'actions, plus forte
+  - Faire des synergies de cartes a faible cout
+  - Les spécificités des classes doivent être plus marqués et ne pas retrouvé trop les mêmes sorts pour chacunes des classes
+  - Ajout des dégâts armes pour les cartes :
+      - Ajouts des dégâts de l'arme équipé pour les sorts de CàC
+      - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en premier
+      - Afficher sur la carte
+- MINOR--> RELEASE
+
+### Fix mineure
 
 - Problématique quand on passe directement du niveau 1 à 7 (est-ce que s'en ai vraiment une) -> pas de regénération du
   deck
@@ -45,39 +80,14 @@ VERY MINOR:
 
 ### Feature:
 
-- Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
-- Ajouter du ciblage si oublié dans la dialog-play?
-- Ne pas cliquer sur dialog-play si pas de cible sur une carte en nécessitant
-- Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
-
-- Refonte des cartes : 
-    - Nouveau générateur de cartes pour remplacer Word? (pas sur)
-      - Possible de le faire directement avec le formulaire sur Foundry?
-      - Ou simplement utiliser autre chose que Word
-    - Faire des cartes qui coutent plus que 10 points d'actions, plus forte
-    - Faire des synergies de cartes a faible cout 
-    - Les spécificités des classes doivent être plus marqués et ne pas retrouvé trop les mêmes sorts pour chacunes des
-  classes
-    - Ajout des dégâts armes pour les cartes :
-      - Ajouts des dégâts de l'arme équipé pour les sorts de CàC
-      - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en
-           premier
-      - Afficher sur la carte
 - Prise en compte la classe d'armure de DND5E -> Est que l'esquive devient plus qu'une demi-esquive?
 - Migrations objets dnd5e v FQ OU comment plus les mettre en avant?
-- Gérer les passifs hors de la main, comme les pouvoirs ...
-    - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
-      utilisation), réécriture des passifs
-    - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
-          d'actions/mana/pioches?)
 - Ajout de spécialisation pour les 7 classes jusqu'au niveau 10
 - Prise en compte des resistances
 
 ### Chore:
 
-- Mettre à jour readme et page Foundry
 - Migration Eizh complète avec les niveaux
-- Moulinette IA des visuels
 - Gestions des principales Custom eval dans des méthodes
 
 ## Backlog
