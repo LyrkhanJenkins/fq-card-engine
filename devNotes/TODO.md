@@ -44,6 +44,7 @@ Migration Foundry v14:
 - Bug tornade effet magique
 - Revoir les effets visuels et audio
 - Gestions des principales Custom eval dans des méthodes
+- Support avec un FQ Card Viewer
 - PATCH--> RELEASE
 
 - Refonte des cartes :

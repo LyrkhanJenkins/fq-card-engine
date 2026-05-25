@@ -64,6 +64,9 @@ v1.1:
 
 v1.0:
 
-- Protéger l'utilisation de carte si pas de token controlé par le joueur
+- Protéger l'utilisation de carte si pas de token contrôlé par le joueur
+- Support v12
 
 v0.1:
+
+- Support v9
