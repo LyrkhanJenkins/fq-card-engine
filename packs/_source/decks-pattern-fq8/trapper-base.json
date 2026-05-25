@@ -7,7 +7,7 @@
     {
       "_id": "LzHqYEFgrxqastbP",
       "name": "FQCARDTITLE.TamedWolf",
-      "description": "FQCARDDESCRIPTION.TamedWolf",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -19,7 +19,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/tamed_wolf.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.TamedWolf"
         }
       ],
       "face": 0,
@@ -111,7 +111,7 @@
     {
       "_id": "xxGZsuFYGxI43mCv",
       "name": "FQCARDTITLE.PreciseShot",
-      "description": "FQCARDDESCRIPTION.PreciseShot",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -123,7 +123,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/precise_shot.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.PreciseShot"
         }
       ],
       "face": 0,
@@ -201,7 +201,7 @@
     {
       "_id": "DCt1oSEftWInrgdK",
       "name": "FQCARDTITLE.EliteMarksman",
-      "description": "FQCARDDESCRIPTION.EliteMarksman",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -213,7 +213,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/elite_marksman.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.EliteMarksman"
         }
       ],
       "face": 0,
@@ -331,7 +331,7 @@
     {
       "_id": "rpEgS6rliEd7wdmk",
       "name": "FQCARDTITLE.DoubleArrows",
-      "description": "FQCARDDESCRIPTION.DoubleArrows",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -343,7 +343,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/double_arrows.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.DoubleArrows"
         }
       ],
       "face": 0,
@@ -421,7 +421,7 @@
     {
       "_id": "6e9JXQETf8xFiGsD",
       "name": "FQCARDTITLE.RainOfArrows",
-      "description": "FQCARDDESCRIPTION.RainOfArrows",
+      "description": "",
       "type": "base",
       "suit": "",
       "value": null,
@@ -434,7 +434,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/rain_of_arrows.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.RainOfArrows"
         }
       ],
       "face": 0,
@@ -521,7 +521,7 @@
     {
       "_id": "TbtTu61BXBeVPMv9",
       "name": "FQCARDTITLE.DrawII",
-      "description": "FQCARDDESCRIPTION.DrawII",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -533,7 +533,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.DrawII"
         }
       ],
       "face": 0,
@@ -616,7 +616,7 @@
     {
       "_id": "v78d7KDq6VOXnSLV",
       "name": "FQCARDTITLE.ManaRecoveryII",
-      "description": "FQCARDDESCRIPTION.ManaRecoveryII",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -628,7 +628,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_ii.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.ManaRecoveryII"
         }
       ],
       "face": 0,
@@ -711,7 +711,7 @@
     {
       "_id": "tuFdGBt4UqZwBOUj",
       "name": "FQCARDTITLE.Trap",
-      "description": "FQCARDDESCRIPTION.Trap",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -723,7 +723,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/trap.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.Trap"
         }
       ],
       "face": 0,
@@ -837,7 +837,7 @@
     {
       "_id": "mAzmCBtGQ4WFYJFp",
       "name": "FQCARDTITLE.ReflexShot",
-      "description": "FQCARDDESCRIPTION.ReflexShot",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -849,7 +849,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/reflex_shot.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.ReflexShot"
         }
       ],
       "face": 0,
@@ -927,7 +927,7 @@
     {
       "_id": "gr3Rb8L46u3aWxbN",
       "name": "FQCARDTITLE.TurnBoosterIV",
-      "description": "FQCARDDESCRIPTION.TurnBoosterIV",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -939,7 +939,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.TurnBoosterIV"
         }
       ],
       "face": 0,
@@ -1022,7 +1022,7 @@
     {
       "_id": "TUED8ErQyqo0kYlQ",
       "name": "FQCARDTITLE.PoisonedShot",
-      "description": "FQCARDDESCRIPTION.PoisonedShot",
+      "description": "",
       "type": "base",
       "suit": "",
       "value": null,
@@ -1035,7 +1035,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/poisoned_shot.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.PoisonedShot"
         }
       ],
       "face": 0,
@@ -1152,7 +1152,7 @@
     {
       "_id": "BZw54yeZmO8xM8m0",
       "name": "FQCARDTITLE.PiercingShot",
-      "description": "FQCARDDESCRIPTION.PiercingShot",
+      "description": "",
       "type": "base",
       "suit": "",
       "value": null,
@@ -1165,7 +1165,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/piercing_shot.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.PiercingShot"
         }
       ],
       "face": 0,
@@ -1252,7 +1252,7 @@
     {
       "_id": "4BMct7X4bIncTuH9",
       "name": "FQCARDTITLE.WeakPointStudy",
-      "description": "FQCARDDESCRIPTION.WeakPointStudy",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1264,7 +1264,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/weak_point_study.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.WeakPointStudy"
         }
       ],
       "face": 0,
@@ -1393,7 +1393,7 @@
     {
       "_id": "YN7Tv6sNrlx3GH91",
       "name": "FQCARDTITLE.Ambush",
-      "description": "FQCARDDESCRIPTION.Ambush",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1405,7 +1405,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/ambush.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.Ambush"
         }
       ],
       "face": 0,
@@ -1538,7 +1538,7 @@
     {
       "_id": "g9dJaW71y084DeoU",
       "name": "FQCARDTITLE.SupersonicShot",
-      "description": "FQCARDDESCRIPTION.SupersonicShot",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1550,7 +1550,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/supersonic_shot.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.SupersonicShot"
         }
       ],
       "face": 0,
@@ -1633,7 +1633,7 @@
     {
       "_id": "FZWgsMc8hAgycB1O",
       "name": "FQCARDTITLE.ExplosiveShot",
-      "description": "FQCARDDESCRIPTION.ExplosiveShot",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1645,7 +1645,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/explosive_shot.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.ExplosiveShot"
         }
       ],
       "face": 0,
@@ -1735,12 +1735,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/enraged_bear.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.EnragedBear"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.EnragedBear",
-      "description": "FQCARDDESCRIPTION.EnragedBear",
+      "description": "",
       "_id": "1jkFPs6RlXohLgFI",
       "type": "base",
       "system": {
@@ -1837,12 +1837,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/adjusted_shot.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.AdjustedShot"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.AdjustedShot",
-      "description": "FQCARDDESCRIPTION.AdjustedShot",
+      "description": "",
       "_id": "AoaqcFI0OZ4CE9oK",
       "type": "base",
       "system": {
@@ -1975,12 +1975,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/spike_trap.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.SpikeTrap"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.SpikeTrap",
-      "description": "FQCARDDESCRIPTION.SpikeTrap",
+      "description": "",
       "_id": "fgehvq9BIao1kZaC",
       "type": "base",
       "system": {
@@ -2063,12 +2063,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/poison_trap.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.PoisonTrap"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.PoisonTrap",
-      "description": "FQCARDDESCRIPTION.PoisonTrap",
+      "description": "",
       "_id": "OGwM2c8o6DzstWdl",
       "type": "base",
       "system": {
@@ -2191,12 +2191,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/rooted_shot.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.RootedShot"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.RootedShot",
-      "description": "FQCARDDESCRIPTION.RootedShot",
+      "description": "",
       "_id": "uDLCs9Kr31l9KTih",
       "type": "base",
       "system": {
@@ -2330,12 +2330,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/trapper/regain_strength.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.RegainStrength"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.RegainStrength",
-      "description": "FQCARDDESCRIPTION.RegainStrength",
+      "description": "",
       "_id": "WQNFcupFcEzGd9TS",
       "type": "base",
       "system": {

@@ -7,7 +7,7 @@
     {
       "_id": "raFI915omeqRQ0RZ",
       "name": "FQCARDTITLE.EarthFracture",
-      "description": "FQCARDDESCRIPTION.EarthFracture",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -19,7 +19,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/earth_fracture.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.EarthFracture"
         }
       ],
       "face": 0,
@@ -138,7 +138,7 @@
     {
       "_id": "utGTvUoJbwCtqUmr",
       "name": "FQCARDTITLE.Tornado",
-      "description": "FQCARDDESCRIPTION.Tornado",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -150,7 +150,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/tornado.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.Tornado"
         }
       ],
       "face": 0,
@@ -269,7 +269,7 @@
     {
       "_id": "1v05nHYBy7qUG0wo",
       "name": "FQCARDTITLE.ManaRecoveryIII",
-      "description": "FQCARDDESCRIPTION.ManaRecoveryIII",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -281,7 +281,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.ManaRecoveryIII"
         }
       ],
       "face": 0,
@@ -364,7 +364,7 @@
     {
       "_id": "Rra232NB5Nd71KbO",
       "name": "FQCARDTITLE.FrostStrike",
-      "description": "FQCARDDESCRIPTION.FrostStrike",
+      "description": "",
       "type": "base",
       "suit": "",
       "value": null,
@@ -377,7 +377,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/frost_strike.png",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.FrostStrike"
         }
       ],
       "face": 0,
@@ -499,7 +499,7 @@
     {
       "_id": "y5TkoHEcX1qJ9AWJ",
       "name": "FQCARDTITLE.Fireball",
-      "description": "FQCARDDESCRIPTION.Fireball",
+      "description": "",
       "type": "base",
       "suit": "",
       "value": null,
@@ -512,7 +512,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/fireball.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.Fireball"
         }
       ],
       "face": 0,
@@ -630,7 +630,7 @@
     {
       "_id": "phTFUFL9soJI8u4S",
       "name": "FQCARDTITLE.DrawIII",
-      "description": "FQCARDDESCRIPTION.DrawIII",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -642,7 +642,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.DrawIII"
         }
       ],
       "face": 0,
@@ -725,7 +725,7 @@
     {
       "_id": "IWbTXqspqKjSF63d",
       "name": "FQCARDTITLE.ManaCapture",
-      "description": "FQCARDDESCRIPTION.ManaCapture",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -737,7 +737,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/mana_capture.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.ManaCapture"
         }
       ],
       "face": 0,
@@ -820,7 +820,7 @@
     {
       "_id": "qotecYVry7bXM6wJ",
       "name": "FQCARDTITLE.Fog",
-      "description": "FQCARDDESCRIPTION.Fog",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -832,7 +832,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/fog.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.Fog"
         }
       ],
       "face": 0,
@@ -961,7 +961,7 @@
     {
       "_id": "z566hV0f4rDp5pkk",
       "name": "FQCARDTITLE.Frostfire",
-      "description": "FQCARDDESCRIPTION.Frostfire",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -973,7 +973,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/frostfire.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.Frostfire"
         }
       ],
       "face": 0,
@@ -1061,7 +1061,7 @@
     {
       "_id": "yR0krjITkABGa5BI",
       "name": "FQCARDTITLE.TurnBoosterIV",
-      "description": "FQCARDDESCRIPTION.TurnBoosterIV",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1073,7 +1073,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.TurnBoosterIV"
         }
       ],
       "face": 0,
@@ -1156,7 +1156,7 @@
     {
       "_id": "O2PV4FTqxLsSmw07",
       "name": "FQCARDTITLE.Meteor",
-      "description": "FQCARDDESCRIPTION.Meteor",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1168,7 +1168,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/meteor.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.Meteor"
         }
       ],
       "face": 0,
@@ -1265,7 +1265,7 @@
     {
       "_id": "jSUo1PP8qMK0hPmE",
       "name": "FQCARDTITLE.VoidAssassin",
-      "description": "FQCARDDESCRIPTION.VoidAssassin",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1277,7 +1277,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/void_assassin.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.VoidAssassin"
         }
       ],
       "face": 0,
@@ -1365,7 +1365,7 @@
     {
       "_id": "0hE5azVNuWZh0Qqm",
       "name": "FQCARDTITLE.Incantation",
-      "description": "FQCARDDESCRIPTION.Incantation",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1377,7 +1377,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/incantation.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.Incantation"
         }
       ],
       "face": 0,
@@ -1491,7 +1491,7 @@
     {
       "_id": "jwIFyqJelqaIek3y",
       "name": "FQCARDTITLE.MagicPlastron",
-      "description": "FQCARDDESCRIPTION.MagicPlastron",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1503,7 +1503,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/magic_plastron.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.MagicPlastron"
         }
       ],
       "face": 0,
@@ -1640,7 +1640,7 @@
     {
       "_id": "4UMd3jaBrbgBCKK8",
       "name": "FQCARDTITLE.IceWave",
-      "description": "FQCARDDESCRIPTION.IceWave",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1652,7 +1652,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/ice_wave.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.IceWave"
         }
       ],
       "face": 0,
@@ -1740,7 +1740,7 @@
     {
       "_id": "QrzttqjNgt8rI7sj",
       "name": "FQCARDTITLE.FireShock",
-      "description": "FQCARDDESCRIPTION.FireShock",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1752,7 +1752,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/fire_shock.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.FireShock"
         }
       ],
       "face": 0,
@@ -1840,7 +1840,7 @@
     {
       "_id": "iPoaOgOnUndyifbm",
       "name": "FQCARDTITLE.DamagePropagation",
-      "description": "FQCARDDESCRIPTION.DamagePropagation",
+      "description": "",
       "type": "base",
       "suit": "",
       "back": {
@@ -1852,7 +1852,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/damage_propagation.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.DamagePropagation"
         }
       ],
       "face": 0,
@@ -1978,12 +1978,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/elemental_magic.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.ElementalMagic"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.ElementalMagic",
-      "description": "FQCARDDESCRIPTION.ElementalMagic",
+      "description": "",
       "_id": "927fs7x1J729akPc",
       "type": "base",
       "system": {
@@ -2351,12 +2351,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/vortex.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.Vortex"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.Vortex",
-      "description": "FQCARDDESCRIPTION.Vortex",
+      "description": "",
       "_id": "X5P2Z9slmySt0v6I",
       "type": "base",
       "system": {
@@ -2484,12 +2484,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/rock_throw.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.RockThrow"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.RockThrow",
-      "description": "FQCARDDESCRIPTION.RockThrow",
+      "description": "",
       "_id": "bYMgKHMKw0TS0EPm",
       "type": "base",
       "system": {
@@ -2615,12 +2615,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/burning_hand.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.BurningHand"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.BurningHand",
-      "description": "FQCARDDESCRIPTION.BurningHand",
+      "description": "",
       "_id": "zZIHPUdfOyxnsdI5",
       "type": "base",
       "system": {
@@ -2744,12 +2744,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/giant_stalactite.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.GiantStalactite"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.GiantStalactite",
-      "description": "FQCARDDESCRIPTION.GiantStalactite",
+      "description": "",
       "_id": "J8gVimxKLPccVTPn",
       "type": "base",
       "system": {
@@ -2877,12 +2877,12 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/magic_missiles.PNG",
-          "text": ""
+          "text": "FQCARDDESCRIPTION.MagicMissilesPlus"
         }
       ],
       "face": 0,
       "name": "FQCARDTITLE.MagicMissilesPlus",
-      "description": "FQCARDDESCRIPTION.MagicMissilesPlus",
+      "description": "",
       "_id": "4tOzdNVk0Xnq0LN8",
       "type": "base",
       "system": {

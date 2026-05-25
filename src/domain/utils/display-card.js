@@ -34,7 +34,17 @@ export default class DisplayCard {
     }
 
     static getDescriptionFromCard(c) {
-        let description = (c.face !== null) ? c.description : "";
+        let description = "";
+        if (c.face != null) {
+            if (!c.faces) {
+                description = undefined;
+            } else {
+                description = c.faces[c.face].text;
+            }
+        }
+        if (c.face && !description) {
+            description = c.data.faces[c.data.face].text;
+        }
         return game.i18n.localize(description);
     }
 
