@@ -2489,7 +2489,7 @@
       ],
       "face": 0,
       "name": "FQCARDTITLE.RockThrow",
-      "description": "<p>FQCARDDESCRIPTION.RockThrow</p>",
+      "description": "FQCARDDESCRIPTION.RockThrow",
       "_id": "bYMgKHMKw0TS0EPm",
       "type": "base",
       "system": {

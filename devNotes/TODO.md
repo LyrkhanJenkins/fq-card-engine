@@ -21,14 +21,15 @@ Migration Foundry v14:
 - Supprimer la notion de joueur par main?
 - Chercher dans votre défausse action
 - Ajout de quelques cartes par classes pour caractérisation + de réactif et de passif?
+- Refaire des cartes pour chacune des classes qui ont trop de sorts les mêmes et bien les diviser par chaque niveau
+ et en distribuer la moitié du nombre max. Bien faire la différenceciation des classes
+- Gérer les cartes incolores
 
 ### Fix
 MAJOR:
 - RETESTER TOUTES LES CORRECTIONS (pas pu tester au moins 2 (arme à son tour et montée de version))
   MINOR:
-
 - Remplacer certaines valeurs sur les cartes par les vrais valeurs (exemple X si xvalue)
-- Bug reach bonus du fouet enchantée
 - Bug sort 'Nécromancie' rejouable indéfiniement: Sort passif utilisable qu'une fois par tour!
 - Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
 - Arrivé a invoquer un squelette par dessus un autre skelette
