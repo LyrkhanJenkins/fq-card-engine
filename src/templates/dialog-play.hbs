@@ -78,9 +78,9 @@
     <div class="fq-play-card-stage">
 
         {{!-- Carte --}}
-        <div class="fq-play-card-wrap{{#if isFQBase}} is-base{{/if}}{{#if
-                passiveHasBeenPlayedOnRound}} is-exhausted{{else}}{{#if hasBeenPlayed}} is-played{{/if}}{{/if}}">
-            <div class="fq-play-card-img">
+        <div class="fq-play-card-wrap">
+            <div class="fq-play-card-img {{#if isFQBase}} fq-card-is-base{{/if}}{{#if
+                    passiveHasBeenPlayedOnRound}} has-been-played-on-round {{else}}{{#if hasBeenPlayed}} has-been-played{{/if}}{{/if}}">
 
                 {{> "modules/fq-card-engine/src/templates/partials/card-svg.hbs"
                         img=img

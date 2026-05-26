@@ -555,13 +555,13 @@
 /* ── Tooltip nom ── */
 .fq-card-tooltip {
     position: absolute;
-    bottom: calc(100% + 8px);
+    bottom: calc(130% + 38px);
     left: 50%;
     transform: translateX(-50%) translateY(4px);
     background: rgba(6, 4, 2, 0.97);
     border: 0.5px solid var(--fq-gold-dark);
     color: var(--fq-gold-light);
-    font-size: 10px;
+    font-size: 16px;
     font-family: 'Palatino Linotype', Georgia, serif;
     letter-spacing: 0.07em;
     padding: 3px 10px;
@@ -630,37 +630,16 @@
 }
 
 /* ── États ── */
-.fq-card--base .fq-card-face,
-.fq-card-is-base .fq-card-face {
-    border-color: rgba(201, 168, 76, 0.45);
-}
-
 .fq-card-is-base {
+    border-color: rgba(201, 168, 76, 0.45);
     filter: saturate(50%) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.85));
 }
 
-@keyframes fq-played-pulse {
-    0%, 100% {
-        filter: saturate(0.35) brightness(0.85) drop-shadow(0 0 2px rgba(80, 160, 80, 0.3));
-    }
-    50% {
-        filter: saturate(0.40) brightness(0.95) drop-shadow(0 0 5px rgba(80, 180, 80, 0.5));
-    }
-}
-
-.fq-card--played,
 .has-been-played {
-    animation: fq-played-pulse 3s ease-in-out infinite;
-}
-
-.fq-card--played:hover,
-.has-been-played:hover {
-    animation: none;
     filter: saturate(0.45) drop-shadow(0 0 8px rgba(201, 168, 76, 0.5)) drop-shadow(0 6px 16px rgba(0, 0, 0, 0.95)) !important;
 }
 
-.fq-card--exhausted .fq-card-face,
-.has-been-played-on-round .fq-card-face {
+.has-been-played-on-round {
     filter: saturate(0) brightness(0.6);
 }
 
@@ -897,14 +876,6 @@ div.separator {
 
 .fq-play-card-wrap:hover .fq-play-card-img {
     transform: perspective(800px) rotateY(0deg) rotateX(0deg);
-}
-
-.fq-play-card-wrap.is-exhausted .fq-play-card-img {
-    filter: saturate(0) brightness(0.6);
-}
-
-.fq-play-card-wrap.is-played .fq-play-card-img {
-    filter: saturate(0.35) brightness(0.85);
 }
 
 .fq-play-card-name {
