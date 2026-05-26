@@ -104,7 +104,7 @@ export default class HandBoard {
                     maxSameCard : c.system.fq?.maxSameCard,
                     fqClass : c.system.fq?.class,
                     hasBeenPlayed: cardContent?.hasBeenPlayed,
-                    hasBeenPlayedOnRound: cardContent?.playedRound && cardContent?.playedRound?.toString() === game.combat?.round?.toString(),
+                    passiveHasBeenPlayedOnRound: cardContent?.passivePlayedRound && cardContent?.passivePlayedRound?.toString() === game.combat?.round?.toString(),
                     isFQBase: c.system?.fq?.isBase,
                     cardsid: t.currentCards._id ? t.currentCards._id : t.currentCards.data._id,
                     uuid: c.uuid,

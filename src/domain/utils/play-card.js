@@ -44,7 +44,7 @@ export default class PlayCard {
         if (!!cardContent && !!cardContent?.replayable) {
             if (cardContent?.replayable === "passif") {
                 FQUtils.rewriteCardContent(card, initCardContents, {
-                    hasBeenPlayed: true, playedRound: game.combat?.round.toString()
+                    hasBeenPlayed: true, passivePlayedRound: game.combat?.round.toString()
                 });
                 ChatMessage.create({
                     speaker: ChatMessage.getSpeaker({actor: game.user.character}),
@@ -67,8 +67,11 @@ export default class PlayCard {
 
         let result = null;
 
-        if (cardContent && !card.system?.fq?.isBase &&
-            (!cardContent.replayable || (cardContent.replayable !== "passif" && cardContent.replayable <= 1)) && (!game.user?.isGM || CONFIG.FqCardEngine.options.GMUsingCards)) {
+        if (cardContent &&
+            !card.system?.fq?.isBase &&
+            (!cardContent.replayable || (cardContent.replayable !== "passif" && cardContent.replayable <= 1)) &&
+            (!game.user?.isGM || CONFIG.FqCardEngine.options.GMUsingCards)
+        ) {
             result = currentCards.pass(to, [card.id], {
                 action: "pass",
                 chatNotification: !CONFIG.FqCardEngine.options.hideMessages,

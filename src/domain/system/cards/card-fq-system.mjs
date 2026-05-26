@@ -114,7 +114,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             afterFirstPlay: new StringField({required: true, label: "FQCARDENGINE.NewFQSystemAfterFirstPlay"}),
 
             // Not in form, calculated Value for second use of cards
-            playedRound: new StringField({required: false}),
+            passivePlayedRound: new StringField({required: false}),
             hasBeenPlayed: new BooleanField({required: false}),
 
             // Custom actions

@@ -8,6 +8,8 @@ Feat :
 - Localisation (FR et EN) de toutes les cartes
 - Refonte des illustrations de toutes les cartes à jouer
 - Nouvelles gestions FX (avec JB2A) et sons originaux (plusieurs sons par type de dégâts)
+- Un sort passif ne peut être joué qu'une fois par tour
+
 Chore :
 - Montée de version 14.362
 - Refacto des templates et objets FQ raccordé aux object DND5E (Feuilles de personnage) et Foundry (carte et decks)

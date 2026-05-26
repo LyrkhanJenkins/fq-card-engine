@@ -348,12 +348,11 @@ export default class FQUtils {
         }
 
         if (game.combat != null) {
-            // La carte a t-elle était déjà joué à ce tour? (carte passive)
-            if (cardContent?.hasBeenPlayed && cardContent?.playedRound === game.combat?.round.toString()) {
+            if (cardContent?.replayable === "passif" && cardContent?.hasBeenPlayed && cardContent?.passivePlayedRound === game.combat?.round.toString()) {
                 ChatMessage.create({
                     speaker: ChatMessage.getSpeaker({actor: game.user.character}),
                     content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                       ${game.i18n.localize("FQCARDENGINE.WarningMsgCantPlayPlayedCard")}</span>`
+                       ${game.i18n.localize("FQCARDENGINE.WarningMsgPassiveSpellAlreadyUsed")}</span>`
                 });
                 return false;
             }

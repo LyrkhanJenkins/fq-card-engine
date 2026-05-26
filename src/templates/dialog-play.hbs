@@ -79,7 +79,7 @@
 
         {{!-- Carte --}}
         <div class="fq-play-card-wrap{{#if isFQBase}} is-base{{/if}}{{#if
-                hasBeenPlayedOnRound}} is-exhausted{{else}}{{#if hasBeenPlayed}} is-played{{/if}}{{/if}}">
+                passiveHasBeenPlayedOnRound}} is-exhausted{{else}}{{#if hasBeenPlayed}} is-played{{/if}}{{/if}}">
             <div class="fq-play-card-img">
 
                 {{> "modules/fq-card-engine/src/templates/partials/card-svg.hbs"
@@ -102,7 +102,7 @@
             {{#if isFQBase}}
                 <span class="fq-play-badge fq-play-badge--base">Base</span>
             {{/if}}
-            {{#if hasBeenPlayedOnRound}}
+            {{#if passiveHasBeenPlayedOnRound}}
                 <span class="fq-play-badge fq-play-badge--exhausted">Épuisée ce tour</span>
             {{else}}
                 {{#if hasBeenPlayed}}
@@ -127,13 +127,13 @@
 
             {{!-- Statut --}}
             {{#if hasBeenPlayed}}
-                {{#if hasBeenPlayedOnRound}}
+                {{#if passiveHasBeenPlayedOnRound}}
                     <div class="fq-play-status fq-play-status--warn">
-                        Cette carte n'est plus utilisable à ce tour
+                        {{localize "FQCARDENGINE.InfoMsgSpellNotUsableThisTurn"}}
                     </div>
                 {{else}}
                     <div class="fq-play-status fq-play-status--ok">
-                        Vous pouvez rejouer cette carte ce tour-ci
+                        {{localize "FQCARDENGINE.InfoMsgSpellUsableThisTurn"}}
                     </div>
                 {{/if}}
             {{/if}}

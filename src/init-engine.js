@@ -471,7 +471,7 @@ window.FqCardEngineModule = {
             minions: firstChoice.minions?.length,
             hasBeenPlayed: firstChoice.hasBeenPlayed,
             isFQBase: card.system?.fq?.isBase,
-            hasBeenPlayedOnRound: firstChoice.playedRound && firstChoice.playedRound?.toString() === game.combat?.round?.toString(),
+            passiveHasBeenPlayedOnRound: firstChoice.passivePlayedRound && firstChoice.passivePlayedRound?.toString() === game.combat?.round?.toString(),
         });
 
         let buttons = {

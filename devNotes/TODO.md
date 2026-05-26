@@ -1,11 +1,11 @@
 ## V2.0
 ### Fix Prioritaire
-- Empêcher de jouer une carte de base 2 fois dans un tour
-  - Bug sort 'Nécromancie' rejouable indéfiniement : Sort passif utilisable qu'une fois par tour!
+- Revoir l'affichage des cartes rejouable + ne pas retourner la carte 2 fois?
 - Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
 - Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
 - Revoir Canalisation des Ombres
 - Remplacer certaines valeurs sur les cartes par les vrais valeurs (exemple X si xvalue)
+- Vérifier tous les sorts passifs
 
 ### Priorité
 Migration Foundry v14:
