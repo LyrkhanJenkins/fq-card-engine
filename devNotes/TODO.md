@@ -1,6 +1,6 @@
 ## V2.0
 ### Fix Prioritaire
-- Vérifier tous les sorts passifs
+- Vérifier tous les sorts passifs et de base
 
 ### Priorité
 Migration Foundry v14:
@@ -66,6 +66,7 @@ Migration Foundry v14:
 - Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
 - Supprimer la notion de joueur par main?
 - Tests fonctionnels + montée dernière version
+- Améliorer le message du chat quand une carte est jouée ou défaussé
 - MINOR--> RELEASE
 
 - Finir Texte a trou dans la description des cartes remplis par les caractéristiques
@@ -88,6 +89,7 @@ Migration Foundry v14:
 ## Backlog
 
 ### High:
+
 
 - Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens
 - Gérer un nombre max d'utilisation pour des armes.

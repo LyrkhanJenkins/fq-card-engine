@@ -920,10 +920,8 @@ div.separator {
 
 .fq-play-label {
     font-family: Georgia, serif;
-    font-size: 24px;
+    font-size: 30px;
     color: rgba(201, 168, 76, 0.45);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
 }
 
 .fq-play-select {
@@ -932,7 +930,7 @@ div.separator {
     border-radius: 4px;
     color: #e8d090;
     font-family: Georgia, serif;
-    font-size: 24px;
+    font-size: 30px;
     height: 54px;
     padding: 5px 10px;
     width: 100%;
@@ -950,7 +948,8 @@ div.separator {
     border-radius: 4px;
     color: #e8d090;
     font-family: Georgia, serif;
-    font-size: 13px;
+    font-size: 30px;
+    height: 42px;
     padding: 5px 8px;
     width: 60px;
     text-align: center;
@@ -1110,19 +1109,6 @@ div.separator {
 .fq-play-field--facedown {
     padding-top: 4px;
     border-top: 0.5px solid rgba(90, 66, 32, 0.25);
-}
-
-.fq-play-drop-count {
-    font-family: Georgia, serif;
-    font-size: 24px;
-    font-style: italic;
-    color: rgba(201, 168, 76, 0.3);
-    text-align: center;
-    margin-top: 4px;
-}
-
-.fq-play-drop-count strong {
-    color: rgba(201, 168, 76, 0.55);
 }
 
 .fq-play-close {

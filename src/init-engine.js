@@ -897,7 +897,7 @@ Hooks.on("setup", function () {
         "modules/fq-card-engine/src/templates/board/card.hbs",
         "modules/fq-card-engine/src/templates/board/hand-container.html",
         "modules/fq-card-engine/src/templates/board/hand.html",
-        "modules/fq-card-engine/src/templates/chat-message.html",
+        "modules/fq-card-engine/src/templates/chat-message.hbs",
         "modules/fq-card-engine/src/templates/dialog-play.hbs",
         "modules/fq-card-engine/src/templates/empty-hand-message.html"];
 

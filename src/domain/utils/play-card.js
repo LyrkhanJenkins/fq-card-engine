@@ -110,12 +110,12 @@ export default class PlayCard {
                 back: (card.face == null || fd.down),
                 img: img,
                 deckName: card.origin.name,
-                name: (card.face !== null && !fd.down) ? card.name : game.i18n.localize("FQCARDENGINE.CardHidden"),
+                name: (card.face !== null && !fd.down) ? game.i18n.localize(card.name) : game.i18n.localize("FQCARDENGINE.CardHidden"),
                 action: game.i18n.localize(actionLabel)
             };
 
             //TODO refacto Chat-Messages
-            foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/chat-message.html", renderData).then(content => {
+            foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/chat-message.hbs", renderData).then(content => {
                 const messageData = {
                     speaker: {
                         scene: game.scenes?.active?.id, actor: game.userId, token: null, alias: null,

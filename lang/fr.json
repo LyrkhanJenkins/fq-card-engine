@@ -21,6 +21,7 @@
   "FQCARDENGINE.PassTo": "Passer à",
   "FQCARDENGINE.ChooseEffect": "Choix de l'effet",
   "FQCARDENGINE.InvokeMinion": "Emplacement minion(s)",
+  "FQCARDENGINE.DropScore": "Score de défausse",
   "FQCARDENGINE.HandCountSetting": "Nombre de mains",
   "FQCARDENGINE.HandCountSettingHint": "Nombre de mains \u00e0 afficher sur l\u0027\u00e9cran",
   "FQCARDENGINE.DisplayHandNameSetting": "Afficher le nom de la main",
