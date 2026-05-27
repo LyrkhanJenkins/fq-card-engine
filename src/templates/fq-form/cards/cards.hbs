@@ -1,6 +1,7 @@
 <section class="tab cards{{#if tab.active}} active{{/if}}" data-group="{{tab.group}}" data-tab="{{tab.id}}">
     <header class="cards-header flexrow">
         <a class="control sort-mode" data-action="toggleSort" data-tooltip="CARDS.ACTIONS.ToggleSortMode">
+            <span>({{cards.length}})</span>
             <i class="fa-solid fa-fw {{sortModeIcon}}"></i>
         </a>
         <strong class="name">{{localize "DOCUMENT.FIELDS.name.label"}}</strong>

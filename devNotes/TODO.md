@@ -1,6 +1,5 @@
 ## V2.0
 ### Fix Prioritaire
-- Revoir Canalisation des Ombres
 - Vérifier tous les sorts passifs
 
 ### Priorité
