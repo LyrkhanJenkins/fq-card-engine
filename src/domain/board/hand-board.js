@@ -11,7 +11,7 @@ export default class HandBoard {
         this.playerBarCount = 0;
         let t = this;
 
-        foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand.html", {
+        foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand.hbs", {
             id: this.id, manualActions: CONFIG.FqCardEngine.options.playerLimitCardsRight === false || game.user.isGM
         }).then(content => {
             content = $(content);
@@ -167,6 +167,7 @@ export default class HandBoard {
                         t.updating = false;//even on error still finish updating
                     });
             } else {
+                //TODO Faire mieux que ça
                 setTimeout(function () {
                     //continue to try to update the hand
                     t.update();
@@ -176,10 +177,6 @@ export default class HandBoard {
             //check if player is selected but not a hand yet then display color and player name
             this.updateTitle();
             this.updatePlayerColor();
-            foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/empty-hand-message.html", {}).then(content => {
-                $("#fq-card-engine-card-container-" + t.id).html(content);
-                t.updatePlayerColor();
-            });
         }
     }
 

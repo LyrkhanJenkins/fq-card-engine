@@ -895,11 +895,10 @@ Hooks.on("setup", function () {
         "modules/fq-card-engine/src/templates/actors/fq-npc-sidebar.hbs",
         "modules/fq-card-engine/src/templates/items/fq-item-tabs.hbs",
         "modules/fq-card-engine/src/templates/board/card.hbs",
-        "modules/fq-card-engine/src/templates/board/hand-container.html",
-        "modules/fq-card-engine/src/templates/board/hand.html",
+        "modules/fq-card-engine/src/templates/board/hand-container.hbs",
+        "modules/fq-card-engine/src/templates/board/hand.hbs",
         "modules/fq-card-engine/src/templates/chat-message.hbs",
-        "modules/fq-card-engine/src/templates/dialog-play.hbs",
-        "modules/fq-card-engine/src/templates/empty-hand-message.html"];
+        "modules/fq-card-engine/src/templates/dialog-play.hbs"];
 
     foundry.applications.handlebars.loadTemplates(templatePaths).then(() => {
         console.info("Better Hand templates preloaded");
@@ -928,7 +927,7 @@ Hooks.on("setup", function () {
     });
 
     // Creates the outer container
-    foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand-container.html", {}).then(content => {
+    foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand-container.hbs", {}).then(content => {
         content = $(content);
         $("#ui-bottom").append(content);
         CONFIG.FqCardEngine.options.draggable = game.settings.get(FqCardEngineModule.moduleName, "Draggable");

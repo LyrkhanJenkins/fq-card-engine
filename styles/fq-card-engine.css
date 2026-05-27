@@ -448,23 +448,6 @@
     padding-left: calc(28px * var(--fq-scale));
 }
 
-/* Message main vide — même hauteur que les mains avec cartes */
-.empty-hand-message {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    width: 100%;
-    height: 100%;
-    color: rgba(201, 168, 76, 0.3);
-    font-size: 11px;
-    font-family: Georgia, serif;
-    font-style: italic;
-    text-align: center;
-    padding: 0 8px;
-    margin: 0;
-}
-
 /* ============================================================
    CARTE INDIVIDUELLE
    ============================================================ */
