@@ -14,6 +14,7 @@ Chore :
 - Montée de version 14.362
 - Refacto des templates et objets FQ raccordé aux object DND5E (Feuilles de personnage) et Foundry (carte et decks)
 - Refacto des classes et methodes statiques pour ne garder que le strict nécessaire
+- Macro pour générer un deck avec toutes les cartes
 
 v1.1.1:
 Chore :

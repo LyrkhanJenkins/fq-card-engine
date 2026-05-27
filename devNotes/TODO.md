@@ -1,15 +1,11 @@
 ## V2.0
 ### Fix Prioritaire
-- Revoir l'affichage des cartes rejouable + ne pas retourner la carte 2 fois?
-- Le renforcément d'armure n'est pas un passif? Alors que le chargement de lame ou whirlwind si?
-- Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
 - Revoir Canalisation des Ombres
-- Remplacer certaines valeurs sur les cartes par les vrais valeurs (exemple X si xvalue)
 - Vérifier tous les sorts passifs
 
 ### Priorité
 Migration Foundry v14:
-- Macro pour générer un deck avec toutes les cartes
+
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Mettre à jour des mondes de tests pour plusieurs cas
 - Tests fonctionnels 2 + montée de version jusqu'à la dernière v14
@@ -74,6 +70,7 @@ Migration Foundry v14:
 - MINOR--> RELEASE
 
 - Finir Texte a trou dans la description des cartes remplis par les caractéristiques
+- Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
 - PATCH--> RELEASE
 
 - Prise en compte la classe d'armure de DND5E -> Est que l'esquive devient plus qu'une demi-esquive?
@@ -82,6 +79,8 @@ Migration Foundry v14:
 - Prise en compte des resistances
 - MINOR--> RELEASE
 ### Fix mineure
+
+
 
 ### Chore:
 

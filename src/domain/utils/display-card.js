@@ -1,8 +1,6 @@
 import FqConstants from "./fq-constants.js";
 
 export default class DisplayCard {
-    // TODO Reactif, Replayable, couleurs pour les gains ou pertes des bullles, changer la taille des fonts des bulles également
-
     static getNumberForBubbleCardSvg(str, cardContent) {
         if (str === "") {
             return "0";
