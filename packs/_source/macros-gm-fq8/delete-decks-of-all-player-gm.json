@@ -1,7 +1,7 @@
 {
   "name": "Delete decks of all player (GM)",
   "type": "script",
-  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.deleteDeckForUser(user.id);\n})",
+  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.deleteDeckForUser(user.id);\n})\nui.notifications.info(\"Suppression des decks des joueurs !\");",
   "img": "icons/magic/fire/beam-jet-stream-spiral-yellow.webp",
   "author": "SA6JKCaEua1JXSu4",
   "scope": "global",
@@ -13,11 +13,11 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "13.347",
+    "coreVersion": "14.362",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": 1724162748653,
-    "modifiedTime": 1755794642460,
+    "modifiedTime": 1779950506127,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },

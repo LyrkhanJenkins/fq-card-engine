@@ -1,7 +1,7 @@
 {
   "name": "Create deck with all cards",
   "type": "script",
-  "command": "const compendium = await game.packs.get(FqCardEngineModule.moduleName + \".decks-pattern-fq8\").getDocuments();\n        let cards = [];\n        compendium.forEach((deckOrigin) => {\n            console.log([... deckOrigin.cards])\n            cards = cards.concat([... deckOrigin.cards]);\n            console.log(cards)\n        });\n        let originDeck = compendium[0];\n        let deck = await Cards.create({\n            ...originDeck,\n            name: \"AllCArds\",\n            type: \"deck\",\n            cards: [],\n            system: {...originDeck?.system, fq: {type: \"DECK\"}},\n            ownership: {default: 0}\n        });\n        await deck.createEmbeddedDocuments(\"Card\", [...cards], {keepId: false});",
+  "command": "const compendium = await game.packs.get(FqCardEngineModule.moduleName + \".decks-pattern-fq8\").getDocuments();\nlet cards = [];\ncompendium.forEach((deckOrigin) => {\n  cards = cards.concat([... deckOrigin.cards]);\n});\nlet originDeck = compendium[0];\nlet deck = await Cards.create({\n  ...originDeck,\n  name: \"AllUniqueCards\",\n  type: \"deck\",\n  cards: [],\n  system: {...originDeck?.system, fq: {type: \"DECK\"}},\n  ownership: {default: 0}\n});\nawait deck.createEmbeddedDocuments(\"Card\", [...cards], {keepId: false});\nui.notifications.info(\"Création d'un deck avec un seul exemplaire de chaque carte!\");",
   "img": "icons/commodities/treasure/box-jade-tassel.webp",
   "_id": "6AteARq0WbZ5OOmz",
   "author": "uUbINdqSmS5ll9IK",
@@ -16,7 +16,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.3.3",
     "createdTime": 1779888975269,
-    "modifiedTime": 1779888975269,
+    "modifiedTime": 1779950762956,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null,
     "compendiumSource": null,

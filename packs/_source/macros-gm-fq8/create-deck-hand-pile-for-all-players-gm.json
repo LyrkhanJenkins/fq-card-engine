@@ -1,7 +1,7 @@
 {
   "name": "Create deck/hand/pile for all players (GM)",
   "type": "script",
-  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.createDeckForUser(user.id);\n   game.cards.find(c => c.system.fq.type === 'DECK' && c.ownership[user.id] === 3)?.sheet.render(true);\n});",
+  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.createDeckForUser(user.id);\n   game.cards.find(c => c.system.fq.type === 'DECK' && c.ownership[user.id] === 3)?.sheet.render(true);\n});\nui.notifications.info(\"Création des decks/main/défausse pour les joueurs !\");",
   "img": "icons/magic/symbols/squares-3d-green.webp",
   "author": "SA6JKCaEua1JXSu4",
   "scope": "global",
@@ -13,11 +13,11 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "13.347",
+    "coreVersion": "14.362",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": 1724162791351,
-    "modifiedTime": 1755794642460,
+    "modifiedTime": 1779950541762,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
