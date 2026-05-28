@@ -6,6 +6,7 @@
 Migration Foundry v14:
 
 #### 2.0.0
+- Mettre à jour DONE.md avec commits
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Mettre à jour des mondes de tests pour plusieurs cas
 - Tests fonctionnels 2 + montée de version jusqu'à la dernière v14
@@ -51,23 +52,28 @@ Migration Foundry v14:
 #### 2.1.x
 - Ajouter également une fleche raccourci pour passer une carte du spellbook vers le deck
 - Refonte des cartes :
-  - Ajout de cartes par classes pour caractérisation + de réactif et de passif?
-  - Refaire des cartes pour chacune des classes qui ont trop de sorts les mêmes et bien les diviser par chaque niveau
-    et en distribuer la moitié du nombre max. Bien faire la différenceciation des classes
-  - Les spécificités des classes doivent être plus marqués et ne pas retrouvé trop les mêmes sorts pour chacunes des classes
-  - Ajout des dégâts armes pour les cartes :
-    - Ajouts des dégâts de l'arme équipé pour les sorts de CàC
-    - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en premier
-    - Afficher sur la carte
-  - Gérer les passifs hors de la main, comme les pouvoirs ...
-    - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
-      utilisation), réécriture des passifs
-    - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
-      d'actions/mana/pioches?)
+  - Création des decks se fait automatiquement à chaque montée de niveau où on rajoute ceil(nbmaxSameCard/2) cartes dans 
+  le deck de la classe et le niveau choisi ---> Suppression des cartes générés et refacto des levels des cartes +  
+  Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
+    - Refaire des cartes pour chacune des classes qui ont trop de sorts les mêmes et bien les diviser par chaque niveau
+      et en distribuer la moitié du nombre max. Bien faire la différenceciation des classes
+    - Les spécificités des classes doivent être plus marqués et ne pas retrouvé trop les mêmes sorts pour chacunes des classes
+    - Ajout des dégâts armes pour les cartes :
+      - Ajouts des dégâts de l'arme équipé pour les sorts de CàC
+      - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en premier
+      - Afficher sur la carte
+    - Gérer les passifs hors de la main, comme les pouvoirs ...
+      - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
+        utilisation), réécriture des passifs
+      - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
+        d'actions/mana/pioches?)
+  
 - MINOR--> RELEASE
 
 #### 2.2.x
 - Chercher dans votre défausse action
+- Possibilité de choisir des cartes dans un changement de niveau (Pour le moment impossible dans le advancement sans
+  recreer une fenêtre )
 - Gérer les cartes incolores
 - Ajouter du ciblage si oublié dans la dialog-play?
 - Ne pas cliquer sur dialog-play si pas de cible sur une carte en nécessitant
@@ -112,5 +118,4 @@ Migration Foundry v14:
 - Comment gérer les effets visuels si le fichier n'existe pas?
 - Plus de sound effects differents
 - Gérer un forçage pour MJ des cartes si jamais il y a un problème d'implémentation dans la partie
-- Possibilité de choisir des cartes dans un changement de niveau (Pour le moment impossible dans le advancement sans
-  recreer une fenêtre )
+
