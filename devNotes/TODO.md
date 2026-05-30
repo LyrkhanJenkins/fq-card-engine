@@ -4,7 +4,6 @@
 
 ### Priorité
 #### 2.0.0
-- Mettre à jour DONE.md avec commits
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Mettre à jour des mondes de tests pour plusieurs cas
 - Tests fonctionnels 2 + montée de version jusqu'à la dernière v14

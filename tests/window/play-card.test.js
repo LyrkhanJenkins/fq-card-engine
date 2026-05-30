@@ -116,7 +116,7 @@ describe("PlayCard", () => {
             expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
 
-        test("should apply card effect and not pass card if FQBase flag", async () => {
+        test("should apply card effect and pass card if FQBase flag", async () => {
             const cardContent = {};
             const card = {
                 id: "mockCardId", _id: "mockCardId",
@@ -128,7 +128,7 @@ describe("PlayCard", () => {
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
             expect(FQUtils.default.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
-            expect(currentCards.pass).toHaveBeenCalledTimes(0);
+            expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
     });
 

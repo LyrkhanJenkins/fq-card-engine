@@ -1,21 +1,30 @@
 v2.0.0:
 Feat :
 - Refonte de l'UI de la main d'un joueur
+- Ajout des ressources FQ sur la main du joueur
 - Refonte de l'UI de la dialog pour jouer une carte
+- Ajout des ressources FQ et des cibles dans la dialog pour jouer une carte
 - Afficher les ressources FQ Directement dans la play dialog et dans la hand-container
-- Formulaire de création de carte plutôt qu'une string transformé en JSON
 - Les cartes sont générés dynamiquement avec le formulaire des cartes FQ via un SVG
+- Les cartes ont une classe définie qui change la texture
 - Localisation (FR et EN) de toutes les cartes
 - Refonte des illustrations de toutes les cartes à jouer
 - Nouvelles gestions FX (avec JB2A) et sons originaux (plusieurs sons par type de dégâts)
 - Un sort passif ne peut être joué qu'une fois par tour
 - Un sort de base ne reste pas forcément en main -> Couplé avec replayable
+- Macro GM pour générer un deck avec toutes les cartes
 
 Chore :
 - Montée de version 14.362
 - Refacto des templates et objets FQ raccordé aux object DND5E (Feuilles de personnage) et Foundry (carte et decks)
 - Refacto des classes et methodes statiques pour ne garder que le strict nécessaire
 - Macro pour générer un deck avec toutes les cartes
+- Migration Vitest
+
+Fix :
+- Correction création d'un deck unique par joueur avec les cartes de ses classes
+- Correction invocation des minions
+- Corrections de plusieurs cartes : 'Fouet Enchanté', 'Jet de Roche', 'Sortilège d'ombre'
 
 v1.1.1:
 Chore :
@@ -65,6 +74,7 @@ v1.1:
 - Automatiser la montée de niveau jusqu'au niveau 5 (utiliser la macro )
 - Gestion d'animations speciales pour certaines cartes.
 - CurrentDrop utilisable hors combat sans drop de card
+- Formulaire de création de carte plutôt qu'une string transformé en JSON
 
 v1.0:
 
