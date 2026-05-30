@@ -9,6 +9,7 @@ Feat :
 - Refonte des illustrations de toutes les cartes à jouer
 - Nouvelles gestions FX (avec JB2A) et sons originaux (plusieurs sons par type de dégâts)
 - Un sort passif ne peut être joué qu'une fois par tour
+- Un sort de base ne reste pas forcément en main -> Couplé avec replayable
 
 Chore :
 - Montée de version 14.362

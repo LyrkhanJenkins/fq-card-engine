@@ -1926,7 +1926,7 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "replayable": "passif",
               "sound": "",
               "visual": {
                 "path": "",
@@ -1960,15 +1960,17 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "14.362",
         "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1780124028688,
+        "modifiedTime": 1780124028688
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.AoaqcFI0OZ4CE9oK"
+      "_key": "!cards.cards!iXjQikoYuH5CmYlL.AoaqcFI0OZ4CE9oK",
+      "cards": []
     },
     {
       "faces": [

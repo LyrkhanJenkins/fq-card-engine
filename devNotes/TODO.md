@@ -1,10 +1,8 @@
 ## V2.0
 ### Fix Prioritaire
-- Vérifier tous les sorts passifs et de base
+-...
 
 ### Priorité
-Migration Foundry v14:
-
 #### 2.0.0
 - Mettre à jour DONE.md avec commits
 - Tests fonctionnels + montée de version jusqu'à la dernière v14

@@ -2058,7 +2058,7 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "replayable": "passif",
               "sound": "",
               "visual": {
                 "path": "",
@@ -2142,7 +2142,7 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "replayable": "passif",
               "sound": "",
               "visual": {
                 "path": "",
@@ -2222,7 +2222,7 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "replayable": "passif",
               "sound": "",
               "visual": {
                 "path": "",
@@ -2302,7 +2302,7 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "replayable": "passif",
               "sound": "",
               "visual": {
                 "path": "",
@@ -2336,15 +2336,17 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "14.362",
         "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1780123798537,
+        "modifiedTime": 1780123798537
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!7lD7zopd27M1kL0c.927fs7x1J729akPc"
+      "_key": "!cards.cards!7lD7zopd27M1kL0c.927fs7x1J729akPc",
+      "cards": []
     },
     {
       "faces": [

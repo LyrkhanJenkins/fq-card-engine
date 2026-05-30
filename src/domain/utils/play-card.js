@@ -55,11 +55,18 @@ export default class PlayCard {
                 FQUtils.rewriteCardContent(card, initCardContents, {
                     replayable: Number(cardContent?.replayable) - 1, hasBeenPlayed: true
                 });
-                ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                    content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.format("FQCARDENGINE.InfoMsgRemainingCharge",
-                        {remainingCharge: Number(cardContent.replayable) - 1})}</div>`
-                });
+                if (Number(cardContent.replayable) > 100){
+                    ChatMessage.create({
+                        speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                        content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.format("FQCARDENGINE.InfoMsgReplayableSpell")}</div>`
+                    });
+                } else {
+                    ChatMessage.create({
+                        speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                        content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.format("FQCARDENGINE.InfoMsgRemainingCharge",
+                            {remainingCharge: Number(cardContent.replayable) - 1})}</div>`
+                    });
+                }
             }
         }
 
@@ -68,7 +75,6 @@ export default class PlayCard {
         let result = null;
 
         if (cardContent &&
-            !card.system?.fq?.isBase &&
             (!cardContent.replayable || (cardContent.replayable !== "passif" && cardContent.replayable <= 1)) &&
             (!game.user?.isGM || CONFIG.FqCardEngine.options.GMUsingCards)
         ) {
