@@ -1,5 +1,0 @@
-2026/05/14-11:05:01.931 3ec Delete type=3 #1
-2026/05/14-11:05:13.350 1ac Level-0 table #20: started
-2026/05/14-11:05:13.350 1ac Level-0 table #20: 0 bytes OK
-2026/05/14-11:05:13.398 1ac Delete type=0 #18
-2026/05/14-11:05:13.425 1ac Manual compaction at level-0 from 'undefined' @ 72057594037927935 : 1 .. 'undefined' @ 0 : 0; will stop at (end)

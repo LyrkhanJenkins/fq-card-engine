@@ -1,16 +1,20 @@
 ## V2.0
 ### Fix Prioritaire
--...
+- S pour les bulles quand @wis, @sag ...etc. -> Mettre la bonne valeur
+- Vases communicants ne se défausse pas
+- Les Squelettes ne sont pas générés a coté du jouer si il s'est déplacé
+- Rituel du sang cout en action pas clair + bugué
+- Le 0 en revanche pour Coup gauche n'est pas clair, ça devrait être S
+-  
 
 ### Priorité
 #### 2.0.0
-- Tests fonctionnels + montée de version jusqu'à la dernière v14
-- Mettre à jour des mondes de tests pour plusieurs cas
 - Tests fonctionnels 2 + montée de version jusqu'à la dernière v14
 - Mettre à jour readme et page Foundry et DONE.md
 - Première passe de suppression code inutile sans risque
 - Mettre a jour les versions des plugins nécessaire dans module.json
 - Tests fonctionnels 3 + montée de version jusqu'à la dernière v14
+- Tests fonctionnels 4 + montée de version jusqu'à la dernière v14
 
 #### 2.0.1
 - SPIKE Meilleurs tests à faire pour de la non-regression ?
@@ -71,6 +75,8 @@
 - Chercher dans votre défausse action
 - Possibilité de choisir des cartes dans un changement de niveau (Pour le moment impossible dans le advancement sans
   recreer une fenêtre )
+- Afficher des auras avec un autre module (exemple: bouclier magique, nuage de dague...)
+- Déplacer les cibles automatiquement (Example: Tir supersonique, Frappe avec salto arrière...)
 - Gérer les cartes incolores
 - Ajouter du ciblage si oublié dans la dialog-play?
 - Ne pas cliquer sur dialog-play si pas de cible sur une carte en nécessitant

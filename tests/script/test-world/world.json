@@ -1,0 +1,16 @@
+{
+  "title": "test-world",
+  "id": "test-world",
+  "system": "dnd5e",
+  "coreVersion": "14.363",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.363"
+  },
+  "systemVersion": "5.3.3",
+  "lastPlayed": "Sat May 30 2026 12:15:44 GMT+0200 (heure d’été d’Europe centrale)",
+  "playtime": 1733,
+  "safeMode": false,
+  "description": "",
+  "flags": {}
+}

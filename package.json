@@ -8,9 +8,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "testWorlds": "npm run testWorld:blank && npm run testWorld:lyrkhan",
-    "testWorld:blank": "node tests/script/copy-world.mjs blank-world",
-    "testWorld:lyrkhan": "node tests/script/copy-world.mjs lyrkhan-world",
+    "testWorlds": "npm run testWorld:test",
+    "testWorld:test": "node tests/script/copy-world.mjs test-world",
     "lint": "eslint src ./tests",
     "lint:fix": "eslint src ./tests --fix",
     "lint:html": "eslint src ./tests -f html -o eslint-report.html"

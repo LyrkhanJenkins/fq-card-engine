@@ -1,0 +1,7 @@
+2026/05/30-12:14:10.888 260c Recovering log #65
+2026/05/30-12:14:10.940 260c Delete type=0 #65
+2026/05/30-12:14:10.941 260c Delete type=3 #62
+2026/05/30-12:15:45.268 17d0 Level-0 table #71: started
+2026/05/30-12:15:45.268 17d0 Level-0 table #71: 0 bytes OK
+2026/05/30-12:15:45.285 17d0 Delete type=0 #69
+2026/05/30-12:15:45.516 17d0 Manual compaction at level-0 from '!messages!1CkrZBpfQKoM9qUM' @ 72057594037927935 : 1 .. '!messages!zeHLN7nwa9wUDHbf' @ 0 : 0; will stop at (end)

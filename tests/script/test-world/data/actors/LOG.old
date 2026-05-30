@@ -1,0 +1,7 @@
+2026/05/30-11:56:20.639 474 Recovering log #61
+2026/05/30-11:56:20.676 474 Delete type=0 #61
+2026/05/30-11:56:20.677 474 Delete type=3 #60
+2026/05/30-12:10:40.187 3dcc Level-0 table #65: started
+2026/05/30-12:10:40.187 3dcc Level-0 table #65: 0 bytes OK
+2026/05/30-12:10:40.224 3dcc Delete type=0 #63
+2026/05/30-12:10:40.319 3dcc Manual compaction at level-0 from '!actors!6BBSIxKYAGaFYk2Z' @ 72057594037927935 : 1 .. '!actors.items!s4YAfKgfQ4svWAe3.zXlhSCOaWHqUDFPL' @ 0 : 0; will stop at (end)

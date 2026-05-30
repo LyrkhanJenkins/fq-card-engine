@@ -1,0 +1,7 @@
+2026/05/30-12:14:11.120 260c Recovering log #26
+2026/05/30-12:14:11.182 260c Delete type=0 #26
+2026/05/30-12:14:11.182 260c Delete type=3 #23
+2026/05/30-12:15:45.645 17d0 Level-0 table #32: started
+2026/05/30-12:15:45.645 17d0 Level-0 table #32: 0 bytes OK
+2026/05/30-12:15:45.660 17d0 Delete type=0 #30
+2026/05/30-12:15:45.664 17d0 Manual compaction at level-0 from '!journal!eUPCdyIHFLbGmVPc' @ 72057594037927935 : 1 .. '!journal!eUPCdyIHFLbGmVPc' @ 0 : 0; will stop at (end)

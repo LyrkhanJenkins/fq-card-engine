@@ -3,8 +3,8 @@
 `npm run build`
 `npm run build:json`
 `npm run test`
-`npm run testWorld`
-`npm run testWorld:lyrkhan`
+`npm run testWorlds`
+`npm run testWorld:test`
 
 Blank World:
 
