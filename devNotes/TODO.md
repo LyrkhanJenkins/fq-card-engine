@@ -1,18 +1,15 @@
 ## V2.0
 ### Fix Prioritaire
-- S pour les bulles quand @wis, @sag ...etc. -> Mettre la bonne valeur
+- Le 0 en revanche pour Coup gauche n'est pas clair, ça devrait être S
 - Vases communicants ne se défausse pas
 - Les Squelettes ne sont pas générés a coté du jouer si il s'est déplacé
 - Rituel du sang cout en action pas clair + bugué
-- Le 0 en revanche pour Coup gauche n'est pas clair, ça devrait être S
--  
 
 ### Priorité
 #### 2.0.0
 - Tests fonctionnels 2 + montée de version jusqu'à la dernière v14
 - Mettre à jour readme et page Foundry et DONE.md
 - Première passe de suppression code inutile sans risque
-- Mettre a jour les versions des plugins nécessaire dans module.json
 - Tests fonctionnels 3 + montée de version jusqu'à la dernière v14
 - Tests fonctionnels 4 + montée de version jusqu'à la dernière v14
 
@@ -21,6 +18,9 @@
 - Test haut-niveau avec toutes les cartes, Besoin de gros tests de non regression de partout + avec toutes les cartes?
 - Couverture de test avec rapport > 80%
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
+- Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
+- Comment faire en sorte que card viewer affiche le svg?
+- Mettre a jour les versions des plugins nécessaire dans module.json
 - A partir de là, montée de version majeure possible : Faire un plan de pmontée de version majeure : Mettre à jour les
   cartes dans les compendiums et relance des tests par exemple
 
@@ -31,7 +31,6 @@
 - Repasser sur tous les TODO
 - Faire un point sur todos.*
 - Tests fonctionnels + montée dernière version
-- Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
 - PATCH--> RELEASE
 
 #### 2.0.3

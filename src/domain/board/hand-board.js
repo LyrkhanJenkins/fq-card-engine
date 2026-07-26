@@ -1,5 +1,6 @@
 import {DECK_TYPE, SPELLBOOK_TYPE} from "../utils/deck-utils.js";
 import DisplayCard from "../utils/display-card.js";
+import FQUtils from "../utils/fq-utils.js";
 
 export default class HandBoard {
     constructor(id) {
@@ -99,6 +100,13 @@ export default class HandBoard {
                     zeal : DisplayCard.getNumberForBubbleCardSvg(cardContent.zeal, cardContent),
                     minReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.minReach, cardContent),
                     maxReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.maxReach, cardContent),
+
+                    actionMod : FQUtils.hasAbilitiesBonus(cardContent.action),
+                    manaMod : FQUtils.hasAbilitiesBonus(cardContent.mana),
+                    zealMod : FQUtils.hasAbilitiesBonus(cardContent.zeal),
+                    reachMod : FQUtils.hasAbilitiesBonus(cardContent.minReach) || FQUtils.hasAbilitiesBonus(cardContent.maxReach),
+                    replayableMod : FQUtils.hasAbilitiesBonus(cardContent.replayable),
+
                     reactive : cardContent.reactive,
                     replayable : cardContent?.replayable === "passif" ? "P" : !cardContent?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(cardContent?.replayable, cardContent),
                     maxSameCard : c.system.fq?.maxSameCard,

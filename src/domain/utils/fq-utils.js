@@ -409,15 +409,27 @@ export default class FQUtils {
         keys.forEach(k => {
             if (cardContent[k] && typeof cardContent[k] === "object") FQUtils.replaceCardContentAbilitiesBonus(cardContent[k]);
             else if (typeof cardContent[k] === "string") {
-                cardContent[k] = cardContent[k].replaceAll("@str", FqConstants.actorAbi.str.mod.toString())
-                    .replaceAll("@dex", FqConstants.actorAbi.dex.mod.toString())
-                    .replaceAll("@con", FqConstants.actorAbi.con.mod.toString())
-                    .replaceAll("@int", FqConstants.actorAbi.int.mod.toString())
-                    .replaceAll("@wis", FqConstants.actorAbi.wis.mod.toString())
-                    .replaceAll("@cha", FqConstants.actorAbi.cha.mod.toString())
-                ;
+                cardContent[k] = FQUtils.replaceAbilitiesBonus(cardContent[k]);
             }
         });
+    }
+
+    static replaceAbilitiesBonus(str) {
+        return str.replaceAll("@str", FqConstants.actorAbi.str.mod.toString())
+            .replaceAll("@dex", FqConstants.actorAbi.dex.mod.toString())
+            .replaceAll("@con", FqConstants.actorAbi.con.mod.toString())
+            .replaceAll("@int", FqConstants.actorAbi.int.mod.toString())
+            .replaceAll("@wis", FqConstants.actorAbi.wis.mod.toString())
+            .replaceAll("@cha", FqConstants.actorAbi.cha.mod.toString());
+    }
+
+    static hasAbilitiesBonus(str) {
+        return (str.includes("@str") && FqConstants.actorAbi.str.mod > 0) ||
+         (str.includes("@dex") && FqConstants.actorAbi.dex.mod > 0) ||
+         (str.includes("@con") && FqConstants.actorAbi.con.mod > 0) ||
+         (str.includes("@int") && FqConstants.actorAbi.int.mod > 0) ||
+         (str.includes("@wis") && FqConstants.actorAbi.wis.mod > 0) ||
+         (str.includes("@cha") && FqConstants.actorAbi.cha.mod > 0);
     }
 
     static async replaceCardContentXAndYValue(cardContent, hasVariables, XXX, YYY) {

@@ -455,6 +455,13 @@ window.FqCardEngineModule = {
             zeal : DisplayCard.getNumberForBubbleCardSvg(firstChoice.zeal, firstChoice),
             minReach : DisplayCard.getNumberForBubbleCardSvg(firstChoice.minReach, firstChoice),
             maxReach : DisplayCard.getNumberForBubbleCardSvg(firstChoice.maxReach, firstChoice),
+
+            actionMod : FQUtils.hasAbilitiesBonus(firstChoice.action),
+            manaMod : FQUtils.hasAbilitiesBonus(firstChoice.mana),
+            zealMod : FQUtils.hasAbilitiesBonus(firstChoice.zeal),
+            reachMod : FQUtils.hasAbilitiesBonus(firstChoice.minReach) || FQUtils.hasAbilitiesBonus(firstChoice.maxReach),
+            replayableMod : FQUtils.hasAbilitiesBonus(firstChoice.replayable),
+
             reactive : firstChoice.reactive,
             replayable : firstChoice?.replayable === "passif" ? "P" : !firstChoice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(firstChoice?.replayable, firstChoice),
             maxSameCard : card.system.fq?.maxSameCard,
