@@ -599,7 +599,7 @@
   "FQCARDTITLE.ArcaneStrike" : "Frappe Arcanique",
   "FQCARDDESCRIPTION.ArcaneStrike" : "Inflige {0_damage} dégâts nécrotique à une cible\nInvoque un squelette de niveau 2 sur une case adjacente",
   "FQCARDTITLE.BloodRitual" : "Rituel Du Sang",
-  "FQCARDDESCRIPTION.BloodRitual" : "Sacrifiez une carte\nGagne autant de zèle que de squelette en jeu\nLe sort coûte 2 points d’action de moins par @cha ",
+  "FQCARDDESCRIPTION.BloodRitual" : "Sacrifiez une carte\nGagne autant de zèle que de squelette en jeu\nLe sort coûte 2x@cha points d’action en moins.",
   "FQCARDTITLE.MorbidShift" : "Déplacement Morbide",
   "FQCARDDESCRIPTION.MorbidShift" : "Détruisez au moins 1 squelette\nAugmente de @cha*score de sacrifice le déplacement des autres squelettes en jeu",
   "FQCARDTITLE.AdjustedShot" : "Ajustage De Tir",

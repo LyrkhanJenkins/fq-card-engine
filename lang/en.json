@@ -599,7 +599,7 @@
   "FQCARDTITLE.ArcaneStrike" : "Arcane Strike",
   "FQCARDDESCRIPTION.ArcaneStrike" : "Deals {0_damage} necrotic damage to a target.\nSummons a level 2 skeleton on an adjacent square.",
   "FQCARDTITLE.BloodRitual" : "Blood Ritual",
-  "FQCARDDESCRIPTION.BloodRitual" : "Sacrifice a card.\nGain zeal equal to the number of skeletons in play.\nThis spell costs 2 fewer action points per @cha.",
+  "FQCARDDESCRIPTION.BloodRitual" : "Sacrifice a card.\nGain zeal equal to the number of skeletons in play.\nThis spell costs 2x@cha fewer action points",
   "FQCARDTITLE.MorbidShift" : "Morbid Shift",
   "FQCARDDESCRIPTION.MorbidShift" : "Destroy at least 1 skeleton.\nIncrease the movement of all other skeletons in play by @cha * sacrifice score.",
   "FQCARDTITLE.AdjustedShot" : "Adjusted Shot",

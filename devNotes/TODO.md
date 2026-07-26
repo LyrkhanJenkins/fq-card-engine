@@ -1,9 +1,7 @@
 ## V2.0
 ### Fix Prioritaire
-- Le 0 en revanche pour Coup gauche n'est pas clair, ça devrait être S
 - Vases communicants ne se défausse pas
-- Les Squelettes ne sont pas générés a coté du jouer si il s'est déplacé
-- Rituel du sang cout en action pas clair + bugué
+- Les Squelettes ne sont pas générés a coté du joueur si il s'est déplacé
 
 ### Priorité
 #### 2.0.0
