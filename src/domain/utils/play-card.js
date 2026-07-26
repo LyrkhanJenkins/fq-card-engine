@@ -50,12 +50,14 @@ export default class PlayCard {
                     speaker: ChatMessage.getSpeaker({actor: game.user.character}),
                     content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.localize("FQCARDENGINE.InfoMsgPassiveSpell")}</div>`
                 });
-            } else if (Number(cardContent?.replayable) && Number(cardContent?.replayable) > 1) {
+            } else if (cardContent?.replayable) {
                 cardContent.replayable = await FQUtils.rollResultAsync(cardContent.replayable);
-                FQUtils.rewriteCardContent(card, initCardContents, {
-                    replayable: Number(cardContent?.replayable) - 1, hasBeenPlayed: true
-                });
-                if (Number(cardContent.replayable) > 100){
+                if (Number(cardContent?.replayable) > 1) {
+                    FQUtils.rewriteCardContent(card, initCardContents, {
+                        replayable: Number(cardContent?.replayable) - 1, hasBeenPlayed: true
+                    });
+                }
+                if (Number(cardContent.replayable) > 100) {
                     ChatMessage.create({
                         speaker: ChatMessage.getSpeaker({actor: game.user.character}),
                         content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.format("FQCARDENGINE.InfoMsgReplayableSpell")}</div>`

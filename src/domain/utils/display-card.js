@@ -12,9 +12,15 @@ export default class DisplayCard {
         if ((result.includes("XXX") && cardContent.xvalue) || (result.includes("YYY") && cardContent.yvalue)) {
             return "S";
         }
-        result = result.replace("XXX","X").replace("YYY","Y");
-        result = DisplayCard.simplifyExpression(result);
-        return result;
+        try {
+            const roll = new Roll(result).evaluateSync();
+            return roll.total;
+        } catch (error) {
+            // Dans le cas ou il y a des variables
+            result = result.replace("XXX", "X").replace("YYY", "Y");
+            result = DisplayCard.simplifyExpression(result);
+            return result;
+        }
     }
 
     static getDescriptionSizeForCardSvg(description) {

@@ -1,6 +1,5 @@
 ## V2.0
 ### Fix Prioritaire
-- Vases communicants ne se défausse pas
 - Les Squelettes ne sont pas générés a coté du joueur si il s'est déplacé
 
 ### Priorité
