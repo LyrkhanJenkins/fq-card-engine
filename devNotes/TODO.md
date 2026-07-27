@@ -1,14 +1,10 @@
 ## V2.0
 ### Fix Prioritaire
-- Les Squelettes ne sont pas générés a coté du joueur si il s'est déplacé
 
 ### Priorité
 #### 2.0.0
 - Tests fonctionnels 2 + montée de version jusqu'à la dernière v14
 - Mettre à jour readme et page Foundry et DONE.md
-- Première passe de suppression code inutile sans risque
-- Tests fonctionnels 3 + montée de version jusqu'à la dernière v14
-- Tests fonctionnels 4 + montée de version jusqu'à la dernière v14
 
 #### 2.0.1
 - SPIKE Meilleurs tests à faire pour de la non-regression ?
@@ -20,9 +16,12 @@
 - Mettre a jour les versions des plugins nécessaire dans module.json
 - A partir de là, montée de version majeure possible : Faire un plan de pmontée de version majeure : Mettre à jour les
   cartes dans les compendiums et relance des tests par exemple
+- Tests fonctionnels + montée de version jusqu'à la dernière v14
+- Première passe de suppression code inutile sans risque
 
 #### 2.0.2
 - Ramener toutes les notes écrites
+- Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Revoir css, homogénéiser fonts...
 - Redecoupage et vérification CSS
 - Repasser sur tous les TODO
