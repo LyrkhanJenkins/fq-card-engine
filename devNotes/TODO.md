@@ -1,12 +1,20 @@
 ## V2.0
 ### Fix Prioritaire
 
-### Priorité
-#### 2.0.0
-- Tests fonctionnels 2 + montée de version jusqu'à la dernière v14
-- Mettre à jour readme et page Foundry et DONE.md
+### Fix à prioriser
+Choisir entre -er et -ez dans les descriptions des cartes
+Sélectionner une cible après coup
+Enlever les + et - si joueurs droits limiteés
+Volée de shuriken et shuriken, effet speciaux à changer
+Afficher les éléments actifs de l'elementaliste, généralement afficherf tous les effets sur une sicble
+Pouvoir faire une lame chargé en une fois
+Priorisé les protections avant de faire jouer la carte
+Revoir cape inhibitrice (enlever quel effet?)
+Revoir tir reflexe (jouer même si pas attaquer?)
 
+### Priorité
 #### 2.0.1
+- Tests fonctionnels + montée de version jusqu'à la dernière v14
 - SPIKE Meilleurs tests à faire pour de la non-regression ?
 - Test haut-niveau avec toutes les cartes, Besoin de gros tests de non regression de partout + avec toutes les cartes?
 - Couverture de test avec rapport > 80%
@@ -17,6 +25,7 @@
 - A partir de là, montée de version majeure possible : Faire un plan de pmontée de version majeure : Mettre à jour les
   cartes dans les compendiums et relance des tests par exemple
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
+- Ameliorer macro create unique cards pour donner l'ownership aux joueurs dans le monde de test
 - Première passe de suppression code inutile sans risque
 
 #### 2.0.2

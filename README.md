@@ -42,7 +42,7 @@ The FQ Card Engine is a combat system for Final Quest 8 combined with DnD5e rule
 
 (Note: Decks are generated up to level 5. After that, decks are customizable and cannot be destroyed by the macros.)
 
-[img_5.png](images/doc/assign-hand-toolbar.png)
+![img_5.png](images/doc/assign-hand-toolbar.png)
 
 - Everything is now set up to play. Start combat with your characters, and cards will automatically be drawn, with picks and hand scores applied. _(See more details in the rulebook.)_
   **_(Make sure your players are connected!)_**
