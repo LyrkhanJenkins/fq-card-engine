@@ -10,7 +10,6 @@ The FQ Card Engine is a combat system for Final Quest 8 combined with DnD5e rule
 ## Optional modules
 - DAE https://foundryvtt.com/packages/dae (non à jour)
 - Dice So Nice https://foundryvtt.com/packages/dice-so-nice
-- Card Viewer https://foundryvtt.com/packages/orcnog-card-viewer
 
 ## Get Started
 
