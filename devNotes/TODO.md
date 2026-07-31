@@ -18,6 +18,8 @@ Revoir tir reflexe (jouer même si pas attaquer?)
 - SPIKE Meilleurs tests à faire pour de la non-regression ?
 - Test haut-niveau avec toutes les cartes, Besoin de gros tests de non regression de partout + avec toutes les cartes?
 - Couverture de test avec rapport > 80%
+- Remplacer la lame chargée par un sort qui fait plus de dégâts suivant le zèle qu'a la cible plutôt que la chargé
+  - Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
 - Comment faire en sorte que card viewer affiche le svg?
@@ -32,9 +34,10 @@ Revoir tir reflexe (jouer même si pas attaquer?)
 - Ramener toutes les notes écrites
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Revoir css, homogénéiser fonts...
-- Redecoupage et vérification CSS
+- Redécoupage et vérification CSS
 - Repasser sur tous les TODO
 - Faire un point sur todos.*
+- Afficher les barres spécifiques
 - Tests fonctionnels + montée dernière version
 - PATCH--> RELEASE
 
@@ -50,7 +53,7 @@ Revoir tir reflexe (jouer même si pas attaquer?)
 #### 2.0.4
 - Bug tornade effet magique
 - Revoir les effets visuels et audio
-- Gestions des principales Custom eval dans des méthodes
+- Gestions des principales Custom eval dans des méthodes (comme les xvalue)
 - Support avec un FQ Card Viewer
 - PATCH--> RELEASE
 
