@@ -137,30 +137,16 @@ export default class DeckUtils {
         let ownership = {default: 0};
         ownership[user.id] = 3;
         const allFQClasses = FqConstants.userFQClasses(user);
-        let mainClass = allFQClasses.find(c => c.system.isOriginalClass);
+        const mainClass = allFQClasses.find(c => c.system.isOriginalClass);
 
-        const compendium = await game.packs.get(FqCardEngineModule.moduleName + ".decks-fq8-generated").getDocuments();
-        const nameOriginDeck = mainClass?.name + " Lvl" + (mainClass?.system?.levels > 5 ? 5 : mainClass?.system?.levels);
+        const compendium = await game.packs.get(FqCardEngineModule.moduleName + ".decks-pattern-fq8").getDocuments();
+        const nameOriginDeck = mainClass?.name + " Base";
         const originDeck = compendium.find(pack => pack.name === nameOriginDeck);
         if (!mainClass || !originDeck) {
             if (!user.isGM) ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoMainClass"));
             return;
         }
-
-        let deck = DeckUtils.getFirstDeck(user.id, DECK_TYPE, false);
-        if (!deck) {
-            let deckName = game.i18n.localize("FQCARDENGINE.DeckPrefixName") + user.character.name;
-            deck = await Cards.create({
-                ...originDeck,
-                name: deckName,
-                type: "deck",
-                cards: [],
-                system: {...originDeck?.system, fq: {type: "DECK", owner: user.id}},
-                ownership
-            });
-            await DeckUtils.createCardsForDeck(deck, [...originDeck.cards]);
-        }
-
+        // Create Hand if not exist
         let hand = DeckUtils.getFirstDeck(user.id, HAND_TYPE, false);
         if (!hand) {
             let handName = game.i18n.localize("FQCARDENGINE.HandPrefixName") + user.character.name;
@@ -172,6 +158,7 @@ export default class DeckUtils {
             });
         }
 
+        // Create Pile if not exist
         let pile = DeckUtils.getFirstDeck(user.id, PILE_TYPE, false);
         if (!pile) {
             let pileName = game.i18n.localize("FQCARDENGINE.PilePrefixName") + user.character.name;
@@ -182,12 +169,14 @@ export default class DeckUtils {
                 ownership
             });
         }
+
+        // Refresh SpellBook (delete and rebuild it)
         let spellBook = DeckUtils.getFirstDeck(user.id, SPELLBOOK_TYPE, false);
         if (spellBook) {
             await Cards.deleteDocuments([spellBook.id]);
         }
         if (mainClass?.system?.levels <= 5 && allFQClasses.length === 1) {
-            // Pas de Bibliothèque pour les monoclasse de niveau 5 ou moins, le deck est généré pour simplifié
+            // Pas de Bibliothèque pour les monoclasse de niveau 5 ou moins, le deck est généré pour simplifier
             return;
         }
         let allCards = [];
@@ -210,6 +199,40 @@ export default class DeckUtils {
             ownership
         });
         await DeckUtils.createCardsForDeck(spellBook, allCards);
+
+        // Create deck if not exist
+        let deck = DeckUtils.getFirstDeck(user.id, DECK_TYPE, false);
+        if (!deck) {
+            let deckName = game.i18n.localize("FQCARDENGINE.DeckPrefixName") + user.character.name;
+            deck = await Cards.create({
+                ...originDeck,
+                name: deckName,
+                type: "deck",
+                cards: [],
+                system: {...originDeck?.system, fq: {type: "DECK", owner: user.id}},
+                ownership
+            });
+        }
+
+        // Delete card not present in spellbook
+        let deleteCards = [];
+        deck.cards.forEach(cardInDeck => {
+            if (!allCards.find(card => cardInDeck.name === card.name)) {
+                deleteCards.push(cardInDeck);
+            }
+        });
+        await DeckUtils.deleteCardsForDeck(deck, deleteCards);
+
+        //Deep Copy of cards not present in deck but present in spellbook and add half of max number
+        let newCards = [];
+        [ ... allCards].forEach(card => {
+            if (!deck.cards.find(cardInDeck => cardInDeck.name === card.name)) {
+                for (let i = 0; i < (Math.ceil((card?.system?.fq?.maxSameCard ?? 1) / 2)); i++) {
+                    newCards.push({...card});
+                }
+            }
+        });
+        await DeckUtils.createCardsForDeck(deck, [...newCards]);
 
     }
 
@@ -263,6 +286,18 @@ export default class DeckUtils {
      */
     static async createCardsForDeck(deck, cards) {
         return await deck.createEmbeddedDocuments("Card", [...cards], {keepId: false});
+    }
+
+    /**
+     * Supprime les carte d'un deck via `deleteEmbeddedDocuments`
+     *
+     * @param {Cards}    deck     - Le deck Foundry dans lequel créer les cartes.
+     * @param {object[]} cards    - Les cartes à supprimer.
+     *
+     * @returns {Promise<Cards>}
+     */
+    static async deleteCardsForDeck(deck, cards) {
+        return await deck.deleteEmbeddedDocuments("Card", cards.map(c => c.id), {});
     }
 
     /**

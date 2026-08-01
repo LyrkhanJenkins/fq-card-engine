@@ -1,5 +1,4 @@
 # Réalisations :
-
 ## Saison 1:
 
 - Score de défausse de carte à utiliser. réinitialiser à chaque round.

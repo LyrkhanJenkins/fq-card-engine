@@ -5,8 +5,7 @@
 
 ### Versions prévues
 #### 2.0.1
-- Ameliorer macro create unique cards pour donner l'ownership aux joueurs dans le monde de test
-- Tests fonctionnels + montée de version jusqu'à la dernière v14
+- Tests fonctionnels (tests de montée de niveau aussi) + montée de version jusqu'à la dernière v14
 - SPIKE Meilleurs tests à faire pour de la non-regression, tests plusieurs IA
 - Test haut-niveau avec toutes les cartes, Besoin de gros tests de non regression de partout + avec toutes les cartes?
 -  OU Couverture de test unitaire avec rapport > 80%
@@ -74,8 +73,6 @@
 - Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts suivant le zèle qu'a la cible plutôt que la chargé
   - Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
 - Refonte des cartes :
-  - Création des decks se fait automatiquement à chaque montée de niveau où on rajoute ceil(nbmaxSameCard/2) cartes dans 
-  le deck de la classe et le niveau choisi ---> Suppression des cartes générés et refacto des levels des cartes +  
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Refaire des cartes pour chacune des classes qui ont trop de sorts les mêmes et bien les diviser par chaque niveau
       et en distribuer la moitié du nombre max. Bien faire la différenceciation des classes
