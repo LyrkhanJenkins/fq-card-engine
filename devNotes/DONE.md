@@ -1,9 +1,15 @@
 v2.0.1:
 Feat :
-- Illustration de carte en cours de construction
-- Logo FQ pour la mise en pause
+- Illustration de carte pas défaut et Logo FQ pour la mise en pause
+
+Chore :
+- Fin recommandation card viewer
+
+Fix :
+- Enlever l'ajout de main dans le container si les droits des joueurs sont limités
 
 v2.0.0:
+
 Feat :
 - Refonte de l'UI de la main d'un joueur
 - Ajout des ressources FQ sur la main du joueur
@@ -20,9 +26,9 @@ Feat :
 - Macro GM pour générer un deck avec toutes les cartes
 
 Chore :
-- Montée de version 14.362
+- Montée de version 14.365
 - Refacto des templates et objets FQ raccordé aux object DND5E (Feuilles de personnage) et Foundry (carte et decks)
-- Refacto des classes et methodes statiques pour ne garder que le strict nécessaire
+- Refacto des classes et méthodes statiques pour ne garder que le strict nécessaire
 - Macro pour générer un deck avec toutes les cartes
 - Migration Vitest
 
@@ -37,9 +43,9 @@ Chore :
 - Montée de version 13.350
   Fix :
 - Les joueurs ne peuvent plus jouer leurs armes hors de leur tour
-- Si xvalue ou yvalue est positionner sur currentDrop, on le vide pour le personnage
+- Si xvalue ou yvalue est positionné sur currentDrop, on le vide pour le personnage
 - Ne plus utiliser game.actors.get pour éviter la décorélation, utiliser que les ids de token pour les targets
-- Correction de la Charge:  ne fonctionne pas .from() is deprecated, please use .copySprite() + utilise les targets du
+- Correction de la Charge: ne fonctionne pas .from() is deprecated, please use .copySprite() + utilise les targets du
   GM
 - Rajout de messages des effets manquants pour Guardian et Elementalist
 - Correction Open/Create Deck Macros
@@ -51,21 +57,21 @@ v1.1:
 - Rajouter des armes aux starters heroes
 - Tests Passe 1
 - Implémentation des cartes 6/7/base
-- Gerer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
+- Gérer le module Card Viewer pour qu'il ne s'affiche au joueur que lorsqu'il pioche -> Preset les options à l'init?
 - Exposition des constantes à la racine de FqCardEngineModule
 - Supprimer le repertoire d'assets et le gérer directement dans le module pour tout ce qui est sorts de base
 - Gérer plusieurs sons pour chaque type de dégâts libre de droit
 - Correction bug des passifs et carte rejouable qui traine depuis longtemps
-- Gestion de modules optionnels pour les effets speciaux (Sequencer, j2ba, DAE, Card Viewer)
+- Gestion de modules optionnels pour les effets spéciaux (Sequencer, j2ba, DAE, Card Viewer)
 - Correction des familiers pour utiliser leurs attaques
-- Ne plus commité les cartes générées
+- Ne plus commiter les cartes générées
 - Refacto : ne plus utiliser le script python pour générer les cartes
 - Gérer l'invulnérabilité
-- Implémenter des cartes utilisable hors des combats et qui ne se défausse jamais (1/2 par classe ? + les communs,
-  les communs apparaissent avec un niveau d'attributs )
+- Implémenter des cartes utilisables hors des combats et qui ne se défausse jamais (1/2 par classe + les communs,
+  les communs apparaissent avec un niveau d'attributs)
 - Implémentation de deux nouvelles classes : Gardien et Sorcière
-- Créer un sort passif qui sacrifie des squelettes, et gérer une bar spécial pour les squelettes?
-- Gérer du ciblage speciale : Skeletons
+- Créer un sort passif qui sacrifie des squelettes, et gérer une bar spécial pour les squelettes ?
+- Gérer du ciblage spécial : Skeletons
 - Droits joueurs limités
 - Afficher le nombre max et les niveaux des cartes dans les decks
 - tagué les cartes et le nombre max
@@ -77,7 +83,7 @@ v1.1:
 - Créer une bibliothèque à partir du pattern et non pas du niveau 5.
 - Empêcher les joueurs de modifier des cartes d'un deck ou d'une bibliothèque (et de supprimer)
 - Automatiser la montée de niveau jusqu'au niveau 5 (utiliser la macro )
-- Gestion d'animations speciales pour certaines cartes.
+- Gestion d'animations spéciales pour certaines cartes.
 - CurrentDrop utilisable hors combat sans drop de card
 - Formulaire de création de carte plutôt qu'une string transformé en JSON
 

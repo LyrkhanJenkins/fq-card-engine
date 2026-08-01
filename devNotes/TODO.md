@@ -1,36 +1,27 @@
-## V2.0
+## V2.x
 ### Fix Prioritaire
 
 ### Fix à prioriser
-Choisir entre -er et -ez dans les descriptions des cartes
-Sélectionner une cible après coup
-Enlever les + et - si joueurs droits limiteés
-Volée de shuriken et shuriken, effet speciaux à changer
-Afficher les éléments actifs de l'elementaliste, généralement afficherf tous les effets sur une sicble
-Pouvoir faire une lame chargé en une fois
-Priorisé les protections avant de faire jouer la carte
-Revoir cape inhibitrice (enlever quel effet?)
-Revoir tir reflexe (jouer même si pas attaquer?)
 
-### Priorité
+### Versions prévues
 #### 2.0.1
+- Ameliorer macro create unique cards pour donner l'ownership aux joueurs dans le monde de test
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
-- SPIKE Meilleurs tests à faire pour de la non-regression ?
+- SPIKE Meilleurs tests à faire pour de la non-regression, tests plusieurs IA
 - Test haut-niveau avec toutes les cartes, Besoin de gros tests de non regression de partout + avec toutes les cartes?
-- Couverture de test avec rapport > 80%
-- Remplacer la lame chargée par un sort qui fait plus de dégâts suivant le zèle qu'a la cible plutôt que la chargé
-  - Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
+-  OU Couverture de test unitaire avec rapport > 80%
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
 - Comment faire en sorte que card viewer affiche le svg?
-- Mettre a jour les versions des plugins nécessaire dans module.json
+- Mettre à jour les versions des plugins nécessaire dans module.json
 - A partir de là, montée de version majeure possible : Faire un plan de pmontée de version majeure : Mettre à jour les
   cartes dans les compendiums et relance des tests par exemple
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
-- Ameliorer macro create unique cards pour donner l'ownership aux joueurs dans le monde de test
 - Première passe de suppression code inutile sans risque
+- Choisir entre -er et -ez dans les descriptions des cartes
 
 #### 2.0.2
+
 - Ramener toutes les notes écrites
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Revoir css, homogénéiser fonts...
@@ -39,6 +30,11 @@ Revoir tir reflexe (jouer même si pas attaquer?)
 - Faire un point sur todos.*
 - Afficher les barres spécifiques
 - Tests fonctionnels + montée dernière version
+- Revoir cape inhibitrice (enlever quel effet?)
+- Revoir tir reflexe (jouer même si pas attaquer?)
+- Afficher les éléments actifs de l'elementaliste, généralement afficherf tous les effets sur une sicble
+- Priorisé les protections avant de faire jouer la carte (OU REPORTER)
+- Sélectionner une cible après coup (OU REPORTER)
 - PATCH--> RELEASE
 
 #### 2.0.3
@@ -46,6 +42,7 @@ Revoir tir reflexe (jouer même si pas attaquer?)
   fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
 - Verifier 
 - Passage en typescript?
+- Volée de shuriken et shuriken, effet speciaux à changer
 - Rajouter des règles d'architectures
 - Tests fonctionnels + montée dernière version
 - PATCH--> RELEASE
@@ -58,12 +55,24 @@ Revoir tir reflexe (jouer même si pas attaquer?)
 - PATCH--> RELEASE
 
 #### 2.1.x
+- Des choix de cartes ne sont plus des choix mais des executions après un autre choix 
+  OU une transformation à la prochaine execution
+    - Filtrer les vrais choix pour la dialog, et executer en queue tous les choix qui se succède
+    - Renommer le mot choix c'est plus un effet de la carte mais j'ai déjà effet
+    - Dans le formulaire remonté rejouable en haut -> l'encart devient FX de la carte, et en haut avec rejouable, yaura
+  aussi lancé dans X tours, génère une autre carte : "Comportement special"
+    - Dans le formulaire, plusieurs type de "choix" : Choix (de base), execution après choix, remplacement choix,
+    - Dans le formulaire rajouter si un champ execution après choix, remplacement choix, comprenant les autre choix
+    -  -> enlever JSON après utilisation?
+    - (Facultatif: les noms des choix peuvent être localisé)
+
 - Ajouter également une fleche raccourci pour passer une carte du spellbook vers le deck
 - L'esquive fait demi-dégâts
 - Faire des sorts qui s'active au bout du enieme tour, action de la carte au bout d'un certain temps
 - Pouvoir générer une carte après utilisation d'une autre à partir d'un modèle
 - Utilisation des armes équipés
-- Est ce qu'il faut pas qu'on puisse joueru plusieurs choix d'une carte en même temps (pas vraiment de choix (boolean))?
+- Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts suivant le zèle qu'a la cible plutôt que la chargé
+  - Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
 - Refonte des cartes :
   - Création des decks se fait automatiquement à chaque montée de niveau où on rajoute ceil(nbmaxSameCard/2) cartes dans 
   le deck de la classe et le niveau choisi ---> Suppression des cartes générés et refacto des levels des cartes +  

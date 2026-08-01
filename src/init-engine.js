@@ -450,22 +450,22 @@ window.FqCardEngineModule = {
             description: description,
             descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
             titleSize: DisplayCard.getTitleSizeForCardSvg(name),
-            action : DisplayCard.getNumberForBubbleCardSvg(firstChoice.action, firstChoice),
-            mana : DisplayCard.getNumberForBubbleCardSvg(firstChoice.mana, firstChoice),
-            zeal : DisplayCard.getNumberForBubbleCardSvg(firstChoice.zeal, firstChoice),
-            minReach : DisplayCard.getNumberForBubbleCardSvg(firstChoice.minReach, firstChoice),
-            maxReach : DisplayCard.getNumberForBubbleCardSvg(firstChoice.maxReach, firstChoice),
+            action: DisplayCard.getNumberForBubbleCardSvg(firstChoice.action, firstChoice),
+            mana: DisplayCard.getNumberForBubbleCardSvg(firstChoice.mana, firstChoice),
+            zeal: DisplayCard.getNumberForBubbleCardSvg(firstChoice.zeal, firstChoice),
+            minReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.minReach, firstChoice),
+            maxReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.maxReach, firstChoice),
 
-            actionMod : FQUtils.hasAbilitiesBonus(firstChoice.action),
-            manaMod : FQUtils.hasAbilitiesBonus(firstChoice.mana),
-            zealMod : FQUtils.hasAbilitiesBonus(firstChoice.zeal),
-            reachMod : FQUtils.hasAbilitiesBonus(firstChoice.minReach) || FQUtils.hasAbilitiesBonus(firstChoice.maxReach),
-            replayableMod : FQUtils.hasAbilitiesBonus(firstChoice.replayable),
+            actionMod: FQUtils.hasAbilitiesBonus(firstChoice.action),
+            manaMod: FQUtils.hasAbilitiesBonus(firstChoice.mana),
+            zealMod: FQUtils.hasAbilitiesBonus(firstChoice.zeal),
+            reachMod: FQUtils.hasAbilitiesBonus(firstChoice.minReach) || FQUtils.hasAbilitiesBonus(firstChoice.maxReach),
+            replayableMod: FQUtils.hasAbilitiesBonus(firstChoice.replayable),
 
-            reactive : firstChoice.reactive,
-            replayable : firstChoice?.replayable === "passif" ? "P" : !firstChoice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(firstChoice?.replayable, firstChoice),
-            maxSameCard : card.system.fq?.maxSameCard,
-            fqClass : card.system.fq?.class,
+            reactive: firstChoice.reactive,
+            replayable: firstChoice?.replayable === "passif" ? "P" : !firstChoice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(firstChoice?.replayable, firstChoice),
+            maxSameCard: card.system.fq?.maxSameCard,
+            fqClass: card.system.fq?.class,
             discards,
             targets,
             charStats,
@@ -944,22 +944,21 @@ Hooks.on("setup", function () {
         label: "FQCARDENGINE.FQCardConfig", makeDefault: true
     });
 
-    // Creates the outer container
-    foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand-container.hbs", {}).then(content => {
+    if (game.settings.get(FqCardEngineModule.moduleName, "PlayerLimitCardsRight") == true) {
+        CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
+    }
+    const adminRights = CONFIG.FqCardEngine.options.playerLimitCardsRight === false || game.user.isGM;
+    foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand-container.hbs", {
+        manualActions: adminRights
+    }).then(content => {
         content = $(content);
         $("#ui-bottom").append(content);
         CONFIG.FqCardEngine.options.draggable = game.settings.get(FqCardEngineModule.moduleName, "Draggable");
         FqCardEngineModule.setupPosition();
-
-
-        if (game.settings.get(FqCardEngineModule.moduleName, "PlayerLimitCardsRight") == true) {
-            CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
-        }
-
         let count = game.settings.get(FqCardEngineModule.moduleName, "HandCount");
         count = count ? count : 0;
         if (count > FqCardEngineModule.handMax) {
-            count = FqCardEngineModule.handMax;
+            count = adminRights ? FqCardEngineModule.handMax : 1;
         }
         for (let i = 0; i < count; i++) {
             new HandBoard(i);

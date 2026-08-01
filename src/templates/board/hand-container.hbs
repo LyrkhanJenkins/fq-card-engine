@@ -2,7 +2,7 @@
 
     <div class="fq-top-bar">
         <span class="fq-move-handle fq-card-engine-move-handle" title="{{ localize 'FQCARDENGINE.Move'}}">
-            <span class="fq-move-pip" ></span>
+            <span class="fq-move-pip"></span>
             <span class="fq-move-pip"></span>
             <span class="fq-move-pip"></span>
         </span>
@@ -21,16 +21,19 @@
             </svg>
         </button>
 
+        {{#if manualActions}}
             <button class="fq-toolbar-btn fq-card-engine-subtract-bar" title="{{ localize 'FQCARDENGINE.RemoveBar'}}">
                 <svg viewBox="0 0 10 2" fill="none" xmlns="http://www.w3.org/2000/svg" width="10" height="10">
                     <path d="M1 1H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
             </button>
+
             <button class="fq-toolbar-btn fq-card-engine-add-bar" title="{{ localize 'FQCARDENGINE.AddBar'}}">
                 <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" width="10" height="10">
                     <path d="M5 1V9M1 5H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
             </button>
+        {{/if}}
 
         <div class="fq-size-control">
             <svg viewBox="0 0 8 10" fill="none" xmlns="http://www.w3.org/2000/svg" width="8" height="10"
@@ -50,8 +53,10 @@
 
         <button class="fq-toolbar-btn fq-char-gauges-toggle" id="fq-char-gauges-toggle"
                 title="{{ localize 'FQCARDENGINE.HideShow'}}">
-            <svg class="fq-char-gauges-chevron" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg" width="6" height="10">
-                <path d="M1 1L5 5L1 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg class="fq-char-gauges-chevron" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg"
+                 width="6" height="10">
+                <path d="M1 1L5 5L1 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round"/>
             </svg>
         </button>
 
@@ -62,22 +67,30 @@
             <div class="fq-cg-bars">
                 <div class="fq-cg-bar" title="HP">
                     <span class="fq-cg-icon fq-gauge-hp">♥</span>
-                    <div class="fq-cg-track"><div class="fq-cg-fill fq-gauge-fill-hp" id="fq-cg-hp"></div></div>
+                    <div class="fq-cg-track">
+                        <div class="fq-cg-fill fq-gauge-fill-hp" id="fq-cg-hp"></div>
+                    </div>
                     <span class="fq-cg-val" id="fq-cg-hp-val">–</span>
                 </div>
                 <div class="fq-cg-bar" title="Action">
                     <span class="fq-cg-icon fq-gauge-action">⚡</span>
-                    <div class="fq-cg-track"><div class="fq-cg-fill fq-gauge-fill-action" id="fq-cg-action"></div></div>
+                    <div class="fq-cg-track">
+                        <div class="fq-cg-fill fq-gauge-fill-action" id="fq-cg-action"></div>
+                    </div>
                     <span class="fq-cg-val" id="fq-cg-action-val">–</span>
                 </div>
                 <div class="fq-cg-bar" title="Mana">
                     <span class="fq-cg-icon fq-gauge-mana">✦</span>
-                    <div class="fq-cg-track"><div class="fq-cg-fill fq-gauge-fill-mana" id="fq-cg-mana"></div></div>
+                    <div class="fq-cg-track">
+                        <div class="fq-cg-fill fq-gauge-fill-mana" id="fq-cg-mana"></div>
+                    </div>
                     <span class="fq-cg-val" id="fq-cg-mana-val">–</span>
                 </div>
                 <div class="fq-cg-bar" title="Zeal">
                     <span class="fq-cg-icon fq-gauge-zeal">☀</span>
-                    <div class="fq-cg-track"><div class="fq-cg-fill fq-gauge-fill-zeal" id="fq-cg-zeal"></div></div>
+                    <div class="fq-cg-track">
+                        <div class="fq-cg-fill fq-gauge-fill-zeal" id="fq-cg-zeal"></div>
+                    </div>
                     <span class="fq-cg-val" id="fq-cg-zeal-val">–</span>
                 </div>
             </div>
