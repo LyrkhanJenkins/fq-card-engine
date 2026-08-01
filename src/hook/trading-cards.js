@@ -39,3 +39,12 @@ Hooks.on("passCards", (from, to, action) => {
 Hooks.on("returnCards", (_origin, _returned, _context) => {
     // Nothing
 });
+
+Hooks.on("preCreateCard", (card, data, _options, _userId) => {
+    const faces = foundry.utils.deepClone(data.faces ?? []);
+
+    if (faces[0]?.img === foundry.documents.BaseCard.DEFAULT_ICON) {
+        faces[0].img = "modules/fq-card-engine/images/cards/in_progress.png";
+        card.updateSource({ faces });
+    }
+});

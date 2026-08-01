@@ -59,6 +59,11 @@ Revoir tir reflexe (jouer même si pas attaquer?)
 
 #### 2.1.x
 - Ajouter également une fleche raccourci pour passer une carte du spellbook vers le deck
+- L'esquive fait demi-dégâts
+- Faire des sorts qui s'active au bout du enieme tour, action de la carte au bout d'un certain temps
+- Pouvoir générer une carte après utilisation d'une autre à partir d'un modèle
+- Utilisation des armes équipés
+- Est ce qu'il faut pas qu'on puisse joueru plusieurs choix d'une carte en même temps (pas vraiment de choix (boolean))?
 - Refonte des cartes :
   - Création des decks se fait automatiquement à chaque montée de niveau où on rajoute ceil(nbmaxSameCard/2) cartes dans 
   le deck de la classe et le niveau choisi ---> Suppression des cartes générés et refacto des levels des cartes +  
@@ -75,7 +80,8 @@ Revoir tir reflexe (jouer même si pas attaquer?)
         utilisation), réécriture des passifs
       - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
         d'actions/mana/pioches?)
-  
+
+- Première carte du Maître d'Armes et du Guerrier Runique
 - MINOR--> RELEASE
 
 #### 2.2.x
@@ -102,7 +108,7 @@ Revoir tir reflexe (jouer même si pas attaquer?)
 - PATCH--> RELEASE
 
 #### 2.3.x
-- Prise en compte la classe d'armure de DND5E -> Est que l'esquive devient plus qu'une demi-esquive?
+- Prise en compte la classe d'armure de DND5E
 - Migrations objets dnd5e v FQ OU comment plus les mettre en avant?
 - Ajout de spécialisation pour les 7 classes jusqu'au niveau 10
 - Prise en compte des resistances

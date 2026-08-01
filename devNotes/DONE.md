@@ -1,3 +1,7 @@
+v2.0.1:
+Feat :
+- Illustration de carte en cours de construction
+
 v2.0.0:
 Feat :
 - Refonte de l'UI de la main d'un joueur
