@@ -22,7 +22,13 @@
     </header>
     <ol class="cards scrollable" data-cards>
         {{#each cards as |card|}}
-            <li class="flexrow" data-card-id="{{card.id}}">
+            <li class="flexrow{{#if card.isMaxReached}} max-reached{{/if}}" data-card-id="{{card.id}}">
+                {{#if @root.isYourSpellbook}}
+                    <a class="move-left" data-action="fqMoveCardDeck" data-tooltip="FQCARDENGINE.MoveCardDeck"
+                        {{disabled card.isMaxReached}}>
+                        <i class="fa-solid fa-fw fa-2x fa-circle-arrow-left"></i>
+                    </a>
+                {{/if}}
                 <img class="face" src="{{card.img}}" alt="{{localize card.name}}" loading="lazy">
                 <strong class="name">{{localize card.name}}</strong>
                 <div class="drawn">{{card.system.fq.level}}</div>
@@ -48,13 +54,19 @@
                         <a data-action="controlCard" data-control="edit" data-tooltip="CARDS.ACTIONS.Edit">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a data-action="controlCard" data-control="delete" data-tooltip="CARDS.ACTIONS.Delete">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
+                        {{#if @root.isYourDeck}}
+                            <a data-action="fqDeleteCard" data-tooltip="CARDS.ACTIONS.Delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        {{else}}
+                            <a data-action="controlCard" data-control="delete" data-tooltip="CARDS.ACTIONS.Delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        {{/if}}
                     </div>
                 {{else if @root.isYourDeck}}
                     <div class="controls">
-                        <a data-action="controlCard" data-control="delete" data-tooltip="CARDS.ACTIONS.Delete">
+                        <a data-action="fqDeleteCard" data-tooltip="CARDS.ACTIONS.Delete">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </div>

@@ -2,6 +2,7 @@ v2.0.1:
 Feat :
 - Illustration de carte pas défaut et Logo FQ pour la mise en pause
 - Génération des decks à la volée suivant les cartes de la bibliothèque et plus à partir de deck générés
+- Ajout une fleche raccourci pour passer une carte du spellbook vers le deck + grisage des cartes déjà distribué dans le deck
 
 Chore :
 - Fin recommandation card viewer

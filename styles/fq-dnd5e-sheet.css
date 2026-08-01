@@ -174,3 +174,16 @@ form .form-group .minion-checkbox {
     display: flex;
     align-items: center;
 }
+
+/* Pour la bibliothèque */
+.cards ol li .move-left.disabled,
+.cards ol li .move-left.locked {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+.cards ol li.max-reached {
+    opacity: 0.3;
+}
+.cards ol li .move-left:not(.disabled):active i {
+    transform: scale(0.85);
+}

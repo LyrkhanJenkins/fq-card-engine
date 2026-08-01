@@ -133,6 +133,7 @@
   "FQCARDENGINE.MaxSameCard": "Nombre d'exemplaire par deck",
   "FQCARDENGINE.CardFQBaseShort": "Base",
   "FQCARDENGINE.MaxSameCardShort": "Nb max",
+  "FQCARDENGINE.MoveCardDeck": "Déplace la carte vers ton deck",
   "FQCARDENGINE.CardEffect": "Effet de la carte",
   "FQCARDENGINE.ChoiceName": "Nom du choix",
   "FQCARDENGINE.ReactiveCard": "Réactif",

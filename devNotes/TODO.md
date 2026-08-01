@@ -65,7 +65,6 @@
     -  -> enlever JSON après utilisation?
     - (Facultatif: les noms des choix peuvent être localisé)
 
-- Ajouter également une fleche raccourci pour passer une carte du spellbook vers le deck
 - L'esquive fait demi-dégâts
 - Faire des sorts qui s'active au bout du enieme tour, action de la carte au bout d'un certain temps
 - Pouvoir générer une carte après utilisation d'une autre à partir d'un modèle
