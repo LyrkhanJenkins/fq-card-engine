@@ -1,3 +1,12 @@
+.fq-card-engine#pause img {
+    opacity: 0.75;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 140px);
+    width: 280px;
+    height: 185px;
+}
+
 /* ── Variables ── */
 #fq-card-engine-container {
     --fq-gold: #c9a84c;

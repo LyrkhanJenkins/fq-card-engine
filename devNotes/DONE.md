@@ -1,6 +1,7 @@
 v2.0.1:
 Feat :
 - Illustration de carte en cours de construction
+- Logo FQ pour la mise en pause
 
 v2.0.0:
 Feat :
