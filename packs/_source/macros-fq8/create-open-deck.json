@@ -4,7 +4,7 @@
   "scope": "global",
   "author": "SA6JKCaEua1JXSu4",
   "img": "icons/sundries/gaming/playing-cards-grey.webp",
-  "command": "let deck = game.cards.find(c => c.system.fq.type === 'DECK' && c.ownership[game.userId] === 3)\nlet spellBook = game.cards.find(c => c.system.fq.type === 'SPELLBOOK' && c.ownership[game.userId] === 3)\nlet hand = game.cards.find(c => c.system.fq.type === 'HAND' && c.ownership[game.userId] === 3)\nlet pile = game.cards.find(c => c.system.fq.type === 'PILE' && c.ownership[game.userId] === 3)\n\nif ( !deck || !hand || !pile  ) {\n  socket = socketlib.registerModule(FqCardEngineModule.moduleName);\n  await socket.executeAsGM('createDeckForUser', game.userId);\n}\n\ndeck = game.cards.find(c => c.system.fq.type === 'DECK' && c.ownership[game.userId] === 3)\n\nspellBook = game.cards.find(c => c.system.fq.type === 'SPELLBOOK' && c.ownership[game.userId] === 3)\n\nif (deck) {\n  deck.sheet.render(true, { position: {\n        left: 110,\n        top: 100\n  }});\n}\n\nif (spellBook) {\n    spellBook.sheet.render(true, { position: {\n        left: 110 + deck.sheet.position.width,\n        top: 100\n    }});\n}",
+  "command": "socket = socketlib.registerModule(FqCardEngineModule.moduleName);\nawait socket.executeAsGM('updateDeckForUser', game.userId);\n\nlet deck = game.cards.find(c => c.system.fq.type === 'DECK' && c.ownership[game.userId] === 3)\nlet spellBook = game.cards.find(c => c.system.fq.type === 'SPELLBOOK' && c.ownership[game.userId] === 3)\n\nif (deck) {\n  deck.sheet.render(true, { position: {\n        left: 110,\n        top: 100\n  }});\n}\n\nif (spellBook) {\n    spellBook.sheet.render(true, { position: {\n        left: 110 + deck.sheet.position.width,\n        top: 100\n    }});\n}",
   "folder": null,
   "ownership": {
     "default": 0
@@ -13,11 +13,11 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "13.348",
+    "coreVersion": "14.365",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": 1724162917214,
-    "modifiedTime": 1758723965040,
+    "modifiedTime": 1785650706988,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },

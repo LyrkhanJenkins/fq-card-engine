@@ -106,8 +106,7 @@ export default class DeckUtils {
 
         if (!DeckUtils.debouncedUpdateDeckByUser[user.id]) {
             DeckUtils.debouncedUpdateDeckByUser[user.id] = foundry.utils.debounce((userId) => {
-                DeckUtils.deleteDeckForUser(userId)
-                    .then(_ => DeckUtils.createDeckForUser(userId));
+                DeckUtils.updateDeckForUser(userId);
             }, 300);
         }
 
@@ -115,18 +114,17 @@ export default class DeckUtils {
     }
 
     /**
-     * Crée l'ensemble des decks (Deck, Hand, Pile, et éventuellement Spellbook)
+     * Met à jour l'ensemble des decks (Deck, Hand, Pile, et éventuellement Spellbook)
      * pour un utilisateur donné, à partir des compendiums FQ.
-     * Ne crée que les decks manquants. Reconstruit le Spellbook si nécessaire.
      *
      * @param {string} currentUserId - L'id Foundry de l'utilisateur cible.
      *
      * @returns {Promise<void>}
      *
      * @example
-     * await DeckUtils.createDeckForUser(game.user.id);
+     * await DeckUtils.updateDeckForUser(game.user.id);
      */
-    static async createDeckForUser(currentUserId) {
+    static async updateDeckForUser(currentUserId) {
         const user = game.users.get(currentUserId);
 
         if (!user?.character?.name) {
@@ -170,15 +168,17 @@ export default class DeckUtils {
             });
         }
 
-        // Refresh SpellBook (delete and rebuild it)
+        // --- Calcul des niveaux actuels par classe et recréation du spellbook ---
         let spellBook = DeckUtils.getFirstDeck(user.id, SPELLBOOK_TYPE, false);
+        const oldClassLevels = spellBook?.system?.fq?.classLevels ?? {};
+        const newClassLevels = {};
+        allFQClasses.forEach(c => {
+            newClassLevels[c.name] = Number(c.system.levels) ? Number(c.system.levels) : 0;
+        });
         if (spellBook) {
             await Cards.deleteDocuments([spellBook.id]);
         }
-        if (mainClass?.system?.levels <= 5 && allFQClasses.length === 1) {
-            // Pas de Bibliothèque pour les monoclasse de niveau 5 ou moins, le deck est généré pour simplifier
-            return;
-        }
+
         let allCards = [];
         for (const i in allFQClasses) {
             const classe = allFQClasses[i];
@@ -195,10 +195,39 @@ export default class DeckUtils {
             name: spellBookName,
             type: "deck",
             cards: [],
-            system: {...originDeck?.system, fq: {type: "SPELLBOOK", owner: user.id}},
+            system: {...originDeck?.system, fq: {type: "SPELLBOOK", owner: user.id, classLevels: newClassLevels}},
             ownership
         });
         await DeckUtils.createCardsForDeck(spellBook, allCards);
+
+        // --- Calcul du delta (cartes gagnées / perdues) par classe ---
+        let cardsToAdd = [];
+        let cardsToRemove = [];
+        const patternCompendium = await game.packs.get(FqCardEngineModule.moduleName + ".decks-pattern-fq8").getDocuments();
+
+        const allClassNames = new Set([...Object.keys(oldClassLevels), ...Object.keys(newClassLevels)]);
+        for (const className of allClassNames) {
+            const oldLevel = oldClassLevels[className] ?? 0;
+            const newLevel = newClassLevels[className] ?? 0;
+            if (newLevel === oldLevel) continue;
+
+            const nameOriginPatternDeck = className + " Base";
+            const deckCompendium = patternCompendium.find(pack => pack.name === nameOriginPatternDeck);
+            if (!deckCompendium) continue;
+            const classeCards = [...deckCompendium.cards];
+
+            if (newLevel > oldLevel) {
+                // Cartes débloquées entre l'ancien niveau (exclu) et le nouveau (inclus)
+                cardsToAdd = cardsToAdd.concat(
+                    classeCards.filter(c => c.system.fq.level > oldLevel && c.system.fq.level <= newLevel)
+                );
+            } else {
+                // Classe rétrogradée ou disparue : cartes perdues entre le nouveau niveau (exclu) et l'ancien (inclus)
+                cardsToRemove = cardsToRemove.concat(
+                    classeCards.filter(c => c.system.fq.level > newLevel && c.system.fq.level <= oldLevel)
+                );
+            }
+        }
 
         // Create deck if not exist
         let deck = DeckUtils.getFirstDeck(user.id, DECK_TYPE, false);
@@ -214,25 +243,26 @@ export default class DeckUtils {
             });
         }
 
-        // Delete card not present in spellbook
-        let deleteCards = [];
-        deck.cards.forEach(cardInDeck => {
-            if (!allCards.find(card => cardInDeck.name === card.name)) {
-                deleteCards.push(cardInDeck);
-            }
-        });
-        await DeckUtils.deleteCardsForDeck(deck, deleteCards);
+        // Retire du deck uniquement les cartes concernées par la baisse de niveau
+        if (cardsToRemove.length) {
+            const removeInDeck = deck.cards.filter(c => cardsToRemove.find(rc => rc.name === c.name));
+            await DeckUtils.deleteCardsForDeck(deck, removeInDeck);
+        }
 
-        //Deep Copy of cards not present in deck but present in spellbook and add half of max number
-        let newCards = [];
-        [ ... allCards].forEach(card => {
-            if (!deck.cards.find(cardInDeck => cardInDeck.name === card.name)) {
-                for (let i = 0; i < (Math.ceil((card?.system?.fq?.maxSameCard ?? 1) / 2)); i++) {
-                    newCards.push({...card});
+        // Ajoute au deck uniquement les nouvelles cartes gagnées, si pas déjà présentes
+        if (cardsToAdd.length) {
+            let newCards = [];
+            cardsToAdd.forEach(card => {
+                if (!deck.cards.find(cardInDeck => cardInDeck.name === card.name)) {
+                    for (let i = 0; i < (Math.ceil((card?.system?.fq?.maxSameCard ?? 1) / 2)); i++) {
+                        newCards.push({...card});
+                    }
                 }
+            });
+            if (newCards.length) {
+                await DeckUtils.createCardsForDeck(deck, newCards);
             }
-        });
-        await DeckUtils.createCardsForDeck(deck, [...newCards]);
+        }
 
     }
 

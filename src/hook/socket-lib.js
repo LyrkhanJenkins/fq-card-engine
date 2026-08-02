@@ -15,7 +15,7 @@ Hooks.once("socketlib.ready", () => {
     socket.register("createActorFromData", DamageUtils.createActorFromData);
     socket.register("createTempFold", FQUtils.createTempFold);
     socket.register("getRandomFileFromFolder", FQUtils.getRandomFileFromFolder);
-    socket.register("createDeckForUser", DeckUtils.createDeckForUser);
+    socket.register("updateDeckForUser", DeckUtils.updateDeckForUser);
     socket.register("deleteDeckForUser", DeckUtils.deleteDeckForUser);
     socket.register("deleteToken", deleteToken); // TODO relocate
 });

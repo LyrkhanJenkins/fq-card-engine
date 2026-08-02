@@ -104,7 +104,7 @@ describe("DeckUtils", () => {
         vi.useFakeTimers();
 
         const deleteSpy = vi.spyOn(DeckUtils, "deleteDeckForUser").mockResolvedValue();
-        const createSpy = vi.spyOn(DeckUtils, "createDeckForUser").mockResolvedValue();
+        const updateSpy = vi.spyOn(DeckUtils, "updateDeckForUser").mockResolvedValue();
 
         const fqDocument = {
             system: {source: {label: "FQ"}},
@@ -121,8 +121,8 @@ describe("DeckUtils", () => {
 
         await vi.runAllTimersAsync();
 
-        expect(deleteSpy).toHaveBeenCalledTimes(1);
-        expect(createSpy).toHaveBeenCalledTimes(1);
+        expect(deleteSpy).toHaveBeenCalledTimes(0);
+        expect(updateSpy).toHaveBeenCalledTimes(1);
 
         vi.useRealTimers();
     });
@@ -131,7 +131,7 @@ describe("DeckUtils", () => {
         vi.useFakeTimers();
 
         const deleteSpy = vi.spyOn(DeckUtils, "deleteDeckForUser").mockResolvedValue();
-        const createSpy = vi.spyOn(DeckUtils, "createDeckForUser").mockResolvedValue();
+        const updateSpy = vi.spyOn(DeckUtils, "updateDeckForUser").mockResolvedValue();
 
         global.game.users.find = vi.fn((fn) => {
             const users = [
@@ -151,10 +151,8 @@ describe("DeckUtils", () => {
 
         await vi.runAllTimersAsync();
 
-        expect(deleteSpy).toHaveBeenCalledTimes(2);
-        expect(deleteSpy).toHaveBeenCalledWith("user-a");
-        expect(deleteSpy).toHaveBeenCalledWith("user-b");
-        expect(createSpy).toHaveBeenCalledTimes(2);
+        expect(deleteSpy).toHaveBeenCalledTimes(0);
+        expect(updateSpy).toHaveBeenCalledTimes(2);
 
         vi.useRealTimers();
     });

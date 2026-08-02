@@ -5,6 +5,7 @@
 
 ### Versions prévues
 #### 2.0.1
+- Log d'erreur non géré : "Foundry VTT | Unregistered callback for deleteCard hook"
 - Tests fonctionnels (tests de montée de niveau aussi) + montée de version jusqu'à la dernière v14
 - SPIKE Meilleurs tests à faire pour de la non-regression, tests plusieurs IA
 - Test haut-niveau avec toutes les cartes, Besoin de gros tests de non regression de partout + avec toutes les cartes?

@@ -651,8 +651,8 @@ window.FqCardEngineModule = {
         return 0;
     },
 
-    async createDeckForUser(currentUserId) {
-        await DeckUtils.createDeckForUser(currentUserId);
+    async updateDeckForUser(currentUserId) {
+        await DeckUtils.updateDeckForUser(currentUserId);
     },
 
     async deleteDeckForUser(currentUserId) {
