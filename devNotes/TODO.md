@@ -7,12 +7,10 @@
 #### 2.0.1
 - Log d'erreur non géré : "Foundry VTT | Unregistered callback for deleteCard hook"
 - Tests fonctionnels (tests de montée de niveau aussi) + montée de version jusqu'à la dernière v14
-- SPIKE Meilleurs tests à faire pour de la non-regression, tests plusieurs IA
 - Test haut-niveau avec toutes les cartes, Besoin de gros tests de non regression de partout + avec toutes les cartes?
 -  OU Couverture de test unitaire avec rapport > 80%
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
-- Comment faire en sorte que card viewer affiche le svg?
 - Mettre à jour les versions des plugins nécessaire dans module.json
 - A partir de là, montée de version majeure possible : Faire un plan de pmontée de version majeure : Mettre à jour les
   cartes dans les compendiums et relance des tests par exemple
@@ -27,6 +25,7 @@
 - Revoir css, homogénéiser fonts...
 - Redécoupage et vérification CSS
 - Repasser sur tous les TODO
+- Comment faire en sorte que card viewer affiche le svg?
 - Faire un point sur todos.*
 - Afficher les barres spécifiques
 - Tests fonctionnels + montée dernière version

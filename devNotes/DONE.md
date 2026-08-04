@@ -6,6 +6,7 @@ Feat :
 
 Chore :
 - Fin recommandation card viewer
+- Mise en place de GSD avec claude code
 
 Fix :
 - Enlever l'ajout de main dans le container si les droits des joueurs sont limités
