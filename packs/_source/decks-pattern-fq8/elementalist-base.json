@@ -73,12 +73,14 @@
                             {
                               "key": "system.fq.attributes.evasion",
                               "value": "-1",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.execute",
                               "value": "PersistAura jb2a.aura_themed.01.orbit.loop.wood",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -203,12 +205,14 @@
                             {
                               "key": "system.attributes.movement.walk",
                               "value": "-5",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.execute",
                               "value": "PersistAura jb2a.aura_themed.01.orbit.loop.metal",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -431,12 +435,14 @@
                             {
                               "key": "system.fq.action.max",
                               "value": "-1",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.executre",
                               "value": "jb2a.aura_themed.01.orbit.loop.cold",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -564,12 +570,14 @@
                             {
                               "key": "system.fq.bonus.dot",
                               "value": "1",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.execute",
                               "value": "PersistAura jb2a.fire_ring",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -886,12 +894,14 @@
                             {
                               "key": "system.fq.attributes.critical",
                               "value": "-@int",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "system.fq.attributes.evasion",
                               "value": "-@wis",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -1430,7 +1440,8 @@
                             {
                               "key": "system.fq.action.max",
                               "value": "XXX",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -1556,12 +1567,14 @@
                             {
                               "key": "system.attributes.hp.tempmax",
                               "value": "10 + 3*@cha",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.tokenMagic",
                               "value": "air-field",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -1906,7 +1919,8 @@
                             {
                               "key": "system.fq.bonus.dot",
                               "value": "@wis",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2032,12 +2046,14 @@
                             {
                               "key": "system.fq.bonus.dot",
                               "value": "1",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.execute",
                               "value": "PersistAura jb2a.fire_ring",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2112,12 +2128,14 @@
                             {
                               "key": "system.fq.action.max",
                               "value": "-1",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.executre",
                               "value": "jb2a.aura_themed.01.orbit.loop.cold",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2196,12 +2214,14 @@
                             {
                               "key": "system.attributes.movement.walk",
                               "value": "-5",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.execute",
                               "value": "PersistAura jb2a.aura_themed.01.orbit.loop.metal",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2276,12 +2296,14 @@
                             {
                               "key": "system.fq.attributes.evasion",
                               "value": "-1",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.execute",
                               "value": "PersistAura jb2a.aura_themed.01.orbit.loop.wood",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2406,12 +2428,14 @@
                             {
                               "key": "system.attributes.movement.walk",
                               "value": "0",
-                              "mode": "5"
+                              "type": "override",
+                              "priority": null
                             },
                             {
                               "key": "macro.execute",
                               "value": "PersistAura jb2a.aura_themed.01.orbit.loop.metal",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2539,12 +2563,14 @@
                             {
                               "key": "system.fq.attributes.critical",
                               "value": "1+@wis",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.execute",
                               "value": "PersistAura jb2a.aura_themed.01.orbit.loop.wood",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2670,12 +2696,14 @@
                             {
                               "key": "system.fq.bonus.dot",
                               "value": "3",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.execute",
                               "value": "PersistAura jb2a.fire_ring",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2799,12 +2827,14 @@
                             {
                               "key": "system.fq.action.max",
                               "value": "-4",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             },
                             {
                               "key": "macro.executre",
                               "value": "jb2a.aura_themed.01.orbit.loop.cold",
-                              "mode": "0"
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {

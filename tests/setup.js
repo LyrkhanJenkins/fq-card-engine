@@ -5,7 +5,17 @@ import {beforeEach, vi} from "vitest";
 const mockField = () => vi.fn().mockImplementation((opts = {}) => ({...opts}));
 
 // ─── Foundry core — chargé une seule fois ────────────────────────────────────
-
+globalThis.CONST = {
+    ACTIVE_EFFECT_CHANGE_TYPES: {
+        custom: 0,
+        multiply: 10,
+        add: 20,
+        downgrade: 30,
+        upgrade: 40,
+        override: 50,
+        subtract: 60
+    }
+};
 globalThis.foundry = {
     applications: {
         handlebars: {

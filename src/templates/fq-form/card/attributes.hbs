@@ -231,7 +231,7 @@
                                                         rootId=../../../../../rootId
                                                 }}
                                                 <label>{{localize "FQCARDENGINE.EffectChangeValue"}}</label>
-                                                <div class="fq-w-l">
+                                                <div class="fq-w-m">
                                                     {{formInput
                                                             ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.value
                                                             value=change.value
@@ -239,12 +239,21 @@
                                                             rootId=../../../../../rootId
                                                     }}
                                                 </div>
-                                                <label>{{localize "FQCARDENGINE.EffectChangeMode"}}</label>
+                                                <label>{{localize "FQCARDENGINE.EffectChangeType"}}</label>
+                                                <div class="fq-w-l">
+                                                    {{formInput
+                                                            ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.type
+                                                            value=change.type
+                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".type")
+                                                            rootId=../../../../../rootId
+                                                    }}
+                                                </div>
+                                                <label>{{localize "FQCARDENGINE.EffectChangePriority"}}</label>
                                                 <div class="fq-w-s">
                                                     {{formInput
-                                                            ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.mode
-                                                            value=change.mode
-                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".mode")
+                                                            ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.priority
+                                                            value=change.priority
+                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".priority")
                                                             rootId=../../../../../rootId
                                                     }}
                                                 </div>

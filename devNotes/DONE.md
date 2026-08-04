@@ -9,6 +9,7 @@ Chore :
 
 Fix :
 - Enlever l'ajout de main dans le container si les droits des joueurs sont limités
+- Correction, pour les cartes, du breaking change v13 -> v14 pour la structure de EffectChangeData
 
 v2.0.0:
 

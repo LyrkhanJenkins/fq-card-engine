@@ -26,6 +26,10 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         "witch": "witch"
     };
 
+    static CHANGE_TYPE_CHOICES = Object.fromEntries(
+        Object.keys(CONST.ACTIVE_EFFECT_CHANGE_TYPES).map(key => [key, key])
+    );
+
     /** @inheritdoc */
     static defineSchema() {
         return {
@@ -149,7 +153,19 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                     changes: new ArrayField(new SchemaField({
                         key: new StringField({required: true, label: "FQCARDENGINE.EffectChangeKey"}),
                         value: new StringField({required: true, label: "FQCARDENGINE.EffectChangeValue"}),
-                        mode: new StringField({required: true, label: "FQCARDENGINE.EffectChangeMode"}),
+                        type: new StringField({
+                            required: true,
+                            label: "FQCARDENGINE.EffectChangeType",
+                            choices: this.CHANGE_TYPE_CHOICES,
+                            initial: () => "add"
+                        }),
+                        priority: new NumberField({
+                            required: false,
+                            nullable: true,
+                            integer: true,
+                            label: "FQCARDENGINE.EffectChangePriority",
+                            initial: null
+                        }),
                     }), {label: "FQCARDENGINE.EffectChanges"}),
                     duration: new SchemaField({
                         startTime: new StringField({required: true, label: "FQCARDENGINE.EffectStartTime"}),

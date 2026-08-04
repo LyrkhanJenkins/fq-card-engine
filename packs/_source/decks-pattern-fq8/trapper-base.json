@@ -267,7 +267,8 @@
                             {
                               "key": "system.fq.attributes.critical",
                               "value": "10+@str",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -777,7 +778,8 @@
                             {
                               "key": "system.attributes.movement.walk",
                               "value": "0",
-                              "mode": "5"
+                              "type": "override",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -1089,7 +1091,8 @@
                             {
                               "key": "system.fq.bonus.dot",
                               "value": "@wis",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -1318,7 +1321,8 @@
                             {
                               "key": "system.fq.bonus.damage",
                               "value": "+1",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -1459,7 +1463,8 @@
                             {
                               "key": "system.fq.bonus.damage",
                               "value": "+@wis",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -1890,7 +1895,8 @@
                             {
                               "key": "system.fq.attributes.critical",
                               "value": "+1",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2118,7 +2124,8 @@
                             {
                               "key": "system.fq.bonus.dot",
                               "value": "+ceil(XXX/3)",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2246,27 +2253,32 @@
                             {
                               "key": "system.attributes.movement.walk",
                               "value": "0",
-                              "mode": "5"
+                              "type": "override",
+                              "priority": null
                             },
                             {
                               "key": "system.attributes.movement.burrow",
                               "value": "0",
-                              "mode": "5"
+                              "type": "override",
+                              "priority": null
                             },
                             {
                               "key": "system.attributes.movement.fly",
                               "value": "0",
-                              "mode": "5"
+                              "type": "override",
+                              "priority": null
                             },
                             {
                               "key": "system.attributes.movement.swim",
                               "value": "0",
-                              "mode": "5"
+                              "type": "override",
+                              "priority": null
                             },
                             {
                               "key": "system.attributes.movement.climb",
                               "value": "0",
-                              "mode": "5"
+                              "type": "override",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2385,7 +2397,8 @@
                             {
                               "key": "system.fq.attributes.critical",
                               "value": "-2*XXX",
-                              "mode": "2"
+                              "type": "add",
+                              "priority": null
                             }
                           ],
                           "duration": {
