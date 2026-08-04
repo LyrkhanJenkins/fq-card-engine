@@ -12,7 +12,14 @@ const {SchemaField, NumberField} = foundry.data.fields;
  * @property {number} fq.cards.currentDrop          Current discard card score.
  */
 export default class CharacterDataFQ {
-    /** @inheritdoc */
+    /**
+     * Définit le schéma de données FQ greffé sur les personnages : les attributs
+     * communs aux créatures (action, mana, zèle, bonus…), les données de cartes
+     * (main, pioche, défausse) et les attributs spéciaux (squelettes sacrifiés).
+     *
+     * @inheritdoc
+     * @returns {object} Le schéma de données FQ des personnages.
+     */
     static defineSchema() {
         return {
             fq: new foundry.data.fields.SchemaField({

@@ -9,7 +9,23 @@ import FqConstants, {
 } from "./fq-constants.js";
 import CanvasUtils from "./canvas-utils.js";
 
+/**
+ * Utilitaires de calcul et d'application des dégâts et des soins FQ : jets de dés
+ * avec bonus, gestion des critiques et esquives, affichage des résultats, et
+ * application des modifications de points de vie et effets sur les cibles.
+ * Certaines méthodes sont exécutées côté MJ via socket (voir `socket-lib.js`).
+ * Toutes les méthodes sont statiques : la classe sert de namespace.
+ */
 export default class DamageUtils {
+    /**
+     * Lance le jet de dégâts d'une carte : applique le bonus de dégâts de l'acteur,
+     * effectue le jet, puis calcule critiques et esquives par cible.
+     *
+     * @param {object} actor       - L'acteur lanceur.
+     * @param {object} cardContent - Le contenu (choix) de la carte (`damage`, `bonusCrit`, `bonusEva`, `targetType`).
+     *
+     * @returns {Promise<object[]>} Le tableau des résultats de dégâts par cible.
+     */
     static async buildDamageDiceLauncher(actor, cardContent) {
         let damageFormula = DamageUtils.getDamageWithBonus(actor, cardContent.damage);
         let damages = await DamageUtils.rollWithSuccessValueResultAsync(actor, damageFormula, {
@@ -19,6 +35,15 @@ export default class DamageUtils {
         return DamageUtils.addCriticalEvasionToDamage(actor, damages, cardContent);
     }
 
+    /**
+     * Lance le jet de soins d'une carte : applique le bonus de soin de l'acteur,
+     * effectue le jet, puis calcule les critiques de soin par cible.
+     *
+     * @param {object} actor       - L'acteur lanceur.
+     * @param {object} cardContent - Le contenu (choix) de la carte (`heal`, `bonusCrit`, `targetType`).
+     *
+     * @returns {Promise<object[]>} Le tableau des résultats de soins par cible.
+     */
     static async buildHealDiceLauncher(actor, cardContent) {
         let healFormula = DamageUtils.getHealWithBonus(actor, cardContent.heal);
         let heal = await DamageUtils.rollWithSuccessValueResultAsync(actor, healFormula,
@@ -29,6 +54,15 @@ export default class DamageUtils {
         return DamageUtils.addCriticalToHeal(actor, heal, cardContent);
     }
 
+    /**
+     * Enrichit une formule de soin avec le bonus de soin de l'acteur (en
+     * préfixant d'un « + » si le bonus commence par un chiffre).
+     *
+     * @param {object} actor       - L'acteur portant le bonus de soin.
+     * @param {string} healFormula - La formule de soin de base.
+     *
+     * @returns {string} La formule de soin enrichie du bonus.
+     */
     static getHealWithBonus(actor, healFormula) {
         let healBonus = "" + actor.system?.fq?.bonus?.heal;
         if (healBonus) {
@@ -40,6 +74,17 @@ export default class DamageUtils {
         return healFormula;
     }
 
+    /**
+     * Détermine si le soin est critique (jet 1d20 selon le score de critique de
+     * l'acteur + bonus) et construit le tableau des soins par cible (doublés si
+     * critique).
+     *
+     * @param {object} actor       - L'acteur lanceur.
+     * @param {number} heal        - Le montant de soin de base (borné à 0 minimum).
+     * @param {object} cardContent - Le contenu (choix) de la carte (`bonusCrit`, `targetType`).
+     *
+     * @returns {Promise<object[]>} Le tableau des résultats de soin par cible.
+     */
     static async addCriticalToHeal(actor, heal, cardContent) {
         if (heal < 0) {
             heal = 0;
@@ -65,6 +110,15 @@ export default class DamageUtils {
         return healArray;
     }
 
+    /**
+     * Enrichit une formule de dégâts avec le bonus de dégâts de l'acteur (en
+     * préfixant d'un « + » si le bonus commence par un chiffre).
+     *
+     * @param {object} actor         - L'acteur portant le bonus de dégâts.
+     * @param {string} damageFormula - La formule de dégâts de base.
+     *
+     * @returns {string} La formule de dégâts enrichie du bonus.
+     */
     static getDamageWithBonus(actor, damageFormula) {
         let damageBonus = "" + actor.system?.fq?.bonus?.damage;
         if (damageBonus) {
@@ -76,6 +130,19 @@ export default class DamageUtils {
         return damageFormula;
     }
 
+    /**
+     * Détermine si les dégâts sont critiques (jet 1d20) et, pour chaque cible,
+     * si elle esquive (jet 1d20 selon son score d'esquive + bonus). Construit le
+     * tableau des dégâts par cible : doublés si critique, annulés si esquive
+     * (sauf critique qui passe outre l'esquive). Aucune esquive n'est possible en
+     * cas d'auto-ciblage.
+     *
+     * @param {object} actor       - L'acteur lanceur.
+     * @param {number} damages     - Le montant de dégâts de base (borné à 0 minimum).
+     * @param {object} cardContent - Le contenu (choix) de la carte (`bonusCrit`, `bonusEva`, `targetType`).
+     *
+     * @returns {Promise<object[]>} Le tableau des résultats de dégâts par cible.
+     */
     static async addCriticalEvasionToDamage(actor, damages, cardContent) {
         const myTargets = FqConstants.myTargets(cardContent.targetType);
         if (damages < 0) {
@@ -130,11 +197,18 @@ export default class DamageUtils {
     }
 
     /**
-     * Roll
-     * @param actor
-     * @param formula
-     * @param options
-     * @returns {Promise<*>}
+     * Effectue un jet de dés, publie le résultat dans le chat (avec titre et
+     * couleur, et éventuellement un libellé SUCCÈS/échec selon un seuil), attend
+     * l'animation Dice So Nice si présente, puis retourne le total du jet.
+     *
+     * @param {object} actor           - L'acteur à qui attribuer le message.
+     * @param {string} formula         - La formule de jet (ex. « 1d20 », « 2d6+3 »).
+     * @param {object} options         - Les options d'affichage du jet.
+     * @param {string} options.color   - La couleur du titre.
+     * @param {string} options.title   - Le titre affiché.
+     * @param {number} [options.success] - Le seuil de succès ; si fourni, affiche SUCCÈS/échec.
+     *
+     * @returns {Promise<number>} Le total du jet.
      */
     static async rollWithSuccessValueResultAsync(actor, formula, options) {
         // Check whether the dice formula is "1dX" or "dX" to assure that both ways work
@@ -167,6 +241,16 @@ export default class DamageUtils {
 
 
     //Display damage dices and manual actions
+    /**
+     * Publie dans le chat un récapitulatif des résultats de l'effet (dégâts/soins
+     * par cible) et, le cas échéant, la liste des actions manuelles à effectuer.
+     *
+     * @param {object}        actor         - L'acteur à qui attribuer le message.
+     * @param {object[]}      resultArray   - Les résultats à afficher (`key`, `value`).
+     * @param {string[]|null} manualActions - Les actions manuelles à lister, ou null.
+     *
+     * @returns {void}
+     */
     static displayResult(actor, resultArray, manualActions) {
         if (resultArray.length > 0 || manualActions) {
             let message = "";
@@ -188,10 +272,30 @@ export default class DamageUtils {
         }
     }
 
+    /**
+     * Crée un effet actif sur l'acteur du token cible. Exécutée côté MJ via socket.
+     *
+     * @param {object} effect   - Les données de l'effet actif à créer.
+     * @param {string} targetId - L'id du token cible.
+     *
+     * @returns {void}
+     */
     static addEffectForTarget(effect, targetId) {
         ActiveEffect.implementation.create(effect, {parent: game.canvas.tokens.get(targetId).actor});
     }
 
+    /**
+     * Applique une modification de points de vie sur l'acteur du token cible.
+     * Pour des dégâts, consomme d'abord les PV temporaires, borne à 0, et supprime
+     * les effets marqués `expireOnDamage` ; pour un soin, plafonne au max (max +
+     * tempmax). Exécutée côté MJ via socket.
+     *
+     * @param {string} targetId   - L'id du token cible.
+     * @param {number} value      - Le montant à appliquer (positif).
+     * @param {string} typeAction - Le type d'action (« damageFQ » ou « healFQ »).
+     *
+     * @returns {void}
+     */
     static applyActorHpModification(targetId, value, typeAction) {
         const targetActor = game.canvas.tokens.get(targetId).actor;
         if (typeAction === "damageFQ") {
@@ -227,6 +331,17 @@ export default class DamageUtils {
         }
     }
 
+    /**
+     * Crée un acteur à partir de données, place son token sur une case adjacente
+     * au personnage de l'utilisateur (selon `location`) dans la scène active, et
+     * l'ajoute au combat en cours le cas échéant. Exécutée côté MJ via socket.
+     *
+     * @param {object} actorData     - Les données de l'acteur à créer.
+     * @param {string} currentUserId - L'id de l'utilisateur dont le personnage sert de référence de position.
+     * @param {string} location      - La direction d'apparition adjacente (« left », « right », « up », « down »).
+     *
+     * @returns {Promise<void>}
+     */
     static async createActorFromData(actorData, currentUserId, location) {
         const currentUser = game.users.get(currentUserId);
         await Actor.create(actorData).then(async newActor => {

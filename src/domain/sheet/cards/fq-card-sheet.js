@@ -1,8 +1,20 @@
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 
+/**
+ * Feuille de configuration d'une carte FQ. Étend `CardConfig` en ajoutant un
+ * onglet « attributes » (schéma FQ de la carte) et une multitude d'actions
+ * d'édition des données FQ : choix, messages, formules d'effets, effets, données
+ * d'effet, changements, sbires (minions) et évaluateurs personnalisés.
+ *
+ * @extends foundry.applications.sheets.CardConfig
+ */
 export default class FqCardSheet extends foundry.applications.sheets.CardConfig {
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     * @param {object} options - Les options de l'application Foundry.
+     * @param {...*}   args    - Les arguments additionnels transmis à la classe parente.
+     */
     constructor(options, ...args) {
         super(options, ...args);
     }
@@ -69,7 +81,17 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         }
     };
 
-    /** @inheritDoc */
+    /**
+     * Enrichit le contexte de la partie « attributes » en y injectant le schéma
+     * du champ `fq` de la carte, nécessaire au rendu des champs FQ.
+     *
+     * @inheritDoc
+     * @param {string} partId  - L'identifiant de la partie de gabarit en cours de rendu.
+     * @param {object} context - Le contexte de rendu partagé.
+     * @param {object} options - Les options de rendu Foundry.
+     *
+     * @returns {Promise<object>} Le contexte de la partie, enrichi pour « attributes ».
+     */
     async _preparePartContext(partId, context, options) {
         const partContext = await super._preparePartContext(partId, context, options);
         if (partId === "attributes") {
@@ -84,7 +106,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     /* -------------------------------------------- */
 
     /**
-     * Add a new face.
+     * Ajoute une nouvelle face à la carte (dupliqué de la base Foundry).
      * @this {CardConfig}
      * @type {ApplicationClickAction}
      */
@@ -99,9 +121,10 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     /* -------------------------------------------- */
 
     /**
-     * Delete an existing face.
+     * Supprime une face existante après confirmation (dupliqué de la base Foundry).
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event - L'événement de clic (repère la face via `data-face`).
      */
     static async #onDeleteFace(event) {
         const question = game.i18n.localize("AreYouSure");
@@ -123,7 +146,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Add a new choice.
+     * Ajoute un nouveau choix (effet jouable) à la carte.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
      */
@@ -138,9 +161,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     /* -------------------------------------------- */
 
     /**
-     * Delete an existing choice.
+     * Supprime un choix existant après confirmation.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant l'index du choix (`data-index`).
      */
     static async #onRemoveChoice(event, button) {
         const index = button.dataset.index;
@@ -160,9 +185,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Add a new adding message.
+     * Ajoute un message additionnel à un choix.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant l'index du choix (`data-index`).
      */
     static async #onAddAdditionalMessage(event, button) {
         const index = button.dataset.index;
@@ -174,9 +201,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Remove an existing adding message.
+     * Supprime un message additionnel d'un choix après confirmation.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-message-index`).
      */
     static async #onRemoveAdditionalMessage(event, button) {
         const index = button.dataset.index;
@@ -198,9 +227,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
 
 
     /**
-     * Add a new effects formula.
+     * Ajoute une nouvelle formule d'effets à un choix.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant l'index du choix (`data-index`).
      */
     static async #onAddEffectsFormula(event, button) {
         const index = button.dataset.index;
@@ -211,6 +242,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas`]: applyEffectsFormulas}});
     }
 
+    /**
+     * Fabrique un objet « formule d'effets » vierge, avec un effet initial.
+     *
+     * @returns {{title: string, formula: string, effects: object[]}} La formule d'effets par défaut.
+     */
     static addEffectsFormula() {
         return {
             title: "",
@@ -220,9 +256,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Remove an existing effects formula.
+     * Supprime une formule d'effets d'un choix après confirmation.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-formula-index`).
      */
     static async #onRemoveEffectsFormula(event, button) {
         const index = button.dataset.index;
@@ -244,9 +282,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
 
 
     /**
-     * Add a new effect.
+     * Ajoute un effet à une formule d'effets.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-formula-index`).
      */
     static async #onAddFormulaEffect(event, button) {
         const index = button.dataset.index;
@@ -258,6 +298,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects`]: effects}});
     }
 
+    /**
+     * Fabrique un objet « effet » vierge, avec une donnée d'effet et un message initiaux.
+     *
+     * @returns {{result: string, data: object[], messages: object[]}} L'effet par défaut.
+     */
     static addFormulaEffect() {
         return {
             result: "",
@@ -267,9 +312,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Remove an existing effect.
+     * Supprime un effet d'une formule d'effets après confirmation.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-formula-index`, `data-effect-index`).
      */
     static async #onRemoveFormulaEffect(event, button) {
         const index = button.dataset.index;
@@ -291,9 +338,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Add a new data effect.
+     * Ajoute une donnée d'effet (active effect) à un effet.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-formula-index`, `data-effect-index`).
      */
     static async #onAddDataEffect(event, button) {
         const index = button.dataset.index;
@@ -306,6 +355,12 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.data`]: data}});
     }
 
+    /**
+     * Fabrique un objet « donnée d'effet » (active effect) vierge, avec un
+     * changement initial et une durée non renseignée.
+     *
+     * @returns {object} La donnée d'effet par défaut (label, icon, changes, duration…).
+     */
     static addDataEffect() {
         return {
             label: "",
@@ -321,9 +376,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Remove an existing data effect.
+     * Supprime une donnée d'effet d'un effet après confirmation.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-formula-index`, `data-effect-index`, `data-data-index`).
      */
     static async #onRemoveDataEffect(event, button) {
         const index = button.dataset.index;
@@ -346,9 +403,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         });
     }
     /**
-     * Add a new message effect.
+     * Ajoute un message à un effet.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-formula-index`, `data-effect-index`).
      */
     static async #onAddEffectMessage(event, button) {
         const index = button.dataset.index;
@@ -362,9 +421,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Remove an existing message effect.
+     * Supprime un message d'un effet après confirmation.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-formula-index`, `data-effect-index`, `data-effect-message-index`).
      */
     static async #onRemoveEffectMessage(event, button) {
         const index = button.dataset.index;
@@ -388,9 +449,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Add a new change data.
+     * Ajoute un changement (change) à une donnée d'effet.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-formula-index`, `data-effect-index`, `data-data-index`).
      */
     static async #onAddChangeData(event, button) {
         const index = button.dataset.index;
@@ -405,9 +468,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Remove an existing change data.
+     * Supprime un changement d'une donnée d'effet après confirmation.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-formula-index`, `data-effect-index`, `data-data-index`, `data-change-index`).
      */
     static async #onRemoveChangeData(event, button) {
         const index = button.dataset.index;
@@ -432,9 +497,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
 
 
     /**
-     * Add a new minion.
+     * Ajoute un sbire (minion) à un choix.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant l'index du choix (`data-index`).
      */
     static async #onAddMinion(event, button) {
         const index = button.dataset.index;
@@ -446,9 +513,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Remove an existing minion.
+     * Supprime un sbire (minion) d'un choix après confirmation.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-minion-index`).
      */
     static async #onRemoveMinion(event, button) {
         const index = button.dataset.index;
@@ -471,9 +540,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
 
 
     /**
-     * Add a new custom evaluator.
+     * Ajoute un évaluateur personnalisé (script) à un choix.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant l'index du choix (`data-index`).
      */
     static async #onAddCustomEval(event, button) {
         const index = button.dataset.index;
@@ -485,6 +556,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
 
+    /**
+     * Fabrique un objet « évaluateur personnalisé » vierge, avec un message d'erreur initial.
+     *
+     * @returns {{script: string, errorMessages: object[]}} L'évaluateur personnalisé par défaut.
+     */
     static addCustomEval() {
         return {
             script: "",
@@ -493,9 +569,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Remove an existing  custom evaluator.
+     * Supprime un évaluateur personnalisé d'un choix après confirmation.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-custom-eval-index`).
      */
     static async #onRemoveCustomEval(event, button) {
         const index = button.dataset.index;
@@ -518,9 +596,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
 
 
     /**
-     * Add a new custom evaluator message.
+     * Ajoute un message d'erreur à un évaluateur personnalisé.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-custom-eval-index`).
      */
     static async #onAddCustomEvalErrorMessage(event, button) {
         const index = button.dataset.index;
@@ -533,9 +613,11 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     }
 
     /**
-     * Remove an existing custom evaluator message.
+     * Supprime un message d'erreur d'un évaluateur personnalisé après confirmation.
      * @this {CardConfig}
      * @type {ApplicationClickAction}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  button - Le bouton portant les index (`data-index`, `data-custom-eval-index`, `data-error-message-index`).
      */
     static async #onRemoveCustomEvalErrorMessage(event, button) {
         const index = button.dataset.index;

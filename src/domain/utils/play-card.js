@@ -1,7 +1,26 @@
 import FqConstants, {WARNING_COLOR} from "./fq-constants.js";
 import FQUtils from "./fq-utils.js";
 
+/**
+ * Orchestration du jeu et de la défausse d'une carte : gestion des cartes
+ * rejouables (passives/à charges), application des effets, envoi des messages de
+ * chat et transfert de la carte vers la pile de défausse.
+ * Toutes les méthodes sont statiques : la classe sert de namespace.
+ */
 export default class PlayCard {
+    /**
+     * Défausse une carte vers la pile cible. Bloque la défausse d'une carte déjà
+     * jouée, incrémente le compteur de défausses du personnage puis transfère la
+     * carte (face cachée si demandé).
+     *
+     * @param {Cards}  to           - La pile de défausse cible.
+     * @param {object} fd           - Les données du formulaire du dialogue (ex. `down` pour face cachée).
+     * @param {object} cardContent  - Le contenu (choix) de la carte.
+     * @param {Card}   card         - La carte à défausser.
+     * @param {Cards}  currentCards - La main courante contenant la carte.
+     *
+     * @returns {Promise<*>|void} La promesse du transfert, ou undefined si la défausse est bloquée.
+     */
     static async discardCard(to, fd, cardContent, card, currentCards) {
         if (cardContent?.hasBeenPlayed) {
             ChatMessage.create({
@@ -27,6 +46,23 @@ export default class PlayCard {
         });
     }
 
+    /**
+     * Callback principal du jeu d'une carte, déclenché à la validation du dialogue.
+     * Recalcule le contenu (bonus de caractéristiques, variables X/Y), vérifie que
+     * la carte peut être utilisée, gère la logique de rejouabilité (passive ou à
+     * charges), transfère la carte vers la défausse le cas échéant, puis applique
+     * les effets de la carte.
+     *
+     * @param {Cards}    to               - La pile de défausse cible.
+     * @param {object}   fd               - Les données du formulaire du dialogue (XXX, YYY, down…).
+     * @param {object}   cardContent      - Le contenu (choix) sélectionné de la carte.
+     * @param {boolean}  hasVariables     - True si le contenu contient des variables X/Y à résoudre.
+     * @param {object[]} initCardContents - Les contenus d'origine de la carte (avant recalcul), pour réécriture.
+     * @param {Cards}    currentCards     - La main courante contenant la carte.
+     * @param {Card}     card             - La carte jouée.
+     *
+     * @returns {Promise<*>|null} La promesse du transfert de la carte, ou null si la carte n'est pas transférée.
+     */
     static async callBackplayCard(to, fd, cardContent, hasVariables, initCardContents, currentCards, card) {
         // Recalcul de la carte à partir des bonus de caractéristiques
         FQUtils.replaceCardContentAbilitiesBonus(cardContent);
@@ -94,6 +130,18 @@ export default class PlayCard {
         return result;
     }
 
+    /**
+     * Construit et publie le message de chat « carte jouée / défaussée » enrichi
+     * (visuel de la carte, face visible ou dos selon `fd.down`), uniquement si
+     * l'option `betterChatMessages` est active.
+     *
+     * @param {Cards}  to          - La pile cible du transfert (contexte du message).
+     * @param {object} fd          - Les données du formulaire (ex. `down` pour face cachée).
+     * @param {Card}   card        - La carte concernée par le message.
+     * @param {string} actionLabel - La clé de localisation du libellé d'action à afficher.
+     *
+     * @returns {void}
+     */
     static renderChatMessage(to, fd, card, actionLabel) {
         if (CONFIG.FqCardEngine.options.betterChatMessages) {
 

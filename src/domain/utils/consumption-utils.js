@@ -3,7 +3,28 @@ import FqConstants, {WARNING_COLOR} from "./fq-constants.js";
 import CardFqSystem from "../system/cards/card-fq-system.mjs";
 
 
+/**
+ * Utilitaires de gestion des ressources et des contraintes de jeu d'une carte :
+ * vérification et consommation des coûts (hp, action, mana, zeal, défausse),
+ * contrôle du nombre de cibles et de la portée, et validation du tour de jeu.
+ * Toutes les méthodes sont statiques : la classe sert de namespace.
+ */
 export default class ConsumptionUtils {
+    /**
+     * Vérifie que l'acteur dispose de suffisamment de ressources pour payer les
+     * coûts indiqués (hp, action, mana, zeal, défausse). Affiche un message
+     * d'avertissement pour la première ressource insuffisante.
+     *
+     * @param {object} resources         - Les coûts à payer (valeurs négatives).
+     * @param {number} [resources.hp]     - Coût en points de vie.
+     * @param {number} [resources.action] - Coût en points d'action.
+     * @param {number} [resources.mana]   - Coût en mana.
+     * @param {number} [resources.zeal]   - Coût en zèle.
+     * @param {number} [resources.drop]   - Coût en défausses (vérifié seulement en combat).
+     * @param {object} actor             - L'acteur qui paie les coûts.
+     *
+     * @returns {boolean} True si toutes les ressources sont suffisantes (ou pas d'acteur), false sinon.
+     */
     static checkResources(resources, actor) {
         if (!actor) {
             return true;
@@ -52,6 +73,17 @@ export default class ConsumptionUtils {
         return true;
     }
 
+    /**
+     * Applique la consommation (ou le gain) de ressources sur l'acteur. Les
+     * ressources sont plafonnées à leur maximum (sauf l'action qui peut le
+     * dépasser), la défausse ne descend pas sous 0, et certaines variables
+     * spéciales (squelettes sacrifiés, défausses courantes) sont remises à 0.
+     *
+     * @param {object} resources - Les ressources à appliquer (hp, action, mana, zeal, drop, xvalue, yvalue).
+     * @param {object} actor     - L'acteur sur lequel appliquer les modifications.
+     *
+     * @returns {void}
+     */
     static consumeResources(resources, actor) {
 
         if (!actor) {
@@ -100,6 +132,14 @@ export default class ConsumptionUtils {
         }
     }
 
+    /**
+     * Publie dans le chat un message d'avertissement stylisé, attribué à l'acteur.
+     *
+     * @param {string} message - Le message d'avertissement (déjà localisé).
+     * @param {object} actor   - L'acteur à qui attribuer le message.
+     *
+     * @returns {void}
+     */
     static createUserWarningMessage(message, actor) {
         ChatMessage.create({
             speaker: ChatMessage.getSpeaker({actor}),
@@ -107,6 +147,20 @@ export default class ConsumptionUtils {
         });
     }
 
+    /**
+     * Vérifie que la carte peut atteindre ses cibles : au moins une cible, pas
+     * plus que le nombre autorisé, présence d'un token du lanceur sur la scène,
+     * et distance de chaque cible comprise entre `minReach` et `maxReach`.
+     * Publie un message d'avertissement pour chaque contrainte non respectée.
+     *
+     * @param {object} actor        - L'acteur lanceur.
+     * @param {number} nbTargets    - Le nombre maximal de cibles autorisé (falsy = une seule).
+     * @param {number} minReach     - La portée minimale (en cases).
+     * @param {number} maxReach     - La portée maximale (en cases).
+     * @param {string} [targetType=CardFqSystem.TARGET_TYPE_DEFAULT] - Le type de ciblage FQ.
+     *
+     * @returns {boolean} True si toutes les cibles sont valides et à portée, false sinon.
+     */
     static checkIfCanCardCanReachTargets(actor, nbTargets, minReach, maxReach, targetType = CardFqSystem.TARGET_TYPE_DEFAULT) {
         const targets = FqConstants.myTargets(targetType);
 
@@ -165,6 +219,15 @@ export default class ConsumptionUtils {
         return result;
     }
 
+    /**
+     * Détermine le nombre de cibles autorisé d'après le gabarit de ciblage :
+     * la valeur déclarée pour une cible unique, un très grand nombre pour une
+     * zone d'effet, 1 par défaut.
+     *
+     * @param {object} target - La configuration de ciblage (`template.type`, `value`).
+     *
+     * @returns {number} Le nombre de cibles autorisé.
+     */
     static determineNbTargets(target) {
         // TODO handle area targets
         const singleTargets = ["self", "enemy", "creature", "ally", "object", "creatureOrObject", "willing", "any", "space"];
@@ -181,6 +244,14 @@ export default class ConsumptionUtils {
     }
 
     /* TODO découper par objets métier et faire les validations par objet métier? (passage en typescript?) */
+    /**
+     * Vérifie que l'acteur peut jouer un sort maintenant : un combat est en cours
+     * et c'est bien son tour. Publie un avertissement dans le cas contraire.
+     *
+     * @param {object} actor - L'acteur qui souhaite jouer.
+     *
+     * @returns {boolean} True si c'est le tour de l'acteur en combat, false sinon.
+     */
     static validateUseSpellInTurn(actor) {
         if (!game.combat || game.combat.combatant?.actor?.id !== actor?.id) {
             ChatMessage.create({

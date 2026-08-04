@@ -1,9 +1,27 @@
 import DeckUtils, {DECK_TYPE, SPELLBOOK_TYPE} from "../../utils/deck-utils.js";
 
+/**
+ * Feuille de configuration d'un jeu de cartes (deck / spellbook) FQ.
+ * Étend `CardDeckConfig` en ajoutant un onglet « cards » personnalisé, des actions
+ * FQ (suppression sans confirmation, déplacement d'une carte vers le deck du joueur)
+ * et un rafraîchissement automatique lorsqu'une carte du deck concerné change.
+ *
+ * @extends foundry.applications.sheets.CardDeckConfig
+ */
 export default class FqCardsSheet extends foundry.applications.sheets.CardDeckConfig {
+    /**
+     * @param {object} object  - Le document Cards (deck) associé à la feuille.
+     * @param {object} options - Les options de l'application Foundry.
+     */
     constructor(object, options) {
         super(object, options);
     }
+
+    /**
+     * Identifiants des hooks de carte enregistrés à l'ouverture, retirés à la
+     * fermeture pour éviter les fuites de listeners.
+     * @type {{createCard: number, updateCard: number, deleteCard: number}}
+     */
     #deckHooks;
 
     /** @override */
@@ -24,7 +42,13 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
         }
     };
 
-    /** @inheritDoc */
+    /**
+     * Prépare les boutons du pied de formulaire. Retire le bouton de soumission
+     * pour les joueurs non-MJ afin de les empêcher d'enregistrer la configuration.
+     *
+     * @inheritDoc
+     * @returns {object[]} La liste des boutons à afficher.
+     */
     _prepareButtons() {
         if (game.user.isGM) {
             return super._prepareButtons();
@@ -33,7 +57,18 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
         }
     }
 
-    /** @inheritDoc */
+    /**
+     * Enrichit le contexte de la partie « cards » : détermine si le deck affiché
+     * est le deck ou le grimoire (spellbook) du joueur courant, et marque les
+     * cartes du grimoire déjà présentes en nombre maximal dans le deck (`isMaxReached`).
+     *
+     * @inheritDoc
+     * @param {string} partId  - L'identifiant de la partie de gabarit en cours de rendu.
+     * @param {object} context - Le contexte de rendu partagé.
+     * @param {object} options - Les options de rendu Foundry.
+     *
+     * @returns {Promise<object>} Le contexte de la partie, enrichi pour « cards ».
+     */
     async _preparePartContext(partId, context, options) {
         const partContext = await super._preparePartContext(partId, context, options);
         if (partId === "cards") {
@@ -67,9 +102,14 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
     }
 
     /**
-     * Action handler pour le déplacement d'une carte vers le deck du joueur courant
-     * @param event
-     * @param target
+     * Action handler pour le déplacement d'une carte du grimoire vers le deck du
+     * joueur courant. Ignoré si la cible est désactivée ou verrouillée ; pose un
+     * verrou temporaire (300 ms) pour éviter les doubles clics.
+     *
+     * @this {FqCardsSheet}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  target - L'élément portant l'action (repère la carte via `data-card-id`).
+     *
      * @returns {Promise<void>}
      */
     static async #onMoveCardDeck(event, target) {
@@ -91,7 +131,14 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
         });
     }
 
-    /** @inheritDoc */
+    /**
+     * Au premier rendu, enregistre les hooks `createCard` / `updateCard` /
+     * `deleteCard` pour rafraîchir la feuille quand une carte du deck change.
+     *
+     * @inheritDoc
+     * @param {object} context - Le contexte de rendu.
+     * @param {object} options - Les options de rendu Foundry.
+     */
     _onFirstRender(context, options) {
         super._onFirstRender(context, options);
 
@@ -103,7 +150,12 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
         };
     }
 
-    /** @inheritDoc */
+    /**
+     * À la fermeture, retire tous les hooks de carte enregistrés au premier rendu.
+     *
+     * @inheritDoc
+     * @param {object} options - Les options de fermeture Foundry.
+     */
     _onClose(options) {
         super._onClose(options);
         for (const [hookName, hookId] of Object.entries(this.#deckHooks ?? {})) {

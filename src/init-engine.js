@@ -40,6 +40,12 @@ window.FqCardEngineModule = {
     eventName: "module.fq-card-engine",
     playerPlayedProp: "player-played",
     handMax: 10,
+    /**
+     * Met à jour l'affichage des jauges du personnage (PV, action, mana, zèle) et
+     * son avatar dans le HUD, selon le réglage de visibilité et le personnage courant.
+     *
+     * @returns {void}
+     */
     updateCharGauges: function () {
         const character = game.user?.character;
         const gauges = document.getElementById("fq-char-gauges");
@@ -74,12 +80,24 @@ window.FqCardEngineModule = {
         set("fq-cg-zeal", "fq-cg-zeal-val", zeal?.value ?? 0, zeal?.max ?? 1);
     },
 
+    /**
+     * Bascule la visibilité des jauges du personnage (réglage `ShowCharGauges`)
+     * puis rafraîchit leur affichage.
+     *
+     * @returns {void}
+     */
     toggleCharGauges: function () {
         const current = game.settings.get(FqCardEngineModule.moduleName, "ShowCharGauges") ?? true;
         game.settings.set(FqCardEngineModule.moduleName, "ShowCharGauges", !current).then(() => {
             FqCardEngineModule.updateCharGauges();
         });
     },
+    /**
+     * Recalcule l'échelle du conteneur des mains à partir du curseur de taille
+     * (variables CSS de hauteur/échelle) puis réapplique l'effet d'éventail.
+     *
+     * @returns {void}
+     */
     updateSize: function () {
         const slider = document.getElementById("fq-size-slider");
         const scale = slider ? parseFloat(slider.value) : 1.0;
@@ -102,6 +120,12 @@ window.FqCardEngineModule = {
 
         FqCardEngineModule.applyFan();
     },
+    /**
+     * Dispose les cartes de chaque zone en éventail : chaque carte reçoit une
+     * rotation, un décalage vertical et un z-index calculés selon sa position.
+     *
+     * @returns {void}
+     */
     applyFan: function () {
         const TILT_MAX = 10;   // degrés max (courbure 67)
         const LIFT_MAX = 19;   // px lift latéral (courbure 67)
@@ -122,6 +146,13 @@ window.FqCardEngineModule = {
             });
         });
     },
+    /**
+     * Positionne le conteneur des mains dans l'interface selon le réglage
+     * « Draggable » : mode déplaçable (position absolue avant `#players`) ou ancré
+     * dans `#interface`.
+     *
+     * @returns {void}
+     */
     setupPosition: function () {
         const content = document.getElementById("fq-card-engine-container");
         if (!content) return;
@@ -140,6 +171,16 @@ window.FqCardEngineModule = {
             content.classList.remove("fq-card-engine-draggable");
         }
     },
+    /**
+     * Active le défilement horizontal fluide des cartes d'une main : la position
+     * de la souris pilote un décalage animé (easing) de la zone de cartes, avec
+     * nettoyage des écouteurs précédents. Stocke une fonction de nettoyage sur
+     * l'élément (`_fqScrollCleanup`).
+     *
+     * @param {HTMLElement} handEl - L'élément racine de la main.
+     *
+     * @returns {void}
+     */
     setupHorizontalScroll: function (handEl) {
         const panel = handEl.querySelector(".fq-hand-panel, .fq-card-engine-hand-inner");
         const zone = handEl.querySelector(".fq-card-zone, .fq-card-engine-card-container");
@@ -203,6 +244,14 @@ window.FqCardEngineModule = {
             }
         };
     },
+    /**
+     * Ajuste le nombre de barres de main affichées pour correspondre à `value`
+     * (plafonné à `handMax`) : ajoute ou retire des instances `HandBoard`.
+     *
+     * @param {number} value - Le nombre de barres souhaité (nouvelle valeur du réglage).
+     *
+     * @returns {void}
+     */
     updateHandCount: function (value) { // value is the new value of the setting
         if (value > FqCardEngineModule.handMax) {
             value = FqCardEngineModule.handMax;
@@ -222,11 +271,24 @@ window.FqCardEngineModule = {
             }
         }
     }, //updates the player hands but with a delay so user flags are correctly set
+    /**
+     * Met à jour les mains des joueurs après un court délai, le temps que les
+     * flags des utilisateurs soient correctement enregistrés.
+     *
+     * @returns {void}
+     */
     updatePlayerHandsDelayed: function () {
         setTimeout(function () {
             FqCardEngineModule.updatePlayerHands();
         }, 500);
     }, //updates the player hands that are owned by other players (the DM)
+    /**
+     * (MJ) Synchronise, pour chaque barre, l'id du jeu de cartes de la main du
+     * joueur associé avec le flag du MJ, puis restaure l'affichage si un changement
+     * a eu lieu.
+     *
+     * @returns {void}
+     */
     updatePlayerHands: function () {
         if (game.user.isGM) {
             let u = game.user;
@@ -257,16 +319,31 @@ window.FqCardEngineModule = {
             }
         }
     },
+    /**
+     * Redessine les cartes de toutes les barres de main.
+     *
+     * @returns {void}
+     */
     rerender: function () {
         $(FqCardEngineModule.handMiniBarList).each(function (i, h) {
             h.renderCards();
         });
     },
+    /**
+     * Restaure l'état persistant de toutes les barres de main.
+     *
+     * @returns {void}
+     */
     restore: function () {
         $(FqCardEngineModule.handMiniBarList).each(function (i, h) {
             h.restore();
         });
     },
+    /**
+     * Recalcule l'indice de barre par joueur pour toutes les barres de main.
+     *
+     * @returns {void}
+     */
     updatePlayerBarCounts() {
         $(FqCardEngineModule.handMiniBarList).each(function (i, h) {
             h.updatePlayerBarCount();
@@ -274,6 +351,14 @@ window.FqCardEngineModule = {
     },
 
     //Attach for dragging cards from the toolbar
+    /**
+     * Branche le glisser-déposer des cartes sur un élément HTML de barre, en
+     * autorisant le début de glisser et en déléguant aux gestionnaires `drag`/`drop`.
+     *
+     * @param {HTMLElement} html - L'élément racine sur lequel activer le glisser-déposer.
+     *
+     * @returns {void}
+     */
     attachDragDrop: function (html) {
         let t = this;
         let dragDrop = new foundry.applications.ux.DragDrop.implementation({
@@ -288,6 +373,14 @@ window.FqCardEngineModule = {
         dragDrop.bind(html);
     },
 
+    /**
+     * Prépare les données de transfert au début du glisser d'une carte (id, uuid,
+     * id du jeu source) et les sérialise dans l'événement.
+     *
+     * @param {DragEvent} event - L'événement de début de glisser.
+     *
+     * @returns {void}
+     */
     drag: function (event) {
         const id = $(event.currentTarget).data("card-id");
         const cardsid = $(event.currentTarget).data("cards-id");
@@ -303,6 +396,15 @@ window.FqCardEngineModule = {
         event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
     },
 
+    /**
+     * Gère le dépôt d'une carte sur une main : transfère la carte depuis sa source
+     * (par uuid ou par ids) si elle n'est pas déjà présente, puis réordonne les
+     * cartes à l'emplacement du dépôt.
+     *
+     * @param {DragEvent} event - L'événement de dépôt.
+     *
+     * @returns {*} La promesse de transfert le cas échéant, sinon undefined.
+     */
     drop: function (event) {
         let cards = this.getCards();
         const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
@@ -362,6 +464,15 @@ window.FqCardEngineModule = {
     },
 
     //one of the cards was clicked, based on options pick what to do
+    /**
+     * Réagit au clic sur une carte selon le réglage `cardClick` : ouvrir le
+     * dialogue de jeu, ouvrir la main, ou afficher l'image de la carte.
+     *
+     * @param {Cards} currentCards - Le jeu de cartes contenant la carte cliquée.
+     * @param {Card}  card         - La carte cliquée.
+     *
+     * @returns {Promise<void>}
+     */
     cardClicked: async function (currentCards, card) {
         let option = CONFIG.FqCardEngine.options.cardClick;
         if (option === "play_card") {
@@ -374,6 +485,14 @@ window.FqCardEngineModule = {
     },
 
     //Flip the card the player right clicked on
+    /**
+     * Retourne la carte sur laquelle le joueur a fait un clic droit, si celui-ci
+     * en est propriétaire (avertit sinon).
+     *
+     * @param {Card} card - La carte à retourner.
+     *
+     * @returns {Promise<void>}
+     */
     flipCard: async function (card) {
         if (card.permission !== CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {
             return ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoPermission"));
@@ -381,6 +500,17 @@ window.FqCardEngineModule = {
         card.flip();
     },
 
+    /**
+     * Ouvre le dialogue « Jouer la carte » : prépare toutes les données
+     * d'affichage (visuel de la carte, stats du personnage et des cibles, choix,
+     * variables X/Y, défausses disponibles), branche la navigation entre cartes de
+     * la main, et déclenche le jeu ou la défausse à la validation.
+     *
+     * @param {Cards} currentCards - La main courante contenant la carte.
+     * @param {Card}  card         - La carte à jouer.
+     *
+     * @returns {Promise<void>}
+     */
     async playDialog(currentCards, card) {
         let img = DisplayCard.getImgFromCard(card);
         let name = DisplayCard.getNameFromCard(card);
@@ -565,6 +695,16 @@ window.FqCardEngineModule = {
 
     },
 
+    /**
+     * Extrait du formulaire du dialogue de jeu les données saisies : la pile de
+     * défausse cible, les valeurs du formulaire, et le contenu (choix) sélectionné.
+     *
+     * @param {HTMLElement} html         - La racine du dialogue contenant le formulaire.
+     * @param {object[]}    cardContents - Les contenus (choix) possibles de la carte.
+     * @param {Cards[]}     discards     - Les piles de défausse disponibles.
+     *
+     * @returns {{to: Cards, fd: object, cardContent: object}} La cible, les données de formulaire et le choix retenu.
+     */
     getCardContent(html, cardContents, discards) {
         const form = html.querySelector("form.cards-dialog");
         let fde = new foundry.applications.ux.FormDataExtended(form);
@@ -580,6 +720,13 @@ window.FqCardEngineModule = {
         return {to, fd, cardContent};
     },
 
+    /**
+     * Rend le conteneur des mains déplaçable à la souris via sa poignée, en
+     * restaurant sa position depuis les réglages et en la persistant à la fin du
+     * déplacement.
+     *
+     * @returns {void}
+     */
     initializeDraggable: function () {
         let isDragging = false;
         const draggableElement = document.getElementById("fq-card-engine-container");
@@ -623,6 +770,13 @@ window.FqCardEngineModule = {
 
 
     //Shows the card image
+    /**
+     * Affiche l'image de la carte dans une fenêtre partageable (ImagePopout).
+     *
+     * @param {Card} card - La carte dont afficher l'image.
+     *
+     * @returns {Promise<void>}
+     */
     showCardImage: async function (card) {
         const ip = new ImagePopout(card.img, {
             title: card.name, shareable: true, uuid: card.uuid
@@ -631,6 +785,14 @@ window.FqCardEngineModule = {
     },
 
     //Opens the hand for any additional options
+    /**
+     * Ouvre (ou ferme si déjà ouverte) la feuille d'une main pour accéder aux
+     * options supplémentaires. Avertit si aucune main n'est fournie.
+     *
+     * @param {Cards} hand - La main à ouvrir.
+     *
+     * @returns {Promise<void>}
+     */
     openHand: async function (hand) {
         if (hand == undefined) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoHandSelected"));
@@ -643,6 +805,15 @@ window.FqCardEngineModule = {
         }
     },
 
+    /**
+     * Comparateur de tri des cartes : les cartes de base (`isBase`) passent en
+     * premier, puis tri par ordre `sort` croissant.
+     *
+     * @param {Card} a - La première carte à comparer.
+     * @param {Card} b - La seconde carte à comparer.
+     *
+     * @returns {number} -1, 0 ou 1 selon l'ordre de tri.
+     */
     cardSort(a, b) {
         if (a.system?.fq?.isBase && !b.system?.fq?.isBase) return -1;
         if (b.system?.fq?.isBase && !a.system?.fq?.isBase) return 1;
@@ -651,10 +822,24 @@ window.FqCardEngineModule = {
         return 0;
     },
 
+    /**
+     * Met à jour les decks d'un utilisateur (délégué à `DeckUtils.updateDeckForUser`).
+     *
+     * @param {string} currentUserId - L'id de l'utilisateur cible.
+     *
+     * @returns {Promise<void>}
+     */
     async updateDeckForUser(currentUserId) {
         await DeckUtils.updateDeckForUser(currentUserId);
     },
 
+    /**
+     * Supprime les decks d'un utilisateur (délégué à `DeckUtils.deleteDeckForUser`).
+     *
+     * @param {string} currentUserId - L'id de l'utilisateur cible.
+     *
+     * @returns {Promise<void>}
+     */
     async deleteDeckForUser(currentUserId) {
         await DeckUtils.deleteDeckForUser(currentUserId);
     }

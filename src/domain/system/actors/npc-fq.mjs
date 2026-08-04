@@ -8,7 +8,13 @@ import CreatureFQTemplate from "./creature-fq.mjs";
 export default class NPCDataFQ {
     /* -------------------------------------------- */
 
-    /** @inheritdoc */
+    /**
+     * Définit le schéma de données FQ greffé sur les PNJ, réduit aux attributs
+     * communs aux créatures (sans les données de cartes propres aux personnages).
+     *
+     * @inheritdoc
+     * @returns {object} Le schéma de données FQ des PNJ.
+     */
     static defineSchema() {
         return {
             fq: new foundry.data.fields.SchemaField({

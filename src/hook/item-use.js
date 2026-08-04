@@ -6,6 +6,15 @@ import FqConstants from "../domain/utils/fq-constants.js";
 import FxUtils from "../domain/utils/fx-utils.js";
 import {visualEffectData} from "../domain/system/fx/visualEffectData.js";
 
+/**
+ * Indique si la logique FQ ne doit PAS s'appliquer à une activité dnd5e donnée :
+ * c'est le cas lorsqu'il n'y a pas d'acteur et que l'activité n'est ni un soin,
+ * ni une attaque, ni des dégâts.
+ *
+ * @param {object} activity - L'activité dnd5e en cours (`actor`, `type`…).
+ *
+ * @returns {boolean|undefined} True si la logique FQ doit être ignorée, undefined sinon.
+ */
 const notApplyFQOnActivity = (activity) => {
     //TODO voir si il y a une action
     if (!activity.actor && !["heal", "attack", "damage"].includes(activity.type)) {

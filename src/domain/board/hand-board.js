@@ -2,7 +2,22 @@ import {DECK_TYPE, SPELLBOOK_TYPE} from "../utils/deck-utils.js";
 import DisplayCard from "../utils/display-card.js";
 import FQUtils from "../utils/fq-utils.js";
 
+/**
+ * Représente une barre de main affichée à l'écran (le module peut en gérer
+ * plusieurs). Une barre est liée à un jeu de cartes (`currentCards`) et, côté MJ,
+ * éventuellement à un utilisateur (`currentUser`). Elle gère le rendu des cartes,
+ * les interactions (clic, retournement, glisser-déposer), les dialogues de
+ * sélection et la persistance de son état dans les flags de l'utilisateur.
+ */
 export default class HandBoard {
+    /**
+     * Instancie une barre de main : rend son gabarit, branche les gestionnaires
+     * d'événements de l'UI, enregistre les hooks de synchronisation des cartes et
+     * des utilisateurs, restaure son état persistant, et s'auto-enregistre dans
+     * `FqCardEngineModule.handMiniBarList`.
+     *
+     * @param {number} id - L'index/identifiant de la barre.
+     */
     constructor(id) {
         this.id = id;
         this.currentCards = undefined;
@@ -71,6 +86,16 @@ export default class HandBoard {
         FqCardEngineModule.handMiniBarList.push(this);
     }
 
+    /**
+     * Rend l'ensemble des cartes de la main courante dans son conteneur : trie les
+     * cartes, les retourne face visible en mode « faceUp », calcule les données
+     * d'affichage (bulles, description, modificateurs…) et branche les interactions.
+     * Met aussi à jour le titre et la couleur du joueur.
+     *
+     * @param {Function} [resolve] - Callback appelé une fois le rendu terminé (pour une Promise).
+     *
+     * @returns {void}
+     */
     renderCards(resolve) {
         let t = this;
         let length = 0;
@@ -153,6 +178,14 @@ export default class HandBoard {
         }
     }
 
+    /**
+     * Rafraîchit la barre : rend les cartes puis (re)branche le glisser-déposer et
+     * l'effet d'éventail. Un verrou `updating` évite les rendus concurrents (les
+     * appels pendant un rendu en cours sont réessayés). Sans cartes, met seulement
+     * à jour le titre et la couleur du joueur.
+     *
+     * @returns {void}
+     */
     update() {
         let t = this;
         if (t.currentCards) {
@@ -188,14 +221,36 @@ export default class HandBoard {
         }
     }
 
+    /**
+     * Gestionnaire de début de glisser d'une carte, délégué à `FqCardEngineModule.drag`.
+     *
+     * @param {DragEvent} event - L'événement de glisser.
+     *
+     * @returns {void}
+     */
     drag(event) {
         FqCardEngineModule.drag.call(this, event);
     }
 
+    /**
+     * Gestionnaire de dépôt d'une carte, délégué à `FqCardEngineModule.drop`.
+     *
+     * @param {DragEvent} event - L'événement de dépôt.
+     *
+     * @returns {void}
+     */
     drop(event) {
         FqCardEngineModule.drop.call(this, event);
     }
 
+    /**
+     * Définit le jeu de cartes affiché par la barre, persiste (ou retire) son id,
+     * met à jour l'affichage et synchronise les autres clients (ou les mains MJ).
+     *
+     * @param {Cards|null|undefined} choice - Le jeu de cartes à afficher, ou falsy pour réinitialiser.
+     *
+     * @returns {void}
+     */
     setCardsOption(choice) {
         this.currentCards = choice;
         if (!choice) {
@@ -217,6 +272,14 @@ export default class HandBoard {
         }
     }
 
+    /**
+     * (MJ) Associe un utilisateur à la barre, persiste son id, met à jour
+     * l'affichage et, si l'utilisateur a déjà une main mémorisée, la sélectionne.
+     *
+     * @param {object} choice - L'utilisateur à associer à la barre.
+     *
+     * @returns {void}
+     */
     setUserOption(choice) {
         this.currentUser = choice;
         this.storeUserID(this.currentUser._id ? this.currentUser._id : this.currentUser.data._id);
@@ -237,6 +300,14 @@ export default class HandBoard {
         }
     }
 
+    /**
+     * Sélectionne le jeu de cartes de la barre à partir de son id et rafraîchit
+     * l'affichage. Un id falsy vide la barre.
+     *
+     * @param {string} id - L'id du jeu de cartes, ou falsy pour vider la barre.
+     *
+     * @returns {void}
+     */
     setCardsID(id) {
         if (!id) {
             this.currentCards = undefined;
@@ -251,6 +322,14 @@ export default class HandBoard {
         }
     }
 
+    /**
+     * Sélectionne l'utilisateur de la barre à partir de son id. Un id falsy vide
+     * l'utilisateur courant.
+     *
+     * @param {string} id - L'id de l'utilisateur, ou falsy pour le retirer.
+     *
+     * @returns {void}
+     */
     setUserID(id) {
         if (!id) {
             this.currentUser = undefined;
@@ -262,6 +341,13 @@ export default class HandBoard {
         }
     }
 
+    /**
+     * Ouvre le dialogue de configuration de la barre : choisir une main, choisir
+     * un joueur (MJ uniquement) ou réinitialiser. Si seule l'option « main » est
+     * disponible, ouvre directement le dialogue de choix de main.
+     *
+     * @returns {Promise<void>}
+     */
     async chooseDialog() {
         const buttons = [];
 
@@ -307,6 +393,12 @@ export default class HandBoard {
         if (result === "reset") this.reset();
     }
 
+    /**
+     * (MJ) Ouvre un dialogue de sélection d'un utilisateur parmi la liste des
+     * joueurs et l'associe à la barre.
+     *
+     * @returns {Promise<void>}
+     */
     async chooseUserDialog() {
         const options = game.users.map(u =>
             `<option value="${u.id}">${u.name}</option>`
@@ -346,6 +438,12 @@ export default class HandBoard {
         }
     }
 
+    /**
+     * Ouvre un dialogue de sélection d'une main parmi les jeux de type « hand »
+     * accessibles (observateur ou propriétaire) et l'associe à la barre.
+     *
+     * @returns {Promise<void>}
+     */
     async chooseHandDialog() {
         // Construction du select sans jQuery
         const options = [`<option value="">${game.i18n.localize("FQCARDENGINE.NoHand")}</option>`];
@@ -393,6 +491,12 @@ export default class HandBoard {
         }
     }
 
+    /**
+     * Demande confirmation avant de réinitialiser la barre. Avertit si aucune main
+     * n'est sélectionnée.
+     *
+     * @returns {Promise<void>}
+     */
     async resetToolbarDialog() {
         if (this.currentCards == undefined) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoHandSelected"));
@@ -408,6 +512,11 @@ export default class HandBoard {
         });
     }
 
+    /**
+     * Ouvre la feuille de la main courante. Avertit si aucune main n'est sélectionnée.
+     *
+     * @returns {Promise<void>}
+     */
     async openStackWindow() {
         if (this.currentCards == undefined) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoHandSelected"));
@@ -416,6 +525,12 @@ export default class HandBoard {
         FqCardEngineModule.openHand(this.currentCards);
     }
 
+    /**
+     * Ouvre les feuilles du deck et du grimoire (spellbook) de l'utilisateur
+     * associé à la barre (ou de l'utilisateur courant), positionnées côte à côte.
+     *
+     * @returns {Promise<void>}
+     */
     async openDeck() {
         const userId = this.currentUser?._id ?? this.currentUser?.data?._id ?? game.userId;
         const deck = game.cards.find(c => c.system.fq.type === DECK_TYPE && c.ownership[userId] === 3);
@@ -438,6 +553,12 @@ export default class HandBoard {
         }
     }
 
+    /**
+     * Ouvre le dialogue de pioche de la main courante. Avertit si aucune main
+     * n'est sélectionnée.
+     *
+     * @returns {Promise<void>}
+     */
     async drawCard() {
         if (this.currentCards == undefined) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoHandSelected"));
@@ -446,6 +567,12 @@ export default class HandBoard {
         this.currentCards.drawDialog();
     }
 
+    /**
+     * Met à jour le titre affiché de la barre à partir du nom de la main et, côté
+     * MJ, du nom de l'utilisateur associé et du numéro de barre.
+     *
+     * @returns {void}
+     */
     updateTitle() {
         let t = this;
         let handTitle = "";
@@ -468,6 +595,12 @@ export default class HandBoard {
         $("#fq-card-engine-hand-name-" + t.id).html(handTitle);
     }
 
+    /**
+     * Calcule l'indice de cette barre parmi les barres du même utilisateur (0 pour
+     * la première), afin de distinguer plusieurs barres attribuées au même joueur.
+     *
+     * @returns {void}
+     */
     updatePlayerBarCount() {
         let count = 0;
         if (this.currentUser) {
@@ -487,6 +620,12 @@ export default class HandBoard {
         this.playerBarCount = count;
     }
 
+    /**
+     * (MJ) Applique la couleur de l'utilisateur associé sur la barre et sa barre
+     * latérale (via une variable CSS), ou la retire si aucun utilisateur.
+     *
+     * @returns {void}
+     */
     updatePlayerColor() {
         if (game.user.isGM) {
             const panel = this.html?.[0]?.querySelector(".fq-hand-toolbar");
@@ -504,50 +643,112 @@ export default class HandBoard {
         }
     }
 
+    /**
+     * Gestionnaire de clic sur une carte : retrouve la carte via son `data-card-id`
+     * et délègue le comportement à `FqCardEngineModule.cardClicked`.
+     *
+     * @param {Event} e - L'événement de clic.
+     *
+     * @returns {Promise<void>}
+     */
     async cardClicked(e) {
         let id = $(e.target).closest("[data-card-id]").data("card-id");
         let card = this.currentCards.cards.get(id);
         FqCardEngineModule.cardClicked(this.currentCards, card);
     }
 
+    /**
+     * Gestionnaire de clic droit sur une carte : retrouve la carte via son
+     * `data-card-id` et la retourne via `FqCardEngineModule.flipCard`.
+     *
+     * @param {Event} e - L'événement de clic droit.
+     *
+     * @returns {Promise<void>}
+     */
     async flipCard(e) {
         let id = $(e.target).closest("[data-card-id]").data("card-id");
         let card = this.currentCards.cards.get(id);
         FqCardEngineModule.flipCard(card);
     }
 
+    /**
+     * Restaure l'état persistant de la barre (jeu de cartes et utilisateur
+     * mémorisés dans les flags) puis rafraîchit l'affichage.
+     *
+     * @returns {void}
+     */
     restore() {
         this.setCardsID(this.getStoredCardsID());
         this.setUserID(this.getStoredUserID());
         this.update();
     }
 
+    /**
+     * Persiste l'id du jeu de cartes de la barre dans les flags de l'utilisateur.
+     *
+     * @param {string} id - L'id du jeu de cartes à mémoriser.
+     *
+     * @returns {void}
+     */
     storeCardsID(id) {
         game.user.setFlag(FqCardEngineModule.moduleName, "CardsID-" + this.id, id);
     }
 
+    /**
+     * Retire l'id de jeu de cartes mémorisé et vide le jeu courant de la barre.
+     *
+     * @returns {void}
+     */
     resetCardsID() {
         game.user.unsetFlag(FqCardEngineModule.moduleName, "CardsID-" + this.id);
         this.currentCards = undefined;
     }
 
+    /**
+     * Retourne l'id du jeu de cartes mémorisé pour cette barre.
+     *
+     * @returns {string|undefined} L'id mémorisé, ou undefined.
+     */
     getStoredCardsID() {
         return game.user.getFlag(FqCardEngineModule.moduleName, "CardsID-" + this.id);
     }
 
+    /**
+     * Persiste l'id de l'utilisateur de la barre dans les flags de l'utilisateur.
+     *
+     * @param {string} id - L'id de l'utilisateur à mémoriser.
+     *
+     * @returns {void}
+     */
     storeUserID(id) {
         game.user.setFlag(FqCardEngineModule.moduleName, "UserID-" + this.id, id);
     }
 
+    /**
+     * Retire l'id d'utilisateur mémorisé et vide l'utilisateur courant de la barre.
+     *
+     * @returns {void}
+     */
     resetUserID() {
         game.user.unsetFlag(FqCardEngineModule.moduleName, "UserID-" + this.id);
         this.currentUser = undefined;
     }
 
+    /**
+     * Retourne l'id de l'utilisateur mémorisé pour cette barre.
+     *
+     * @returns {string|undefined} L'id mémorisé, ou undefined.
+     */
     getStoredUserID() {
         return game.user.getFlag(FqCardEngineModule.moduleName, "UserID-" + this.id);
     }
 
+    /**
+     * Réinitialise complètement la barre (jeu de cartes et utilisateur) et
+     * synchronise les mains des autres clients (MJ).
+     *
+     * @returns {void}
+     */
     reset() {
         this.resetCardsID();
         this.resetUserID();
@@ -556,12 +757,22 @@ export default class HandBoard {
         FqCardEngineModule.updatePlayerHandsDelayed();
     }
 
+    /**
+     * Retire du DOM l'élément HTML de la barre.
+     *
+     * @returns {void}
+     */
     remove() {
         if (this.html) {
             this.html.remove();
         }
     }
 
+    /**
+     * Retourne le jeu de cartes actuellement affiché par la barre.
+     *
+     * @returns {Cards|undefined} Le jeu de cartes courant, ou undefined.
+     */
     getCards() {
         return this.currentCards;
     }

@@ -1,3 +1,11 @@
+/**
+ * Table de correspondance entre types d'effets et chemins de fichiers vidéo (.webm)
+ * utilisés pour jouer les effets visuels lors du jeu des cartes.
+ * Organisée par catégorie : effets génériques (mêlée / distance / autres, indexés
+ * par type de dégâts) et effets spécifiques à une classe (ex. « elementalist »).
+ *
+ * @type {object}
+ */
 export const visualEffectData = {
     generics: {
         melee: {

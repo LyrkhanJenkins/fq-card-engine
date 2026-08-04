@@ -23,6 +23,13 @@ const {SchemaField, NumberField, StringField} = foundry.data.fields;
  */
 export default class CreatureFQTemplate {
 
+    /**
+     * Retourne les champs de schéma FQ communs aux personnages et aux PNJ :
+     * points d'action, mana, zèle (avec valeur initiale), attributs (critique,
+     * esquive) et bonus (portée, dégâts, soin, DOT/HOT).
+     *
+     * @returns {object} Les champs de schéma communs (SchemaField/NumberField/StringField).
+     */
     static get common() {
         return {
             action: new SchemaField({

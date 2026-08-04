@@ -6,7 +6,14 @@ const {SchemaField, StringField, ObjectField} = foundry.data.fields;
  * @mixin
  */
 export default class CardsFqSystem extends foundry.abstract.TypeDataModel {
-    /** @inheritdoc */
+    /**
+     * Définit le schéma de données FQ d'un jeu de cartes (deck, main, pile,
+     * grimoire) : son type FQ, son propriétaire, et, pour le grimoire uniquement,
+     * un instantané des niveaux par classe servant au calcul du delta de cartes.
+     *
+     * @inheritdoc
+     * @returns {object} Le schéma de données FQ du jeu de cartes.
+     */
     static defineSchema() {
         return {
             fq: new SchemaField({

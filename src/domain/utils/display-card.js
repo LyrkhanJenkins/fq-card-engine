@@ -1,7 +1,25 @@
 import FqConstants from "./fq-constants.js";
 import FQUtils from "./fq-utils.js";
 
+/**
+ * Utilitaires de présentation d'une carte : extraction du titre, de la
+ * description et de l'image, dimensionnement du texte pour le rendu SVG,
+ * transformation des tokens (@abilities, [types de dégâts]) en symboles lisibles,
+ * et évaluation/simplification des valeurs affichées dans les bulles.
+ * Toutes les méthodes sont statiques : la classe sert de namespace.
+ */
 export default class DisplayCard {
+    /**
+     * Calcule la valeur à afficher dans une bulle de carte (action, mana, portée…).
+     * Renvoie « 0 » si vide, « ∞ » au-delà de 99, « S » si une variable spéciale
+     * (X/Y) est renseignée, la valeur évaluée du jet sinon, ou l'expression
+     * algébrique simplifiée si des variables subsistent.
+     *
+     * @param {string} str         - L'expression brute de la bulle (peut contenir des bonus/variables).
+     * @param {object} cardContent - Le contenu (choix) de la carte, portant `xvalue`/`yvalue`.
+     *
+     * @returns {string|number} La valeur ou le symbole à afficher.
+     */
     static getNumberForBubbleCardSvg(str, cardContent) {
         if (str === "" || !str) {
             return "0";
@@ -23,6 +41,14 @@ export default class DisplayCard {
         }
     }
 
+    /**
+     * Retourne la taille de police adaptée à la longueur de la description, pour
+     * que le texte tienne dans la carte SVG.
+     *
+     * @param {string} description - Le texte de description de la carte.
+     *
+     * @returns {number} La taille de police (px) à appliquer.
+     */
     static getDescriptionSizeForCardSvg(description) {
         let descriptionSize = {1: 40, 80: 36, 110: 34, 145: 30, 200: 26, 290: 22, 340: 20, 440: 18, 9999: 16};
         return descriptionSize[Object.keys(descriptionSize)
@@ -31,6 +57,14 @@ export default class DisplayCard {
             .find(limit => description.length <= limit)];
     }
 
+    /**
+     * Retourne la taille de police adaptée à la longueur du titre, pour que le
+     * titre tienne dans la carte SVG.
+     *
+     * @param {string} title - Le titre de la carte.
+     *
+     * @returns {number} La taille de police (px) à appliquer.
+     */
     static getTitleSizeForCardSvg(title) {
         let titleSize = {1: 34, 20: 32, 25: 28, 30: 24, 9999: 20};
 
@@ -40,6 +74,15 @@ export default class DisplayCard {
             .find(limit => title.length <= limit)];
     }
 
+    /**
+     * Extrait et met en forme la description d'une carte à partir de sa face
+     * visible, en interpolant les valeurs des choix (`system.fq.choices`) et en
+     * transformant les tokens en symboles lisibles.
+     *
+     * @param {Card} c - La carte dont on extrait la description.
+     *
+     * @returns {string} La description formatée, prête à l'affichage.
+     */
     static getDescriptionFromCard(c) {
         let description = "";
         if (c.face != null) {
@@ -60,11 +103,27 @@ export default class DisplayCard {
         return DisplayCard.transformForDescription(game.i18n.format(description, flat));
     }
 
+    /**
+     * Retourne le nom localisé de la carte, ou le libellé du dos si la carte est
+     * face cachée.
+     *
+     * @param {Card} c - La carte dont on extrait le nom.
+     *
+     * @returns {string} Le nom localisé de la carte (ou du dos).
+     */
     static getNameFromCard(c) {
         let name = (c.face !== null) ? c.name : "FQCARDENGINE.CardBack";
         return game.i18n.localize(name);
     }
 
+    /**
+     * Retourne l'image à afficher pour la carte : l'image de la face visible, ou
+     * l'image du dos si la carte est face cachée.
+     *
+     * @param {Card} c - La carte dont on extrait l'image.
+     *
+     * @returns {string|undefined} Le chemin de l'image, ou undefined si indisponible.
+     */
     static getImgFromCard(c) {
         let img = c.back.img;
         if (c.face != null) {
@@ -80,6 +139,15 @@ export default class DisplayCard {
         return img;
     }
 
+    /**
+     * Transforme une chaîne de description en remplaçant les variables (XXX/YYY),
+     * les références de caractéristiques (@int, @str…) par leur modificateur et
+     * un emoji, et les types de dégâts ([fire], [cold]…) par leur symbole.
+     *
+     * @param {string} val - La chaîne à transformer (renvoyée telle quelle si non-string).
+     *
+     * @returns {string} La chaîne transformée, prête à l'affichage.
+     */
     static transformForDescription(val) {
         const abilities = FqConstants.actorAbi;
         if (typeof val === "string") {
@@ -112,6 +180,13 @@ export default class DisplayCard {
      * Simplifie une expression algébrique linéaire simple.
      * Supporte : +, -, *, parenthèses, variables alphabétiques.
      * Exemples : "5 + 3 + 4*X" -> "8+4X" ; "1+5" -> "6"
+     *
+     * @param {string} expr - L'expression algébrique à simplifier.
+     *
+     * @returns {string} L'expression simplifiée (« 0 » si le résultat est nul).
+     *
+     * @throws {Error} Si l'expression est incomplète, mal parenthésée, contient
+     *                 un produit de deux variables, ou des tokens non consommés.
      */
     static simplifyExpression(expr) {
         const tokens = expr.match(/\d+(\.\d+)?|[a-zA-Z_]+|[+\-*()]/g);

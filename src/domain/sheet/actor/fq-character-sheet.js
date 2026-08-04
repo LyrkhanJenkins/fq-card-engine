@@ -1,3 +1,10 @@
+/**
+ * Feuille de personnage FQ. Étend la feuille de personnage dnd5e en ajoutant
+ * une barre latérale (« sidebar ») dédiée aux jauges FQ (action, mana, zeal) et
+ * en calculant les pourcentages d'affichage de ces jauges.
+ *
+ * @extends dnd5e.applications.actor.CharacterActorSheet
+ */
 export default class FqCharacterSheet extends dnd5e.applications.actor.CharacterActorSheet {
 
     /** @override */
@@ -11,7 +18,16 @@ export default class FqCharacterSheet extends dnd5e.applications.actor.Character
         }
     };
 
-    /** @override */
+    /**
+     * Prépare le contexte de rendu de la barre latérale : ajoute les pourcentages
+     * des jauges FQ et le drapeau `canModifyFQ` (droit d'édition des valeurs FQ).
+     *
+     * @override
+     * @param {object} _context - Le contexte de base fourni par la classe parente.
+     * @param {object} options  - Les options de rendu Foundry.
+     *
+     * @returns {Promise<object>} Le contexte enrichi des données FQ.
+     */
     async _prepareSidebarContext(_context, options) {
         let context = await super._prepareSidebarContext(_context, options);
         context = FqCharacterSheet.calculPercentageFqAttributes(context);
@@ -20,6 +36,14 @@ export default class FqCharacterSheet extends dnd5e.applications.actor.Character
         return context;
     }
 
+    /**
+     * Calcule et injecte dans le contexte les pourcentages de remplissage des
+     * jauges FQ (action, mana, zeal) ainsi que la valeur de déplacement en cases.
+     *
+     * @param {object} context - Le contexte de rendu à enrichir (muté sur place).
+     *
+     * @returns {object} Le contexte enrichi des pourcentages (`.pct`) et de `speed.squareValue`.
+     */
     static calculPercentageFqAttributes(context) {
         // Action Points Percentage
         context.system.fq.action.pct = Math.clamp(context.system.fq.action.max ? (context.system.fq.action.value / context.system.fq.action.max) * 100 : 0, 0, 100);
@@ -34,6 +58,17 @@ export default class FqCharacterSheet extends dnd5e.applications.actor.Character
         return context;
     }
 
+    /**
+     * Détermine si l'utilisateur peut modifier manuellement les valeurs FQ.
+     * L'édition n'est autorisée que pour le MJ, sur une feuille éditable, et
+     * uniquement si aucun effet actif ne modifie déjà `system.fq` (pour éviter
+     * les conflits entre saisie manuelle et effets).
+     *
+     * @param {boolean} editable - True si la feuille est en mode édition.
+     * @param {object}  effects  - Le contexte des effets actifs (issu de `_prepareEffectsContext`).
+     *
+     * @returns {boolean} True si les valeurs FQ peuvent être éditées manuellement.
+     */
     static getCanModifyFQ(editable, effects) {
         let allEffectChanges = [...Object.values(effects).map(e => e.effects).reduce((a, b) => a.concat(b), [])]
             .map(e => e.source?.effects ? [...e.source.effects] : []).reduce((a, b) => a.concat(b), [])

@@ -9,7 +9,13 @@
  * @mixin
  */
 export default class ActionFQTemplate {
-    /** @inheritdoc */
+    /**
+     * Définit le schéma de données FQ greffé sur les actions d'objet : les coûts
+     * d'utilisation en points d'action, mana, zèle, défausse et points de vie.
+     *
+     * @inheritdoc
+     * @returns {object} Le schéma de données FQ des actions d'objet.
+     */
     static defineSchema() {
         return {
             fq: new foundry.data.fields.SchemaField({

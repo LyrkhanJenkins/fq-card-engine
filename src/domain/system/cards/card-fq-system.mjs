@@ -30,7 +30,13 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         Object.keys(CONST.ACTIVE_EFFECT_CHANGE_TYPES).map(key => [key, key])
     );
 
-    /** @inheritdoc */
+    /**
+     * Définit le schéma de données FQ d'une carte : nombre max d'exemplaires,
+     * classe, niveau, indicateur de carte de base, et la liste des choix jouables.
+     *
+     * @inheritdoc
+     * @returns {object} Le schéma de données FQ de la carte.
+     */
     static defineSchema() {
         return {
             fq: new SchemaField({
@@ -47,6 +53,14 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         };
     }
 
+    /**
+     * Construit le schéma d'un « choix » de carte : coûts (action, mana, zèle, hp,
+     * pioche, défausse), ciblage et portée, dégâts/soins et bonus, variables X/Y,
+     * formules d'effets, messages, sbires, rejouabilité, son, visuels, actions
+     * personnalisées et données de rejeu.
+     *
+     * @returns {SchemaField} Le schéma d'un choix de carte.
+     */
     static getChoiceSchema() {
         return new SchemaField({
             name: new StringField({required: true, label: "FQCARDENGINE.ChoiceName"}),
@@ -131,6 +145,13 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         });
     }
 
+    /**
+     * Construit le schéma d'une « formule d'effets » : un titre, une formule de
+     * jet, et une liste d'effets déclenchés selon le résultat (données d'effet
+     * actif, changements, durée, messages, application sur soi ou sur la cible).
+     *
+     * @returns {SchemaField} Le schéma d'une formule d'effets.
+     */
     static getApplyEffectsFormulaSchema() {
         return new SchemaField({
             title: new StringField({required: true, label: "FQCARDENGINE.FormulaTitle"}),
@@ -178,6 +199,12 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         });
     }
 
+    /**
+     * Construit le schéma d'un message localisable : une clé de traduction et un
+     * argument de formatage optionnel.
+     *
+     * @returns {SchemaField} Le schéma d'un message.
+     */
     static getMessageSchema() {
         return new SchemaField({
             key: new StringField({required: true, label: "FQCARDENGINE.MessageKey"}),

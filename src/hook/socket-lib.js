@@ -5,6 +5,14 @@ import DeckUtils from "../domain/utils/deck-utils.js";
 import FQUtils from "../domain/utils/fq-utils.js";
 import {deleteToken} from "./render-token.js"; // relocate
 
+/**
+ * Instance socketlib du module, initialisée au hook `socketlib.ready`.
+ * Permet d'exécuter côté MJ (ou côté joueur cible) les opérations nécessitant des
+ * droits particuliers : application de dégâts/soins, pioche, création d'acteurs,
+ * gestion des decks et suppression de tokens.
+ *
+ * @type {object|undefined}
+ */
 export let socket;
 Hooks.once("socketlib.ready", () => {
     socket = socketlib.registerModule(FqCardEngineModule.moduleName);

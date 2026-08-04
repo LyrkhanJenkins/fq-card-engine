@@ -16,6 +16,17 @@ Hooks.on("renderTokenHUD", (hud, html, data) => {
     addSqueletonButton(colLeft, hud.object);
 });
 
+/**
+ * Ajoute au HUD du token un bouton « sacrifier le squelette » (uniquement pour
+ * les tokens dont le nom contient « Skeleton »). Au clic : joue un effet Sequencer
+ * si disponible, publie un message de chat, incrémente le score de squelettes
+ * sacrifiés du personnage et supprime le token via socket (droits MJ).
+ *
+ * @param {HTMLElement} column - La colonne du HUD où insérer le bouton.
+ * @param {object}      token  - Le token concerné.
+ *
+ * @returns {void}
+ */
 function addSqueletonButton(column, token) {
     if (!token.document.name.includes("Skeleton")) return;
     if (column.querySelector("[data-action='skeleton-sacrificed']")) return;
@@ -66,6 +77,14 @@ function addSqueletonButton(column, token) {
 }
 
 // TODO protect for user not owner ?
+/**
+ * Supprime un token de la scène active à partir de son id. Exécutée côté MJ via
+ * socket (voir `socket-lib.js`).
+ *
+ * @param {string} tokenId - L'id du token à supprimer.
+ *
+ * @returns {void}
+ */
 export function deleteToken(tokenId) {
     // TODO Meilleur façon de récupérer un token, généraliser cette récupération!!
     // Ou parcourir toutes les scenes game.scenes ?
@@ -73,6 +92,13 @@ export function deleteToken(tokenId) {
     token.document.delete();
 }
 
+/**
+ * Retourne le score de sacrifice associé à un type de squelette, d'après son nom.
+ *
+ * @param {string} tokenName - Le nom du token squelette.
+ *
+ * @returns {number} Le score de sacrifice (1 par défaut).
+ */
 function getSacrificedScore(tokenName) {
     switch (tokenName) {
     case "Skeleton lvl 2":
@@ -88,6 +114,16 @@ function getSacrificedScore(tokenName) {
     }
 }
 
+/**
+ * Ajoute au HUD du token un bouton « infliger des dégâts » qui déclenche l'usage
+ * de toutes les armes équipées de l'acteur, après validation de l'usage d'un sort
+ * dans le tour.
+ *
+ * @param {HTMLElement} column - La colonne du HUD où insérer le bouton.
+ * @param {object}      token  - Le token dont l'acteur porte les armes.
+ *
+ * @returns {void}
+ */
 function addDamageButton(column, token) {
     const actor = token.actor;
     const bouton = document.createElement("button");

@@ -360,6 +360,15 @@ export default class DeckUtils {
     }
 
 
+    /**
+     * Pioche des cartes depuis un deck vers une main.
+     *
+     * @param {string} handId    - L'id du jeu de type « hand » qui reçoit les cartes.
+     * @param {string} deckId    - L'id du deck source.
+     * @param {number} drawScore - Le nombre de cartes à piocher.
+     *
+     * @returns {void}
+     */
     static drawCard(handId, deckId, drawScore) {
         const hand = game.cards.get(handId);
         const deck = game.cards.get(deckId);
@@ -368,7 +377,16 @@ export default class DeckUtils {
         });
     }
 
-    // Log Card played on combat
+    /**
+     * Enregistre dans les flags du combat actif une entrée de log décrivant la
+     * carte jouée : acteur, cibles, round/tour, résultats et contenu de la carte.
+     * N'a aucun effet hors combat.
+     *
+     * @param {object[]} initResultatArray - Le tableau des résultats de l'effet joué.
+     * @param {object}   cardContent       - Le contenu (choix) de la carte jouée.
+     *
+     * @returns {void}
+     */
     static logCardPlayed(initResultatArray, cardContent) {
         if (game.combat) {
             let FQLogs = game.combat.flags.fq?.logs ? game.combat.flags.fq?.logs : [];
