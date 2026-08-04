@@ -2,9 +2,19 @@ import {beforeEach, vi} from "vitest";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-const mockField = () => vi.fn().mockImplementation((opts = {}) => ({...opts}));
+// Fabrique passthrough pour les DataField Foundry : renvoie simplement les options
+// reçues, ce qui suffit pour les tests unitaires (on ne valide pas le schéma ici).
+// NB : implémentation en `function` (et non fléchée) pour rester **constructible**
+// via `new SchemaField(...)` — les tests de schéma (system/) instancient les champs avec `new`.
+const mockField = () => vi.fn().mockImplementation(function (opts = {}) {
+    return {...opts};
+});
 
-// ─── Foundry core — chargé une seule fois ────────────────────────────────────
+// ════════════════════════════════════════════════════════════════════════════
+// ZONE 1 — Foundry chargé une seule fois (globals stables, non réinitialisés
+// entre les tests : constantes, classes document, helpers utilitaires).
+// ════════════════════════════════════════════════════════════════════════════
+
 globalThis.CONST = {
     ACTIVE_EFFECT_CHANGE_TYPES: {
         custom: 0,
@@ -53,6 +63,9 @@ globalThis.foundry = {
             }
         }
     },
+    // foundry.data.fields : chaque DataField est un passthrough (mockField) qui
+    // renvoie ses options telles quelles ; suffisant pour les tests unitaires,
+    // qui n'ont pas besoin de la validation réelle du schéma Foundry.
     data: {
         fields: {
             SchemaField: mockField(),
@@ -61,6 +74,8 @@ globalThis.foundry = {
             BooleanField: mockField(),
             ArrayField: mockField(),
             FilePathField: mockField(),
+            ObjectField: mockField(),
+            HTMLField: mockField(),
         }
     },
     audio: {
@@ -72,7 +87,21 @@ globalThis.Hooks = {
     on: vi.fn(), once: vi.fn(), call: vi.fn(), callAll: vi.fn(),
 };
 
-globalThis.CONFIG = {FQ: {}};
+// CONFIG est chargé une seule fois (pas de réinitialisation en beforeEach) :
+// on y ajoute un socle par défaut pour FqCardEngine.options, sans écraser FQ.
+// Note : tests/window/play-card.test.js surcharge localement `global.CONFIG`
+// (au chargement du fichier, donc après ce bloc) ; ce défaut ne sert donc que
+// de socle pour les futures suites qui n'écrasent pas CONFIG elles-mêmes.
+globalThis.CONFIG = {
+    FQ: {},
+    FqCardEngine: {
+        options: {
+            GMUsingCards: false,
+            hideMessages: false,
+            betterChatMessages: true,
+        }
+    }
+};
 
 globalThis.Actor = class {
     constructor(data) {
@@ -101,20 +130,44 @@ globalThis.Item = class {
     }
 };
 
+// canvas (scène/tokens) : mock minimal, complété par game.canvas dans la zone
+// beforeEach ci-dessous pour les besoins spécifiques de CanvasUtils/DamageUtils.
 globalThis.canvas = {scene: null, tokens: {get: vi.fn()}};
 
-// ─── Globals réinitialisés avant chaque test ─────────────────────────────────
+// ════════════════════════════════════════════════════════════════════════════
+// ZONE 2 — Globals réinitialisés avant chaque test (mocks à compteur d'appels :
+// ui, Cards, Card, ChatMessage, Roll, game).
+// ════════════════════════════════════════════════════════════════════════════
 
 beforeEach(() => {
     globalThis.ui = {
         notifications: {
             error: vi.fn(),
             warn: vi.fn(),
+            info: vi.fn(),
         },
     };
 
+    // Classe document Cards (deck/main/pile/spellbook) : opérations de base
+    // consommées par deck-utils (deleteDocuments) et les futures suites (get/
+    // getDocuments pour lire le contenu d'un deck ou d'un compendium de cartes).
     globalThis.Cards = {
-        deleteDocuments: vi.fn()
+        deleteDocuments: vi.fn(),
+        getDocuments: vi.fn(() => ([])),
+        get: vi.fn(),
+    };
+
+    // Classe document Card minimale : stocke data/system, suffisant pour les
+    // suites qui manipulent une carte sans dépendre du modèle Foundry complet.
+    globalThis.Card = class {
+        constructor(data) {
+            this.data = data;
+            this.system = data?.system ?? {};
+        }
+
+        get name() {
+            return this.data?.name;
+        }
     };
 
     globalThis.ChatMessage = {
@@ -122,9 +175,14 @@ beforeEach(() => {
         getSpeaker: vi.fn().mockResolvedValue(null),
     };
 
+    // Roll déterministe : reste un vi.fn espionnable (global.Roll.mock.calls),
+    // mais son total est fixé à une constante documentée (10, choisie dans
+    // l'intervalle 1..20) afin de rendre les assertions reproductibles sans
+    // casser les tests qui vérifient une plage 1..20.
+    const DETERMINISTIC_ROLL_TOTAL = 10;
     globalThis.Roll = vi.fn(function (formula) {
         this.formula = formula;
-        this.total = Math.floor(Math.random() * 20) + 1;
+        this.total = DETERMINISTIC_ROLL_TOTAL;
         this.evaluate = async () => this;
         this.toMessage = vi.fn(async () => ({id: "messageId"}));
     });
@@ -206,6 +264,20 @@ beforeEach(() => {
         i18n: {
             localize: vi.fn(str => str),
             format: vi.fn((str, args) => str + JSON.stringify(args))
-        }
+        },
+        // game.settings : socle pour les couches système/hooks des phases 2 à 6
+        // (lecture/écriture de réglages module). `get` renvoie undefined par
+        // défaut ; chaque suite peut surcharger via mockReturnValue au besoin.
+        settings: {
+            get: vi.fn(() => undefined),
+            register: vi.fn(),
+        },
+        // game.socket : socle pour les appels socketlib côté GM/joueurs (voir
+        // src/hook/socket-lib.js), nécessaire aux futures suites de hooks.
+        socket: {
+            executeAsGM: vi.fn(),
+            executeForEveryone: vi.fn(),
+            register: vi.fn(),
+        },
     };
 });

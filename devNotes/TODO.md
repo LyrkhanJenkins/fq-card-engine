@@ -5,18 +5,13 @@
 
 ### Versions prévues
 #### 2.0.1
-- Log d'erreur non géré : "Foundry VTT | Unregistered callback for deleteCard hook"
-- Tests fonctionnels (tests de montée de niveau aussi) + montée de version jusqu'à la dernière v14
 - Test haut-niveau avec toutes les cartes, Besoin de gros tests de non regression de partout + avec toutes les cartes?
 -  OU Couverture de test unitaire avec rapport > 80%
-- Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Comment faire en sorte que les jets de dés aillent plus vite avec dice so nice (module recommandé)
-- Mettre à jour les versions des plugins nécessaire dans module.json
 - A partir de là, montée de version majeure possible : Faire un plan de pmontée de version majeure : Mettre à jour les
   cartes dans les compendiums et relance des tests par exemple
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Première passe de suppression code inutile sans risque
-- Choisir entre -er et -ez dans les descriptions des cartes
 
 #### 2.0.2
 
@@ -31,7 +26,7 @@
 - Tests fonctionnels + montée dernière version
 - Revoir cape inhibitrice (enlever quel effet?)
 - Revoir tir reflexe (jouer même si pas attaquer?)
-- Afficher les éléments actifs de l'elementaliste, généralement afficherf tous les effets sur une sicble
+- Afficher les éléments actifs de l'elementaliste, généralement afficher tous les effets sur une sicble
 - Priorisé les protections avant de faire jouer la carte (OU REPORTER)
 - Sélectionner une cible après coup (OU REPORTER)
 - PATCH--> RELEASE

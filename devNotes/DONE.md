@@ -5,10 +5,14 @@ Feat :
 - Ajout une fleche raccourci pour passer une carte du spellbook vers le deck + grisage des cartes déjà distribué dans le deck
 
 Chore :
+- Couverture des tests unitaires >50% et >80% pour les méthodes utils
+- Documentations complètes des méthodes
 - Fin recommandation card viewer
+- Mise à jour et figer les versions de dépendances du package.json
 - Mise en place de GSD avec claude code
 
 Fix :
+- Correction traduction fr.json et en.json
 - Enlever l'ajout de main dans le container si les droits des joueurs sont limités
 - Correction, pour les cartes, du breaking change v13 -> v14 pour la structure de EffectChangeData
 
