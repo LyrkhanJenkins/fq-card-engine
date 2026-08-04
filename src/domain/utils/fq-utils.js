@@ -27,17 +27,23 @@ export default class FQUtils {
      *
      * @param {string|number} formula        - La formule de jet (convertie en chaîne).
      * @param {boolean}       [display=false] - Si true, publie le résultat dans un message de chat.
+     * @param {Promise[]}     [dsnAnimations=[]] - Collecteur des promesses d'animations Dice So Nice :
+     *        la promesse du jet y est empilée (au lieu d'être attendue) pour un affichage simultané ;
+     *        l'appelant attend l'ensemble via `Promise.all` au bon moment.
      *
      * @returns {Promise<number>} Le total du jet.
      */
-    static async rollResultAsync(formula, display = false) {
+    static async rollResultAsync(formula, display = false, dsnAnimations = []) {
         const roll = await new Roll(formula.toString()).evaluate();
         if (display === false) {
             return roll.total;
         }
+        DamageUtils.applyDiceAppearance(roll); // dés à la couleur du joueur
         const msg = await roll.toMessage();
+        // Même principe que DamageUtils : on empile la promesse d'animation dans le
+        // collecteur fourni au lieu de l'attendre, pour un affichage simultané des dés.
         if (game.dice3d && roll.isDeterministic === false) {
-            await game.dice3d.waitFor3DAnimationByMessageID(msg.id);
+            dsnAnimations.push(game.dice3d.waitFor3DAnimationByMessageID(msg.id));
         }
         return roll.total;
     }
@@ -76,14 +82,18 @@ export default class FQUtils {
      */
     static async applyCardEffect(cardContent, card, fd) {
         let resultArray = [];
+        // Collecteur local des animations Dice So Nice de ce jet de carte : créé à la
+        // volée et passé aux méthodes de jet. Chaque dé y dépose sa promesse d'animation
+        // sans l'attendre → tous les dés partent simultanément à l'écran.
+        const dsnAnimations = [];
 
         if (cardContent) {
             ConsumptionUtils.consumeResources(cardContent, game.user?.character);
             if (cardContent.damage) {
-                resultArray.push(...await DamageUtils.buildDamageDiceLauncher(game.user.character, cardContent));
+                resultArray.push(...await DamageUtils.buildDamageDiceLauncher(game.user.character, cardContent, dsnAnimations));
             }
             if (cardContent.heal) {
-                resultArray.push(...await DamageUtils.buildHealDiceLauncher(game.user.character, cardContent));
+                resultArray.push(...await DamageUtils.buildHealDiceLauncher(game.user.character, cardContent, dsnAnimations));
             }
             if (cardContent.draw) {
                 card.parent.draw(card.source, cardContent.draw, {chatNotification: false, how: 2});
@@ -126,6 +136,11 @@ export default class FQUtils {
 
             const match = cardContent.damage.match(/\[([a-z]+)\]/i);
             await FxUtils.handleSpecialEffect(cardContent, resultArray, FqConstants.myToken, match ? match[1] : null);
+
+            // On attend ICI, une seule fois, que TOUTES les animations Dice So Nice
+            // du jet soient terminées (les dés sont partis simultanément plus haut),
+            // juste avant d'infliger les PV et d'afficher le récap → affichage cohérent.
+            await Promise.all(dsnAnimations);
 
             for (const res of resultArray) {
                 await socket.executeAsGM("applyActorHpModification", res.targetTokenId, res.value, res.type);
@@ -282,6 +297,7 @@ export default class FQUtils {
      */
     static async playApplyEffectsFormulas(applyEffectsFormulas, cardContent) {
         const roll = await new Roll(applyEffectsFormulas.formula).evaluate();
+        DamageUtils.applyDiceAppearance(roll); // dés à la couleur du joueur
         for (let i = 0; i < applyEffectsFormulas.effects.length; i++) {
             applyEffectsFormulas.effects[i].result = await FQUtils.rollResultAsync(applyEffectsFormulas.effects[i].result);
         }

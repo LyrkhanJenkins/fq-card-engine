@@ -85,6 +85,7 @@
         "type": "module",
         "reason": "The Sequencer module provides beautiful visuals effects implemented with FQ cards",
         "compatibility": {
+          "verified": "4.2.3"
         }
       },
       {
@@ -92,6 +93,7 @@
         "type": "module",
         "reason": "The JB2A module is used with Sequencer",
         "compatibility": {
+          "verified": "0.9.1"
         }
       },
       {
@@ -99,6 +101,15 @@
         "type": "module",
         "reason": "The DAE module is used with to make actor's effect with visual FX",
         "compatibility": {
+          "verified": "14.0.12"
+        }
+      },
+      {
+        "id": "dice-so-nice",
+        "type": "module",
+        "reason": "Adds customizable 3D dice to Foundry VTT with lots of options to fit your playstyle.",
+        "compatibility": {
+          "verified": "6.2.9"
         }
       }
     ]

@@ -29,6 +29,7 @@ vi.mock("../../src/domain/utils/damage-utils.js", () => ({
         buildHealDiceLauncher: vi.fn(async () => ([])),
         handleSoundEffect: vi.fn(),
         addCriticalEvasionToDamage: vi.fn(),
+        applyDiceAppearance: vi.fn(),
         displayResult: vi.fn()
     }
 }));

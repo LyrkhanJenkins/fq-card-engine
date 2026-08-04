@@ -13,6 +13,29 @@ export const FAIL_COLOR = "red";
 export const OriginFQEffectLabel = "FQ Effect";
 export const DEFAULT_MAX_ZEAL = 8;
 
+// Construit une apparence Dice So Nice « forcée » à partir d'une couleur de fond.
+// On force volontairement `colorset: "custom"`, `system: "standard"` et
+// `texture: "none"` pour que la couleur s'affiche de façon fiable quel que soit le
+// préréglage du joueur (ex. « Spectral », qui sinon écraserait la couleur). Le
+// compromis : les dés du module n'utilisent plus le modèle choisi par le joueur,
+// mais leur couleur est garantie.
+export function buildDiceAppearance(color) {
+    return {
+        colorset: "custom",
+        system: "standard",
+        texture: "none",
+        background: color,
+        edge: color,
+        foreground: "#FFFFFF",
+        outline: "#000000"
+    };
+}
+
+// Apparences forcées pour les jets spécifiques : critique = rouge, esquive = bleu.
+// Les autres dés du module utilisent la couleur du joueur (voir DamageUtils.getPlayerDiceAppearance).
+export const CRITICAL_DICE_APPEARANCE = buildDiceAppearance(CRITICAL_COLOR);
+export const EVASION_DICE_APPEARANCE = buildDiceAppearance(EVASION_COLOR);
+
 // TODO Rendre ces constantes utilisables de partout
 /**
  * Regroupe des constantes de couleurs/labels et des accesseurs pratiques vers

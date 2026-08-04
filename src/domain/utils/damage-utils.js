@@ -1,8 +1,11 @@
 import FqConstants, {
+    buildDiceAppearance,
     CRITICAL_COLOR,
+    CRITICAL_DICE_APPEARANCE,
     CRITICAL_HEAL_COLOR,
     DAMAGES_COLOR,
     EVASION_COLOR,
+    EVASION_DICE_APPEARANCE,
     FAIL_COLOR,
     HEAL_COLOR,
     SUCCESS_COLOR
@@ -23,16 +26,17 @@ export default class DamageUtils {
      *
      * @param {object} actor       - L'acteur lanceur.
      * @param {object} cardContent - Le contenu (choix) de la carte (`damage`, `bonusCrit`, `bonusEva`, `targetType`).
+     * @param {Promise[]} [dsnAnimations=[]] - Collecteur des promesses d'animations Dice So Nice (affichage simultané).
      *
      * @returns {Promise<object[]>} Le tableau des résultats de dégâts par cible.
      */
-    static async buildDamageDiceLauncher(actor, cardContent) {
+    static async buildDamageDiceLauncher(actor, cardContent, dsnAnimations = []) {
         let damageFormula = DamageUtils.getDamageWithBonus(actor, cardContent.damage);
         let damages = await DamageUtils.rollWithSuccessValueResultAsync(actor, damageFormula, {
             color: DAMAGES_COLOR,
             title: "Dégâts"
-        });
-        return DamageUtils.addCriticalEvasionToDamage(actor, damages, cardContent);
+        }, dsnAnimations);
+        return DamageUtils.addCriticalEvasionToDamage(actor, damages, cardContent, dsnAnimations);
     }
 
     /**
@@ -41,17 +45,18 @@ export default class DamageUtils {
      *
      * @param {object} actor       - L'acteur lanceur.
      * @param {object} cardContent - Le contenu (choix) de la carte (`heal`, `bonusCrit`, `targetType`).
+     * @param {Promise[]} [dsnAnimations=[]] - Collecteur des promesses d'animations Dice So Nice (affichage simultané).
      *
      * @returns {Promise<object[]>} Le tableau des résultats de soins par cible.
      */
-    static async buildHealDiceLauncher(actor, cardContent) {
+    static async buildHealDiceLauncher(actor, cardContent, dsnAnimations = []) {
         let healFormula = DamageUtils.getHealWithBonus(actor, cardContent.heal);
         let heal = await DamageUtils.rollWithSuccessValueResultAsync(actor, healFormula,
             {
                 color: HEAL_COLOR,
                 title: "Soins"
-            });
-        return DamageUtils.addCriticalToHeal(actor, heal, cardContent);
+            }, dsnAnimations);
+        return DamageUtils.addCriticalToHeal(actor, heal, cardContent, dsnAnimations);
     }
 
     /**
@@ -82,10 +87,11 @@ export default class DamageUtils {
      * @param {object} actor       - L'acteur lanceur.
      * @param {number} heal        - Le montant de soin de base (borné à 0 minimum).
      * @param {object} cardContent - Le contenu (choix) de la carte (`bonusCrit`, `targetType`).
+     * @param {Promise[]} [dsnAnimations=[]] - Collecteur des promesses d'animations Dice So Nice (affichage simultané).
      *
      * @returns {Promise<object[]>} Le tableau des résultats de soin par cible.
      */
-    static async addCriticalToHeal(actor, heal, cardContent) {
+    static async addCriticalToHeal(actor, heal, cardContent, dsnAnimations = []) {
         if (heal < 0) {
             heal = 0;
         }
@@ -95,8 +101,9 @@ export default class DamageUtils {
             const critToReach = 20 - actor?.system?.fq.attributes.critical - cardContent.bonusCrit;
             critical = await DamageUtils.rollWithSuccessValueResultAsync(actor, "1d20", {
                 color: CRITICAL_HEAL_COLOR, title: "Critique des soins",
-                success: critToReach
-            }) >= critToReach;
+                success: critToReach,
+                appearance: CRITICAL_DICE_APPEARANCE // dé rouge pour le critique
+            }, dsnAnimations) >= critToReach;
         }
         FqConstants.myTargets(cardContent.targetType).forEach(target => {
             healArray.push({
@@ -140,10 +147,11 @@ export default class DamageUtils {
      * @param {object} actor       - L'acteur lanceur.
      * @param {number} damages     - Le montant de dégâts de base (borné à 0 minimum).
      * @param {object} cardContent - Le contenu (choix) de la carte (`bonusCrit`, `bonusEva`, `targetType`).
+     * @param {Promise[]} [dsnAnimations=[]] - Collecteur des promesses d'animations Dice So Nice (affichage simultané).
      *
      * @returns {Promise<object[]>} Le tableau des résultats de dégâts par cible.
      */
-    static async addCriticalEvasionToDamage(actor, damages, cardContent) {
+    static async addCriticalEvasionToDamage(actor, damages, cardContent, dsnAnimations = []) {
         const myTargets = FqConstants.myTargets(cardContent.targetType);
         if (damages < 0) {
             damages = 0;
@@ -154,8 +162,9 @@ export default class DamageUtils {
             const critToReach = 21 - actor?.system?.fq.attributes.critical - cardContent.bonusCrit;
             critical = await DamageUtils.rollWithSuccessValueResultAsync(actor, "1d20", {
                 color: CRITICAL_COLOR, title: "Critique",
-                success: critToReach
-            }) >= critToReach;
+                success: critToReach,
+                appearance: CRITICAL_DICE_APPEARANCE // dé rouge pour le critique
+            }, dsnAnimations) >= critToReach;
         }
         for (let i = 0; i < myTargets.length; i++) {
             const target = myTargets[i];
@@ -169,8 +178,9 @@ export default class DamageUtils {
                     evaToReach = 21 - targetActor.system?.fq?.attributes.evasion - cardContent.bonusEva;
                     evasionScore = await DamageUtils.rollWithSuccessValueResultAsync(actor, "1d20", {
                         color: EVASION_COLOR, title: `Esquive de "${target.document.name}"`,
-                        success: evaToReach
-                    });
+                        success: evaToReach,
+                        appearance: EVASION_DICE_APPEARANCE // dé bleu pour l'esquive
+                    }, dsnAnimations);
                 }
                 if (evasionScore >= evaToReach) {
                     damagesArray.push({
@@ -197,6 +207,42 @@ export default class DamageUtils {
     }
 
     /**
+     * Construit l'apparence Dice So Nice des dés « ordinaires » du module (dégâts,
+     * soins…) à partir de la couleur du joueur courant dans Foundry
+     * (`game.user.color`). Comme le critique et l'esquive, on force le préréglage
+     * standard pour que la couleur s'affiche de façon fiable ; seule la couleur de
+     * fond change. Poser une apparence explicite sur chaque dé évite aussi toute
+     * fuite de couleur entre jets lors de l'affichage simultané.
+     *
+     * @returns {object|undefined} L'apparence basée sur la couleur du joueur, ou undefined si indisponible.
+     */
+    static getPlayerDiceAppearance() {
+        const color = game.user?.color?.css ?? game.user?.color;
+        return color ? buildDiceAppearance(color) : undefined;
+    }
+
+    /**
+     * Applique une apparence Dice So Nice sur CHAQUE dé d'un jet (avant `toMessage`).
+     * À utiliser sur tous les jets visibles du module pour garantir la couleur et
+     * éviter toute fuite entre jets lors de l'affichage simultané. Par défaut,
+     * utilise la couleur du joueur ; passer une `appearance` pour forcer une couleur
+     * spécifique (ex. critique = rouge, esquive = bleu).
+     *
+     * @param {Roll}   roll                                        - Le jet déjà évalué.
+     * @param {object} [appearance=DamageUtils.getPlayerDiceAppearance()] - L'apparence à poser.
+     *
+     * @returns {void}
+     */
+    static applyDiceAppearance(roll, appearance = DamageUtils.getPlayerDiceAppearance()) {
+        if (!appearance || !roll?.dice) {
+            return;
+        }
+        for (const die of roll.dice) {
+            die.options.appearance = appearance;
+        }
+    }
+
+    /**
      * Effectue un jet de dés, publie le résultat dans le chat (avec titre et
      * couleur, et éventuellement un libellé SUCCÈS/échec selon un seuil), attend
      * l'animation Dice So Nice si présente, puis retourne le total du jet.
@@ -207,14 +253,23 @@ export default class DamageUtils {
      * @param {string} options.color   - La couleur du titre.
      * @param {string} options.title   - Le titre affiché.
      * @param {number} [options.success] - Le seuil de succès ; si fourni, affiche SUCCÈS/échec.
+     * @param {object} [options.appearance] - Apparence DSN forcée pour ce jet (ex. critique/esquive) ;
+     *        si absente, l'apparence du joueur est réappliquée explicitement.
+     * @param {Promise[]} [dsnAnimations=[]] - Collecteur des promesses d'animations Dice So Nice :
+     *        la promesse de ce jet y est empilée (au lieu d'être attendue) pour un affichage
+     *        simultané ; l'appelant attend l'ensemble via `Promise.all` au bon moment.
      *
      * @returns {Promise<number>} Le total du jet.
      */
-    static async rollWithSuccessValueResultAsync(actor, formula, options) {
+    static async rollWithSuccessValueResultAsync(actor, formula, options, dsnAnimations = []) {
         // Check whether the dice formula is "1dX" or "dX" to assure that both ways work
         // if (dice.charAt(0) == "d") dice = "1" + dice;
         // Roll dice
         const roll = await new Roll(formula).evaluate();
+
+        // Apparence explicite sur chaque dé : critique/esquive = couleur forcée
+        // (options.appearance), sinon couleur du joueur. Évite toute fuite en affichage simultané.
+        DamageUtils.applyDiceAppearance(roll, options.appearance);
         // Add reroll button
         let message = `<h2 style='color: ${options.color}'>${options.title}`;
 
@@ -232,9 +287,13 @@ export default class DamageUtils {
             flavor: message
         });
 
-        //TODO pas mal mais si probleme peut être récupérer plutôt le message et voir si il est déjà display
+        // On N'ATTEND PAS l'animation ici : on empile la promesse dans le collecteur
+        // fourni pour que tous les dés du même jet partent simultanément. L'appelant
+        // attendra l'ensemble (Promise.all) avant d'appliquer les PV / d'afficher le
+        // récap. `roll.total` est déjà disponible après evaluate(), donc la logique
+        // métier (critique, esquive…) peut s'enchaîner immédiatement sans attente visuelle.
         if (game.dice3d && roll.isDeterministic === false) {
-            await game.dice3d.waitFor3DAnimationByMessageID(msg.id);
+            dsnAnimations.push(game.dice3d.waitFor3DAnimationByMessageID(msg.id));
         }
         return roll.total;
     }

@@ -3,6 +3,7 @@ Feat :
 - Illustration de carte pas défaut et Logo FQ pour la mise en pause
 - Génération des decks à la volée suivant les cartes correspondant aux classes et niveaux (1/2 du nombre max par défaut) et plus à partir de deck générés
 - Ajout une fleche raccourci pour passer une carte du spellbook vers le deck + grisage des cartes déjà distribué dans le deck
+- Support Dice So Nice: Jets de dés simultanés
 
 Chore :
 - Couverture des tests unitaires >50% et >80% pour les méthodes utils

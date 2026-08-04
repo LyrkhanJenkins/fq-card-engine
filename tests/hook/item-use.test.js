@@ -229,7 +229,7 @@ describe("item-use", () => {
             await hook([roll], {subject});
 
             expect(DamageUtils.addCriticalToHeal)
-                .toHaveBeenCalledWith(actor, roll.total, expect.objectContaining({heal: "1d8"}));
+                .toHaveBeenCalledWith(actor, roll.total, expect.objectContaining({heal: "1d8"}), expect.any(Array));
             expect(FxUtils.handleSpecialEffect).toHaveBeenCalled();
             expect(socket.executeAsGM).toHaveBeenCalledWith("applyActorHpModification", "token-1", 5, "healFQ");
             expect(DamageUtils.displayResult)

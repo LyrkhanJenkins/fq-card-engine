@@ -183,6 +183,8 @@ beforeEach(() => {
     globalThis.Roll = vi.fn(function (formula) {
         this.formula = formula;
         this.total = DETERMINISTIC_ROLL_TOTAL;
+        this.options = {}; // le vrai Roll de Foundry possède toujours un objet options
+        this.dice = [{options: {}}]; // le vrai Roll expose ses DiceTerm (avec leurs propres options)
         this.evaluate = async () => this;
         this.toMessage = vi.fn(async () => ({id: "messageId"}));
     });

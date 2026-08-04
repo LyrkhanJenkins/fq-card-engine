@@ -87,18 +87,22 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     }
     let resultArray = [];
     let cardContent = {heal: 0, damage: 0, minReach, maxReach, bonusCrit: 0, bonusEva: 0};
+    // Collecteur local des animations Dice So Nice de ce jet, passé aux méthodes de jet
+    // pour un affichage simultané des dés (voir DamageUtils.rollWithSuccessValueResultAsync).
+    const dsnAnimations = [];
     for (let roll of rolls) {
         if (item.actor) {
             if (subject.type === "heal") {
                 cardContent.heal = roll.formula;
                 if (item.actor.system?.fq?.bonus?.heal) {
                     roll = await new Roll(DamageUtils.getHealWithBonus(item.actor, roll.total)).evaluate();
+                    DamageUtils.applyDiceAppearance(roll); // dés à la couleur du joueur
                     await roll.toMessage({
                         speaker: ChatMessage.getSpeaker({actor: item.actor}),
                         flavor: game.i18n.format("FQCARDENGINE.InfoMsgHealBonus", {heal: item.actor.system?.fq?.bonus?.heal})
                     });
                 }
-                resultArray.push(...await DamageUtils.addCriticalToHeal(item.actor, roll.total, cardContent));
+                resultArray.push(...await DamageUtils.addCriticalToHeal(item.actor, roll.total, cardContent, dsnAnimations));
                 if (token) {
                     await FxUtils.handleSpecialEffect(cardContent, resultArray, token, roll.options.type);
                 }
@@ -106,16 +110,21 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
                 cardContent.damage = roll.formula;
                 if (item.actor.system?.fq?.bonus?.damage) {
                     roll = await new Roll(DamageUtils.getDamageWithBonus(item.actor, roll.total)).evaluate();
+                    DamageUtils.applyDiceAppearance(roll); // dés à la couleur du joueur
                     await roll.toMessage({
                         speaker: ChatMessage.getSpeaker({actor: item.actor}),
                         flavor: game.i18n.format("FQCARDENGINE.InfoMsgDamageBonus", {damage: item.actor.system?.fq?.bonus?.damage})
                     });
                 }
-                resultArray.push(...await DamageUtils.addCriticalEvasionToDamage(item.actor, roll.total, cardContent));
+                resultArray.push(...await DamageUtils.addCriticalEvasionToDamage(item.actor, roll.total, cardContent, dsnAnimations));
                 if (token) {
                     await FxUtils.handleSpecialEffect(cardContent, resultArray, token, roll.options.type);
                 }
             }
+
+            // Attente unique de toutes les animations Dice So Nice du jet (dégâts/soin
+            // + critique + esquives partis simultanément) avant d'infliger les PV.
+            await Promise.all(dsnAnimations);
 
             for (const res of resultArray) {
                 await socket.executeAsGM("applyActorHpModification", res.targetTokenId, res.value, res.type);
