@@ -1693,7 +1693,7 @@
               "minReach": "1",
               "maxReach": "1",
               "nbTargets": "4",
-              "damage": "(1+@int+1d4)[thunder]+(1+@sag+1d4)[cold]",
+              "damage": "(1+@int+1d4)[thunder]+(1+@wis+1d4)[cold]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
