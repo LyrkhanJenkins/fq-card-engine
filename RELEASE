@@ -1,3 +1,41 @@
+Update 2.0.0:
+    Feat:
+        - Rework of the player hand UI
+        - Add FQ resources to the player hand
+        - Rework of the play-card dialog UI
+        - Add FQ resources and targets to the play-card dialog
+        - Show FQ resources directly in the play dialog and in the hand-container
+        - Cards are generated dynamically from the FQ card form via an SVG
+        - Cards have a defined class that changes the texture
+        - Localization (FR and EN) of all cards
+        - Rework of the illustrations of all playable cards
+        - New FX handling (with JB2A) and original sounds (several sounds per damage type)
+        - A passive spell can only be played once per turn
+        - A base spell does not necessarily stay in hand -> coupled with replayable
+        - GM macro to generate a deck with all cards
+    Chore:
+        - Version bump 14.365
+        - Refactor FQ templates and objects wired to DND5E objects (character sheets) and Foundry (cards and decks)
+        - Refactor classes and static methods to keep only the strict minimum
+        - Macro to generate a deck with all cards
+        - Vitest migration
+    Fix:
+        - Fix creation of a unique deck per player with their class cards
+        - Fix minion summoning
+        - Fix several cards: 'Enchanted Whip', 'Rock Throw', 'Shadow Spell'
+
+Update 1.1.1:
+    Chore:
+        - Version bump 13.350
+    Fix:
+        - Players can no longer play their weapons outside their turn
+        - If xvalue or yvalue is set to currentDrop, clear it for the character
+        - Stop using game.actors.get to avoid decorrelation, use only token ids for targets
+        - Fix Charge: did not work, .from() is deprecated, use .copySprite() + use the GM targets
+        - Add missing effect messages for Guardian and Elementalist
+        - Fix Open/Create Deck Macros
+        - Fix base cards in generated decks
+
 Update 1.1.0:
     Feat:
         - Add 2 new classes : The Witch and the Guardian
