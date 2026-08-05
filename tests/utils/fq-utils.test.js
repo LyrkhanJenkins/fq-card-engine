@@ -703,11 +703,10 @@ describe("FQUtils", () => {
             }));
         });
 
-        it("ymin non respecté (comportement RÉEL : comparé à XXX, pas YYY) : rejette (false) et publie WarningMsgYValueInferiorYMin", async () => {
-            // Quirk caractérisé : fq-utils.js:633 compare `XXX < ymin`, pas YYY.
+        it("ymin non respecté : rejette (false) quand YYY < ymin et publie WarningMsgYValueInferiorYMin", async () => {
             const cardContent = makeChoice({damage: "XXX+YYY", ymin: "5"});
 
-            const ok = await FQUtils.replaceCardContentXAndYValue(cardContent, true, 2, 100);
+            const ok = await FQUtils.replaceCardContentXAndYValue(cardContent, true, 100, 2);
 
             expect(ok).toBe(false);
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
