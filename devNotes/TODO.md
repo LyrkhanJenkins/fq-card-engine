@@ -10,7 +10,6 @@
 - Revoir css, homogénéiser fonts...
 - Redécoupage et vérification CSS
 - Repasser sur tous les TODO
-- Comment faire en sorte que card viewer affiche le svg?
 - Faire un point sur todos.*
 - Afficher les barres spécifiques
 - Tests fonctionnels + montée dernière version
@@ -20,7 +19,6 @@
 - Priorisé les protections avant de faire jouer la carte (OU REPORTER)
 - Sélectionner une cible après coup (OU REPORTER)
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
-- Support avec un FQ Card Viewer
 - PATCH--> RELEASE
 
 #### 2.0.3
@@ -31,9 +29,6 @@
 - Volée de shuriken et shuriken, effet spéciaux à changer
 - Rajouter des règles d'architectures
 - Tests fonctionnels + montée dernière version
-- PATCH--> RELEASE
-
-#### 2.0.4
 - Bug tornade effet magique
 - Revoir les effets visuels et audio
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)

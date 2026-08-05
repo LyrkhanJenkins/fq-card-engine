@@ -80,19 +80,20 @@ export default class DisplayCard {
      * transformant les tokens en symboles lisibles.
      *
      * @param {Card} c - La carte dont on extrait la description.
+     * @param {number|null} [faceIndex] - Index de face à présenter (par défaut la face courante `c.face`). Permet de forcer la face avant lors d'une révélation.
      *
      * @returns {string} La description formatée, prête à l'affichage.
      */
-    static getDescriptionFromCard(c) {
+    static getDescriptionFromCard(c, faceIndex = c.face) {
         let description = "";
-        if (c.face != null) {
+        if (faceIndex != null) {
             if (!c.faces) {
                 description = undefined;
             } else {
-                description = c.faces[c.face].text;
+                description = c.faces[faceIndex].text;
             }
         }
-        if (c.face && !description) {
+        if (faceIndex && !description) {
             description = c.data.faces[c.data.face].text;
         }
         const flat = Object.fromEntries(
@@ -108,11 +109,12 @@ export default class DisplayCard {
      * face cachée.
      *
      * @param {Card} c - La carte dont on extrait le nom.
+     * @param {number|null} [faceIndex] - Index de face à présenter (par défaut la face courante `c.face`). Permet de forcer la face avant lors d'une révélation.
      *
      * @returns {string} Le nom localisé de la carte (ou du dos).
      */
-    static getNameFromCard(c) {
-        let name = (c.face !== null) ? c.name : "FQCARDENGINE.CardBack";
+    static getNameFromCard(c, faceIndex = c.face) {
+        let name = (faceIndex !== null) ? c.name : "FQCARDENGINE.CardBack";
         return game.i18n.localize(name);
     }
 
@@ -121,19 +123,20 @@ export default class DisplayCard {
      * l'image du dos si la carte est face cachée.
      *
      * @param {Card} c - La carte dont on extrait l'image.
+     * @param {number|null} [faceIndex] - Index de face à présenter (par défaut la face courante `c.face`). Permet de forcer la face avant lors d'une révélation.
      *
      * @returns {string|undefined} Le chemin de l'image, ou undefined si indisponible.
      */
-    static getImgFromCard(c) {
+    static getImgFromCard(c, faceIndex = c.face) {
         let img = c.back.img;
-        if (c.face != null) {
+        if (faceIndex != null) {
             if (!c.faces) {
                 img = undefined;
             } else {
-                img = c.faces[c.face].img;
+                img = c.faces[faceIndex].img;
             }
         }
-        if (c.face && !img) {
+        if (faceIndex && !img) {
             img = c.data.faces[c.data.face].img;
         }
         return img;

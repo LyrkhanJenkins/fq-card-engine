@@ -25,6 +25,9 @@ export default class HandBoard {
         this.updating = false;
         this.html = undefined;
         this.playerBarCount = 0;
+        // Regroupement des cartes d'une même pioche pour l'animation de révélation.
+        this._drawRevealBuffer = [];
+        this._drawRevealTimer = null;
         let t = this;
 
         foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand.hbs", {
@@ -68,9 +71,15 @@ export default class HandBoard {
             }
         });
 
-        Hooks.on("createCard", function (target) {
+        Hooks.on("createCard", function (target, options, userId) {
             if (!!target && !!target.parent && (!!t.currentCards && (target.parent._id ? target.parent._id : target.parent.data._id) == (t.currentCards._id ? t.currentCards._id : t.currentCards.data._id))) {
                 t.update();
+                // Révélation cosmétique : uniquement pour le joueur qui pioche
+                // (`userId` local) et uniquement pour les cartes réellement piochées
+                // (`drawn`), quelle que soit la méthode de pioche.
+                if (userId === game.user.id && target.drawn) {
+                    t.bufferDrawReveal(target);
+                }
             }
         });
 
@@ -84,6 +93,56 @@ export default class HandBoard {
         });
         //auto register to listen for updates
         FqCardEngineModule.handMiniBarList.push(this);
+    }
+
+    /**
+     * Construit l'objet de données d'affichage d'une carte pour le gabarit
+     * `card.hbs` (bulles, description, modificateurs, face/dos…). Centralise la
+     * logique afin qu'elle soit réutilisable telle quelle par le rendu de la main
+     * et par l'animation de révélation à la pioche.
+     *
+     * @param {Card} c - La carte à présenter.
+     * @param {object} [options] - Options de présentation.
+     * @param {boolean} [options.forceFace=false] - Force l'affichage de la face avant même si la carte est face cachée (pour la révélation).
+     *
+     * @returns {object} Les données à passer à `card.hbs`.
+     */
+    buildCardRenderData(c, {forceFace = false} = {}) {
+        const faceIndex = forceFace && c.face == null ? 0 : c.face;
+        const img = DisplayCard.getImgFromCard(c, faceIndex);
+        const name = DisplayCard.getNameFromCard(c, faceIndex);
+        const cardContent = c.system.fq?.choices?.length ? c.system.fq?.choices[0] : {};
+        const description = DisplayCard.getDescriptionFromCard(c, faceIndex);
+        return {
+            id: c._id ? c._id : c.data._id,
+            description: description,
+            descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
+            titleSize: DisplayCard.getTitleSizeForCardSvg(name),
+            action : DisplayCard.getNumberForBubbleCardSvg(cardContent.action, cardContent),
+            mana : DisplayCard.getNumberForBubbleCardSvg(cardContent.mana, cardContent),
+            zeal : DisplayCard.getNumberForBubbleCardSvg(cardContent.zeal, cardContent),
+            minReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.minReach, cardContent),
+            maxReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.maxReach, cardContent),
+
+            actionMod : FQUtils.hasAbilitiesBonus(cardContent.action),
+            manaMod : FQUtils.hasAbilitiesBonus(cardContent.mana),
+            zealMod : FQUtils.hasAbilitiesBonus(cardContent.zeal),
+            reachMod : FQUtils.hasAbilitiesBonus(cardContent.minReach) || FQUtils.hasAbilitiesBonus(cardContent.maxReach),
+            replayableMod : FQUtils.hasAbilitiesBonus(cardContent.replayable),
+
+            reactive : cardContent.reactive,
+            replayable : cardContent?.replayable === "passif" ? "P" : !cardContent?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(cardContent?.replayable, cardContent),
+            maxSameCard : c.system.fq?.maxSameCard,
+            fqClass : c.system.fq?.class,
+            hasBeenPlayed: cardContent?.hasBeenPlayed,
+            passiveHasBeenPlayedOnRound: cardContent?.passivePlayedRound && cardContent?.passivePlayedRound?.toString() === game.combat?.round?.toString(),
+            isFQBase: c.system?.fq?.isBase,
+            cardsid: this.currentCards._id ? this.currentCards._id : this.currentCards.data._id,
+            uuid: c.uuid,
+            back: forceFace ? false : (c.face == null),
+            img: img,
+            name: name,
+        };
     }
 
     /**
@@ -111,40 +170,7 @@ export default class HandBoard {
                 });
             }
             $(this.currentCards.cards.contents.sort(FqCardEngineModule.cardSort)).each(function (i, c) {
-                let img = DisplayCard.getImgFromCard(c);
-                let name = DisplayCard.getNameFromCard(c);
-                let cardContent = c.system.fq?.choices?.length ? c.system.fq?.choices[0] : {};
-                let description = DisplayCard.getDescriptionFromCard(c);
-                let renderData = {
-                    id: c._id ? c._id : c.data._id,
-                    description: description,
-                    descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
-                    titleSize: DisplayCard.getTitleSizeForCardSvg(name),
-                    action : DisplayCard.getNumberForBubbleCardSvg(cardContent.action, cardContent),
-                    mana : DisplayCard.getNumberForBubbleCardSvg(cardContent.mana, cardContent),
-                    zeal : DisplayCard.getNumberForBubbleCardSvg(cardContent.zeal, cardContent),
-                    minReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.minReach, cardContent),
-                    maxReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.maxReach, cardContent),
-
-                    actionMod : FQUtils.hasAbilitiesBonus(cardContent.action),
-                    manaMod : FQUtils.hasAbilitiesBonus(cardContent.mana),
-                    zealMod : FQUtils.hasAbilitiesBonus(cardContent.zeal),
-                    reachMod : FQUtils.hasAbilitiesBonus(cardContent.minReach) || FQUtils.hasAbilitiesBonus(cardContent.maxReach),
-                    replayableMod : FQUtils.hasAbilitiesBonus(cardContent.replayable),
-
-                    reactive : cardContent.reactive,
-                    replayable : cardContent?.replayable === "passif" ? "P" : !cardContent?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(cardContent?.replayable, cardContent),
-                    maxSameCard : c.system.fq?.maxSameCard,
-                    fqClass : c.system.fq?.class,
-                    hasBeenPlayed: cardContent?.hasBeenPlayed,
-                    passiveHasBeenPlayedOnRound: cardContent?.passivePlayedRound && cardContent?.passivePlayedRound?.toString() === game.combat?.round?.toString(),
-                    isFQBase: c.system?.fq?.isBase,
-                    cardsid: t.currentCards._id ? t.currentCards._id : t.currentCards.data._id,
-                    uuid: c.uuid,
-                    back: (c.face == null),
-                    img: img,
-                    name: name,
-                };
+                let renderData = t.buildCardRenderData(c);
                 foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/card.hbs", renderData).then(content => {
                     content = $(content);
                     content.click(function (e) {
@@ -565,6 +591,156 @@ export default class HandBoard {
             return;
         }
         this.currentCards.drawDialog();
+    }
+
+    /**
+     * Met une carte piochée en tampon puis, après un court délai, déclenche la
+     * révélation de toutes les cartes de la même pioche d'un seul coup. Les cartes
+     * d'une pioche multiple arrivent via plusieurs événements `createCard` quasi
+     * simultanés : ce regroupement (debounce) les rassemble pour une seule
+     * animation « toutes ensemble ».
+     *
+     * @param {Card} card - Une carte fraîchement piochée à révéler.
+     *
+     * @returns {void}
+     */
+    bufferDrawReveal(card) {
+        const t = this;
+        t._drawRevealBuffer.push(card);
+        clearTimeout(t._drawRevealTimer);
+        t._drawRevealTimer = setTimeout(function () {
+            const cards = t._drawRevealBuffer.slice();
+            t._drawRevealBuffer = [];
+            t._drawRevealTimer = null;
+            t.playDrawReveal(cards);
+        }, 80);
+    }
+
+    /**
+     * Joue une animation cosmétique de révélation des cartes piochées : un voile
+     * noir plein écran apparaît, les cartes sont révélées face avant (rendues via
+     * le même gabarit `card.hbs` que la main), maintenues brièvement, puis
+     * « aspirées » vers la barre de main de cette barre avant que le voile ne se
+     * dissolve. Purement local et cosmétique — aucun impact sur le moteur, aucun
+     * socket. Un clic n'importe où accélère/passe l'animation.
+     *
+     * @param {Card[]} cards - Les cartes réellement piochées à révéler.
+     *
+     * @returns {Promise<void>}
+     */
+    async playDrawReveal(cards) {
+        if (!Array.isArray(cards) || cards.length === 0) {
+            return;
+        }
+        const t = this;
+        const count = cards.length;
+
+        const overlay = document.createElement("div");
+        overlay.className = "fq-draw-reveal-overlay";
+        const stage = document.createElement("div");
+        stage.className = "fq-draw-reveal-stage";
+        overlay.appendChild(stage);
+
+        // Taille responsive : cartes aussi grandes que possible selon la hauteur
+        // d'écran, mais assez petites pour que toute la volée tienne en largeur.
+        const scaleByHeight = (window.innerHeight * 0.55) / 130;
+        const scaleByWidth = (window.innerWidth * 0.9) / (count * 94 * 1.15);
+        const scale = Math.max(1.6, Math.min(scaleByHeight, scaleByWidth, 5));
+        stage.style.setProperty("--fq-scale", scale);
+
+        // Rend chaque carte piochée face avant, à l'identique de la main.
+        const elements = await Promise.all(cards.map(async (c, i) => {
+            const renderData = t.buildCardRenderData(c, {forceFace: true});
+            const html = await foundry.applications.handlebars.renderTemplate(
+                "modules/fq-card-engine/src/templates/board/card.hbs", renderData);
+            const el = $(html)[0];
+            el.classList.add("fq-draw-reveal-card");
+            // Léger éventail : rotation centrée autour du milieu de la volée.
+            const rot = (i - (count - 1) / 2) * 5;
+            el.style.setProperty("--fq-reveal-rot", rot + "deg");
+            el.style.setProperty("--fq-reveal-delay", (i * 90) + "ms");
+            return el;
+        }));
+        elements.forEach(el => stage.appendChild(el));
+
+        document.body.appendChild(overlay);
+        // Force un reflow avant de déclencher l'entrée (sinon la transition est ignorée).
+        void overlay.offsetWidth;
+        overlay.classList.add("fq-draw-reveal-in");
+
+        // Machine à états : enter → charge (illumination immobile) → out (aspiration) → done.
+        let phase = "enter";
+        const timers = [];
+        const clearTimers = () => {
+            timers.forEach(clearTimeout);
+            timers.length = 0;
+        };
+
+        // Vise la barre de main de CETTE barre ; renvoie le point d'arrivée à l'écran.
+        const aimAtHand = () => {
+            const target = document.getElementById("fq-card-engine-card-container-" + t.id);
+            const rect = target?.getBoundingClientRect();
+            const hx = (rect && rect.width) ? rect.left + rect.width / 2 : window.innerWidth / 2;
+            const hy = (rect && rect.width) ? rect.top + rect.height / 2 : window.innerHeight;
+            stage.style.setProperty("--fq-reveal-out-x", (hx - window.innerWidth / 2) + "px");
+            stage.style.setProperty("--fq-reveal-out-y", (hy - window.innerHeight / 2) + "px");
+            return {hx, hy};
+        };
+
+        // Éclat lumineux à l'arrivée des cartes dans la main.
+        const burstAt = (hx, hy) => {
+            const burst = document.createElement("div");
+            burst.className = "fq-draw-reveal-burst";
+            burst.style.left = hx + "px";
+            burst.style.top = hy + "px";
+            overlay.appendChild(burst);
+            setTimeout(() => burst.remove(), 700);
+        };
+
+        // Phase finale : accélération lumineuse vers la main puis éclat + nettoyage.
+        const finish = () => {
+            if (phase === "out" || phase === "done") {
+                return;
+            }
+            phase = "out";
+            clearTimers();
+            const {hx, hy} = aimAtHand();
+            overlay.classList.add("fq-draw-reveal-out");
+            timers.push(setTimeout(() => burstAt(hx, hy), 430));
+            timers.push(setTimeout(() => {
+                phase = "done";
+                overlay.remove();
+            }, 900));
+        };
+
+        // Illumination : les cartes restent immobiles et s'éclairent avant le lancement.
+        const charge = (chargeMs) => {
+            if (phase !== "enter") {
+                return;
+            }
+            phase = "charge";
+            overlay.classList.add("fq-draw-reveal-charge");
+            timers.push(setTimeout(finish, chargeMs));
+        };
+
+        // Durées : maintien plus long quand il y a plus de cartes (plafonné).
+        const enterMs = 500 + count * 90;
+        const holdMs = Math.min(1500 + count * 400, 3800);
+        timers.push(setTimeout(() => charge(400), enterMs + holdMs));
+
+        // Clic = accélère : illumination courte puis aspiration, ou fin immédiate.
+        overlay.addEventListener("click", () => {
+            if (phase === "enter") {
+                clearTimers();
+                charge(140);
+            } else if (phase === "charge") {
+                finish();
+            } else {
+                clearTimers();
+                phase = "done";
+                overlay.remove();
+            }
+        });
     }
 
     /**

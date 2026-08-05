@@ -1,3 +1,7 @@
+v2.0.2:
+Feat :
+- Animation de pioche de carte
+
 v2.0.1:
 Feat :
 - Illustration de carte pas défaut et Logo FQ pour la mise en pause
