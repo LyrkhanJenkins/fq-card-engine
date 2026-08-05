@@ -805,6 +805,15 @@ div.separator {
     will-change: transform, box-shadow;
 }
 
+/* Variante « dos » : pas de SVG, juste l'image de dos. Le div .fq-card-face est
+   en position absolue, on donne donc une taille au conteneur (ratio de la carte
+   508×693) pour qu'il s'affiche à la même empreinte que la face. */
+.fq-play-card-img--back {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 508 / 693;
+}
+
 @keyframes floatCard {
     0% {
         transform: perspective(900px) rotateY(8deg) rotateX(8deg);

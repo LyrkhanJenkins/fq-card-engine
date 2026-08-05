@@ -76,25 +76,29 @@
 
         {{!-- Carte --}}
         <div class="fq-play-card-wrap">
-            <div class="fq-play-card-img {{#if isFQBase}} fq-card-is-base{{/if}}{{#if
+            <div class="fq-play-card-img{{#if back}} fq-play-card-img--back{{/if}}{{#if isFQBase}} fq-card-is-base{{/if}}{{#if
                     passiveHasBeenPlayedOnRound}} has-been-played-on-round {{else}}{{#if hasBeenPlayed}} has-been-played{{/if}}{{/if}}">
 
-                {{> "modules/fq-card-engine/src/templates/partials/card-svg.hbs"
-                        img=img
-                        name=name
-                        action=action
-                        mana=mana
-                        zeal=zeal
-                        minReach=minReach
-                        maxReach=maxReach
-                        maxSameCard=maxSameCard
-                        fqClass=fqClass
-                        description=description
-                        titleSize=titleSize
-                        descriptionSize=descriptionSize
-                        reactive=reactive
-                        replayable=replayable
-                }}
+                {{#if back}}
+                    <div class="fq-card-face" style="background-image: url('{{ img }}')"></div>
+                {{else}}
+                    {{> "modules/fq-card-engine/src/templates/partials/card-svg.hbs"
+                            img=img
+                            name=name
+                            action=action
+                            mana=mana
+                            zeal=zeal
+                            minReach=minReach
+                            maxReach=maxReach
+                            maxSameCard=maxSameCard
+                            fqClass=fqClass
+                            description=description
+                            titleSize=titleSize
+                            descriptionSize=descriptionSize
+                            reactive=reactive
+                            replayable=replayable
+                    }}
+                {{/if}}
             </div>
             {{#if isFQBase}}
                 <span class="fq-play-badge fq-play-badge--base">Base</span>

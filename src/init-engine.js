@@ -570,6 +570,7 @@ window.FqCardEngineModule = {
             card,
             img: img,
             name: name,
+            back: (card.face == null),
             description: description,
             descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
             titleSize: DisplayCard.getTitleSizeForCardSvg(name),
