@@ -646,7 +646,7 @@ export default class FQUtils {
             }
         }
 
-        if (cardContent?.ymin && XXX < Number(cardContent?.ymin)) {
+        if (cardContent?.ymin && YYY < Number(cardContent?.ymin)) {
             ChatMessage.create({
                 speaker: ChatMessage.getSpeaker({actor: game.user.character}),
                 content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
