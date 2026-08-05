@@ -281,12 +281,11 @@ describe("Dégâts : bizarrerie caractérisée — ciblage sur soi-même (struct
         vi.clearAllMocks();
     });
 
-    // Caractérisation, pas correction : dans `DamageUtils.addCriticalEvasionToDamage`,
-    // TOUT le bloc qui pousse le résultat dans `damagesArray` (esquive ET
-    // application de la valeur) est imbriqué à l'intérieur du
-    // `if (targetActor._id !== actor._id)`. En auto-ciblage, ce bloc entier est
-    // sauté : AUCUNE entrée n'est poussée, donc `hpCalls` reste VIDE — pas
-    // « dégâts pleins sans esquive possible » comme on pourrait l'attendre.
+    // Comportement VOULU (pas un bug) : dans `DamageUtils.addCriticalEvasionToDamage`,
+    // tout le bloc qui pousse le résultat dans `damagesArray` est imbriqué dans
+    // `if (targetActor._id !== actor._id)`. En auto-ciblage, ce bloc est sauté :
+    // aucune entrée n'est poussée, donc `hpCalls` reste VIDE (on ne se cible pas
+    // soi-même avec un sort de dégâts).
     test.each(damageCandidates)(
         "$deckFile :: $cardName :: choix $choiceIndex — cible = lanceur -> aucun hpCalls (quel que soit le dé)",
         async ({card, choiceIndex}) => {
@@ -341,24 +340,18 @@ describe("Application directe des PV (socket MJ, EXHA-02) — PV temporaires et 
         vi.clearAllMocks();
     });
 
-    // Caractérisation, pas correction : dans `DamageUtils.applyActorHpModification`,
-    // la réduction des PV temporaires (`temp > value`) et la réduction des PV
-    // normaux (`if (value > 0) {...}`) sont DEUX blocs indépendants qui
-    // s'exécutent l'un après l'autre — `value` n'étant réinitialisé QUE dans la
-    // branche `else if (temp > 0)`. Quand les PV temporaires absorbent
-    // ENTIÈREMENT le coup (`temp > value`), la valeur BRUTE (non réduite)
-    // s'applique QUAND MÊME ensuite aux PV normaux : deux appels `update` sont
-    // émis (PV temp réduits ET PV normaux réduits de la même valeur complète).
-    test("dégâts : quand les PV temporaires absorbent tout, ils sont réduits ET les PV normaux encaissent quand même la valeur complète", () => {
+    // Quand les PV temporaires absorbent ENTIÈREMENT le coup
+    // (`temp > value`), `value` est remis à 0 → les PV normaux ne sont PAS
+    // touchés (plus de double comptage). Un seul appel `update` est émis.
+    test("dégâts : quand les PV temporaires absorbent tout le coup, seuls les PV temporaires sont réduits (pas de double comptage)", () => {
         const update = vi.fn();
         const targetActor = {system: {attributes: {hp: {value: 20, max: 20, temp: 10, tempmax: 0}}}, update};
         mountWorld({canvas: {tokens: {get: vi.fn(() => ({actor: targetActor}))}}});
 
         DamageUtils.applyActorHpModification("target-token", 6, "damageFQ");
 
-        expect(update).toHaveBeenCalledTimes(2);
+        expect(update).toHaveBeenCalledTimes(1);
         expect(update).toHaveBeenNthCalledWith(1, {"system.attributes.hp.temp": 4});
-        expect(update).toHaveBeenNthCalledWith(2, {"system.attributes.hp.value": 14});
     });
 
     test("dégâts : quand les PV temporaires sont insuffisants, ils sont consommés entièrement et le reliquat s'applique aux PV normaux", () => {

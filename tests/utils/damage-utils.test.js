@@ -226,13 +226,13 @@ describe("DamageUtils", () => {
             game.canvas.tokens = {get: vi.fn(() => ({actor: targetActor}))};
         }
 
-        it("damageFQ: consumes hp.temp fully — CARACTÉRISATION : le montant complet est aussi soustrait de hp.value (bug réel non corrigé)", () => {
+        it("damageFQ: quand hp.temp absorbe entièrement le coup, seuls les PV temporaires sont réduits (pas de double comptage)", () => {
             setupTargetActor({temp: 10, value: 20, max: 20, tempmax: 0}, {size: 0, filter: () => []});
 
             DamageUtils.applyActorHpModification("token1", 5, "damageFQ");
 
+            expect(targetActor.update).toHaveBeenCalledTimes(1);
             expect(targetActor.update).toHaveBeenCalledWith({"system.attributes.hp.temp": 5});
-            expect(targetActor.update).toHaveBeenCalledWith({"system.attributes.hp.value": 15});
         });
 
         it("damageFQ: consumes hp.temp partially then applies the remainder to hp.value", () => {

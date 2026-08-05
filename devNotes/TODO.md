@@ -2,8 +2,6 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-- `applyActorHpModification` (damage-utils.js) : quand les PV temporaires absorbent tout un coup (`temp > value`), la valeur brute n'est pas remise à 0 → les PV normaux réencaissent le même coup (double comptage des dégâts).
-- Auto-ciblage d'un sort de dégâts : `addCriticalEvasionToDamage` exclut le lanceur (`targetActor._id !== actor._id`) → aucune modification de PV n'est produite (`hpCalls` vide) ; à confirmer si c'est voulu.
 
 ### Versions prévues
 

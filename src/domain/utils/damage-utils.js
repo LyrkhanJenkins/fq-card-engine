@@ -357,6 +357,7 @@ export default class DamageUtils {
         if (typeAction === "damageFQ") {
             if (targetActor.system.attributes.hp.temp > value) {
                 targetActor.update({"system.attributes.hp.temp": targetActor.system.attributes.hp.temp - value});
+                value = 0;
             } else if (targetActor.system.attributes.hp.temp > 0) {
                 value -= targetActor.system.attributes.hp.temp;
                 targetActor.update({"system.attributes.hp.temp": 0});

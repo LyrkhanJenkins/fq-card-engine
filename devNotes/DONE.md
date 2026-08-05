@@ -19,6 +19,7 @@ Fix :
 - Correction des modificateurs d'attributs traduit en français à tord (@for -> @str)
 - Enlever l'ajout de main dans le container si les droits des joueurs sont limités
 - Correction, pour les cartes, du breaking change v13 -> v14 pour la structure de EffectChangeData
+- Correction du double comptage des dégâts quand les PV temporaires absorbent tout
 
 v2.0.0:
 
