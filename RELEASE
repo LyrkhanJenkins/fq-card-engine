@@ -1,3 +1,25 @@
+Update 2.0.1:
+    Feat:
+        - Default card illustration and FQ logo on pause
+        - On-the-fly deck generation based on cards matching classes and levels (half the max number by default), and further decks from already generated decks
+        - Add a shortcut arrow to move a card from the spellbook to the deck + grey out cards already distributed in the deck
+        - Dice So Nice support: simultaneous dice rolls
+    Chore:
+        - Unit test coverage >50%, and >80% for utils methods
+        - Non-regression tests on all game cards
+        - Complete documentation of methods
+        - End of Card Viewer recommendation
+        - Update and pin package.json dependency versions
+        - Set up GSD with Claude Code
+    Fix:
+        - Fix fr.json and en.json translations
+        - Fix wrong control of the Y variables
+        - Fix attribute modifiers wrongly translated into French (@for -> @str)
+        - Do not add the hand to the container when player rights are limited
+        - Fix, for cards, the v13 -> v14 breaking change of the EffectChangeData structure
+        - Fix double-counting of damage when temporary HP absorb everything
+        - Prevent a crash when the xyvalue evaluation fails, returning 0 instead
+
 Update 2.0.0:
     Feat:
         - Rework of the player hand UI
