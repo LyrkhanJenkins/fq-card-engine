@@ -20,6 +20,7 @@ Fix :
 - Enlever l'ajout de main dans le container si les droits des joueurs sont limités
 - Correction, pour les cartes, du breaking change v13 -> v14 pour la structure de EffectChangeData
 - Correction du double comptage des dégâts quand les PV temporaires absorbent tout
+- Empêcher le crash si l'évaluation du xyvalue rate et renvoie 0 plutôt
 
 v2.0.0:
 

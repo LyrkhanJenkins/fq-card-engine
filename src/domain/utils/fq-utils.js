@@ -683,8 +683,16 @@ export default class FQUtils {
             return CanvasUtils.getMinDistanceBetweenTwoToken(myToken.x, myToken.y, target.x, target.y,
                 myToken.width, target.width, myToken.height, target.height);
         } else if (value.startsWith("SCRIPT:")) {
-            // TODO A voir si on fait mieux et on protège
-            return eval(value.substring(7));
+            // Le script peut référencer un contexte absent (ex. game.combat null
+            // hors combat) : on protège l'évaluation et on retombe à 0 plutôt
+            // que de laisser une exception interrompre la lecture de la carte.
+            try {
+                const result = eval(value.substring(7));
+                return Number.isFinite(result) ? result : 0;
+            } catch (e) {
+                console.warn("FQ Card Engine | Échec de l'évaluation du script de valeur X/Y, valeur ramenée à 0 :", value, e);
+                return 0;
+            }
         } else {
             // Sinon ça concerne le systeme du personnage
             return FQUtils.getNestedAttribute(game.user.character?.system, value);

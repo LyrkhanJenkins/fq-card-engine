@@ -751,6 +751,16 @@ describe("FQUtils", () => {
             expect(result).toBe(4);
         });
 
+        it("SCRIPT: qui lève une exception (ex. game.combat null) : renvoie 0 sans planter", async () => {
+            const result = await FQUtils.getXYValue("SCRIPT:game.combat.flags.fq.logs", []);
+            expect(result).toBe(0);
+        });
+
+        it("SCRIPT: dont le résultat n'est pas un nombre fini (undefined/NaN) : renvoie 0", async () => {
+            expect(await FQUtils.getXYValue("SCRIPT:undefined", [])).toBe(0);
+            expect(await FQUtils.getXYValue("SCRIPT:-2*undefined", [])).toBe(0);
+        });
+
         it("défaut : délègue à getNestedAttribute sur le système du personnage", async () => {
             game.user.character.system.attributes.hp = {value: "5"};
 
