@@ -111,13 +111,6 @@ window.FqCardEngineModule = {
         const panelH = cardH + overflow;
         container.style.setProperty("--fq-panel-h", panelH + "px");
 
-        // Le fan tilte à max 10°, la carte rotée déborde de cardH * sin(10°) à gauche
-        // La sidebar gauche (28px) absorbe une partie de ce débordement
-        const TILT_MAX_RAD = 10 * Math.PI / 180;
-        const fanOverflow = Math.ceil(cardH * Math.sin(TILT_MAX_RAD));
-        const sidebarW = 28;
-        const paddingLeft = Math.max(0, fanOverflow - sidebarW);
-
         FqCardEngineModule.applyFan();
     },
     /**
@@ -617,26 +610,9 @@ window.FqCardEngineModule = {
                 label: game.i18n.localize("FQCARDENGINE.PlayCard"),
                 callback: html => {
                     const {to, fd, cardContent} = this.getCardContent(html[0], cardContents, discards);
-
-                    const nbSelectedMinionLocations = FQUtils.getNbMinionLocationSelected(fd);
-                    const nbValideMinionLocations = FQUtils.getNbValideMinionLocationSelected(fd);
-
-                    if (firstChoice.minions?.length &&
-                        ((nbSelectedMinionLocations === 0) ||
-                            (firstChoice.minions?.length < nbValideMinionLocations) ||
-                            (nbSelectedMinionLocations !== nbValideMinionLocations))) {
-                        throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorMinionLocation"));
-                    }
-
-                    if (fd.XXX === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorXXX"));
-                    if (fd.YYY === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorYYY"));
-                    if (cardContents.length > 1) {
-                        ChatMessage.create({
-                            speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                            content: `<div>${game.i18n.format("FQCARDENGINE.ChatMessageCardEffectChoice", {nameContent: fd.nameContent})}</div>`
-                        });
-                    }
-                    PlayCard.callBackplayCard(to, fd, cardContent, hasVariables, initCardContents, currentCards, card);
+                    this.playValidatedCard(to, fd, cardContent, {
+                        firstChoice, cardContents, hasVariables, initCardContents, currentCards, card
+                    });
                 }
             },
         };
@@ -693,6 +669,44 @@ window.FqCardEngineModule = {
             options: {jQuery: false, height: "80%"},
         });
 
+    },
+
+    /**
+     * Valide et déclenche le jeu effectif d'une carte, une fois les données du
+     * formulaire du dialogue (bouton OK) extraites via `getCardContent`. Vérifie
+     * le placement des sbires et les variables X/Y saisies, publie le message de
+     * chat de choix multiple le cas échéant, puis délègue au pipeline du moteur.
+     *
+     * @param {Cards}  to  - La pile de défausse cible.
+     * @param {object} fd  - Les données du formulaire du dialogue (XXX, YYY, down…).
+     * @param {object} cardContent - Le contenu (choix) sélectionné de la carte.
+     * @param {object} ctx - Le contexte du jeu de la carte : `firstChoice`, `cardContents`,
+     *                       `hasVariables`, `initCardContents`, `currentCards`, `card`.
+     *
+     * @returns {Promise<*>|void} La promesse du transfert de la carte, ou undefined si une garde a levé une erreur.
+     */
+    playValidatedCard(to, fd, cardContent, ctx) {
+        const {firstChoice, cardContents, hasVariables, initCardContents, currentCards, card} = ctx;
+
+        const nbSelectedMinionLocations = FQUtils.getNbMinionLocationSelected(fd);
+        const nbValideMinionLocations = FQUtils.getNbValideMinionLocationSelected(fd);
+
+        if (firstChoice.minions?.length &&
+            ((nbSelectedMinionLocations === 0) ||
+                (firstChoice.minions?.length < nbValideMinionLocations) ||
+                (nbSelectedMinionLocations !== nbValideMinionLocations))) {
+            throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorMinionLocation"));
+        }
+
+        if (fd.XXX === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorXXX"));
+        if (fd.YYY === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorYYY"));
+        if (cardContents.length > 1) {
+            ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                content: `<div>${game.i18n.format("FQCARDENGINE.ChatMessageCardEffectChoice", {nameContent: fd.nameContent})}</div>`
+            });
+        }
+        return PlayCard.callBackplayCard(to, fd, cardContent, hasVariables, initCardContents, currentCards, card);
     },
 
     /**

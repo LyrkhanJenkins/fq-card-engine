@@ -604,7 +604,6 @@ export default class HandBoard {
     updatePlayerBarCount() {
         let count = 0;
         if (this.currentUser) {
-            this.id;
             let list = FqCardEngineModule.handMiniBarList;
             let userId = this.currentUser._id ? this.currentUser._id : this.currentUser.data._id;
             for (let i = 0; i < list.length && i < this.id; i++) {

@@ -2,20 +2,13 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
+- `applyActorHpModification` (damage-utils.js) : quand les PV temporaires absorbent tout un coup (`temp > value`), la valeur brute n'est pas remise à 0 → les PV normaux réencaissent le même coup (double comptage des dégâts).
+- Auto-ciblage d'un sort de dégâts : `addCriticalEvasionToDamage` exclut le lanceur (`targetActor._id !== actor._id`) → aucune modification de PV n'est produite (`hpCalls` vide) ; à confirmer si c'est voulu.
 
 ### Versions prévues
-#### 2.0.1
-- Test haut-niveau avec toutes les cartes, Besoin de gros tests de non regression de partout + avec toutes les cartes?
--  OU Couverture de test unitaire avec rapport > 80%
-- A partir de là, montée de version majeure possible : Faire un plan de pmontée de version majeure : Mettre à jour les
-  cartes dans les compendiums et relance des tests par exemple
-- Tests fonctionnels + montée de version jusqu'à la dernière v14
-- Première passe de suppression code inutile sans risque
 
 #### 2.0.2
-
 - Ramener toutes les notes écrites
-- Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Revoir css, homogénéiser fonts...
 - Redécoupage et vérification CSS
 - Repasser sur tous les TODO
@@ -28,6 +21,8 @@
 - Afficher les éléments actifs de l'elementaliste, généralement afficher tous les effets sur une sicble
 - Priorisé les protections avant de faire jouer la carte (OU REPORTER)
 - Sélectionner une cible après coup (OU REPORTER)
+- Tests fonctionnels + montée de version jusqu'à la dernière v14
+- Support avec un FQ Card Viewer
 - PATCH--> RELEASE
 
 #### 2.0.3
@@ -35,7 +30,7 @@
   fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
 - Verifier 
 - Passage en typescript?
-- Volée de shuriken et shuriken, effet speciaux à changer
+- Volée de shuriken et shuriken, effet spéciaux à changer
 - Rajouter des règles d'architectures
 - Tests fonctionnels + montée dernière version
 - PATCH--> RELEASE
@@ -44,7 +39,6 @@
 - Bug tornade effet magique
 - Revoir les effets visuels et audio
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
-- Support avec un FQ Card Viewer
 - PATCH--> RELEASE
 
 #### 2.1.x

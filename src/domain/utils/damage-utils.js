@@ -262,9 +262,6 @@ export default class DamageUtils {
      * @returns {Promise<number>} Le total du jet.
      */
     static async rollWithSuccessValueResultAsync(actor, formula, options, dsnAnimations = []) {
-        // Check whether the dice formula is "1dX" or "dX" to assure that both ways work
-        // if (dice.charAt(0) == "d") dice = "1" + dice;
-        // Roll dice
         const roll = await new Roll(formula).evaluate();
 
         // Apparence explicite sur chaque dé : critique/esquive = couleur forcée

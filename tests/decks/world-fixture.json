@@ -1,0 +1,48 @@
+{
+  "gridSize": 5,
+  "character": {
+    "id": "world-character",
+    "name": "Personnage du monde",
+    "system": {
+      "attributes": {
+        "hp": {"value": 20, "max": 20, "temp": 0, "tempmax": 0},
+        "movement": {"walk": 30}
+      },
+      "abilities": {
+        "str": {"mod": 3},
+        "dex": {"mod": 2},
+        "con": {"mod": 2},
+        "int": {"mod": 0},
+        "wis": {"mod": 0},
+        "cha": {"mod": 0}
+      },
+      "fq": {
+        "action": {"value": 10, "max": 10},
+        "mana": {"value": 10, "max": 10},
+        "zeal": {"value": 0, "max": 8},
+        "cards": {"currentDrop": 0},
+        "bonus": {"range": 0, "damage": "", "heal": ""},
+        "attributes": {"critical": 1, "evasion": 1},
+        "special": {"sacrificedSkeleton": 0}
+      }
+    }
+  },
+  "myToken": {"x": 5, "y": 5, "width": 1, "height": 1},
+  "target": {
+    "tokenId": "world-target-token",
+    "actorId": "world-target-actor",
+    "name": "Cible du monde",
+    "x": 0,
+    "y": 5,
+    "width": 1,
+    "height": 1,
+    "system": {
+      "fq": {
+        "attributes": {"evasion": 1}
+      }
+    }
+  },
+  "discardPile": {
+    "id": "world-discard-pile"
+  }
+}

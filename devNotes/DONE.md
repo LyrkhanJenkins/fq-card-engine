@@ -7,6 +7,7 @@ Feat :
 
 Chore :
 - Couverture des tests unitaires >50% et >80% pour les méthodes utils
+- Tests de Non-Regression sur toutes les cartes du jeu
 - Documentations complètes des méthodes
 - Fin recommandation card viewer
 - Mise à jour et figer les versions de dépendances du package.json
