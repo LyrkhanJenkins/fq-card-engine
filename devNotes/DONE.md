@@ -5,6 +5,7 @@ Feat :
 
 Fix :
 - Correction affichage dos de carte dans la dialog-play
+- Correction macro create deck utilise le owner fq
 
 Chore :
 - Redécoupage et suppression du code mort CSS

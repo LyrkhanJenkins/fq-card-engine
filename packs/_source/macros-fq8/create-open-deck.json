@@ -4,7 +4,7 @@
   "scope": "global",
   "author": "SA6JKCaEua1JXSu4",
   "img": "icons/sundries/gaming/playing-cards-grey.webp",
-  "command": "socket = socketlib.registerModule(FqCardEngineModule.moduleName);\nawait socket.executeAsGM('updateDeckForUser', game.userId);\n\nlet deck = game.cards.find(c => c.system.fq.type === 'DECK' && c.ownership[game.userId] === 3)\nlet spellBook = game.cards.find(c => c.system.fq.type === 'SPELLBOOK' && c.ownership[game.userId] === 3)\n\nif (deck) {\n  deck.sheet.render(true, { position: {\n        left: 110,\n        top: 100\n  }});\n}\n\nif (spellBook) {\n    spellBook.sheet.render(true, { position: {\n        left: 110 + deck.sheet.position.width,\n        top: 100\n    }});\n}",
+  "command": "socket = socketlib.registerModule(FqCardEngineModule.moduleName);\nawait socket.executeAsGM('updateDeckForUser', game.userId);\n\nlet deck = game.cards.find(c => c.system.fq.type === 'DECK' && c.system.fq.owner === game.userId && c.ownership[game.userId] === 3)\nlet spellBook = game.cards.find(c => c.system.fq.type === 'SPELLBOOK' && c.system.fq.owner === game.userId && c.ownership[game.userId] === 3)\n\nif (deck) {\n  deck.sheet.render(true, { position: {\n        left: 110,\n        top: 100\n  }});\n}\n\nif (spellBook) {\n    spellBook.sheet.render(true, { position: {\n        left: 110 + deck.sheet.position.width,\n        top: 100\n    }});\n}",
   "folder": null,
   "ownership": {
     "default": 0
