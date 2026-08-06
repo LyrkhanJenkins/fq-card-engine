@@ -1,9 +1,13 @@
 v2.0.2:
 Feat :
 - Animation de pioche de carte
+- Affichage de la carte au clic dans les decks/bibliotheques
 
 Fix :
 - Correction affichage dos de carte dans la dialog-play
+
+Chore :
+- Redécoupage et suppression du code mort CSS
 
 v2.0.1:
 Feat :

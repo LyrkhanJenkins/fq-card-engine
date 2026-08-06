@@ -29,7 +29,8 @@
                         <i class="fa-solid fa-fw fa-2x fa-circle-arrow-left"></i>
                     </a>
                 {{/if}}
-                <img class="face" src="{{card.img}}" alt="{{localize card.name}}" loading="lazy">
+                <img class="face fq-card-viewable" src="{{card.img}}" alt="{{localize card.name}}" loading="lazy"
+                     data-action="fqViewCard" data-tooltip="FQCARDENGINE.ViewCard">
                 <strong class="name">{{localize card.name}}</strong>
                 <div class="drawn">{{card.system.fq.level}}</div>
                 <div class="drawn">{{card.system.fq.maxSameCard}}</div>

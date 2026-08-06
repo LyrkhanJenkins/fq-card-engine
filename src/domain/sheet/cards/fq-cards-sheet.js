@@ -1,4 +1,5 @@
 import DeckUtils, {DECK_TYPE, SPELLBOOK_TYPE} from "../../utils/deck-utils.js";
+import DisplayCard from "../../utils/display-card.js";
 
 /**
  * Feuille de configuration d'un jeu de cartes (deck / spellbook) FQ.
@@ -38,7 +39,8 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
     static DEFAULT_OPTIONS = {
         actions: {
             fqDeleteCard: FqCardsSheet.#onDeleteCard,
-            fqMoveCardDeck: FqCardsSheet.#onMoveCardDeck
+            fqMoveCardDeck: FqCardsSheet.#onMoveCardDeck,
+            fqViewCard: FqCardsSheet.#onViewCard
         }
     };
 
@@ -129,6 +131,76 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
         }).catch(err => {
             return ui.notifications.error(err.message);
         });
+    }
+
+    /**
+     * Action handler : affiche la carte cliquée en grand sur un voile noir, pour
+     * la regarder. Aucune animation (voile simple) ; clic n'importe où pour fermer.
+     *
+     * @this {FqCardsSheet}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  target - L'élément portant l'action (repère la carte via `data-card-id`).
+     *
+     * @returns {Promise<void>}
+     */
+    static async #onViewCard(event, target) {
+        const li = target.closest("[data-card-id]");
+        const card = this.document.cards.get(li?.dataset.cardId);
+        if (!card) return;
+        await FqCardsSheet.#showCardOverlay(card);
+    }
+
+    /**
+     * Monte un voile noir plein écran affichant une carte en grand : le rendu SVG
+     * complet (`card-svg.hbs`) pour une carte visible, ou simplement l'image de dos
+     * pour une carte face cachée. Aucun impact moteur ; clic n'importe où = fermeture.
+     *
+     * @param {Card} card - La carte à afficher en grand.
+     *
+     * @returns {Promise<void>}
+     */
+    static async #showCardOverlay(card) {
+        const overlay = document.createElement("div");
+        overlay.className = "fq-card-view-overlay";
+        const wrap = document.createElement("div");
+        wrap.className = "fq-card-view-card";
+        overlay.appendChild(wrap);
+
+        const back = (card.face == null);
+        const firstChoice = card.system.fq?.choices?.length ? card.system.fq.choices[0] : null;
+
+        if (back || !firstChoice) {
+            // Face cachée (ou carte sans contenu jouable) : juste l'image.
+            wrap.classList.add("fq-card-view-card--back");
+            const face = document.createElement("div");
+            face.className = "fq-card-face";
+            face.style.backgroundImage = `url('${DisplayCard.getImgFromCard(card)}')`;
+            wrap.appendChild(face);
+        } else {
+            const name = DisplayCard.getNameFromCard(card);
+            const description = DisplayCard.getDescriptionFromCard(card);
+            const renderData = {
+                img: DisplayCard.getImgFromCard(card),
+                name: name,
+                description: description,
+                descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
+                titleSize: DisplayCard.getTitleSizeForCardSvg(name),
+                action: DisplayCard.getNumberForBubbleCardSvg(firstChoice.action, firstChoice),
+                mana: DisplayCard.getNumberForBubbleCardSvg(firstChoice.mana, firstChoice),
+                zeal: DisplayCard.getNumberForBubbleCardSvg(firstChoice.zeal, firstChoice),
+                minReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.minReach, firstChoice),
+                maxReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.maxReach, firstChoice),
+                maxSameCard: card.system.fq?.maxSameCard,
+                fqClass: card.system.fq?.class,
+                reactive: firstChoice.reactive,
+                replayable: firstChoice?.replayable === "passif" ? "P" : !firstChoice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(firstChoice?.replayable, firstChoice),
+            };
+            wrap.innerHTML = await foundry.applications.handlebars.renderTemplate(
+                "modules/fq-card-engine/src/templates/partials/card-svg.hbs", renderData);
+        }
+
+        overlay.addEventListener("click", () => overlay.remove());
+        document.body.appendChild(overlay);
     }
 
     /**
