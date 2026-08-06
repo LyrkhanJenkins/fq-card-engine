@@ -14,7 +14,6 @@
 - Priorisé les protections avant de faire jouer la carte (OU REPORTER)
 - Sélectionner une cible après coup (OU REPORTER)
 - Localisé les choix des cartes , tout ce qui est visisble après par l'utilisateur
-- Mettre à jour le chat-message avec le choix aussi des utilisateurs
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - PATCH--> RELEASE
 
@@ -30,6 +29,8 @@
 - Revoir les effets visuels et audio
 - Devoir des effets visuel arrive avant le reveal des dés et dégâts, des fois non
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
+- Pour les réactifs ptetre travaillé sur des evenements pour pouvoir les jouer ( j'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
+, ...) et afficher en surbrillance une carte réactive qui peut être jouée
 - PATCH--> RELEASE
 
 #### 2.1.x

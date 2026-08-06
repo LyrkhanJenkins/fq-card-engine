@@ -111,22 +111,54 @@ describe("playValidatedCard", () => {
         expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
     });
 
-    test("choix multiples : émet un ChatMessage de choix avant de déléguer au pipeline", () => {
-        const choiceA = makeChoice({name: "ChoixA"});
-        const choiceB = makeChoice({name: "ChoixB"});
-        const ctx = makeCtx({firstChoice: choiceA, cardContents: [choiceA, choiceB]});
-        const to = {id: "discard-pile"};
-        const fd = {XXX: undefined, YYY: undefined, nameContent: "ChoixA"};
-        const cardContent = choiceA;
+    test("choix multiples + betterChatMessages OFF : émet le message de choix hérité avant de déléguer", () => {
+        const previous = CONFIG.FqCardEngine.options.betterChatMessages;
+        CONFIG.FqCardEngine.options.betterChatMessages = false;
+        try {
+            const choiceA = makeChoice({name: "ChoixA"});
+            const choiceB = makeChoice({name: "ChoixB"});
+            const ctx = makeCtx({firstChoice: choiceA, cardContents: [choiceA, choiceB]});
+            const to = {id: "discard-pile"};
+            const fd = {XXX: undefined, YYY: undefined, nameContent: "ChoixA"};
+            const cardContent = choiceA;
 
-        window.FqCardEngineModule.playValidatedCard(to, fd, cardContent, ctx);
+            window.FqCardEngineModule.playValidatedCard(to, fd, cardContent, ctx);
 
-        expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
-            content: expect.stringContaining("FQCARDENGINE.ChatMessageCardEffectChoice")
-        }));
-        expect(PlayCard.callBackplayCard).toHaveBeenCalledWith(
-            to, fd, cardContent, ctx.hasVariables, ctx.initCardContents, ctx.currentCards, ctx.card
-        );
+            expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
+                content: expect.stringContaining("FQCARDENGINE.ChatMessageCardEffectChoice")
+            }));
+            expect(PlayCard.callBackplayCard).toHaveBeenCalledWith(
+                to, fd, cardContent, ctx.hasVariables, ctx.initCardContents, ctx.currentCards, ctx.card
+            );
+        } finally {
+            CONFIG.FqCardEngine.options.betterChatMessages = previous;
+        }
+    });
+
+    test("choix multiples + betterChatMessages ON : n'émet plus de message de choix séparé (consolidé dans le message de carte)", () => {
+        // Le choix d'effet est désormais reporté dans le message de carte enrichi
+        // (PlayCard.renderChatMessage, ici mocké) : plus de ChatMessage distinct.
+        const previous = CONFIG.FqCardEngine?.options?.betterChatMessages;
+        CONFIG.FqCardEngine = CONFIG.FqCardEngine ?? {options: {}};
+        CONFIG.FqCardEngine.options = CONFIG.FqCardEngine.options ?? {};
+        CONFIG.FqCardEngine.options.betterChatMessages = true;
+        try {
+            const choiceA = makeChoice({name: "ChoixA"});
+            const choiceB = makeChoice({name: "ChoixB"});
+            const ctx = makeCtx({firstChoice: choiceA, cardContents: [choiceA, choiceB]});
+            const to = {id: "discard-pile"};
+            const fd = {XXX: undefined, YYY: undefined, nameContent: "ChoixA"};
+            const cardContent = choiceA;
+
+            window.FqCardEngineModule.playValidatedCard(to, fd, cardContent, ctx);
+
+            expect(ChatMessage.create).not.toHaveBeenCalled();
+            expect(PlayCard.callBackplayCard).toHaveBeenCalledWith(
+                to, fd, cardContent, ctx.hasVariables, ctx.initCardContents, ctx.currentCards, ctx.card
+            );
+        } finally {
+            CONFIG.FqCardEngine.options.betterChatMessages = previous;
+        }
     });
 
     test("choix unique : n'émet pas de ChatMessage de choix", () => {

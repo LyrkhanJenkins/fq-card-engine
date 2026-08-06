@@ -1,7 +1,7 @@
 import CardFqSystem from "./system/cards/card-fq-system.mjs";
 
 export const CRITICAL_COLOR = "#C0392B";
-export const CRITICAL_HEAL_COLOR = "#D9F356";
+export const CRITICAL_HEAL_COLOR = "#c39f43";
 export const HEAL_COLOR = "#10911A";
 export const DAMAGES_COLOR = "#F1C40F";
 export const EVASION_COLOR = "#4B8AF1";

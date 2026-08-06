@@ -4,6 +4,7 @@ import FqNpcSheet from "../domain/interface/sheet/actor/fq-npc-sheet.js";
 import FqItemSheet from "../domain/interface/sheet/items/fq-item-sheet.js";
 import FqCardsSheet from "../domain/interface/sheet/cards/fq-cards-sheet.js";
 import FqCardSheet from "../domain/interface/sheet/cards/fq-card-sheet.js";
+import DisplayCard from "../domain/interface/shared/display-card.js";
 
 Hooks.on("setup", function () {
     // Ajoute les jauges FQ (action/mana/zèle) aux attributs suivables du HUD de
@@ -93,15 +94,30 @@ Hooks.on("setup", function () {
                 FqCardEngineModule.updateHandCount(value);
             }
         });
-        //popup card image on message click
+        // Clic sur la carte d'un message de chat : affiche la carte SVG en grand,
+        // à l'identique du voile de la feuille de deck. On retrouve la carte via son
+        // id (elle a pu être défaussée) ; repli sur l'image simple si introuvable.
         $(document).on("click", ".fq-card-engine-message-card", function (e) {
-            let t = $(e.target);
-            let src = t.data("img");
+            const el = e.currentTarget;
+            const cardId = el.dataset.cardId;
+            let card = null;
+            if (cardId) {
+                for (const stack of game.cards) {
+                    const found = stack.cards.get(cardId);
+                    if (found) {
+                        card = found;
+                        break;
+                    }
+                }
+            }
+            if (card) {
+                DisplayCard.showCardOverlay(card);
+                return;
+            }
+            // Repli : la carte n'est plus retrouvable (remélangée/supprimée) → image simple.
+            const src = el.dataset.img;
             if (src) {
-                const ip = new ImagePopout(src, {
-                    title: t.attr("title"), shareable: true
-                });
-                ip.render(true);
+                new ImagePopout(src, {title: el.getAttribute("title"), shareable: true}).render(true);
             }
         });
         //initialize Options from saved settings

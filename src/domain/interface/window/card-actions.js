@@ -258,7 +258,10 @@ export default {
 
         if (fd.XXX === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorXXX"));
         if (fd.YYY === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorYYY"));
-        if (cardContents.length > 1) {
+        // Le choix d'effet est désormais consolidé dans le message de carte enrichi
+        // (voir PlayCard.renderChatMessage). On ne conserve le message séparé hérité
+        // que lorsque les messages enrichis sont désactivés, pour ne pas perdre l'info.
+        if (cardContents.length > 1 && !CONFIG.FqCardEngine.options.betterChatMessages) {
             ChatMessage.create({
                 speaker: ChatMessage.getSpeaker({actor: game.user.character}),
                 content: `<div>${game.i18n.format("FQCARDENGINE.ChatMessageCardEffectChoice", {nameContent: fd.nameContent})}</div>`

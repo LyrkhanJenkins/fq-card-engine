@@ -309,18 +309,34 @@ export default class Damage {
      */
     static displayResult(actor, resultArray, manualActions) {
         if (resultArray.length > 0 || manualActions) {
-            let message = "";
+            let message = `<div class="fq-card-engine-result">`;
             if (resultArray.length !== 0) {
-                message = `<h1>${game.i18n.localize("FQCARDENGINE.InfoMsgPartCardResult")}</h1>`;
+                message += `<div class="fq-card-engine-result-title">${game.i18n.localize("FQCARDENGINE.InfoMsgPartCardResult")}</div>`;
+                message += `<ul class="fq-card-engine-result-list">`;
                 resultArray.forEach(result => {
-                    message += `<div>${result.key} : <b>${result.value}</b></div>`;
+                    const modifier = result.type === "healFQ" ? "fq-result--heal"
+                        : result.type === "damageFQ" ? "fq-result--damage" : "";
+                    let badges = "";
+                    if (result.critical) {
+                        badges += `<span class="fq-result-badge fq-result-badge--crit">${game.i18n.localize("FQCARDENGINE.ChatMessagePartCritical")}</span>`;
+                    }
+                    if (result.evasion) {
+                        badges += `<span class="fq-result-badge fq-result-badge--eva">${game.i18n.localize("FQCARDENGINE.ChatMessagePartEvasion")}</span>`;
+                    }
+                    message += `<li class="fq-card-engine-result-line ${modifier}">`
+                        + `<span class="fq-result-key">${result.key}</span>`
+                        + `<span class="fq-result-value"><b>${result.value}</b>${badges}</span>`
+                        + `</li>`;
                 });
+                message += `</ul>`;
             }
             if (manualActions && manualActions.length > 0) {
-                message += `<h2>${game.i18n.localize("FQCARDENGINE.InfoMsgPartCardOtherEffect")}</h2><ul>`;
+                message += `<div class="fq-card-engine-result-subtitle">${game.i18n.localize("FQCARDENGINE.InfoMsgPartCardOtherEffect")}</div>`;
+                message += `<ul class="fq-card-engine-result-manual">`;
                 manualActions.forEach(manualAction => message += `<li>${manualAction}</li>`);
                 message += `</ul>`;
             }
+            message += `</div>`;
             ChatMessage.create({
                 speaker: ChatMessage.getSpeaker({actor}),
                 content: message

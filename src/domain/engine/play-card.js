@@ -109,7 +109,9 @@ export default class PlayCard {
             }
         }
 
-        PlayCard.renderChatMessage(to, fd, card, "FQCARDENGINE.CardPlayed");
+        PlayCard.renderChatMessage(to, fd, card, "FQCARDENGINE.CardPlayed", {
+            cardContent, hasVariables, hasSeveralChoices: (initCardContents?.length ?? 0) > 1
+        });
 
         let result = null;
 
@@ -132,18 +134,26 @@ export default class PlayCard {
     }
 
     /**
-     * Construit et publie le message de chat « carte jouée / défaussée » enrichi
-     * (visuel de la carte, face visible ou dos selon `fd.down`), uniquement si
-     * l'option `betterChatMessages` est active.
+     * Construit et publie le message de chat consolidé « carte jouée / défaussée »
+     * (visuel de la carte, face visible ou dos selon `fd.down`) enrichi des choix
+     * faits par l'utilisateur dans le dialogue de jeu — effet retenu, valeurs X/Y
+     * saisies et cibles visées — uniquement si l'option `betterChatMessages` est
+     * active. Ce message absorbe l'ancien message séparé « Choix de l'effet ». Les
+     * jets de dés (Dice So Nice) et le récapitulatif des résultats restent des
+     * messages distincts.
      *
      * @param {Cards}  to          - La pile cible du transfert (contexte du message).
-     * @param {object} fd          - Les données du formulaire (ex. `down` pour face cachée).
+     * @param {object} fd          - Les données du formulaire (ex. `down` pour face cachée, `XXX`/`YYY`).
      * @param {Card}   card        - La carte concernée par le message.
      * @param {string} actionLabel - La clé de localisation du libellé d'action à afficher.
+     * @param {object} [choiceData] - Les choix faits dans le dialogue à reporter (jeu uniquement).
+     * @param {object} [choiceData.cardContent]      - Le contenu (choix) retenu, déjà résolu (X/Y substitués).
+     * @param {boolean} [choiceData.hasVariables]    - True si l'utilisateur a saisi des valeurs X/Y.
+     * @param {boolean} [choiceData.hasSeveralChoices] - True si la carte proposait plusieurs choix d'effet.
      *
      * @returns {void}
      */
-    static renderChatMessage(to, fd, card, actionLabel) {
+    static renderChatMessage(to, fd, card, actionLabel, choiceData = {}) {
         if (CONFIG.FqCardEngine.options.betterChatMessages) {
 
             if (fd.down && card.face != null) {
@@ -168,7 +178,10 @@ export default class PlayCard {
                 img: img,
                 deckName: card.origin.name,
                 name: (card.face !== null && !fd.down) ? game.i18n.localize(card.name) : game.i18n.localize("FQCARDENGINE.CardHidden"),
-                action: game.i18n.localize(actionLabel)
+                action: game.i18n.localize(actionLabel),
+                hidden: !!fd.down,
+                hiddenLabel: game.i18n.localize("FQCARDENGINE.ChatMessagePartHidden"),
+                ...PlayCard.buildChoiceRenderData(fd, choiceData)
             };
 
             foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/chat-message.hbs", renderData).then(content => {
@@ -181,6 +194,55 @@ export default class PlayCard {
 
             });
         }
+    }
+
+    /**
+     * Assemble, pour le message de chat consolidé, les données décrivant les choix
+     * faits par l'utilisateur : effet retenu (si la carte proposait plusieurs
+     * choix), valeurs X/Y saisies (si la carte a des variables), et cibles visées.
+     * Renvoie un objet vide de détails si aucun `cardContent` n'est fourni (ex.
+     * défausse : la carte n'est pas résolue, aucun choix à reporter).
+     *
+     * @param {object} fd         - Les données du formulaire (`XXX`, `YYY`, `nameContent`…).
+     * @param {object} choiceData - Les choix faits (`cardContent`, `hasVariables`, `hasSeveralChoices`).
+     *
+     * @returns {object} Les champs de rendu des choix pour le template de message.
+     */
+    static buildChoiceRenderData(fd, choiceData = {}) {
+        const {cardContent, hasVariables, hasSeveralChoices} = choiceData;
+        if (!cardContent) {
+            return {hasDetails: false, targets: []};
+        }
+
+        const isFilled = value => value !== undefined && value !== null && value !== "";
+        const showX = !!hasVariables && isFilled(fd?.XXX);
+        const showY = !!hasVariables && isFilled(fd?.YYY);
+        const choiceName = (hasSeveralChoices && cardContent?.name) ? cardContent.name : null;
+
+        let targets = [];
+        try {
+            targets = Constants.myTargets(cardContent.targetType).map(target => ({
+                name: target.document?.name ?? target.name ?? "",
+                img: target.document?.texture?.src
+            }));
+        } catch (e) {
+            // Certains types de cible (ex. squelettes) supposent un contexte de scène
+            // complet absent hors jeu : on retombe sur une liste vide plutôt que
+            // d'interrompre la publication du message.
+            targets = [];
+        }
+
+        return {
+            hasDetails: !!choiceName || showX || showY || targets.length > 0,
+            choiceName,
+            effectLabel: game.i18n.localize("FQCARDENGINE.ChatMessagePartChoice"),
+            hasX: showX,
+            xValue: fd?.XXX,
+            hasY: showY,
+            yValue: fd?.YYY,
+            targets,
+            targetsLabel: game.i18n.localize("FQCARDENGINE.ChatMessagePartTargets")
+        };
     }
 
     /**

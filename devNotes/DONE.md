@@ -2,6 +2,7 @@ v2.0.2:
 Feat :
 - Animation de pioche de carte
 - Affichage de la carte au clic dans les decks/bibliotheques
+- Message de chat consolidé (choix + résultats) + clic → carte SVG
 
 Fix :
 - Correction affichage dos de carte dans la dialog-play

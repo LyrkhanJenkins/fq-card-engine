@@ -20,4 +20,15 @@
     --fq8-color-hp-1: #123b09;
     --fq8-color-hp-2: #4dd82b;
     --fq8-color-hp-3: #33871b;
+
+    --fq8-message-gold: #e0c56b;
+    --fq8-message-label: #9a8f77;
+    --fq8-message-target: #d8c7a0;
+    --fq8-message-damage: #d66a5a;
+    --fq8-message-heal: #6fbf73;
+    --fq8-message-shadow-strong: rgba(0, 0, 0, 0.75);
+    --fq8-message-shadow: rgba(0, 0, 0, 0.6);
+    --fq8-message-card-shadow: rgba(0, 0, 0, 0.5);
+    --fq8-message-zebra: rgba(255, 255, 255, 0.04);
+    --fq8-message-separator: #000;
 }

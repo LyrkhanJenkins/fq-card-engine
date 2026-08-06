@@ -1,9 +1,41 @@
 <section class="fq-card-engine-message">
     <div class="fq-card-engine-message-card card" style="background-image:url('{{img}}')" title="{{name}}"
          data-img="{{img}}" data-card-id="{{id}}">
+        {{#if hidden}}<span class="fq-card-engine-message-hidden" title="{{hiddenLabel}}"><i class="fas fa-eye-slash"></i></span>{{/if}}
     </div>
 
     <div class="fq-card-engine-message-info">
         <h4 class="fq-card-engine-message-name"> {{#if action}}{{action}}: {{/if}}<b>{{name}}</b></h4>
+
+        {{#if hasDetails}}
+        <ul class="fq-card-engine-message-choices">
+            {{#if choiceName}}
+            <li class="fq-choice fq-choice--effect">
+                <span class="fq-choice-label">{{effectLabel}}</span>
+                <span class="fq-choice-value">{{choiceName}}</span>
+            </li>
+            {{/if}}
+            {{#if hasX}}
+            <li class="fq-choice fq-choice--x">
+                <span class="fq-choice-label">X</span>
+                <span class="fq-choice-value">{{xValue}}</span>
+            </li>
+            {{/if}}
+            {{#if hasY}}
+            <li class="fq-choice fq-choice--y">
+                <span class="fq-choice-label">Y</span>
+                <span class="fq-choice-value">{{yValue}}</span>
+            </li>
+            {{/if}}
+            {{#if targets.length}}
+            <li class="fq-choice fq-choice--targets">
+                <span class="fq-choice-label">{{targetsLabel}}</span>
+                <span class="fq-choice-targets">
+                    {{#each targets}}<span class="fq-choice-target">{{this.name}}</span>{{/each}}
+                </span>
+            </li>
+            {{/if}}
+        </ul>
+        {{/if}}
     </div>
 </section>

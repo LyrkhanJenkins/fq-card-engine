@@ -19,7 +19,7 @@ describe("Constants", () => {
     describe("constantes exportées", () => {
         it("couleurs et labels ont les valeurs attendues", () => {
             expect(CRITICAL_COLOR).toBe("#C0392B");
-            expect(CRITICAL_HEAL_COLOR).toBe("#D9F356");
+            expect(CRITICAL_HEAL_COLOR).toBe("#c39f43");
             expect(HEAL_COLOR).toBe("#10911A");
             expect(DAMAGES_COLOR).toBe("#F1C40F");
             expect(EVASION_COLOR).toBe("#4B8AF1");
