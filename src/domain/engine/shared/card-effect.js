@@ -73,7 +73,6 @@ export default class CardEffect {
                 }
             }
             if (cardContent.executeEval) {
-                // TODO refacto
                 cardContent.executeEval = cardContent.executeEval?.replaceAll("&gt;", ">").replaceAll("&lt;", "<")
                     .replaceAll("&amp;", "&");
                 eval(cardContent.executeEval);
@@ -140,10 +139,8 @@ export default class CardEffect {
                     await Fx.importMacroFromCompendium(effect.changes[changeKey].value);
                 }
                 let value = effect.changes[changeKey].value;
-                // TODO constantes ?
                 if (!["system.fq.bonus.damage", "system.fq.bonus.heal"].includes(effect.changes[changeKey].key)) {
                     try {
-                        // TODO A factoriser?
                         const roll = await new Roll(effect.changes[changeKey].value.toString()).evaluate();
                         if (!roll) {
                             throw new Error();
@@ -171,7 +168,6 @@ export default class CardEffect {
      * @returns {void}
      */
     static rewriteCardContent(card, cardContents, newValue) {
-        //TODO pour le moment réécris chaque choix, à voir si on le fait que par choix
         cardContents = cardContents.map(content => {
             if (content.afterFirstPlay) {
                 content = JSON.parse(content.afterFirstPlay);
@@ -223,7 +219,7 @@ export default class CardEffect {
                 } else if (!isNaN(content[key])) {
                     content[key] = Number(content[key]);
                 } else if (typeof content[key] === "string" && content[key][0] === "+") {
-                    // Do nothing TODO: peut être géré dans une fonction (form()) par exemple
+                    // Do nothing
                 } else {
                     try {
                         content[key] = await RollService.rollResultAsync(content[key]);

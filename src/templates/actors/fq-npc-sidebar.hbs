@@ -42,7 +42,6 @@
     {{#if important}}
     {{#with system.attributes.hd}}
     <div class="pills-group empty">
-        {{!-- TODO: Allow clicking this to roll a hit die --}}
         <h3 class="icon">
             <i class="fa-solid fa-dice-d{{ denomination }}"></i>
             <span class="roboto-upper">{{ localize "DND5E.HitDice" }}</span>
@@ -118,7 +117,6 @@
         label="DND5E.Habitat.Configuration.Label" }}
 
     {{!-- Treasure --}}
-    {{!-- TODO: Allow clicking a treasure category pill to roll appropriately for random treasure --}}
     {{> "dnd5e.actor-trait-pills" values=treasure configAction="treasure" icon="fa-solid fa-gem"
         label="DND5E.Treasure.Configuration.Label" }}
 

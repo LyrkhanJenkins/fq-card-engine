@@ -229,7 +229,6 @@ export default class ResourceHandler {
      * @returns {number} Le nombre de cibles autorisé.
      */
     static determineNbTargets(target) {
-        // TODO handle area targets
         const singleTargets = ["self", "enemy", "creature", "ally", "object", "creatureOrObject", "willing", "any", "space"];
 
         const areaTargets = ["cone", "cube", "cylinder", "line", "radius", "sphere", "square", "wall"];
@@ -243,7 +242,6 @@ export default class ResourceHandler {
         }
     }
 
-    /* TODO découper par objets métier et faire les validations par objet métier? (passage en typescript?) */
     /**
      * Vérifie que l'acteur peut jouer un sort maintenant : un combat est en cours
      * et c'est bien son tour. Publie un avertissement dans le cas contraire.

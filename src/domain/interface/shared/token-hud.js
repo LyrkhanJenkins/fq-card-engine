@@ -68,7 +68,6 @@ export default class TokenHud {
         column.appendChild(bouton);
     }
 
-    // TODO protect for user not owner ?
     /**
      * Supprime un token de la scène active à partir de son id. Exécutée côté MJ via
      * socket (voir `hook/integration/socketlib.hook.js`).
@@ -78,8 +77,6 @@ export default class TokenHud {
      * @returns {void}
      */
     static deleteToken(tokenId) {
-        // TODO Meilleur façon de récupérer un token, généraliser cette récupération!!
-        // Ou parcourir toutes les scenes game.scenes ?
         const token = game.canvas.tokens.get(tokenId);
         token.document.delete();
     }

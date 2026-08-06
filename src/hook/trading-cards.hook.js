@@ -7,7 +7,6 @@ Hooks.on("dealCards", (_origin, _destinations, _context) => {
 Hooks.on("passCards", (from, to, action) => {
     //track who played what if this flag is turned on showPlayedPlayerNames
     //Mark The Pile with the card info and player ID that passed it that's being passed to it
-    // TODO nécessaire, à voir en refacto?
     if ((action.action === "play" || action.action === "pass") && to.type === "pile" && CONFIG.FqCardEngine.options.showPlayedPlayerNames) {
         action.toCreate.forEach(function (c, _i) {
             let cardID = c._id ? c._id : c.data._id;

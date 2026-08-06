@@ -10,7 +10,6 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static TARGET_TYPE_SKELETON = "Skeletons";
     static TARGET_TYPE_DEFAULT = "Default";
     static NEUTRAL_CLASS = "neutral";
-    // TODO A localisé?
     static TARGET_TYPE_CHOICE = {
         "Default": this.TARGET_TYPE_DEFAULT,
         "Skeletons": this.TARGET_TYPE_SKELETON

@@ -1,4 +1,3 @@
-// TODO Stop les classes utils
 /**
  * Utilitaires de géométrie sur le canvas Foundry : calculs de distances entre
  * tokens (en tenant compte de leur taille), et repérage des cases adjacentes.

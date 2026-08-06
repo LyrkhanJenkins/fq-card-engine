@@ -17,6 +17,8 @@
 - Afficher les éléments actifs de l'elementaliste, généralement afficher tous les effets sur une sicble
 - Priorisé les protections avant de faire jouer la carte (OU REPORTER)
 - Sélectionner une cible après coup (OU REPORTER)
+- Localisé les choix des cartes , tout ce qui est visisble après par l'utilisateur
+- Mettre à jour le chat-message avec le choix aussi des utilisateurs
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - PATCH--> RELEASE
 

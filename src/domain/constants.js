@@ -36,7 +36,6 @@ export function buildDiceAppearance(color) {
 export const CRITICAL_DICE_APPEARANCE = buildDiceAppearance(CRITICAL_COLOR);
 export const EVASION_DICE_APPEARANCE = buildDiceAppearance(EVASION_COLOR);
 
-// TODO Rendre ces constantes utilisables de partout
 /**
  * Regroupe des constantes de couleurs/labels et des accesseurs pratiques vers
  * le personnage de l'utilisateur courant, ses cibles et l'état de combat.

@@ -2,7 +2,6 @@
 import TokenHud from "../domain/interface/shared/token-hud.js";
 
 Hooks.on("renderTokenHUD", (hud, html, data) => {
-    // TODO Add option in FQ (hide token HUD default buttons for players)L
     if (!game.user.isGM) {
         html.querySelectorAll(".col").forEach(col => col.innerHTML = "");
     }

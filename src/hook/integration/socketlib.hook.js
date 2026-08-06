@@ -1,5 +1,4 @@
 
-//TODO faire mieux pour exposé socket?
 import Damage from "../../domain/engine/roll/damage.js";
 import TradingCards from "../../domain/trading/trading-cards.js";
 import Minion from "../../domain/engine/shared/minion.js";

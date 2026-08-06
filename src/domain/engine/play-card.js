@@ -77,7 +77,7 @@ export default class PlayCard {
             return;
         }
 
-        // Check pour savoir si la carte est rejouable et si on va la passer à la défausse. TODO TESTER
+        // Check pour savoir si la carte est rejouable et si on va la passer à la défausse.
         if (!!cardContent && !!cardContent?.replayable) {
             if (cardContent?.replayable === "passif") {
                 CardEffect.rewriteCardContent(card, initCardContents, {
@@ -171,7 +171,6 @@ export default class PlayCard {
                 action: game.i18n.localize(actionLabel)
             };
 
-            //TODO refacto Chat-Messages
             foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/chat-message.hbs", renderData).then(content => {
                 const messageData = {
                     speaker: {

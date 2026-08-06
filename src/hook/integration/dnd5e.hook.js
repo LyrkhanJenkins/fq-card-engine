@@ -14,7 +14,6 @@ import Fx from "../../domain/engine/shared/fx.js";
  * @returns {boolean|undefined} True si la logique FQ doit être ignorée, undefined sinon.
  */
 const notApplyFQOnActivity = (activity) => {
-    //TODO voir si il y a une action
     if (!activity.actor && !["heal", "attack", "damage"].includes(activity.type)) {
         return true;
     }
@@ -69,12 +68,10 @@ Hooks.on("dnd5e.activityConsumption", (activity, _config, _messageConfig) => {
 
 Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     const item = subject.item;
-    //TODO Refacto
     const squareDistance = game.system.grid.distance;
     const minReach = Math.trunc((subject.range.value ? squareDistance : subject.range.reach) ?? 0) / squareDistance;
     const maxReach = Math.trunc((subject.range.value ?? subject.range.reach) ?? 0) / squareDistance;
     const token = game.canvas.scene.tokens.find(t => t.actorId === subject.actor.id);
-    // TODO mettre en option
     if (!subject.item) {
         return;
     }

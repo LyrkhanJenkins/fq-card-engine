@@ -179,7 +179,6 @@ export default class DisplayCard {
     }
 
     /**
-     * TODO Utiliser une librairie externe
      * Simplifie une expression algébrique linéaire simple.
      * Supporte : +, -, *, parenthèses, variables alphabétiques.
      * Exemples : "5 + 3 + 4*X" -> "8+4X" ; "1+5" -> "6"
