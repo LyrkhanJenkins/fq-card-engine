@@ -124,9 +124,6 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             visual: new SchemaField({
                 path: new StringField({required: true, label: "FQCARDENGINE.CardVisual"}),
                 onTarget: new BooleanField({required: true, label: "FQCARDENGINE.CardVisualOnTarget"}),
-                impactPath: new StringField({required: true, label: "FQCARDENGINE.CardVisualImpactPath"}),// TODO
-                impactOnMiddle: new BooleanField({required: true, label: "FQCARDENGINE.CardVisualImpactMiddle"}),// TODO
-                impactSize: new StringField({required: true, label: "FQCARDENGINE.CardVisualImpactSize"}),// TODO
             }),
             // Json qui va redéfinir dans la main le system.fq de la carte
             afterFirstPlay: new StringField({required: true, label: "FQCARDENGINE.NewFQSystemAfterFirstPlay"}),

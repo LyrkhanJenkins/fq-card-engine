@@ -5,7 +5,7 @@
   "img": "modules/fq-card-engine/images/cards/back_trapper.PNG",
   "cards": [
     {
-      "_id": "LzHqYEFgrxqastbP",
+      "_id": "d1iL0FtVRz5WREfI",
       "name": "FQCARDTITLE.TamedWolf",
       "description": "",
       "type": "base",
@@ -78,10 +78,7 @@
               "sound": "specific_spells/tamed_wolf.mp3",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -95,21 +92,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430827,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.LzHqYEFgrxqastbP"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.d1iL0FtVRz5WREfI",
+      "cards": []
     },
     {
-      "_id": "xxGZsuFYGxI43mCv",
+      "_id": "gbW08JaE31eaVYY6",
       "name": "FQCARDTITLE.PreciseShot",
       "description": "",
       "type": "base",
@@ -165,10 +164,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -185,21 +181,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430827,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.xxGZsuFYGxI43mCv"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.gbW08JaE31eaVYY6",
+      "cards": []
     },
     {
-      "_id": "DCt1oSEftWInrgdK",
+      "_id": "KJD2EDaDIQ6ZsPgD",
       "name": "FQCARDTITLE.EliteMarksman",
       "description": "",
       "type": "base",
@@ -297,10 +295,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -316,21 +311,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430827,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.DCt1oSEftWInrgdK"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.KJD2EDaDIQ6ZsPgD",
+      "cards": []
     },
     {
-      "_id": "rpEgS6rliEd7wdmk",
+      "_id": "vTLHkgpfLtg25FEW",
       "name": "FQCARDTITLE.DoubleArrows",
       "description": "",
       "type": "base",
@@ -386,10 +383,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -406,21 +400,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430828,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.rpEgS6rliEd7wdmk"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.vTLHkgpfLtg25FEW",
+      "cards": []
     },
     {
-      "_id": "6e9JXQETf8xFiGsD",
+      "_id": "Wc6npoKcpdM5TQZv",
       "name": "FQCARDTITLE.RainOfArrows",
       "description": "",
       "type": "base",
@@ -487,10 +483,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -506,21 +499,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430828,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.6e9JXQETf8xFiGsD"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Wc6npoKcpdM5TQZv",
+      "cards": []
     },
     {
-      "_id": "TbtTu61BXBeVPMv9",
+      "_id": "cqd8EUF2UiCp50Q3",
       "name": "FQCARDTITLE.DrawII",
       "description": "",
       "type": "base",
@@ -582,10 +577,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -601,21 +593,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430828,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.TbtTu61BXBeVPMv9"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.cqd8EUF2UiCp50Q3",
+      "cards": []
     },
     {
-      "_id": "v78d7KDq6VOXnSLV",
+      "_id": "qB1Pxiy7tDXmB34R",
       "name": "FQCARDTITLE.ManaRecoveryII",
       "description": "",
       "type": "base",
@@ -677,10 +671,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -696,21 +687,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430829,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.v78d7KDq6VOXnSLV"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.qB1Pxiy7tDXmB34R",
+      "cards": []
     },
     {
-      "_id": "tuFdGBt4UqZwBOUj",
+      "_id": "avtGZSi6Wmto1NMP",
       "name": "FQCARDTITLE.Trap",
       "description": "",
       "type": "base",
@@ -804,10 +797,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -823,21 +813,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430829,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.tuFdGBt4UqZwBOUj"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.avtGZSi6Wmto1NMP",
+      "cards": []
     },
     {
-      "_id": "mAzmCBtGQ4WFYJFp",
+      "_id": "RY2yaqnllHmwB2z6",
       "name": "FQCARDTITLE.ReflexShot",
       "description": "",
       "type": "base",
@@ -893,10 +885,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -913,21 +902,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430830,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.mAzmCBtGQ4WFYJFp"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.RY2yaqnllHmwB2z6",
+      "cards": []
     },
     {
-      "_id": "gr3Rb8L46u3aWxbN",
+      "_id": "AdOpVTHJ8qzVJLFj",
       "name": "FQCARDTITLE.TurnBoosterIV",
       "description": "",
       "type": "base",
@@ -989,10 +980,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -1008,21 +996,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430830,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.gr3Rb8L46u3aWxbN"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.AdOpVTHJ8qzVJLFj",
+      "cards": []
     },
     {
-      "_id": "TUED8ErQyqo0kYlQ",
+      "_id": "kORVYHpmXhuDsizl",
       "name": "FQCARDTITLE.PoisonedShot",
       "description": "",
       "type": "base",
@@ -1121,10 +1111,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -1139,21 +1126,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430830,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.TUED8ErQyqo0kYlQ"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.kORVYHpmXhuDsizl",
+      "cards": []
     },
     {
-      "_id": "BZw54yeZmO8xM8m0",
+      "_id": "Yw9wSjfTpXDd36Mm",
       "name": "FQCARDTITLE.PiercingShot",
       "description": "",
       "type": "base",
@@ -1220,10 +1209,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -1239,21 +1225,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430830,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.BZw54yeZmO8xM8m0"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Yw9wSjfTpXDd36Mm",
+      "cards": []
     },
     {
-      "_id": "4BMct7X4bIncTuH9",
+      "_id": "CD5n1ZGMMbAqO13C",
       "name": "FQCARDTITLE.WeakPointStudy",
       "description": "",
       "type": "base",
@@ -1364,10 +1352,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -1381,21 +1366,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430830,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.4BMct7X4bIncTuH9"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.CD5n1ZGMMbAqO13C",
+      "cards": []
     },
     {
-      "_id": "YN7Tv6sNrlx3GH91",
+      "_id": "tvqlIp3dj7D8e2fp",
       "name": "FQCARDTITLE.Ambush",
       "description": "",
       "type": "base",
@@ -1510,10 +1497,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -1527,21 +1511,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430830,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.YN7Tv6sNrlx3GH91"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.tvqlIp3dj7D8e2fp",
+      "cards": []
     },
     {
-      "_id": "g9dJaW71y084DeoU",
+      "_id": "m2yw2H4tFxI806qo",
       "name": "FQCARDTITLE.SupersonicShot",
       "description": "",
       "type": "base",
@@ -1603,10 +1589,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -1622,21 +1605,23 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430831,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.g9dJaW71y084DeoU"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.m2yw2H4tFxI806qo",
+      "cards": []
     },
     {
-      "_id": "FZWgsMc8hAgycB1O",
+      "_id": "6qrrXMYhDLDjPltB",
       "name": "FQCARDTITLE.ExplosiveShot",
       "description": "",
       "type": "base",
@@ -1703,10 +1688,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -1722,18 +1704,20 @@
         }
       },
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430831,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.FZWgsMc8hAgycB1O"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.6qrrXMYhDLDjPltB",
+      "cards": []
     },
     {
       "faces": [
@@ -1746,7 +1730,7 @@
       "face": 0,
       "name": "FQCARDTITLE.EnragedBear",
       "description": "",
-      "_id": "1jkFPs6RlXohLgFI",
+      "_id": "kvhW9fgonGQZHFwN",
       "type": "base",
       "system": {
         "fq": {
@@ -1797,10 +1781,7 @@
               "sound": "specific_spells/enraged_bear.mp3",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -1824,18 +1805,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430831,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.1jkFPs6RlXohLgFI"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.kvhW9fgonGQZHFwN",
+      "cards": []
     },
     {
       "faces": [
@@ -1848,7 +1831,7 @@
       "face": 0,
       "name": "FQCARDTITLE.AdjustedShot",
       "description": "",
-      "_id": "AoaqcFI0OZ4CE9oK",
+      "_id": "d353d0O4KUCCQFoY",
       "type": "base",
       "system": {
         "fq": {
@@ -1936,10 +1919,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -1963,20 +1943,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.362",
+        "coreVersion": "14.365",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
-        "createdTime": 1780124028688,
-        "modifiedTime": 1780124028688
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430831,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.AoaqcFI0OZ4CE9oK"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.d353d0O4KUCCQFoY",
+      "cards": []
     },
     {
       "faces": [
@@ -1989,7 +1969,7 @@
       "face": 0,
       "name": "FQCARDTITLE.SpikeTrap",
       "description": "",
-      "_id": "fgehvq9BIao1kZaC",
+      "_id": "a5VWk7LqfzGca2Rb",
       "type": "base",
       "system": {
         "fq": {
@@ -2024,10 +2004,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -2053,18 +2030,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430831,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.fgehvq9BIao1kZaC"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.a5VWk7LqfzGca2Rb",
+      "cards": []
     },
     {
       "faces": [
@@ -2077,7 +2056,7 @@
       "face": 0,
       "name": "FQCARDTITLE.PoisonTrap",
       "description": "",
-      "_id": "OGwM2c8o6DzstWdl",
+      "_id": "32n0BG877yvyRJ5q",
       "type": "base",
       "system": {
         "fq": {
@@ -2154,10 +2133,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -2182,18 +2158,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430831,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.OGwM2c8o6DzstWdl"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.32n0BG877yvyRJ5q",
+      "cards": []
     },
     {
       "faces": [
@@ -2206,7 +2184,7 @@
       "face": 0,
       "name": "FQCARDTITLE.RootedShot",
       "description": "",
-      "_id": "uDLCs9Kr31l9KTih",
+      "_id": "HKImFoYKvrcsn3Ep",
       "type": "base",
       "system": {
         "fq": {
@@ -2298,10 +2276,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -2326,18 +2301,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430831,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.uDLCs9Kr31l9KTih"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.HKImFoYKvrcsn3Ep",
+      "cards": []
     },
     {
       "faces": [
@@ -2350,7 +2327,7 @@
       "face": 0,
       "name": "FQCARDTITLE.RegainStrength",
       "description": "",
-      "_id": "WQNFcupFcEzGd9TS",
+      "_id": "PAa1ZbJPO95KZHBg",
       "type": "base",
       "system": {
         "fq": {
@@ -2427,10 +2404,7 @@
               "sound": "",
               "visual": {
                 "path": "",
-                "onTarget": false,
-                "impactPath": "",
-                "impactOnMiddle": false,
-                "impactSize": ""
+                "onTarget": false
               },
               "afterFirstPlay": "",
               "name": "",
@@ -2455,18 +2429,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430832,
         "compendiumSource": null,
         "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.347",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!iXjQikoYuH5CmYlL.WQNFcupFcEzGd9TS"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.PAa1ZbJPO95KZHBg",
+      "cards": []
     }
   ],
   "width": null,
@@ -2476,26 +2452,27 @@
   "folder": null,
   "flags": {},
   "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1786004430824,
+    "modifiedTime": 1786004435246,
+    "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,
-    "exportSource": null,
-    "coreVersion": "13.347",
-    "systemId": "dnd5e",
-    "systemVersion": "5.1.4",
-    "createdTime": 1757086454105,
-    "modifiedTime": 1757086454105,
-    "lastModifiedBy": "dnd5ebuilder0000"
+    "exportSource": null
   },
   "system": {
     "fq": {
       "type": "",
-      "owner": ""
+      "owner": "",
+      "classLevels": {}
     }
   },
   "ownership": {
     "default": 0
   },
-  "_id": "iXjQikoYuH5CmYlL",
-  "sort": 0,
-  "_key": "!cards!iXjQikoYuH5CmYlL"
+  "_id": "6b9vSzD4cZQZSYIu",
+  "sort": 300000,
+  "_key": "!cards!6b9vSzD4cZQZSYIu"
 }
