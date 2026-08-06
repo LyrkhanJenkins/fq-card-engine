@@ -1,4 +1,4 @@
-import FqConstants, {
+import Constants, {
     buildDiceAppearance,
     CRITICAL_COLOR,
     CRITICAL_DICE_APPEARANCE,
@@ -9,17 +9,17 @@ import FqConstants, {
     FAIL_COLOR,
     HEAL_COLOR,
     SUCCESS_COLOR
-} from "./fq-constants.js";
-import CanvasUtils from "./canvas-utils.js";
+} from "../../constants.js";
+import Geometry from "../shared/geometry.js";
 
 /**
  * Utilitaires de calcul et d'application des dégâts et des soins FQ : jets de dés
  * avec bonus, gestion des critiques et esquives, affichage des résultats, et
  * application des modifications de points de vie et effets sur les cibles.
- * Certaines méthodes sont exécutées côté MJ via socket (voir `socket-lib.js`).
+ * Certaines méthodes sont exécutées côté MJ via socket (voir `hook/integration/socketlib.hook.js`).
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
-export default class DamageUtils {
+export default class Damage {
     /**
      * Lance le jet de dégâts d'une carte : applique le bonus de dégâts de l'acteur,
      * effectue le jet, puis calcule critiques et esquives par cible.
@@ -31,12 +31,12 @@ export default class DamageUtils {
      * @returns {Promise<object[]>} Le tableau des résultats de dégâts par cible.
      */
     static async buildDamageDiceLauncher(actor, cardContent, dsnAnimations = []) {
-        let damageFormula = DamageUtils.getDamageWithBonus(actor, cardContent.damage);
-        let damages = await DamageUtils.rollWithSuccessValueResultAsync(actor, damageFormula, {
+        let damageFormula = Damage.getDamageWithBonus(actor, cardContent.damage);
+        let damages = await Damage.rollWithSuccessValueResultAsync(actor, damageFormula, {
             color: DAMAGES_COLOR,
             title: "Dégâts"
         }, dsnAnimations);
-        return DamageUtils.addCriticalEvasionToDamage(actor, damages, cardContent, dsnAnimations);
+        return Damage.addCriticalEvasionToDamage(actor, damages, cardContent, dsnAnimations);
     }
 
     /**
@@ -50,13 +50,13 @@ export default class DamageUtils {
      * @returns {Promise<object[]>} Le tableau des résultats de soins par cible.
      */
     static async buildHealDiceLauncher(actor, cardContent, dsnAnimations = []) {
-        let healFormula = DamageUtils.getHealWithBonus(actor, cardContent.heal);
-        let heal = await DamageUtils.rollWithSuccessValueResultAsync(actor, healFormula,
+        let healFormula = Damage.getHealWithBonus(actor, cardContent.heal);
+        let heal = await Damage.rollWithSuccessValueResultAsync(actor, healFormula,
             {
                 color: HEAL_COLOR,
                 title: "Soins"
             }, dsnAnimations);
-        return DamageUtils.addCriticalToHeal(actor, heal, cardContent, dsnAnimations);
+        return Damage.addCriticalToHeal(actor, heal, cardContent, dsnAnimations);
     }
 
     /**
@@ -99,13 +99,13 @@ export default class DamageUtils {
         let healArray = [];
         if (actor?.system?.fq.attributes.critical + cardContent.bonusCrit > 0) {
             const critToReach = 20 - actor?.system?.fq.attributes.critical - cardContent.bonusCrit;
-            critical = await DamageUtils.rollWithSuccessValueResultAsync(actor, "1d20", {
+            critical = await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
                 color: CRITICAL_HEAL_COLOR, title: "Critique des soins",
                 success: critToReach,
                 appearance: CRITICAL_DICE_APPEARANCE // dé rouge pour le critique
             }, dsnAnimations) >= critToReach;
         }
-        FqConstants.myTargets(cardContent.targetType).forEach(target => {
+        Constants.myTargets(cardContent.targetType).forEach(target => {
             healArray.push({
                 key: `Soins totaux sur "${target.document.name}"`,
                 value: critical ? heal * 2 : heal,
@@ -152,7 +152,7 @@ export default class DamageUtils {
      * @returns {Promise<object[]>} Le tableau des résultats de dégâts par cible.
      */
     static async addCriticalEvasionToDamage(actor, damages, cardContent, dsnAnimations = []) {
-        const myTargets = FqConstants.myTargets(cardContent.targetType);
+        const myTargets = Constants.myTargets(cardContent.targetType);
         if (damages < 0) {
             damages = 0;
         }
@@ -160,7 +160,7 @@ export default class DamageUtils {
         let damagesArray = [];
         if (actor?.system?.fq.attributes.critical + cardContent.bonusCrit > 0) {
             const critToReach = 21 - actor?.system?.fq.attributes.critical - cardContent.bonusCrit;
-            critical = await DamageUtils.rollWithSuccessValueResultAsync(actor, "1d20", {
+            critical = await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
                 color: CRITICAL_COLOR, title: "Critique",
                 success: critToReach,
                 appearance: CRITICAL_DICE_APPEARANCE // dé rouge pour le critique
@@ -176,7 +176,7 @@ export default class DamageUtils {
             ) {
                 if (targetActor.system?.fq?.attributes.evasion + cardContent.bonusEva > 0) { // or no evasion from the target
                     evaToReach = 21 - targetActor.system?.fq?.attributes.evasion - cardContent.bonusEva;
-                    evasionScore = await DamageUtils.rollWithSuccessValueResultAsync(actor, "1d20", {
+                    evasionScore = await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
                         color: EVASION_COLOR, title: `Esquive de "${target.document.name}"`,
                         success: evaToReach,
                         appearance: EVASION_DICE_APPEARANCE // dé bleu pour l'esquive
@@ -229,11 +229,11 @@ export default class DamageUtils {
      * spécifique (ex. critique = rouge, esquive = bleu).
      *
      * @param {Roll}   roll                                        - Le jet déjà évalué.
-     * @param {object} [appearance=DamageUtils.getPlayerDiceAppearance()] - L'apparence à poser.
+     * @param {object} [appearance=Damage.getPlayerDiceAppearance()] - L'apparence à poser.
      *
      * @returns {void}
      */
-    static applyDiceAppearance(roll, appearance = DamageUtils.getPlayerDiceAppearance()) {
+    static applyDiceAppearance(roll, appearance = Damage.getPlayerDiceAppearance()) {
         if (!appearance || !roll?.dice) {
             return;
         }
@@ -266,7 +266,7 @@ export default class DamageUtils {
 
         // Apparence explicite sur chaque dé : critique/esquive = couleur forcée
         // (options.appearance), sinon couleur du joueur. Évite toute fuite en affichage simultané.
-        DamageUtils.applyDiceAppearance(roll, options.appearance);
+        Damage.applyDiceAppearance(roll, options.appearance);
         // Add reroll button
         let message = `<h2 style='color: ${options.color}'>${options.title}`;
 
@@ -409,8 +409,8 @@ export default class DamageUtils {
                 ...newActor.prototypeToken,
                 actorId: newActor._id,
                 effects: [],
-                x: CanvasUtils.getXAdjacentLocation(game.canvas?.scene?.tokens?.find(t => t.actorId === currentUser?.character?.id), location),
-                y: CanvasUtils.getYAdjacentLocation(game.canvas?.scene?.tokens?.find(t => t.actorId === currentUser?.character?.id), location)
+                x: Geometry.getXAdjacentLocation(game.canvas?.scene?.tokens?.find(t => t.actorId === currentUser?.character?.id), location),
+                y: Geometry.getYAdjacentLocation(game.canvas?.scene?.tokens?.find(t => t.actorId === currentUser?.character?.id), location)
             };
             await scene.createEmbeddedDocuments("Token", [tokenData]).then(async t => {
                 const token = t[0];

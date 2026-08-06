@@ -1,20 +1,23 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
-import FQUtils from "../../src/domain/utils/fq-utils.js";
-import FxUtils from "../../src/domain/utils/fx-utils.js";
-import ConsumptionUtils from "../../src/domain/utils/consumption-utils.js";
-import DamageUtils from "../../src/domain/utils/damage-utils.js";
-import CanvasUtils from "../../src/domain/utils/canvas-utils.js";
-import {socket} from "../../src/hook/socket-lib.js";
+import CardEffect from "../../src/domain/engine/shared/card-effect.js";
+import RollService from "../../src/domain/engine/roll/roll-service.js";
+import Minion from "../../src/domain/engine/shared/minion.js";
+import ObjectUtils from "../../src/core/utils/object.utils.js";
+import Fx from "../../src/domain/engine/shared/fx.js";
+import ResourceHandler from "../../src/domain/engine/shared/resource-handler.js";
+import Damage from "../../src/domain/engine/roll/damage.js";
+import Geometry from "../../src/domain/engine/shared/geometry.js";
+import {socket} from "../../src/hook/integration/socketlib.hook.js";
 import {makeCard, makeChoice} from "../factories.js";
 
-vi.mock("../../src/hook/socket-lib.js", () => ({
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     default: {},
     socket: {
         executeAsGM: vi.fn()
     }
 }));
 
-vi.mock("../../src/domain/utils/consumption-utils.js", () => ({
+vi.mock("../../src/domain/engine/shared/resource-handler.js", () => ({
     default: {
         consumeResources: vi.fn(),
         checkIfCanCardCanReachTargets: vi.fn(),
@@ -23,7 +26,7 @@ vi.mock("../../src/domain/utils/consumption-utils.js", () => ({
     }
 }));
 
-vi.mock("../../src/domain/utils/damage-utils.js", () => ({
+vi.mock("../../src/domain/engine/roll/damage.js", () => ({
     default: {
         buildDamageDiceLauncher: vi.fn(async () => ([])),
         buildHealDiceLauncher: vi.fn(async () => ([])),
@@ -34,39 +37,39 @@ vi.mock("../../src/domain/utils/damage-utils.js", () => ({
     }
 }));
 
-vi.mock("../../src/domain/utils/fx-utils.js", () => ({
+vi.mock("../../src/domain/engine/shared/fx.js", () => ({
     default: {
         handleSpecialEffect: vi.fn(),
         importMacroFromCompendium: vi.fn()
     }
 }));
 
-vi.mock("../../src/domain/utils/canvas-utils.js", () => ({
+vi.mock("../../src/domain/engine/shared/geometry.js", () => ({
     default: {
         locationIsOccupied: vi.fn(),
         getMinDistanceBetweenTwoToken: vi.fn()
     }
 }));
-describe("FQUtils", () => {
+describe("CardEffect / RollService / Minion / ObjectUtils", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
     it("should roll a dice and return result", async () => {
-        const result = await FQUtils.rollResultAsync("1d20");
+        const result = await RollService.rollResultAsync("1d20");
         expect(result).toBeGreaterThanOrEqual(1);
         expect(result).toBeLessThanOrEqual(20);
     });
 
     it("should generate a random ID", () => {
-        const id = FQUtils.generateRandomId(10);
+        const id = ObjectUtils.generateRandomId(10);
         expect(id).toHaveLength(10);
     });
 
     it("should prepare data from card", async () => {
         const cardContent = {minReach: "1", maxReach: "1+1d6", nbTargets: "1d3"};
-        await FQUtils.prepareDataFromCard(cardContent);
+        await CardEffect.prepareDataFromCard(cardContent);
 
         expect(cardContent.minReach).toBeGreaterThanOrEqual(1);
         expect(cardContent.maxReach).toBeGreaterThanOrEqual(1);
@@ -90,7 +93,7 @@ describe("FQUtils", () => {
             cha: {mod: 3}
         };
 
-        FQUtils.replaceCardContentAbilitiesBonus(cardContent);
+        CardEffect.replaceCardContentAbilitiesBonus(cardContent);
 
         expect(cardContent.key1).toBe("some text with 2 modifier");
         expect(cardContent.key2.nestedKey).toBe("3 modifier");
@@ -98,8 +101,8 @@ describe("FQUtils", () => {
 
     it("should handle sound effect in applyCardEffect", async () => {
         const cardContent = {damage: "1d6", heal: "3+1d4", sound: "sound.mp3"};
-        await FQUtils.applyCardEffect(cardContent, {}, {});
-        expect(FxUtils.handleSpecialEffect).toHaveBeenCalledWith(cardContent, expect.any(Array), {
+        await CardEffect.applyCardEffect(cardContent, {}, {});
+        expect(Fx.handleSpecialEffect).toHaveBeenCalledWith(cardContent, expect.any(Array), {
             "actorId": "userCharacterId",
             "x": 5,
             "y": 5
@@ -110,17 +113,17 @@ describe("FQUtils", () => {
         const cardContent = makeChoice({damage: "1d6", heal: "3"});
         const card = makeCard();
 
-        await FQUtils.applyCardEffect(cardContent, card, {});
+        await CardEffect.applyCardEffect(cardContent, card, {});
 
-        expect(ConsumptionUtils.consumeResources).toHaveBeenCalled();
-        expect(DamageUtils.buildDamageDiceLauncher).toHaveBeenCalled();
-        expect(DamageUtils.buildHealDiceLauncher).toHaveBeenCalled();
-        expect(DamageUtils.displayResult).toHaveBeenCalled();
+        expect(ResourceHandler.consumeResources).toHaveBeenCalled();
+        expect(Damage.buildDamageDiceLauncher).toHaveBeenCalled();
+        expect(Damage.buildHealDiceLauncher).toHaveBeenCalled();
+        expect(Damage.displayResult).toHaveBeenCalled();
         expect(socket.executeAsGM).toHaveBeenCalledWith("logCardPlayed", expect.any(Array), cardContent);
     });
 
     it("applyCardEffect - branche cardContent null : publie InfoMsgNoAddedEffect", async () => {
-        await FQUtils.applyCardEffect(null, makeCard(), {});
+        await CardEffect.applyCardEffect(null, makeCard(), {});
 
         expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
             content: expect.stringContaining("FQCARDENGINE.InfoMsgNoAddedEffect")
@@ -135,7 +138,7 @@ describe("FQUtils", () => {
             ],
         };
 
-        const result = await FQUtils.createEffectsFromData(input);
+        const result = await CardEffect.createEffectsFromData(input);
 
         expect(result[0].name).toBe("Effet A");
         expect(result[1].name).toBe("Déjà nommé");
@@ -152,7 +155,7 @@ describe("FQUtils", () => {
             ],
         };
 
-        const [res] = await FQUtils.createEffectsFromData(input);
+        const [res] = await CardEffect.createEffectsFromData(input);
 
         expect(res.startTime).toBe(10);
         expect(res.rounds).toBe(2);
@@ -173,7 +176,7 @@ describe("FQUtils", () => {
             ],
         };
 
-        const [res] = await FQUtils.createEffectsFromData(input);
+        const [res] = await CardEffect.createEffectsFromData(input);
 
         expect(res.changes[0].value).toBe("1+2");
         expect(res.changes[1].value).toBe("2+3");
@@ -186,18 +189,18 @@ describe("FQUtils", () => {
     describe("checkIfCanUseCard — eval custom", () => {
         // ISOLE la branche eval : sans ceci, `game.combat` non-null (défaut de
         // tests/setup.js) fait passer la ligne 469 de fq-utils.js, qui appelle
-        // ConsumptionUtils.validateUseSpellInTurn — absent du mock de
+        // ResourceHandler.validateUseSpellInTurn — absent du mock de
         // consumption-utils.js — ce qui lèverait une erreur non désirée.
         beforeEach(() => {
             game.combat = null;
-            ConsumptionUtils.checkResources.mockReturnValue(true);
+            ResourceHandler.checkResources.mockReturnValue(true);
         });
 
         it("script vrai : renvoie true et ne publie aucun message", () => {
             const cardContent = makeChoice({customEvals: [{script: "1+1===2"}]});
             const card = makeCard();
 
-            const result = FQUtils.checkIfCanUseCard(cardContent, card);
+            const result = CardEffect.checkIfCanUseCard(cardContent, card);
 
             expect(result).toBe(true);
             expect(ChatMessage.create).not.toHaveBeenCalled();
@@ -207,7 +210,7 @@ describe("FQUtils", () => {
             const cardContent = makeChoice({customEvals: [{script: "1===2"}]});
             const card = makeCard();
 
-            const result = FQUtils.checkIfCanUseCard(cardContent, card);
+            const result = CardEffect.checkIfCanUseCard(cardContent, card);
 
             expect(result).toBe(false);
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
@@ -227,7 +230,7 @@ describe("FQUtils", () => {
             // NOTE : la branche catch ne met PAS iscustomEvals à false — on ne
             // se prononce donc pas sur la valeur de retour ici, uniquement sur
             // le logging et le message publié.
-            FQUtils.checkIfCanUseCard(cardContent, card);
+            CardEffect.checkIfCanUseCard(cardContent, card);
 
             expect(spy).toHaveBeenCalled();
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
@@ -244,7 +247,7 @@ describe("FQUtils", () => {
             const cardContent = makeChoice({customEvals: [{script: "1&gt;0"}]});
             const card = makeCard();
 
-            FQUtils.checkIfCanUseCard(cardContent, card);
+            CardEffect.checkIfCanUseCard(cardContent, card);
 
             expect(cardContent.customEvals[0].script).toBe("1>0");
         });
@@ -254,7 +257,7 @@ describe("FQUtils", () => {
         it("substitution nominale : remplace XXX/YYY et renvoie true", async () => {
             const cardContent = makeChoice({damage: "XXX+YYY", xmax: "10", ymax: "10"});
 
-            const ok = await FQUtils.replaceCardContentXAndYValue(cardContent, true, 3, 2);
+            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, true, 3, 2);
 
             expect(ok).toBe(true);
             expect(cardContent.damage).toBe("3+2");
@@ -263,7 +266,7 @@ describe("FQUtils", () => {
         it("hors bornes : rejette (false) une valeur XXX négative et publie WarningMsgXValueSuperiorXMax", async () => {
             const cardContent = makeChoice({damage: "XXX+YYY", xmax: "10", ymax: "10"});
 
-            const ok = await FQUtils.replaceCardContentXAndYValue(cardContent, true, -1, 2);
+            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, true, -1, 2);
 
             expect(ok).toBe(false);
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
@@ -280,7 +283,7 @@ describe("FQUtils", () => {
     // Globals locaux NON fournis par tests/setup.js (FqCardEngineModule,
     // game.folders, game.userId, globalThis.Folder) : posés en beforeEach et
     // nettoyés en afterEach, patron T-04-05 (tests/hook/socket-lib.test.js).
-    describe("FQUtils — création de sbires", () => {
+    describe("Minion — création de sbires", () => {
         beforeEach(() => {
             globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
             game.userId = "userCharacterId";
@@ -299,26 +302,26 @@ describe("FQUtils", () => {
             const tempFolder = {id: "tmp", type: "Actor", name: "Temporaire"};
             game.folders.find = vi.fn((fn) => [tempFolder].find(fn));
 
-            expect(FQUtils.getTempActorFolder()).toBe(tempFolder);
+            expect(Minion.getTempActorFolder()).toBe(tempFolder);
         });
 
         it("getTempActorFolder renvoie undefined si absent", () => {
             game.folders.find = vi.fn((fn) => [].find(fn));
 
-            expect(FQUtils.getTempActorFolder()).toBeUndefined();
+            expect(Minion.getTempActorFolder()).toBeUndefined();
         });
 
         it("createTempFold crée le dossier Temporaire de type Actor", async () => {
-            await FQUtils.createTempFold();
+            await Minion.createTempFold();
 
             expect(Folder.create).toHaveBeenCalledWith({name: "Temporaire", type: "Actor"});
         });
 
         it("createActor SANS dossier Temporaire : demande sa création au MJ puis délègue à createActorData", async () => {
             game.folders.find = vi.fn(() => undefined);
-            const spy = vi.spyOn(FQUtils, "createActorData").mockResolvedValue(undefined);
+            const spy = vi.spyOn(Minion, "createActorData").mockResolvedValue(undefined);
 
-            await FQUtils.createActor({name: "minionName"}, "left");
+            await Minion.createActor({name: "minionName"}, "left");
 
             expect(socket.executeAsGM).toHaveBeenCalledWith("createTempFold");
             expect(spy).toHaveBeenCalledWith({name: "minionName"}, "left");
@@ -328,9 +331,9 @@ describe("FQUtils", () => {
 
         it("createActor AVEC dossier Temporaire déjà présent : ne demande pas sa création au MJ", async () => {
             game.folders.find = vi.fn((fn) => [{id: "tmp", type: "Actor", name: "Temporaire"}].find(fn));
-            const spy = vi.spyOn(FQUtils, "createActorData").mockResolvedValue(undefined);
+            const spy = vi.spyOn(Minion, "createActorData").mockResolvedValue(undefined);
 
-            await FQUtils.createActor({name: "minionName"}, "left");
+            await Minion.createActor({name: "minionName"}, "left");
 
             expect(socket.executeAsGM).not.toHaveBeenCalledWith("createTempFold");
             expect(spy).toHaveBeenCalledWith({name: "minionName"}, "left");
@@ -340,7 +343,7 @@ describe("FQUtils", () => {
 
         describe("createActorData", () => {
             beforeEach(() => {
-                vi.spyOn(FQUtils, "getTempActorFolder").mockReturnValue({id: "tmp"});
+                vi.spyOn(Minion, "getTempActorFolder").mockReturnValue({id: "tmp"});
                 // Doc de compendium complet (bonus/movement inclus) pour couvrir
                 // toutes les branches de surcharge de minion.data sans planter
                 // sur les clés absentes du doc minimal de tests/setup.js.
@@ -363,7 +366,7 @@ describe("FQUtils", () => {
             });
 
             afterEach(() => {
-                FQUtils.getTempActorFolder.mockRestore();
+                Minion.getTempActorFolder.mockRestore();
             });
 
             it("construit actorData depuis le compendium, applique toutes les surcharges de minion.data et délègue au MJ via socket", async () => {
@@ -375,7 +378,7 @@ describe("FQUtils", () => {
                     }
                 };
 
-                await FQUtils.createActorData(minion, "left");
+                await Minion.createActorData(minion, "left");
 
                 expect(game.packs.get).toHaveBeenCalledWith("fq-card-engine.minions-fq8");
                 expect(socket.executeAsGM).toHaveBeenCalledWith(
@@ -403,7 +406,7 @@ describe("FQUtils", () => {
             });
 
             it("sans minion.data : n'applique aucune surcharge mais crée quand même l'acteur (ownership + socket)", async () => {
-                await FQUtils.createActorData({name: "minionName"}, "up");
+                await Minion.createActorData({name: "minionName"}, "up");
 
                 expect(socket.executeAsGM).toHaveBeenCalledWith(
                     "createActorFromData",
@@ -430,18 +433,18 @@ describe("FQUtils", () => {
             const card = makeCard({parent: {draw}, source: "sourceRef"});
             const cardContent = makeChoice({draw: 2});
 
-            await FQUtils.applyCardEffect(cardContent, card, {});
+            await CardEffect.applyCardEffect(cardContent, card, {});
 
             expect(draw).toHaveBeenCalledWith("sourceRef", 2, {chatNotification: false, how: 2});
         });
 
         it("minions : appelle createActor par emplacement sélectionné et repasse chaque flag à false", async () => {
-            const spy = vi.spyOn(FQUtils, "createActor").mockResolvedValue(undefined);
+            const spy = vi.spyOn(Minion, "createActor").mockResolvedValue(undefined);
             const minion = {name: "goblin"};
             const cardContent = makeChoice({minions: [minion]});
             const fd = {minionLeft: true, minionUp: true, minionRight: true, minionDown: true};
 
-            await FQUtils.applyCardEffect(cardContent, makeCard(), fd);
+            await CardEffect.applyCardEffect(cardContent, makeCard(), fd);
 
             expect(spy).toHaveBeenCalledWith(minion, "left");
             expect(spy).toHaveBeenCalledWith(minion, "up");
@@ -459,7 +462,7 @@ describe("FQUtils", () => {
             globalThis.__evalProbe = 0;
             const cardContent = makeChoice({executeEval: "globalThis.__evalProbe = (1 &gt; 0 &amp;&amp; 2 &lt; 3) ? 42 : 0;"});
 
-            await FQUtils.applyCardEffect(cardContent, makeCard(), {});
+            await CardEffect.applyCardEffect(cardContent, makeCard(), {});
 
             expect(cardContent.executeEval).toBe("globalThis.__evalProbe = (1 > 0 && 2 < 3) ? 42 : 0;");
             expect(globalThis.__evalProbe).toBe(42);
@@ -468,13 +471,13 @@ describe("FQUtils", () => {
         });
 
         it("applyEffectsFormulas non vide : appelle playApplyEffectsFormulas et concatène les messages", async () => {
-            const spy = vi.spyOn(FQUtils, "playApplyEffectsFormulas").mockResolvedValue(["Message effet déclenché"]);
+            const spy = vi.spyOn(CardEffect, "playApplyEffectsFormulas").mockResolvedValue(["Message effet déclenché"]);
             const cardContent = makeChoice({applyEffectsFormulas: [{formula: "1d20", title: "T", effects: []}]});
 
-            await FQUtils.applyCardEffect(cardContent, makeCard(), {});
+            await CardEffect.applyCardEffect(cardContent, makeCard(), {});
 
             expect(spy).toHaveBeenCalledWith(cardContent.applyEffectsFormulas[0], cardContent);
-            expect(DamageUtils.displayResult).toHaveBeenCalledWith(
+            expect(Damage.displayResult).toHaveBeenCalledWith(
                 game.user.character, expect.any(Array), expect.arrayContaining(["Message effet déclenché"])
             );
 
@@ -482,13 +485,13 @@ describe("FQUtils", () => {
         });
 
         it("resultArray non vide : applique les PV via socket.executeAsGM('applyActorHpModification', ...) par résultat", async () => {
-            DamageUtils.buildDamageDiceLauncher.mockResolvedValueOnce([
+            Damage.buildDamageDiceLauncher.mockResolvedValueOnce([
                 {targetTokenId: "token1", value: 5, type: "damageFQ"},
                 {targetTokenId: "token2", value: 3, type: "healFQ"}
             ]);
             const cardContent = makeChoice({damage: "1d6"});
 
-            await FQUtils.applyCardEffect(cardContent, makeCard(), {});
+            await CardEffect.applyCardEffect(cardContent, makeCard(), {});
 
             expect(socket.executeAsGM).toHaveBeenCalledWith("applyActorHpModification", "token1", 5, "damageFQ");
             expect(socket.executeAsGM).toHaveBeenCalledWith("applyActorHpModification", "token2", 3, "healFQ");
@@ -517,7 +520,7 @@ describe("FQUtils", () => {
                 }]
             };
 
-            const messages = await FQUtils.playApplyEffectsFormulas(applyEffectsFormulas, makeChoice());
+            const messages = await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, makeChoice());
 
             expect(ActiveEffect.implementation.create).toHaveBeenCalled();
             expect(socket.executeAsGM).not.toHaveBeenCalledWith("addEffectForTarget", expect.anything(), expect.anything());
@@ -536,7 +539,7 @@ describe("FQUtils", () => {
             };
             const cardContent = makeChoice({minReach: 1});
 
-            await FQUtils.playApplyEffectsFormulas(applyEffectsFormulas, cardContent);
+            await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, cardContent);
 
             expect(socket.executeAsGM).toHaveBeenCalledWith("addEffectForTarget", expect.any(Object), "token1");
             expect(ActiveEffect.implementation.create).not.toHaveBeenCalled();
@@ -545,7 +548,7 @@ describe("FQUtils", () => {
         it("no match (aucun effet ne correspond au total du jet) : ne crée aucun effet et renvoie []", async () => {
             const applyEffectsFormulas = {formula: "1d20", title: "T", effects: []};
 
-            const messages = await FQUtils.playApplyEffectsFormulas(applyEffectsFormulas, makeChoice());
+            const messages = await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, makeChoice());
 
             expect(ActiveEffect.implementation.create).not.toHaveBeenCalled();
             expect(socket.executeAsGM).not.toHaveBeenCalledWith("addEffectForTarget", expect.anything(), expect.anything());
@@ -560,7 +563,7 @@ describe("FQUtils", () => {
                 draw: "1", drop: "1", bonusCrit: "1", bonusEva: "1"
             };
 
-            await FQUtils.prepareDataFromCard(cardContent);
+            await CardEffect.prepareDataFromCard(cardContent);
 
             expect(cardContent.hp).toBe(10);
             expect(cardContent.action).toBe(10);
@@ -572,13 +575,13 @@ describe("FQUtils", () => {
             expect(cardContent.bonusEva).toBe(10);
         });
 
-        it("maxReach ajoute le bonus de portée de l'acteur (FqConstants.actorFQ.bonus.range)", async () => {
+        it("maxReach ajoute le bonus de portée de l'acteur (Constants.actorFQ.bonus.range)", async () => {
             // minReach doit être présent : la branche évalue minReach ET maxReach
             // dès que l'un des deux est truthy (fq-utils.js:356-358).
             game.user.character.system.fq.bonus.range = 3;
             const cardContent = {minReach: "1", maxReach: "1"};
 
-            await FQUtils.prepareDataFromCard(cardContent);
+            await CardEffect.prepareDataFromCard(cardContent);
 
             expect(cardContent.minReach).toBe(10);
             expect(cardContent.maxReach).toBe(13); // 10 (roll déterministe) + 3 (bonus.range)
@@ -588,14 +591,14 @@ describe("FQUtils", () => {
     describe("checkIfCanUseCard — branches combat et validations", () => {
         beforeEach(() => {
             game.combat = null;
-            ConsumptionUtils.checkResources.mockReturnValue(true);
+            ResourceHandler.checkResources.mockReturnValue(true);
         });
 
         it("passif déjà rejoué ce round : renvoie false et publie WarningMsgPassiveSpellAlreadyUsed", () => {
             game.combat = {round: 3};
             const cardContent = makeChoice({replayable: "passif", hasBeenPlayed: true, passivePlayedRound: "3"});
 
-            const result = FQUtils.checkIfCanUseCard(cardContent, makeCard());
+            const result = CardEffect.checkIfCanUseCard(cardContent, makeCard());
 
             expect(result).toBe(false);
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
@@ -607,7 +610,7 @@ describe("FQUtils", () => {
             game.combat = {round: 1, combatant: {actor: {id: "userCharacterId"}}};
             const cardContent = makeChoice({reactive: true});
 
-            const result = FQUtils.checkIfCanUseCard(cardContent, makeCard());
+            const result = CardEffect.checkIfCanUseCard(cardContent, makeCard());
 
             expect(result).toBe(false);
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
@@ -616,13 +619,13 @@ describe("FQUtils", () => {
         });
 
         it("portée insuffisante : délègue à checkIfCanCardCanReachTargets et renvoie false s'il échoue", () => {
-            ConsumptionUtils.checkIfCanCardCanReachTargets.mockReturnValue(false);
+            ResourceHandler.checkIfCanCardCanReachTargets.mockReturnValue(false);
             const cardContent = makeChoice({minReach: 1, maxReach: 3, nbTargets: 1, targetType: "Default"});
 
-            const result = FQUtils.checkIfCanUseCard(cardContent, makeCard());
+            const result = CardEffect.checkIfCanUseCard(cardContent, makeCard());
 
             expect(result).toBe(false);
-            expect(ConsumptionUtils.checkIfCanCardCanReachTargets).toHaveBeenCalledWith(
+            expect(ResourceHandler.checkIfCanCardCanReachTargets).toHaveBeenCalledWith(
                 game.user.character, 1, 1, 3, "Default"
             );
         });
@@ -631,10 +634,10 @@ describe("FQUtils", () => {
             const card = makeCard({source: {cards: {size: 1}, drawnCards: []}});
             const cardContent = makeChoice({draw: 2});
 
-            const result = FQUtils.checkIfCanUseCard(cardContent, card);
+            const result = CardEffect.checkIfCanUseCard(cardContent, card);
 
             expect(result).toBe(false);
-            expect(ConsumptionUtils.createUserWarningMessage).toHaveBeenCalledWith(
+            expect(ResourceHandler.createUserWarningMessage).toHaveBeenCalledWith(
                 "FQCARDENGINE.WarningMsgNotEnoughDraw", game.user.character
             );
         });
@@ -642,10 +645,10 @@ describe("FQUtils", () => {
         it("cas nominal : aucune condition bloquante, renvoie le résultat de checkResources", () => {
             const cardContent = makeChoice();
 
-            const result = FQUtils.checkIfCanUseCard(cardContent, makeCard());
+            const result = CardEffect.checkIfCanUseCard(cardContent, makeCard());
 
             expect(result).toBe(true);
-            expect(ConsumptionUtils.checkResources).toHaveBeenCalledWith(cardContent, game.user.character);
+            expect(ResourceHandler.checkResources).toHaveBeenCalledWith(cardContent, game.user.character);
         });
     });
 
@@ -653,7 +656,7 @@ describe("FQUtils", () => {
 
     describe("rollResultAsync — display", () => {
         it("display=true, isDeterministic (défaut) : publie via roll.toMessage, n'appelle pas l'animation 3D", async () => {
-            const result = await FQUtils.rollResultAsync("1d20", true);
+            const result = await RollService.rollResultAsync("1d20", true);
 
             expect(result).toBe(10);
             expect(game.dice3d.waitFor3DAnimationByMessageID).not.toHaveBeenCalled();
@@ -668,7 +671,7 @@ describe("FQUtils", () => {
                 this.toMessage = vi.fn(async () => ({id: "msg-3d"}));
             });
 
-            const result = await FQUtils.rollResultAsync("1d20", true);
+            const result = await RollService.rollResultAsync("1d20", true);
 
             expect(result).toBe(10);
             expect(game.dice3d.waitFor3DAnimationByMessageID).toHaveBeenCalledWith("msg-3d");
@@ -684,7 +687,7 @@ describe("FQUtils", () => {
             // rester <= 10 et YYY doit dépasser 10 pour déclencher cette branche.
             const cardContent = makeChoice({damage: "XXX+YYY", xmax: "10", ymax: "5"});
 
-            const ok = await FQUtils.replaceCardContentXAndYValue(cardContent, true, 3, 11);
+            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, true, 3, 11);
 
             expect(ok).toBe(false);
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
@@ -695,7 +698,7 @@ describe("FQUtils", () => {
         it("xmin non respecté : rejette (false) et publie WarningMsgXValueInferiorXMin", async () => {
             const cardContent = makeChoice({damage: "XXX+YYY", xmin: "5"});
 
-            const ok = await FQUtils.replaceCardContentXAndYValue(cardContent, true, 2, 2);
+            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, true, 2, 2);
 
             expect(ok).toBe(false);
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
@@ -706,7 +709,7 @@ describe("FQUtils", () => {
         it("ymin non respecté : rejette (false) quand YYY < ymin et publie WarningMsgYValueInferiorYMin", async () => {
             const cardContent = makeChoice({damage: "XXX+YYY", ymin: "5"});
 
-            const ok = await FQUtils.replaceCardContentXAndYValue(cardContent, true, 100, 2);
+            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, true, 100, 2);
 
             expect(ok).toBe(false);
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
@@ -715,10 +718,10 @@ describe("FQUtils", () => {
         });
 
         it("sans variables saisies (hasVariables=false) mais xvalue/yvalue définis : calcule via getXYValue", async () => {
-            const spy = vi.spyOn(FQUtils, "getXYValue").mockResolvedValueOnce(7).mockResolvedValueOnce(2);
+            const spy = vi.spyOn(CardEffect, "getXYValue").mockResolvedValueOnce(7).mockResolvedValueOnce(2);
             const cardContent = makeChoice({damage: "XXX+YYY", xvalue: "nbTargets", yvalue: "nbTargets"});
 
-            const ok = await FQUtils.replaceCardContentXAndYValue(cardContent, false, undefined, undefined);
+            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, false, undefined, undefined);
 
             expect(ok).toBe(true);
             expect(spy).toHaveBeenCalledWith("nbTargets", expect.any(Array));
@@ -730,41 +733,41 @@ describe("FQUtils", () => {
 
     describe("getXYValue", () => {
         it("nbTargets : renvoie la longueur des cibles (0 si vide)", async () => {
-            expect(await FQUtils.getXYValue("nbTargets", [])).toBe(0);
-            expect(await FQUtils.getXYValue("nbTargets", [{}, {}])).toBe(2);
+            expect(await CardEffect.getXYValue("nbTargets", [])).toBe(0);
+            expect(await CardEffect.getXYValue("nbTargets", [{}, {}])).toBe(2);
         });
 
-        it("reach avec une seule cible : délègue à CanvasUtils.getMinDistanceBetweenTwoToken", async () => {
-            CanvasUtils.getMinDistanceBetweenTwoToken.mockReturnValue(4);
+        it("reach avec une seule cible : délègue à Geometry.getMinDistanceBetweenTwoToken", async () => {
+            Geometry.getMinDistanceBetweenTwoToken.mockReturnValue(4);
             const target = {document: {x: 0, y: 5, width: 1, height: 1}};
 
-            const result = await FQUtils.getXYValue("reach", [target]);
+            const result = await CardEffect.getXYValue("reach", [target]);
 
             expect(result).toBe(4);
-            expect(CanvasUtils.getMinDistanceBetweenTwoToken).toHaveBeenCalledWith(
+            expect(Geometry.getMinDistanceBetweenTwoToken).toHaveBeenCalledWith(
                 5, 5, 0, 5, undefined, 1, undefined, 1
             );
         });
 
         it("SCRIPT: : évalue le script après le préfixe", async () => {
-            const result = await FQUtils.getXYValue("SCRIPT:2+2", []);
+            const result = await CardEffect.getXYValue("SCRIPT:2+2", []);
             expect(result).toBe(4);
         });
 
         it("SCRIPT: qui lève une exception (ex. game.combat null) : renvoie 0 sans planter", async () => {
-            const result = await FQUtils.getXYValue("SCRIPT:game.combat.flags.fq.logs", []);
+            const result = await CardEffect.getXYValue("SCRIPT:game.combat.flags.fq.logs", []);
             expect(result).toBe(0);
         });
 
         it("SCRIPT: dont le résultat n'est pas un nombre fini (undefined/NaN) : renvoie 0", async () => {
-            expect(await FQUtils.getXYValue("SCRIPT:undefined", [])).toBe(0);
-            expect(await FQUtils.getXYValue("SCRIPT:-2*undefined", [])).toBe(0);
+            expect(await CardEffect.getXYValue("SCRIPT:undefined", [])).toBe(0);
+            expect(await CardEffect.getXYValue("SCRIPT:-2*undefined", [])).toBe(0);
         });
 
         it("défaut : délègue à getNestedAttribute sur le système du personnage", async () => {
             game.user.character.system.attributes.hp = {value: "5"};
 
-            const result = await FQUtils.getXYValue("attributes.hp.value", []);
+            const result = await CardEffect.getXYValue("attributes.hp.value", []);
 
             expect(result).toBe(10); // rollResultAsync("5") -> total déterministe
         });
@@ -772,15 +775,15 @@ describe("FQUtils", () => {
 
     describe("getNestedAttribute", () => {
         it("clé vide : renvoie 0", async () => {
-            expect(await FQUtils.getNestedAttribute({foo: "bar"}, "")).toBe(0);
+            expect(await CardEffect.getNestedAttribute({foo: "bar"}, "")).toBe(0);
         });
 
         it("chemin présent : renvoie le total du jet (roll déterministe)", async () => {
-            expect(await FQUtils.getNestedAttribute({a: {b: "3"}}, "a.b")).toBe(10);
+            expect(await CardEffect.getNestedAttribute({a: {b: "3"}}, "a.b")).toBe(10);
         });
 
         it("chemin absent : renvoie 0", async () => {
-            expect(await FQUtils.getNestedAttribute({a: {}}, "a.c")).toBe(0);
+            expect(await CardEffect.getNestedAttribute({a: {}}, "a.c")).toBe(0);
         });
     });
 
@@ -793,7 +796,7 @@ describe("FQUtils", () => {
                 flag: true
             };
 
-            FQUtils.recalculatedWithWYValue(cardContent, 5, 3);
+            CardEffect.recalculatedWithWYValue(cardContent, 5, 3);
 
             expect(cardContent.top).toBe("5 dégâts, 3 portée");
             expect(cardContent.nested.inner).toBe("encore 5");
@@ -804,7 +807,7 @@ describe("FQUtils", () => {
 
     describe("stringifyObjValue", () => {
         it("convertit récursivement les valeurs primitives en chaînes", () => {
-            const result = FQUtils.stringifyObjValue({a: 1, b: true, nested: {c: 2}});
+            const result = CardEffect.stringifyObjValue({a: 1, b: true, nested: {c: 2}});
 
             expect(result.a).toBe("1");
             expect(result.b).toBe("true");
@@ -820,7 +823,7 @@ describe("FQUtils", () => {
             // nommées -> la boucle ne fait rien, quelles que soient les valeurs.
             const content = {five: 5, plus: "+2", roll: "1d6"};
 
-            const result = await FQUtils.numerizeEffectObjValue(content);
+            const result = await CardEffect.numerizeEffectObjValue(content);
 
             expect(result).toEqual({five: 5, plus: "+2", roll: "1d6"});
         });
@@ -831,7 +834,7 @@ describe("FQUtils", () => {
             // chaîne "+..." non numérique (ex: "+1d6") atteint cette branche.
             const content = {0: "5", 1: "+1d6", 2: "1d6"};
 
-            const result = await FQUtils.numerizeEffectObjValue(content);
+            const result = await CardEffect.numerizeEffectObjValue(content);
 
             expect(result[0]).toBe(5);
             expect(result[1]).toBe("+1d6");
@@ -841,7 +844,7 @@ describe("FQUtils", () => {
         it("valeur imbriquée sous une clé alignée : récursion", async () => {
             const content = {0: {0: "5"}};
 
-            const result = await FQUtils.numerizeEffectObjValue(content);
+            const result = await CardEffect.numerizeEffectObjValue(content);
 
             expect(result[0][0]).toBe(5);
         });
@@ -856,46 +859,46 @@ describe("FQUtils", () => {
         });
 
         it("replaceAbilitiesBonus substitue chaque référence @xxx par le modificateur correspondant", () => {
-            const result = FQUtils.replaceAbilitiesBonus("@str/@dex/@con/@int/@wis/@cha");
+            const result = RollService.replaceAbilitiesBonus("@str/@dex/@con/@int/@wis/@cha");
             expect(result).toBe("2/0/-1/0/0/0");
         });
 
         it("hasAbilitiesBonus : true si au moins une référence a un modificateur strictement positif", () => {
-            expect(FQUtils.hasAbilitiesBonus("bonus @str")).toBe(true);
+            expect(RollService.hasAbilitiesBonus("bonus @str")).toBe(true);
         });
 
         it("hasAbilitiesBonus : false si aucune référence n'a de modificateur positif", () => {
-            expect(FQUtils.hasAbilitiesBonus("bonus @dex @con")).toBe(false);
+            expect(RollService.hasAbilitiesBonus("bonus @dex @con")).toBe(false);
         });
     });
 
     describe("getNbValideMinionLocationSelected / getNbMinionLocationSelected", () => {
         it("getNbMinionLocationSelected compte tous les emplacements sélectionnés (occupés ou non)", () => {
             const fd = {minionUp: true, minionDown: true, minionLeft: false, minionRight: true};
-            expect(FQUtils.getNbMinionLocationSelected(fd)).toBe(3);
+            expect(Minion.getNbMinionLocationSelected(fd)).toBe(3);
         });
 
-        it("getNbValideMinionLocationSelected exclut les emplacements occupés (CanvasUtils.locationIsOccupied)", () => {
-            CanvasUtils.locationIsOccupied.mockImplementation(loc => loc === "up");
+        it("getNbValideMinionLocationSelected exclut les emplacements occupés (Geometry.locationIsOccupied)", () => {
+            Geometry.locationIsOccupied.mockImplementation(loc => loc === "up");
             const fd = {minionUp: true, minionDown: true, minionLeft: true, minionRight: false};
 
-            const result = FQUtils.getNbValideMinionLocationSelected(fd);
+            const result = Minion.getNbValideMinionLocationSelected(fd);
 
             expect(result).toBe(2); // up exclu (occupé) ; down + left valides
-            expect(CanvasUtils.locationIsOccupied).toHaveBeenCalledWith("up");
+            expect(Geometry.locationIsOccupied).toHaveBeenCalledWith("up");
         });
     });
 
     describe("deepCopy", () => {
         it("primitive/null renvoyés tels quels", () => {
-            expect(FQUtils.deepCopy(null)).toBeNull();
-            expect(FQUtils.deepCopy(42)).toBe(42);
-            expect(FQUtils.deepCopy("abc")).toBe("abc");
+            expect(ObjectUtils.deepCopy(null)).toBeNull();
+            expect(ObjectUtils.deepCopy(42)).toBe(42);
+            expect(ObjectUtils.deepCopy("abc")).toBe("abc");
         });
 
         it("copie un tableau en profondeur : mutation de la copie n'affecte pas l'original", () => {
             const original = [{a: 1}, {a: 2}];
-            const copy = FQUtils.deepCopy(original);
+            const copy = ObjectUtils.deepCopy(original);
 
             copy[0].a = 999;
 
@@ -905,7 +908,7 @@ describe("FQUtils", () => {
 
         it("copie un objet en profondeur : mutation de la copie n'affecte pas l'original", () => {
             const original = {nested: {value: 1}};
-            const copy = FQUtils.deepCopy(original);
+            const copy = ObjectUtils.deepCopy(original);
 
             copy.nested.value = 999;
 
@@ -915,14 +918,14 @@ describe("FQUtils", () => {
 
     describe("translateMessages", () => {
         it("liste vide/undefined : renvoie []", () => {
-            expect(FQUtils.translateMessages(undefined)).toEqual([]);
-            expect(FQUtils.translateMessages([])).toEqual([]);
+            expect(CardEffect.translateMessages(undefined)).toEqual([]);
+            expect(CardEffect.translateMessages([])).toEqual([]);
         });
 
         it("message avec arg JSON : appelle game.i18n.format avec l'objet parsé", () => {
             const messages = [{key: "FQCARDENGINE.SomeKey", arg: JSON.stringify({value: 5})}];
 
-            FQUtils.translateMessages(messages);
+            CardEffect.translateMessages(messages);
 
             expect(game.i18n.format).toHaveBeenCalledWith("FQCARDENGINE.SomeKey", {value: 5});
         });
@@ -930,7 +933,7 @@ describe("FQUtils", () => {
         it("message sans arg : appelle game.i18n.format avec un objet vide", () => {
             const messages = [{key: "FQCARDENGINE.NoArg"}];
 
-            FQUtils.translateMessages(messages);
+            CardEffect.translateMessages(messages);
 
             expect(game.i18n.format).toHaveBeenCalledWith("FQCARDENGINE.NoArg", {});
         });
@@ -941,7 +944,7 @@ describe("FQUtils", () => {
             const card = {update: vi.fn(), flip: vi.fn().mockReturnValue(Promise.resolve())};
             const cardContents = [{a: 1}];
 
-            FQUtils.rewriteCardContent(card, cardContents, {b: 2});
+            CardEffect.rewriteCardContent(card, cardContents, {b: 2});
 
             expect(card.update).toHaveBeenCalledWith({
                 "system.fq.choices": [{a: "1", b: "2"}]
@@ -953,7 +956,7 @@ describe("FQUtils", () => {
             const card = {update: vi.fn(), flip: vi.fn().mockReturnValue(Promise.resolve())};
             const cardContents = [{afterFirstPlay: JSON.stringify({c: 3})}];
 
-            FQUtils.rewriteCardContent(card, cardContents, {d: 4});
+            CardEffect.rewriteCardContent(card, cardContents, {d: 4});
 
             expect(card.update).toHaveBeenCalledWith({
                 "system.fq.choices": [{c: "3", d: "4"}]
@@ -977,7 +980,7 @@ describe("FQUtils", () => {
         it("renvoie un fichier de la liste retournée par browse", async () => {
             foundry.applications.apps.FilePicker.implementation.browse.mockResolvedValue({files: ["a.png", "b.png"]});
 
-            const result = await FQUtils.getRandomFileFromFolder("modules/fq/images");
+            const result = await ObjectUtils.getRandomFileFromFolder("modules/fq/images");
 
             expect(["a.png", "b.png"]).toContain(result);
         });
@@ -985,7 +988,7 @@ describe("FQUtils", () => {
         it("liste vide : renvoie null", async () => {
             foundry.applications.apps.FilePicker.implementation.browse.mockResolvedValue({files: []});
 
-            const result = await FQUtils.getRandomFileFromFolder("modules/fq/images");
+            const result = await ObjectUtils.getRandomFileFromFolder("modules/fq/images");
 
             expect(result).toBeNull();
         });
@@ -995,7 +998,7 @@ describe("FQUtils", () => {
             });
             foundry.applications.apps.FilePicker.implementation.browse.mockRejectedValue(new Error("boom"));
 
-            const result = await FQUtils.getRandomFileFromFolder("modules/fq/images");
+            const result = await ObjectUtils.getRandomFileFromFolder("modules/fq/images");
 
             expect(result).toBeNull();
             expect(spy).toHaveBeenCalled();

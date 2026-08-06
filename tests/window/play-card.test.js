@@ -1,21 +1,22 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
-import PlayCard from "../../src/domain/utils/play-card.js";
+import PlayCard from "../../src/domain/engine/play-card.js";
 import {makeCard} from "../factories.js";
 
-vi.mock("../../src/hook/socket-lib.js", () => ({
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     socket: {
         executeAsGM: vi.fn()
     }
 }));
 
-const FQUtils = await import("../../src/domain/utils/fq-utils.js");
-vi.mock("../../src/domain/utils/fq-utils.js", () => ({
+import CardEffect from "../../src/domain/engine/shared/card-effect.js";
+vi.mock("../../src/domain/engine/shared/card-effect.js", () => ({
     default: {
         replaceCardContentAbilitiesBonus: vi.fn(),
         prepareDataFromCard: vi.fn(),
         applyCardEffect: vi.fn(),
         replaceCardContentXAndYValue: vi.fn().mockResolvedValue(true),
         checkIfCanUseCard: vi.fn().mockResolvedValue(true),
+        rewriteCardContent: vi.fn(),
     }
 }));
 
@@ -109,8 +110,8 @@ describe("PlayCard", () => {
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
-            expect(FQUtils.default.replaceCardContentAbilitiesBonus).toHaveBeenCalledWith(cardContent);
-            expect(FQUtils.default.prepareDataFromCard).toHaveBeenCalledWith(cardContent);
+            expect(CardEffect.replaceCardContentAbilitiesBonus).toHaveBeenCalledWith(cardContent);
+            expect(CardEffect.prepareDataFromCard).toHaveBeenCalledWith(cardContent);
         });
 
         test("should apply card effect and pass the card if needed", async () => {
@@ -123,7 +124,7 @@ describe("PlayCard", () => {
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
-            expect(FQUtils.default.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
+            expect(CardEffect.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
             expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
 
@@ -138,7 +139,7 @@ describe("PlayCard", () => {
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
-            expect(FQUtils.default.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
+            expect(CardEffect.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
             expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
 
@@ -146,45 +147,45 @@ describe("PlayCard", () => {
             const cardContent = {};
             const card = makeCard();
             const currentCards = {pass: vi.fn().mockResolvedValue()};
-            FQUtils.default.replaceCardContentXAndYValue.mockResolvedValue(true);
+            CardEffect.replaceCardContentXAndYValue.mockResolvedValue(true);
             // CRUCIAL : checkIfCanUseCard est appelé de façon SYNCHRONE dans le code
-            // (`if (!FQUtils.checkIfCanUseCard(...))`) : on utilise mockReturnValue(false),
+            // (`if (!CardEffect.checkIfCanUseCard(...))`) : on utilise mockReturnValue(false),
             // pas mockResolvedValue(false), sinon la Promise résolue serait truthy et ne
             // bloquerait pas l'exécution.
-            FQUtils.default.checkIfCanUseCard.mockReturnValue(false);
+            CardEffect.checkIfCanUseCard.mockReturnValue(false);
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
-            expect(FQUtils.default.applyCardEffect).not.toHaveBeenCalled();
+            expect(CardEffect.applyCardEffect).not.toHaveBeenCalled();
             expect(currentCards.pass).not.toHaveBeenCalled();
 
             // Restaure le comportement par défaut pour ne pas polluer les tests suivants.
-            FQUtils.default.checkIfCanUseCard.mockReturnValue(true);
+            CardEffect.checkIfCanUseCard.mockReturnValue(true);
         });
 
         test("should not apply effect or pass card when replaceCardContentXAndYValue resolves false", async () => {
             const cardContent = {};
             const card = makeCard();
             const currentCards = {pass: vi.fn().mockResolvedValue()};
-            FQUtils.default.checkIfCanUseCard.mockReturnValue(true);
-            FQUtils.default.replaceCardContentXAndYValue.mockResolvedValue(false);
+            CardEffect.checkIfCanUseCard.mockReturnValue(true);
+            CardEffect.replaceCardContentXAndYValue.mockResolvedValue(false);
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
-            expect(FQUtils.default.replaceCardContentAbilitiesBonus).toHaveBeenCalled();
-            expect(FQUtils.default.applyCardEffect).not.toHaveBeenCalled();
+            expect(CardEffect.replaceCardContentAbilitiesBonus).toHaveBeenCalled();
+            expect(CardEffect.applyCardEffect).not.toHaveBeenCalled();
             expect(currentCards.pass).not.toHaveBeenCalled();
 
             // Restaure le comportement par défaut pour ne pas polluer les tests suivants.
-            FQUtils.default.replaceCardContentXAndYValue.mockResolvedValue(true);
+            CardEffect.replaceCardContentXAndYValue.mockResolvedValue(true);
         });
 
         test("should call ui.notifications.error when currentCards.pass rejects", async () => {
             const cardContent = {};
             const card = makeCard();
             const currentCards = {pass: vi.fn().mockRejectedValue(new Error("pass failed"))};
-            FQUtils.default.checkIfCanUseCard.mockReturnValue(true);
-            FQUtils.default.replaceCardContentXAndYValue.mockResolvedValue(true);
+            CardEffect.checkIfCanUseCard.mockReturnValue(true);
+            CardEffect.replaceCardContentXAndYValue.mockResolvedValue(true);
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 

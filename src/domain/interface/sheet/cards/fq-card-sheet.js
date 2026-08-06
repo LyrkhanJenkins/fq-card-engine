@@ -1,4 +1,4 @@
-import CardFqSystem from "../../system/cards/card-fq-system.mjs";
+import CardFqSystem from "../../../system/cards/card-fq-system.mjs";
 
 /**
  * Feuille de configuration d'une carte FQ. Étend `CardConfig` en ajoutant un

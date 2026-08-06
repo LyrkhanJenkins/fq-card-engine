@@ -28,11 +28,13 @@
   ],
   "esmodules": [
     "src/init-engine.js",
-    "src/hook/socket-lib.js",
-    "src/hook/combat.js",
-    "src/hook/trading-cards.js",
-    "src/hook/render-token.js",
-    "src/hook/item-use.js"
+    "src/hook/integration/socketlib.hook.js",
+    "src/hook/integration/sequencer.hook.js",
+    "src/hook/integration/dnd5e.hook.js",
+    "src/hook/combat.hook.js",
+    "src/hook/trading-cards.hook.js",
+    "src/hook/render-token.hook.js",
+    "src/hook/item.hook.js"
   ],
   "styles": [
     "styles/globals.css",

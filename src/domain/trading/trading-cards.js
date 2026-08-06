@@ -1,11 +1,11 @@
-import FqConstants from "./fq-constants.js";
+import Constants from "../constants.js";
 
 export const DECK_TYPE = "DECK";
 export const HAND_TYPE = "HAND";
 export const PILE_TYPE = "PILE";
 export const SPELLBOOK_TYPE = "SPELLBOOK";
 
-export default class DeckUtils {
+export default class TradingCards {
 
     /**
      * Map des fonctions debounce indexées par userId.
@@ -30,7 +30,7 @@ export default class DeckUtils {
      * @returns {boolean} True si toutes les cartes peuvent être ajoutées, false sinon.
      *
      * @example
-     * const canAdd = DeckUtils.canPassCardsToDeck(deck, { toCreate: [card] });
+     * const canAdd = Deck.canPassCardsToDeck(deck, { toCreate: [card] });
      */
     static canPassCardsToDeck(to, action) {
         if (action?.toCreate && action.toCreate.length > 0) {
@@ -60,11 +60,11 @@ export default class DeckUtils {
      *
      * @example
      * Hooks.on("preUpdateItem", (document, changed, options) => {
-     *     if (!DeckUtils.checkIfCanUpdateClasses(document, options)) return false;
+     *     if (!Deck.checkIfCanUpdateClasses(document, options)) return false;
      * });
      */
     static checkIfCanUpdateClasses(document, options) {
-        if (options.isAdvancement && FqConstants.isFQClasses(document)) {
+        if (options.isAdvancement && Constants.isFQClasses(document)) {
             const ownedCharacters = game.users.filter(u => !!u.character).map(u => u.character?.id);
             if (ownedCharacters.includes(document.parent.id)) {
                 return true;
@@ -87,7 +87,7 @@ export default class DeckUtils {
      * @example
      * // Déclaration du Hook au chargement du module
      * Hooks.on("updateItem", (document, changed, options, _userId) => {
-     *     DeckUtils.updateDeckWhenChange(document, options);
+     *     Deck.updateDeckWhenChange(document, options);
      * });
      *
      * @param {ItemData} document  - Le document item mis à jour par Foundry.
@@ -99,18 +99,18 @@ export default class DeckUtils {
      * @returns {void}
      */
     static updateDeckWhenChange(document, options) {
-        if (!options.isAdvancement || !FqConstants.isFQClasses(document)) return;
+        if (!options.isAdvancement || !Constants.isFQClasses(document)) return;
 
         const user = game.users.find(u => u.character?.id === options.parent?.id);
         if (!user?.id) return;
 
-        if (!DeckUtils.debouncedUpdateDeckByUser[user.id]) {
-            DeckUtils.debouncedUpdateDeckByUser[user.id] = foundry.utils.debounce((userId) => {
-                DeckUtils.updateDeckForUser(userId);
+        if (!TradingCards.debouncedUpdateDeckByUser[user.id]) {
+            TradingCards.debouncedUpdateDeckByUser[user.id] = foundry.utils.debounce((userId) => {
+                TradingCards.updateDeckForUser(userId);
             }, 300);
         }
 
-        DeckUtils.debouncedUpdateDeckByUser[user.id](user.id);
+        TradingCards.debouncedUpdateDeckByUser[user.id](user.id);
     }
 
     /**
@@ -122,7 +122,7 @@ export default class DeckUtils {
      * @returns {Promise<void>}
      *
      * @example
-     * await DeckUtils.updateDeckForUser(game.user.id);
+     * await Deck.updateDeckForUser(game.user.id);
      */
     static async updateDeckForUser(currentUserId) {
         const user = game.users.get(currentUserId);
@@ -134,7 +134,7 @@ export default class DeckUtils {
 
         let ownership = {default: 0};
         ownership[user.id] = 3;
-        const allFQClasses = FqConstants.userFQClasses(user);
+        const allFQClasses = Constants.userFQClasses(user);
         const mainClass = allFQClasses.find(c => c.system.isOriginalClass);
 
         const compendium = await game.packs.get(FqCardEngineModule.moduleName + ".decks-pattern-fq8").getDocuments();
@@ -145,7 +145,7 @@ export default class DeckUtils {
             return;
         }
         // Create Hand if not exist
-        let hand = DeckUtils.getFirstDeck(user.id, HAND_TYPE, false);
+        let hand = TradingCards.getFirstDeck(user.id, HAND_TYPE, false);
         if (!hand) {
             let handName = game.i18n.localize("FQCARDENGINE.HandPrefixName") + user.character.name;
             await Cards.create({
@@ -157,7 +157,7 @@ export default class DeckUtils {
         }
 
         // Create Pile if not exist
-        let pile = DeckUtils.getFirstDeck(user.id, PILE_TYPE, false);
+        let pile = TradingCards.getFirstDeck(user.id, PILE_TYPE, false);
         if (!pile) {
             let pileName = game.i18n.localize("FQCARDENGINE.PilePrefixName") + user.character.name;
             await Cards.create({
@@ -169,7 +169,7 @@ export default class DeckUtils {
         }
 
         // --- Calcul des niveaux actuels par classe et recréation du spellbook ---
-        let spellBook = DeckUtils.getFirstDeck(user.id, SPELLBOOK_TYPE, false);
+        let spellBook = TradingCards.getFirstDeck(user.id, SPELLBOOK_TYPE, false);
         const oldClassLevels = spellBook?.system?.fq?.classLevels ?? {};
         const newClassLevels = {};
         allFQClasses.forEach(c => {
@@ -198,7 +198,7 @@ export default class DeckUtils {
             system: {...originDeck?.system, fq: {type: "SPELLBOOK", owner: user.id, classLevels: newClassLevels}},
             ownership
         });
-        await DeckUtils.createCardsForDeck(spellBook, allCards);
+        await TradingCards.createCardsForDeck(spellBook, allCards);
 
         // --- Calcul du delta (cartes gagnées / perdues) par classe ---
         let cardsToAdd = [];
@@ -230,7 +230,7 @@ export default class DeckUtils {
         }
 
         // Create deck if not exist
-        let deck = DeckUtils.getFirstDeck(user.id, DECK_TYPE, false);
+        let deck = TradingCards.getFirstDeck(user.id, DECK_TYPE, false);
         if (!deck) {
             let deckName = game.i18n.localize("FQCARDENGINE.DeckPrefixName") + user.character.name;
             deck = await Cards.create({
@@ -246,7 +246,7 @@ export default class DeckUtils {
         // Retire du deck uniquement les cartes concernées par la baisse de niveau
         if (cardsToRemove.length) {
             const removeInDeck = deck.cards.filter(c => cardsToRemove.find(rc => rc.name === c.name));
-            await DeckUtils.deleteCardsForDeck(deck, removeInDeck);
+            await TradingCards.deleteCardsForDeck(deck, removeInDeck);
         }
 
         // Ajoute au deck uniquement les nouvelles cartes gagnées, si pas déjà présentes
@@ -260,7 +260,7 @@ export default class DeckUtils {
                 }
             });
             if (newCards.length) {
-                await DeckUtils.createCardsForDeck(deck, newCards);
+                await TradingCards.createCardsForDeck(deck, newCards);
             }
         }
 
@@ -276,7 +276,7 @@ export default class DeckUtils {
      * @returns {Promise<void>}
      *
      * @example
-     * await DeckUtils.deleteDeckForUser(game.user.id);
+     * await Deck.deleteDeckForUser(game.user.id);
      */
     static async deleteDeckForUser(currentUserId) {
         const user = game.users.get(currentUserId);
@@ -284,19 +284,19 @@ export default class DeckUtils {
             if (!user.isGM) ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoOwnedCharacter"));
             return;
         }
-        const allFQClasses = FqConstants.userFQClasses(user);
+        const allFQClasses = Constants.userFQClasses(user);
         let mainClass = allFQClasses.find(c => c.system.isOriginalClass);
         if (!mainClass) {
             if (!user.isGM) ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoMainClass"));
             return;
         }
 
-        let deck = DeckUtils.getFirstDeck(user.id, DECK_TYPE, false);
+        let deck = TradingCards.getFirstDeck(user.id, DECK_TYPE, false);
         // On ne détruit le deck que si on sait le reconstruire (niveau1 à 5, monoclasse)
         if (deck && mainClass?.system?.levels <= 5 && allFQClasses.length === 1) {
             await Cards.deleteDocuments([deck.id]);
         }
-        let spellBook = DeckUtils.getFirstDeck(user.id, SPELLBOOK_TYPE, false);
+        let spellBook = TradingCards.getFirstDeck(user.id, SPELLBOOK_TYPE, false);
         if (spellBook) {
             await Cards.deleteDocuments([spellBook.id]);
         }
@@ -312,7 +312,7 @@ export default class DeckUtils {
      * @returns {Promise<Cards>}
      *
      * @example
-     * await DeckUtils.createCardsForDeck(deck, originDeck.cards);
+     * await Deck.createCardsForDeck(deck, originDeck.cards);
      */
     static async createCardsForDeck(deck, cards) {
         return await deck.createEmbeddedDocuments("Card", [...cards], {keepId: false});
@@ -341,7 +341,7 @@ export default class DeckUtils {
      * @returns {Cards|undefined} Le premier deck trouvé, ou undefined.
      *
      * @example
-     * const hand = DeckUtils.getFirstDeck(game.user.id, HAND_TYPE);
+     * const hand = Deck.getFirstDeck(game.user.id, HAND_TYPE);
      */
     static getFirstDeck(userId, typeFq, warning = true) {
         let deck = game.cards.filter(cards => cards.ownership[userId] === 3 && cards.system.fq.type === typeFq && cards.system.fq.owner === userId);
@@ -375,34 +375,5 @@ export default class DeckUtils {
         hand.draw(deck, drawScore, {
             chatNotification: false, how: 2
         });
-    }
-
-    /**
-     * Enregistre dans les flags du combat actif une entrée de log décrivant la
-     * carte jouée : acteur, cibles, round/tour, résultats et contenu de la carte.
-     * N'a aucun effet hors combat.
-     *
-     * @param {object[]} initResultatArray - Le tableau des résultats de l'effet joué.
-     * @param {object}   cardContent       - Le contenu (choix) de la carte jouée.
-     *
-     * @returns {void}
-     */
-    static logCardPlayed(initResultatArray, cardContent) {
-        if (game.combat) {
-            let FQLogs = game.combat.flags.fq?.logs ? game.combat.flags.fq?.logs : [];
-            let resultArray = [...initResultatArray];
-            FQLogs.push({
-                "actorId": game.user.character.id,
-                "targetsId": FqConstants.myTargets(cardContent.targetType).map(t => t.document.actorId),
-                "round": game.combat.round,
-                "turn": game.combat.turn,
-                resultArray: {...resultArray},
-                "cardContent": {...cardContent}
-            });
-
-            game.combat.update({
-                "flags.fq": {logs: FQLogs}
-            });
-        }
     }
 }

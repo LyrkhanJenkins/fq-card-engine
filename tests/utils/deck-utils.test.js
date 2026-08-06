@@ -1,6 +1,7 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
-import DeckUtils, {SPELLBOOK_TYPE} from "../../src/domain/utils/deck-utils.js";
-import FqConstants from "../../src/domain/utils/fq-constants.js";
+import TradingCards, {SPELLBOOK_TYPE} from "../../src/domain/trading/trading-cards.js";
+import Constants from "../../src/domain/constants.js";
+import PlayCard from "../../src/domain/engine/play-card.js";
 
 const createEmbeddedDocumentsMock = vi.fn();
 const deck = {
@@ -9,41 +10,41 @@ const deck = {
     createEmbeddedDocuments: createEmbeddedDocumentsMock,
 };
 
-describe("DeckUtils", () => {
+describe("TradingCards", () => {
 
     beforeEach(() => {
         vi.resetAllMocks(); // remet les compteurs d'appels à zéro mais garde les implémentations
-        DeckUtils.debouncedUpdateDeckByUser = {}; // reset du debounce entre chaque test
+        TradingCards.debouncedUpdateDeckByUser = {}; // reset du debounce entre chaque test
     });
 
     // ─── canPassCardsToDeck ───────────────────────────────────────────────────
 
     it("should return true when there are no cards to create", () => {
-        expect(DeckUtils.canPassCardsToDeck({}, {})).toBe(true);
+        expect(TradingCards.canPassCardsToDeck({}, {})).toBe(true);
     });
 
     it("should return true when cards to create can be added to the deck", () => {
         const to = {cards: [{name: "Card1"}, {name: "Card2"}]};
         const action = {toCreate: [{name: "Card3"}]};
-        expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(true);
+        expect(TradingCards.canPassCardsToDeck(to, action)).toBe(true);
     });
 
     it("should return false when cards to create exceed the max same card limit", () => {
         const to = {cards: [{name: "Card1"}, {name: "Card1"}, {name: "Card2"}]};
         const action = {toCreate: [{name: "Card1", system: {fq: {maxSameCard: 2}}}]};
-        expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(false);
+        expect(TradingCards.canPassCardsToDeck(to, action)).toBe(false);
     });
 
     it("should return true when maxSameCard is not reached", () => {
         const to = {cards: [{name: "Card1"}, {name: "Card1"}, {name: "Card2"}]};
         const action = {toCreate: [{name: "Card1", system: {fq: {maxSameCard: 3}}}]};
-        expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(true);
+        expect(TradingCards.canPassCardsToDeck(to, action)).toBe(true);
     });
 
     it("should handle cards without flags correctly", () => {
         const to = {cards: [{name: "Card1"}, {name: "Card2"}]};
         const action = {toCreate: [{name: "Card3"}, {name: "Card4", system: {fq: {maxSameCard: 1}}}]};
-        expect(DeckUtils.canPassCardsToDeck(to, action)).toBe(true);
+        expect(TradingCards.canPassCardsToDeck(to, action)).toBe(true);
     });
 
     // ─── checkIfCanUpdateClasses ──────────────────────────────────────────────
@@ -56,35 +57,35 @@ describe("DeckUtils", () => {
 
     it("should return true if the character is owned by a user", () => {
         global.game = {users: [{character: {id: "parent-id"}}]};
-        expect(DeckUtils.checkIfCanUpdateClasses(document, {isAdvancement: true})).toBe(true);
+        expect(TradingCards.checkIfCanUpdateClasses(document, {isAdvancement: true})).toBe(true);
     });
 
     it("should show warning and return false if the character is not owned by a user", () => {
         global.game = {users: [{character: {id: "other-id"}}]};
-        const result = DeckUtils.checkIfCanUpdateClasses(document, {isAdvancement: true});
+        const result = TradingCards.checkIfCanUpdateClasses(document, {isAdvancement: true});
         expect(result).toBe(false);
         expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.NoUserForActor", {localize: true});
     });
 
     it("should return true if not an advancement", () => {
-        expect(DeckUtils.checkIfCanUpdateClasses(document, {isAdvancement: false})).toBe(true);
+        expect(TradingCards.checkIfCanUpdateClasses(document, {isAdvancement: false})).toBe(true);
     });
 
     it("should return true if document does not have type FQ system", () => {
-        expect(DeckUtils.checkIfCanUpdateClasses({...document}, {isAdvancement: true})).toBe(true);
+        expect(TradingCards.checkIfCanUpdateClasses({...document}, {isAdvancement: true})).toBe(true);
     });
 
     // ─── updateDeckWhenChange ─────────────────────────────────────────────────
 
     it("should not trigger delete/create if not an advancement", () => {
-        const deleteSpy = vi.spyOn(DeckUtils, "deleteDeckForUser").mockResolvedValue();
-        DeckUtils.updateDeckWhenChange({flags: {fq: {}}}, {isAdvancement: false});
+        const deleteSpy = vi.spyOn(TradingCards, "deleteDeckForUser").mockResolvedValue();
+        TradingCards.updateDeckWhenChange({flags: {fq: {}}}, {isAdvancement: false});
         expect(deleteSpy).not.toHaveBeenCalled();
     });
 
     it("should not trigger delete/create if document is not an FQ class", () => {
-        const deleteSpy = vi.spyOn(DeckUtils, "deleteDeckForUser").mockResolvedValue();
-        DeckUtils.updateDeckWhenChange(
+        const deleteSpy = vi.spyOn(TradingCards, "deleteDeckForUser").mockResolvedValue();
+        TradingCards.updateDeckWhenChange(
             {system: {isOriginalClass: false, levels: 10}, flags: {fq: {}}},
             {isAdvancement: true, parent: {id: "parent-id"}}
         );
@@ -92,8 +93,8 @@ describe("DeckUtils", () => {
     });
 
     it("should not trigger delete/create if no matching user found", () => {
-        const deleteSpy = vi.spyOn(DeckUtils, "deleteDeckForUser").mockResolvedValue();
-        DeckUtils.updateDeckWhenChange(
+        const deleteSpy = vi.spyOn(TradingCards, "deleteDeckForUser").mockResolvedValue();
+        TradingCards.updateDeckWhenChange(
             {system: {source: {label: "FQ"}}, type: "class", parent: {id: "unknown-id"}},
             {isAdvancement: true, parent: {id: "unknown-id"}}
         );
@@ -103,8 +104,8 @@ describe("DeckUtils", () => {
     it("should debounce and call delete then create once despite 7 triggers", async () => {
         vi.useFakeTimers();
 
-        const deleteSpy = vi.spyOn(DeckUtils, "deleteDeckForUser").mockResolvedValue();
-        const updateSpy = vi.spyOn(DeckUtils, "updateDeckForUser").mockResolvedValue();
+        const deleteSpy = vi.spyOn(TradingCards, "deleteDeckForUser").mockResolvedValue();
+        const updateSpy = vi.spyOn(TradingCards, "updateDeckForUser").mockResolvedValue();
 
         const fqDocument = {
             system: {source: {label: "FQ"}},
@@ -114,7 +115,7 @@ describe("DeckUtils", () => {
         const options = {isAdvancement: true, parent: {id: "userCharacterId"}};
 
         for (let i = 0; i < 7; i++) {
-            DeckUtils.updateDeckWhenChange(fqDocument, options);
+            TradingCards.updateDeckWhenChange(fqDocument, options);
         }
 
         expect(deleteSpy).not.toHaveBeenCalled();
@@ -130,8 +131,8 @@ describe("DeckUtils", () => {
     it("should handle two different users independently", async () => {
         vi.useFakeTimers();
 
-        const deleteSpy = vi.spyOn(DeckUtils, "deleteDeckForUser").mockResolvedValue();
-        const updateSpy = vi.spyOn(DeckUtils, "updateDeckForUser").mockResolvedValue();
+        const deleteSpy = vi.spyOn(TradingCards, "deleteDeckForUser").mockResolvedValue();
+        const updateSpy = vi.spyOn(TradingCards, "updateDeckForUser").mockResolvedValue();
 
         global.game.users.find = vi.fn((fn) => {
             const users = [
@@ -145,8 +146,8 @@ describe("DeckUtils", () => {
         const docB = {system: {source: {label: "FQ"}}, type: "class", parent: {id: "char-b"}};
 
         for (let i = 0; i < 3; i++) {
-            DeckUtils.updateDeckWhenChange(docA, {isAdvancement: true, parent: {id: "char-a"}});
-            DeckUtils.updateDeckWhenChange(docB, {isAdvancement: true, parent: {id: "char-b"}});
+            TradingCards.updateDeckWhenChange(docA, {isAdvancement: true, parent: {id: "char-a"}});
+            TradingCards.updateDeckWhenChange(docB, {isAdvancement: true, parent: {id: "char-b"}});
         }
 
         await vi.runAllTimersAsync();
@@ -167,37 +168,37 @@ describe("DeckUtils", () => {
             {ownership: {"user123": 3}, system: {fq: {type: typeFQ, owner: "user123"}}},
         ];
         global.game.cards = cards;
-        expect(DeckUtils.getFirstDeck(userId, typeFQ)).toEqual(cards[0]);
+        expect(TradingCards.getFirstDeck(userId, typeFQ)).toEqual(cards[0]);
         expect(ui.notifications.warn).not.toHaveBeenCalled();
     });
 
     it("should return undefined without warning when warning=false and no deck found", () => {
         global.game.cards = [];
-        expect(DeckUtils.getFirstDeck("user123", "HAND", false)).toBeUndefined();
+        expect(TradingCards.getFirstDeck("user123", "HAND", false)).toBeUndefined();
         expect(ui.notifications.warn).not.toHaveBeenCalled();
     });
 
     it("should warn WarningHandMissingForPlayer when no HAND deck found", () => {
         global.game.cards = [];
-        expect(DeckUtils.getFirstDeck("user123", "HAND")).toBeUndefined();
+        expect(TradingCards.getFirstDeck("user123", "HAND")).toBeUndefined();
         expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningHandMissingForPlayer", {localize: true});
     });
 
     it("should warn WarningDeckMissingForPlayer when no DECK deck found", () => {
         global.game.cards = [];
-        expect(DeckUtils.getFirstDeck("user123", "DECK")).toBeUndefined();
+        expect(TradingCards.getFirstDeck("user123", "DECK")).toBeUndefined();
         expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningDeckMissingForPlayer", {localize: true});
     });
 
     it("should warn WarningPileMissingForPlayer when no PILE deck found", () => {
         global.game.cards = [];
-        expect(DeckUtils.getFirstDeck("user123", "PILE")).toBeUndefined();
+        expect(TradingCards.getFirstDeck("user123", "PILE")).toBeUndefined();
         expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningPileMissingForPlayer", {localize: true});
     });
 
     it("should warn WarningSpellBookMissingForPlayer when no SPELLBOOK deck found", () => {
         global.game.cards = [];
-        expect(DeckUtils.getFirstDeck("user123", "SPELLBOOK")).toBeUndefined();
+        expect(TradingCards.getFirstDeck("user123", "SPELLBOOK")).toBeUndefined();
         expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningSpellBookMissingForPlayer", {localize: true});
     });
 
@@ -211,7 +212,7 @@ describe("DeckUtils", () => {
             get: vi.fn(id => (id === "handId" ? hand : deck))
         };
 
-        DeckUtils.drawCard("handId", "deckId", 3);
+        TradingCards.drawCard("handId", "deckId", 3);
 
         expect(game.cards.get).toHaveBeenCalledWith("handId");
         expect(game.cards.get).toHaveBeenCalledWith("deckId");
@@ -225,14 +226,14 @@ describe("DeckUtils", () => {
         const targetDeck = {deleteEmbeddedDocuments: deleteEmbeddedDocumentsMock};
         const cardsToDelete = [{id: "card1"}, {id: "card2"}];
 
-        await DeckUtils.deleteCardsForDeck(targetDeck, cardsToDelete);
+        await TradingCards.deleteCardsForDeck(targetDeck, cardsToDelete);
 
         expect(deleteEmbeddedDocumentsMock).toHaveBeenCalledWith("Card", ["card1", "card2"], {});
     });
 
     // ─── logCardPlayed ────────────────────────────────────────────────────────
 
-    describe("DeckUtils — logCardPlayed", () => {
+    describe("PlayCard — logCardPlayed", () => {
         it("should push a log entry and update the active combat when a combat is running", () => {
             const updateMock = vi.fn();
             game.combat = {
@@ -241,13 +242,13 @@ describe("DeckUtils", () => {
                 turn: 1,
                 update: updateMock
             };
-            vi.spyOn(FqConstants, "myTargets").mockReturnValue([
+            vi.spyOn(Constants, "myTargets").mockReturnValue([
                 {document: {actorId: "target1"}},
                 {document: {actorId: "target2"}}
             ]);
 
             const cardContent = {targetType: "Default", damage: "1d6"};
-            DeckUtils.logCardPlayed([{key: "Dégâts", value: 5}], cardContent);
+            PlayCard.logCardPlayed([{key: "Dégâts", value: 5}], cardContent);
 
             expect(updateMock).toHaveBeenCalledWith({
                 "flags.fq": {
@@ -263,7 +264,7 @@ describe("DeckUtils", () => {
 
         it("should not throw and do nothing when there is no active combat", () => {
             game.combat = undefined;
-            expect(() => DeckUtils.logCardPlayed([], {targetType: "Default"})).not.toThrow();
+            expect(() => PlayCard.logCardPlayed([], {targetType: "Default"})).not.toThrow();
         });
     });
 
@@ -274,7 +275,7 @@ describe("DeckUtils", () => {
         deck.cards = [{name: "ExistingCard"}];
         const cards = [{name: "Card1"}, {name: "Card2"}, {name: "Card3"}];
 
-        await DeckUtils.createCardsForDeck(deck, cards);
+        await TradingCards.createCardsForDeck(deck, cards);
 
         expect(createEmbeddedDocumentsMock).toHaveBeenCalledWith("Card", cards, {keepId: false});
     });
@@ -283,7 +284,7 @@ describe("DeckUtils", () => {
         deck.system.fq.type = "OTHER_TYPE";
         const cards = [{name: "Card1"}, {name: "Card2"}];
 
-        await DeckUtils.createCardsForDeck(deck, cards);
+        await TradingCards.createCardsForDeck(deck, cards);
 
         expect(createEmbeddedDocumentsMock).toHaveBeenCalledWith("Card", cards, {keepId: false});
     });
@@ -296,7 +297,7 @@ describe("DeckUtils", () => {
         game.users = {...game.users, get: getMock};
         console.info("user retourné:", game.users.get("user1"));
 
-        await DeckUtils.deleteDeckForUser("user1");
+        await TradingCards.deleteDeckForUser("user1");
         console.info("warn appelé:", ui.notifications.warn.mock.calls);
 
         expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.NoOwnedCharacter");
@@ -308,9 +309,9 @@ describe("DeckUtils", () => {
             ...game.users,
             get: vi.fn().mockReturnValue({character: {name: "CharacterName"}, isGM: false})
         };
-        vi.spyOn(FqConstants, "userFQClasses").mockReturnValue([]);
+        vi.spyOn(Constants, "userFQClasses").mockReturnValue([]);
 
-        await DeckUtils.deleteDeckForUser("user1");
+        await TradingCards.deleteDeckForUser("user1");
 
         expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.NoMainClass");
         expect(Cards.deleteDocuments).not.toHaveBeenCalled();
@@ -322,16 +323,16 @@ describe("DeckUtils", () => {
             ...game.users,
             get: vi.fn().mockReturnValue({id: "user1", character: {name: "CharacterName"}, isGM: false})
         };
-        vi.spyOn(FqConstants, "userFQClasses").mockReturnValue([mainClass]);
+        vi.spyOn(Constants, "userFQClasses").mockReturnValue([mainClass]);
         const existingDeck = {id: "deckId"};
         const existingSpellbook = {id: "spellbookId"};
-        vi.spyOn(DeckUtils, "getFirstDeck").mockImplementation((userId, typeFq) => {
+        vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) => {
             if (typeFq === "DECK") return existingDeck;
             if (typeFq === "SPELLBOOK") return existingSpellbook;
             return undefined;
         });
 
-        await DeckUtils.deleteDeckForUser("user1");
+        await TradingCards.deleteDeckForUser("user1");
 
         expect(Cards.deleteDocuments).toHaveBeenCalledWith([existingDeck.id]);
         expect(Cards.deleteDocuments).toHaveBeenCalledWith([existingSpellbook.id]);
@@ -344,16 +345,16 @@ describe("DeckUtils", () => {
             ...game.users,
             get: vi.fn().mockReturnValue({id: "user1", character: {name: "CharacterName"}, isGM: false})
         };
-        vi.spyOn(FqConstants, "userFQClasses").mockReturnValue([mainClass, secondClass]);
+        vi.spyOn(Constants, "userFQClasses").mockReturnValue([mainClass, secondClass]);
         const existingDeck = {id: "deckId"};
         const existingSpellbook = {id: "spellbookId"};
-        vi.spyOn(DeckUtils, "getFirstDeck").mockImplementation((userId, typeFq) => {
+        vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) => {
             if (typeFq === "DECK") return existingDeck;
             if (typeFq === "SPELLBOOK") return existingSpellbook;
             return undefined;
         });
 
-        await DeckUtils.deleteDeckForUser("user1");
+        await TradingCards.deleteDeckForUser("user1");
 
         expect(Cards.deleteDocuments).not.toHaveBeenCalledWith([existingDeck.id]);
         expect(Cards.deleteDocuments).toHaveBeenCalledWith([existingSpellbook.id]);
@@ -365,28 +366,28 @@ describe("DeckUtils", () => {
             ...game.users,
             get: vi.fn().mockReturnValue({id: "user1", character: {name: "CharacterName"}, isGM: false})
         };
-        vi.spyOn(FqConstants, "userFQClasses").mockReturnValue([mainClass]);
+        vi.spyOn(Constants, "userFQClasses").mockReturnValue([mainClass]);
         const existingDeck = {id: "deckId"};
-        vi.spyOn(DeckUtils, "getFirstDeck").mockImplementation((userId, typeFq) => {
+        vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) => {
             if (typeFq === "DECK") return existingDeck;
             return undefined;
         });
 
-        await DeckUtils.deleteDeckForUser("user1");
+        await TradingCards.deleteDeckForUser("user1");
 
         expect(Cards.deleteDocuments).not.toHaveBeenCalledWith([existingDeck.id]);
     });
 
     // ─── updateDeckForUser ────────────────────────────────────────────────────
 
-    describe("DeckUtils — updateDeckForUser", () => {
+    describe("TradingCards — updateDeckForUser", () => {
 
         beforeEach(() => {
             globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
             globalThis.Cards.create = vi.fn().mockResolvedValue({id: "newDeck", cards: []});
-            vi.spyOn(DeckUtils, "getFirstDeck").mockReturnValue(undefined);
-            vi.spyOn(DeckUtils, "createCardsForDeck").mockResolvedValue();
-            vi.spyOn(DeckUtils, "deleteCardsForDeck").mockResolvedValue();
+            vi.spyOn(TradingCards, "getFirstDeck").mockReturnValue(undefined);
+            vi.spyOn(TradingCards, "createCardsForDeck").mockResolvedValue();
+            vi.spyOn(TradingCards, "deleteCardsForDeck").mockResolvedValue();
         });
 
         afterEach(() => {
@@ -396,7 +397,7 @@ describe("DeckUtils", () => {
         it("should warn NoOwnedCharacter and create nothing when user has no character (non-GM)", async () => {
             game.users = {...game.users, get: vi.fn().mockReturnValue({character: null, isGM: false})};
 
-            await DeckUtils.updateDeckForUser("user1");
+            await TradingCards.updateDeckForUser("user1");
 
             expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.NoOwnedCharacter");
             expect(Cards.create).not.toHaveBeenCalled();
@@ -407,9 +408,9 @@ describe("DeckUtils", () => {
                 ...game.users,
                 get: vi.fn().mockReturnValue({id: "user1", character: {name: "CharacterName"}, isGM: false})
             };
-            vi.spyOn(FqConstants, "userFQClasses").mockReturnValue([]);
+            vi.spyOn(Constants, "userFQClasses").mockReturnValue([]);
 
-            await DeckUtils.updateDeckForUser("user1");
+            await TradingCards.updateDeckForUser("user1");
 
             expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.NoMainClass");
             expect(Cards.create).not.toHaveBeenCalled();
@@ -425,7 +426,7 @@ describe("DeckUtils", () => {
                     isGM: false
                 })
             };
-            vi.spyOn(FqConstants, "userFQClasses").mockReturnValue([mainClass]);
+            vi.spyOn(Constants, "userFQClasses").mockReturnValue([mainClass]);
 
             const originDeckCards = [
                 {name: "LowLevelCard", system: {fq: {level: 1}}},
@@ -440,7 +441,7 @@ describe("DeckUtils", () => {
                 getDocuments: vi.fn().mockResolvedValue([originDeck])
             }));
 
-            await DeckUtils.updateDeckForUser("user1");
+            await TradingCards.updateDeckForUser("user1");
 
             // Hand created
             expect(Cards.create).toHaveBeenCalledWith(expect.objectContaining({
@@ -465,7 +466,7 @@ describe("DeckUtils", () => {
                 })
             }));
             // Only the card filtered by level <= 3 is forwarded to createCardsForDeck
-            expect(DeckUtils.createCardsForDeck).toHaveBeenCalledWith(
+            expect(TradingCards.createCardsForDeck).toHaveBeenCalledWith(
                 expect.anything(),
                 [originDeckCards[0]]
             );
@@ -486,7 +487,7 @@ describe("DeckUtils", () => {
                     isGM: false
                 })
             };
-            vi.spyOn(FqConstants, "userFQClasses").mockReturnValue([mainClass]);
+            vi.spyOn(Constants, "userFQClasses").mockReturnValue([mainClass]);
 
             const originDeck = {name: "Warrior Base", system: {someBase: true}, cards: []};
             game.packs.get = vi.fn(() => ({
@@ -497,7 +498,7 @@ describe("DeckUtils", () => {
             const existingPile = {id: "existingPile"};
             const existingSpellbook = {id: "existingSpellbook", system: {fq: {classLevels: {Warrior: 1}}}};
             const existingDeck = {id: "existingDeck", cards: []};
-            DeckUtils.getFirstDeck.mockImplementation((userId, typeFq) => {
+            TradingCards.getFirstDeck.mockImplementation((userId, typeFq) => {
                 if (typeFq === "HAND") return existingHand;
                 if (typeFq === "PILE") return existingPile;
                 if (typeFq === "SPELLBOOK") return existingSpellbook;
@@ -505,7 +506,7 @@ describe("DeckUtils", () => {
                 return undefined;
             });
 
-            await DeckUtils.updateDeckForUser("user1");
+            await TradingCards.updateDeckForUser("user1");
 
             expect(Cards.create).not.toHaveBeenCalledWith(expect.objectContaining({type: "hand"}));
             expect(Cards.create).not.toHaveBeenCalledWith(expect.objectContaining({type: "pile"}));

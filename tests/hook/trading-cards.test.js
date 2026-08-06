@@ -1,7 +1,7 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 import {makeDeck} from "../factories.js";
-import DeckUtils, {DECK_TYPE} from "../../src/domain/utils/deck-utils.js";
-import "../../src/hook/trading-cards.js";
+import TradingCards, {DECK_TYPE} from "../../src/domain/trading/trading-cards.js";
+import "../../src/hook/trading-cards.hook.js";
 
 function getHook(name) {
     const call = Hooks.on.mock.calls.find(c => c[0] === name);
@@ -34,7 +34,7 @@ describe("trading-cards", () => {
 
         it("crée les cartes dans le deck cible quand deck->deck valide et canPassCardsToDeck vrai", () => {
             const hook = getHook("passCards");
-            vi.spyOn(DeckUtils, "canPassCardsToDeck").mockReturnValue(true);
+            vi.spyOn(TradingCards, "canPassCardsToDeck").mockReturnValue(true);
             const from = makeDeck(DECK_TYPE, {type: "deck"});
             const to = makeDeck(DECK_TYPE, {type: "deck"});
             const action = {action: "pass", toCreate: [{name: "Card1"}]};
@@ -48,7 +48,7 @@ describe("trading-cards", () => {
 
         it("avertit sans créer de cartes quand canPassCardsToDeck est faux (limite atteinte)", () => {
             const hook = getHook("passCards");
-            vi.spyOn(DeckUtils, "canPassCardsToDeck").mockReturnValue(false);
+            vi.spyOn(TradingCards, "canPassCardsToDeck").mockReturnValue(false);
             const from = makeDeck(DECK_TYPE, {type: "deck"});
             const to = makeDeck(DECK_TYPE, {type: "deck"});
             const action = {action: "pass", toCreate: [{name: "Card1"}]};

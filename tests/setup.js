@@ -131,7 +131,7 @@ globalThis.Item = class {
 };
 
 // canvas (scène/tokens) : mock minimal, complété par game.canvas dans la zone
-// beforeEach ci-dessous pour les besoins spécifiques de CanvasUtils/DamageUtils.
+// beforeEach ci-dessous pour les besoins spécifiques de Geometry/Damage.
 globalThis.canvas = {scene: null, tokens: {get: vi.fn()}};
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -275,7 +275,7 @@ beforeEach(() => {
             register: vi.fn(),
         },
         // game.socket : socle pour les appels socketlib côté GM/joueurs (voir
-        // src/hook/socket-lib.js), nécessaire aux futures suites de hooks.
+        // src/hook/integration/socketlib.hook.js), nécessaire aux futures suites de hooks.
         socket: {
             executeAsGM: vi.fn(),
             executeForEveryone: vi.fn(),

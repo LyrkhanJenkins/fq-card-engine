@@ -1,9 +1,11 @@
 // TODO Verifier les options
-import FqConstants from "./domain/utils/fq-constants.js";
-import HandBoard from "./domain/board/hand-board.js";
-import DeckUtils, {PILE_TYPE} from "./domain/utils/deck-utils.js";
-import FQUtils from "./domain/utils/fq-utils.js";
-import PlayCard from "./domain/utils/play-card.js";
+import Constants from "./domain/constants.js";
+import HandBoard from "./domain/interface/hand-board.js";
+import TradingCards, {PILE_TYPE} from "./domain/trading/trading-cards.js";
+import ObjectUtils from "./core/utils/object.utils.js";
+import RollService from "./domain/engine/roll/roll-service.js";
+import Minion from "./domain/engine/shared/minion.js";
+import PlayCard from "./domain/engine/play-card.js";
 import {mergeSchema} from "./core/utils/schema.utils.js";
 import FormError from "./core/error/form-error.model.js";
 import CharacterDataFQ from "./domain/system/actors/character-fq.mjs";
@@ -11,12 +13,12 @@ import ActionFQTemplate from "./domain/system/items/item-action-fq.mjs";
 import CardsFqSystem from "./domain/system/cards/cards-fq-system.mjs";
 import CardFqSystem from "./domain/system/cards/card-fq-system.mjs";
 import NPCDataFQ from "./domain/system/actors/npc-fq.mjs";
-import FqCharacterSheet from "./domain/sheet/actor/fq-character-sheet.js";
-import FqNpcSheet from "./domain/sheet/actor/fq-npc-sheet.js";
-import FqItemSheet from "./domain/sheet/items/fq-item-sheet.js";
-import FqCardsSheet from "./domain/sheet/cards/fq-cards-sheet.js";
-import FqCardSheet from "./domain/sheet/cards/fq-card-sheet.js";
-import DisplayCard from "./domain/utils/display-card.js";
+import FqCharacterSheet from "./domain/interface/sheet/actor/fq-character-sheet.js";
+import FqNpcSheet from "./domain/interface/sheet/actor/fq-npc-sheet.js";
+import FqItemSheet from "./domain/interface/sheet/items/fq-item-sheet.js";
+import FqCardsSheet from "./domain/interface/sheet/cards/fq-cards-sheet.js";
+import FqCardSheet from "./domain/interface/sheet/cards/fq-card-sheet.js";
+import DisplayCard from "./domain/interface/display-card.js";
 
 CONFIG.FqCardEngine = {
     options: {
@@ -34,7 +36,7 @@ CONFIG.FqCardEngine = {
 };
 
 window.FqCardEngineModule = {
-    cst: FqConstants,
+    cst: Constants,
     handMiniBarList: new Array(),
     moduleName: "fq-card-engine",
     eventName: "module.fq-card-engine",
@@ -523,7 +525,7 @@ window.FqCardEngineModule = {
         }
 
         let initCardContents = card.system.fq.choices;
-        let cardContents = FQUtils.deepCopy(card.system.fq.choices);
+        let cardContents = ObjectUtils.deepCopy(card.system.fq.choices);
 
         let firstChoice = cardContents[0];
         const firstChoiceString = JSON.stringify(firstChoice);
@@ -580,11 +582,11 @@ window.FqCardEngineModule = {
             minReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.minReach, firstChoice),
             maxReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.maxReach, firstChoice),
 
-            actionMod: FQUtils.hasAbilitiesBonus(firstChoice.action),
-            manaMod: FQUtils.hasAbilitiesBonus(firstChoice.mana),
-            zealMod: FQUtils.hasAbilitiesBonus(firstChoice.zeal),
-            reachMod: FQUtils.hasAbilitiesBonus(firstChoice.minReach) || FQUtils.hasAbilitiesBonus(firstChoice.maxReach),
-            replayableMod: FQUtils.hasAbilitiesBonus(firstChoice.replayable),
+            actionMod: RollService.hasAbilitiesBonus(firstChoice.action),
+            manaMod: RollService.hasAbilitiesBonus(firstChoice.mana),
+            zealMod: RollService.hasAbilitiesBonus(firstChoice.zeal),
+            reachMod: RollService.hasAbilitiesBonus(firstChoice.minReach) || RollService.hasAbilitiesBonus(firstChoice.maxReach),
+            replayableMod: RollService.hasAbilitiesBonus(firstChoice.replayable),
 
             reactive: firstChoice.reactive,
             replayable: firstChoice?.replayable === "passif" ? "P" : !firstChoice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(firstChoice?.replayable, firstChoice),
@@ -689,8 +691,8 @@ window.FqCardEngineModule = {
     playValidatedCard(to, fd, cardContent, ctx) {
         const {firstChoice, cardContents, hasVariables, initCardContents, currentCards, card} = ctx;
 
-        const nbSelectedMinionLocations = FQUtils.getNbMinionLocationSelected(fd);
-        const nbValideMinionLocations = FQUtils.getNbValideMinionLocationSelected(fd);
+        const nbSelectedMinionLocations = Minion.getNbMinionLocationSelected(fd);
+        const nbValideMinionLocations = Minion.getNbValideMinionLocationSelected(fd);
 
         if (firstChoice.minions?.length &&
             ((nbSelectedMinionLocations === 0) ||
@@ -838,25 +840,25 @@ window.FqCardEngineModule = {
     },
 
     /**
-     * Met à jour les decks d'un utilisateur (délégué à `DeckUtils.updateDeckForUser`).
+     * Met à jour les decks d'un utilisateur (délégué à `Deck.updateDeckForUser`).
      *
      * @param {string} currentUserId - L'id de l'utilisateur cible.
      *
      * @returns {Promise<void>}
      */
     async updateDeckForUser(currentUserId) {
-        await DeckUtils.updateDeckForUser(currentUserId);
+        await TradingCards.updateDeckForUser(currentUserId);
     },
 
     /**
-     * Supprime les decks d'un utilisateur (délégué à `DeckUtils.deleteDeckForUser`).
+     * Supprime les decks d'un utilisateur (délégué à `Deck.deleteDeckForUser`).
      *
      * @param {string} currentUserId - L'id de l'utilisateur cible.
      *
      * @returns {Promise<void>}
      */
     async deleteDeckForUser(currentUserId) {
-        await DeckUtils.deleteDeckForUser(currentUserId);
+        await TradingCards.deleteDeckForUser(currentUserId);
     }
 };
 

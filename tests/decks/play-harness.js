@@ -11,20 +11,20 @@ import {defaultFdFor} from "./fd-table.js";
  * laisser tourner tout le pipeline réel (`callBackplayCard` -> `applyCardEffect`),
  * avec les briques Foundry mockées en espions (socket MJ, `ChatMessage`,
  * `ActiveEffect`, `card.parent.draw`) et un `Roll` déterministe pilotable
- * (`tests/decks/deterministic-roll.js`).
+ * (`tests/decks/deterministic-roll-service.js`).
  *
  * IMPORTANT — `vi.mock` est hissé PAR FICHIER (limitation Vitest) : chaque fichier
  * de test qui importe ce harnais DOIT déclarer, tout en haut du fichier et AVANT
  * tout import, exactement les mocks listés dans `REQUIRED_MOCKS` ci-dessous
  * (copier-coller depuis `tests/decks/harness.smoke.test.js`) :
  *
- *   vi.mock("../../src/domain/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
- *   vi.mock("../../src/domain/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
- *   vi.mock("../../src/domain/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
- *   vi.mock("../../src/domain/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
- *   vi.mock("../../src/domain/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
- *   vi.mock("../../src/domain/board/hand-board.js", () => ({default: class {}}));
- *   vi.mock("../../src/hook/socket-lib.js", () => ({socket: {executeAsGM: vi.fn()}}));
+ *   vi.mock("../../src/domain/interface/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
+ *   vi.mock("../../src/domain/interface/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
+ *   vi.mock("../../src/domain/interface/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
+ *   vi.mock("../../src/domain/interface/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
+ *   vi.mock("../../src/domain/interface/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
+ *   vi.mock("../../src/domain/interface/hand-board.js", () => ({default: class {}}));
+ *   vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {executeAsGM: vi.fn()}}));
  *
  * Puis `globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};`
  * avant tout appel à `ensureEngineLoaded`/`playChoice` (voir `harness.smoke.test.js`).
@@ -38,13 +38,13 @@ import {defaultFdFor} from "./fd-table.js";
 // Liste informative des mocks requis (à déclarer soi-même dans le fichier de test,
 // vi.mock ne pouvant pas être appelé indirectement depuis un module importé).
 export const REQUIRED_MOCKS = [
-    "../../src/domain/sheet/actor/fq-character-sheet.js",
-    "../../src/domain/sheet/actor/fq-npc-sheet.js",
-    "../../src/domain/sheet/items/fq-item-sheet.js",
-    "../../src/domain/sheet/cards/fq-cards-sheet.js",
-    "../../src/domain/sheet/cards/fq-card-sheet.js",
-    "../../src/domain/board/hand-board.js",
-    "../../src/hook/socket-lib.js"
+    "../../src/domain/interface/sheet/actor/fq-character-sheet.js",
+    "../../src/domain/interface/sheet/actor/fq-npc-sheet.js",
+    "../../src/domain/interface/sheet/items/fq-item-sheet.js",
+    "../../src/domain/interface/sheet/cards/fq-cards-sheet.js",
+    "../../src/domain/interface/sheet/cards/fq-card-sheet.js",
+    "../../src/domain/interface/hand-board.js",
+    "../../src/hook/integration/socketlib.hook.js"
 ];
 
 let enginePromise = null;
@@ -70,14 +70,14 @@ export async function ensureEngineLoaded() {
 }
 
 /**
- * Renvoie l'objet `socket` du module mocké `src/hook/socket-lib.js` (l'espion
+ * Renvoie l'objet `socket` du module mocké `src/hook/integration/socketlib.hook.js` (l'espion
  * `executeAsGM` assertable). Suppose que le fichier de test appelant a bien
- * déclaré `vi.mock("../../src/hook/socket-lib.js", ...)`.
+ * déclaré `vi.mock("../../src/hook/integration/socketlib.hook.js", ...)`.
  *
  * @returns {Promise<{executeAsGM: import("vitest").Mock}>} L'objet socket mocké.
  */
 export async function getSocketSpy() {
-    const mod = await import("../../src/hook/socket-lib.js");
+    const mod = await import("../../src/hook/integration/socketlib.hook.js");
     return mod.socket;
 }
 

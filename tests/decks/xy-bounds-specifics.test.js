@@ -4,18 +4,18 @@ import path from "path";
 
 // ─── Mocks requis par tests/decks/play-harness.js (vi.mock est hissé PAR FICHIER,
 // voir le commentaire JSDoc en tête de play-harness.js pour la liste canonique) ──
-vi.mock("../../src/domain/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/board/hand-board.js", () => ({default: class {}}));
-vi.mock("../../src/hook/socket-lib.js", () => ({socket: {executeAsGM: vi.fn()}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/hand-board.js", () => ({default: class {}}));
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {executeAsGM: vi.fn()}}));
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 // `Macro` est un global Foundry natif jamais exercé par le smoke test du socle (07-02) :
-// `FxUtils.importMacroFromCompendium` (déclenché par tout effet `macro.execute`) appelle
+// `Fx.importMacroFromCompendium` (déclenché par tout effet `macro.execute`) appelle
 // `Macro.create(...)` dès que le compendium mocké ne trouve pas la macro. Sans ce stub,
 // tout choix comportant un `macro.execute` lève `ReferenceError: Macro is not defined` —
 // un trou générique du bac à sable de test (pas un bug métier), comblé comme dans
@@ -26,7 +26,7 @@ globalThis.Macro = class {
 
 const {mountWorld, playChoice, getSocketSpy} = await import("./play-harness.js");
 const {DeterministicRoll, resetDiceControl} = await import("./deterministic-roll.js");
-const FQUtils = (await import("../../src/domain/utils/fq-utils.js")).default;
+const RollService = (await import("../../src/domain/engine/roll/roll-service.js")).default;
 
 /**
  * Phase 07 Plan 04 — Task 3 : bornes X/Y (min/max/hors) [EXHA-03] et
@@ -56,7 +56,7 @@ function fixtureDistance() {
 
 async function resolveFormula(formula) {
     mountWorld();
-    const substituted = FQUtils.replaceAbilitiesBonus(String(formula ?? "0"));
+    const substituted = RollService.replaceAbilitiesBonus(String(formula ?? "0"));
     resetDiceControl();
     const roll = await new DeterministicRoll(substituted).evaluate();
     resetDiceControl();

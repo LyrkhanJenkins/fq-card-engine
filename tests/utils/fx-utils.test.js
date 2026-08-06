@@ -1,8 +1,8 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
-import {socket} from "../../src/hook/socket-lib.js";
-import FxUtils from "../../src/domain/utils/fx-utils.js";
+import {socket} from "../../src/hook/integration/socketlib.hook.js";
+import Fx from "../../src/domain/engine/shared/fx.js";
 
-vi.mock("../../src/hook/socket-lib.js", () => ({
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     default: {},
     socket: {
         executeAsGM: vi.fn(async () => "modules/fq-card-engine/sounds/fire/1.mp3")
@@ -28,7 +28,7 @@ function makeChainableSequence() {
     return chainable;
 }
 
-describe("FxUtils", () => {
+describe("Fx", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
@@ -41,54 +41,54 @@ describe("FxUtils", () => {
 
     describe("chemins statiques", () => {
         it("expose SOUND_PATH, VISUAL_PATH et GENERIC_VISUAL_PATH", () => {
-            expect(FxUtils.SOUND_PATH).toBe("modules/fq-card-engine/sounds/");
-            expect(FxUtils.VISUAL_PATH).toBe("modules/fq-card-engine/visuals/");
-            expect(FxUtils.GENERIC_VISUAL_PATH).toBe("modules/fq-card-engine/visuals/generics/");
+            expect(Fx.SOUND_PATH).toBe("modules/fq-card-engine/sounds/");
+            expect(Fx.VISUAL_PATH).toBe("modules/fq-card-engine/visuals/");
+            expect(Fx.GENERIC_VISUAL_PATH).toBe("modules/fq-card-engine/visuals/generics/");
         });
     });
 
     describe("getDamageGenericEffectPath", () => {
         it("maxReach <= 2 -> sous-dossier melee/ avec type mappé", () => {
-            expect(FxUtils.getDamageGenericEffectPath("1d6", 1, "fire"))
+            expect(Fx.getDamageGenericEffectPath("1d6", 1, "fire"))
                 .toBe("modules/fq-card-engine/visuals/generics/melee/fire.webm");
         });
 
         it("maxReach > 2 -> sous-dossier range/ avec type mappé", () => {
-            expect(FxUtils.getDamageGenericEffectPath("1d6", 5, "cold"))
+            expect(Fx.getDamageGenericEffectPath("1d6", 5, "cold"))
                 .toBe("modules/fq-card-engine/visuals/generics/range/cold.webm");
         });
 
         it("typeEffect falsy -> default.webm", () => {
-            expect(FxUtils.getDamageGenericEffectPath("1d6", 1, undefined))
+            expect(Fx.getDamageGenericEffectPath("1d6", 1, undefined))
                 .toBe("modules/fq-card-engine/visuals/generics/melee/default.webm");
         });
     });
 
     describe("_getEffectFile", () => {
         it("heal -> other/heal.webm", () => {
-            expect(FxUtils._getEffectFile({heal: "1d4"}, null))
+            expect(Fx._getEffectFile({heal: "1d4"}, null))
                 .toBe("modules/fq-card-engine/visuals/generics/other/heal.webm");
         });
 
         it("damage sans visuel -> délègue à getDamageGenericEffectPath", () => {
-            expect(FxUtils._getEffectFile({damage: "1d6", maxReach: 1}, "fire"))
+            expect(Fx._getEffectFile({damage: "1d6", maxReach: 1}, "fire"))
                 .toBe("modules/fq-card-engine/visuals/generics/melee/fire.webm");
         });
 
         it("ni heal ni damage -> other/buff.webm", () => {
-            expect(FxUtils._getEffectFile({}, null))
+            expect(Fx._getEffectFile({}, null))
                 .toBe("modules/fq-card-engine/visuals/generics/other/buff.webm");
         });
 
         it("visual.path custom (hors jb2a) -> renvoyé tel quel", () => {
-            expect(FxUtils._getEffectFile({visual: {path: "custom/path.webm"}}, null))
+            expect(Fx._getEffectFile({visual: {path: "custom/path.webm"}}, null))
                 .toBe("custom/path.webm");
         });
 
         it("visual.path jb2a avec module JB2A_DnD5e inactif -> ignoré, retombe sur damage", () => {
             const cardContent = {visual: {path: "modules/jb2a/fireball.webm"}, damage: "1d6", maxReach: 1};
 
-            expect(FxUtils._getEffectFile(cardContent, "fire"))
+            expect(Fx._getEffectFile(cardContent, "fire"))
                 .toBe("modules/fq-card-engine/visuals/generics/melee/fire.webm");
         });
 
@@ -96,38 +96,38 @@ describe("FxUtils", () => {
             game.modules.set("JB2A_DnD5e", {active: true});
             const cardContent = {visual: {path: "modules/jb2a/fireball.webm"}, damage: "1d6", maxReach: 1};
 
-            expect(FxUtils._getEffectFile(cardContent, "fire")).toBe("modules/jb2a/fireball.webm");
+            expect(Fx._getEffectFile(cardContent, "fire")).toBe("modules/jb2a/fireball.webm");
         });
     });
 
     describe("getSoundEffectPath", () => {
         it("customSound -> SOUND_PATH + customSound, sans appel socket", async () => {
-            const result = await FxUtils.getSoundEffectPath(null, null, "evasion/1.mp3", null);
+            const result = await Fx.getSoundEffectPath(null, null, "evasion/1.mp3", null);
 
             expect(result).toBe("modules/fq-card-engine/sounds/evasion/1.mp3");
             expect(socket.executeAsGM).not.toHaveBeenCalled();
         });
 
         it("damage -> socket.executeAsGM avec le dossier du type de dégâts", async () => {
-            await FxUtils.getSoundEffectPath("1d6", null, null, "fire");
+            await Fx.getSoundEffectPath("1d6", null, null, "fire");
 
             expect(socket.executeAsGM).toHaveBeenCalledWith("getRandomFileFromFolder", "modules/fq-card-engine/sounds/fire");
         });
 
         it("damage sans firstType -> dossier default", async () => {
-            await FxUtils.getSoundEffectPath("1d6", null, null, null);
+            await Fx.getSoundEffectPath("1d6", null, null, null);
 
             expect(socket.executeAsGM).toHaveBeenCalledWith("getRandomFileFromFolder", "modules/fq-card-engine/sounds/default");
         });
 
         it("heal -> socket.executeAsGM avec le dossier heal", async () => {
-            await FxUtils.getSoundEffectPath(null, "1d4", null, null);
+            await Fx.getSoundEffectPath(null, "1d4", null, null);
 
             expect(socket.executeAsGM).toHaveBeenCalledWith("getRandomFileFromFolder", "modules/fq-card-engine/sounds/heal");
         });
 
         it("ni damage ni heal ni customSound -> null", async () => {
-            const result = await FxUtils.getSoundEffectPath(null, null, null, null);
+            const result = await Fx.getSoundEffectPath(null, null, null, null);
 
             expect(result).toBeNull();
         });
@@ -143,7 +143,7 @@ describe("FxUtils", () => {
             const cardContent = {damage: "1d6", maxReach: 5, targetType: "Default"};
             const resultArray = [{targetTokenId: "token1", evasion: false, critical: true}];
 
-            await FxUtils.handleSpecialEffect(cardContent, resultArray, {actorId: "userCharacterId"}, "fire");
+            await Fx.handleSpecialEffect(cardContent, resultArray, {actorId: "userCharacterId"}, "fire");
 
             expect(globalThis.Sequence).toHaveBeenCalled();
             const instances = globalThis.Sequence.mock.results.map(r => r.value);
@@ -158,7 +158,7 @@ describe("FxUtils", () => {
 
             const cardContent = {damage: "1d6", maxReach: 0, targetType: "Default"};
 
-            await FxUtils.handleSpecialEffect(cardContent, [], {actorId: "userCharacterId"}, "fire");
+            await Fx.handleSpecialEffect(cardContent, [], {actorId: "userCharacterId"}, "fire");
 
             const instances = globalThis.Sequence.mock.results.map(r => r.value);
             expect(instances.some(seq => seq.atLocation.mock.calls.length > 0 && seq.play.mock.calls.length > 0)).toBe(true);
@@ -172,14 +172,14 @@ describe("FxUtils", () => {
 
             const cardContent = {sound: "beep.mp3"};
 
-            await expect(FxUtils.handleSpecialEffect(cardContent, [], {}, null)).resolves.toBeUndefined();
+            await expect(Fx.handleSpecialEffect(cardContent, [], {}, null)).resolves.toBeUndefined();
         });
 
         it("joue le son via foundry.audio.AudioHelper.play après 200ms", async () => {
             vi.useFakeTimers();
             const cardContent = {sound: "beep.mp3"};
 
-            await FxUtils.handleSpecialEffect(cardContent, [], {}, null);
+            await Fx.handleSpecialEffect(cardContent, [], {}, null);
             expect(foundry.audio.AudioHelper.play).not.toHaveBeenCalled();
 
             vi.advanceTimersByTime(200);

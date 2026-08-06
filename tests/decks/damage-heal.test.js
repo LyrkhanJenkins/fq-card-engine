@@ -4,20 +4,20 @@ import path from "path";
 
 // ─── Mocks requis par tests/decks/play-harness.js (vi.mock est hissé PAR FICHIER,
 // voir le commentaire JSDoc en tête de play-harness.js pour la liste canonique) ──
-vi.mock("../../src/domain/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/board/hand-board.js", () => ({default: class {}}));
-vi.mock("../../src/hook/socket-lib.js", () => ({socket: {executeAsGM: vi.fn()}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/hand-board.js", () => ({default: class {}}));
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {executeAsGM: vi.fn()}}));
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {mountWorld, playChoice} = await import("./play-harness.js");
 const {DeterministicRoll, resetDiceControl} = await import("./deterministic-roll.js");
-const FQUtils = (await import("../../src/domain/utils/fq-utils.js")).default;
-const DamageUtils = (await import("../../src/domain/utils/damage-utils.js")).default;
+const RollService = (await import("../../src/domain/engine/roll/roll-service.js")).default;
+const Damage = (await import("../../src/domain/engine/roll/damage.js")).default;
 
 /**
  * Phase 07 Plan 04 — Task 1 (tracer) : dégâts/soins chiffrés par cible via de
@@ -68,7 +68,7 @@ function fixtureDistance() {
  */
 async function resolveFormula(formula) {
     mountWorld();
-    const substituted = FQUtils.replaceAbilitiesBonus(String(formula ?? "0"));
+    const substituted = RollService.replaceAbilitiesBonus(String(formula ?? "0"));
     resetDiceControl();
     const roll = await new DeterministicRoll(substituted).evaluate();
     resetDiceControl();
@@ -281,7 +281,7 @@ describe("Dégâts : bizarrerie caractérisée — ciblage sur soi-même (struct
         vi.clearAllMocks();
     });
 
-    // Comportement VOULU (pas un bug) : dans `DamageUtils.addCriticalEvasionToDamage`,
+    // Comportement VOULU (pas un bug) : dans `Damage.addCriticalEvasionToDamage`,
     // tout le bloc qui pousse le résultat dans `damagesArray` est imbriqué dans
     // `if (targetActor._id !== actor._id)`. En auto-ciblage, ce bloc est sauté :
     // aucune entrée n'est poussée, donc `hpCalls` reste VIDE (on ne se cible pas
@@ -348,7 +348,7 @@ describe("Application directe des PV (socket MJ, EXHA-02) — PV temporaires et 
         const targetActor = {system: {attributes: {hp: {value: 20, max: 20, temp: 10, tempmax: 0}}}, update};
         mountWorld({canvas: {tokens: {get: vi.fn(() => ({actor: targetActor}))}}});
 
-        DamageUtils.applyActorHpModification("target-token", 6, "damageFQ");
+        Damage.applyActorHpModification("target-token", 6, "damageFQ");
 
         expect(update).toHaveBeenCalledTimes(1);
         expect(update).toHaveBeenNthCalledWith(1, {"system.attributes.hp.temp": 4});
@@ -359,7 +359,7 @@ describe("Application directe des PV (socket MJ, EXHA-02) — PV temporaires et 
         const targetActor = {system: {attributes: {hp: {value: 20, max: 20, temp: 4, tempmax: 0}}}, update};
         mountWorld({canvas: {tokens: {get: vi.fn(() => ({actor: targetActor}))}}});
 
-        DamageUtils.applyActorHpModification("target-token", 6, "damageFQ");
+        Damage.applyActorHpModification("target-token", 6, "damageFQ");
 
         expect(update).toHaveBeenCalledTimes(2);
         expect(update).toHaveBeenNthCalledWith(1, {"system.attributes.hp.temp": 0});
@@ -371,7 +371,7 @@ describe("Application directe des PV (socket MJ, EXHA-02) — PV temporaires et 
         const targetActor = {system: {attributes: {hp: {value: 20, max: 20, temp: 0, tempmax: 0}}}, update};
         mountWorld({canvas: {tokens: {get: vi.fn(() => ({actor: targetActor}))}}});
 
-        DamageUtils.applyActorHpModification("target-token", 25, "damageFQ");
+        Damage.applyActorHpModification("target-token", 25, "damageFQ");
 
         expect(update).toHaveBeenCalledTimes(1);
         expect(update).toHaveBeenCalledWith({"system.attributes.hp.value": 0});
@@ -382,7 +382,7 @@ describe("Application directe des PV (socket MJ, EXHA-02) — PV temporaires et 
         const targetActor = {system: {attributes: {hp: {value: 18, max: 20, temp: 0, tempmax: 5}}}, update};
         mountWorld({canvas: {tokens: {get: vi.fn(() => ({actor: targetActor}))}}});
 
-        DamageUtils.applyActorHpModification("target-token", 10, "healFQ");
+        Damage.applyActorHpModification("target-token", 10, "healFQ");
 
         expect(update).toHaveBeenCalledTimes(1);
         expect(update).toHaveBeenCalledWith({"system.attributes.hp.value": 25});
@@ -393,7 +393,7 @@ describe("Application directe des PV (socket MJ, EXHA-02) — PV temporaires et 
         const targetActor = {system: {attributes: {hp: {value: 10, max: 20, temp: 0, tempmax: 0}}}, update};
         mountWorld({canvas: {tokens: {get: vi.fn(() => ({actor: targetActor}))}}});
 
-        DamageUtils.applyActorHpModification("target-token", 5, "healFQ");
+        Damage.applyActorHpModification("target-token", 5, "healFQ");
 
         expect(update).toHaveBeenCalledTimes(1);
         expect(update).toHaveBeenCalledWith({"system.attributes.hp.value": 15});

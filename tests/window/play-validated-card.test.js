@@ -2,20 +2,20 @@ import {beforeEach, describe, expect, test, vi} from "vitest";
 import {makeCard, makeChoice} from "../factories.js";
 
 // ─── Mocks des feuilles Foundry (couplées à dnd5e / DOM, hors périmètre ici) ──
-vi.mock("../../src/domain/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/board/hand-board.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/hand-board.js", () => ({default: class {}}));
 
-vi.mock("../../src/hook/socket-lib.js", () => ({
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     socket: {
         executeAsGM: vi.fn()
     }
 }));
 
-vi.mock("../../src/domain/utils/play-card.js", () => ({
+vi.mock("../../src/domain/engine/play-card.js", () => ({
     default: {
         callBackplayCard: vi.fn().mockResolvedValue(null),
         discardCard: vi.fn()
@@ -29,7 +29,7 @@ globalThis.socketlib = {
 // Import dynamique APRÈS les mocks : peuple window.FqCardEngineModule sans
 // dépendre du rendu DOM/Handlebars/Dialog (hors périmètre de ce test).
 await import("../../src/init-engine.js");
-const PlayCard = (await import("../../src/domain/utils/play-card.js")).default;
+const PlayCard = (await import("../../src/domain/engine/play-card.js")).default;
 
 /**
  * Construit un contexte `ctx` minimal pour `playValidatedCard`, sans variables

@@ -1,5 +1,5 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
-import {socket} from "../../src/hook/socket-lib.js";
+import {socket} from "../../src/hook/integration/socketlib.hook.js";
 
 // Les 10 handlers enregistrés côté MJ par socket-lib.js au hook "socketlib.ready".
 // Cette liste sert aussi de verrou pour T-04-03 (surface exposée sans auth) :

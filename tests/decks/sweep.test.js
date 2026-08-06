@@ -4,18 +4,18 @@ import path from "path";
 
 // ─── Mocks requis par tests/decks/play-harness.js (vi.mock est hissé PAR FICHIER,
 // voir le commentaire JSDoc en tête de play-harness.js pour la liste canonique) ──
-vi.mock("../../src/domain/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/board/hand-board.js", () => ({default: class {}}));
-vi.mock("../../src/hook/socket-lib.js", () => ({socket: {executeAsGM: vi.fn()}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/hand-board.js", () => ({default: class {}}));
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {executeAsGM: vi.fn()}}));
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 // `Macro` est un global Foundry natif jamais exercé par le smoke test du socle
-// (07-02) : `FxUtils.importMacroFromCompendium` (déclenché par tout effet
+// (07-02) : `Fx.importMacroFromCompendium` (déclenché par tout effet
 // `macro.execute`, ex. PersistAura) appelle `Macro.create(...)` dès que le
 // compendium mocké (`game.packs.get(...).getDocuments()` -> `[]`) ne trouve pas
 // la macro. Sans ce stub, TOUT choix comportant un `macro.execute` lève
@@ -39,7 +39,7 @@ const worldFixture = JSON.parse(
  * Construit un document de compendium « sbire » minimal et cohérent à partir
  * des données DÉCLARÉES par le choix lui-même (`choice.minions[]`), pour
  * combler `game.packs.get("...minions-fq8").getDocuments()` (mocké vide par
- * le socle) : sans ce document, `FQUtils.createActorData` calcule
+ * le socle) : sans ce document, `Minion.createActorData` calcule
  * `JSON.parse(JSON.stringify(undefined))` (`.find` ne trouve rien) et lève
  * `"undefined" is not valid JSON` pour TOUT choix qui invoque un sbire, quel
  * qu'il soit. Piloté uniquement par la forme du choix (`minion.name`), jamais
@@ -68,7 +68,7 @@ function minionDocFor(minion) {
 
 /**
  * Indique si un choix référence une API dépendant d'un combat actif
- * (`game.combat.flags.fq.logs` via `FqConstants.lastDamageThisTurn`/
+ * (`game.combat.flags.fq.logs` via `Constants.lastDamageThisTurn`/
  * `lastCriticalThisTurn`, appelées directement ou via
  * `FqCardEngineModule.cst.*` dans un `xvalue`/`yvalue`/`customEvals`).
  * Détection purement textuelle sur le contenu du choix — aucune référence à
@@ -102,10 +102,10 @@ function referencesCombatApi(choice) {
  *     `dimensions`), nécessaire à tout choix référençant
  *     `game.canvas.scene.grid.distance` (ex. calcul de portée en cases).
  *   - `canvas.scene.tokens[].name`/`.object` : le socle n'attribue ni nom, ni
- *     `.object` (placeable) aux tokens ; `FqConstants.myTargets("Skeletons")`
+ *     `.object` (placeable) aux tokens ; `Constants.myTargets("Skeletons")`
  *     fait `.map(t => t.object).filter(t => t.name...)`, qui casse dès que
  *     `.object` est `undefined` — ce qui se produit pour TOUT choix quel que
- *     soit son `targetType` puisque `FxUtils.handleSpecialEffect` appelle
+ *     soit son `targetType` puisque `Fx.handleSpecialEffect` appelle
  *     `myTargets(cardContent.targetType)` pour CHAQUE choix joué. Réutilise
  *     les noms déjà présents dans `world-fixture.json` (aucune invention).
  *   - `packs.get(...).getDocuments()` : voir `minionDocFor`.

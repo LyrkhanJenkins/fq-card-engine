@@ -1,5 +1,5 @@
-import FqConstants from "./fq-constants.js";
-import FQUtils from "./fq-utils.js";
+import Constants from "../constants.js";
+import RollService from "../engine/roll/roll-service.js";
 
 /**
  * Utilitaires de présentation d'une carte : extraction du titre, de la
@@ -26,7 +26,7 @@ export default class DisplayCard {
         }
         const match = str.match(/-?\d+/g);
         if (match?.length && match[0] > 99) return "∞";
-        let result = FQUtils.replaceAbilitiesBonus(str);
+        let result = RollService.replaceAbilitiesBonus(str);
         if ((result.includes("XXX") && cardContent.xvalue) || (result.includes("YYY") && cardContent.yvalue)) {
             return "S";
         }
@@ -152,7 +152,7 @@ export default class DisplayCard {
      * @returns {string} La chaîne transformée, prête à l'affichage.
      */
     static transformForDescription(val) {
-        const abilities = FqConstants.actorAbi;
+        const abilities = Constants.actorAbi;
         if (typeof val === "string") {
             return  val.replace("XXX","X").replace("YYY","Y")
                 .replace(/@int/g, abilities?.int?.mod + "(🧠)")

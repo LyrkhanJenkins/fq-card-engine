@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import DisplayCard from "../../src/domain/utils/display-card.js";
+import DisplayCard from "../../src/domain/interface/display-card.js";
 
 describe("DisplayCard.simplifyExpression", () => {
 
@@ -67,7 +67,7 @@ describe("DisplayCard.getNumberForBubbleCardSvg", () => {
 
     describe("branches restantes (S / evaluateSync / simplify)", () => {
         beforeEach(() => {
-            // FQUtils.replaceAbilitiesBonus lit FqConstants.actorAbi.<abi>.mod sans
+            // RollService.replaceAbilitiesBonus lit Constants.actorAbi.<abi>.mod sans
             // chaînage optionnel : il faut poser les 6 caractéristiques pour ne pas
             // lever d'exception, même quand la chaîne ne contient aucun token @abi.
             game.user.character.system.abilities = {

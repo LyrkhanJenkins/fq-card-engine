@@ -33,7 +33,7 @@ describe("DeterministicRoll — évaluation réelle des formules", () => {
     });
 
     test("@-référence substituée en amont par le pipeline (ex. @str -> \"3\")", async () => {
-        // Le pipeline réel (FQUtils.replaceAbilitiesBonus) substitue @str par le
+        // Le pipeline réel (RollService.replaceAbilitiesBonus) substitue @str par le
         // modificateur AVANT de construire le Roll ; DeterministicRoll reçoit donc
         // directement la formule déjà substituée.
         const roll = await new DeterministicRoll("2 + ceil(3/3)").evaluate();

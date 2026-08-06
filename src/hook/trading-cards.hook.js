@@ -1,4 +1,4 @@
-import DeckUtils, {DECK_TYPE, SPELLBOOK_TYPE} from "../domain/utils/deck-utils.js";
+import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../domain/trading/trading-cards.js";
 
 Hooks.on("dealCards", (_origin, _destinations, _context) => {
     // Nothing
@@ -26,7 +26,7 @@ Hooks.on("passCards", (from, to, action) => {
     if (from.type === "deck" && to.type === "deck" && (to.system.fq.type || from.system.fq.type)) {
         if (to.system.fq.type !== DECK_TYPE && from.system.fq.type !== SPELLBOOK_TYPE) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.WarningOnlyCopyCardFromSpellBookToDeck"));
-        } else if (!DeckUtils.canPassCardsToDeck(to, action)) {
+        } else if (!TradingCards.canPassCardsToDeck(to, action)) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.WarningReachMaxCardsForDeck"));
         } else {
             to.createEmbeddedDocuments("Card", [...action.toCreate], {keepId: false});

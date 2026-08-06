@@ -4,13 +4,13 @@ import path from "path";
 
 // ─── Mocks requis par tests/decks/play-harness.js (vi.mock est hissé PAR FICHIER,
 // voir le commentaire JSDoc en tête de play-harness.js pour la liste canonique) ──
-vi.mock("../../src/domain/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/board/hand-board.js", () => ({default: class {}}));
-vi.mock("../../src/hook/socket-lib.js", () => ({socket: {executeAsGM: vi.fn()}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/hand-board.js", () => ({default: class {}}));
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {executeAsGM: vi.fn()}}));
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 

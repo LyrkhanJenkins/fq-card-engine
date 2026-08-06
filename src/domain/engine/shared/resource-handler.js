@@ -1,6 +1,6 @@
-import CanvasUtils from "./canvas-utils.js";
-import FqConstants, {WARNING_COLOR} from "./fq-constants.js";
-import CardFqSystem from "../system/cards/card-fq-system.mjs";
+import Geometry from "./geometry.js";
+import Constants, {WARNING_COLOR} from "../../constants.js";
+import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 
 
 /**
@@ -9,7 +9,7 @@ import CardFqSystem from "../system/cards/card-fq-system.mjs";
  * contrôle du nombre de cibles et de la portée, et validation du tour de jeu.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
-export default class ConsumptionUtils {
+export default class ResourceHandler {
     /**
      * Vérifie que l'acteur dispose de suffisamment de ressources pour payer les
      * coûts indiqués (hp, action, mana, zeal, défausse). Affiche un message
@@ -33,7 +33,7 @@ export default class ConsumptionUtils {
         // COST HP
         if (resources?.hp) {
             if (actor.system?.attributes.hp.value + resources?.hp < 0) {
-                ConsumptionUtils.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughHp"), actor);
+                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughHp"), actor);
                 return false;
             }
         }
@@ -41,7 +41,7 @@ export default class ConsumptionUtils {
         // COST ACTION
         if (resources?.action) {
             if (actor.system?.fq.action.value + resources?.action < 0) {
-                ConsumptionUtils.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughAction"), actor);
+                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughAction"), actor);
                 return false;
             }
         }
@@ -49,7 +49,7 @@ export default class ConsumptionUtils {
         // COST MANA
         if (resources?.mana) {
             if (actor.system?.fq.mana.value + resources?.mana < 0) {
-                ConsumptionUtils.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughMana"), actor);
+                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughMana"), actor);
                 return false;
             }
         }
@@ -57,15 +57,15 @@ export default class ConsumptionUtils {
         // COST ZEAL
         if (resources?.zeal) {
             if (actor.system?.fq.zeal.value + resources?.zeal < 0) {
-                ConsumptionUtils.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughZeal"), actor);
+                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughZeal"), actor);
                 return false;
             }
         }
 
         // COST DROP
-        if (resources?.drop && FqConstants.isActorInCombat) {
+        if (resources?.drop && Constants.isActorInCombat) {
             if (actor.system?.fq.cards.currentDrop + resources?.drop < 0) {
-                ConsumptionUtils.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDrop"), actor);
+                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDrop"), actor);
                 return false;
             }
         }
@@ -162,7 +162,7 @@ export default class ConsumptionUtils {
      * @returns {boolean} True si toutes les cibles sont valides et à portée, false sinon.
      */
     static checkIfCanCardCanReachTargets(actor, nbTargets, minReach, maxReach, targetType = CardFqSystem.TARGET_TYPE_DEFAULT) {
-        const targets = FqConstants.myTargets(targetType);
+        const targets = Constants.myTargets(targetType);
 
         if (targets.length === 0) {
             ChatMessage.create({
@@ -198,7 +198,7 @@ export default class ConsumptionUtils {
             return false;
         }
         targets.forEach(target => {
-            const dist = CanvasUtils.getMinDistanceBetweenTwoToken(myToken.x, myToken.y, target.document.x, target.document.y, myToken.width, target.document.width, myToken.height, target.document.height);
+            const dist = Geometry.getMinDistanceBetweenTwoToken(myToken.x, myToken.y, target.document.x, target.document.y, myToken.width, target.document.width, myToken.height, target.document.height);
 
             if (minReach > dist || maxReach < dist) {
                 result = false;

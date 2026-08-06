@@ -1,7 +1,7 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
-import CanvasUtils from "../../src/domain/utils/canvas-utils.js";
+import Geometry from "../../src/domain/engine/shared/geometry.js";
 
-describe("CanvasUtils", () => {
+describe("Geometry", () => {
     const token = {actorId: "charId", x: 5, y: 5};
     const squareSize = 5;
 
@@ -10,7 +10,7 @@ describe("CanvasUtils", () => {
     });
 
     test("getAllSquaresOccupiedByToken", () => {
-        const result = CanvasUtils.getAllSquaresOccupiedByToken(0, 0, 2, 2);
+        const result = Geometry.getAllSquaresOccupiedByToken(0, 0, 2, 2);
         expect(result).toEqual([
             {x: 0, y: 0},
             {x: 0, y: 5},
@@ -20,22 +20,22 @@ describe("CanvasUtils", () => {
     });
 
     test("getDistanceBetweenTwoSquares", () => {
-        const result = CanvasUtils.getDistanceBetweenTwoSquares(0, 0, 5, 5);
+        const result = Geometry.getDistanceBetweenTwoSquares(0, 0, 5, 5);
         expect(result).toEqual(2);
     });
 
     test("getXAdjacentLocation", () => {
-        const result = CanvasUtils.getXAdjacentLocation({actorId: "charId", x: 5, y: 5}, "left");
+        const result = Geometry.getXAdjacentLocation({actorId: "charId", x: 5, y: 5}, "left");
         expect(result).toEqual(token.x - squareSize);
     });
 
     test("getYAdjacentLocation", () => {
-        const result = CanvasUtils.getYAdjacentLocation({actorId: "charId", x: 5, y: 5}, "up");
+        const result = Geometry.getYAdjacentLocation({actorId: "charId", x: 5, y: 5}, "up");
         expect(result).toEqual(token.y - squareSize);
     });
 
     test("locationIsOccupied", () => {
-        const result = CanvasUtils.locationIsOccupied("left");
+        const result = Geometry.locationIsOccupied("left");
         expect(result).toEqual(true);
     });
 });

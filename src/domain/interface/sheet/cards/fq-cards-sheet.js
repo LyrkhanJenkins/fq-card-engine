@@ -1,5 +1,5 @@
-import DeckUtils, {DECK_TYPE, SPELLBOOK_TYPE} from "../../utils/deck-utils.js";
-import DisplayCard from "../../utils/display-card.js";
+import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../../trading/trading-cards.js";
+import DisplayCard from "../../display-card.js";
 
 /**
  * Feuille de configuration d'un jeu de cartes (deck / spellbook) FQ.
@@ -78,7 +78,7 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
             partContext.isYourSpellbook = (partContext?.document.system?.fq?.type === SPELLBOOK_TYPE && partContext?.document.system?.fq?.owner === game.user.id);
 
             if (partContext.isYourSpellbook) {
-                const deck = DeckUtils.getFirstDeck(game.user.id, DECK_TYPE, false);
+                const deck = TradingCards.getFirstDeck(game.user.id, DECK_TYPE, false);
                 for (const cardCtx of partContext.cards) {
                     const maxSameCard = cardCtx.system?.fq?.maxSameCard;
                     cardCtx.isMaxReached = deck && Number.isFinite(maxSameCard)
@@ -119,7 +119,7 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
 
         const li = target.closest("[data-card-id]");
         const card = this.document.cards.get(li?.dataset.cardId);
-        let deck = DeckUtils.getFirstDeck(game.user.id, DECK_TYPE, false);
+        let deck = TradingCards.getFirstDeck(game.user.id, DECK_TYPE, false);
         if (!card ||! deck) return;
 
         target.classList.add("locked"); // verrou temporaire, distinct de "disabled"
@@ -239,7 +239,7 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
      * @param {Card} card
      */
     #onDeckCardChange(card) {
-        const deck = DeckUtils.getFirstDeck(game.user.id, DECK_TYPE, false);
+        const deck = TradingCards.getFirstDeck(game.user.id, DECK_TYPE, false);
         if (deck && card.parent?.id === deck.id) {
             this.render();
         }

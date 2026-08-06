@@ -1,13 +1,14 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 
-vi.mock("../../src/hook/socket-lib.js", () => ({
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     socket: {
         executeAsGM: vi.fn()
     }
 }));
 
-import {socket} from "../../src/hook/socket-lib.js";
-import {deleteToken} from "../../src/hook/render-token.js";
+import {socket} from "../../src/hook/integration/socketlib.hook.js";
+import TokenHud from "../../src/domain/interface/token-hud.js";
+import "../../src/hook/render-token.hook.js";
 
 function getHook(name) {
     const call = Hooks.on.mock.calls.find(c => c[0] === name);
@@ -41,7 +42,7 @@ describe("render-token", () => {
             const tokenDoc = {delete: vi.fn()};
             game.canvas.tokens = {get: vi.fn(() => ({document: tokenDoc}))};
 
-            deleteToken("token-1");
+            TokenHud.deleteToken("token-1");
 
             expect(game.canvas.tokens.get).toHaveBeenCalledWith("token-1");
             expect(tokenDoc.delete).toHaveBeenCalled();
@@ -50,7 +51,7 @@ describe("render-token", () => {
         it("lève une erreur si le token est introuvable (comportement actuel, non corrigé)", () => {
             game.canvas.tokens = {get: vi.fn(() => undefined)};
 
-            expect(() => deleteToken("missing")).toThrow();
+            expect(() => TokenHud.deleteToken("missing")).toThrow();
         });
     });
 

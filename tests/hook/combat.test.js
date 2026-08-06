@@ -1,17 +1,17 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import {socket} from "../../src/hook/socket-lib.js";
-import DeckUtils, {DECK_TYPE, HAND_TYPE} from "../../src/domain/utils/deck-utils.js";
-import {OriginFQEffectLabel} from "../../src/domain/utils/fq-constants.js";
+import {socket} from "../../src/hook/integration/socketlib.hook.js";
+import TradingCards, {DECK_TYPE, HAND_TYPE} from "../../src/domain/trading/trading-cards.js";
+import {OriginFQEffectLabel} from "../../src/domain/constants.js";
 import {makeCard, makeDeck} from "../factories.js";
 
 // ─── Mocks de modules ──────────────────────────────────────────────────────
 //
 // L'export réel `socket` de socket-lib.js reste `undefined` tant que le hook
-// `socketlib.ready` n'a pas été invoqué. combat.js déréférence pourtant
+// `socketlib.ready` n'a pas été invoqué. combat.hook.js déréférence pourtant
 // `socket.executeAsUser`/`executeAsGM` dans drawHand/drawPick : sans ce mock,
 // ces appels planteraient. Suit le même pattern que
 // tests/utils/fq-utils.test.js et tests/window/play-card.test.js.
-vi.mock("../../src/hook/socket-lib.js", () => ({
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     default: {},
     socket: {
         executeAsUser: vi.fn(),
@@ -24,13 +24,13 @@ vi.mock("../../src/hook/socket-lib.js", () => ({
 // tests/setup.js — zone 1, non réinitialisé en beforeEach) et définit la
 // classe `Combat`, module-privée. Ses méthodes statiques ne sont atteignables
 // que via les callbacks capturés ci-dessous.
-import "../../src/hook/combat.js";
+import "../../src/hook/combat.hook.js";
 
 /**
  * Renvoie le dernier callback enregistré par `Hooks.on(name, cb)` pour le nom
  * de hook donné. `Hooks.on.mock.calls` n'est jamais vidé dans ce fichier
  * (aucun vi.clearAllMocks()/resetAllMocks() global) : les 5 hooks de
- * combat.js n'étant enregistrés qu'une seule fois à l'import du module, les
+ * combat.hook.js n'étant enregistrés qu'une seule fois à l'import du module, les
  * vider casserait la capture pour tous les tests suivants.
  */
 function getHook(name) {
@@ -42,7 +42,7 @@ const GM_ID = "gm-user-id";
 
 /**
  * Construit un combattant de test avec un acteur minimal aligné sur les
- * champs `system.fq`/`system.attributes` consommés par combat.js
+ * champs `system.fq`/`system.attributes` consommés par combat.hook.js
  * (action/zeal/bonus.dot/cards, attributes.exhaustion/hp). `actor.update`
  * est un vi.fn espionnable.
  */
@@ -74,7 +74,7 @@ function makeCombatant({actorId = "actor-1", fq = {}, attributes = {}, effects} 
 
 beforeEach(() => {
     // Défaut : utilisateur local premier MJ actif, condition requise par
-    // Combat.isLocalUserFirstActiveGM() pour exécuter les opérations
+    // CombatTurn.isLocalUserFirstActiveGM() pour exécuter les opérations
     // partagées. setup.js ne fournit ni game.userId ni game.users.activeGM.
     // game.users doit rester itérable (forEach/filter/find, utilisés
     // respectivement par drawBaseCards/drawHand/combatTurnChange) : on le
@@ -87,7 +87,7 @@ beforeEach(() => {
     socket.executeAsGM.mockReset();
 });
 
-describe("hook/combat.js", () => {
+describe("hook/combat.hook.js", () => {
 
     // ─── Tâche 1 : harnais + tranche end-to-end ────────────────────────────
 
@@ -101,7 +101,7 @@ describe("hook/combat.js", () => {
         });
     });
 
-    describe("createCombat -> Combat.resetCards", () => {
+    describe("createCombat -> CombatTurn.resetCards", () => {
         it("rappelle chaque deck FQ (recall) quand l'utilisateur local est premier MJ actif", () => {
             const deck = {system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
             game.cards = [deck];
@@ -183,7 +183,7 @@ describe("hook/combat.js", () => {
         });
     });
 
-    describe("userConnected -> Combat.drawBaseCards", () => {
+    describe("userConnected -> CombatTurn.drawBaseCards", () => {
         it("passe uniquement les cartes de base non piochées de chaque utilisateur, de son deck vers sa main", () => {
             game.users = Object.assign([{id: "user-1"}], {activeGM: {id: GM_ID}});
 
@@ -195,7 +195,7 @@ describe("hook/combat.js", () => {
             const deck = makeDeck(DECK_TYPE, {cards: [baseUndrawn1, baseUndrawn2, baseDrawn, nonBase]});
             const hand = makeDeck(HAND_TYPE);
 
-            vi.spyOn(DeckUtils, "getFirstDeck").mockImplementation((userId, typeFq) => {
+            vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) => {
                 if (typeFq === DECK_TYPE) return deck;
                 if (typeFq === HAND_TYPE) return hand;
                 return undefined;
@@ -210,7 +210,7 @@ describe("hook/combat.js", () => {
             game.users = Object.assign([{id: "user-1"}], {activeGM: null});
             const deck = makeDeck(DECK_TYPE, {cards: [makeCard({id: "base-1", system: {fq: {isBase: true}}, drawn: false})]});
             const hand = makeDeck(HAND_TYPE);
-            vi.spyOn(DeckUtils, "getFirstDeck").mockImplementation((userId, typeFq) =>
+            vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) =>
                 typeFq === DECK_TYPE ? deck : hand);
 
             getHook("userConnected")({id: "user-1"}, true);
@@ -309,7 +309,7 @@ describe("hook/combat.js", () => {
             const activeHand = {id: "hand-active"};
             const inactiveDeck = {id: "deck-inactive"};
             const inactiveHand = {id: "hand-inactive"};
-            vi.spyOn(DeckUtils, "getFirstDeck").mockImplementation((userId, typeFq) => {
+            vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) => {
                 if (userId === "active-user") return typeFq === DECK_TYPE ? activeDeck : activeHand;
                 if (userId === "inactive-user") return typeFq === DECK_TYPE ? inactiveDeck : inactiveHand;
                 return undefined;
@@ -374,7 +374,7 @@ describe("hook/combat.js", () => {
 
             const deck = {id: "deck-1", availableCards: [{}, {}, {}, {}, {}]}; // 5 cartes dispo > pick(2)
             const hand = {id: "hand-1"};
-            vi.spyOn(DeckUtils, "getFirstDeck").mockImplementation((userId, typeFq) =>
+            vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) =>
                 typeFq === DECK_TYPE ? deck : hand);
 
             const combat = {
@@ -405,7 +405,7 @@ describe("hook/combat.js", () => {
 
             const deck = {id: "deck-1", availableCards: [{}]}; // 1 carte dispo <= pick(3), mais > 0
             const hand = {id: "hand-1"};
-            vi.spyOn(DeckUtils, "getFirstDeck").mockImplementation((userId, typeFq) =>
+            vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) =>
                 typeFq === DECK_TYPE ? deck : hand);
 
             const combat = {
@@ -442,7 +442,7 @@ describe("hook/combat.js", () => {
 
             const deck = {id: "deck-1", availableCards: [{}, {}]};
             const hand = {id: "hand-1"};
-            vi.spyOn(DeckUtils, "getFirstDeck").mockImplementation((userId, typeFq) =>
+            vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) =>
                 typeFq === DECK_TYPE ? deck : hand);
 
             const combat = {

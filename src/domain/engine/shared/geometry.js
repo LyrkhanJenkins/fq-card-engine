@@ -4,7 +4,7 @@
  * tokens (en tenant compte de leur taille), et repérage des cases adjacentes.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
-export default class CanvasUtils {
+export default class Geometry {
 
     /**
      * Calcule la distance minimale (en cases) entre deux tokens, en considérant
@@ -22,12 +22,12 @@ export default class CanvasUtils {
      * @returns {number} La plus petite distance (en cases) entre les deux tokens.
      */
     static getMinDistanceBetweenTwoToken(x1, y1, x2, y2, w1, w2, h1, h2) {
-        const squares1 = CanvasUtils.getAllSquaresOccupiedByToken(x1, y1, w1, h1);
-        const squares2 = CanvasUtils.getAllSquaresOccupiedByToken(x2, y2, w2, h2);
+        const squares1 = Geometry.getAllSquaresOccupiedByToken(x1, y1, w1, h1);
+        const squares2 = Geometry.getAllSquaresOccupiedByToken(x2, y2, w2, h2);
         const result = [];
         squares1.forEach(s1 => {
             squares2.forEach(s2 => {
-                result.push(CanvasUtils.getDistanceBetweenTwoSquares(s1.x, s1.y, s2.x, s2.y));
+                result.push(Geometry.getDistanceBetweenTwoSquares(s1.x, s1.y, s2.x, s2.y));
             });
         });
         return Math.min(...result);
@@ -108,7 +108,7 @@ export default class CanvasUtils {
     static locationIsOccupied(location) {
         const myToken = game.canvas?.scene?.tokens?.find(t => t.actorId === game.user?.character?.id);
         return !!game.scenes.find(s => s.active).tokens?.find(t =>
-            t.x === CanvasUtils.getXAdjacentLocation(myToken, location) &&
-            t.y === CanvasUtils.getYAdjacentLocation(myToken, location));
+            t.x === Geometry.getXAdjacentLocation(myToken, location) &&
+            t.y === Geometry.getYAdjacentLocation(myToken, location));
     }
 }

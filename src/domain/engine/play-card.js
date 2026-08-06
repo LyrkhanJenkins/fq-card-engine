@@ -1,5 +1,6 @@
-import FqConstants, {WARNING_COLOR} from "./fq-constants.js";
-import FQUtils from "./fq-utils.js";
+import Constants, {WARNING_COLOR} from "../constants.js";
+import CardEffect from "./shared/card-effect.js";
+import RollService from "./roll/roll-service.js";
 
 /**
  * Orchestration du jeu et de la défausse d'une carte : gestion des cartes
@@ -33,7 +34,7 @@ export default class PlayCard {
 
         // Add +1 on drop card
         game.user.character.update({
-            "system.fq.cards.currentDrop": FqConstants.actorFQ.cards.currentDrop + 1
+            "system.fq.cards.currentDrop": Constants.actorFQ.cards.currentDrop + 1
         });
         this.renderChatMessage(to, fd, card, "FQCARDENGINE.CardDiscard");
 
@@ -65,21 +66,21 @@ export default class PlayCard {
      */
     static async callBackplayCard(to, fd, cardContent, hasVariables, initCardContents, currentCards, card) {
         // Recalcul de la carte à partir des bonus de caractéristiques
-        FQUtils.replaceCardContentAbilitiesBonus(cardContent);
+        CardEffect.replaceCardContentAbilitiesBonus(cardContent);
         // Recalcul de la carte à partir des valeurs X, Y donné par l'utilisateur
-        if (!await FQUtils.replaceCardContentXAndYValue(cardContent, hasVariables, fd.XXX, fd.YYY)) {
+        if (!await CardEffect.replaceCardContentXAndYValue(cardContent, hasVariables, fd.XXX, fd.YYY)) {
             return;
         }
-        await FQUtils.prepareDataFromCard(cardContent);
+        await CardEffect.prepareDataFromCard(cardContent);
 
-        if (!FQUtils.checkIfCanUseCard(cardContent, card)) {
+        if (!CardEffect.checkIfCanUseCard(cardContent, card)) {
             return;
         }
 
         // Check pour savoir si la carte est rejouable et si on va la passer à la défausse. TODO TESTER
         if (!!cardContent && !!cardContent?.replayable) {
             if (cardContent?.replayable === "passif") {
-                FQUtils.rewriteCardContent(card, initCardContents, {
+                CardEffect.rewriteCardContent(card, initCardContents, {
                     hasBeenPlayed: true, passivePlayedRound: game.combat?.round.toString()
                 });
                 ChatMessage.create({
@@ -87,9 +88,9 @@ export default class PlayCard {
                     content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.localize("FQCARDENGINE.InfoMsgPassiveSpell")}</div>`
                 });
             } else if (cardContent?.replayable) {
-                cardContent.replayable = await FQUtils.rollResultAsync(cardContent.replayable);
+                cardContent.replayable = await RollService.rollResultAsync(cardContent.replayable);
                 if (Number(cardContent?.replayable) > 1) {
-                    FQUtils.rewriteCardContent(card, initCardContents, {
+                    CardEffect.rewriteCardContent(card, initCardContents, {
                         replayable: Number(cardContent?.replayable) - 1, hasBeenPlayed: true
                     });
                 }
@@ -125,7 +126,7 @@ export default class PlayCard {
             });
         }
 
-        await FQUtils.applyCardEffect(cardContent, card, fd);
+        await CardEffect.applyCardEffect(cardContent, card, fd);
 
         return result;
     }
@@ -179,6 +180,35 @@ export default class PlayCard {
                 };
                 ChatMessage.create(messageData);
 
+            });
+        }
+    }
+
+    /**
+     * Enregistre dans les flags du combat actif une entrée de log décrivant la
+     * carte jouée : acteur, cibles, round/tour, résultats et contenu de la carte.
+     * N'a aucun effet hors combat.
+     *
+     * @param {object[]} initResultatArray - Le tableau des résultats de l'effet joué.
+     * @param {object}   cardContent       - Le contenu (choix) de la carte jouée.
+     *
+     * @returns {void}
+     */
+    static logCardPlayed(initResultatArray, cardContent) {
+        if (game.combat) {
+            let FQLogs = game.combat.flags.fq?.logs ? game.combat.flags.fq?.logs : [];
+            let resultArray = [...initResultatArray];
+            FQLogs.push({
+                "actorId": game.user.character.id,
+                "targetsId": Constants.myTargets(cardContent.targetType).map(t => t.document.actorId),
+                "round": game.combat.round,
+                "turn": game.combat.turn,
+                resultArray: {...resultArray},
+                "cardContent": {...cardContent}
+            });
+
+            game.combat.update({
+                "flags.fq": {logs: FQLogs}
             });
         }
     }

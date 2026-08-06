@@ -1,6 +1,6 @@
-import {DECK_TYPE, SPELLBOOK_TYPE} from "../utils/deck-utils.js";
-import DisplayCard from "../utils/display-card.js";
-import FQUtils from "../utils/fq-utils.js";
+import {DECK_TYPE, SPELLBOOK_TYPE} from "../trading/trading-cards.js";
+import DisplayCard from "./display-card.js";
+import RollService from "../engine/roll/roll-service.js";
 
 /**
  * Représente une barre de main affichée à l'écran (le module peut en gérer
@@ -124,11 +124,11 @@ export default class HandBoard {
             minReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.minReach, cardContent),
             maxReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.maxReach, cardContent),
 
-            actionMod : FQUtils.hasAbilitiesBonus(cardContent.action),
-            manaMod : FQUtils.hasAbilitiesBonus(cardContent.mana),
-            zealMod : FQUtils.hasAbilitiesBonus(cardContent.zeal),
-            reachMod : FQUtils.hasAbilitiesBonus(cardContent.minReach) || FQUtils.hasAbilitiesBonus(cardContent.maxReach),
-            replayableMod : FQUtils.hasAbilitiesBonus(cardContent.replayable),
+            actionMod : RollService.hasAbilitiesBonus(cardContent.action),
+            manaMod : RollService.hasAbilitiesBonus(cardContent.mana),
+            zealMod : RollService.hasAbilitiesBonus(cardContent.zeal),
+            reachMod : RollService.hasAbilitiesBonus(cardContent.minReach) || RollService.hasAbilitiesBonus(cardContent.maxReach),
+            replayableMod : RollService.hasAbilitiesBonus(cardContent.replayable),
 
             reactive : cardContent.reactive,
             replayable : cardContent?.replayable === "passif" ? "P" : !cardContent?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(cardContent?.replayable, cardContent),

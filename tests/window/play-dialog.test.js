@@ -1,18 +1,18 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
 import {makeCard, makeChoice} from "../factories.js";
-import {PILE_TYPE} from "../../src/domain/utils/deck-utils.js";
+import {PILE_TYPE} from "../../src/domain/trading/trading-cards.js";
 
 // ─── Mocks des feuilles Foundry (couplées à dnd5e / DOM, hors périmètre ici) ──
 // Couture identique à 07-01/07-02 (tests/decks/play-harness.js REQUIRED_MOCKS) :
 // vi.mock est hissé PAR FICHIER (limitation Vitest), donc redéclaré ici.
-vi.mock("../../src/domain/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/board/hand-board.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/hand-board.js", () => ({default: class {}}));
 
-vi.mock("../../src/hook/socket-lib.js", () => ({
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     socket: {
         executeAsGM: vi.fn()
     }
@@ -21,7 +21,7 @@ vi.mock("../../src/hook/socket-lib.js", () => ({
 // PlayCard est mocké : seul le bouton discard de playDialog délègue à
 // PlayCard.discardCard (espionné ici). Le bouton ok (playValidatedCard) est
 // hors périmètre de ce plan (déjà couvert par play-validated-card.test.js).
-vi.mock("../../src/domain/utils/play-card.js", () => ({
+vi.mock("../../src/domain/engine/play-card.js", () => ({
     default: {
         discardCard: vi.fn(),
         callBackplayCard: vi.fn().mockResolvedValue(null),
@@ -36,7 +36,7 @@ globalThis.socketlib = {
 // Import dynamique APRÈS les mocks : peuple window.FqCardEngineModule sans
 // dépendre du rendu DOM réel (Handlebars/Dialog restent mockés ci-dessous).
 await import("../../src/init-engine.js");
-const PlayCard = (await import("../../src/domain/utils/play-card.js")).default;
+const PlayCard = (await import("../../src/domain/engine/play-card.js")).default;
 
 // CONST.DOCUMENT_OWNERSHIP_LEVELS n'est pas fourni par tests/setup.js (zone 1,
 // jamais réinitialisée entre les tests) : on l'étend une seule fois ici.
@@ -49,7 +49,7 @@ const renderTemplateSpy = vi.spyOn(foundry.applications.handlebars, "renderTempl
 /**
  * Construit un choix de carte jouable par `playDialog` : ajoute `replayable`
  * (absent des défauts de `makeChoice`, mais lu sans garde de nullité par
- * `FQUtils.hasAbilitiesBonus` lors de la construction des données du template).
+ * `RollService.hasAbilitiesBonus` lors de la construction des données du template).
  *
  * @param {object} [overrides] Surcharge de premier niveau (merge superficiel).
  * @returns {object} Un choix de carte jouable par `playDialog`.

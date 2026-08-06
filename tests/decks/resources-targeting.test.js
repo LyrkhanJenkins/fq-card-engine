@@ -4,18 +4,18 @@ import path from "path";
 
 // ─── Mocks requis par tests/decks/play-harness.js (vi.mock est hissé PAR FICHIER,
 // voir le commentaire JSDoc en tête de play-harness.js pour la liste canonique) ──
-vi.mock("../../src/domain/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
-vi.mock("../../src/domain/board/hand-board.js", () => ({default: class {}}));
-vi.mock("../../src/hook/socket-lib.js", () => ({socket: {executeAsGM: vi.fn()}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/actor/fq-npc-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
+vi.mock("../../src/domain/interface/hand-board.js", () => ({default: class {}}));
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {executeAsGM: vi.fn()}}));
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 // `Macro` est un global Foundry natif jamais exercé par le smoke test du socle (07-02) :
-// `FxUtils.importMacroFromCompendium` (déclenché par tout effet `macro.execute`, ex.
+// `Fx.importMacroFromCompendium` (déclenché par tout effet `macro.execute`, ex.
 // PersistAura sur les cartes squelette) appelle `Macro.create(...)` dès que le
 // compendium mocké ne trouve pas la macro. Sans ce stub, tout choix comportant un
 // `macro.execute` lève `ReferenceError: Macro is not defined` — un trou générique du
@@ -26,7 +26,7 @@ globalThis.Macro = class {
 
 const {mountWorld, playChoice} = await import("./play-harness.js");
 const {DeterministicRoll, resetDiceControl} = await import("./deterministic-roll.js");
-const FQUtils = (await import("../../src/domain/utils/fq-utils.js")).default;
+const RollService = (await import("../../src/domain/engine/roll/roll-service.js")).default;
 
 /**
  * Phase 07 Plan 04 — Task 2 : coûts/ressources consommés + rejets ressources
@@ -55,7 +55,7 @@ function fixtureDistance() {
 /**
  * Résout une formule de carte exactement comme le pipeline réel (mêmes
  * substitutions @-caractéristiques + même évaluateur générique de dés que le
- * `globalThis.Roll` installé, voir tests/decks/deterministic-roll.js).
+ * `globalThis.Roll` installé, voir tests/decks/deterministic-roll-service.js).
  *
  * @param {string|number} formula - La formule brute du choix.
  *
@@ -63,7 +63,7 @@ function fixtureDistance() {
  */
 async function resolveFormula(formula) {
     mountWorld();
-    const substituted = FQUtils.replaceAbilitiesBonus(String(formula ?? "0"));
+    const substituted = RollService.replaceAbilitiesBonus(String(formula ?? "0"));
     resetDiceControl();
     const roll = await new DeterministicRoll(substituted).evaluate();
     resetDiceControl();
@@ -499,7 +499,7 @@ describe("EXHA-04 : ciblage/portée", () => {
             // propre `deepMerge`, qui ne distingue pas `Set` d'un objet simple — fusionner
             // un `Set` source dans un `Set` de base y perd son itérabilité (`Object.keys`
             // d'un `Set` est vide). On passe donc un TABLEAU (remplacé tel quel par ce
-            // `deepMerge`, jamais fusionné clé à clé) — `FqConstants.myTargets` fait
+            // `deepMerge`, jamais fusionné clé à clé) — `Constants.myTargets` fait
             // `[...game.user.targets]`, qui fonctionne aussi bien sur un tableau.
             world: abundantWorld({user: {targets: []}})
         });

@@ -1,4 +1,4 @@
-import CardFqSystem from "../system/cards/card-fq-system.mjs";
+import CardFqSystem from "./system/cards/card-fq-system.mjs";
 
 export const CRITICAL_COLOR = "#C0392B";
 export const CRITICAL_HEAL_COLOR = "#D9F356";
@@ -32,7 +32,7 @@ export function buildDiceAppearance(color) {
 }
 
 // Apparences forcées pour les jets spécifiques : critique = rouge, esquive = bleu.
-// Les autres dés du module utilisent la couleur du joueur (voir DamageUtils.getPlayerDiceAppearance).
+// Les autres dés du module utilisent la couleur du joueur (voir Damage.getPlayerDiceAppearance).
 export const CRITICAL_DICE_APPEARANCE = buildDiceAppearance(CRITICAL_COLOR);
 export const EVASION_DICE_APPEARANCE = buildDiceAppearance(EVASION_COLOR);
 
@@ -42,7 +42,7 @@ export const EVASION_DICE_APPEARANCE = buildDiceAppearance(EVASION_COLOR);
  * le personnage de l'utilisateur courant, ses cibles et l'état de combat.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
-export default class FqConstants {
+export default class Constants {
 
     /**
      * Accès rapide aux attributs (hp, etc.) du personnage de l'utilisateur courant.
@@ -161,7 +161,7 @@ export default class FqConstants {
      * @returns {object|undefined} Le document token, ou undefined si absent.
      */
     static get myToken() {
-        return game.canvas?.scene?.tokens?.find(t => t.actorId === FqConstants.myId);
+        return game.canvas?.scene?.tokens?.find(t => t.actorId === Constants.myId);
     }
 
     /**

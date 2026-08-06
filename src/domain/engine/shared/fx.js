@@ -1,5 +1,5 @@
-import FqConstants from "./fq-constants.js";
-import {socket} from "../../hook/socket-lib.js";
+import Constants from "../../constants.js";
+import {socket} from "../../../hook/integration/socketlib.hook.js";
 
 /**
  * Utilitaires d'effets audiovisuels lors du jeu des cartes, s'appuyant sur le
@@ -8,7 +8,7 @@ import {socket} from "../../hook/socket-lib.js";
  * séquences visuelles vers soi ou vers les cibles.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
-export default class FxUtils {
+export default class Fx {
 
     static SOUND_PATH = "modules/fq-card-engine/sounds/";
     static VISUAL_PATH = "modules/fq-card-engine/visuals/";
@@ -44,16 +44,16 @@ export default class FxUtils {
      * @returns {Promise<void>}
      */
     static async handleSpecialEffect(cardContent, resultArray, myToken, typeEffect) {
-        const targets = FqConstants.myTargets(cardContent.targetType);
-        const soundPath = await FxUtils.getSoundEffectPath(cardContent.damage, cardContent.heal, cardContent.sound, typeEffect);
+        const targets = Constants.myTargets(cardContent.targetType);
+        const soundPath = await Fx.getSoundEffectPath(cardContent.damage, cardContent.heal, cardContent.sound, typeEffect);
 
         if (game.modules.get("sequencer")?.active) {
-            FxUtils._handleSequencerEffects(cardContent, myToken, targets, resultArray, typeEffect);
+            Fx._handleSequencerEffects(cardContent, myToken, targets, resultArray, typeEffect);
         }
 
         if (soundPath) {
             setTimeout(_ => {
-                FxUtils._playAudioOnly(soundPath);
+                Fx._playAudioOnly(soundPath);
             }, 200);
         }
     }
@@ -72,7 +72,7 @@ export default class FxUtils {
      * @returns {void}
      */
     static _handleSequencerEffects(cardContent, myToken, targets, resultArray, typeEffect) {
-        const effectFile = FxUtils._getEffectFile(cardContent, typeEffect);
+        const effectFile = Fx._getEffectFile(cardContent, typeEffect);
         const hasTargets = targets.length > 0;
 
         [...resultArray].forEach((result) => {
@@ -84,10 +84,10 @@ export default class FxUtils {
 
         if (hasTargets && cardContent.maxReach) {
             targets.forEach(target => {
-                FxUtils._createSequenceForTarget(effectFile, myToken, target, cardContent, [...resultArray].find(res => res.targetTokenId === target.id)?.evasion);
+                Fx._createSequenceForTarget(effectFile, myToken, target, cardContent, [...resultArray].find(res => res.targetTokenId === target.id)?.evasion);
             });
         } else {
-            FxUtils._createSequenceForSelf(effectFile, myToken);
+            Fx._createSequenceForSelf(effectFile, myToken);
         }
     }
 
@@ -107,7 +107,7 @@ export default class FxUtils {
         } else if (cardContent.heal) {
             return this.GENERIC_VISUAL_PATH + "other/heal.webm";
         } else if (cardContent.damage) {
-            return FxUtils.getDamageGenericEffectPath(cardContent.damage, cardContent.maxReach, typeEffect);
+            return Fx.getDamageGenericEffectPath(cardContent.damage, cardContent.maxReach, typeEffect);
         } else {
             return this.GENERIC_VISUAL_PATH + "other/buff.webm";
         }
@@ -138,7 +138,7 @@ export default class FxUtils {
         }
 
         if (cardContent.damage && !isEvade) {
-            FxUtils.getBlinkAnimation(seq, target, 100, 8);
+            Fx.getBlinkAnimation(seq, target, 100, 8);
         }
 
         if (isEvade) {

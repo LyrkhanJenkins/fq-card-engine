@@ -1,8 +1,8 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
-import DamageUtils from "../../src/domain/utils/damage-utils.js";
-import {DAMAGES_COLOR} from "../../src/domain/utils/fq-constants";
+import Damage from "../../src/domain/engine/roll/damage.js";
+import {DAMAGES_COLOR} from "../../src/domain/constants.js";
 
-describe("DamageUtils", () => {
+describe("Damage", () => {
     let actor;
 
     beforeEach(() => {
@@ -25,33 +25,33 @@ describe("DamageUtils", () => {
     });
 
     it("should build damage dice launcher with bonus", async () => {
-        const result = await DamageUtils.buildDamageDiceLauncher(actor, "1d8", 1, -9999);
+        const result = await Damage.buildDamageDiceLauncher(actor, "1d8", 1, -9999);
         expect(result).toBeDefined();
         expect(result[0].value).toBeGreaterThan(0);
     });
 
     it("should build heal dice launcher with bonus", async () => {
-        const result = await DamageUtils.buildHealDiceLauncher(actor, "1d8", 1);
+        const result = await Damage.buildHealDiceLauncher(actor, "1d8", 1);
         expect(result).toBeDefined();
         expect(result[0].value).toBeGreaterThan(0);
     });
 
     it("should add bonuses to heal", async () => {
-        const result = await DamageUtils.addCriticalToHeal(actor, 10, 1);
+        const result = await Damage.addCriticalToHeal(actor, 10, 1);
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
         expect(result[0].value >= 10).toBe(true);
     });
 
     it("should add bonuses to damage", async () => {
-        const result = await DamageUtils.addCriticalEvasionToDamage(actor, 10, 1, -999);
+        const result = await Damage.addCriticalEvasionToDamage(actor, 10, 1, -999);
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
         expect(result[0].value >= 10).toBe(true);
     });
 
     it("should roll with success value result", async () => {
-        const result = await DamageUtils.rollWithSuccessValueResultAsync(actor, "1d20", {
+        const result = await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
             color: DAMAGES_COLOR,
             title: "Test"
         });
@@ -60,15 +60,15 @@ describe("DamageUtils", () => {
     });
 
     it("should display roll result", () => {
-        DamageUtils.displayResult(actor, [{key: "Test", value: 10}], ["Manual Action"]);
+        Damage.displayResult(actor, [{key: "Test", value: 10}], ["Manual Action"]);
         expect(ChatMessage.create).toHaveBeenCalledTimes(1);
     });
 
     // ─── rollWithSuccessValueResultAsync — succès/échec ────────────────────────
 
-    describe("DamageUtils — rollWithSuccessValueResultAsync success/échec", () => {
+    describe("Damage — rollWithSuccessValueResultAsync success/échec", () => {
         it("should flag SUCCÈS when the deterministic roll (10) reaches the success threshold", async () => {
-            await DamageUtils.rollWithSuccessValueResultAsync(actor, "1d20", {
+            await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
                 color: DAMAGES_COLOR, title: "Test", success: 5
             });
             const instance = Roll.mock.instances[Roll.mock.instances.length - 1];
@@ -77,7 +77,7 @@ describe("DamageUtils", () => {
         });
 
         it("should flag échec when the deterministic roll (10) misses the success threshold", async () => {
-            await DamageUtils.rollWithSuccessValueResultAsync(actor, "1d20", {
+            await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
                 color: DAMAGES_COLOR, title: "Test", success: 15
             });
             const instance = Roll.mock.instances[Roll.mock.instances.length - 1];
@@ -88,14 +88,14 @@ describe("DamageUtils", () => {
 
     // ─── addCriticalEvasionToDamage — self/esquive/critique ────────────────────
 
-    describe("DamageUtils — addCriticalEvasionToDamage", () => {
+    describe("Damage — addCriticalEvasionToDamage", () => {
         it("should push no entry when self-targeting (targetActor._id === actor._id)", async () => {
             game.user.targets = new Set([{
                 id: "token1",
                 actor: {_id: actor._id, system: {fq: {attributes: {evasion: 3}}}},
                 document: {name: "Self"}
             }]);
-            const result = await DamageUtils.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0});
             expect(result).toEqual([]);
         });
 
@@ -105,7 +105,7 @@ describe("DamageUtils", () => {
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 15}}}},
                 document: {name: "Target1"}
             }]);
-            const result = await DamageUtils.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0});
             expect(result).toEqual([expect.objectContaining({value: 0, critical: false, evasion: true})]);
         });
 
@@ -115,7 +115,7 @@ describe("DamageUtils", () => {
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 1}}}},
                 document: {name: "Target1"}
             }]);
-            const result = await DamageUtils.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0});
             expect(result).toEqual([expect.objectContaining({value: 10, critical: false, evasion: false})]);
         });
 
@@ -125,7 +125,7 @@ describe("DamageUtils", () => {
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 1}}}},
                 document: {name: "Target1"}
             }]);
-            const result = await DamageUtils.addCriticalEvasionToDamage(actor, 10, {bonusCrit: 20, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: 20, bonusEva: 0});
             expect(result).toEqual([expect.objectContaining({value: 20, critical: true, evasion: false})]);
         });
 
@@ -135,7 +135,7 @@ describe("DamageUtils", () => {
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 15}}}},
                 document: {name: "Target1"}
             }]);
-            const result = await DamageUtils.addCriticalEvasionToDamage(actor, 10, {bonusCrit: 20, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: 20, bonusEva: 0});
             expect(result).toEqual([expect.objectContaining({value: 10, critical: true, evasion: true})]);
         });
 
@@ -145,22 +145,22 @@ describe("DamageUtils", () => {
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 1}}}},
                 document: {name: "Target1"}
             }]);
-            const result = await DamageUtils.addCriticalEvasionToDamage(actor, -5, {bonusCrit: -999, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, -5, {bonusCrit: -999, bonusEva: 0});
             expect(result).toEqual([expect.objectContaining({value: 0})]);
         });
     });
 
     // ─── addCriticalToHeal — critique + heal<0 ──────────────────────────────────
 
-    describe("DamageUtils — addCriticalToHeal", () => {
+    describe("Damage — addCriticalToHeal", () => {
         it("should double the heal amount on critical", async () => {
-            const result = await DamageUtils.addCriticalToHeal(actor, 10, {bonusCrit: 15});
+            const result = await Damage.addCriticalToHeal(actor, 10, {bonusCrit: 15});
             expect(result[0].value).toBe(20);
             expect(result[0].critical).toBe(true);
         });
 
         it("should bound a negative heal to 0", async () => {
-            const result = await DamageUtils.addCriticalToHeal(actor, -5, {bonusCrit: -999});
+            const result = await Damage.addCriticalToHeal(actor, -5, {bonusCrit: -999});
             expect(result[0].value).toBe(0);
             expect(result[0].critical).toBe(false);
         });
@@ -168,14 +168,14 @@ describe("DamageUtils", () => {
 
     // ─── displayResult — branches ────────────────────────────────────────────
 
-    describe("DamageUtils — displayResult branches", () => {
+    describe("Damage — displayResult branches", () => {
         it("should not post a chat message when resultArray is empty and manualActions is null", () => {
-            DamageUtils.displayResult(actor, [], null);
+            Damage.displayResult(actor, [], null);
             expect(ChatMessage.create).not.toHaveBeenCalled();
         });
 
         it("should post a message with only the result section when manualActions is empty", () => {
-            DamageUtils.displayResult(actor, [{key: "Dégâts", value: 5}], []);
+            Damage.displayResult(actor, [{key: "Dégâts", value: 5}], []);
             expect(ChatMessage.create).toHaveBeenCalledTimes(1);
             const content = ChatMessage.create.mock.calls[0][0].content;
             expect(content).toContain("Dégâts");
@@ -183,7 +183,7 @@ describe("DamageUtils", () => {
         });
 
         it("should post a message with only the manual actions section when resultArray is empty", () => {
-            DamageUtils.displayResult(actor, [], ["Manual Action"]);
+            Damage.displayResult(actor, [], ["Manual Action"]);
             expect(ChatMessage.create).toHaveBeenCalledTimes(1);
             const content = ChatMessage.create.mock.calls[0][0].content;
             expect(content).not.toContain("<h1>");
@@ -193,7 +193,7 @@ describe("DamageUtils", () => {
 
     // ─── addEffectForTarget ────────────────────────────────────────────────────
 
-    describe("DamageUtils — addEffectForTarget", () => {
+    describe("Damage — addEffectForTarget", () => {
         afterEach(() => {
             globalThis.ActiveEffect = undefined;
         });
@@ -205,7 +205,7 @@ describe("DamageUtils", () => {
             game.canvas.tokens = {get: vi.fn(() => ({actor: targetActor}))};
 
             const effect = {name: "SomeEffect"};
-            DamageUtils.addEffectForTarget(effect, "token123");
+            Damage.addEffectForTarget(effect, "token123");
 
             expect(game.canvas.tokens.get).toHaveBeenCalledWith("token123");
             expect(createMock).toHaveBeenCalledWith(effect, {parent: targetActor});
@@ -214,7 +214,7 @@ describe("DamageUtils", () => {
 
     // ─── applyActorHpModification ───────────────────────────────────────────────
 
-    describe("DamageUtils — applyActorHpModification", () => {
+    describe("Damage — applyActorHpModification", () => {
         let targetActor;
 
         function setupTargetActor(hp, effects) {
@@ -229,7 +229,7 @@ describe("DamageUtils", () => {
         it("damageFQ: quand hp.temp absorbe entièrement le coup, seuls les PV temporaires sont réduits (pas de double comptage)", () => {
             setupTargetActor({temp: 10, value: 20, max: 20, tempmax: 0}, {size: 0, filter: () => []});
 
-            DamageUtils.applyActorHpModification("token1", 5, "damageFQ");
+            Damage.applyActorHpModification("token1", 5, "damageFQ");
 
             expect(targetActor.update).toHaveBeenCalledTimes(1);
             expect(targetActor.update).toHaveBeenCalledWith({"system.attributes.hp.temp": 5});
@@ -238,7 +238,7 @@ describe("DamageUtils", () => {
         it("damageFQ: consumes hp.temp partially then applies the remainder to hp.value", () => {
             setupTargetActor({temp: 3, value: 20, max: 20, tempmax: 0}, {size: 0, filter: () => []});
 
-            DamageUtils.applyActorHpModification("token1", 5, "damageFQ");
+            Damage.applyActorHpModification("token1", 5, "damageFQ");
 
             expect(targetActor.update).toHaveBeenCalledWith({"system.attributes.hp.temp": 0});
             expect(targetActor.update).toHaveBeenCalledWith({"system.attributes.hp.value": 18});
@@ -247,7 +247,7 @@ describe("DamageUtils", () => {
         it("damageFQ: bounds hp.value to 0 when damages exceed remaining hp", () => {
             setupTargetActor({temp: 0, value: 20, max: 20, tempmax: 0}, {size: 0, filter: () => []});
 
-            DamageUtils.applyActorHpModification("token1", 25, "damageFQ");
+            Damage.applyActorHpModification("token1", 25, "damageFQ");
 
             expect(targetActor.update).toHaveBeenCalledWith({"system.attributes.hp.value": 0});
         });
@@ -260,7 +260,7 @@ describe("DamageUtils", () => {
                 filter: (fn) => [expiringEffect, persistentEffect].filter(fn)
             });
 
-            DamageUtils.applyActorHpModification("token1", 5, "damageFQ");
+            Damage.applyActorHpModification("token1", 5, "damageFQ");
 
             expect(expiringEffect.delete).toHaveBeenCalledTimes(1);
             expect(persistentEffect.delete).not.toHaveBeenCalled();
@@ -269,7 +269,7 @@ describe("DamageUtils", () => {
         it("healFQ: bounds the heal to max + tempmax", () => {
             setupTargetActor({temp: 0, value: 20, max: 20, tempmax: 5}, {size: 0, filter: () => []});
 
-            DamageUtils.applyActorHpModification("token1", 10, "healFQ");
+            Damage.applyActorHpModification("token1", 10, "healFQ");
 
             expect(targetActor.update).toHaveBeenCalledWith({"system.attributes.hp.value": 25});
         });
@@ -277,7 +277,7 @@ describe("DamageUtils", () => {
         it("healFQ: applies the heal directly when under the max", () => {
             setupTargetActor({temp: 0, value: 10, max: 20, tempmax: 0}, {size: 0, filter: () => []});
 
-            DamageUtils.applyActorHpModification("token1", 5, "healFQ");
+            Damage.applyActorHpModification("token1", 5, "healFQ");
 
             expect(targetActor.update).toHaveBeenCalledWith({"system.attributes.hp.value": 15});
         });
@@ -285,7 +285,7 @@ describe("DamageUtils", () => {
 
     // ─── createActorFromData ────────────────────────────────────────────────────
 
-    describe("DamageUtils — createActorFromData", () => {
+    describe("Damage — createActorFromData", () => {
         afterEach(() => {
             delete Actor.create;
         });
@@ -300,7 +300,7 @@ describe("DamageUtils", () => {
             const createCombatantMock = vi.fn().mockResolvedValue();
             game.combat = {createEmbeddedDocuments: createCombatantMock};
 
-            await DamageUtils.createActorFromData({name: "Minion"}, "user1", "right");
+            await Damage.createActorFromData({name: "Minion"}, "user1", "right");
 
             expect(Actor.create).toHaveBeenCalledWith({name: "Minion"});
             expect(createTokenMock).toHaveBeenCalledWith("Token", [expect.objectContaining({
@@ -320,7 +320,7 @@ describe("DamageUtils", () => {
             game.users = {...game.users, get: vi.fn().mockReturnValue({character: {id: "userCharacterId"}})};
             game.combat = undefined;
 
-            await DamageUtils.createActorFromData({name: "Minion"}, "user1", "left");
+            await Damage.createActorFromData({name: "Minion"}, "user1", "left");
 
             expect(createTokenMock).toHaveBeenCalled();
         });

@@ -1,19 +1,18 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 import {makeActor} from "../factories.js";
-import DeckUtils from "../../src/domain/utils/deck-utils.js";
-import ConsumptionUtils from "../../src/domain/utils/consumption-utils.js";
-import FqConstants from "../../src/domain/utils/fq-constants.js";
-import DamageUtils from "../../src/domain/utils/damage-utils.js";
-import FxUtils from "../../src/domain/utils/fx-utils.js";
+import ResourceHandler from "../../src/domain/engine/shared/resource-handler.js";
+import Constants from "../../src/domain/constants.js";
+import Damage from "../../src/domain/engine/roll/damage.js";
+import Fx from "../../src/domain/engine/shared/fx.js";
 
-vi.mock("../../src/hook/socket-lib.js", () => ({
+vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     socket: {
         executeAsGM: vi.fn()
     }
 }));
 
-import {socket} from "../../src/hook/socket-lib.js";
-import "../../src/hook/item-use.js";
+import {socket} from "../../src/hook/integration/socketlib.hook.js";
+import "../../src/hook/integration/dnd5e.hook.js";
 
 function getHook(name) {
     const call = Hooks.on.mock.calls.find(c => c[0] === name);
@@ -40,7 +39,7 @@ afterEach(() => {
     vi.restoreAllMocks();
 });
 
-describe("item-use", () => {
+describe("integration/dnd5e", () => {
 
     describe("dnd5e.shortRest", () => {
         it("restaure action et zeal, et ajoute le mana avec un plancher de 1", () => {
@@ -95,19 +94,19 @@ describe("item-use", () => {
 
         it("retourne false si les ressources sont insuffisantes", () => {
             const hook = getHook("dnd5e.preUseActivity");
-            vi.spyOn(ConsumptionUtils, "checkResources").mockReturnValue(false);
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(false);
             const activity = {actor: {}, item: {system: {fq: {mana: -3}}}, type: "attack"};
 
             const result = hook(activity, {}, {}, {});
 
-            expect(ConsumptionUtils.checkResources).toHaveBeenCalledWith(activity.item.system.fq, activity.actor);
+            expect(ResourceHandler.checkResources).toHaveBeenCalledWith(activity.item.system.fq, activity.actor);
             expect(result).toBe(false);
         });
 
         it("retourne true en auto-cible (aucune cible sélectionnée et portée minimale nulle)", () => {
             const hook = getHook("dnd5e.preUseActivity");
-            vi.spyOn(ConsumptionUtils, "checkResources").mockReturnValue(true);
-            vi.spyOn(FqConstants, "myTargets").mockReturnValue([]);
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(Constants, "myTargets").mockReturnValue([]);
             const activity = {
                 actor: {}, item: {system: {fq: {}}}, type: "attack",
                 range: {value: 0, reach: 0}, target: {}
@@ -120,9 +119,9 @@ describe("item-use", () => {
 
         it("délègue à checkIfCanCardCanReachTargets et propage sa valeur de retour", () => {
             const hook = getHook("dnd5e.preUseActivity");
-            vi.spyOn(ConsumptionUtils, "checkResources").mockReturnValue(true);
-            vi.spyOn(FqConstants, "myTargets").mockReturnValue([{id: "t1"}]);
-            vi.spyOn(ConsumptionUtils, "checkIfCanCardCanReachTargets").mockReturnValue(false);
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "t1"}]);
+            vi.spyOn(ResourceHandler, "checkIfCanCardCanReachTargets").mockReturnValue(false);
             const activity = {
                 actor: {}, item: {system: {fq: {}}}, type: "attack",
                 range: {value: 10, reach: 0}, target: {}
@@ -131,7 +130,7 @@ describe("item-use", () => {
             const result = hook(activity, {}, {}, {});
 
             // squareDistance=5 ; minRange = trunc(5)/5 = 1 ; maxRange = trunc(10)/5 = 2
-            expect(ConsumptionUtils.checkIfCanCardCanReachTargets).toHaveBeenCalledWith(activity.actor, 1, 1, 2);
+            expect(ResourceHandler.checkIfCanCardCanReachTargets).toHaveBeenCalledWith(activity.actor, 1, 1, 2);
             expect(result).toBe(false);
         });
     });
@@ -139,52 +138,24 @@ describe("item-use", () => {
     describe("dnd5e.activityConsumption", () => {
         it("ignore la consommation quand le filtre s'applique", () => {
             const hook = getHook("dnd5e.activityConsumption");
-            vi.spyOn(ConsumptionUtils, "consumeResources");
+            vi.spyOn(ResourceHandler, "consumeResources");
             const activity = {actor: undefined, type: "utility"};
 
             const result = hook(activity, {}, {});
 
-            expect(ConsumptionUtils.consumeResources).not.toHaveBeenCalled();
+            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
             expect(result).toBe(true);
         });
 
         it("consomme les ressources hors filtre", () => {
             const hook = getHook("dnd5e.activityConsumption");
-            vi.spyOn(ConsumptionUtils, "consumeResources").mockImplementation(() => {});
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
             const activity = {actor: {}, item: {system: {fq: {action: -1}}}, type: "attack"};
 
             const result = hook(activity, {}, {});
 
-            expect(ConsumptionUtils.consumeResources).toHaveBeenCalledWith(activity.item.system.fq, activity.actor);
+            expect(ResourceHandler.consumeResources).toHaveBeenCalledWith(activity.item.system.fq, activity.actor);
             expect(result).toBe(true);
-        });
-    });
-
-    describe("hooks CRUD d'objet (délégation vers DeckUtils)", () => {
-        it("updateItem/createItem/deleteItem délèguent à DeckUtils.updateDeckWhenChange(document, options)", () => {
-            vi.spyOn(DeckUtils, "updateDeckWhenChange").mockImplementation(() => {});
-            const document = {type: "class"};
-            const options = {isAdvancement: true, parent: {id: "parent-id"}};
-
-            getHook("updateItem")(document, {}, options, "user-1");
-            getHook("createItem")(document, options, "user-1");
-            getHook("deleteItem")(document, options, "user-1");
-
-            expect(DeckUtils.updateDeckWhenChange).toHaveBeenCalledTimes(3);
-            expect(DeckUtils.updateDeckWhenChange).toHaveBeenCalledWith(document, options);
-        });
-
-        it("preUpdateItem/preCreateItem/preDeleteItem délèguent à DeckUtils.checkIfCanUpdateClasses(document, options)", () => {
-            vi.spyOn(DeckUtils, "checkIfCanUpdateClasses").mockReturnValue(true);
-            const document = {type: "class"};
-            const options = {isAdvancement: true, parent: {id: "parent-id"}};
-
-            getHook("preUpdateItem")(document, {}, options, "user-1");
-            getHook("preCreateItem")(document, options, "user-1");
-            getHook("preDeleteItem")(document, options, "user-1");
-
-            expect(DeckUtils.checkIfCanUpdateClasses).toHaveBeenCalledTimes(3);
-            expect(DeckUtils.checkIfCanUpdateClasses).toHaveBeenCalledWith(document, options);
         });
     });
 
@@ -196,7 +167,7 @@ describe("item-use", () => {
 
         it("ne fait rien si subject.item est absent (garde de retour anticipé)", async () => {
             const hook = getHook("dnd5e.rollDamageV2");
-            vi.spyOn(DamageUtils, "addCriticalToHeal");
+            vi.spyOn(Damage, "addCriticalToHeal");
             const subject = {
                 item: undefined,
                 actor: {id: "actor-1"},
@@ -206,17 +177,17 @@ describe("item-use", () => {
 
             await hook([], {subject});
 
-            expect(DamageUtils.addCriticalToHeal).not.toHaveBeenCalled();
+            expect(Damage.addCriticalToHeal).not.toHaveBeenCalled();
             expect(socket.executeAsGM).not.toHaveBeenCalled();
         });
 
         it("applique un soin : addCriticalToHeal puis applyActorHpModification et logCardPlayed via socket", async () => {
             const hook = getHook("dnd5e.rollDamageV2");
-            vi.spyOn(DamageUtils, "addCriticalToHeal").mockResolvedValue([
+            vi.spyOn(Damage, "addCriticalToHeal").mockResolvedValue([
                 {targetTokenId: "token-1", value: 5, type: "healFQ"}
             ]);
-            vi.spyOn(DamageUtils, "displayResult").mockImplementation(() => {});
-            vi.spyOn(FxUtils, "handleSpecialEffect").mockResolvedValue();
+            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
 
             const actor = {id: "actor-1", system: {fq: {bonus: {heal: ""}}}};
             const item = {actor};
@@ -228,11 +199,11 @@ describe("item-use", () => {
 
             await hook([roll], {subject});
 
-            expect(DamageUtils.addCriticalToHeal)
+            expect(Damage.addCriticalToHeal)
                 .toHaveBeenCalledWith(actor, roll.total, expect.objectContaining({heal: "1d8"}), expect.any(Array));
-            expect(FxUtils.handleSpecialEffect).toHaveBeenCalled();
+            expect(Fx.handleSpecialEffect).toHaveBeenCalled();
             expect(socket.executeAsGM).toHaveBeenCalledWith("applyActorHpModification", "token-1", 5, "healFQ");
-            expect(DamageUtils.displayResult)
+            expect(Damage.displayResult)
                 .toHaveBeenCalledWith(actor, [{targetTokenId: "token-1", value: 5, type: "healFQ"}], null);
             expect(socket.executeAsGM)
                 .toHaveBeenCalledWith("logCardPlayed", expect.any(Array), expect.objectContaining({heal: "1d8"}));

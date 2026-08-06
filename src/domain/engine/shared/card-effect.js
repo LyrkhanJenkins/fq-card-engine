@@ -1,71 +1,25 @@
-import ConsumptionUtils from "./consumption-utils.js";
-import DamageUtils from "./damage-utils.js";
-import CanvasUtils from "./canvas-utils.js";
-import FqConstants, {
-    DEFAULT_MAX_ZEAL,
+import ResourceHandler from "./resource-handler.js";
+import Damage from "../roll/damage.js";
+import RollService from "../roll/roll-service.js";
+import Minion from "./minion.js";
+import Geometry from "./geometry.js";
+import Constants, {
     ERROR_COLOR,
     OriginFQEffectLabel,
     OTHER_ROLL_COLOR,
     WARNING_COLOR
-} from "./fq-constants.js";
-import FxUtils from "./fx-utils.js";
-import CardFqSystem from "../system/cards/card-fq-system.mjs";
-import {socket} from "../../hook/socket-lib.js";
+} from "../../constants.js";
+import Fx from "./fx.js";
+import CardFqSystem from "../../system/cards/card-fq-system.mjs";
+import {socket} from "../../../hook/integration/socketlib.hook.js";
 
 /**
- * Boîte à outils centrale du module : jets de dés, résolution des variables et
- * bonus d'une carte (X/Y, caractéristiques), application des effets de carte
- * (dégâts, soins, pioche, sbires, effets actifs, scripts), validations de jeu,
- * création de sbires et divers helpers (deep copy, id aléatoire, etc.).
+ * Résolution et application des effets d'une carte : variables et bonus (X/Y,
+ * caractéristiques), jets de dégâts/soins, pioche, sbires, effets actifs,
+ * scripts, validations de jeu et calcul des valeurs dynamiques du contenu.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
-export default class FQUtils {
-
-    // TODO: A finir de dispatché pour tout ce qui n'est pas du utils genre applyCardEffect
-    /**
-     * Lance un jet de dés et attend le résultat, avec affichage optionnel dans le chat.
-     *
-     * @param {string|number} formula        - La formule de jet (convertie en chaîne).
-     * @param {boolean}       [display=false] - Si true, publie le résultat dans un message de chat.
-     * @param {Promise[]}     [dsnAnimations=[]] - Collecteur des promesses d'animations Dice So Nice :
-     *        la promesse du jet y est empilée (au lieu d'être attendue) pour un affichage simultané ;
-     *        l'appelant attend l'ensemble via `Promise.all` au bon moment.
-     *
-     * @returns {Promise<number>} Le total du jet.
-     */
-    static async rollResultAsync(formula, display = false, dsnAnimations = []) {
-        const roll = await new Roll(formula.toString()).evaluate();
-        if (display === false) {
-            return roll.total;
-        }
-        DamageUtils.applyDiceAppearance(roll); // dés à la couleur du joueur
-        const msg = await roll.toMessage();
-        // Même principe que DamageUtils : on empile la promesse d'animation dans le
-        // collecteur fourni au lieu de l'attendre, pour un affichage simultané des dés.
-        if (game.dice3d && roll.isDeterministic === false) {
-            dsnAnimations.push(game.dice3d.waitFor3DAnimationByMessageID(msg.id));
-        }
-        return roll.total;
-    }
-
-    /**
-     * Génère un identifiant aléatoire alphanumérique en majuscules.
-     *
-     * @param {number} length - La longueur de l'identifiant à générer.
-     *
-     * @returns {string} L'identifiant aléatoire.
-     */
-    static generateRandomId(length) {
-        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        let result = "";
-
-        for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * characters.length);
-            result += characters.charAt(randomIndex);
-        }
-
-        return result;
-    }
+export default class CardEffect {
 
     /**
      * Applique l'ensemble des effets d'une carte jouée : consommation des
@@ -88,12 +42,12 @@ export default class FQUtils {
         const dsnAnimations = [];
 
         if (cardContent) {
-            ConsumptionUtils.consumeResources(cardContent, game.user?.character);
+            ResourceHandler.consumeResources(cardContent, game.user?.character);
             if (cardContent.damage) {
-                resultArray.push(...await DamageUtils.buildDamageDiceLauncher(game.user.character, cardContent, dsnAnimations));
+                resultArray.push(...await Damage.buildDamageDiceLauncher(game.user.character, cardContent, dsnAnimations));
             }
             if (cardContent.heal) {
-                resultArray.push(...await DamageUtils.buildHealDiceLauncher(game.user.character, cardContent, dsnAnimations));
+                resultArray.push(...await Damage.buildHealDiceLauncher(game.user.character, cardContent, dsnAnimations));
             }
             if (cardContent.draw) {
                 card.parent.draw(card.source, cardContent.draw, {chatNotification: false, how: 2});
@@ -101,19 +55,19 @@ export default class FQUtils {
             if (cardContent.minions && Array.isArray(cardContent.minions)) {
                 for (const minion of cardContent.minions) {
                     if (fd.minionLeft) {
-                        await FQUtils.createActor(minion, "left");
+                        await Minion.createActor(minion, "left");
                         fd.minionLeft = false;
                     }
                     if (fd.minionUp) {
-                        await FQUtils.createActor(minion, "up");
+                        await Minion.createActor(minion, "up");
                         fd.minionUp = false;
                     }
                     if (fd.minionRight) {
-                        await FQUtils.createActor(minion, "right");
+                        await Minion.createActor(minion, "right");
                         fd.minionRight = false;
                     }
                     if (fd.minionDown) {
-                        await FQUtils.createActor(minion, "down");
+                        await Minion.createActor(minion, "down");
                         fd.minionDown = false;
                     }
                 }
@@ -125,17 +79,17 @@ export default class FQUtils {
                 eval(cardContent.executeEval);
             }
 
-            let cardMessages = FQUtils.translateMessages(cardContent.messages);
+            let cardMessages = CardEffect.translateMessages(cardContent.messages);
             if (cardContent.applyEffectsFormulas) {
                 for (let i = 0; i < cardContent.applyEffectsFormulas.length; i++) {
                     const applyEffectsFormulas = cardContent.applyEffectsFormulas[i];
-                    const message = await FQUtils.playApplyEffectsFormulas(applyEffectsFormulas, cardContent);
+                    const message = await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, cardContent);
                     cardMessages = cardMessages.concat(message);
                 }
             }
 
             const match = cardContent.damage.match(/\[([a-z]+)\]/i);
-            await FxUtils.handleSpecialEffect(cardContent, resultArray, FqConstants.myToken, match ? match[1] : null);
+            await Fx.handleSpecialEffect(cardContent, resultArray, Constants.myToken, match ? match[1] : null);
 
             // On attend ICI, une seule fois, que TOUTES les animations Dice So Nice
             // du jet soient terminées (les dés sont partis simultanément plus haut),
@@ -146,7 +100,7 @@ export default class FQUtils {
                 await socket.executeAsGM("applyActorHpModification", res.targetTokenId, res.value, res.type);
             }
 
-            DamageUtils.displayResult(game.user.character, resultArray, cardMessages);
+            Damage.displayResult(game.user.character, resultArray, cardMessages);
             await socket.executeAsGM("logCardPlayed", resultArray, cardContent);
         } else {
             ChatMessage.create({
@@ -170,7 +124,7 @@ export default class FQUtils {
      */
     static async createEffectsFromData(currentEffect) {
         return Promise.all(currentEffect.data.map(async effect => {
-            effect = await FQUtils.numerizeEffectObjValue(effect);
+            effect = await CardEffect.numerizeEffectObjValue(effect);
             if (!effect.name) {
                 effect.name = effect.label;
             }
@@ -183,7 +137,7 @@ export default class FQUtils {
             }
             for (let changeKey in effect.changes) {
                 if (effect.changes[changeKey].key === "macro.execute") {
-                    await FxUtils.importMacroFromCompendium(effect.changes[changeKey].value);
+                    await Fx.importMacroFromCompendium(effect.changes[changeKey].value);
                 }
                 let value = effect.changes[changeKey].value;
                 // TODO constantes ?
@@ -222,7 +176,7 @@ export default class FQUtils {
             if (content.afterFirstPlay) {
                 content = JSON.parse(content.afterFirstPlay);
             }
-            return (FQUtils.stringifyObjValue({...content, ...newValue}));
+            return (CardEffect.stringifyObjValue({...content, ...newValue}));
         });
         card.update({
             "system.fq.choices": cardContents
@@ -243,7 +197,7 @@ export default class FQUtils {
         for (const key in cardContent) {
             if (cardContent.hasOwnProperty(key)) {
                 if (typeof cardContent[key] === "object") {
-                    cardContent[key] = FQUtils.stringifyObjValue(cardContent[key]);
+                    cardContent[key] = CardEffect.stringifyObjValue(cardContent[key]);
                 } else {
                     cardContent[key] = cardContent[key]?.toString();
                 }
@@ -265,14 +219,14 @@ export default class FQUtils {
         for (const key in Object.values(content)) {
             if (content.hasOwnProperty(key)) {
                 if (typeof content[key] === "object") {
-                    content[key] = await FQUtils.numerizeEffectObjValue(content[key]);
+                    content[key] = await CardEffect.numerizeEffectObjValue(content[key]);
                 } else if (!isNaN(content[key])) {
                     content[key] = Number(content[key]);
                 } else if (typeof content[key] === "string" && content[key][0] === "+") {
                     // Do nothing TODO: peut être géré dans une fonction (form()) par exemple
                 } else {
                     try {
-                        content[key] = await FQUtils.rollResultAsync(content[key]);
+                        content[key] = await RollService.rollResultAsync(content[key]);
                     } catch (e) {
                         console.error(e);
                     }
@@ -297,9 +251,9 @@ export default class FQUtils {
      */
     static async playApplyEffectsFormulas(applyEffectsFormulas, cardContent) {
         const roll = await new Roll(applyEffectsFormulas.formula).evaluate();
-        DamageUtils.applyDiceAppearance(roll); // dés à la couleur du joueur
+        Damage.applyDiceAppearance(roll); // dés à la couleur du joueur
         for (let i = 0; i < applyEffectsFormulas.effects.length; i++) {
-            applyEffectsFormulas.effects[i].result = await FQUtils.rollResultAsync(applyEffectsFormulas.effects[i].result);
+            applyEffectsFormulas.effects[i].result = await RollService.rollResultAsync(applyEffectsFormulas.effects[i].result);
         }
 
         let effectMessages = null;
@@ -308,12 +262,12 @@ export default class FQUtils {
         if (applyEffectsFormulas.effects && applyEffectsFormulas.effects.map(effect => effect.result).includes(roll.total)) {
             const currentEffectData = applyEffectsFormulas.effects.find(effect => effect.result === roll.total);
             message += `: <b>${game.i18n.format("FQCARDENGINE.CardMsgApplyEffectsFormulasSuccess")}</b> `;
-            effectMessages = FQUtils.translateMessages(currentEffectData.messages);
-            const effects = await FQUtils.createEffectsFromData(currentEffectData);
+            effectMessages = CardEffect.translateMessages(currentEffectData.messages);
+            const effects = await CardEffect.createEffectsFromData(currentEffectData);
             for (const effectsKey in effects) {
                 if (!currentEffectData.self && (cardContent?.minReach || cardContent?.maxReach ||
                     cardContent.targetType === CardFqSystem.TARGET_TYPE_SKELETON)) {
-                    const myTargets = FqConstants.myTargets(cardContent.targetType);
+                    const myTargets = Constants.myTargets(cardContent.targetType);
                     for (let i = 0; i < myTargets.length; i++) {
                         await socket.executeAsGM("addEffectForTarget", effects[effectsKey], myTargets[i].id);
                     }
@@ -370,48 +324,48 @@ export default class FQUtils {
     static async prepareDataFromCard(cardContent) {
         // TARGETING
         if (cardContent?.minReach || cardContent?.maxReach) {
-            cardContent.minReach = await FQUtils.rollResultAsync(cardContent.minReach);
-            cardContent.maxReach = await FQUtils.rollResultAsync(cardContent.maxReach) + Number(FqConstants.actorFQ.bonus.range);
+            cardContent.minReach = await RollService.rollResultAsync(cardContent.minReach);
+            cardContent.maxReach = await RollService.rollResultAsync(cardContent.maxReach) + Number(Constants.actorFQ.bonus.range);
         }
         if (cardContent?.nbTargets) {
-            cardContent.nbTargets = await FQUtils.rollResultAsync(cardContent.nbTargets);
+            cardContent.nbTargets = await RollService.rollResultAsync(cardContent.nbTargets);
         }
 
         // COST HP
         if (cardContent?.hp) {
-            cardContent.hp = await FQUtils.rollResultAsync(cardContent.hp);
+            cardContent.hp = await RollService.rollResultAsync(cardContent.hp);
         }
 
         // COST ACTION
         if (cardContent?.action) {
-            cardContent.action = await FQUtils.rollResultAsync(cardContent.action);
+            cardContent.action = await RollService.rollResultAsync(cardContent.action);
         }
 
         // COST MANA
         if (cardContent?.mana) {
-            cardContent.mana = await FQUtils.rollResultAsync(cardContent.mana);
+            cardContent.mana = await RollService.rollResultAsync(cardContent.mana);
         }
 
         // COST ZEAL
         if (cardContent?.zeal) {
-            cardContent.zeal = await FQUtils.rollResultAsync(cardContent.zeal);
+            cardContent.zeal = await RollService.rollResultAsync(cardContent.zeal);
         }
 
         // COST DRAW
         if (cardContent?.draw) {
-            cardContent.draw = await FQUtils.rollResultAsync(cardContent.draw);
+            cardContent.draw = await RollService.rollResultAsync(cardContent.draw);
         }
         // COST DROP
         if (cardContent?.drop) {
-            cardContent.drop = await FQUtils.rollResultAsync(cardContent.drop);
+            cardContent.drop = await RollService.rollResultAsync(cardContent.drop);
         }
 
         // BONUSES
         if (cardContent.bonusCrit) {
-            cardContent.bonusCrit = await FQUtils.rollResultAsync(cardContent.bonusCrit);
+            cardContent.bonusCrit = await RollService.rollResultAsync(cardContent.bonusCrit);
         }
         if (cardContent.bonusEva) {
-            cardContent.bonusEva = await FQUtils.rollResultAsync(cardContent.bonusEva);
+            cardContent.bonusEva = await RollService.rollResultAsync(cardContent.bonusEva);
         }
     }
 
@@ -440,7 +394,7 @@ export default class FQUtils {
                 if (customEval.script) {
                     try {
                         if (!eval(customEval.script)) {
-                            let cardMessages = FQUtils.translateMessages(customEval.errorMessages);
+                            let cardMessages = CardEffect.translateMessages(customEval.errorMessages);
                             if (cardMessages?.length) {
                                 cardMessages.forEach(warningMsg => {
                                     ChatMessage.create({
@@ -482,7 +436,7 @@ export default class FQUtils {
                 return false;
             }
             // S'agit t-il d'un sort réactive et peut on la jouer?
-            if (cardContent && !cardContent.reactive && !ConsumptionUtils.validateUseSpellInTurn(game.user?.character)) {
+            if (cardContent && !cardContent.reactive && !ResourceHandler.validateUseSpellInTurn(game.user?.character)) {
                 return false;
             } else if (cardContent?.reactive && (!game.combat || game.combat.combatant.actor?.id === game.user?.character?.id)) {
                 ChatMessage.create({
@@ -496,7 +450,7 @@ export default class FQUtils {
 
         // TARGETING
         if (cardContent?.minReach || cardContent?.maxReach) {
-            if (!ConsumptionUtils.checkIfCanCardCanReachTargets(
+            if (!ResourceHandler.checkIfCanCardCanReachTargets(
                 game.user.character,
                 cardContent.nbTargets,
                 cardContent.minReach,
@@ -510,12 +464,12 @@ export default class FQUtils {
         // COST DRAW
         if (cardContent?.draw) {
             if ((card.source.cards.size - card.source.drawnCards.length) < cardContent.draw) {
-                ConsumptionUtils.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDraw"), game.user.character);
+                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDraw"), game.user.character);
                 return false;
             }
         }
 
-        return ConsumptionUtils.checkResources(cardContent, game.user.character);
+        return ResourceHandler.checkResources(cardContent, game.user.character);
     }
 
 
@@ -532,7 +486,7 @@ export default class FQUtils {
     static recalculatedWithWYValue(cardContent, XXX, YYY) {
         const keys = Object.keys(cardContent);
         keys.forEach(k => {
-            if (cardContent[k] && typeof cardContent[k] === "object") FQUtils.recalculatedWithWYValue(cardContent[k], XXX, YYY);
+            if (cardContent[k] && typeof cardContent[k] === "object") CardEffect.recalculatedWithWYValue(cardContent[k], XXX, YYY);
             else if (typeof cardContent[k] === "string") {
                 cardContent[k] = cardContent[k].replaceAll("XXX", XXX).replaceAll("YYY", YYY);
             }
@@ -551,45 +505,11 @@ export default class FQUtils {
     static replaceCardContentAbilitiesBonus(cardContent) {
         const keys = Object.keys(cardContent);
         keys.forEach(k => {
-            if (cardContent[k] && typeof cardContent[k] === "object") FQUtils.replaceCardContentAbilitiesBonus(cardContent[k]);
+            if (cardContent[k] && typeof cardContent[k] === "object") CardEffect.replaceCardContentAbilitiesBonus(cardContent[k]);
             else if (typeof cardContent[k] === "string") {
-                cardContent[k] = FQUtils.replaceAbilitiesBonus(cardContent[k]);
+                cardContent[k] = RollService.replaceAbilitiesBonus(cardContent[k]);
             }
         });
-    }
-
-    /**
-     * Remplace dans une chaîne les références de caractéristiques (@str, @dex,
-     * @con, @int, @wis, @cha) par le modificateur correspondant du personnage.
-     *
-     * @param {string} str - La chaîne contenant d'éventuelles références.
-     *
-     * @returns {string} La chaîne avec les modificateurs substitués.
-     */
-    static replaceAbilitiesBonus(str) {
-        return str.replaceAll("@str", FqConstants.actorAbi.str.mod.toString())
-            .replaceAll("@dex", FqConstants.actorAbi.dex.mod.toString())
-            .replaceAll("@con", FqConstants.actorAbi.con.mod.toString())
-            .replaceAll("@int", FqConstants.actorAbi.int.mod.toString())
-            .replaceAll("@wis", FqConstants.actorAbi.wis.mod.toString())
-            .replaceAll("@cha", FqConstants.actorAbi.cha.mod.toString());
-    }
-
-    /**
-     * Indique si une chaîne référence une caractéristique dont le modificateur du
-     * personnage est positif (sert à décider d'afficher un indicateur de bonus).
-     *
-     * @param {string} str - La chaîne à inspecter.
-     *
-     * @returns {boolean} True si au moins une caractéristique référencée a un modificateur > 0.
-     */
-    static hasAbilitiesBonus(str) {
-        return (str.includes("@str") && FqConstants.actorAbi.str.mod > 0) ||
-         (str.includes("@dex") && FqConstants.actorAbi.dex.mod > 0) ||
-         (str.includes("@con") && FqConstants.actorAbi.con.mod > 0) ||
-         (str.includes("@int") && FqConstants.actorAbi.int.mod > 0) ||
-         (str.includes("@wis") && FqConstants.actorAbi.wis.mod > 0) ||
-         (str.includes("@cha") && FqConstants.actorAbi.cha.mod > 0);
     }
 
     /**
@@ -609,10 +529,10 @@ export default class FQUtils {
         //Recalculate xmax and ymax before checking it and replace XXX and YYY value
         //The others value are recalculated in checkIfCanUseCardAndPrepareDataFromIt
         if (cardContent?.xmax) {
-            cardContent.xmax = await FQUtils.rollResultAsync(cardContent.xmax);
+            cardContent.xmax = await RollService.rollResultAsync(cardContent.xmax);
         }
         if (cardContent?.ymax) {
-            cardContent.ymax = await FQUtils.rollResultAsync(cardContent.ymax);
+            cardContent.ymax = await RollService.rollResultAsync(cardContent.ymax);
         }
 
         if (cardContent?.xmax) {
@@ -656,10 +576,10 @@ export default class FQUtils {
         }
 
         if (hasVariables) {
-            FQUtils.recalculatedWithWYValue(cardContent, XXX ? XXX : 0, YYY ? YYY : 0);
+            CardEffect.recalculatedWithWYValue(cardContent, XXX ? XXX : 0, YYY ? YYY : 0);
         } else if (cardContent && (cardContent.xvalue || cardContent.yvalue)) {
-            FQUtils.recalculatedWithWYValue(cardContent, await FQUtils.getXYValue(cardContent.xvalue, FqConstants.myTargets(cardContent.targetType)),
-                await FQUtils.getXYValue(cardContent.yvalue, FqConstants.myTargets(cardContent.targetType)));
+            CardEffect.recalculatedWithWYValue(cardContent, await CardEffect.getXYValue(cardContent.xvalue, Constants.myTargets(cardContent.targetType)),
+                await CardEffect.getXYValue(cardContent.yvalue, Constants.myTargets(cardContent.targetType)));
         }
         return true;
     }
@@ -680,7 +600,7 @@ export default class FQUtils {
         } else if (myTargets.length === 1 && value === "reach") {
             const myToken = game.canvas?.scene?.tokens?.find(t => t.actorId === game.user?.character?.id);
             const target = myTargets[0].document;
-            return CanvasUtils.getMinDistanceBetweenTwoToken(myToken.x, myToken.y, target.x, target.y,
+            return Geometry.getMinDistanceBetweenTwoToken(myToken.x, myToken.y, target.x, target.y,
                 myToken.width, target.width, myToken.height, target.height);
         } else if (value.startsWith("SCRIPT:")) {
             // Le script peut référencer un contexte absent (ex. game.combat null
@@ -695,7 +615,7 @@ export default class FQUtils {
             }
         } else {
             // Sinon ça concerne le systeme du personnage
-            return FQUtils.getNestedAttribute(game.user.character?.system, value);
+            return CardEffect.getNestedAttribute(game.user.character?.system, value);
         }
     }
 
@@ -722,172 +642,6 @@ export default class FQUtils {
                 return 0;
             }
         }
-        return await FQUtils.rollResultAsync(value.toString());
-    }
-
-    /**
-     * Crée un sbire (minion) : s'assure de l'existence du dossier temporaire
-     * (créé côté MJ si besoin), puis prépare et instancie l'acteur.
-     *
-     * @param {object} minion   - Les données du sbire à créer.
-     * @param {string} location - La direction d'apparition adjacente (« left », « right », « up », « down »).
-     *
-     * @returns {Promise<void>}
-     */
-    static async createActor(minion, location) {
-        if (!FQUtils.getTempActorFolder()) {
-            await socket.executeAsGM("createTempFold");
-        }
-        await FQUtils.createActorData(minion, location);
-
-    }
-
-    /**
-     * Construit les données d'un sbire à partir du compendium des sbires, applique
-     * les surcharges éventuelles (PV, critique, esquive, action, mana, zèle,
-     * bonus, déplacement), attribue la propriété au joueur, puis délègue la
-     * création de l'acteur et de son token au MJ via socket.
-     *
-     * @param {object} minion   - Les données du sbire (`name`, `data`…).
-     * @param {string} location - La direction d'apparition adjacente.
-     *
-     * @returns {Promise<void>}
-     */
-    static async createActorData(minion, location) {
-        const minionPack = await game.packs.get(FqCardEngineModule.moduleName + ".minions-fq8").getDocuments();
-
-        let actorData = JSON.parse(JSON.stringify(minionPack.find(m => m.name === minion?.name)));
-
-        if (actorData) {
-            actorData.folder = FQUtils.getTempActorFolder().id;
-            actorData.name = actorData.name + "_" + Math.floor(Math.random() * 1000000);
-            if (minion.data) {
-                if (minion.data.hp) {
-                    actorData.system.attributes.hp.max = await FQUtils.rollResultAsync(minion.data.hp);
-                    actorData.system.attributes.hp.value = await FQUtils.rollResultAsync(minion.data.hp);
-                }
-                if (minion.data.critical) {
-                    actorData.system.fq.attributes.critical = await FQUtils.rollResultAsync(minion.data.critical);
-                }
-                if (minion.data.evasion) {
-                    actorData.system.fq.attributes.evasion = await FQUtils.rollResultAsync(minion.data.evasion);
-                }
-                if (minion.data.action) {
-                    actorData.system.fq.action.max = await FQUtils.rollResultAsync(minion.data.action);
-                    actorData.system.fq.action.value = await FQUtils.rollResultAsync(minion.data.action);
-                }
-                if (minion.data.mana) {
-                    actorData.system.fq.mana.max = await FQUtils.rollResultAsync(minion.data.mana);
-                    actorData.system.fq.mana.value = await FQUtils.rollResultAsync(minion.data.mana);
-                }
-                if (minion.data.zeal) {
-                    actorData.system.fq.zeal.max = DEFAULT_MAX_ZEAL;
-                    actorData.system.fq.zeal.value = await FQUtils.rollResultAsync(minion.data.zeal);
-                }
-                if (minion.data.damageBonus) {
-                    actorData.system.fq.bonus.damage = await FQUtils.rollResultAsync(minion.data.damageBonus);
-                }
-                if (minion.data.healBonus) {
-                    actorData.system.fq.bonus.heal = await FQUtils.rollResultAsync(minion.data.healBonus);
-                }
-                if (minion.data.movement) {
-                    actorData.system.attributes.movement.walk = await FQUtils.rollResultAsync(minion.data.movement);
-                }
-            }
-            actorData.ownership[game.userId] = 3;
-
-            await socket.executeAsGM("createActorFromData", actorData, game.userId, location);
-        }
-    }
-
-    /**
-     * Compte le nombre d'emplacements de sbire sélectionnés ET libres (non
-     * occupés) parmi les quatre directions.
-     *
-     * @param {object} fd - Les données du formulaire (`minionUp`, `minionDown`, `minionLeft`, `minionRight`).
-     *
-     * @returns {number} Le nombre d'emplacements valides sélectionnés (0 à 4).
-     */
-    static getNbValideMinionLocationSelected(fd) {
-        return (fd.minionUp && !CanvasUtils.locationIsOccupied("up") ? 1 : 0) +
-            (fd.minionDown && !CanvasUtils.locationIsOccupied("down") ? 1 : 0) +
-            (fd.minionLeft && !CanvasUtils.locationIsOccupied("left") ? 1 : 0) +
-            (fd.minionRight && !CanvasUtils.locationIsOccupied("right") ? 1 : 0);
-    }
-
-    /**
-     * Compte le nombre d'emplacements de sbire sélectionnés parmi les quatre
-     * directions, qu'ils soient libres ou non.
-     *
-     * @param {object} fd - Les données du formulaire (`minionUp`, `minionDown`, `minionLeft`, `minionRight`).
-     *
-     * @returns {number} Le nombre d'emplacements sélectionnés (0 à 4).
-     */
-    static getNbMinionLocationSelected(fd) {
-        return (fd.minionUp ? 1 : 0) +
-            (fd.minionDown ? 1 : 0) +
-            (fd.minionLeft ? 1 : 0) +
-            (fd.minionRight ? 1 : 0);
-    }
-
-
-    /**
-     * Retourne le dossier d'acteurs temporaire (nommé « Temporaire »), s'il existe.
-     *
-     * @returns {object|undefined} Le dossier « Temporaire », ou undefined.
-     */
-    static getTempActorFolder() {
-        return game.folders.find(fol => fol.type === "Actor" && fol.name === "Temporaire");
-    }
-
-    /**
-     * Crée le dossier d'acteurs temporaire « Temporaire ». Exécutée côté MJ via socket.
-     *
-     * @returns {Promise<void>}
-     */
-    static async createTempFold() {
-        await Folder.create({
-            name: "Temporaire", type: "Actor"
-        });
-    }
-
-    /**
-     * Effectue une copie profonde d'une valeur (objets et tableaux inclus). Les
-     * primitives sont retournées telles quelles.
-     *
-     * @param {*} obj - La valeur à copier.
-     *
-     * @returns {*} Une copie profonde de la valeur.
-     */
-    static deepCopy(obj) {
-        if (obj === null || typeof obj !== "object") return obj;
-
-        if (Array.isArray(obj)) {
-            return obj.map(item => FQUtils.deepCopy(item));
-        }
-
-        return Object.fromEntries(
-            Object.entries(obj).map(([key, value]) => [key, FQUtils.deepCopy(value)])
-        );
-    }
-
-    /**
-     * MUST BE EXECUTE AS A GM
-     * Retourne un chemin de fichier aléatoire depuis un dossier virtuel de Foundry
-     * @param {string} folderPath - Le chemin virtuel (ex: "modules/mon-module/images")
-     * @returns {Promise<string|null>}
-     */
-    static async getRandomFileFromFolder(folderPath) {
-        try {
-            const response = await foundry.applications.apps.FilePicker.implementation.browse("data", folderPath);
-
-            if (!response.files.length) return null;
-
-            const randomIndex = Math.floor(Math.random() * response.files.length);
-            return response.files[randomIndex];
-        } catch (err) {
-            console.error("Erreur lors du browse :", err);
-            return null;
-        }
+        return await RollService.rollResultAsync(value.toString());
     }
 }

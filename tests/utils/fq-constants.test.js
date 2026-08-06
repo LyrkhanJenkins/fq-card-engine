@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, it} from "vitest";
-import FqConstants, {
+import Constants, {
     CRITICAL_COLOR,
     CRITICAL_HEAL_COLOR,
     HEAL_COLOR,
@@ -12,9 +12,9 @@ import FqConstants, {
     FAIL_COLOR,
     OriginFQEffectLabel,
     DEFAULT_MAX_ZEAL
-} from "../../src/domain/utils/fq-constants.js";
+} from "../../src/domain/constants.js";
 
-describe("FqConstants", () => {
+describe("Constants", () => {
 
     describe("constantes exportées", () => {
         it("couleurs et labels ont les valeurs attendues", () => {
@@ -38,63 +38,63 @@ describe("FqConstants", () => {
 
     describe("getters personnage", () => {
         it("actorAttr/actorAbi/actorFQ renvoient les blocs system.* du personnage courant", () => {
-            expect(FqConstants.actorAttr).toBe(game.user.character.system.attributes);
-            expect(FqConstants.actorAbi).toBe(game.user.character.system.abilities);
-            expect(FqConstants.actorFQ).toBe(game.user.character.system.fq);
+            expect(Constants.actorAttr).toBe(game.user.character.system.attributes);
+            expect(Constants.actorAbi).toBe(game.user.character.system.abilities);
+            expect(Constants.actorFQ).toBe(game.user.character.system.fq);
         });
 
         it("actorAttr/actorAbi/actorFQ renvoient undefined quand game.user.character est null", () => {
             game.user.character = null;
 
-            expect(FqConstants.actorAttr).toBeUndefined();
-            expect(FqConstants.actorAbi).toBeUndefined();
-            expect(FqConstants.actorFQ).toBeUndefined();
+            expect(Constants.actorAttr).toBeUndefined();
+            expect(Constants.actorAbi).toBeUndefined();
+            expect(Constants.actorFQ).toBeUndefined();
         });
 
         it("myId renvoie l'id du personnage courant", () => {
-            expect(FqConstants.myId).toBe("userCharacterId");
+            expect(Constants.myId).toBe("userCharacterId");
         });
 
         it("myId renvoie undefined quand game.user.character est null", () => {
             game.user.character = null;
 
-            expect(FqConstants.myId).toBeUndefined();
+            expect(Constants.myId).toBeUndefined();
         });
 
         it("myToken renvoie le token dont actorId correspond au personnage courant", () => {
-            expect(FqConstants.myToken).toEqual(expect.objectContaining({actorId: "userCharacterId"}));
+            expect(Constants.myToken).toEqual(expect.objectContaining({actorId: "userCharacterId"}));
         });
 
         it("isActorInCombat vaut true quand le personnage courant est combattant", () => {
-            expect(FqConstants.isActorInCombat).toBe(true);
+            expect(Constants.isActorInCombat).toBe(true);
         });
 
         it("isActorInCombat vaut false quand le personnage courant n'est pas combattant", () => {
             game.combat.combatants = [{actorId: "someoneElse"}];
 
-            expect(FqConstants.isActorInCombat).toBe(false);
+            expect(Constants.isActorInCombat).toBe(false);
         });
     });
 
     describe("logique métier", () => {
         it("isFQClasses est true pour un document de classe FQ", () => {
-            expect(FqConstants.isFQClasses({system: {source: {label: "FQ"}}, type: "class"})).toBe(true);
+            expect(Constants.isFQClasses({system: {source: {label: "FQ"}}, type: "class"})).toBe(true);
         });
 
         it("isFQClasses est false pour un type différent de class", () => {
-            expect(FqConstants.isFQClasses({system: {source: {label: "FQ"}}, type: "weapon"})).toBe(false);
+            expect(Constants.isFQClasses({system: {source: {label: "FQ"}}, type: "weapon"})).toBe(false);
         });
 
         it("isFQClasses est false pour un label différent de FQ", () => {
-            expect(FqConstants.isFQClasses({system: {source: {label: "Other"}}, type: "class"})).toBe(false);
+            expect(Constants.isFQClasses({system: {source: {label: "Other"}}, type: "class"})).toBe(false);
         });
 
         it("isFQClasses est false pour un document null", () => {
-            expect(FqConstants.isFQClasses(null)).toBe(false);
+            expect(Constants.isFQClasses(null)).toBe(false);
         });
 
         it("myTargets() (défaut) renvoie une copie de game.user.targets", () => {
-            const targets = FqConstants.myTargets();
+            const targets = Constants.myTargets();
 
             expect(targets).toHaveLength(1);
             expect(targets).not.toBe(game.user.targets);
@@ -111,7 +111,7 @@ describe("FqConstants", () => {
                 }
             };
 
-            const result = FqConstants.userFQClasses(user);
+            const result = Constants.userFQClasses(user);
 
             expect(result).toEqual([{system: {source: {label: "FQ"}}, type: "class"}]);
         });
@@ -136,13 +136,13 @@ describe("FqConstants", () => {
                 }
             };
 
-            expect(FqConstants.lastDamageThisTurn()).toBe(7);
+            expect(Constants.lastDamageThisTurn()).toBe(7);
         });
 
         it("lastDamageThisTurn renvoie 0 quand aucun log ne concorde", () => {
             game.combat.flags = {fq: {logs: []}};
 
-            expect(FqConstants.lastDamageThisTurn()).toBe(0);
+            expect(Constants.lastDamageThisTurn()).toBe(0);
         });
 
         it("lastCriticalThisTurn renvoie le dernier critical du round pour l'acteur", () => {
@@ -159,13 +159,13 @@ describe("FqConstants", () => {
                 }
             };
 
-            expect(FqConstants.lastCriticalThisTurn()).toBe(true);
+            expect(Constants.lastCriticalThisTurn()).toBe(true);
         });
 
         it("lastCriticalThisTurn renvoie false quand aucun log ne concorde", () => {
             game.combat.flags = {fq: {logs: []}};
 
-            expect(FqConstants.lastCriticalThisTurn()).toBe(false);
+            expect(Constants.lastCriticalThisTurn()).toBe(false);
         });
     });
 });
