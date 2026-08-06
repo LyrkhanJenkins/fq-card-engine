@@ -7,7 +7,7 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
 }));
 
 import {socket} from "../../src/hook/integration/socketlib.hook.js";
-import TokenHud from "../../src/domain/interface/token-hud.js";
+import TokenHud from "../../src/domain/interface/shared/token-hud.js";
 import "../../src/hook/render-token.hook.js";
 
 function getHook(name) {

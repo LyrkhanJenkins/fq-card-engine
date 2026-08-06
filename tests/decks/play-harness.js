@@ -23,7 +23,7 @@ import {defaultFdFor} from "./fd-table.js";
  *   vi.mock("../../src/domain/interface/sheet/items/fq-item-sheet.js", () => ({default: class {}}));
  *   vi.mock("../../src/domain/interface/sheet/cards/fq-cards-sheet.js", () => ({default: class {}}));
  *   vi.mock("../../src/domain/interface/sheet/cards/fq-card-sheet.js", () => ({default: class {}}));
- *   vi.mock("../../src/domain/interface/hand-board.js", () => ({default: class {}}));
+ *   vi.mock("../../src/domain/interface/window/hand-board.js", () => ({default: class {}}));
  *   vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {executeAsGM: vi.fn()}}));
  *
  * Puis `globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};`
@@ -43,7 +43,7 @@ export const REQUIRED_MOCKS = [
     "../../src/domain/interface/sheet/items/fq-item-sheet.js",
     "../../src/domain/interface/sheet/cards/fq-cards-sheet.js",
     "../../src/domain/interface/sheet/cards/fq-card-sheet.js",
-    "../../src/domain/interface/hand-board.js",
+    "../../src/domain/interface/window/hand-board.js",
     "../../src/hook/integration/socketlib.hook.js"
 ];
 

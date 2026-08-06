@@ -28,6 +28,9 @@
   ],
   "esmodules": [
     "src/init-engine.js",
+    "src/hook/init.hook.js",
+    "src/hook/setup.hook.js",
+    "src/hook/render-game-pause.hook.js",
     "src/hook/integration/socketlib.hook.js",
     "src/hook/integration/sequencer.hook.js",
     "src/hook/integration/dnd5e.hook.js",

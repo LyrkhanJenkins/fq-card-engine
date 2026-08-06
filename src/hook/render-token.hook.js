@@ -1,5 +1,5 @@
 // Ajoute un bouton perso dans le Token HUD
-import TokenHud from "../domain/interface/token-hud.js";
+import TokenHud from "../domain/interface/shared/token-hud.js";
 
 Hooks.on("renderTokenHUD", (hud, html, data) => {
     // TODO Add option in FQ (hide token HUD default buttons for players)L

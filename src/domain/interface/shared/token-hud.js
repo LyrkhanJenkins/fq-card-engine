@@ -1,5 +1,5 @@
-import ResourceHandler from "../engine/shared/resource-handler.js";
-import {socket} from "../../hook/integration/socketlib.hook.js";
+import ResourceHandler from "../../engine/shared/resource-handler.js";
+import {socket} from "../../../hook/integration/socketlib.hook.js";
 
 /**
  * Gestion des boutons personnalisés ajoutés au HUD des tokens (dégâts, sacrifice

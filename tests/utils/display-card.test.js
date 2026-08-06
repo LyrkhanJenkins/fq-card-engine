@@ -1,5 +1,5 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
-import DisplayCard from "../../src/domain/interface/display-card.js";
+import DisplayCard from "../../src/domain/interface/shared/display-card.js";
 
 describe("DisplayCard.simplifyExpression", () => {
 

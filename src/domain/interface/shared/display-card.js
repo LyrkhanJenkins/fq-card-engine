@@ -1,5 +1,5 @@
-import Constants from "../constants.js";
-import RollService from "../engine/roll/roll-service.js";
+import Constants from "../../constants.js";
+import RollService from "../../engine/roll/roll-service.js";
 
 /**
  * Utilitaires de présentation d'une carte : extraction du titre, de la

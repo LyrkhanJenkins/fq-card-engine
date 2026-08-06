@@ -1,6 +1,6 @@
-import {DECK_TYPE, SPELLBOOK_TYPE} from "../trading/trading-cards.js";
-import DisplayCard from "./display-card.js";
-import RollService from "../engine/roll/roll-service.js";
+import {DECK_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
+import DisplayCard from "../shared/display-card.js";
+import RollService from "../../engine/roll/roll-service.js";
 
 /**
  * Représente une barre de main affichée à l'écran (le module peut en gérer

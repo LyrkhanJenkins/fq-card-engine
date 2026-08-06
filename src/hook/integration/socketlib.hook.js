@@ -4,7 +4,7 @@ import Damage from "../../domain/engine/roll/damage.js";
 import TradingCards from "../../domain/trading/trading-cards.js";
 import Minion from "../../domain/engine/shared/minion.js";
 import ObjectUtils from "../../core/utils/object.utils.js";
-import TokenHud from "../../domain/interface/token-hud.js";
+import TokenHud from "../../domain/interface/shared/token-hud.js";
 import PlayCard from "../../domain/engine/play-card.js";
 
 /**
