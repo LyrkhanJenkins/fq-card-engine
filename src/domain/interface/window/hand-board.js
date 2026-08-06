@@ -60,7 +60,8 @@ export default class HandBoard {
          * Useful: CONFIG.debug.hooks = true
          */
         Hooks.on("updateCard", function (target, data) {
-            if (!!data.drawn || data.sort !== undefined || data.face !== undefined) {
+            if (!!data.drawn || data.sort !== undefined || data.face !== undefined
+                || data.system?.fq?.choices !== undefined) {
                 t.update();
             }
         });
@@ -206,8 +207,9 @@ export default class HandBoard {
 
     /**
      * Rafraîchit la barre : rend les cartes puis (re)branche le glisser-déposer et
-     * l'effet d'éventail. Un verrou `updating` évite les rendus concurrents (les
-     * appels pendant un rendu en cours sont réessayés). Sans cartes, met seulement
+     * l'effet d'éventail. Un verrou `updating` évite les rendus concurrents : les
+     * appels reçus pendant un rendu en cours sont coalescés via `pendingUpdate` et
+     * déclenchent une unique relance à la fin du rendu. Sans cartes, met seulement
      * à jour le titre et la couleur du joueur.
      *
      * @returns {void}
@@ -221,6 +223,15 @@ export default class HandBoard {
                     t.renderCards(resolve);
                 });
 
+                const finish = function () {
+                    t.updating = false;
+                    // Un ou plusieurs appels reçus pendant le rendu : relance une seule fois.
+                    if (t.pendingUpdate) {
+                        t.pendingUpdate = false;
+                        t.update();
+                    }
+                };
+
                 myPromise
                     .then(function () {
                         FqCardEngineModule.attachDragDrop.bind(t)(t.html[0]);
@@ -228,17 +239,10 @@ export default class HandBoard {
                     .then(function () {
                         FqCardEngineModule.applyFan();
                     })
-                    .then(function () {
-                        t.updating = false;
-                    }, function () {
-                        t.updating = false;//even on error still finish updating
-                    });
+                    .then(finish, finish);//even on error still finish updating
             } else {
-                //TODO Faire mieux que ça
-                setTimeout(function () {
-                    //continue to try to update the hand
-                    t.update();
-                }, 500);
+                // Rendu déjà en cours : mémorise la demande, traitée à la fin du rendu.
+                t.pendingUpdate = true;
             }
         } else {
             //check if player is selected but not a hand yet then display color and player name

@@ -32,6 +32,7 @@
 - Tests fonctionnels + montée dernière version
 - Bug tornade effet magique
 - Revoir les effets visuels et audio
+- Devoir des effets visuel arrive avant le reveal des dés et dégâts, des fois non
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
 - PATCH--> RELEASE
 
