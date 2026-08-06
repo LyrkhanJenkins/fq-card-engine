@@ -23,6 +23,13 @@ describe("CharGauges", () => {
             <div id="fq-cg-action"></div><span id="fq-cg-action-val"></span>
             <div id="fq-cg-mana"></div><span id="fq-cg-mana-val"></span>
             <div id="fq-cg-zeal"></div><span id="fq-cg-zeal-val"></span>
+            <span id="fq-cg-critical"></span>
+            <span id="fq-cg-evasion"></span>
+            <span id="fq-cg-drop"></span>
+            <span id="fq-cg-sacrifice-chip"><span id="fq-cg-sacrifice"></span></span>
+            <span id="fq-cg-range-chip"><span id="fq-cg-range"></span></span>
+            <span id="fq-cg-damage-chip"><span id="fq-cg-damage"></span></span>
+            <span id="fq-cg-heal-chip"><span id="fq-cg-heal"></span></span>
         `;
     });
 
@@ -53,6 +60,38 @@ describe("CharGauges", () => {
             expect(document.getElementById("fq-cg-mana-val").textContent).toBe("3/4");
             expect(document.getElementById("fq-cg-zeal").style.width).toBe("0%");
             expect(document.getElementById("fq-cg-zeal-val").textContent).toBe("0/8");
+        });
+
+        test("renseigne les pastilles critique / esquive / défausse et n'affiche les bonus que s'ils sont > 0", () => {
+            game.user.character.system = {
+                attributes: {hp: {value: 30, max: 60}},
+                fq: {
+                    action: {value: 1, max: 2},
+                    mana: {value: 3, max: 4},
+                    zeal: {value: 0, max: 8},
+                    attributes: {critical: 5, evasion: 3},
+                    cards: {currentDrop: 2},
+                    special: {sacrificedSkeleton: 0},
+                    bonus: {range: 2, damage: "1d6", heal: "0"},
+                },
+            };
+
+            CharGauges.updateCharGauges();
+
+            // Toujours affichées
+            expect(document.getElementById("fq-cg-critical").textContent).toBe("5");
+            expect(document.getElementById("fq-cg-evasion").textContent).toBe("3");
+            expect(document.getElementById("fq-cg-drop").textContent).toBe("2");
+
+            // sacrifice = 0 → masqué ; range = 2 → affiché
+            expect(document.getElementById("fq-cg-sacrifice-chip").style.display).toBe("none");
+            expect(document.getElementById("fq-cg-range-chip").style.display).toBe("inline-flex");
+            expect(document.getElementById("fq-cg-range").textContent).toBe("2");
+
+            // damage = "1d6" (non vide, ≠ "0") → affiché ; heal = "0" → masqué
+            expect(document.getElementById("fq-cg-damage-chip").style.display).toBe("inline-flex");
+            expect(document.getElementById("fq-cg-damage").textContent).toBe("1d6");
+            expect(document.getElementById("fq-cg-heal-chip").style.display).toBe("none");
         });
 
         test("masque les jauges quand le réglage ShowCharGauges est false", () => {

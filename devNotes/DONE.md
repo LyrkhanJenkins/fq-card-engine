@@ -4,6 +4,7 @@ Feat :
 - Affichage de la carte au clic dans les decks/bibliotheques
 - Message de chat consolidé (choix + résultats) + clic → carte SVG
 - Choix des cartes localisé et traduit en français
+- Affichage des resources spécifiques (critique, défausse, ...etc ) dans la main ou la dialog play
 
 Fix :
 - Correction affichage dos de carte dans la dialog-play

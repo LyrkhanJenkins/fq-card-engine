@@ -6,11 +6,9 @@
 ### Versions prévues
 
 #### 2.0.2
-- Afficher les barres spécifiques
-- Tests fonctionnels + montée dernière version
+- Afficher les éléments actifs de l'elementaliste, généralement afficher tous les effets sur une sicble
 - Revoir cape inhibitrice (enlever quel effet?)
 - Revoir tir reflexe (jouer même si pas attaquer?)
-- Afficher les éléments actifs de l'elementaliste, généralement afficher tous les effets sur une sicble
 - Priorisé les protections avant de faire jouer la carte (OU REPORTER)
 - Sélectionner une cible après coup (OU REPORTER)
 - Tests fonctionnels + montée de version jusqu'à la dernière v14

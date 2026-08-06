@@ -38,6 +38,47 @@
                 </div>
                 <span class="fq-play-gauge-val">{{charStats.zealValue}}/{{charStats.zealMax}}</span>
             </div>
+
+            {{!-- Statistiques secondaires (pastilles) --}}
+            <div class="fq-play-chips">
+                <span class="fq-play-chip fq-gauge-critical" title="{{ localize 'FQCARDENGINE.CriticalScore' }}">
+                    <span class="fq-play-chip-icon">💥</span>
+                    <span class="fq-play-chip-val">{{charStats.critical}}</span>
+                </span>
+                <span class="fq-play-chip fq-gauge-evasion" title="{{ localize 'FQCARDENGINE.EvasionScore' }}">
+                    <span class="fq-play-chip-icon">💨</span>
+                    <span class="fq-play-chip-val">{{charStats.evasion}}</span>
+                </span>
+                <span class="fq-play-chip fq-gauge-drop" title="{{ localize 'FQCARDENGINE.DropScore' }}">
+                    <span class="fq-play-chip-icon">🗑</span>
+                    <span class="fq-play-chip-val">{{charStats.currentDrop}}</span>
+                </span>
+                {{#if charStats.showSacrifice}}
+                    <span class="fq-play-chip fq-gauge-sacrifice"
+                          title="{{ localize 'FQCARDENGINE.SacrificedSkeleton' }}">
+                        <span class="fq-play-chip-icon">💀</span>
+                        <span class="fq-play-chip-val">{{charStats.sacrificedSkeleton}}</span>
+                    </span>
+                {{/if}}
+                {{#if charStats.showRangeBonus}}
+                    <span class="fq-play-chip fq-gauge-range" title="{{ localize 'FQCARDENGINE.RangeBonus' }}">
+                        <span class="fq-play-chip-icon">🏹</span>
+                        <span class="fq-play-chip-val">{{charStats.rangeBonus}}</span>
+                    </span>
+                {{/if}}
+                {{#if charStats.showDamageBonus}}
+                    <span class="fq-play-chip fq-gauge-damage" title="{{ localize 'FQCARDENGINE.DamageBonus' }}">
+                        <span class="fq-play-chip-icon">⚔</span>
+                        <span class="fq-play-chip-val">{{charStats.damageBonus}}</span>
+                    </span>
+                {{/if}}
+                {{#if charStats.showHealBonus}}
+                    <span class="fq-play-chip fq-gauge-heal" title="{{ localize 'FQCARDENGINE.HealBonus' }}">
+                        <span class="fq-play-chip-icon">💚</span>
+                        <span class="fq-play-chip-val">{{charStats.healBonus}}</span>
+                    </span>
+                {{/if}}
+            </div>
         </div>
     {{/if}}
 

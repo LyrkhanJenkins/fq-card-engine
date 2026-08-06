@@ -31,4 +31,37 @@
     --fq8-message-card-shadow: rgba(0, 0, 0, 0.5);
     --fq8-message-zebra: rgba(255, 255, 255, 0.04);
     --fq8-message-separator: #000;
+
+    --fq8-color-sacrifice: #c9b8e0;
+    --fq8-color-range: #e0c56b;
+}
+
+/* ── Couleurs des statistiques secondaires (pastilles jauges) ──
+   Partagées par la hand-container et le dialogue « Jouer la carte ». */
+.fq-gauge-critical {
+    color: var(--fq8-color-critical);
+}
+
+.fq-gauge-evasion {
+    color: var(--fq8-color-evasion);
+}
+
+.fq-gauge-drop {
+    color: var(--fq8-message-label);
+}
+
+.fq-gauge-sacrifice {
+    color: var(--fq8-color-sacrifice);
+}
+
+.fq-gauge-range {
+    color: var(--fq8-color-range);
+}
+
+.fq-gauge-damage {
+    color: var(--fq8-message-damage);
+}
+
+.fq-gauge-heal {
+    color: var(--fq8-message-heal);
 }

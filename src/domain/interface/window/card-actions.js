@@ -13,6 +13,20 @@ import {PILE_TYPE} from "../../trading/trading-cards.js";
  * `init-engine.js`. Les méthodes utilisant `this` restent appelées via la façade.
  */
 export default {
+    /**
+     * Indique si un bonus « string » (dégâts / soin) est renseigné, c.-à-d. non
+     * vide et différent de « 0 » — utilisé pour n'afficher la pastille que si le
+     * bonus est supérieur à 0.
+     *
+     * @param {string|null|undefined} str - La valeur brute du bonus.
+     *
+     * @returns {boolean} Vrai si le bonus doit être affiché.
+     */
+    hasBonusStr(str) {
+        const s = (str ?? "").toString().trim();
+        return s !== "" && s !== "0";
+    },
+
     //one of the cards was clicked, based on options pick what to do
     /**
      * Réagit au clic sur une carte selon le réglage `cardClick` : ouvrir le
@@ -122,6 +136,16 @@ export default {
             zealMax: character.system?.fq?.zeal?.max ?? 1,
             zealPct: Math.round(((character.system?.fq?.zeal?.value ?? 0) / (character.system?.fq?.zeal?.max ?? 1)) * 100),
             currentDrop: character.system?.fq?.cards?.currentDrop ?? 0,
+            critical: character.system?.fq?.attributes?.critical ?? 0,
+            evasion: character.system?.fq?.attributes?.evasion ?? 0,
+            sacrificedSkeleton: character.system?.fq?.special?.sacrificedSkeleton ?? 0,
+            rangeBonus: character.system?.fq?.bonus?.range ?? 0,
+            damageBonus: character.system?.fq?.bonus?.damage ?? "",
+            healBonus: character.system?.fq?.bonus?.heal ?? "",
+            showSacrifice: (character.system?.fq?.special?.sacrificedSkeleton ?? 0) > 0,
+            showRangeBonus: (character.system?.fq?.bonus?.range ?? 0) > 0,
+            showDamageBonus: this.hasBonusStr(character.system?.fq?.bonus?.damage),
+            showHealBonus: this.hasBonusStr(character.system?.fq?.bonus?.heal),
         } : null;
 
         let description = DisplayCard.getDescriptionFromCard(card);

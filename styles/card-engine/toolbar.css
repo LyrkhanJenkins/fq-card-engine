@@ -256,6 +256,33 @@
     line-height: 1;
 }
 
+/* ── Pastilles de statistiques secondaires (critique, esquive, défausse…) ── */
+.fq-cg-chips {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-left: 4px;
+}
+
+.fq-cg-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.fq-cg-chip-icon {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.fq-cg-chip-val {
+    font-family: Georgia, serif;
+    font-size: 15px;
+    line-height: 1;
+    color: inherit;
+}
+
 #fq-char-gauges-toggle {
     transition: opacity 0.2s;
 }

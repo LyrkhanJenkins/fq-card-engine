@@ -529,6 +529,34 @@
     background: var(--fq8-color-zeal-3);
 }
 
+/* ── Pastilles de statistiques secondaires (critique, esquive, défausse…) ── */
+.fq-play-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    margin-top: 10px;
+    max-width: 340px;
+}
+
+.fq-play-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fq-play-chip-icon {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.fq-play-chip-val {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    line-height: 1;
+    color: inherit;
+}
+
 /* ── Cibles ── */
 .fq-play-targets {
     position: fixed;

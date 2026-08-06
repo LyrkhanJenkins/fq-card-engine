@@ -42,6 +42,41 @@ export default {
         set("fq-cg-action", "fq-cg-action-val", action?.value ?? 0, action?.max ?? 1);
         set("fq-cg-mana", "fq-cg-mana-val", mana?.value ?? 0, mana?.max ?? 1);
         set("fq-cg-zeal", "fq-cg-zeal-val", zeal?.value ?? 0, zeal?.max ?? 1);
+
+        // Pastilles secondaires : critique / esquive / défausse (toujours) ; sacrifice,
+        // bonus de portée, de dégâts et de soin (seulement si supérieurs à 0).
+        const attributes = character.system?.fq?.attributes;
+        const bonus = character.system?.fq?.bonus;
+
+        // Renseigne la valeur d'une pastille, et affiche/masque son conteneur pour les
+        // pastilles conditionnelles. `visible === null` ⇒ toujours affichée.
+        const setChip = (valId, chipId, value, visible = null) => {
+            const val = document.getElementById(valId);
+            if (val) val.textContent = value;
+            if (chipId !== null) {
+                const chip = document.getElementById(chipId);
+                if (chip) chip.style.display = visible ? "inline-flex" : "none";
+            }
+        };
+
+        // Un bonus « string » (dégâts/soin) est présent s'il n'est ni vide ni « 0 ».
+        const hasBonusStr = (str) => {
+            const s = (str ?? "").toString().trim();
+            return s !== "" && s !== "0";
+        };
+
+        setChip("fq-cg-critical", null, attributes?.critical ?? 0);
+        setChip("fq-cg-evasion", null, attributes?.evasion ?? 0);
+        setChip("fq-cg-drop", null, character.system?.fq?.cards?.currentDrop ?? 0);
+
+        const sacrifice = character.system?.fq?.special?.sacrificedSkeleton ?? 0;
+        setChip("fq-cg-sacrifice", "fq-cg-sacrifice-chip", sacrifice, sacrifice > 0);
+
+        const range = bonus?.range ?? 0;
+        setChip("fq-cg-range", "fq-cg-range-chip", range, range > 0);
+
+        setChip("fq-cg-damage", "fq-cg-damage-chip", bonus?.damage, hasBonusStr(bonus?.damage));
+        setChip("fq-cg-heal", "fq-cg-heal-chip", bonus?.heal, hasBonusStr(bonus?.heal));
     },
 
     /**
