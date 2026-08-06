@@ -242,15 +242,6 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
 
             spy.mockRestore();
         });
-
-        it("décode les entités HTML du script sur place", () => {
-            const cardContent = makeChoice({customEvals: [{script: "1&gt;0"}]});
-            const card = makeCard();
-
-            CardEffect.checkIfCanUseCard(cardContent, card);
-
-            expect(cardContent.customEvals[0].script).toBe("1>0");
-        });
     });
 
     describe("replaceCardContentXAndYValue", () => {
@@ -940,8 +931,8 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
     });
 
     describe("rewriteCardContent", () => {
-        it("fusionne newValue dans chaque choix (stringifié), met à jour la carte et enchaîne flip", () => {
-            const card = {update: vi.fn(), flip: vi.fn().mockReturnValue(Promise.resolve())};
+        it("fusionne newValue dans chaque choix (stringifié) et met à jour la carte", () => {
+            const card = {update: vi.fn()};
             const cardContents = [{a: 1}];
 
             CardEffect.rewriteCardContent(card, cardContents, {b: 2});
@@ -949,11 +940,10 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(card.update).toHaveBeenCalledWith({
                 "system.fq.choices": [{a: "1", b: "2"}]
             });
-            expect(card.flip).toHaveBeenCalled();
         });
 
         it("content.afterFirstPlay (JSON) remplace le contenu d'origine avant la fusion", () => {
-            const card = {update: vi.fn(), flip: vi.fn().mockReturnValue(Promise.resolve())};
+            const card = {update: vi.fn()};
             const cardContents = [{afterFirstPlay: JSON.stringify({c: 3})}];
 
             CardEffect.rewriteCardContent(card, cardContents, {d: 4});

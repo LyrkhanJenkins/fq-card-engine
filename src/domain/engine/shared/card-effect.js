@@ -158,8 +158,9 @@ export default class CardEffect {
 
     /**
      * Réécrit les contenus (choix) d'une carte en fusionnant `newValue`, en
-     * appliquant l'éventuel état `afterFirstPlay`, puis met à jour la carte et
-     * la retourne pour forcer son rafraîchissement.
+     * appliquant l'éventuel état `afterFirstPlay`, puis met à jour la carte. La
+     * mise à jour de `system.fq.choices` déclenche le hook `updateCard` qui
+     * rafraîchit la main.
      *
      * @param {Card}     card         - La carte à mettre à jour.
      * @param {object[]} cardContents - Les contenus (choix) d'origine.
@@ -177,8 +178,6 @@ export default class CardEffect {
         card.update({
             "system.fq.choices": cardContents
         });
-        //TODO peut mieux faire pour rafraichir le carte
-        card.flip().then(() => card.flip(0));
     }
 
     /**
@@ -382,10 +381,6 @@ export default class CardEffect {
         if (cardContent.customEvals && Array.isArray(cardContent.customEvals)) {
             let iscustomEvals = true;
             cardContent.customEvals.forEach(customEval => {
-                // TODO Encore necessaire après refacto?
-                customEval.script = customEval.script?.replaceAll("&gt;", ">").replaceAll("&lt;", "<")
-                    .replaceAll("&amp;", "&");
-
                 // Contrôle de la carte personnalisée
                 if (customEval.script) {
                     try {
