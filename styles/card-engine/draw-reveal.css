@@ -1,0 +1,190 @@
+/* ============================================================
+   FQ CARD ENGINE — Animation de révélation à la pioche
+   Généré depuis l'ancien styles/fq-card-engine.css (redécoupage).
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Animation de révélation à la pioche (cosmétique, locale)
+   Voile noir plein écran → cartes révélées face avant → aspiration vers la main.
+   ══════════════════════════════════════════════════════════════════════════ */
+.fq-draw-reveal-overlay {
+    /* L'overlay est monté sur <body>, hors de #fq-card-engine-container :
+       on redéclare ici les variables dont dépendent les cartes, sinon leur
+       taille vaut calc(undefined) → 0 et les cartes sont invisibles. */
+    --fq-card-w: 94px;
+    --fq-card-h: 130px;
+    --fq-gold: #c9a84c;
+    --fq-gold-light: #e8d090;
+    --fq-gold-dark: #7a5e22;
+    --fq-gold-glow: rgba(201, 168, 76, 0.45);
+    --fq-border: rgba(90, 66, 32, 0.75);
+    --fq-border-subtle: rgba(90, 66, 32, 0.4);
+    --fq-bg-sidebar: rgba(0, 0, 0, 0.85);
+
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.fq-draw-reveal-overlay.fq-draw-reveal-in {
+    background: rgba(0, 0, 0, 0.82);
+}
+
+.fq-draw-reveal-overlay.fq-draw-reveal-out {
+    background: rgba(0, 0, 0, 0) !important;
+    transition: background 0.5s ease;
+}
+
+/* La volée de cartes, agrandie et centrée. --fq-scale est fixé en JS. */
+.fq-draw-reveal-stage {
+    --fq-scale: 2.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--fq-card-w) * var(--fq-scale) * 0.10);
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+    pointer-events: none;
+    /* Aspiration en ease-in : part lentement puis accélère vers la main. */
+    transition: transform 0.62s cubic-bezier(0.6, 0, 0.9, 0.25), opacity 0.62s ease-in;
+}
+
+/* Aspiration vers la barre de main (direction calculée en JS). */
+.fq-draw-reveal-overlay.fq-draw-reveal-out .fq-draw-reveal-stage {
+    transform: translate(var(--fq-reveal-out-x, 0px), var(--fq-reveal-out-y, 40vh)) scale(0.08);
+    opacity: 0;
+}
+
+/* ── Illumination (cartes immobiles) avant le lancement ── */
+.fq-draw-reveal-overlay.fq-draw-reveal-charge .fq-draw-reveal-card {
+    filter: drop-shadow(0 0 14px var(--fq-gold-glow))
+            drop-shadow(0 6px 18px rgba(0, 0, 0, 0.9))
+            brightness(1.15);
+    transition: filter 0.4s ease;
+}
+
+.fq-draw-reveal-overlay.fq-draw-reveal-charge .fq-draw-reveal-card .fq-card-inner {
+    transform: scale(1.04);
+}
+
+/* ── Aspiration : montée en luminosité pendant le vol vers la main ── */
+.fq-draw-reveal-overlay.fq-draw-reveal-out .fq-draw-reveal-card {
+    filter: drop-shadow(0 0 26px var(--fq-gold-glow))
+            drop-shadow(0 0 46px var(--fq-gold-glow))
+            brightness(1.7) saturate(1.15);
+    transition: filter 0.5s ease-in;
+}
+
+/* ── Éclat lumineux à l'arrivée dans la main ── */
+.fq-draw-reveal-burst {
+    position: fixed;
+    width: calc(var(--fq-card-w) * 2.2);
+    height: calc(var(--fq-card-w) * 2.2);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 100001;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.15);
+    background: radial-gradient(circle,
+        rgba(255, 244, 214, 0.95) 0%,
+        var(--fq-gold-glow) 32%,
+        rgba(201, 168, 76, 0.25) 55%,
+        rgba(201, 168, 76, 0) 72%);
+    animation: fq-draw-reveal-burst 0.6s ease-out forwards;
+}
+
+@keyframes fq-draw-reveal-burst {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.15);
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.7);
+    }
+}
+
+/* Carte révélée : neutralise le chevauchement de la main, état initial d'entrée. */
+.fq-draw-reveal-card.fq-card,
+.fq-draw-reveal-card.fq-card-engine-card {
+    margin-left: 0 !important;
+    opacity: 0;
+    transform: translateY(40px) scale(0.6);
+    z-index: 10 !important;
+    cursor: pointer;
+}
+
+.fq-draw-reveal-overlay.fq-draw-reveal-in .fq-draw-reveal-card {
+    animation: fq-draw-reveal-enter 0.45s cubic-bezier(0.2, 0.7, 0.2, 1.3) forwards;
+    animation-delay: var(--fq-reveal-delay, 0ms);
+}
+
+@keyframes fq-draw-reveal-enter {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.6) rotate(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(var(--fq-reveal-rot, 0deg));
+    }
+}
+
+/* ── Halo lumineux qui éclot autour de chaque carte à son apparition ──
+   Via un pseudo-élément (derrière la carte) pour ne PAS verrouiller le
+   `filter` des cartes, sinon l'illumination/aspiration ne s'appliqueraient plus
+   (une animation `forwards` gèlerait la valeur de filter). */
+.fq-draw-reveal-card::after {
+    content: "";
+    position: absolute;
+    inset: -32%;
+    z-index: -1;
+    border-radius: 14px;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.6);
+    background: radial-gradient(ellipse at center,
+        rgba(255, 244, 214, 0.9) 0%,
+        var(--fq-gold-glow) 38%,
+        rgba(201, 168, 76, 0.15) 60%,
+        rgba(201, 168, 76, 0) 74%);
+}
+
+.fq-draw-reveal-overlay.fq-draw-reveal-in .fq-draw-reveal-card::after {
+    animation: fq-draw-reveal-appear-glow 0.75s ease-out forwards;
+    animation-delay: var(--fq-reveal-delay, 0ms);
+}
+
+@keyframes fq-draw-reveal-appear-glow {
+    0% {
+        opacity: 0;
+        transform: scale(0.55);
+    }
+    35% {
+        opacity: 1;
+        transform: scale(1.12);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
+/* Accessibilité : réduit les mouvements sans supprimer la révélation. */
+@media (prefers-reduced-motion: reduce) {
+    .fq-draw-reveal-overlay,
+    .fq-draw-reveal-stage,
+    .fq-draw-reveal-card {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

@@ -1,0 +1,46 @@
+/* ============================================================
+   FQ CARD ENGINE — Messages de chat
+   Généré depuis l'ancien styles/fq-card-engine.css (redécoupage).
+   ============================================================ */
+
+/* ============================================================
+   MESSAGES CHAT
+   ============================================================ */
+
+.fq-card-engine-message {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.fq-card-engine-message-info {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    max-width: 224px;
+    padding-left: 4px;
+}
+
+.fq-card-engine-message-card {
+    height: 50px;
+    width: 50px;
+    background-position: center;
+    background-size: auto 50px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border-radius: 4px;
+    filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.5));
+    transition: transform 0.2s;
+}
+
+.fq-card-engine-message-card:hover {
+    z-index: 3;
+    transform: translate(113px) scale(6);
+}
+
+div.separator {
+    margin: 3px auto 0 auto;
+    width: 30px;
+    height: 6px;
+    border-top: solid 1px #000;
+}

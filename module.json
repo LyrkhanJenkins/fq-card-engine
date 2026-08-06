@@ -36,7 +36,14 @@
   ],
   "styles": [
     "styles/globals.css",
-    "styles/fq-card-engine.css",
+    "styles/card-engine/root.css",
+    "styles/card-engine/toolbar.css",
+    "styles/card-engine/hand.css",
+    "styles/card-engine/card.css",
+    "styles/card-engine/chat.css",
+    "styles/card-engine/utilities.css",
+    "styles/card-engine/dialog-play.css",
+    "styles/card-engine/draw-reveal.css",
     "styles/fq-dnd5e-sheet.css"
   ],
   "socket": true,

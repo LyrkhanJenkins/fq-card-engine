@@ -6,7 +6,6 @@
 ### Versions prévues
 
 #### 2.0.2
-- Ramener toutes les notes écrites
 - Revoir css, homogénéiser fonts...
 - Redécoupage et vérification CSS
 - Repasser sur tous les TODO

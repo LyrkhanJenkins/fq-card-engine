@@ -1,0 +1,265 @@
+/* ============================================================
+   FQ CARD ENGINE — Toolbar globale
+   Généré depuis l'ancien styles/fq-card-engine.css (redécoupage).
+   ============================================================ */
+
+/* ============================================================
+   TOOLBAR GLOBAL
+   ============================================================ */
+
+.fq-toolbar,
+.fq-card-engine-buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    pointer-events: all;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--fq-border-subtle);
+    border-radius: 6px;
+    width: fit-content;
+    margin-top: 4px;
+    /* Annule les anciens styles */
+    max-height: none !important;
+    min-width: unset !important;
+    filter: none !important;
+}
+
+/* Boutons toolbar */
+.fq-toolbar-btn {
+    background: none !important;
+    border: 0.5px solid var(--fq-border-subtle);
+    border-radius: 4px;
+    color: var(--fq-gold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    opacity: 0.65;
+    transition: opacity 0.15s, background 0.15s, border-color 0.15s;
+    pointer-events: all;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1;
+    -webkit-text-stroke-width: 0;
+    text-shadow: none;
+}
+
+.fq-toolbar-btn:hover *:hover {
+    opacity: 1;
+    background: rgba(201, 168, 76, 0.12) !important;
+    border-color: var(--fq-gold-dark);
+    filter: none !important;
+}
+
+/* Hide/show — chevron */
+.fq-card-engine-hide-show {
+    font-size: 0 !important; /* masque le caractère ▴ original */
+    background-image: none !important;
+}
+
+.fq-chevron-icon {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+#fq-card-engine-container.hidden .fq-chevron-icon {
+    transform: rotate(180deg);
+}
+
+/* Masque l'ancien show-buttons (les "...") */
+/* TODO [css-mort] : aucune référence dans le code source — supprimer après tests. */
+.fq-card-engine-show-buttons {
+    display: none !important;
+}
+
+/* Move handle */
+.fq-move-handle,
+.fq-card-engine-move-handle {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    cursor: move;
+    padding: 3px 5px;
+    pointer-events: all;
+    border: 0.5px solid transparent;
+    border-radius: 4px;
+}
+
+.fq-move-pip {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--fq-gold-dark);
+    opacity: 0.6;
+    transition: opacity 0.15s;
+}
+
+.fq-move-handle:hover .fq-move-pip {
+    opacity: 1;
+    background: var(--fq-gold);
+}
+
+/* Top bar (draggable uniquement) */
+.fq-top-bar {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 12px;
+    pointer-events: all;
+    width: 100px;
+}
+
+/* ── Override player ui to not overflow #fq-card-engine-container ── */
+#players {
+    height: 75px;
+    overflow-y: scroll;
+    overflow-x: clip;
+    width: fit-content;
+    gap: 0
+}
+
+#fq-card-engine-container:not(.fq-card-engine-draggable) {
+    position: fixed;
+    left: 16px;
+    bottom: 95px;
+    align-items: flex-start;
+    pointer-events: none;
+}
+
+#fq-card-engine-container.fq-card-engine-draggable .fq-top-bar {
+    display: flex;
+}
+
+/* ── Slider taille ── */
+.fq-size-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--fq-gold);
+    margin-left: 4px;
+}
+
+.fq-size-icon-sm,
+.fq-size-icon-lg {
+    opacity: 0.45;
+    flex-shrink: 0;
+    color: var(--fq-gold);
+}
+
+.fq-size-slider {
+    width: 72px;
+    height: 3px;
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(201, 168, 76, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+}
+
+.fq-size-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--fq-gold);
+    cursor: pointer;
+    box-shadow: 0 0 4px rgba(201, 168, 76, 0.4);
+}
+
+.fq-size-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    background: var(--fq-gold);
+    cursor: pointer;
+}
+
+/* ── Séparateur de toolbar + jauges personnage ──
+   (relocalisées ici depuis la fin de l'ancien fichier : elles appartiennent à la toolbar) ── */
+.fq-toolbar-sep {
+    width: 2px;
+    height: 18px;
+    background: rgba(90, 66, 32, 0.35);
+    margin: 0 4px;
+    flex-shrink: 0;
+}
+
+.fq-char-gauges {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fq-cg-avatar-wrap {
+    flex-shrink: 0;
+}
+
+.fq-cg-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    object-fit: cover;
+    display: block;
+}
+
+.fq-cg-bars {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.fq-cg-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fq-cg-icon {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.fq-cg-track {
+    width: 70px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.fq-cg-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.fq-cg-val {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.35);
+    min-width: 28px;
+    height: 20px;
+    line-height: 1;
+}
+
+#fq-char-gauges-toggle {
+    transition: opacity 0.2s;
+}
+
+#fq-char-gauges-toggle:hover {
+    opacity: 1 !important;
+}

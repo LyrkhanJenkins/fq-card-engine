@@ -1,0 +1,143 @@
+/* ============================================================
+   FQ CARD ENGINE — Main individuelle
+   Généré depuis l'ancien styles/fq-card-engine.css (redécoupage).
+   ============================================================ */
+
+/* ============================================================
+   MAIN INDIVIDUELLE
+   ============================================================ */
+
+.fq-hand,
+.fq-card-engine-hand {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    color: var(--fq-gold-light);
+    max-height: none !important;
+    margin: 0 !important;
+}
+
+/* ── Barre de titre (visible si show-names) ── */
+.fq-hand-toolbar {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 8px;
+    background: var(--fq-bg-sidebar);
+    border: 2px solid var(--fq-player-color);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    height: 20px;
+    width: fit-content;
+}
+
+#fq-card-engine-container.show-names .fq-hand-toolbar {
+    display: flex;
+}
+
+/* Nom de la main */
+.fq-hand-name {
+    font-size: 11px;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--fq-gold-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+/* Ancienne classe nom — masquée par défaut, gérée par .fq-hand-toolbar */
+.fq-card-engine-hand-name {
+    display: none !important;
+}
+
+#fq-card-engine-container.show-names .fq-card-engine-hand-name {
+    display: none !important; /* géré par .fq-hand-name dans .fq-hand-toolbar */
+}
+
+/* ── Panel principal ── */
+.fq-hand-panel,
+.fq-card-engine-hand-inner {
+    display: flex;
+    align-items: stretch;
+    overflow: visible;
+    position: relative;
+    width: fit-content;
+    pointer-events: all;
+    /* Hauteur fixe — identique avec ou sans cartes */
+    height: var(--fq-panel-h);
+    min-height: var(--fq-panel-h);
+}
+
+#fq-card-engine-container.show-names .fq-hand-panel,
+#fq-card-engine-container.show-names .fq-card-engine-hand-inner {
+    border-radius: 0 0 8px 8px;
+}
+
+/* ── Sidebars ── */
+.fq-hand-sidebar,
+.fq-card-engine-settings {
+    display: flex;
+    flex-direction: column;
+    background: var(--fq-bg-sidebar) !important;
+    background-image: none !important;
+    border: 2px solid var(--fq-player-color);
+    border-right: none;
+    border-top: none;
+    width: 28px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 6px 0;
+    overflow-y: hidden;
+}
+
+.fq-hand-sidebar--left,
+.fq-card-engine-settings {
+    border-right: 1px solid var(--fq-border-subtle);
+    border-radius: 0 0 0 7px;
+}
+
+/* Boutons sidebar */
+.fq-side-btn,
+.fq-card-engine-settings-hand,
+.fq-card-engine-settings-choose,
+.fq-card-engine-draw {
+    background: none !important;
+    background-image: none !important;
+    border: 0.5px solid transparent;
+    border-radius: 4px;
+    color: var(--fq-gold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    opacity: 0.55;
+    transition: opacity 0.15s, background 0.15s, border-color 0.15s;
+    padding: 0;
+    -webkit-text-stroke-width: 0;
+    box-shadow: none !important;
+}
+
+.fq-side-btn:hover,
+.fq-card-engine-settings-hand:hover,
+.fq-card-engine-settings-choose:hover,
+.fq-card-engine-draw:hover {
+    opacity: 1;
+    background: rgba(201, 168, 76, 0.12) !important;
+    border-color: var(--fq-gold-dark);
+    box-shadow: none !important;
+}
+
+/* Masque les pseudo-elements de l'ancien CSS */
+.fq-card-engine-settings-hand::before,
+.fq-card-engine-settings-choose::before,
+.fq-card-engine-draw::before {
+    display: none !important;
+    content: none !important;
+}

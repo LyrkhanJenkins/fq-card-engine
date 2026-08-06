@@ -1,0 +1,88 @@
+/* ============================================================
+   FQ CARD ENGINE — Racine — variables & layout global
+   Généré depuis l'ancien styles/fq-card-engine.css (redécoupage).
+   ============================================================ */
+
+.fq-card-engine#pause img {
+    opacity: 0.75;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 140px);
+    width: 280px;
+    height: 185px;
+}
+
+/* ── Variables ── */
+#fq-card-engine-container {
+    --fq-gold: #c9a84c;
+    --fq-gold-light: #e8d090;
+    --fq-gold-dark: #7a5e22;
+    --fq-gold-glow: rgba(201, 168, 76, 0.45);
+    --fq-border: rgba(90, 66, 32, 0.75);
+    --fq-border-subtle: rgba(90, 66, 32, 0.4);
+    --fq-bg-sidebar: rgba(0, 0, 0, 0.85);
+
+    /* Taille fluide pilotée par le slider */
+    --fq-scale: 1.0;
+    --fq-card-w: 94px;
+    --fq-card-h: 130px;
+
+    /* Dépassement éventail au-dessus du container */
+    --fq-overflow: 15px;
+
+    /* Hauteur fixe du panel (cartes + overflow) */
+    --fq-panel-h: calc(var(--fq-card-h) * var(--fq-scale) + var(--fq-overflow) + 12px);
+}
+
+/* ── Fix WebRTC ── */
+#ui-top {
+    min-height: 0;
+}
+
+/* ============================================================
+   LAYOUT GLOBAL — above_macros uniquement
+   ============================================================ */
+
+/* Le container s'intègre au-dessus de la barre macro */
+#ui-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#fq-card-engine-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+/* Mode draggable : position absolue, largeur auto */
+#fq-card-engine-container.fq-card-engine-draggable {
+    position: absolute;
+    left: 110px;
+    top: 50px;
+    width: auto;
+    min-width: 200px;
+    resize: horizontal;
+    overflow: auto;
+}
+
+/* ── Zone des mains ── */
+#fq-card-engine-hands-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    overflow: visible;
+    padding-top: var(--fq-overflow);
+    padding-bottom: 4px;
+}
+
+
+#fq-card-engine-container.hidden #fq-card-engine-hands-container {
+    display: none;
+}

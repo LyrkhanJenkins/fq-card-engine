@@ -1,0 +1,59 @@
+/* ============================================================
+   FQ CARD ENGINE — Utilitaires
+   Généré depuis l'ancien styles/fq-card-engine.css (redécoupage).
+   ============================================================ */
+
+/* ============================================================
+   UTILITAIRES
+   ============================================================ */
+
+.fq-form-attributes {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.effect-legend {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.fq-w-xs {
+    width: 20px;
+    max-width: 20px;
+}
+
+.fq-w-s {
+    width: 40px;
+    max-width: 40px;
+}
+
+.fq-w-m {
+    width: 60px;
+    max-width: 60px;
+}
+
+.fq-w-l {
+    width: 80px;
+    max-width: 80px;
+}
+
+.fq-w-xl {
+    width: 100px;
+    max-width: 100px;
+}
+
+.fq-w-2xl {
+    width: 120px;
+    max-width: 120px;
+}
+
+.fq-w-3xl {
+    width: 140px;
+    max-width: 140px;
+}
+
+.fq-w-4xl {
+    width: 160px;
+    max-width: 160px;
+}

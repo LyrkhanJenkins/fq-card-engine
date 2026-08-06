@@ -1,0 +1,581 @@
+/* ============================================================
+   FQ CARD ENGINE — Dialog « jouer une carte » (overlay)
+   Généré depuis l'ancien styles/fq-card-engine.css (redécoupage).
+   ============================================================ */
+
+/* ============================================================
+   DIALOG JOUER UNE CARTE — overlay plein écran
+   ============================================================ */
+
+/* Cache tout le chrome Foundry */
+.app.dialog:has(.fq-play-dialog) {
+    display: contents !important;
+}
+
+.app.dialog:has(.fq-play-dialog) .window-header,
+.app.dialog:has(.fq-play-dialog) .window-resizable-handle {
+    display: none !important;
+}
+
+.app.dialog:has(.fq-play-dialog) .window-content {
+    all: unset !important;
+}
+
+/* Layout overlay : carte au centre, boutons sur les côtés */
+.fq-play-dialog {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 1fr auto;
+    align-items: center;
+    justify-items: center;
+    box-shadow: inset 0 0 100vh 100vh rgb(0 0 0 / 88%);
+    transition: box-shadow 500ms;
+    pointer-events: all;
+    padding: 40px;
+    gap: 24px;
+}
+
+.fq-play-card-stage {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    width: 22vw;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    padding: 0;
+    position: relative;
+}
+
+.fq-play-card-stage::before {
+    display: none;
+}
+
+.fq-play-card-img {
+    display: block;
+    width: auto;
+    border: transparent;
+    border-radius: 3%;
+    transform: perspective(800px) rotateY(6deg) rotateX(4deg);
+    animation: floatCard 12s linear infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: rgba(201, 168, 76, 0.6);
+    box-shadow: 0 0 30px 10px rgba(201, 168, 76, 0.6);
+    color: rgb(255 255 255 / 53%);
+    will-change: transform, box-shadow;
+}
+
+/* Variante « dos » : pas de SVG, juste l'image de dos. Le div .fq-card-face est
+   en position absolue, on donne donc une taille au conteneur (ratio de la carte
+   508×693) pour qu'il s'affiche à la même empreinte que la face. */
+.fq-play-card-img--back {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 508 / 693;
+}
+
+@keyframes floatCard {
+    0% {
+        transform: perspective(900px) rotateY(8deg) rotateX(8deg);
+        box-shadow: 0 0 30px 10px rgba(201, 168, 76, 0.6);
+    }
+
+    10% {
+        transform: perspective(900px) rotateY(5deg) rotateX(6deg);
+        box-shadow: 0 0 30px 11px rgba(201, 168, 76, 0.62);
+    }
+
+    20% {
+        transform: perspective(900px) rotateY(3deg) rotateX(4deg);
+        box-shadow: 0 0 28px 12px rgba(201, 168, 76, 0.65);
+    }
+
+    30% {
+        transform: perspective(900px) rotateY(0deg) rotateX(2deg);
+        box-shadow: 0 0 26px 13px rgba(201, 168, 76, 0.7);
+    }
+
+    40% {
+        transform: perspective(900px) rotateY(-3deg) rotateX(0deg);
+        box-shadow: 0 0 24px 14px rgba(201, 168, 76, 0.75);
+    }
+
+    50% {
+        transform: perspective(900px) rotateY(-6deg) rotateX(-2deg);
+        box-shadow: 0 0 22px 15px rgba(201, 168, 76, 0.8);
+    }
+
+    60% {
+        transform: perspective(900px) rotateY(-5deg) rotateX(0deg);
+        box-shadow: 0 0 24px 14px rgba(201, 168, 76, 0.75);
+    }
+
+    70% {
+        transform: perspective(900px) rotateY(-4deg) rotateX(2deg);
+        box-shadow: 0 0 26px 13px rgba(201, 168, 76, 0.7);
+    }
+
+    80% {
+        transform: perspective(900px) rotateY(2deg) rotateX(4deg);
+        box-shadow: 0 0 28px 12px rgba(201, 168, 76, 0.65);
+    }
+
+    90% {
+        transform: perspective(900px) rotateY(4deg) rotateX(6deg);
+        box-shadow: 0 0 30px 11px rgba(201, 168, 76, 0.62);
+    }
+
+    100% {
+        transform: perspective(900px) rotateY(8deg) rotateX(8deg);
+        box-shadow: 0 0 30px 10px rgba(201, 168, 76, 0.6);
+    }
+}
+
+.fq-play-card-wrap {
+    width: 100%;
+}
+
+.fq-play-card-wrap:hover .fq-play-card-img {
+    transform: perspective(800px) rotateY(0deg) rotateX(0deg);
+}
+
+/* Options flottantes sous la carte */
+.fq-play-options {
+    grid-column: 2;
+    grid-row: 2;
+    background: none;
+    border: none;
+}
+
+.fq-play-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    align-items: center;
+}
+
+/* Champs (select, input) restylés pour flotter sur le fond sombre */
+.fq-play-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 220px;
+}
+
+.fq-play-field--row {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.fq-play-label {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    color: rgba(201, 168, 76, 0.45);
+}
+
+.fq-play-select {
+    background: rgba(0, 0, 0, 0.7);
+    border: 0.5px solid rgba(90, 66, 32, 0.7);
+    border-radius: 4px;
+    color: #e8d090;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    height: 54px;
+    padding: 5px 10px;
+    width: 100%;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+.fq-play-select option {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.fq-play-input {
+    background: rgba(0, 0, 0, 0.7);
+    border: 0.5px solid rgba(90, 66, 32, 0.7);
+    border-radius: 4px;
+    color: #e8d090;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    height: 42px;
+    padding: 5px 8px;
+    width: 60px;
+    text-align: center;
+}
+
+/* Remplace tout le bloc dialog-buttons */
+.app.dialog:has(.fq-play-dialog) .dialog-buttons {
+    position: fixed;
+    top: 75%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: space-between;
+    padding: 0 60px;
+    background: none;
+    border: none;
+    pointer-events: none;
+    z-index: 10000;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button {
+    pointer-events: all;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(90, 66, 32, 0.8);
+    border-radius: 6px;
+    color: #e8d090;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 34px;
+    letter-spacing: 0.2em;
+    padding: 18px 12px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+    position: static;
+    transform: none;
+    top: auto;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button:hover {
+    background: rgba(201, 168, 76, 0.15);
+    border-color: rgba(201, 168, 76, 0.7);
+    color: #fff;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button[data-button="ok"] {
+    grid-column: 4;
+    grid-row: 1;
+    border-color: rgba(201, 168, 76, 0.6);
+    background: rgba(201, 168, 76, 0.12);
+    margin-left: auto;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button[data-button="ok"]:hover {
+    background: rgba(201, 168, 76, 0.25);
+    border-color: rgba(201, 168, 76, 0.9);
+    color: #fff;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button[data-button="discard"] {
+    grid-column: 1;
+    grid-row: 1;
+    border-color: rgba(140, 40, 40, 0.6);
+    color: #c07070;
+    margin-right: auto;
+}
+
+.app.dialog:has(.fq-play-dialog) .dialog-buttons button[data-button="discard"]:hover {
+    background: rgba(140, 40, 40, 0.2);
+    border-color: rgba(200, 60, 60, 0.7);
+    color: #e09090;
+}
+
+/* Statuts */
+.fq-play-status {
+    font-family: Georgia, serif;
+    font-size: 11px;
+    font-style: italic;
+    text-align: center;
+    padding: 5px 14px;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+}
+
+.fq-play-status--warn {
+    background: rgba(80, 20, 20, 0.5);
+    border: 0.5px solid rgba(200, 60, 60, 0.4);
+    color: #e09090;
+}
+
+.fq-play-status--ok {
+    background: rgba(20, 60, 20, 0.5);
+    border: 0.5px solid rgba(60, 160, 60, 0.4);
+    color: #90c090;
+}
+
+/* Badges */
+.fq-play-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+}
+
+.fq-play-badge--base {
+    background: rgba(122, 94, 34, 0.9);
+    color: #f0d898;
+    border: 0.5px solid rgba(201, 168, 76, 0.4);
+}
+
+.fq-play-badge--exhausted {
+    background: rgba(80, 20, 20, 0.9);
+    color: #e09090;
+    border: 0.5px solid rgba(200, 60, 60, 0.4);
+}
+
+.fq-play-badge--played {
+    background: rgba(20, 60, 20, 0.9);
+    color: #90c090;
+    border: 0.5px solid rgba(60, 160, 60, 0.4);
+}
+
+/* Minions, facedown, drop count — inchangés */
+.fq-play-minions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.fq-play-minion-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fq-play-minion-center {
+    color: rgba(201, 168, 76, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+.fq-play-minion-cb {
+    width: 16px;
+    height: 16px;
+    accent-color: #c9a84c;
+    cursor: pointer;
+}
+
+.fq-play-close {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.6);
+    border: 0.5px solid rgba(90, 66, 32, 0.6);
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(201, 168, 76, 0.5);
+    backdrop-filter: blur(8px);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.fq-play-close:hover {
+    background: rgba(180, 30, 30, 0.3);
+    border-color: rgba(200, 60, 60, 0.6);
+    color: #e09090;
+}
+
+.fq-play-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.55);
+    border: 0.5px solid rgba(90, 66, 32, 0.55);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(201, 168, 76, 0.45);
+    backdrop-filter: blur(8px);
+    transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.fq-play-nav--prev {
+    left: 32px;
+}
+
+.fq-play-nav--next {
+    right: 32px;
+}
+
+.fq-play-nav:hover {
+    background: rgba(201, 168, 76, 0.1);
+    border-color: rgba(201, 168, 76, 0.5);
+    color: rgba(201, 168, 76, 0.9);
+    transform: translateY(-50%) scale(1.08);
+}
+
+.fq-play-nav:disabled {
+    opacity: 0.2;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* ── Jauges personnage ── */
+.fq-play-charStats {
+    position: fixed;
+    left: 40px;
+    top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.fq-play-char-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.fq-play-char-img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid rgba(201, 168, 76, 0.4);
+    object-fit: cover;
+}
+
+.fq-play-char-name {
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    color: rgba(201, 168, 76, 0.7);
+    text-transform: uppercase;
+}
+
+/* ── Jauge générique ── */
+.fq-play-gauge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.fq-play-gauge-label {
+    font-size: 22px;
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.fq-play-gauge-bar {
+    width: 240px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.fq-play-gauge-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.fq-play-gauge-val {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.4);
+    min-width: 72px;
+}
+
+/* Couleurs par stat */
+.fq-gauge-hp {
+    color: var(--fq8-color-hp-2);
+}
+
+.fq-gauge-action {
+    color: var(--fq8-color-action-2);
+}
+
+.fq-gauge-mana {
+    color: var(--fq8-color-mana-2);
+}
+
+.fq-gauge-zeal {
+    color: var(--fq8-color-zeal-2);
+}
+
+.fq-gauge-fill-hp {
+    background: var(--fq8-color-hp-3);
+}
+
+.fq-gauge-fill-action {
+    background: var(--fq8-color-action-3);
+}
+
+.fq-gauge-fill-mana {
+    background: var(--fq8-color-mana-3);
+}
+
+.fq-gauge-fill-zeal {
+    background: var(--fq8-color-zeal-3);
+}
+
+/* ── Cibles ── */
+.fq-play-targets {
+    position: fixed;
+    right: 140px;
+    top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10000;
+    pointer-events: none;
+    align-items: flex-end;
+}
+
+.fq-play-targets-title {
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 20px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(201, 168, 76, 0.4);
+    text-align: right;
+}
+
+.fq-play-target {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-direction: row-reverse;
+}
+
+.fq-play-target-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(200, 60, 60, 0.5);
+    object-fit: cover;
+}
+
+.fq-play-target-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.fq-play-target-name {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.06em;
+}
