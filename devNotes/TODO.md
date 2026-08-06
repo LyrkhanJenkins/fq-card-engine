@@ -6,10 +6,6 @@
 ### Versions prévues
 
 #### 2.0.2
-- Revoir css, homogénéiser fonts...
-- Redécoupage et vérification CSS
-- Repasser sur tous les TODO
-- Faire un point sur todos.*
 - Afficher les barres spécifiques
 - Tests fonctionnels + montée dernière version
 - Revoir cape inhibitrice (enlever quel effet?)

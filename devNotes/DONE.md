@@ -9,6 +9,7 @@ Fix :
 
 Chore :
 - Redécoupage et suppression du code mort CSS
+- Refacto architecture et todo techniques en suspens
 
 v2.0.1:
 Feat :
