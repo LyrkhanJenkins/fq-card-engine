@@ -1991,7 +1991,7 @@
           "class": "elementalist",
           "choices": [
             {
-              "name": "Fire Element",
+              "name": "FQCARDCHOICE.FireElement",
               "action": "-9",
               "mana": "",
               "zeal": "",
@@ -2070,7 +2070,7 @@
               "customEvals": []
             },
             {
-              "name": "Frost Element",
+              "name": "FQCARDCHOICE.FrostElement",
               "action": "-9",
               "mana": "",
               "zeal": "",
@@ -2153,7 +2153,7 @@
               "customEvals": []
             },
             {
-              "name": "Air Element",
+              "name": "FQCARDCHOICE.AirElement",
               "action": "-9",
               "mana": "",
               "zeal": "",
@@ -2232,7 +2232,7 @@
               "customEvals": []
             },
             {
-              "name": "Earth Element",
+              "name": "FQCARDCHOICE.EarthElement",
               "action": "-9",
               "mana": "",
               "zeal": "",

@@ -2,7 +2,7 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-
+- Si ça devient génant, pour les choix de l'effet de la carte, mettre null de base et empecher de cliquer sur jouer si pas choisi ( comme X et Y)
 ### Versions prévues
 
 #### 2.0.2
@@ -13,7 +13,6 @@
 - Afficher les éléments actifs de l'elementaliste, généralement afficher tous les effets sur une sicble
 - Priorisé les protections avant de faire jouer la carte (OU REPORTER)
 - Sélectionner une cible après coup (OU REPORTER)
-- Localisé les choix des cartes , tout ce qui est visisble après par l'utilisateur
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - PATCH--> RELEASE
 

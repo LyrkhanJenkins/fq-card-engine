@@ -81,6 +81,9 @@ export default {
 
         let initCardContents = card.system.fq.choices;
         let cardContents = ObjectUtils.deepCopy(card.system.fq.choices);
+        // Libellé localisé pour l'affichage du sélecteur d'effet ; la valeur (`name`)
+        // reste brute car elle sert de clé de correspondance à la validation.
+        cardContents.forEach(cc => cc.localizedName = game.i18n.localize(cc.name));
 
         let firstChoice = cardContents[0];
         const firstChoiceString = JSON.stringify(firstChoice);
@@ -264,7 +267,7 @@ export default {
         if (cardContents.length > 1 && !CONFIG.FqCardEngine.options.betterChatMessages) {
             ChatMessage.create({
                 speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                content: `<div>${game.i18n.format("FQCARDENGINE.ChatMessageCardEffectChoice", {nameContent: fd.nameContent})}</div>`
+                content: `<div>${game.i18n.format("FQCARDENGINE.ChatMessageCardEffectChoice", {nameContent: game.i18n.localize(fd.nameContent)})}</div>`
             });
         }
         return PlayCard.callBackplayCard(to, fd, cardContent, hasVariables, initCardContents, currentCards, card);

@@ -217,7 +217,7 @@ export default class PlayCard {
         const isFilled = value => value !== undefined && value !== null && value !== "";
         const showX = !!hasVariables && isFilled(fd?.XXX);
         const showY = !!hasVariables && isFilled(fd?.YYY);
-        const choiceName = (hasSeveralChoices && cardContent?.name) ? cardContent.name : null;
+        const choiceName = (hasSeveralChoices && cardContent?.name) ? game.i18n.localize(cardContent.name) : null;
 
         let targets = [];
         try {
