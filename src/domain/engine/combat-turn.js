@@ -1,5 +1,5 @@
 import TradingCards, {DECK_TYPE, HAND_TYPE} from "../trading/trading-cards.js";
-import {WARNING_COLOR} from "../constants.js";
+import {createWarning} from "../../core/utils/chat.utils.js";
 import {socket} from "../../hook/integration/socketlib.hook.js";
 
 /**
@@ -195,11 +195,7 @@ export default class CombatTurn {
                 });
             }
         } else {
-            ChatMessage.create({
-                speaker: {actor: actor},
-                content: `<div style='font-style: italic; color:${WARNING_COLOR};'>
-                        ${game.i18n.localize("FQCARDENGINE.WarningMsgNoPickScore")}</div>`
-            });
+            createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgNoPickScore"), {actor});
         }
     }
 }

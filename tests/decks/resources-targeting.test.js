@@ -27,6 +27,7 @@ globalThis.Macro = class {
 const {mountWorld, playChoice} = await import("./play-harness.js");
 const {DeterministicRoll, resetDiceControl} = await import("./deterministic-roll.js");
 const RollService = (await import("../../src/domain/engine/roll/roll-service.js")).default;
+const FormError = (await import("../../src/core/error/form-error.model.js")).default;
 
 /**
  * Phase 07 Plan 04 — Task 2 : coûts/ressources consommés + rejets ressources
@@ -482,16 +483,17 @@ describe("EXHA-04 : ciblage/portée", () => {
     );
 
     test.each(outOfRangeCandidates)(
-        "$deckFile :: $cardName :: choix $choiceIndex — cible hors portée : rejet propre, aucun hpCalls",
+        "$deckFile :: $cardName :: choix $choiceIndex — cible hors portée : garde-fou (FormError OutOfReach), aucun hpCalls",
         async ({card, choiceIndex}) => {
             const result = await playChoice(card, choiceIndex, {world: abundantWorld()});
-            expect(result.threw).toBe(false);
+            expect(result.threw).toBe(true);
+            expect(result.error).toBeInstanceOf(FormError);
+            expect(result.error.message).toContain("FQCARDENGINE.DialogPlayFormErrorOutOfReach");
             expect(result.hpCalls).toHaveLength(0);
-            expect(chatText(result)).toContain("FQCARDENGINE.WarningMsgCantReachTarget");
         }
     );
 
-    test("aucune cible sélectionnée -> rejet propre (WarningMsgNoTarget)", async () => {
+    test("aucune cible sélectionnée -> garde-fou (FormError NoTarget)", async () => {
         expect(reachCandidatesInRange.length).toBeGreaterThanOrEqual(1);
         const {card, choiceIndex} = reachCandidatesInRange[0];
         const result = await playChoice(card, choiceIndex, {
@@ -503,20 +505,22 @@ describe("EXHA-04 : ciblage/portée", () => {
             // `[...game.user.targets]`, qui fonctionne aussi bien sur un tableau.
             world: abundantWorld({user: {targets: []}})
         });
-        expect(result.threw).toBe(false);
+        expect(result.threw).toBe(true);
+        expect(result.error).toBeInstanceOf(FormError);
+        expect(result.error.message).toContain("FQCARDENGINE.DialogPlayFormErrorNoTarget");
         expect(result.hpCalls).toHaveLength(0);
-        expect(chatText(result)).toContain("FQCARDENGINE.WarningMsgNoTarget");
     });
 
     test.each(noNbTargetsReachCandidates)(
-        "$deckFile :: $cardName :: choix $choiceIndex — plusieurs cibles sans nbTargets -> rejet propre (WarningMsgNoMultipleTarget)",
+        "$deckFile :: $cardName :: choix $choiceIndex — plusieurs cibles sans nbTargets -> garde-fou (FormError NoMultipleTarget)",
         async ({card, choiceIndex}) => {
             const result = await playChoice(card, choiceIndex, {
                 world: abundantWorld({user: {targets: [targetLike("-a"), targetLike("-b")]}})
             });
-            expect(result.threw).toBe(false);
+            expect(result.threw).toBe(true);
+            expect(result.error).toBeInstanceOf(FormError);
+            expect(result.error.message).toContain("FQCARDENGINE.DialogPlayFormErrorNoMultipleTarget");
             expect(result.hpCalls).toHaveLength(0);
-            expect(chatText(result)).toContain("FQCARDENGINE.WarningMsgNoMultipleTarget");
         }
     );
 });

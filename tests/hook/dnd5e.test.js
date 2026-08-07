@@ -117,11 +117,14 @@ describe("integration/dnd5e", () => {
             expect(result).toBe(true);
         });
 
-        it("délègue à checkIfCanCardCanReachTargets et propage sa valeur de retour", () => {
+        it("délègue à evaluateTargeting : verdict non-OK → avertit (warnTargeting) et retourne false", () => {
             const hook = getHook("dnd5e.preUseActivity");
             vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
             vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "t1"}]);
-            vi.spyOn(ResourceHandler, "checkIfCanCardCanReachTargets").mockReturnValue(false);
+            vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
+                verdict: ResourceHandler.TARGETING_VERDICT.OUT_OF_REACH, targets: [], outOfReach: []
+            });
+            const warnSpy = vi.spyOn(ResourceHandler, "warnTargeting").mockImplementation(() => {});
             const activity = {
                 actor: {}, item: {system: {fq: {}}}, type: "attack",
                 range: {value: 10, reach: 0}, target: {}
@@ -130,8 +133,28 @@ describe("integration/dnd5e", () => {
             const result = hook(activity, {}, {}, {});
 
             // squareDistance=5 ; minRange = trunc(5)/5 = 1 ; maxRange = trunc(10)/5 = 2
-            expect(ResourceHandler.checkIfCanCardCanReachTargets).toHaveBeenCalledWith(activity.actor, 1, 1, 2);
+            expect(ResourceHandler.evaluateTargeting).toHaveBeenCalledWith(activity.actor, 1, 1, 2);
+            expect(warnSpy).toHaveBeenCalled();
             expect(result).toBe(false);
+        });
+
+        it("délègue à evaluateTargeting : verdict OK → retourne true sans avertir", () => {
+            const hook = getHook("dnd5e.preUseActivity");
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "t1"}]);
+            vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
+                verdict: ResourceHandler.TARGETING_VERDICT.OK, targets: [{id: "t1"}], outOfReach: []
+            });
+            const warnSpy = vi.spyOn(ResourceHandler, "warnTargeting").mockImplementation(() => {});
+            const activity = {
+                actor: {}, item: {system: {fq: {}}}, type: "attack",
+                range: {value: 10, reach: 0}, target: {}
+            };
+
+            const result = hook(activity, {}, {}, {});
+
+            expect(result).toBe(true);
+            expect(warnSpy).not.toHaveBeenCalled();
         });
     });
 

@@ -82,24 +82,12 @@
         </div>
     {{/if}}
 
-    {{!-- Cibles (droite) --}}
-    {{#if targets.length}}
-        <div class="fq-play-targets">
-            <span class="fq-play-targets-title">Cibles</span>
-            {{#each targets}}
-                <div class="fq-play-target">
-                    <img class="fq-play-target-img" src="{{img}}" alt="{{name}}"/>
-                    <div class="fq-play-target-info">
-                        <span class="fq-play-target-name">{{name}}</span>
-                        <div class="fq-play-gauge">
-                            <span class="fq-play-gauge-label fq-gauge-hp">❤</span>
-                            <span class="fq-play-gauge-val">{{hpValue}}/{{hpMax}}</span>
-                        </div>
-                    </div>
-                </div>
-            {{/each}}
+
+    <div class="fq-play-targets">
+        <div class="fq-play-targets-content">
+            {{> "modules/fq-card-engine/src/templates/partials/targeting-panel.hbs" panel}}
         </div>
-    {{/if}}
+    </div>
 
     <button class="fq-play-close" onclick="$(this).closest('.app').find('.header-button.close').trigger('click')">
         <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">

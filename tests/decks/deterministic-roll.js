@@ -332,6 +332,18 @@ export class DeterministicRoll {
      * @returns {Promise<DeterministicRoll>} L'instance elle-même (comme le vrai `Roll`).
      */
     async evaluate() {
+        return this.evaluateSync();
+    }
+
+    /**
+     * Variante synchrone d'`evaluate()` : même évaluation (déjà synchrone en
+     * interne), exposée pour le résolveur de ciblage synchrone
+     * (`TargetingResolver`, qui doit rester synchrone pour que le garde-fou de la
+     * dialog garde celle-ci ouverte).
+     *
+     * @returns {DeterministicRoll} L'instance elle-même (comme le vrai `Roll`).
+     */
+    evaluateSync() {
         const clean = preprocessFormula(this.formula);
         const diceEntries = [];
         try {

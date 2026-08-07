@@ -3,14 +3,13 @@
 
 ### Fix à prioriser
 - Si ça devient génant, pour les choix de l'effet de la carte, mettre null de base et empecher de cliquer sur jouer si pas choisi ( comme X et Y)
+- J'ai l'impression que ya pas la bonne couleur de dé quand on fait le roll damage depuis une arme équipé (grave?)
 ### Versions prévues
 
 #### 2.0.2
 - Afficher les éléments actifs de l'elementaliste, généralement afficher tous les effets sur une sicble
 - Revoir cape inhibitrice (enlever quel effet?)
-- Revoir tir reflexe (jouer même si pas attaquer?)
 - Priorisé les protections avant de faire jouer la carte (OU REPORTER)
-- Sélectionner une cible après coup (OU REPORTER)
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - PATCH--> RELEASE
 
@@ -27,7 +26,7 @@
 - Devoir des effets visuel arrive avant le reveal des dés et dégâts, des fois non
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
 - Pour les réactifs ptetre travaillé sur des evenements pour pouvoir les jouer ( j'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
-, ...) et afficher en surbrillance une carte réactive qui peut être jouée
+  , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> - Revoir tir reflexe (jouer même si pas attaquer?)
 - PATCH--> RELEASE
 
 #### 2.1.x

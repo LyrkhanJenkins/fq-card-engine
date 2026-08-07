@@ -180,14 +180,14 @@ describe("playDialog", () => {
     });
 
     describe("cas nominal", () => {
-        test("renderTemplate reçoit charStats/targets/cardContents/discards/hasVariables et Dialog.wait reçoit ok+discard", async () => {
+        test("renderTemplate reçoit charStats/panel/cardContents/discards/hasVariables et Dialog.wait reçoit ok+discard", async () => {
             await window.FqCardEngineModule.playDialog(currentCards, card);
 
             expect(renderTemplateSpy).toHaveBeenCalledWith(
                 expect.stringContaining("dialog-play.hbs"),
                 expect.objectContaining({
                     charStats: expect.any(Object),
-                    targets: expect.any(Array),
+                    panel: expect.any(Object),
                     cardContents: expect.any(Array),
                     discards: [pile],
                     hasVariables: false

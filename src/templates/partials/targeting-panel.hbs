@@ -1,0 +1,26 @@
+{{!-- Panneau de ciblage actif. Reçoit le view-model `TargetingView.build`
+      comme contexte. Rendu UNIQUEMENT en ciblage manuel (`manual`). Réutilisé au
+      rendu initial de la dialog ET au rafraîchissement live (renderTemplate). --}}
+{{#if manual}}
+    <span class="fq-play-targets-title">{{localize "FQCARDENGINE.TargetingPanelTitle"}}</span>
+
+    <button type="button" class="fq-play-target-btn">🎯 {{localize "FQCARDENGINE.TargetingPanelTargetButton"}}</button>
+
+    <div class="fq-play-targets-counter">{{localize "FQCARDENGINE.TargetingPanelCounterLabel"}} {{count}} / {{required}}</div>
+
+    {{#each targets}}
+        <div class="fq-play-target{{#if outOfReach}} fq-play-target--oor{{/if}}">
+            <img class="fq-play-target-img" src="{{img}}" alt="{{name}}"/>
+            <div class="fq-play-target-info">
+                <span class="fq-play-target-name">{{name}}</span>
+                <div class="fq-play-gauge">
+                    <span class="fq-play-gauge-label fq-gauge-hp">❤</span>
+                    <span class="fq-play-gauge-val">{{hpValue}}/{{hpMax}}</span>
+                </div>
+                {{#if outOfReach}}
+                    <span class="fq-play-target-oor-label">{{localize "FQCARDENGINE.TargetingPanelOutOfReach"}}</span>
+                {{/if}}
+            </div>
+        </div>
+    {{/each}}
+{{/if}}

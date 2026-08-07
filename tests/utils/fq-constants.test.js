@@ -6,8 +6,6 @@ import Constants, {
     DAMAGES_COLOR,
     EVASION_COLOR,
     OTHER_ROLL_COLOR,
-    WARNING_COLOR,
-    ERROR_COLOR,
     SUCCESS_COLOR,
     FAIL_COLOR,
     OriginFQEffectLabel,
@@ -24,8 +22,6 @@ describe("Constants", () => {
             expect(DAMAGES_COLOR).toBe("#F1C40F");
             expect(EVASION_COLOR).toBe("#4B8AF1");
             expect(OTHER_ROLL_COLOR).toBe("#34CBE3");
-            expect(WARNING_COLOR).toBe("#E36934");
-            expect(ERROR_COLOR).toBe("#C04200");
             expect(SUCCESS_COLOR).toBe("green");
             expect(FAIL_COLOR).toBe("red");
             expect(OriginFQEffectLabel).toBe("FQ Effect");

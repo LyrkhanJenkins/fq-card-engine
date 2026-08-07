@@ -607,3 +607,150 @@
     color: rgba(255, 255, 255, 0.5);
     letter-spacing: 0.06em;
 }
+
+/* ── Panneau de ciblage actif ── */
+/* Conteneur rafraîchi en direct : conserve le flux vertical aligné à droite. */
+.fq-play-targets-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+/* Compteur « Cibles : X / N ». */
+.fq-play-targets-counter {
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    color: rgba(201, 168, 76, 0.75);
+    text-align: right;
+}
+
+/* Bouton « 🎯 Cibler » — cliquable malgré .fq-play-targets { pointer-events: none }. */
+.fq-play-target-btn {
+    pointer-events: auto;
+    cursor: pointer;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: rgba(201, 168, 76, 0.9);
+    background: rgba(20, 16, 10, 0.7);
+    border: 1px solid rgba(201, 168, 76, 0.5);
+    border-radius: 7px;
+    padding: 9px 22px;
+}
+
+.fq-play-target-btn:hover {
+    color: rgba(230, 200, 110, 1);
+    border-color: rgba(201, 168, 76, 0.9);
+    background: rgba(40, 32, 18, 0.85);
+}
+
+.fq-play-targets-content:not(:has(.fq-play-target)) .fq-play-target-btn {
+    animation: fqTargetBtnBlink 1s ease-in-out infinite;
+    border-color: rgba(245, 222, 140, 0.95);
+}
+
+@keyframes fqTargetBtnBlink {
+    0%, 100% {
+        color: rgba(201, 168, 76, 0.9);
+        background: rgba(20, 16, 10, 0.7);
+        box-shadow: 0 0 4px 0 rgba(201, 168, 76, 0.35);
+    }
+    50% {
+        color: rgba(245, 222, 140, 1);
+        background: rgba(60, 48, 24, 0.92);
+        box-shadow: 0 0 18px 5px rgba(230, 200, 110, 0.9);
+    }
+}
+
+/* Cible retenue : surbrillance dorée (les cibles listées SONT les cibles ciblées). */
+.fq-play-target .fq-play-target-img {
+    border-color: rgba(201, 168, 76, 0.7);
+}
+
+/* Cible hors de portée : signalement rouge, prioritaire sur la surbrillance dorée. */
+.fq-play-target--oor .fq-play-target-img {
+    border-color: rgba(220, 60, 60, 0.9);
+}
+
+.fq-play-target--oor .fq-play-target-name {
+    color: rgba(230, 120, 120, 0.9);
+}
+
+.fq-play-target-oor-label {
+    font-size: 13px;
+    font-style: italic;
+    color: rgba(220, 70, 70, 0.95);
+    letter-spacing: 0.05em;
+}
+
+/* ── Mode ciblage ── */
+/* Pendant le ciblage : on efface l'overlay (opacité 0) et on le rend traversant
+   (pointer-events) pour libérer le canvas, sans fermer la dialog (état préservé).
+   Les boutons Foundry (Jouer/Défausser) sont masqués le temps du ciblage. */
+.fq-targeting-mode .fq-play-dialog {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fq-targeting-mode .dialog-buttons {
+    display: none !important;
+}
+
+/* Barre flottante « Ciblage… X / N — [Terminé] », injectée dans le body. */
+.fq-play-targeting-bar {
+    position: fixed;
+    bottom: 96px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 14px 24px;
+    border-radius: 10px;
+    background: rgba(15, 12, 8, 0.92);
+    border: 1px solid rgba(201, 168, 76, 0.6);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+    pointer-events: auto;
+}
+
+.fq-play-targeting-bar-label {
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    color: rgba(230, 200, 110, 0.95);
+}
+
+.fq-play-targeting-done {
+    pointer-events: auto;
+    cursor: pointer;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(20, 16, 10, 0.98);
+    background: linear-gradient(180deg, rgba(235, 205, 115, 1), rgba(201, 168, 76, 1));
+    border: 1px solid rgba(245, 222, 140, 0.9);
+    border-radius: 9px;
+    padding: 14px 40px;
+    box-shadow: 0 0 0 rgba(201, 168, 76, 0.7);
+    animation: fqTargetingDonePulse 1.6s ease-in-out infinite;
+}
+
+.fq-play-targeting-done:hover {
+    background: linear-gradient(180deg, rgba(245, 222, 140, 1), rgba(220, 190, 100, 1));
+    animation: none;
+    box-shadow: 0 0 18px 4px rgba(230, 200, 110, 0.85);
+}
+
+@keyframes fqTargetingDonePulse {
+    0%, 100% {
+        box-shadow: 0 0 6px 1px rgba(201, 168, 76, 0.45);
+    }
+    50% {
+        box-shadow: 0 0 20px 5px rgba(230, 200, 110, 0.85);
+    }
+}

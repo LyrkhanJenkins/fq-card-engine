@@ -1,6 +1,7 @@
-import Geometry from "./geometry.js";
-import Constants, {WARNING_COLOR} from "../../constants.js";
+import TargetingPredicates from "./targeting-predicates.js";
+import Constants from "../../constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
+import {createWarning} from "../../../core/utils/chat.utils.js";
 
 
 /**
@@ -141,82 +142,89 @@ export default class ResourceHandler {
      * @returns {void}
      */
     static createUserWarningMessage(message, actor) {
-        ChatMessage.create({
-            speaker: ChatMessage.getSpeaker({actor}),
-            content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>${actor?.name} ${message}</span>`
-        });
+        createWarning(message, {actor, prependActorName: true});
     }
 
     /**
-     * Vérifie que la carte peut atteindre ses cibles : au moins une cible, pas
-     * plus que le nombre autorisé, présence d'un token du lanceur sur la scène,
-     * et distance de chaque cible comprise entre `minReach` et `maxReach`.
-     * Publie un message d'avertissement pour chaque contrainte non respectée.
+     * Verdicts possibles de l'évaluation du ciblage (objet gelé).
+     */
+    static TARGETING_VERDICT = Object.freeze({
+        OK: "ok",
+        NO_TARGET: "none",
+        MULTIPLE_NOT_ALLOWED: "multipleNotAllowed",
+        TOO_MANY: "tooMany",
+        NO_CASTER_TOKEN: "noCasterToken",
+        OUT_OF_REACH: "outOfReach",
+    });
+
+    /**
+     * Évalue le ciblage (nombre de cibles, présence du token du lanceur, portée) et
+     * renvoie un VERDICT neutre — sans lever d'erreur ni publier de message. C'est la
+     * source de vérité unique du contrôle de ciblage, appelée EN AMONT du jeu par les
+     * DEUX appelants qui traduisent ensuite le verdict à leur façon :
+     * - la dialog (`playValidatedCard`) → `FormError` (garde la dialog ouverte) ;
+     * - l'intégration dnd5e (`dnd5e.hook`) → message de chat + booléen (via `warnTargeting`).
+     * Les valeurs `nbTargets`/`minReach`/`maxReach` sont supposées déjà RÉSOLUES.
      *
      * @param {object} actor        - L'acteur lanceur.
-     * @param {number} nbTargets    - Le nombre maximal de cibles autorisé (falsy = une seule).
+     * @param {number} nbTargets    - Le nombre de cibles autorisé (falsy = une seule).
      * @param {number} minReach     - La portée minimale (en cases).
      * @param {number} maxReach     - La portée maximale (en cases).
      * @param {string} [targetType=CardFqSystem.TARGET_TYPE_DEFAULT] - Le type de ciblage FQ.
      *
-     * @returns {boolean} True si toutes les cibles sont valides et à portée, false sinon.
+     * @returns {{verdict: string, targets: object[], outOfReach: {target: object, dist: number}[]}}
+     *          Le verdict (`TARGETING_VERDICT`), les cibles courantes et, le cas échéant, les cibles hors portée.
      */
-    static checkIfCanCardCanReachTargets(actor, nbTargets, minReach, maxReach, targetType = CardFqSystem.TARGET_TYPE_DEFAULT) {
+    static evaluateTargeting(actor, nbTargets, minReach, maxReach, targetType = CardFqSystem.TARGET_TYPE_DEFAULT) {
         const targets = Constants.myTargets(targetType);
-
-        if (targets.length === 0) {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor}), content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                    ${game.i18n.localize("FQCARDENGINE.WarningMsgNoTarget")}</span>`
-            });
-            return false;
+        const countVerdict = TargetingPredicates.evaluateTargetCount(targets.length, nbTargets);
+        if (countVerdict !== TargetingPredicates.TARGET_COUNT.OK) {
+            return {verdict: countVerdict, targets, outOfReach: []};
         }
-
-        if (!nbTargets && targets.length > 1) {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor}), content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                    ${game.i18n.localize("FQCARDENGINE.WarningMsgNoMultipleTarget")}</span>`
-            });
-            return false;
+        const casterToken = TargetingPredicates.findCasterToken(actor);
+        if (!casterToken) {
+            return {verdict: ResourceHandler.TARGETING_VERDICT.NO_CASTER_TOKEN, targets, outOfReach: []};
         }
-
-        if (nbTargets && targets.length > nbTargets) {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor}), content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                    ${game.i18n.format("FQCARDENGINE.WarningMsgTooMuchTarget", {nbTargets})}</span>`
-            });
-            return false;
+        const outOfReach = TargetingPredicates.findOutOfReachTargets(casterToken, targets, minReach, maxReach);
+        if (outOfReach.length > 0) {
+            return {verdict: ResourceHandler.TARGETING_VERDICT.OUT_OF_REACH, targets, outOfReach};
         }
+        return {verdict: ResourceHandler.TARGETING_VERDICT.OK, targets, outOfReach: []};
+    }
 
-        let result = true;
-        const myToken = game.canvas?.scene?.tokens?.find(t => t.actorId === actor?.id);
-        if (!myToken) {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor}), content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                    ${game.i18n.format("FQCARDENGINE.WarningNoTokenInCanvas", {nbTargets})}</span>`
+    /**
+     * Publie le(s) message(s) de chat d'avertissement correspondant à un verdict de
+     * ciblage invalide — utilisé par l'intégration dnd5e (la dialog, elle, lève une
+     * `FormError`). Ne publie rien pour un verdict `OK`. Reproduit les messages
+     * historiques (mêmes clés/arguments/speaker) de l'ancien contrôle de portée.
+     *
+     * @param {object} actor       - L'acteur lanceur (speaker des avertissements de comptage/token).
+     * @param {object} info        - Le détail du verdict.
+     * @param {string} info.verdict    - Le verdict de `evaluateTargeting`.
+     * @param {number} info.nbTargets  - Le nombre de cibles autorisé (pour les messages formatés).
+     * @param {number} info.minReach   - La portée minimale (message hors-portée).
+     * @param {number} info.maxReach   - La portée maximale (message hors-portée).
+     * @param {{target: object, dist: number}[]} [info.outOfReach] - Les cibles hors portée.
+     *
+     * @returns {void}
+     */
+    static warnTargeting(actor, {verdict, nbTargets, minReach, maxReach, outOfReach = []}) {
+        const V = ResourceHandler.TARGETING_VERDICT;
+        if (verdict === V.NO_TARGET) {
+            createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgNoTarget"), {actor});
+        } else if (verdict === V.MULTIPLE_NOT_ALLOWED) {
+            createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgNoMultipleTarget"), {actor});
+        } else if (verdict === V.TOO_MANY) {
+            createWarning(game.i18n.format("FQCARDENGINE.WarningMsgTooMuchTarget", {nbTargets}), {actor});
+        } else if (verdict === V.NO_CASTER_TOKEN) {
+            createWarning(game.i18n.format("FQCARDENGINE.WarningNoTokenInCanvas", {nbTargets}), {actor});
+        } else if (verdict === V.OUT_OF_REACH) {
+            outOfReach.forEach(({target, dist}) => {
+                createWarning(game.i18n.format("FQCARDENGINE.WarningMsgCantReachTarget", {
+                    targetName: target.name, minReach, maxReach, dist
+                }), {actor: game.user.character});
             });
-            return false;
         }
-        targets.forEach(target => {
-            const dist = Geometry.getMinDistanceBetweenTwoToken(myToken.x, myToken.y, target.document.x, target.document.y, myToken.width, target.document.width, myToken.height, target.document.height);
-
-            if (minReach > dist || maxReach < dist) {
-                result = false;
-                ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                    content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                            ${game.i18n.format("FQCARDENGINE.WarningMsgCantReachTarget", {
-                        targetName: target.name,
-                        minReach,
-                        maxReach,
-                        dist
-                    })}
-                        </span>`
-                });
-            }
-
-        });
-        return result;
     }
 
     /**
@@ -252,11 +260,7 @@ export default class ResourceHandler {
      */
     static validateUseSpellInTurn(actor) {
         if (!game.combat || game.combat.combatant?.actor?.id !== actor?.id) {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-            ${game.i18n.localize("FQCARDENGINE.WarningMsgPlayOutOfHisRound")}</span>`
-            });
+            createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPlayOutOfHisRound"), {actor: game.user.character});
             return false;
         }
         return true;

@@ -54,7 +54,12 @@ Hooks.on("dnd5e.preUseActivity", (activity, usageConfig, dialogConfig, messageCo
         return true;
     }
 
-    return ResourceHandler.checkIfCanCardCanReachTargets(activity.actor, itemNbTargets, minRange, maxRange);
+    const {verdict, outOfReach} = ResourceHandler.evaluateTargeting(activity.actor, itemNbTargets, minRange, maxRange);
+    if (verdict === ResourceHandler.TARGETING_VERDICT.OK) {
+        return true;
+    }
+    ResourceHandler.warnTargeting(activity.actor, {verdict, nbTargets: itemNbTargets, minReach: minRange, maxReach: maxRange, outOfReach});
+    return false;
 
 });
 Hooks.on("dnd5e.activityConsumption", (activity, _config, _messageConfig) => {

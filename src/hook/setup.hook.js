@@ -19,6 +19,7 @@ Hooks.on("setup", function () {
     // Pre Load templates.
     const templatePaths = [
         "modules/fq-card-engine/src/templates/partials/card-svg.hbs",
+        "modules/fq-card-engine/src/templates/partials/targeting-panel.hbs",
         "modules/fq-card-engine/src/templates/actors/fq-character-sidebar.hbs",
         "modules/fq-card-engine/src/templates/actors/fq-npc-header.hbs",
         "modules/fq-card-engine/src/templates/actors/fq-npc-sidebar.hbs",

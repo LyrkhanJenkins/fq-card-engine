@@ -1,4 +1,5 @@
-import {OriginFQEffectLabel, WARNING_COLOR} from "../domain/constants.js";
+import {OriginFQEffectLabel} from "../domain/constants.js";
+import {createWarning} from "../core/utils/chat.utils.js";
 import TradingCards, {DECK_TYPE, HAND_TYPE} from "../domain/trading/trading-cards.js";
 import CombatTurn from "../domain/engine/combat-turn.js";
 
@@ -89,11 +90,7 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
                         "system.attributes.exhaustion":
                             actor.system.attributes.exhaustion + 1
                     });
-                    ChatMessage.create({
-                        speaker: {actor: actor},
-                        content: `<div style='font-style: italic; color:${WARNING_COLOR};'>
-                            ${game.i18n.format("FQCARDENGINE.WarningMsgNoMoreCardInDeck", {pick: -nextPick})}</div>`
-                    });
+                    createWarning(game.i18n.format("FQCARDENGINE.WarningMsgNoMoreCardInDeck", {pick: -nextPick}), {actor});
                 }
             }
         }

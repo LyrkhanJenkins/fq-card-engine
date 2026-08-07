@@ -133,79 +133,83 @@ describe("ResourceHandler", () => {
 
     // ─── checkIfCanCardCanReachTargets ──────────────────────────────────────────
 
-    describe("ResourceHandler.checkIfCanCardCanReachTargets", () => {
+    describe("ResourceHandler.evaluateTargeting", () => {
         const caster = {id: "casterId", name: "Caster"};
+        const V = ResourceHandler.TARGETING_VERDICT;
 
         afterEach(() => {
             vi.restoreAllMocks();
         });
 
-        it("warns NoTarget and returns false when there are no targets", () => {
+        it("verdict NO_TARGET quand aucune cible", () => {
             vi.spyOn(Constants, "myTargets").mockReturnValue([]);
-
-            const result = ResourceHandler.checkIfCanCardCanReachTargets(caster, 1, 0, 1);
-
-            expect(result).toBe(false);
-            expect(ChatMessage.create).toHaveBeenCalledTimes(1);
-            expect(ChatMessage.create.mock.calls[0][0].content).toContain("WarningMsgNoTarget");
+            expect(ResourceHandler.evaluateTargeting(caster, 1, 0, 1).verdict).toBe(V.NO_TARGET);
         });
 
-        it("warns NoMultipleTarget and returns false with several targets but no nbTargets", () => {
-            vi.spyOn(Constants, "myTargets").mockReturnValue([
-                {document: {name: "T1"}}, {document: {name: "T2"}}
-            ]);
-
-            const result = ResourceHandler.checkIfCanCardCanReachTargets(caster, 0, 0, 1);
-
-            expect(result).toBe(false);
-            expect(ChatMessage.create.mock.calls[0][0].content).toContain("WarningMsgNoMultipleTarget");
+        it("verdict MULTIPLE_NOT_ALLOWED avec plusieurs cibles sans nbTargets", () => {
+            vi.spyOn(Constants, "myTargets").mockReturnValue([{document: {name: "T1"}}, {document: {name: "T2"}}]);
+            expect(ResourceHandler.evaluateTargeting(caster, 0, 0, 1).verdict).toBe(V.MULTIPLE_NOT_ALLOWED);
         });
 
-        it("warns TooMuchTarget and returns false when there are more targets than allowed", () => {
+        it("verdict TOO_MANY quand plus de cibles que le nombre autorisé", () => {
             vi.spyOn(Constants, "myTargets").mockReturnValue([
                 {document: {name: "T1"}}, {document: {name: "T2"}}, {document: {name: "T3"}}
             ]);
-
-            const result = ResourceHandler.checkIfCanCardCanReachTargets(caster, 2, 0, 1);
-
-            expect(result).toBe(false);
-            expect(ChatMessage.create.mock.calls[0][0].content).toContain("WarningMsgTooMuchTarget");
+            expect(ResourceHandler.evaluateTargeting(caster, 2, 0, 1).verdict).toBe(V.TOO_MANY);
         });
 
-        it("warns NoTokenInCanvas and returns false when the caster has no token on the active scene", () => {
+        it("verdict NO_CASTER_TOKEN quand le lanceur n'a pas de token sur la scène", () => {
             vi.spyOn(Constants, "myTargets").mockReturnValue([{document: {name: "T1"}}]);
             game.canvas.scene.tokens = [{actorId: "someoneElse", x: 0, y: 0}];
-
-            const result = ResourceHandler.checkIfCanCardCanReachTargets(caster, 1, 0, 1);
-
-            expect(result).toBe(false);
-            expect(ChatMessage.create.mock.calls[0][0].content).toContain("WarningNoTokenInCanvas");
+            expect(ResourceHandler.evaluateTargeting(caster, 1, 0, 1).verdict).toBe(V.NO_CASTER_TOKEN);
         });
 
-        it("returns false and warns per target when out of the min/max reach", () => {
+        it("verdict OUT_OF_REACH (+ liste des cibles hors portée) quand hors de portée", () => {
             vi.spyOn(Constants, "myTargets").mockReturnValue([
                 {document: {name: "T1", x: 100, y: 100, width: 1, height: 1}}
             ]);
             game.canvas.scene.tokens = [{actorId: "casterId", x: 0, y: 0, width: 1, height: 1}];
             vi.spyOn(Geometry, "getMinDistanceBetweenTwoToken").mockReturnValue(10);
 
-            const result = ResourceHandler.checkIfCanCardCanReachTargets(caster, 1, 0, 5);
-
-            expect(result).toBe(false);
-            expect(ChatMessage.create).toHaveBeenCalledTimes(1);
-            expect(ChatMessage.create.mock.calls[0][0].content).toContain("WarningMsgCantReachTarget");
+            const {verdict, outOfReach} = ResourceHandler.evaluateTargeting(caster, 1, 0, 5);
+            expect(verdict).toBe(V.OUT_OF_REACH);
+            expect(outOfReach).toHaveLength(1);
+            expect(outOfReach[0].dist).toBe(10);
         });
 
-        it("returns true when the target is within min/max reach", () => {
+        it("verdict OK quand la cible est à portée, sans aucun message de chat", () => {
             vi.spyOn(Constants, "myTargets").mockReturnValue([
                 {document: {name: "T1", x: 10, y: 0, width: 1, height: 1}}
             ]);
             game.canvas.scene.tokens = [{actorId: "casterId", x: 0, y: 0, width: 1, height: 1}];
             vi.spyOn(Geometry, "getMinDistanceBetweenTwoToken").mockReturnValue(2);
 
-            const result = ResourceHandler.checkIfCanCardCanReachTargets(caster, 1, 0, 5);
+            expect(ResourceHandler.evaluateTargeting(caster, 1, 0, 5).verdict).toBe(V.OK);
+            expect(ChatMessage.create).not.toHaveBeenCalled();
+        });
+    });
 
-            expect(result).toBe(true);
+    describe("ResourceHandler.warnTargeting", () => {
+        const caster = {id: "casterId", name: "Caster"};
+        const V = ResourceHandler.TARGETING_VERDICT;
+
+        it("publie WarningMsgNoTarget pour le verdict NO_TARGET", () => {
+            ResourceHandler.warnTargeting(caster, {verdict: V.NO_TARGET, nbTargets: 1, minReach: 0, maxReach: 1});
+            expect(ChatMessage.create).toHaveBeenCalledTimes(1);
+            expect(ChatMessage.create.mock.calls[0][0].content).toContain("WarningMsgNoTarget");
+        });
+
+        it("publie un WarningMsgCantReachTarget PAR cible hors portée", () => {
+            ResourceHandler.warnTargeting(caster, {
+                verdict: V.OUT_OF_REACH, nbTargets: 1, minReach: 0, maxReach: 1,
+                outOfReach: [{target: {name: "T1"}, dist: 5}, {target: {name: "T2"}, dist: 6}]
+            });
+            expect(ChatMessage.create).toHaveBeenCalledTimes(2);
+            expect(ChatMessage.create.mock.calls[0][0].content).toContain("WarningMsgCantReachTarget");
+        });
+
+        it("ne publie rien pour le verdict OK", () => {
+            ResourceHandler.warnTargeting(caster, {verdict: V.OK, nbTargets: 1, minReach: 0, maxReach: 1});
             expect(ChatMessage.create).not.toHaveBeenCalled();
         });
     });

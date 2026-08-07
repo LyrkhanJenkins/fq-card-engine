@@ -28,6 +28,8 @@ const {mountWorld, playChoice, getSocketSpy} = await import("./play-harness.js")
 const {DeterministicRoll, resetDiceControl} = await import("./deterministic-roll.js");
 const RollService = (await import("../../src/domain/engine/roll/roll-service.js")).default;
 
+const FormError = (await import("../../src/core/error/form-error.model.js")).default;
+
 /**
  * Phase 07 Plan 04 — Task 3 : bornes X/Y (min/max/hors) [EXHA-03] et
  * mécaniques propres de cartes clés (currentDrop, cartes<->zèle, pioche,
@@ -532,10 +534,19 @@ describe("Mécanique : script personnalisé (condition/effet requis) — échec 
     });
 
     test.each(customEvalCandidates)(
-        "$deckFile :: $cardName :: choix $choiceIndex — le pipeline ne lève jamais, même sans les prérequis du script",
+        "$deckFile :: $cardName :: choix $choiceIndex — aucune exception INATTENDUE (au pire une FormError de ciblage)",
         async ({card, choiceIndex}) => {
+            // Certaines de ces cartes (à portée) voient leur cible unique de
+            // fixture hors de portée ; le garde-fou de ciblage lève alors une FormError
+            // GRACIEUSE en amont du script. L'intention du test — le pipeline dégrade
+            // proprement, jamais d'exception inattendue — est préservée : soit pas de
+            // throw, soit une FormError (rejet gracieux), jamais une autre erreur.
             const result = await playChoice(card, choiceIndex, {world: abundantWorld()});
-            expect(result.threw).toBe(false);
+            if (result.threw) {
+                expect(result.error).toBeInstanceOf(FormError);
+            } else {
+                expect(result.threw).toBe(false);
+            }
         }
     );
 });

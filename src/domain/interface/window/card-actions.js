@@ -1,10 +1,23 @@
 import DisplayCard from "../shared/display-card.js";
+import TargetingView from "../shared/targeting-view.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
 import RollService from "../../engine/roll/roll-service.js";
 import Minion from "../../engine/shared/minion.js";
 import PlayCard from "../../engine/play-card.js";
 import FormError from "../../../core/error/form-error.model.js";
+import TargetingResolver from "../../engine/shared/targeting-resolver.js";
+import ResourceHandler from "../../engine/shared/resource-handler.js";
 import {PILE_TYPE} from "../../trading/trading-cards.js";
+
+// Correspondance verdict de ciblage (`ResourceHandler.TARGETING_VERDICT`) → clé du
+// message d'erreur du formulaire de jeu. `ok` n'y figure pas (aucune erreur levée).
+const TARGETING_FORM_ERROR = {
+    none: "FQCARDENGINE.DialogPlayFormErrorNoTarget",
+    multipleNotAllowed: "FQCARDENGINE.DialogPlayFormErrorNoMultipleTarget",
+    tooMany: "FQCARDENGINE.DialogPlayFormErrorTooManyTargets",
+    noCasterToken: "FQCARDENGINE.DialogPlayFormErrorNoTokenOnScene",
+    outOfReach: "FQCARDENGINE.DialogPlayFormErrorOutOfReach",
+};
 
 /**
  * Interactions de jeu sur une carte : clic, retournement, dialogue « Jouer la
@@ -112,13 +125,11 @@ export default {
         }
 
         const character = game.user.character;
-        const targets = [...game.user.targets].map(t => ({
-            name: t.name,
-            img: t.document.texture?.src,
-            hpValue: t.actor?.system?.attributes?.hp?.value ?? 0,
-            hpMax: t.actor?.system?.attributes?.hp?.max ?? 1,
-            hpPct: Math.round(((t.actor?.system?.attributes?.hp?.value ?? 0) / (t.actor?.system?.attributes?.hp?.max ?? 1)) * 100),
-        }));
+        // Panneau de ciblage
+        // (source de vérité unique → « ce qu'on voit = ce qui bloque »). Calculé pour le
+        // premier choix au rendu initial ; recalculé en direct par le hook renderDialog
+        // (au ciblage/déciblage et au changement de choix).
+        const panel = TargetingView.build(firstChoice, {});
 
         const charStats = character ? {
             name: character.name,
@@ -175,7 +186,7 @@ export default {
             maxSameCard: card.system.fq?.maxSameCard,
             fqClass: card.system.fq?.class,
             discards,
-            targets,
+            panel,
             charStats,
             hasSeveralDiscards: discards.length > 1,
             cardContents,
@@ -217,6 +228,87 @@ export default {
 
         Hooks.once("renderDialog", (app, _html) => {
             const root = app.element instanceof HTMLElement ? app.element : app.element[0];
+
+            // ── Panneau de ciblage actif + mode ciblage ──
+            // Câblé AVANT le garde de navigation ci-dessous pour ne pas dépendre de la
+            // présence des boutons prev/next. Le view-model partagé alimente le panneau
+            // (rendu initial + refresh live) et la barre du mode ciblage.
+            let targetingBar = null;
+
+            // Recalcule le view-model pour le CHOIX SÉLECTIONNÉ (cohérent avec le garde-fou).
+            const currentView = () => {
+                const {fd, cardContent} = this.getCardContent(root, cardContents, discards);
+                return TargetingView.build(cardContent, fd);
+            };
+
+            const updateBar = (view) => {
+                const label = targetingBar?.querySelector(".fq-play-targeting-bar-label");
+                if (label) {
+                    label.textContent = `${game.i18n.localize("FQCARDENGINE.TargetingPanelInProgress")} ${view.count} / ${view.required}`;
+                }
+            };
+
+            // Re-rend le partial dans `.fq-play-targets-content` (et la barre si active).
+            const renderPanel = async () => {
+                const content = root.querySelector(".fq-play-targets-content");
+                if (!content) return;
+                const view = currentView();
+                content.innerHTML = await foundry.applications.handlebars.renderTemplate(
+                    "modules/fq-card-engine/src/templates/partials/targeting-panel.hbs", view
+                );
+                if (targetingBar) updateBar(view);
+            };
+
+            // Sortie du mode ciblage : revient à l'outil « select », restaure la dialog
+            // (jamais fermée → état préservé) et rafraîchit le panneau avec les cibles finales.
+            const exitTargeting = async () => {
+                await ui.controls?.activate?.({control: "tokens", tool: "select"});
+                root.classList.remove("fq-targeting-mode");
+                targetingBar?.remove();
+                targetingBar = null;
+                renderPanel();
+            };
+
+            // Entrée du mode ciblage : outil « target » actif + canvas libéré (CSS) +
+            // barre flottante « Ciblage… X / N — [Terminé] ». La dialog reste ouverte.
+            const enterTargeting = async () => {
+                await ui.controls?.activate?.({control: "tokens", tool: "target"});
+                root.classList.add("fq-targeting-mode");
+                targetingBar = document.createElement("div");
+                targetingBar.className = "fq-play-targeting-bar";
+                const label = document.createElement("span");
+                label.className = "fq-play-targeting-bar-label";
+                const doneBtn = document.createElement("button");
+                doneBtn.type = "button";
+                doneBtn.className = "fq-play-targeting-done";
+                doneBtn.textContent = game.i18n.localize("FQCARDENGINE.TargetingPanelDone");
+                doneBtn.addEventListener("click", () => exitTargeting());
+                targetingBar.append(label, doneBtn);
+                document.body.appendChild(targetingBar);
+                updateBar(currentView());
+                ui.notifications.info(game.i18n.localize("FQCARDENGINE.TargetingPanelTargetHint"));
+            };
+
+            // Bouton « 🎯 Cibler » : listener DÉLÉGUÉ sur `root` (survit au re-rendu du panneau).
+            root.addEventListener("click", (event) => {
+                if (!event.target.closest(".fq-play-target-btn")) return;
+                event.preventDefault();
+                enterTargeting();
+            });
+
+            const targetHookId = Hooks.on("targetToken", () => renderPanel());
+            root.querySelector("select[name=\"nameContent\"]")?.addEventListener("change", () => renderPanel());
+            // Nettoyage obligatoire à la fermeture de CETTE dialog : retirer le hook
+            // targetToken (pas de fuite), enlever la barre et revenir à l'outil « select »
+            // si on ferme en plein ciblage.
+            Hooks.once("closeDialog", (closedApp) => {
+                if (closedApp !== app) return;
+                Hooks.off("targetToken", targetHookId);
+                targetingBar?.remove();
+                if (root.classList.contains("fq-targeting-mode")) {
+                    ui.controls?.activate?.({control: "tokens", tool: "select"});
+                }
+            });
 
             const prevBtn = root.querySelector(".fq-play-nav--prev");
             const nextBtn = root.querySelector(".fq-play-nav--next");
@@ -285,9 +377,18 @@ export default {
 
         if (fd.XXX === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorXXX"));
         if (fd.YYY === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorYYY"));
-        // Le choix d'effet est désormais consolidé dans le message de carte enrichi
-        // (voir PlayCard.renderChatMessage). On ne conserve le message séparé hérité
-        // que lorsque les messages enrichis sont désactivés, pour ne pas perdre l'info.
+
+        // ── Garde-fou de ciblage ──
+        if (cardContent?.minReach || cardContent?.maxReach) {
+            const nbTargets = TargetingResolver.resolveNbTargets(cardContent, fd);
+            const {minReach, maxReach} = TargetingResolver.resolveReach(cardContent, fd);
+            const {verdict} = ResourceHandler.evaluateTargeting(game.user.character, nbTargets, minReach, maxReach, cardContent.targetType);
+            const errorKey = TARGETING_FORM_ERROR[verdict];
+            if (errorKey) {
+                throw new FormError(game.i18n.localize(errorKey));
+            }
+        }
+
         if (cardContents.length > 1 && !CONFIG.FqCardEngine.options.betterChatMessages) {
             ChatMessage.create({
                 speaker: ChatMessage.getSpeaker({actor: game.user.character}),

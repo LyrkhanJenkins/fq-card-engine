@@ -20,7 +20,6 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
 vi.mock("../../src/domain/engine/shared/resource-handler.js", () => ({
     default: {
         consumeResources: vi.fn(),
-        checkIfCanCardCanReachTargets: vi.fn(),
         createUserWarningMessage: vi.fn(),
         checkResources: vi.fn()
     }
@@ -609,16 +608,16 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             }));
         });
 
-        it("portée insuffisante : délègue à checkIfCanCardCanReachTargets et renvoie false s'il échoue", () => {
-            ResourceHandler.checkIfCanCardCanReachTargets.mockReturnValue(false);
+        // v2.0.2 : le moteur ne contrôle PLUS DU TOUT le ciblage. Tout le contrôle
+        // (Default ET Skeletons) est remonté en amont, dans playValidatedCard, avant
+        // callBackplayCard (via ResourceHandler.evaluateTargeting).
+        it("le moteur ne bloque plus sur le ciblage : une carte à portée n'est pas rejetée par checkIfCanUseCard", () => {
+            ResourceHandler.checkResources.mockReturnValue(true);
             const cardContent = makeChoice({minReach: 1, maxReach: 3, nbTargets: 1, targetType: "Default"});
 
             const result = CardEffect.checkIfCanUseCard(cardContent, makeCard());
 
-            expect(result).toBe(false);
-            expect(ResourceHandler.checkIfCanCardCanReachTargets).toHaveBeenCalledWith(
-                game.user.character, 1, 1, 3, "Default"
-            );
+            expect(result).toBe(true);
         });
 
         it("pioche insuffisante : publie WarningMsgNotEnoughDraw et renvoie false", () => {

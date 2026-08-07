@@ -1,6 +1,7 @@
-import Constants, {WARNING_COLOR} from "../constants.js";
+import Constants from "../constants.js";
 import CardEffect from "./shared/card-effect.js";
 import RollService from "./roll/roll-service.js";
+import {createWarning} from "../../core/utils/chat.utils.js";
 
 /**
  * Orchestration du jeu et de la défausse d'une carte : gestion des cartes
@@ -24,11 +25,7 @@ export default class PlayCard {
      */
     static async discardCard(to, fd, cardContent, card, currentCards) {
         if (cardContent?.hasBeenPlayed) {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                    ${game.i18n.localize("FQCARDENGINE.WarningMsgCantDropPlayedCard")}</span>`
-            });
+            createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgCantDropPlayedCard"), {actor: game.user.character});
             return;
         }
 

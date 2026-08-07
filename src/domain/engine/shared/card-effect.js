@@ -4,12 +4,12 @@ import RollService from "../roll/roll-service.js";
 import Minion from "./minion.js";
 import Geometry from "./geometry.js";
 import Constants, {
-    ERROR_COLOR,
     OriginFQEffectLabel,
-    OTHER_ROLL_COLOR,
-    WARNING_COLOR
+    OTHER_ROLL_COLOR
 } from "../../constants.js";
 import Fx from "./fx.js";
+import {createWarning} from "../../../core/utils/chat.utils.js";
+import {ERROR_COLOR} from "../../../core/constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
 
@@ -388,27 +388,16 @@ export default class CardEffect {
                             let cardMessages = CardEffect.translateMessages(customEval.errorMessages);
                             if (cardMessages?.length) {
                                 cardMessages.forEach(warningMsg => {
-                                    ChatMessage.create({
-                                        speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                                        content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>${warningMsg}</span>`
-                                    });
+                                    createWarning(warningMsg, {actor: game.user.character});
                                 });
                             } else {
-                                ChatMessage.create({
-                                    speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                                    content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                                        ${game.i18n.localize("FQCARDENGINE.WarningMsgCardConditionNotMet")}</span>`
-                                });
+                                createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgCardConditionNotMet"), {actor: game.user.character});
                             }
                             iscustomEvals = false;
                         }
                     } catch (e) {
                         console.error(e);
-                        ChatMessage.create({
-                            speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                            content: `<span style='color: ${ERROR_COLOR}; font-style: italic'>
-                            ${game.i18n.localize("FQCARDENGINE.WarningMsgErrorReadingCardSpecialCondition")}</span>`
-                        });
+                        createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgErrorReadingCardSpecialCondition"), {actor: game.user.character, color: ERROR_COLOR});
                     }
                 }
             });
@@ -419,35 +408,14 @@ export default class CardEffect {
 
         if (game.combat != null) {
             if (cardContent?.replayable === "passif" && cardContent?.hasBeenPlayed && cardContent?.passivePlayedRound === game.combat?.round.toString()) {
-                ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                    content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                       ${game.i18n.localize("FQCARDENGINE.WarningMsgPassiveSpellAlreadyUsed")}</span>`
-                });
+                createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPassiveSpellAlreadyUsed"), {actor: game.user.character});
                 return false;
             }
             // S'agit t-il d'un sort réactive et peut on la jouer?
             if (cardContent && !cardContent.reactive && !ResourceHandler.validateUseSpellInTurn(game.user?.character)) {
                 return false;
             } else if (cardContent?.reactive && (!game.combat || game.combat.combatant.actor?.id === game.user?.character?.id)) {
-                ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                    content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-            ${game.i18n.localize("FQCARDENGINE.WarningMsgPlayReactiveCard")}</span>`
-                });
-                return false;
-            }
-        }
-
-        // TARGETING
-        if (cardContent?.minReach || cardContent?.maxReach) {
-            if (!ResourceHandler.checkIfCanCardCanReachTargets(
-                game.user.character,
-                cardContent.nbTargets,
-                cardContent.minReach,
-                cardContent.maxReach,
-                cardContent.targetType)
-            ) {
+                createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPlayReactiveCard"), {actor: game.user.character});
                 return false;
             }
         }
@@ -528,41 +496,25 @@ export default class CardEffect {
 
         if (cardContent?.xmax) {
             if (XXX > Number(cardContent?.xmax) || XXX < 0) {
-                ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                    content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                            ${game.i18n.format("FQCARDENGINE.WarningMsgXValueSuperiorXMax", {xmax: cardContent.xmax})}</span>`
-                });
+                createWarning(game.i18n.format("FQCARDENGINE.WarningMsgXValueSuperiorXMax", {xmax: cardContent.xmax}), {actor: game.user.character});
                 return false;
             }
         }
 
         if (cardContent?.xmin && XXX < Number(cardContent?.xmin)) {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                            ${game.i18n.format("FQCARDENGINE.WarningMsgXValueInferiorXMin", {xmin: cardContent.xmin})}</span>`
-            });
+            createWarning(game.i18n.format("FQCARDENGINE.WarningMsgXValueInferiorXMin", {xmin: cardContent.xmin}), {actor: game.user.character});
             return false;
         }
 
         if (cardContent?.ymax) {
             if (YYY > Number(cardContent?.ymax) || YYY < 0) {
-                ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                    content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                      ${game.i18n.format("FQCARDENGINE.WarningMsgYValueSuperiorYMax", {ymax: cardContent.ymax})}</span>`
-                });
+                createWarning(game.i18n.format("FQCARDENGINE.WarningMsgYValueSuperiorYMax", {ymax: cardContent.ymax}), {actor: game.user.character});
                 return false;
             }
         }
 
         if (cardContent?.ymin && YYY < Number(cardContent?.ymin)) {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-                content: `<span style='color: ${WARNING_COLOR}; font-style: italic'>
-                            ${game.i18n.format("FQCARDENGINE.WarningMsgYValueInferiorYMin", {ymin: cardContent.ymin})}</span>`
-            });
+            createWarning(game.i18n.format("FQCARDENGINE.WarningMsgYValueInferiorYMin", {ymin: cardContent.ymin}), {actor: game.user.character});
             return false;
         }
 
