@@ -2,25 +2,21 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-- Si ça devient génant, pour les choix de l'effet de la carte, mettre null de base et empecher de cliquer sur jouer si pas choisi ( comme X et Y)
-- J'ai l'impression que ya pas la bonne couleur de dé quand on fait le roll damage depuis une arme équipé (grave?)
-- On consomme les points d'actions mais on les récupère pas si on annule la dialog de dégâts quand on utilise une arme pour attaquer
-- Pas d'animation a la pioche des cartes de base
-- La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion???
-- Dialog-play doit se fermer si on ouvre une autre dialog-play (problème avec ciblage)
-- TODO : variabiliser les couleurs dans le css
-  Deplacer les controles d'utilisation d'une carte dans un dossier
+
 ### Versions prévues
 
 #### 2.0.2
+- On consomme les points d'actions mais on les récupère pas si on annule la dialog de dégâts quand on utilise une arme pour attaquer
+- Pas d'animation a la pioche des cartes de base
 - Si applyEffectsFormulas.formula vaut 1, ne pas appliquer le roll et tout de suite valider
+- Dialog-play doit se fermer si on ouvre une autre dialog-play (problème avec ciblage)
+- TODO : variabiliser les couleurs dans le css
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - PATCH--> RELEASE
 
 #### 2.0.3
 - Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de
   fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
-- Verifier 
 - Passage en typescript?
 - Volée de shuriken et shuriken, effet spéciaux à changer
 - Rajouter des règles d'architectures
@@ -33,6 +29,8 @@
   , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> - Revoir tir reflexe (jouer même si pas attaquer?)
 - Un réctif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème
 - Macros create all decks arrête d'ouvrir tous les decks
+- La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR
+- Deplacer les controles d'utilisation d'une carte dans un fichier JS et les tester
 - PATCH--> RELEASE
 
 #### 2.1.x
@@ -109,6 +107,8 @@
 ## Backlog
 
 ### Fix mineure
+- J'ai l'impression que ya pas la bonne couleur de dé quand on fait le roll damage depuis une arme équipé (grave?)
+- Si ça devient génant, pour les choix de l'effet de la carte, mettre null de base et empecher de cliquer sur jouer si pas choisi ( comme X et Y)
 - Dé à 0 face : les cartes en `1d(expr)` (ex. `1d(2*@str)`, `1d(@str)`, `1d(2*@wis)`, `1d(2*@dex)`) plantent au vrai Roll si le modificateur concerné vaut 0.
 - `1d(4-XXX)` (EarthFracture) et `1d(6-XXX)` (GiantStalactite) produisent des faces ≤ 0 (dé invalide) quand XXX est élevé.
 - `playDialog` : `firstChoice.replayable` est lu sans garde de nullité (`str.includes` plante si le champ est absent).
