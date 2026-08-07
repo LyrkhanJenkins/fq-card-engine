@@ -15,6 +15,7 @@ Fix :
 - Correction aura frost
 - Macro GM "create all decks" arrête d'ouvrir tous les decks
 - Pas d'animation a la pioche des cartes de base
+- Si applyEffectsFormulas.formula vaut 1, ne pas appliquer le roll et tout de suite valider
 
 Chore :
 - Redécoupage et suppression du code mort CSS

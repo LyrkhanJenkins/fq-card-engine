@@ -326,8 +326,14 @@ export default class CardEffect {
      * @returns {Promise<string[]>} Les messages traduits de l'effet déclenché (vide si aucun).
      */
     static async playApplyEffectsFormulas(applyEffectsFormulas, cardContent) {
-        const roll = await new Roll(applyEffectsFormulas.formula).evaluate();
-        Damage.applyDiceAppearance(roll); // dés à la couleur du joueur
+        // Formule purement numérique : pas de jet, on valide directement avec ce
+        // nombre comme total (aucun dé lancé, aucun message de chat posté).
+        const numeric = Number(applyEffectsFormulas.formula);
+        const isNumber = !isNaN(numeric);
+
+        const roll = isNumber ? null : await new Roll(applyEffectsFormulas.formula).evaluate();
+        const total = isNumber ? numeric : roll.total;
+        if (roll) Damage.applyDiceAppearance(roll); // dés à la couleur du joueur
         for (let i = 0; i < applyEffectsFormulas.effects.length; i++) {
             applyEffectsFormulas.effects[i].result = await RollService.rollResultAsync(applyEffectsFormulas.effects[i].result);
         }
@@ -340,8 +346,8 @@ export default class CardEffect {
         let effects = null;
         let message = `<h2 style='color: ${OTHER_ROLL_COLOR}'>${game.i18n.format("FQCARDENGINE.CardMsgApplyEffectsFormulas",
             {applyEffectsFormulasTitle: applyEffectsFormulas.title})}`;
-        if (applyEffectsFormulas.effects && applyEffectsFormulas.effects.map(effect => effect.result).includes(roll.total)) {
-            currentEffectData = applyEffectsFormulas.effects.find(effect => effect.result === roll.total);
+        if (applyEffectsFormulas.effects && applyEffectsFormulas.effects.map(effect => effect.result).includes(total)) {
+            currentEffectData = applyEffectsFormulas.effects.find(effect => effect.result === total);
             message += `: <b>${game.i18n.format("FQCARDENGINE.CardMsgApplyEffectsFormulasSuccess")}</b> `;
             effectMessages = CardEffect.translateMessages(currentEffectData.messages);
             effects = await CardEffect.createEffectsFromData(currentEffectData);
@@ -349,13 +355,15 @@ export default class CardEffect {
 
         message += `</h2>`;
 
-        const msg = await roll.toMessage({
-            speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-            flavor: message
-        });
+        if (roll) {
+            const msg = await roll.toMessage({
+                speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                flavor: message
+            });
 
-        if (game.dice3d && roll.isDeterministic === false) {
-            await game.dice3d.waitFor3DAnimationByMessageID(msg.id);
+            if (game.dice3d && roll.isDeterministic === false) {
+                await game.dice3d.waitFor3DAnimationByMessageID(msg.id);
+            }
         }
 
         // Application des effets actifs sur soi ou les cibles UNIQUEMENT après la
