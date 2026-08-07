@@ -1,9 +1,9 @@
 {
   "name": "Create deck/hand/pile for all players (GM)",
   "type": "script",
-  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.updateDeckForUser(user.id);\n   game.cards.find(c => c.system.fq.type === 'DECK' && c.ownership[user.id] === 3)?.sheet.render(true);\n});\nui.notifications.info(\"Création des decks/main/défausse pour les joueurs !\");",
+  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.updateDeckForUser(user.id);\n});\nui.notifications.info(\"Création des decks/main/défausse pour les joueurs !\");",
   "img": "icons/magic/symbols/squares-3d-green.webp",
-  "author": "SA6JKCaEua1JXSu4",
+  "author": "uUbINdqSmS5ll9IK",
   "scope": "global",
   "folder": null,
   "ownership": {
@@ -11,17 +11,17 @@
   },
   "flags": {},
   "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1786116998796,
+    "modifiedTime": 1786117148969,
+    "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "14.362",
-    "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "createdTime": 1724162791351,
-    "modifiedTime": 1779950541762,
-    "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
   "_id": "Pg15ocLpu2Up03C9",
-  "sort": 100000,
+  "sort": 0,
   "_key": "!macros!Pg15ocLpu2Up03C9"
 }

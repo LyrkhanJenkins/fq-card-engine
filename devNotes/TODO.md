@@ -28,7 +28,6 @@
 - Pour les réactifs ptetre travaillé sur des evenements pour pouvoir les jouer ( j'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
   , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> - Revoir tir reflexe (jouer même si pas attaquer?)
 - Un réctif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème
-- Macros create all decks arrête d'ouvrir tous les decks
 - La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR
 - Deplacer les controles d'utilisation d'une carte dans un fichier JS et les tester
 - PATCH--> RELEASE

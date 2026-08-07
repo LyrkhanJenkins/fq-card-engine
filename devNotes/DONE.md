@@ -13,6 +13,7 @@ Fix :
 - Correction macro create deck utilise le owner fq
 - Affichage des FX après les lancer de dés
 - Correction aura frost
+- Macro GM "create all decks" arrête d'ouvrir tous les decks
 
 Chore :
 - Redécoupage et suppression du code mort CSS
