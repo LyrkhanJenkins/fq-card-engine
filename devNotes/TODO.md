@@ -9,7 +9,6 @@
 #### 2.0.2
 - Afficher les éléments actifs de l'elementaliste, généralement afficher tous les effets sur une sicble
 - Revoir cape inhibitrice (enlever quel effet?)
-- Priorisé les protections avant de faire jouer la carte (OU REPORTER)
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - PATCH--> RELEASE
 

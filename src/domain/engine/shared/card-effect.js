@@ -87,13 +87,12 @@ export default class CardEffect {
                 }
             }
 
+            // On attend ICI, une seule fois, que TOUTES les animations Dice So Nice
+            // du jet soient terminées (les dés sont partis simultanément plus haut).
+            await Promise.all(dsnAnimations);
+
             const match = cardContent.damage.match(/\[([a-z]+)\]/i);
             await Fx.handleSpecialEffect(cardContent, resultArray, Constants.myToken, match ? match[1] : null);
-
-            // On attend ICI, une seule fois, que TOUTES les animations Dice So Nice
-            // du jet soient terminées (les dés sont partis simultanément plus haut),
-            // juste avant d'infliger les PV et d'afficher le récap → affichage cohérent.
-            await Promise.all(dsnAnimations);
 
             for (const res of resultArray) {
                 await socket.executeAsGM("applyActorHpModification", res.targetTokenId, res.value, res.type);
@@ -126,6 +125,12 @@ export default class CardEffect {
             effect = await CardEffect.numerizeEffectObjValue(effect);
             if (!effect.name) {
                 effect.name = effect.label;
+            }
+            // Foundry a renommé le champ image des ActiveEffect « icon » → « img » (v11).
+            // Les données de cartes utilisent encore « icon » : sans cette normalisation,
+            // l'effet est créé sans image et aucune icône n'apparaît sur le token.
+            if (!effect.img && effect.icon) {
+                effect.img = effect.icon;
             }
             if (effect.duration) {
                 const {startTime, rounds, turns} = effect.duration;
@@ -251,14 +256,36 @@ export default class CardEffect {
             applyEffectsFormulas.effects[i].result = await RollService.rollResultAsync(applyEffectsFormulas.effects[i].result);
         }
 
+        // On PRÉPARE ici l'effet déclenché (données + message) sans encore
+        // l'appliquer aux tokens : l'application effective est repoussée après
+        // l'animation des dés, plus bas.
         let effectMessages = null;
+        let currentEffectData = null;
+        let effects = null;
         let message = `<h2 style='color: ${OTHER_ROLL_COLOR}'>${game.i18n.format("FQCARDENGINE.CardMsgApplyEffectsFormulas",
             {applyEffectsFormulasTitle: applyEffectsFormulas.title})}`;
         if (applyEffectsFormulas.effects && applyEffectsFormulas.effects.map(effect => effect.result).includes(roll.total)) {
-            const currentEffectData = applyEffectsFormulas.effects.find(effect => effect.result === roll.total);
+            currentEffectData = applyEffectsFormulas.effects.find(effect => effect.result === roll.total);
             message += `: <b>${game.i18n.format("FQCARDENGINE.CardMsgApplyEffectsFormulasSuccess")}</b> `;
             effectMessages = CardEffect.translateMessages(currentEffectData.messages);
-            const effects = await CardEffect.createEffectsFromData(currentEffectData);
+            effects = await CardEffect.createEffectsFromData(currentEffectData);
+        }
+
+        message += `</h2>`;
+
+        const msg = await roll.toMessage({
+            speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+            flavor: message
+        });
+
+        if (game.dice3d && roll.isDeterministic === false) {
+            await game.dice3d.waitFor3DAnimationByMessageID(msg.id);
+        }
+
+        // Application des effets actifs sur soi ou les cibles UNIQUEMENT après la
+        // fin de l'animation des dés : sinon l'effet apparaît sur le token avant
+        // que le jet qui le déclenche ait fini de rouler.
+        if (effects) {
             for (const effectsKey in effects) {
                 if (!currentEffectData.self && (cardContent?.minReach || cardContent?.maxReach ||
                     cardContent.targetType === CardFqSystem.TARGET_TYPE_SKELETON)) {
@@ -272,16 +299,6 @@ export default class CardEffect {
             }
         }
 
-        message += `</h2>`;
-
-        const msg = await roll.toMessage({
-            speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-            flavor: message
-        });
-
-        if (game.dice3d && roll.isDeterministic === false) {
-            await game.dice3d.waitFor3DAnimationByMessageID(msg.id);
-        }
         return effectMessages ? effectMessages : [];
     }
 
