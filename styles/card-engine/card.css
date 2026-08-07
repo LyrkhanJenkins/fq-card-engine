@@ -43,7 +43,7 @@
     flex-shrink: 0;
     cursor: pointer;
     position: relative;
-    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.85));
+    filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85));
     z-index: 10;
     margin-left: calc(-1 * var(--fq-card-w) * var(--fq-scale) * 0.24);
 
@@ -68,7 +68,7 @@
     position: absolute;
     inset: 0;
     border-radius: 5px;
-    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.85));
+    filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85));
     transition: transform 0.25s cubic-bezier(0.22, 0.68, 0, 1.25),
     filter 0.2s ease;
     transform-origin: bottom center;
@@ -79,7 +79,7 @@
 .fq-card-engine-card:hover .fq-card-inner {
     transform: rotate(0deg) translateY(-28px) scale(1.25) !important;
     z-index: 100;
-    filter: drop-shadow(0 0 8px rgba(201, 168, 76, 0.5)) drop-shadow(0 6px 16px rgba(0, 0, 0, 0.95)) !important;
+    filter: drop-shadow(0 0 8px rgba(var(--fq-gold-rgb), 0.5)) drop-shadow(0 6px 16px rgba(var(--fq-black-rgb), 0.95)) !important;
 }
 
 /* Le tooltip suit l'inner */
@@ -99,7 +99,7 @@
 
 .fq-card:hover .fq-card-face,
 .fq-card-engine-card:hover .fq-card-face {
-    border-color: rgba(201, 168, 76, 0.6);
+    border-color: rgba(var(--fq-gold-rgb), 0.6);
 }
 
 /* ── Tooltip nom ── */
@@ -108,7 +108,7 @@
     bottom: calc(130% + 38px);
     left: 50%;
     transform: translateX(-50%) translateY(4px);
-    background: rgba(6, 4, 2, 0.97);
+    background: rgba(var(--fq-ink-rgb), 0.97);
     border: 0.5px solid var(--fq-gold-dark);
     color: var(--fq-gold-light);
     font-size: 16px;
@@ -143,7 +143,7 @@
     top: 2px;
     left: 2px;
     background: var(--fq-gold-dark);
-    color: #f0d898;
+    color: var(--fq-gold-bright);
     padding: 1px 4px;
     font-size: 10px;
     font-family: Georgia, serif;
@@ -153,12 +153,12 @@
 
 /* ── États ── */
 .fq-card-is-base {
-    border-color: rgba(201, 168, 76, 0.45);
-    filter: saturate(50%) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.85));
+    border-color: rgba(var(--fq-gold-rgb), 0.45);
+    filter: saturate(50%) drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85));
 }
 
 .has-been-played {
-    filter: saturate(0.45) drop-shadow(0 0 8px rgba(201, 168, 76, 0.5)) drop-shadow(0 6px 16px rgba(0, 0, 0, 0.95)) !important;
+    filter: saturate(0.45) drop-shadow(0 0 8px rgba(var(--fq-gold-rgb), 0.5)) drop-shadow(0 6px 16px rgba(var(--fq-black-rgb), 0.95)) !important;
 }
 
 .has-been-played-on-round {
@@ -177,7 +177,7 @@
 }
 
 .fq-card-viewable:hover {
-    filter: drop-shadow(0 0 6px rgba(201, 168, 76, 0.7));
+    filter: drop-shadow(0 0 6px rgba(var(--fq-gold-rgb), 0.7));
 }
 
 .fq-card-view-overlay {
@@ -187,7 +187,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(var(--fq-black-rgb), 0.85);
     cursor: pointer;
 }
 
@@ -197,7 +197,7 @@
     max-height: 92vh;
     max-width: 92vw;
     aspect-ratio: 508 / 693;
-    filter: drop-shadow(0 12px 34px rgba(0, 0, 0, 0.8));
+    filter: drop-shadow(0 12px 34px rgba(var(--fq-black-rgb), 0.8));
 }
 
 .fq-card-view-card svg {

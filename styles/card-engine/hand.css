@@ -129,7 +129,7 @@
 .fq-card-engine-settings-choose:hover,
 .fq-card-engine-draw:hover {
     opacity: 1;
-    background: rgba(201, 168, 76, 0.12) !important;
+    background: rgba(var(--fq-gold-rgb), 0.12) !important;
     border-color: var(--fq-gold-dark);
     box-shadow: none !important;
 }
