@@ -17,6 +17,7 @@ Fix :
 - Pas d'animation a la pioche des cartes de base
 - Si applyEffectsFormulas.formula vaut 1, ne pas appliquer le roll et tout de suite valider
 - Dialog-play doit se fermer si on ouvre une autre dialog-play (problème avec ciblage)
+- On consomme les ressources FQ au bon moment quand on lance les dégâts de l'arme
 
 Chore :
 - Redécoupage et suppression du code mort CSS

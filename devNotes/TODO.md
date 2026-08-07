@@ -6,7 +6,6 @@
 ### Versions prévues
 
 #### 2.0.2
-- On consomme les points d'actions mais on les récupère pas si on annule la dialog de dégâts quand on utilise une arme pour attaquer
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - PATCH--> RELEASE
 

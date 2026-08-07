@@ -62,14 +62,6 @@ Hooks.on("dnd5e.preUseActivity", (activity, usageConfig, dialogConfig, messageCo
     return false;
 
 });
-Hooks.on("dnd5e.activityConsumption", (activity, _config, _messageConfig) => {
-    // Filter Activities
-    if (notApplyFQOnActivity(activity)) {
-        return true;
-    }
-    ResourceHandler.consumeResources(activity.item?.system?.fq, activity.actor);
-    return true;
-});
 
 Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     const item = subject.item;
@@ -80,6 +72,9 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     if (!subject.item) {
         return;
     }
+    if (["heal",  "damage"].includes(subject.type)) {
+        ResourceHandler.consumeResources(item.system?.fq, subject.actor);
+    }
     let resultArray = [];
     let cardContent = {heal: 0, damage: 0, minReach, maxReach, bonusCrit: 0, bonusEva: 0};
     // Collecteur local des animations Dice So Nice de ce jet, passé aux méthodes de jet
@@ -87,6 +82,11 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     const dsnAnimations = [];
     for (let roll of rolls) {
         if (item.actor) {
+            // Type d'effet (issu du dé) pour les FX, capté au moment du jet mais joué
+            // seulement après l'attente des dés (voir plus bas) ; playFx distingue les
+            // types traités (heal/damage/attack) des autres, qui ne déclenchent pas de FX.
+            let fxType;
+            let playFx = false;
             if (subject.type === "heal") {
                 cardContent.heal = roll.formula;
                 if (item.actor.system?.fq?.bonus?.heal) {
@@ -98,9 +98,8 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
                     });
                 }
                 resultArray.push(...await Damage.addCriticalToHeal(item.actor, roll.total, cardContent, dsnAnimations));
-                if (token) {
-                    await Fx.handleSpecialEffect(cardContent, resultArray, token, roll.options.type);
-                }
+                fxType = roll.options.type;
+                playFx = true;
             } else if (subject.type === "damage" || subject.type === "attack") {
                 cardContent.damage = roll.formula;
                 if (item.actor.system?.fq?.bonus?.damage) {
@@ -112,14 +111,18 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
                     });
                 }
                 resultArray.push(...await Damage.addCriticalEvasionToDamage(item.actor, roll.total, cardContent, dsnAnimations));
-                if (token) {
-                    await Fx.handleSpecialEffect(cardContent, resultArray, token, roll.options.type);
-                }
+                fxType = roll.options.type;
+                playFx = true;
             }
 
             // Attente unique de toutes les animations Dice So Nice du jet (dégâts/soin
-            // + critique + esquives partis simultanément) avant d'infliger les PV.
+            // + critique + esquives partis simultanément) avant de jouer les FX puis
+            // d'infliger les PV — même ordre que lors du jeu d'une carte.
             await Promise.all(dsnAnimations);
+
+            if (token && playFx) {
+                await Fx.handleSpecialEffect(cardContent, resultArray, token, fxType);
+            }
 
             for (const res of resultArray) {
                 await socket.executeAsGM("applyActorHpModification", res.targetTokenId, res.value, res.type);

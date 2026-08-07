@@ -158,30 +158,6 @@ describe("integration/dnd5e", () => {
         });
     });
 
-    describe("dnd5e.activityConsumption", () => {
-        it("ignore la consommation quand le filtre s'applique", () => {
-            const hook = getHook("dnd5e.activityConsumption");
-            vi.spyOn(ResourceHandler, "consumeResources");
-            const activity = {actor: undefined, type: "utility"};
-
-            const result = hook(activity, {}, {});
-
-            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
-            expect(result).toBe(true);
-        });
-
-        it("consomme les ressources hors filtre", () => {
-            const hook = getHook("dnd5e.activityConsumption");
-            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
-            const activity = {actor: {}, item: {system: {fq: {action: -1}}}, type: "attack"};
-
-            const result = hook(activity, {}, {});
-
-            expect(ResourceHandler.consumeResources).toHaveBeenCalledWith(activity.item.system.fq, activity.actor);
-            expect(result).toBe(true);
-        });
-    });
-
     describe("dnd5e.rollDamageV2", () => {
         beforeEach(() => {
             game.system = {grid: {distance: 5}};
@@ -230,6 +206,80 @@ describe("integration/dnd5e", () => {
                 .toHaveBeenCalledWith(actor, [{targetTokenId: "token-1", value: 5, type: "healFQ"}], null);
             expect(socket.executeAsGM)
                 .toHaveBeenCalledWith("logCardPlayed", expect.any(Array), expect.objectContaining({heal: "1d8"}));
+        });
+
+        it("consomme les ressources FQ au jet pour une activité de dégâts (consommation différée)", async () => {
+            const hook = getHook("dnd5e.rollDamageV2");
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
+            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
+
+            const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
+            const fq = {action: -1, mana: -2};
+            const item = {actor, system: {fq}};
+            const subject = {
+                item, actor, type: "damage",
+                range: {value: 0, reach: 0}
+            };
+            const roll = {formula: "2d6", total: 7, options: {type: "fire"}};
+
+            await hook([roll], {subject});
+
+            expect(ResourceHandler.consumeResources).toHaveBeenCalledWith(fq, actor);
+        });
+
+        it("ne consomme pas les ressources FQ pour une activité d'attaque", async () => {
+            const hook = getHook("dnd5e.rollDamageV2");
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
+            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
+
+            const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
+            const item = {actor, system: {fq: {action: -1}}};
+            const subject = {
+                item, actor, type: "attack",
+                range: {value: 0, reach: 0}
+            };
+            const roll = {formula: "2d6", total: 7, options: {type: "fire"}};
+
+            await hook([roll], {subject});
+
+            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
+        });
+
+        it("joue les FX seulement après la fin des animations de dés (Dice So Nice)", async () => {
+            const hook = getHook("dnd5e.rollDamageV2");
+            let diceDone = false;
+            let diceDoneWhenFxPlayed;
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            // Le jet dépose une animation de dés dans le collecteur ; elle se termine
+            // de façon asynchrone (setTimeout) après tout code synchrone.
+            vi.spyOn(Damage, "addCriticalEvasionToDamage").mockImplementation(async (a, t, c, dsn) => {
+                dsn.push(new Promise(resolve => setTimeout(() => {
+                    diceDone = true;
+                    resolve();
+                }, 5)));
+                return [];
+            });
+            vi.spyOn(Fx, "handleSpecialEffect").mockImplementation(async () => {
+                diceDoneWhenFxPlayed = diceDone;
+            });
+
+            const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
+            const item = {actor, system: {fq: {}}};
+            const subject = {
+                item, actor, type: "damage",
+                range: {value: 0, reach: 0}
+            };
+            const roll = {formula: "2d6", total: 7, options: {type: "fire"}};
+
+            await hook([roll], {subject});
+
+            expect(Fx.handleSpecialEffect).toHaveBeenCalled();
+            expect(diceDoneWhenFxPlayed).toBe(true);
         });
     });
 });
