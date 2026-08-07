@@ -14,6 +14,7 @@ Fix :
 - Affichage des FX après les lancer de dés
 - Correction aura frost
 - Macro GM "create all decks" arrête d'ouvrir tous les decks
+- Pas d'animation a la pioche des cartes de base
 
 Chore :
 - Redécoupage et suppression du code mort CSS

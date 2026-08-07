@@ -77,8 +77,9 @@ export default class HandBoard {
                 t.update();
                 // Révélation cosmétique : uniquement pour le joueur qui pioche
                 // (`userId` local) et uniquement pour les cartes réellement piochées
-                // (`drawn`), quelle que soit la méthode de pioche.
-                if (userId === game.user.id && target.drawn) {
+                // (`drawn`), quelle que soit la méthode de pioche. Les cartes de base
+                // (`isBase`), distribuées automatiquement, ne déclenchent pas la révélation.
+                if (userId === game.user.id && target.drawn && !target.system?.fq?.isBase) {
                     t.bufferDrawReveal(target);
                 }
             }

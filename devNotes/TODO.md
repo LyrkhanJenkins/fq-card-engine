@@ -7,7 +7,6 @@
 
 #### 2.0.2
 - On consomme les points d'actions mais on les récupère pas si on annule la dialog de dégâts quand on utilise une arme pour attaquer
-- Pas d'animation a la pioche des cartes de base
 - Si applyEffectsFormulas.formula vaut 1, ne pas appliquer le roll et tout de suite valider
 - Dialog-play doit se fermer si on ouvre une autre dialog-play (problème avec ciblage)
 - TODO : variabiliser les couleurs dans le css
