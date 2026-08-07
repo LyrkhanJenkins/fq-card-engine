@@ -7,8 +7,6 @@
 
 #### 2.0.2
 - On consomme les points d'actions mais on les récupère pas si on annule la dialog de dégâts quand on utilise une arme pour attaquer
-
-- Dialog-play doit se fermer si on ouvre une autre dialog-play (problème avec ciblage)
 - TODO : variabiliser les couleurs dans le css
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - PATCH--> RELEASE

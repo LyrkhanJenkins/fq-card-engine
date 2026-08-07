@@ -19,6 +19,12 @@ const TARGETING_FORM_ERROR = {
     outOfReach: "FQCARDENGINE.DialogPlayFormErrorOutOfReach",
 };
 
+// Dialogue « Jouer la carte » actuellement ouvert. Une seule instance doit
+// exister à la fois : le mode ciblage (hook `targetToken`, barre flottante,
+// outil « target ») est global, deux dialogues ouverts se marcheraient dessus.
+// Ouvrir un nouveau dialogue ferme le précédent (voir `playDialog`).
+let openPlayDialog = null;
+
 /**
  * Interactions de jeu sur une carte : clic, retournement, dialogue « Jouer la
  * carte », validation/défausse, affichage image, ouverture de main et tri.
@@ -226,8 +232,17 @@ export default {
             };
         }
 
+        // Ferme le dialogue « Jouer » déjà ouvert (le cas échéant) avant d'afficher
+        // celui-ci : garantit une instance unique et déclenche le nettoyage du mode
+        // ciblage du précédent via son hook `closeDialog`.
+        if (openPlayDialog) {
+            await openPlayDialog.close();
+            openPlayDialog = null;
+        }
+
         Hooks.once("renderDialog", (app, _html) => {
             const root = app.element instanceof HTMLElement ? app.element : app.element[0];
+            openPlayDialog = app;
 
             // ── Panneau de ciblage actif + mode ciblage ──
             // Câblé AVANT le garde de navigation ci-dessous pour ne pas dépendre de la
@@ -303,6 +318,7 @@ export default {
             // si on ferme en plein ciblage.
             Hooks.once("closeDialog", (closedApp) => {
                 if (closedApp !== app) return;
+                if (openPlayDialog === app) openPlayDialog = null;
                 Hooks.off("targetToken", targetHookId);
                 targetingBar?.remove();
                 if (root.classList.contains("fq-targeting-mode")) {

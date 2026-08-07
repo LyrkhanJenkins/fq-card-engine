@@ -16,6 +16,7 @@ Fix :
 - Macro GM "create all decks" arrête d'ouvrir tous les decks
 - Pas d'animation a la pioche des cartes de base
 - Si applyEffectsFormulas.formula vaut 1, ne pas appliquer le roll et tout de suite valider
+- Dialog-play doit se fermer si on ouvre une autre dialog-play (problème avec ciblage)
 
 Chore :
 - Redécoupage et suppression du code mort CSS

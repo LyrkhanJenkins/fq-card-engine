@@ -366,6 +366,39 @@ describe("playDialog", () => {
         });
     });
 
+    describe("instance unique (fermeture du dialogue précédent)", () => {
+        let card2;
+
+        beforeEach(() => {
+            card2 = makePlayableCard({id: "card-2", _id: "card-2", sort: 2});
+            currentCards = makeHand([card, card2]);
+            globalThis.game.cards = [currentCards, pile];
+        });
+
+        /**
+         * Récupère le callback passé au dernier appel `Hooks.once("renderDialog", cb)`.
+         *
+         * @returns {Function} Le dernier callback `renderDialog` capturé.
+         */
+        function lastRenderDialogCallback() {
+            const calls = Hooks.once.mock.calls.filter(call => call[0] === "renderDialog");
+            return calls[calls.length - 1][1];
+        }
+
+        test("ouvrir un second dialogue ferme le premier", async () => {
+            // 1er dialogue : on simule son rendu pour enregistrer l'instance ouverte.
+            await window.FqCardEngineModule.playDialog(currentCards, card);
+            const firstRoot = document.createElement("div");
+            const firstApp = {element: firstRoot, close: vi.fn().mockResolvedValue(null)};
+            lastRenderDialogCallback()(firstApp, null);
+
+            // 2nd dialogue (autre carte) : doit fermer le premier avant de s'ouvrir.
+            await window.FqCardEngineModule.playDialog(currentCards, card2);
+
+            expect(firstApp.close).toHaveBeenCalled();
+        });
+    });
+
     describe("callback du bouton discard", () => {
         /**
          * Construit une racine jsdom minimale portant le formulaire attendu par
