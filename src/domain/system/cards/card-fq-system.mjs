@@ -190,6 +190,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                         turns: new StringField({required: true, label: "FQCARDENGINE.EffectTurns"}),
                     }),
                 }), {label: "FQCARDENGINE.EffectDatas"}),
+                removeEffectName: new StringField({required: true, label: "FQCARDENGINE.RemoveEffectName"}),
                 messages: new ArrayField(this.getMessageSchema(), {label: "FQCARDENGINE.EffectMessages"}),
             }), {label: "FQCARDENGINE.FormulaEffects"}),
         });

@@ -108,6 +108,82 @@ export default class CardEffect {
         }
     }
 
+    /**
+     * Indique si un effet déclenché s'applique à la/les cible(s) résolue(s) plutôt qu'au
+     * lanceur : vrai si l'effet n'est pas `self` ET que la carte a une portée (ou cible des
+     * squelettes). Source de vérité unique partagée par l'ajout et le retrait d'effet.
+     *
+     * @param {object} currentEffectData - L'effet déclenché (`self`).
+     * @param {object} cardContent       - Le contenu (choix) de la carte.
+     *
+     * @returns {boolean} True si l'effet vise la/les cible(s), false s'il vise le lanceur.
+     */
+    static effectAppliesToTargets(currentEffectData, cardContent) {
+        return !currentEffectData.self && Boolean(cardContent?.minReach || cardContent?.maxReach ||
+            cardContent.targetType === CardFqSystem.TARGET_TYPE_SKELETON);
+    }
+
+    /**
+     * Retire, quand un effet d'`applyEffectsFormulas` se déclenche, l'effet actif nommé
+     * `currentEffectData.removeEffectName` (nom exact, ou "@choose" pour une dialog de
+     * choix), sur les destinataires déjà résolus : la/les cible(s) (`targets`, retrait
+     * délégué au MJ via socket car la cible peut appartenir à un autre joueur) ou le
+     * lanceur (retrait direct, il possède son acteur).
+     *
+     * @param {object}   currentEffectData - L'effet déclenché (`removeEffectName`).
+     * @param {boolean}  toTargets         - True si le retrait vise la/les cible(s).
+     * @param {object[]} targets           - Les cibles résolues (vide si `toTargets` faux).
+     *
+     * @returns {Promise<void>}
+     */
+    static async removeEffectForApplyEffect(currentEffectData, toTargets, targets) {
+        const name = currentEffectData.removeEffectName;
+        if (toTargets) {
+            for (const target of targets) {
+                const effects = target.actor?.effects?.contents ?? [];
+                const effectId = effects.length ? await CardEffect.resolveEffectIdToRemove(effects, name) : undefined;
+                if (effectId) {
+                    await socket.executeAsGM("removeEffectForTarget", target.id, effectId);
+                }
+            }
+        } else {
+            const actor = game.user.character;
+            const effects = actor?.effects?.contents ?? [];
+            const effectId = effects.length ? await CardEffect.resolveEffectIdToRemove(effects, name) : undefined;
+            if (effectId) {
+                await actor.deleteEmbeddedDocuments("ActiveEffect", [effectId]);
+            }
+        }
+    }
+
+    /**
+     * Résout l'id de l'effet à retirer parmi les effets actifs d'une cible. Deux modes :
+     * nom exact (`spec` = le `name` d'un effet) → résolution pure et testable ; "@choose"
+     * → ouvre une dialog de choix. La branche interactive est isolée ici (et non dans
+     * `removeEffectOnTargets`) pour garder la résolution par nom testable sans DOM.
+     *
+     * @param {object[]} effects - Les effets actifs de la cible.
+     * @param {string}   spec    - "@choose" ou le nom exact de l'effet à retirer.
+     *
+     * @returns {Promise<string|undefined>} L'id de l'effet à retirer, ou undefined si aucun.
+     */
+    static async resolveEffectIdToRemove(effects, spec) {
+        if (spec !== "@choose") {
+            return effects.find(effect => effect.name === spec)?.id;
+        }
+        const options = effects.map(effect => `<option value="${effect.id}">${effect.name}</option>`).join("");
+        try {
+            return await foundry.applications.api.DialogV2.prompt({
+                window: {title: game.i18n.localize("FQCARDENGINE.RemoveEffectTitle")},
+                content: `<select name="effect">${options}</select>`,
+                ok: {callback: (event, button) => button.form.elements.effect.value}
+            });
+        } catch (e) {
+            // Dialog fermée/annulée sans choix : aucun effet retiré.
+            return undefined;
+        }
+    }
+
 
     /**
      * Construit les données d'effets actifs à partir d'un effet de carte :
@@ -285,18 +361,25 @@ export default class CardEffect {
         // Application des effets actifs sur soi ou les cibles UNIQUEMENT après la
         // fin de l'animation des dés : sinon l'effet apparaît sur le token avant
         // que le jet qui le déclenche ait fini de rouler.
+        // Décision cible/soi + cibles résolues : calculées UNE seule fois et partagées par
+        // l'ajout et le retrait d'effet de cet effet déclenché.
+        const toTargets = currentEffectData ? CardEffect.effectAppliesToTargets(currentEffectData, cardContent) : false;
+        const targets = toTargets ? Constants.myTargets(cardContent.targetType) : [];
+
         if (effects) {
             for (const effectsKey in effects) {
-                if (!currentEffectData.self && (cardContent?.minReach || cardContent?.maxReach ||
-                    cardContent.targetType === CardFqSystem.TARGET_TYPE_SKELETON)) {
-                    const myTargets = Constants.myTargets(cardContent.targetType);
-                    for (let i = 0; i < myTargets.length; i++) {
-                        await socket.executeAsGM("addEffectForTarget", effects[effectsKey], myTargets[i].id);
+                if (toTargets) {
+                    for (const target of targets) {
+                        await socket.executeAsGM("addEffectForTarget", effects[effectsKey], target.id);
                     }
                 } else {
                     ActiveEffect.implementation.create(effects[effectsKey], {parent: game.user.character});
                 }
             }
+        }
+
+        if (currentEffectData?.removeEffectName) {
+            await CardEffect.removeEffectForApplyEffect(currentEffectData, toTargets, targets);
         }
 
         return effectMessages ? effectMessages : [];

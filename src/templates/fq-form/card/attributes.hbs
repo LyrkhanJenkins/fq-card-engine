@@ -182,6 +182,15 @@
                                             rootId=../../../rootId
                                     }}
                                 </legend>
+                                <div class="form-fields">
+                                    <label>{{localize "FQCARDENGINE.RemoveEffectName"}}</label>
+                                    {{formInput
+                                            ../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.removeEffectName
+                                            value=effect.removeEffectName
+                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".removeEffectName")
+                                            rootId=../../../rootId
+                                    }}
+                                </div>
                                 <button type="button" data-action="addDataEffect" data-index="{{i}}"
                                         data-formula-index="{{formulaIndex}}" data-effect-index="{{effectIndex}}">
                                     ➕ {{localize

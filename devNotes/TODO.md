@@ -4,11 +4,16 @@
 ### Fix à prioriser
 - Si ça devient génant, pour les choix de l'effet de la carte, mettre null de base et empecher de cliquer sur jouer si pas choisi ( comme X et Y)
 - J'ai l'impression que ya pas la bonne couleur de dé quand on fait le roll damage depuis une arme équipé (grave?)
+- On consomme les points d'actions mais on les récupère pas si on annule la dialog de dégâts quand on utilise une arme pour attaquer
+- Pas d'animation a la pioche des cartes de base
+- La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion???
+- Dialog-play doit se fermer si on ouvre une autre dialog-play (problème avec ciblage)
+- TODO : variabiliser les couleurs dans le css
+  Deplacer les controles d'utilisation d'une carte dans un dossier
 ### Versions prévues
 
 #### 2.0.2
-- Afficher les éléments actifs de l'elementaliste, généralement afficher tous les effets sur une sicble
-- Revoir cape inhibitrice (enlever quel effet?)
+- Si applyEffectsFormulas.formula vaut 1, ne pas appliquer le roll et tout de suite valider
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - PATCH--> RELEASE
 
@@ -26,9 +31,14 @@
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
 - Pour les réactifs ptetre travaillé sur des evenements pour pouvoir les jouer ( j'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
   , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> - Revoir tir reflexe (jouer même si pas attaquer?)
+- Un réctif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème
+- Macros create all decks arrête d'ouvrir tous les decks
 - PATCH--> RELEASE
 
 #### 2.1.x
+- Se poser pour refelchir la caracterisation :
+  - Refaire une passe de toutes els fonctionnalités + celles à venir ET donner plus de cartes qui utilisent ces fonctionnalités
+  - QU'est ce qui caractérisent une classe , faire une passe des sorts qui ne caracterise pas la classe
 - Des choix de cartes ne sont plus des choix mais des executions après un autre choix 
   OU une transformation à la prochaine execution
     - Filtrer les vrais choix pour la dialog, et executer en queue tous les choix qui se succède
@@ -39,8 +49,9 @@
     - Dans le formulaire rajouter si un champ execution après choix, remplacement choix, comprenant les autre choix
     -  -> enlever JSON après utilisation?
     - (Facultatif: les noms des choix peuvent être localisé)
-
+    - Peut être qu'une fois que c'est fait, on a pas besoin de plusiuers formules d'application d'effet ( à voir)
 - L'esquive fait demi-dégâts
+- Plus de carte qui dissipent des effets ou qui ont des chances de dissiper des effets
 - Faire des sorts qui s'active au bout du enieme tour, action de la carte au bout d'un certain temps
 - Pouvoir générer une carte après utilisation d'une autre à partir d'un modèle
 - Utilisation des armes équipés

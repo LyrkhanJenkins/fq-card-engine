@@ -6,6 +6,7 @@ Feat :
 - Choix des cartes localisé et traduit en français
 - Affichage des resources spécifiques (critique, défausse, ...etc ) dans la main ou la dialog play
 - Ciblage possible depuis la dialog-play et erreur remonté avant de jouer la carte
+- Implémentation de la dissipation d'effet
 
 Fix :
 - Correction affichage dos de carte dans la dialog-play

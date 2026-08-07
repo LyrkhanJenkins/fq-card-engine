@@ -357,6 +357,23 @@ export default class Damage {
     }
 
     /**
+     * Supprime un effet actif sur l'acteur du token cible. Symétrique de
+     * `addEffectForTarget` : exécutée côté MJ via socket car la cible peut appartenir
+     * à un autre joueur. Tolérante à l'absence de token/acteur/effet.
+     *
+     * @param {string} targetId - L'id du token cible.
+     * @param {string} effectId - L'id de l'effet actif à retirer.
+     *
+     * @returns {Promise<void>}
+     */
+    static async removeEffectForTarget(targetId, effectId) {
+        const actor = game.canvas.tokens.get(targetId)?.actor;
+        if (actor && effectId) {
+            await actor.deleteEmbeddedDocuments("ActiveEffect", [effectId]);
+        }
+    }
+
+    /**
      * Applique une modification de points de vie sur l'acteur du token cible.
      * Pour des dégâts, consomme d'abord les PV temporaires, borne à 0, et supprime
      * les effets marqués `expireOnDamage` ; pour un soin, plafonne au max (max +

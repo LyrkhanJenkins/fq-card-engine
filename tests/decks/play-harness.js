@@ -159,6 +159,7 @@ export function mountWorld(overrides = {}) {
     };
     character = deepMerge(character, characterOverrides ?? {});
     character.update = vi.fn().mockResolvedValue(null);
+    character.deleteEmbeddedDocuments = vi.fn().mockResolvedValue(null);
 
     let targetActor = {
         _id: fixture.target.actorId,
@@ -298,7 +299,7 @@ function applyDiceControl(dice) {
  * @param {object} [opts.cardOptions] - Options transmises à `wrapCard`.
  *
  * @returns {Promise<object>} Le résultat riche : `{threw, error, hpCalls, logCalls,
- *          effectsCreated, activeEffectCalls, chatMessages, draws, passCalls,
+ *          effectsCreated, effectsRemoved, activeEffectCalls, chatMessages, draws, passCalls,
  *          updates, card, cardContent}`.
  */
 export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
@@ -354,6 +355,12 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
         effectsCreated: socketCalls
             .filter(call => call[0] === "addEffectForTarget")
             .map(call => ({effect: call[1], targetId: call[2]})),
+        effectsRemoved: socketCalls
+            .filter(call => call[0] === "removeEffectForTarget")
+            .map(call => ({targetId: call[1], effectId: call[2]})),
+        selfEffectsRemoved: globalThis.game.user.character.deleteEmbeddedDocuments.mock.calls
+            .filter(call => call[0] === "ActiveEffect")
+            .flatMap(call => call[1] ?? []),
         activeEffectCalls: globalThis.ActiveEffect.implementation.create.mock.calls,
         chatMessages: globalThis.ChatMessage.create.mock.calls.map(call => call[0]),
         draws: card.parent.draw.mock.calls,
