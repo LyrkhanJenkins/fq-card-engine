@@ -1,4 +1,64 @@
 :root {
+    /* ═══════════════════════════════════════════════════════════
+       PALETTE DE BASE — composantes RVB réutilisables
+       Déclarées en triplets « r, g, b » pour être combinées à une
+       opacité via rgba(var(--x-rgb), α).
+       ═══════════════════════════════════════════════════════════ */
+
+    /* Or */
+    --fq-gold-rgb: 201, 168, 76;
+    --fq-gold-dark-rgb: 122, 94, 34;
+    --fq-gold-hi-rgb: 230, 200, 110;
+    --fq-gold-hi2-rgb: 245, 222, 140;
+    --fq-gold-hi3-rgb: 235, 205, 115;
+    --fq-gold-hi4-rgb: 220, 190, 100;
+    --fq-cream-rgb: 255, 244, 214;
+
+    /* Brun (bordures) */
+    --fq-brown-rgb: 90, 66, 32;
+
+    /* Neutres */
+    --fq-black-rgb: 0, 0, 0;
+    --fq-white-rgb: 255, 255, 255;
+    --fq-ink-rgb: 6, 4, 2;
+    --fq-panel-a-rgb: 20, 16, 10;
+    --fq-panel-b-rgb: 15, 12, 8;
+    --fq-panel-c-rgb: 40, 32, 18;
+    --fq-panel-d-rgb: 60, 48, 24;
+
+    /* Rouge (danger / défausse / hors portée) */
+    --fq-danger-rgb: 200, 60, 60;
+    --fq-danger-b-rgb: 220, 60, 60;
+    --fq-danger-c-rgb: 220, 70, 70;
+    --fq-danger-d-rgb: 230, 120, 120;
+    --fq-danger-mid-rgb: 180, 30, 30;
+    --fq-danger-deep-rgb: 140, 40, 40;
+    --fq-danger-dark-rgb: 80, 20, 20;
+
+    /* Vert (validé / joué) */
+    --fq-success-rgb: 60, 160, 60;
+    --fq-success-deep-rgb: 20, 60, 20;
+
+    /* ═══════════════════════════════════════════════════════════
+       JETONS SÉMANTIQUES — habillage de l'interface cartes
+       (partagés par le container, les overlays et les dialogues)
+       ═══════════════════════════════════════════════════════════ */
+    --fq-gold: #c9a84c;
+    --fq-gold-light: #e8d090;
+    --fq-gold-dark: #7a5e22;
+    --fq-gold-bright: #f0d898;
+    --fq-gold-glow: rgba(var(--fq-gold-rgb), 0.45);
+    --fq-border: rgba(var(--fq-brown-rgb), 0.75);
+    --fq-border-subtle: rgba(var(--fq-brown-rgb), 0.4);
+    --fq-bg-sidebar: rgba(var(--fq-black-rgb), 0.85);
+    --fq-danger-text: #e09090;
+    --fq-danger-text-dim: #c07070;
+    --fq-success-text: #90c090;
+    --fq-text-white: #fff;
+
+    /* ═══════════════════════════════════════════════════════════
+       COULEURS DE JEU — statistiques secondaires & messages
+       ═══════════════════════════════════════════════════════════ */
     --fq8-color-action-1: #333102;
     --fq8-color-action-2: #e0d607;
     --fq8-color-action-3: #7d7700;
@@ -26,10 +86,10 @@
     --fq8-message-target: #d8c7a0;
     --fq8-message-damage: #d66a5a;
     --fq8-message-heal: #6fbf73;
-    --fq8-message-shadow-strong: rgba(0, 0, 0, 0.75);
-    --fq8-message-shadow: rgba(0, 0, 0, 0.6);
-    --fq8-message-card-shadow: rgba(0, 0, 0, 0.5);
-    --fq8-message-zebra: rgba(255, 255, 255, 0.04);
+    --fq8-message-shadow-strong: rgba(var(--fq-black-rgb), 0.75);
+    --fq8-message-shadow: rgba(var(--fq-black-rgb), 0.6);
+    --fq8-message-card-shadow: rgba(var(--fq-black-rgb), 0.5);
+    --fq8-message-zebra: rgba(var(--fq-white-rgb), 0.04);
     --fq8-message-separator: #000;
 
     --fq8-color-sacrifice: #c9b8e0;

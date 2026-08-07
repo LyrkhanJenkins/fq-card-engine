@@ -21,6 +21,7 @@ Fix :
 Chore :
 - Redécoupage et suppression du code mort CSS
 - Refacto architecture et todo techniques en suspens
+- Variabiliser toutes les couleurs dans le css
 
 v2.0.1:
 Feat :

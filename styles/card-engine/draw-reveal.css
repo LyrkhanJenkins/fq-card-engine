@@ -9,17 +9,11 @@
    ══════════════════════════════════════════════════════════════════════════ */
 .fq-draw-reveal-overlay {
     /* L'overlay est monté sur <body>, hors de #fq-card-engine-container :
-       on redéclare ici les variables dont dépendent les cartes, sinon leur
-       taille vaut calc(undefined) → 0 et les cartes sont invisibles. */
+       on redéclare ici les tailles de carte (portées par le container), sinon
+       leur calc(undefined) → 0 et les cartes sont invisibles. Les jetons de
+       couleur, eux, sont hérités de :root (styles/globals.css). */
     --fq-card-w: 94px;
     --fq-card-h: 130px;
-    --fq-gold: #c9a84c;
-    --fq-gold-light: #e8d090;
-    --fq-gold-dark: #7a5e22;
-    --fq-gold-glow: rgba(201, 168, 76, 0.45);
-    --fq-border: rgba(90, 66, 32, 0.75);
-    --fq-border-subtle: rgba(90, 66, 32, 0.4);
-    --fq-bg-sidebar: rgba(0, 0, 0, 0.85);
 
     position: fixed;
     inset: 0;

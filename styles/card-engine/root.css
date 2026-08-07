@@ -12,16 +12,9 @@
     height: 185px;
 }
 
-/* ── Variables ── */
+/* ── Variables de mise en page ──
+   (les jetons de couleur sont centralisés dans styles/globals.css) */
 #fq-card-engine-container {
-    --fq-gold: #c9a84c;
-    --fq-gold-light: #e8d090;
-    --fq-gold-dark: #7a5e22;
-    --fq-gold-glow: rgba(201, 168, 76, 0.45);
-    --fq-border: rgba(90, 66, 32, 0.75);
-    --fq-border-subtle: rgba(90, 66, 32, 0.4);
-    --fq-bg-sidebar: rgba(0, 0, 0, 0.85);
-
     /* Taille fluide pilotée par le slider */
     --fq-scale: 1.0;
     --fq-card-w: 94px;
