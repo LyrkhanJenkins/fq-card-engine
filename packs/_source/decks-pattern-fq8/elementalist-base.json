@@ -436,8 +436,8 @@
                               "priority": null
                             },
                             {
-                              "key": "macro.executre",
-                              "value": "jb2a.aura_themed.01.orbit.loop.cold",
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.cold",
                               "type": "custom",
                               "priority": null
                             }

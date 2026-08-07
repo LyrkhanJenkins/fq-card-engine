@@ -11,6 +11,7 @@ Fix :
 - Correction affichage dos de carte dans la dialog-play
 - Correction macro create deck utilise le owner fq
 - Affichage des FX après les lancer de dés
+- Correction aura frost
 
 Chore :
 - Redécoupage et suppression du code mort CSS
