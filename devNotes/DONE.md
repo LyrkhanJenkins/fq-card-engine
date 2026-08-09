@@ -23,6 +23,7 @@ Chore :
 - Redécoupage et suppression du code mort CSS
 - Refacto architecture et todo techniques en suspens
 - Variabiliser toutes les couleurs dans le css
+- Ajout de la recommandation du module "FQ Restrain movement"
 
 v2.0.1:
 Feat :
@@ -127,10 +128,54 @@ v1.1:
 - CurrentDrop utilisable hors combat sans drop de card
 - Formulaire de création de carte plutôt qu'une string transformé en JSON
 
+[//]: # (TODO)
 v1.0:
 
 - Protéger l'utilisation de carte si pas de token contrôlé par le joueur
 - Support v12
+
+# Réalisations :
+## Saison 1:
+- Score de défausse de carte à utiliser. réinitialiser à chaque round.
+- Ajouter d'autres consommations dans les sorts passifs de Foundry (comme la défausse)
+- Notamment pour les cartes qu'il faut uniquement révélé (cf White-Mage) -> Ne pas défausser la carte mais appliquer les
+  effets
+- Portée gérée cartes + sorts passifs
+- Permettre d'appliquer un effet directement au joueur
+- Permettre d'appliquer un effet directement à la cible d'un joueur
+- Gestion de la fatigue et des repos
+- Permettre de lancer des effets depuis les cartes
+- Permettre de lancer des macros depuis les objets
+- Implémentation de tous les objets D&D pour les butins
+- Déplacement limité par tour (sauf familiers)
+
+## Saison 2:
+
+- Ajout de messages dans le chat pour les repos
+- Les repos rendent l'intégralité des points de vie max + temporaires max
+- Les items ne donnent plus de points de vie max, mais des points de vie temporaires max
+- La duplication de carte force la nouvelle carte à avoir comme origine le deck en duquel on a dupliqué
+- Tous les effets des cartes se réinitialisent à la fin du combat
+- Gestion des cartes passives ou réutilisables + cout différent quand elles sont utilisés une première fois
+- Gérer le fait qu'une carte passive ne peut être jouée qu'une fois par tour
+- Définition des sorts D&D accessibles pour toutes les classes
+- Possibilité d'implémenter du code spécifique dans une carte
+- Gestion des bonus de dégâts/heal globaux
+- Gérer les conditions spéciales pour lancer les sorts, macro intégré au Json? (la cible est maudite, à un effet de
+  brulure ...etx)
+- Gérer les DOTS et HOTS en début de tour --> Réécriture de l'élémentaliste
+- Version simplifiée des personnages jusqu'au niveau 5
+- Cartes communes du niveau 6
+- Les cartes peuvent chacune avoir du code spécifique et des contraintes spécifiques.
+- Création dynamique des familiers et serviteurs
+- La plupart des conditions particulières des cartes sont vérifié (sauf La cible qui a subi des dégâts )
+- 5 Classes implémentées jusqu'au niveau 5
+- Ajout des bruitages suivant le type de dégâts
+- Dégâts typés (feu, froid, acid...etc)
+- Pioche aléatoire corrigée
+- Découpage et rajout de musique suivant les régions
+- 5 Sorts de bases pour tous les personnages: Dégainer, Rengainer, Courir, Bousculer ou Maîtriser (Macros)
+
 
 v0.1:
 

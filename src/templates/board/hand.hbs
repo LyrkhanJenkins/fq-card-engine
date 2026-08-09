@@ -8,24 +8,6 @@
 
         <div class="fq-hand-sidebar fq-hand-sidebar--left fq-card-engine-settings">
 
-            {{#if manualActions}}
-            <button class="fq-side-btn fq-card-engine-settings-hand"
-                    title="{{ localize 'FQCARDENGINE.OpenHand'}}">
-                <svg viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="14">
-                    <rect x="1" y="2" width="6" height="8" rx="1.5"
-                          stroke="currentColor" stroke-width="1.1"/>
-                    <rect x="3" y="3" width="6" height="8" rx="1.5"
-                          stroke="currentColor" stroke-width="1.1"
-                          transform="rotate(18 14 10)"/>
-                </svg>
-            </button>
-            <button class="fq-side-btn fq-card-engine-draw" title="{{ localize 'FQCARDENGINE.AddCard'}}">
-                <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="12">
-                    <path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                </svg>
-            </button>
-            {{/if}}
-
             <button class="fq-side-btn fq-card-engine-open-deck"
                     title="{{ localize 'FQCARDENGINE.OpenDeck'}}">
                 <svg viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="11">
@@ -61,6 +43,24 @@
             M9.2 7A2.2 2.2 0 0 0 4.8 7A2.2 2.2 0 0 0 9.2 7Z"/>
                 </svg>
             </button>
+
+            {{#if manualActions}}
+                <button class="fq-side-btn fq-card-engine-draw" title="{{ localize 'FQCARDENGINE.AddCard'}}">
+                    <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                        <path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <button class="fq-side-btn fq-card-engine-settings-hand"
+                        title="{{ localize 'FQCARDENGINE.OpenHand'}}">
+                    <svg viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg" width="12" height="14">
+                        <rect x="1" y="2" width="6" height="8" rx="1.5"
+                              stroke="currentColor" stroke-width="1.1"/>
+                        <rect x="3" y="3" width="6" height="8" rx="1.5"
+                              stroke="currentColor" stroke-width="1.1"
+                              transform="rotate(18 14 10)"/>
+                    </svg>
+                </button>
+            {{/if}}
         </div>
 
         <div id="fq-card-engine-card-container-{{ id }}" class="fq-card-zone fq-card-engine-card-container"></div>

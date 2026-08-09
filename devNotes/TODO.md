@@ -4,31 +4,30 @@
 ### Fix à prioriser
 
 ### Versions prévues
-
 #### 2.0.2
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
+- Docs a finir de relire
+- FQ Restraint movement, tester decommenter, revoir les commits, ajouter un RELEASE, faire le README, publier le package et l'ajouter en recommandation des modules
 - PATCH--> RELEASE
 
 #### 2.0.3
+- La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR
 - Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de
   fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
-- Passage en typescript?
-- Volée de shuriken et shuriken, effet spéciaux à changer
-- Rajouter des règles d'architectures
-- Tests fonctionnels + montée dernière version
-- Bug tornade effet magique
-- Revoir les effets visuels et audio
-- Devoir des effets visuel arrive avant le reveal des dés et dégâts, des fois non
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
+- Deplacer les controles d'utilisation d'une carte dans un fichier JS et les tester
 - Pour les réactifs ptetre travaillé sur des evenements pour pouvoir les jouer ( j'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
   , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> - Revoir tir reflexe (jouer même si pas attaquer?)
-- Un réctif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème
-- La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR
-- Deplacer les controles d'utilisation d'une carte dans un fichier JS et les tester
+- Un réactif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème
+- Rajouter des règles d'architectures
+- Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
+- Passage en typescript?
+  -> Remplacer empty-hand-message.html (par un gros bouton de configuration?) (commit 27 mai 2026)?
+- Tests fonctionnels + montée de version jusqu'à la dernière v14
 - PATCH--> RELEASE
 
-#### 2.1.x
-- Se poser pour refelchir la caracterisation :
+#### 2.1.0
+- Se poser pour refelchir la caractérisation :
   - Refaire une passe de toutes els fonctionnalités + celles à venir ET donner plus de cartes qui utilisent ces fonctionnalités
   - QU'est ce qui caractérisent une classe , faire une passe des sorts qui ne caracterise pas la classe
 - Des choix de cartes ne sont plus des choix mais des executions après un autre choix 
@@ -43,6 +42,7 @@
     - (Facultatif: les noms des choix peuvent être localisé)
     - Peut être qu'une fois que c'est fait, on a pas besoin de plusiuers formules d'application d'effet ( à voir)
 - L'esquive fait demi-dégâts
+- Gérer du ciblage speciale : Zone -> utiliser le ciblage de zone avec la dialog-play
 - Plus de carte qui dissipent des effets ou qui ont des chances de dissiper des effets
 - Faire des sorts qui s'active au bout du enieme tour, action de la carte au bout d'un certain temps
 - Pouvoir générer une carte après utilisation d'une autre à partir d'un modèle
@@ -65,62 +65,54 @@
         d'actions/mana/pioches?)
 
 - Première carte du Maître d'Armes et du Guerrier Runique
+- Chercher dans votre défausse action
+- Afficher d'autres auras (exemple: bouclier magique, nuage de dague...)
+- Gérer les cartes incolores
+- Déplacer les cibles automatiquement (Example: Tir supersonique, Frappe avec salto arrière...)
+
 - MINOR--> RELEASE
 
-#### 2.2.x
-- Chercher dans votre défausse action
-- Possibilité de choisir des cartes dans un changement de niveau (Pour le moment impossible dans le advancement sans
-  recreer une fenêtre )
-- Afficher des auras avec un autre module (exemple: bouclier magique, nuage de dague...)
-- Déplacer les cibles automatiquement (Example: Tir supersonique, Frappe avec salto arrière...)
-- Gérer les cartes incolores
-- Ajouter du ciblage si oublié dans la dialog-play?
-- Ne pas cliquer sur dialog-play si pas de cible sur une carte en nécessitant
-- Proposer des cibles pas encore choisi 0dans dialog-play
-- Gérer les erreurs au niveau de la dialog directement plutôt qu'en message
+#### 2.1.1
+- Revoir les effets visuels et audio
+- faire bouger tornade effet magique
+- Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens (vérifier que c'est pas déjà fait)
+- J'ai l'impression que ya pas la bonne couleur de dé quand on fait le roll damage depuis une arme équipé (grave?)
+- Valeurs sentinelles (`-9999`, `999999999`, `99999999`) utilisées comme drapeaux (pas de crit, cible inesquivable, portée/cibles infinies, rejouable infini) : fragiles, à remplacer par de vrais flags.
 - Supprimer la notion de joueur par main si le joueur n'a qu'une main possible
   -> Si joueur alors ce dernier ne peut avoir qu'une main, pas de configuration
-  -> Remplacer empty-hand-message.html (par un gros bouton de configuration?) (commit 27 mai 2026)?
-- Tests fonctionnels + montée dernière version
-- Améliorer le message du chat quand une carte est jouée ou défaussé
-- MINOR--> RELEASE
+- Volée de shuriken et shuriken, effet spéciaux à changer
+- Plus de sound effects et FX differents
 
-#### 2.2.x+1
-- Finir Texte a trou dans la description des cartes remplis par les caractéristiques
-- Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
-- PATCH--> RELEASE
-
-#### 2.3.x
+#### 2.2.x
 - Prise en compte la classe d'armure de DND5E
+- Ajout des cartes pour les 9 classes (jusqu'au niveau 10)
 - Migrations objets dnd5e v FQ OU comment plus les mettre en avant?
-- Ajout de spécialisation pour les 7 classes jusqu'au niveau 10
-- Prise en compte des resistances
+- Prise en compte des resistances, absorption des dégâts
+- Sort qui touche tous les alliés du canvas? tous les ennemis de canvas? (AURA)
 - MINOR--> RELEASE
-
 
 ## Backlog
-
 ### Fix mineure
-- J'ai l'impression que ya pas la bonne couleur de dé quand on fait le roll damage depuis une arme équipé (grave?)
 - Si ça devient génant, pour les choix de l'effet de la carte, mettre null de base et empecher de cliquer sur jouer si pas choisi ( comme X et Y)
 - Dé à 0 face : les cartes en `1d(expr)` (ex. `1d(2*@str)`, `1d(@str)`, `1d(2*@wis)`, `1d(2*@dex)`) plantent au vrai Roll si le modificateur concerné vaut 0.
 - `1d(4-XXX)` (EarthFracture) et `1d(6-XXX)` (GiantStalactite) produisent des faces ≤ 0 (dé invalide) quand XXX est élevé.
 - `playDialog` : `firstChoice.replayable` est lu sans garde de nullité (`str.includes` plante si le champ est absent).
-- Valeurs sentinelles (`-9999`, `999999999`, `99999999`) utilisées comme drapeaux (pas de crit, cible inesquivable, portée/cibles infinies, rejouable infini) : fragiles, à remplacer par de vrais flags.
 
 ### Chore:
-
 - Migration Eizh complète avec les niveaux
 
 ### Feat:
-
-- Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens
-- Gérer un nombre max d'utilisation pour des armes.
-- Implémentation du Gladiateur -> resource spécial pour les armes?, renommer en maître d'armes?
-- Gérer du ciblage speciale : Zone
-- Ne pas utiliser de points d'actions quand hors combat
+- Possibilité de choisir des cartes dans un changement de niveau (Pour le moment impossible dans le advancement sans
+  recreer une fenêtre )
 - Vérifier qu'un GM est connecté pour pouvoir lancer les cartes
-- Comment gérer les effets visuels si le fichier n'existe pas?
-- Plus de sound effects differents
 - Gérer un forçage pour MJ des cartes si jamais il y a un problème d'implémentation dans la partie
+- Entrer dans les logs de toutes les autres actions et pas seulement celles des cartes -> Permettra de savoir si des
+  dégâts ont été infligés sur une cible par n'importe quelle source par exemple
+- Amélioration de cartes? : Faire des cartes dorées (hearthstone) ou des cartes + (SlayTheSpire)
+- Est ce qu'on peut faire des cartes qui construisent des tiles infranchissables?
 
+- Règles sur les repos:
+  - Après un repos long, la constitution ajoute X points de vie temporaire (X = (niveau * bonus de constitution)) ? (A
+  tester)
+  - La constitution doit augmenter la récupération des points de vie directement à la fin d’un combat (niveau +
+  constitution) ou pendant un repos court (niveau + 1d(2* constitution))
