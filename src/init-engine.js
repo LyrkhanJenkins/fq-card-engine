@@ -14,7 +14,6 @@ CONFIG.FqCardEngine = {
         betterChatMessages: false,
         hideMessages: false,
         faceUpMode: false,
-        showPlayedPlayerNames: false,
         cardClick: "play_card"
     }, documentClass: HandBoard
 };
@@ -27,7 +26,6 @@ window.FqCardEngineModule = {
     handMiniBarList: new Array(),
     moduleName: "fq-card-engine",
     eventName: "module.fq-card-engine",
-    playerPlayedProp: "player-played",
     handMax: 10,
 
     ...CharGauges,

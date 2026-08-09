@@ -107,20 +107,6 @@ export function registerSettings() {
         },
         filePicker: false,  // set true with a String `type` to use a file picker input
     });
-    game.settings.register(FqCardEngineModule.moduleName, "ShowPlayedPlayerNames", {
-        name: game.i18n.localize("FQCARDENGINE.ShowPlayedPlayerNames"),
-        hint: game.i18n.localize("FQCARDENGINE.ShowPlayedPlayerNamesHint"),
-        scope: "world",     // "world" = sync to db, "client" = local storage
-        config: true,       // false if you dont want it to show in module config
-        type: Boolean,       // Number, Boolean, String,
-        default: false,
-        onChange: value => { // value is the new value of the setting
-            CONFIG.FqCardEngine.options.showPlayedPlayerNames = value;
-            game.socket.emit(FqCardEngineModule.eventName, {"action": "rerender"});
-            FqCardEngineModule.rerender();
-        },
-        filePicker: false,  // set true with a String `type` to use a file picker input
-    });
     game.settings.register(FqCardEngineModule.moduleName, "ShowCharGauges", {
         scope: "client",
         config: false,

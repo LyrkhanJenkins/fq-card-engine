@@ -35,8 +35,6 @@
   "FQCARDENGINE.RollInitiativeNameSettingHint": "Roll Normal Initiative In start combat and cards creating minions",
   "FQCARDENGINE.BetterChatMessagesSetting": "Better Chat Messages",
   "FQCARDENGINE.BetterChatMessagesSettingHint": "Messages in Chat are displayed with card images and descriptions",
-  "FQCARDENGINE.ShowPlayedPlayerNames": "Show Player Names in Pile",
-  "FQCARDENGINE.ShowPlayedPlayerNamesHint": "When active this will show who played the cards in the Pile (Window View)",
   "FQCARDENGINE.FaceUpModeSetting": "Face Up Mode",
   "FQCARDENGINE.FaceUpModeSettingHint": "Disables the ability to flip and shows the face when using the module",
   "FQCARDENGINE.ChooseForGMTitle": "Assign User or Hand",

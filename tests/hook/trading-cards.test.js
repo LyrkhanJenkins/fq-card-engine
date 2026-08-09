@@ -60,29 +60,6 @@ describe("trading-cards", () => {
             expect(result).toBe(false);
         });
 
-        it("historise la carte jouée dans les flags utilisateur quand showPlayedPlayerNames est actif", () => {
-            const hook = getHook("passCards");
-            globalThis.FqCardEngineModule = {moduleName: "fq-card-engine", playerPlayedProp: "playerPlayed"};
-            CONFIG.FqCardEngine.options.showPlayedPlayerNames = true;
-            game.user.getFlag = vi.fn(() => undefined);
-            game.user.setFlag = vi.fn();
-
-            const from = makeDeck("HAND", {type: "hand"});
-            const to = makeDeck("PILE", {type: "pile"});
-            const action = {action: "play", toCreate: [{_id: "card-1"}]};
-
-            hook(from, to, action);
-
-            expect(game.user.getFlag).toHaveBeenCalledWith("fq-card-engine", "playerPlayed");
-            expect(game.user.setFlag).toHaveBeenCalledWith(
-                "fq-card-engine", "playerPlayed", expect.objectContaining({"card-1": expect.any(Number)})
-            );
-
-            // Restauré pour ne pas polluer les autres tests du fichier (CONFIG n'est
-            // pas réinitialisé entre tests, cf. tests/setup.js Zone 1).
-            CONFIG.FqCardEngine.options.showPlayedPlayerNames = false;
-        });
-
         it("laisse passer (true) quand aucune des conditions de blocage n'est remplie", () => {
             const hook = getHook("passCards");
             const from = makeDeck("HAND", {type: "hand"});

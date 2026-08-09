@@ -35,8 +35,6 @@
   "FQCARDENGINE.RollInitiativeNameSettingHint": "Lance les dés d'initiative en mode normal au début des combats et sur les cartes invoquant des familiers",
   "FQCARDENGINE.BetterChatMessagesSetting": "Meilleur message de chat",
   "FQCARDENGINE.BetterChatMessagesSettingHint": "Les messages de chat affichent les images et descriptions des cartes",
-  "FQCARDENGINE.ShowPlayedPlayerNames": "Affiche le nom du joueur dans la pile",
-  "FQCARDENGINE.ShowPlayedPlayerNamesHint": "Quand actif, montre le nom du joueur qui a jou\u00e9 la carte dans la pile (Window View)",
   "FQCARDENGINE.FaceUpModeSetting": "Mode face visible",
   "FQCARDENGINE.FaceUpModeSettingHint": "D\u00e9sactive la possibilit\u00e9 de retourner les cartes quand le module est actif",
   "FQCARDENGINE.ChooseForGMTitle": "Assigner utilisateur ou main",

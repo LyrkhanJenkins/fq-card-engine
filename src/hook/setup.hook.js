@@ -138,9 +138,6 @@ Hooks.on("setup", function () {
         if (game.settings.get(FqCardEngineModule.moduleName, "FaceUpMode")) {
             CONFIG.FqCardEngine.options.faceUpMode = true;
         }
-        if (game.settings.get(FqCardEngineModule.moduleName, "ShowPlayedPlayerNames")) {
-            CONFIG.FqCardEngine.options.showPlayedPlayerNames = true;
-        }
         game.socket.on(FqCardEngineModule.eventName, data => {
             if (data.action === "rerender") {
                 FqCardEngineModule.rerender();

@@ -5,19 +5,6 @@ Hooks.on("dealCards", (_origin, _destinations, _context) => {
 });
 
 Hooks.on("passCards", (from, to, action) => {
-    //track who played what if this flag is turned on showPlayedPlayerNames
-    //Mark The Pile with the card info and player ID that passed it that's being passed to it
-    if ((action.action === "play" || action.action === "pass") && to.type === "pile" && CONFIG.FqCardEngine.options.showPlayedPlayerNames) {
-        action.toCreate.forEach(function (c, _i) {
-            let cardID = c._id ? c._id : c.data._id;
-            let history = game.user.getFlag(FqCardEngineModule.moduleName, FqCardEngineModule.playerPlayedProp);
-            if (history === undefined) {
-                history = {};
-            }
-            history[cardID] = Date.now();
-            game.user.setFlag(FqCardEngineModule.moduleName, FqCardEngineModule.playerPlayedProp, history);
-        });
-    }
     if (from.system.fq.type === "SPELLBOOK" && to.system.fq.type !== "DECK") {
         ui.notifications.warn(game.i18n.localize("FQCARDENGINE.WarningOnlyCopyCardFromSpellBookToDeck"));
         return false;
