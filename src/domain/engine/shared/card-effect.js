@@ -664,12 +664,13 @@ export default class CardEffect {
         const keys = key.split(".");
         let value = obj;
         for (const k of keys) {
-
-            if (value.hasOwnProperty(k)) {
-                value = value[k];
-            } else {
+            if (value == null || !Object.prototype.hasOwnProperty.call(value, k)) {
                 return 0;
             }
+            value = value[k];
+        }
+        if (value == null) {
+            return 0;
         }
         return RollService.rollResultSync(value.toString());
     }

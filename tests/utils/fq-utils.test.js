@@ -746,6 +746,20 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         it("chemin absent : renvoie 0", async () => {
             expect(await CardEffect.getNestedAttribute({a: {}}, "a.c")).toBe(0);
         });
+
+        it("maillon intermédiaire null : renvoie 0 sans lever", async () => {
+            expect(() => CardEffect.getNestedAttribute({a: null}, "a.b")).not.toThrow();
+            expect(await CardEffect.getNestedAttribute({a: null}, "a.b")).toBe(0);
+        });
+
+        it("objet racine null/undefined (personnage absent) : renvoie 0 sans lever", async () => {
+            expect(await CardEffect.getNestedAttribute(undefined, "a.b")).toBe(0);
+            expect(await CardEffect.getNestedAttribute(null, "a")).toBe(0);
+        });
+
+        it("valeur finale résolue à null : renvoie 0 sans lever", async () => {
+            expect(await CardEffect.getNestedAttribute({a: {b: null}}, "a.b")).toBe(0);
+        });
     });
 
     describe("recalculatedWithWYValue", () => {
