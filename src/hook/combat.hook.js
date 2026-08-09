@@ -7,8 +7,9 @@ Hooks.on("deleteCombat", async function (combat, _delta) {
     if (CombatTurn.isLocalUserFirstActiveGM()) {
         await CombatTurn.resetCards();
         combat.combatants.forEach(combatant => {
+            if (!combatant.actor) return;
             combatant.actor.update({"system.attributes.exhaustion": 0});
-            if (combatant?.actor?.effects && combatant.actor.effects.size > 0) {
+            if (combatant.actor.effects && combatant.actor.effects.size > 0) {
                 combatant.actor.effects.filter(
                     effect => effect.origin === OriginFQEffectLabel
                 ).forEach(effect => {

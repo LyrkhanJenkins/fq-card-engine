@@ -35,7 +35,7 @@ export default class FqNpcSheet extends dnd5e.applications.actor.NPCActorSheet {
     async _prepareHeaderContext(_context, options) {
         let context = await super._prepareHeaderContext(_context, options);
         context = FqCharacterSheet.calculPercentageFqAttributes(context);
-        const contextEffects = await super._prepareEffectsContext(options);
+        const contextEffects = await super._prepareEffectsContext(_context, options);
         context.canModifyFQ = FqCharacterSheet.getCanModifyFQ(context.editable, contextEffects.effects);
         return context;
     }

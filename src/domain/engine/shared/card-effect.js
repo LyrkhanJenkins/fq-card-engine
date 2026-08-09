@@ -91,7 +91,7 @@ export default class CardEffect {
             // du jet soient terminées (les dés sont partis simultanément plus haut).
             await Promise.all(dsnAnimations);
 
-            const match = cardContent.damage.match(/\[([a-z]+)\]/i);
+            const match = cardContent.damage?.match(/\[([a-z]+)\]/i);
             await Fx.handleSpecialEffect(cardContent, resultArray, Constants.myToken, match ? match[1] : null);
 
             for (const res of resultArray) {
@@ -198,7 +198,6 @@ export default class CardEffect {
      */
     static async createEffectsFromData(currentEffect) {
         return Promise.all(currentEffect.data.map(async effect => {
-            effect = CardEffect.numerizeEffectObjValue(effect);
             if (!effect.name) {
                 effect.name = effect.label;
             }
@@ -282,37 +281,6 @@ export default class CardEffect {
         return cardContent;
     }
 
-    /**
-     * Convertit récursivement les valeurs d'un effet : nombres numérisés, chaînes
-     * commençant par « + » laissées telles quelles, autres chaînes évaluées comme
-     * des jets de dés.
-     *
-     * @param {object} content - L'objet effet dont les valeurs sont transformées.
-     *
-     * @returns {Promise<object>} Le même objet avec ses valeurs numérisées/évaluées.
-     */
-    static numerizeEffectObjValue(content) {
-        for (const key in Object.values(content)) {
-            if (content.hasOwnProperty(key)) {
-                if (typeof content[key] === "object") {
-                    content[key] = CardEffect.numerizeEffectObjValue(content[key]);
-                } else if (!isNaN(content[key])) {
-                    content[key] = Number(content[key]);
-                } else if (typeof content[key] === "string" && content[key][0] === "+") {
-                    // Do nothing
-                } else {
-                    try {
-                        content[key] = RollService.rollResultSync(content[key]);
-                    } catch (e) {
-                        console.error(e);
-                    }
-                }
-            }
-        }
-        return content;
-    }
-
-
     //Display damage dices and manual actions
     /**
      * Évalue la formule d'une « formule d'effets » : si le résultat du jet
@@ -331,7 +299,7 @@ export default class CardEffect {
         const numeric = Number(applyEffectsFormulas.formula);
         const isNumber = !isNaN(numeric);
 
-        const roll = isNumber ? null : await new Roll(applyEffectsFormulas.formula).evaluate(); //TODO
+        const roll = isNumber ? null : await new Roll(applyEffectsFormulas.formula).evaluate();
         const total = isNumber ? numeric : roll.total;
         if (roll) Damage.applyDiceAppearance(roll); // dés à la couleur du joueur
         for (let i = 0; i < applyEffectsFormulas.effects.length; i++) {
@@ -659,7 +627,7 @@ export default class CardEffect {
         if (value === "nbTargets") {
             return myTargets.length ? myTargets.length : 0;
         } else if (myTargets.length === 1 && value === "reach") {
-            const myToken = game.canvas?.scene?.tokens?.find(t => t.actorId === game.user?.character?.id);
+            const myToken = Constants.myToken;
             const target = myTargets[0].document;
             return Geometry.getMinDistanceBetweenTwoToken(myToken.x, myToken.y, target.x, target.y,
                 myToken.width, target.width, myToken.height, target.height);

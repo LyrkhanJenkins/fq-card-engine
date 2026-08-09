@@ -206,7 +206,7 @@ function damageThresholds(choice) {
  * @returns {number} Le seuil de réussite.
  */
 function healCritThreshold(choice) {
-    return 20 - actorCritical - Number(choice.bonusCrit || 0);
+    return 21 - actorCritical - Number(choice.bonusCrit || 0);
 }
 
 describe("Dégâts chiffrés : valeur de base exacte hors critique/esquive (EXHA-02)", () => {

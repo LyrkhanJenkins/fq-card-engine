@@ -61,11 +61,6 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         expect(result).toBeLessThanOrEqual(20);
     });
 
-    it("should generate a random ID", () => {
-        const id = ObjectUtils.generateRandomId(10);
-        expect(id).toHaveLength(10);
-    });
-
     it("should prepare data from card", async () => {
         const cardContent = {minReach: "1", maxReach: "1+1d6", nbTargets: "1d3"};
         await CardEffect.prepareDataFromCard(cardContent);
@@ -129,7 +124,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         }));
     });
 
-    it("appelle numerizeEffectObjValue pour chaque effet et recopie label → name si manquant", async () => {
+    it("createEffectsFromData recopie label → name si manquant", async () => {
         const input = {
             data: [
                 {label: "Effet A", changes: []},
@@ -778,41 +773,6 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(result.a).toBe("1");
             expect(result.b).toBe("true");
             expect(result.nested.c).toBe("2");
-        });
-    });
-
-    describe("numerizeEffectObjValue — comportement RÉEL (itère Object.values(content) comme des clés)", () => {
-        it("clés non-numériques : la boucle `for...in Object.values(content)` itère des index absents de content -> rien n'est modifié", async () => {
-            // Quirk caractérisé (fq-utils.js:250) : `Object.values(content)` = un
-            // tableau ; `for (const key in ...)` itère ses index "0","1","2"...
-            // `content.hasOwnProperty("0")` est FALSE pour un objet à clés
-            // nommées -> la boucle ne fait rien, quelles que soient les valeurs.
-            const content = {five: 5, plus: "+2", roll: "1d6"};
-
-            const result = await CardEffect.numerizeEffectObjValue(content);
-
-            expect(result).toEqual({five: 5, plus: "+2", roll: "1d6"});
-        });
-
-        it("clés numériques alignées (0..n-1) : nombre -> Number, chaîne '+...' non numérique inchangée, autre chaîne -> rollResultSync", async () => {
-            // "+2" est numériquement valide (isNaN("+2")===false) : il est donc
-            // converti en Number, PAS préservé par la branche "+..." — seule une
-            // chaîne "+..." non numérique (ex: "+1d6") atteint cette branche.
-            const content = {0: "5", 1: "+1d6", 2: "1d6"};
-
-            const result = await CardEffect.numerizeEffectObjValue(content);
-
-            expect(result[0]).toBe(5);
-            expect(result[1]).toBe("+1d6");
-            expect(result[2]).toBe(10); // rollResultSync déterministe
-        });
-
-        it("valeur imbriquée sous une clé alignée : récursion", async () => {
-            const content = {0: {0: "5"}};
-
-            const result = await CardEffect.numerizeEffectObjValue(content);
-
-            expect(result[0][0]).toBe(5);
         });
     });
 

@@ -6,6 +6,8 @@ Hooks.on("renderGamePause", (app, html) => {
     container.append(...html.children);
     html.append(container);
     const img = html.querySelector("img");
-    img.src = "modules/fq-card-engine/images/logo.png";
-    img.className = "";
+    if (img) {
+        img.src = "modules/fq-card-engine/images/logo.png";
+        img.className = "";
+    }
 });

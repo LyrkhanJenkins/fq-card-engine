@@ -69,14 +69,27 @@ export default class Damage {
      * @returns {string} La formule de soin enrichie du bonus.
      */
     static getHealWithBonus(actor, healFormula) {
-        let healBonus = "" + actor.system?.fq?.bonus?.heal;
-        if (healBonus) {
-            if (/^\d/.test(healBonus)) { // vérifie si ça commence par un chiffre
-                healBonus = "+" + healBonus;
+        return Damage.getFormulaWithBonus(healFormula, actor.system?.fq?.bonus?.heal);
+    }
+
+    /**
+     * Enrichit une formule avec un bonus (en préfixant d'un « + » si le bonus
+     * commence par un chiffre). Le bonus vide/absent laisse la formule inchangée.
+     *
+     * @param {string} formula - La formule de base.
+     * @param {string} bonus   - Le bonus à intégrer.
+     *
+     * @returns {string} La formule enrichie du bonus.
+     */
+    static getFormulaWithBonus(formula, bonus) {
+        let bonusStr = "" + bonus;
+        if (bonusStr) {
+            if (/^\d/.test(bonusStr)) { // vérifie si ça commence par un chiffre
+                bonusStr = "+" + bonusStr;
             }
-            healFormula = `(` + healFormula + `) ${healBonus}`;
+            formula = `(` + formula + `) ${bonusStr}`;
         }
-        return healFormula;
+        return formula;
     }
 
     /**
@@ -98,7 +111,7 @@ export default class Damage {
         let critical = false;
         let healArray = [];
         if (actor?.system?.fq.attributes.critical + cardContent.bonusCrit > 0) {
-            const critToReach = 20 - actor?.system?.fq.attributes.critical - cardContent.bonusCrit;
+            const critToReach = 21 - actor?.system?.fq.attributes.critical - cardContent.bonusCrit;
             critical = await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
                 color: CRITICAL_HEAL_COLOR, title: "Critique des soins",
                 success: critToReach,
@@ -127,14 +140,7 @@ export default class Damage {
      * @returns {string} La formule de dégâts enrichie du bonus.
      */
     static getDamageWithBonus(actor, damageFormula) {
-        let damageBonus = "" + actor.system?.fq?.bonus?.damage;
-        if (damageBonus) {
-            if (/^\d/.test(damageBonus)) { // vérifie si ça commence par un chiffre
-                damageBonus = "+" + damageBonus;
-            }
-            damageFormula = `(` + damageFormula + `) ${damageBonus}`;
-        }
-        return damageFormula;
+        return Damage.getFormulaWithBonus(damageFormula, actor.system?.fq?.bonus?.damage);
     }
 
     /**
@@ -386,7 +392,8 @@ export default class Damage {
      * @returns {void}
      */
     static applyActorHpModification(targetId, value, typeAction) {
-        const targetActor = game.canvas.tokens.get(targetId).actor;
+        const targetActor = game.canvas.tokens.get(targetId)?.actor;
+        if (!targetActor) return;
         if (typeAction === "damageFQ") {
             if (targetActor.system.attributes.hp.temp > value) {
                 targetActor.update({"system.attributes.hp.temp": targetActor.system.attributes.hp.temp - value});
