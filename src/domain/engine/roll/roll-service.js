@@ -44,6 +44,7 @@ export default class RollService {
      * @returns {boolean} True si au moins une caractéristique référencée a un modificateur > 0.
      */
     static hasAbilitiesBonus(str) {
+        if (typeof str !== "string") return false;
         return (str.includes("@str") && Constants.actorAbi.str.mod > 0) ||
          (str.includes("@dex") && Constants.actorAbi.dex.mod > 0) ||
          (str.includes("@con") && Constants.actorAbi.con.mod > 0) ||

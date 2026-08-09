@@ -796,6 +796,12 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         it("hasAbilitiesBonus : false si aucune référence n'a de modificateur positif", () => {
             expect(RollService.hasAbilitiesBonus("bonus @dex @con")).toBe(false);
         });
+
+        it("hasAbilitiesBonus : false sans lever sur une valeur non-string (carte à 0 choix → undefined)", () => {
+            expect(() => RollService.hasAbilitiesBonus(undefined)).not.toThrow();
+            expect(RollService.hasAbilitiesBonus(undefined)).toBe(false);
+            expect(RollService.hasAbilitiesBonus(null)).toBe(false);
+        });
     });
 
     describe("getNbValideMinionLocationSelected / getNbMinionLocationSelected", () => {
