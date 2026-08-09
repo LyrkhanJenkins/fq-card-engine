@@ -55,8 +55,8 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         vi.clearAllMocks();
     });
 
-    it("should roll a dice and return result", async () => {
-        const result = await RollService.rollResultAsync("1d20");
+    it("rollResultSync : évalue une formule et renvoie son total (synchrone)", () => {
+        const result = RollService.rollResultSync("1d20");
         expect(result).toBeGreaterThanOrEqual(1);
         expect(result).toBeLessThanOrEqual(20);
     });
@@ -243,28 +243,81 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         });
     });
 
-    describe("replaceCardContentXAndYValue", () => {
-        it("substitution nominale : remplace XXX/YYY et renvoie true", async () => {
-            const cardContent = makeChoice({damage: "XXX+YYY", xmax: "10", ymax: "10"});
+    describe("evaluateXYBounds", () => {
+        it("dans les bornes : renvoie null et résout xmax/ymax en place", () => {
+            const cardContent = makeChoice({xmax: "10", ymax: "10"});
 
-            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, true, 3, 2);
+            const verdict = CardEffect.evaluateXYBounds(cardContent, 3, 2);
 
-            expect(ok).toBe(true);
+            expect(verdict).toBeNull();
+            // Roll déterministe (total 10) : xmax/ymax résolus en place à 10.
+            expect(cardContent.xmax).toBe(10);
+            expect(cardContent.ymax).toBe(10);
+        });
+
+        it("XXX négatif (sous garde xmax) : verdict WarningMsgXValueSuperiorXMax", () => {
+            const cardContent = makeChoice({xmax: "10", ymax: "10"});
+
+            const verdict = CardEffect.evaluateXYBounds(cardContent, -1, 2);
+
+            expect(verdict).toEqual({messageKey: "FQCARDENGINE.WarningMsgXValueSuperiorXMax", format: {xmax: 10}});
+        });
+
+        it("XXX > xmax : verdict WarningMsgXValueSuperiorXMax", () => {
+            const cardContent = makeChoice({xmax: "10"}); // résolu à 10
+
+            const verdict = CardEffect.evaluateXYBounds(cardContent, 11, 0);
+
+            expect(verdict.messageKey).toBe("FQCARDENGINE.WarningMsgXValueSuperiorXMax");
+        });
+
+        it("XXX < xmin : verdict WarningMsgXValueInferiorXMin (xmin résolu en place)", () => {
+            const cardContent = makeChoice({xmin: "5"});
+
+            const verdict = CardEffect.evaluateXYBounds(cardContent, 2, 2);
+
+            // xmin est résolu en place (Roll déterministe → 10) : le verdict porte la valeur résolue.
+            expect(cardContent.xmin).toBe(10);
+            expect(verdict).toEqual({messageKey: "FQCARDENGINE.WarningMsgXValueInferiorXMin", format: {xmin: 10}});
+        });
+
+        it("YYY > ymax : verdict WarningMsgYValueSuperiorYMax", () => {
+            const cardContent = makeChoice({xmax: "10", ymax: "5"}); // ymax résolu à 10
+
+            const verdict = CardEffect.evaluateXYBounds(cardContent, 3, 11);
+
+            expect(verdict.messageKey).toBe("FQCARDENGINE.WarningMsgYValueSuperiorYMax");
+        });
+
+        it("YYY < ymin : verdict WarningMsgYValueInferiorYMin (ymin résolu en place)", () => {
+            const cardContent = makeChoice({ymin: "5"});
+
+            const verdict = CardEffect.evaluateXYBounds(cardContent, 100, 2);
+
+            // ymin est résolu en place (Roll déterministe → 10) : le verdict porte la valeur résolue.
+            expect(cardContent.ymin).toBe(10);
+            expect(verdict).toEqual({messageKey: "FQCARDENGINE.WarningMsgYValueInferiorYMin", format: {ymin: 10}});
+        });
+    });
+
+    describe("substituteXAndYValue", () => {
+        it("hasVariables=true : substitue XXX/YYY par les valeurs saisies", () => {
+            const cardContent = makeChoice({damage: "XXX+YYY"});
+
+            CardEffect.substituteXAndYValue(cardContent, true, 3, 2);
+
             expect(cardContent.damage).toBe("3+2");
         });
 
-        it("hors bornes : rejette (false) une valeur XXX négative et publie WarningMsgXValueSuperiorXMax", async () => {
-            const cardContent = makeChoice({damage: "XXX+YYY", xmax: "10", ymax: "10"});
+        it("hasVariables=false mais xvalue/yvalue définis : calcule via getXYValue", () => {
+            const spy = vi.spyOn(CardEffect, "getXYValue").mockReturnValueOnce(7).mockReturnValueOnce(2);
+            const cardContent = makeChoice({damage: "XXX+YYY", xvalue: "nbTargets", yvalue: "nbTargets"});
 
-            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, true, -1, 2);
+            CardEffect.substituteXAndYValue(cardContent, false, undefined, undefined);
 
-            expect(ok).toBe(false);
-            expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
-                content: expect.stringContaining("#E36934")
-            }));
-            expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
-                content: expect.stringContaining("FQCARDENGINE.WarningMsgXValueSuperiorXMax")
-            }));
+            expect(spy).toHaveBeenCalledWith("nbTargets", expect.any(Array));
+            expect(cardContent.damage).toBe("7+2");
+            spy.mockRestore();
         });
     });
 
@@ -644,83 +697,6 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
 
     // ─── Tâche 3 : helpers restants (X/Y, résolution d'attributs, purs) ────────
 
-    describe("rollResultAsync — display", () => {
-        it("display=true, isDeterministic (défaut) : publie via roll.toMessage, n'appelle pas l'animation 3D", async () => {
-            const result = await RollService.rollResultAsync("1d20", true);
-
-            expect(result).toBe(10);
-            expect(game.dice3d.waitFor3DAnimationByMessageID).not.toHaveBeenCalled();
-        });
-
-        it("display=true, isDeterministic=false : joue l'animation 3D via game.dice3d", async () => {
-            Roll.mockImplementationOnce(function (formula) {
-                this.formula = formula;
-                this.total = 10;
-                this.isDeterministic = false;
-                this.evaluate = async () => this;
-                this.toMessage = vi.fn(async () => ({id: "msg-3d"}));
-            });
-
-            const result = await RollService.rollResultAsync("1d20", true);
-
-            expect(result).toBe(10);
-            expect(game.dice3d.waitFor3DAnimationByMessageID).toHaveBeenCalledWith("msg-3d");
-        });
-    });
-
-    describe("replaceCardContentXAndYValue — bornes restantes", () => {
-        it("ymax dépassé : rejette (false) et publie WarningMsgYValueSuperiorYMax", async () => {
-            // Quirk caractérisé (fq-utils.js:598-599) : xmax/ymax sont d'abord
-            // recalculés via rollResultAsync — avec le Roll déterministe (total
-            // toujours 10), leur valeur numérique finale est donc TOUJOURS 10,
-            // quelle que soit la chaîne "xmax"/"ymax" d'origine. XXX doit donc
-            // rester <= 10 et YYY doit dépasser 10 pour déclencher cette branche.
-            const cardContent = makeChoice({damage: "XXX+YYY", xmax: "10", ymax: "5"});
-
-            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, true, 3, 11);
-
-            expect(ok).toBe(false);
-            expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
-                content: expect.stringContaining("FQCARDENGINE.WarningMsgYValueSuperiorYMax")
-            }));
-        });
-
-        it("xmin non respecté : rejette (false) et publie WarningMsgXValueInferiorXMin", async () => {
-            const cardContent = makeChoice({damage: "XXX+YYY", xmin: "5"});
-
-            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, true, 2, 2);
-
-            expect(ok).toBe(false);
-            expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
-                content: expect.stringContaining("FQCARDENGINE.WarningMsgXValueInferiorXMin")
-            }));
-        });
-
-        it("ymin non respecté : rejette (false) quand YYY < ymin et publie WarningMsgYValueInferiorYMin", async () => {
-            const cardContent = makeChoice({damage: "XXX+YYY", ymin: "5"});
-
-            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, true, 100, 2);
-
-            expect(ok).toBe(false);
-            expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
-                content: expect.stringContaining("FQCARDENGINE.WarningMsgYValueInferiorYMin")
-            }));
-        });
-
-        it("sans variables saisies (hasVariables=false) mais xvalue/yvalue définis : calcule via getXYValue", async () => {
-            const spy = vi.spyOn(CardEffect, "getXYValue").mockResolvedValueOnce(7).mockResolvedValueOnce(2);
-            const cardContent = makeChoice({damage: "XXX+YYY", xvalue: "nbTargets", yvalue: "nbTargets"});
-
-            const ok = await CardEffect.replaceCardContentXAndYValue(cardContent, false, undefined, undefined);
-
-            expect(ok).toBe(true);
-            expect(spy).toHaveBeenCalledWith("nbTargets", expect.any(Array));
-            expect(cardContent.damage).toBe("7+2");
-
-            spy.mockRestore();
-        });
-    });
-
     describe("getXYValue", () => {
         it("nbTargets : renvoie la longueur des cibles (0 si vide)", async () => {
             expect(await CardEffect.getXYValue("nbTargets", [])).toBe(0);
@@ -759,7 +735,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
 
             const result = await CardEffect.getXYValue("attributes.hp.value", []);
 
-            expect(result).toBe(10); // rollResultAsync("5") -> total déterministe
+            expect(result).toBe(10); // rollResultSync("5") -> total déterministe
         });
     });
 
@@ -818,7 +794,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(result).toEqual({five: 5, plus: "+2", roll: "1d6"});
         });
 
-        it("clés numériques alignées (0..n-1) : nombre -> Number, chaîne '+...' non numérique inchangée, autre chaîne -> rollResultAsync", async () => {
+        it("clés numériques alignées (0..n-1) : nombre -> Number, chaîne '+...' non numérique inchangée, autre chaîne -> rollResultSync", async () => {
             // "+2" est numériquement valide (isNaN("+2")===false) : il est donc
             // converti en Number, PAS préservé par la branche "+..." — seule une
             // chaîne "+..." non numérique (ex: "+1d6") atteint cette branche.
@@ -828,7 +804,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
 
             expect(result[0]).toBe(5);
             expect(result[1]).toBe("+1d6");
-            expect(result[2]).toBe(10); // rollResultAsync déterministe
+            expect(result[2]).toBe(10); // rollResultSync déterministe
         });
 
         it("valeur imbriquée sous une clé alignée : récursion", async () => {

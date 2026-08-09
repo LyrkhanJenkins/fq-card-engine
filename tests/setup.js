@@ -186,7 +186,7 @@ beforeEach(() => {
         this.options = {}; // le vrai Roll de Foundry possède toujours un objet options
         this.dice = [{options: {}}]; // le vrai Roll expose ses DiceTerm (avec leurs propres options)
         this.evaluate = async () => this;
-        this.evaluateSync = () => this; // variante synchrone (miroir d'evaluate) pour TargetingResolver
+        this.evaluateSync = () => this; // variante synchrone (miroir d'evaluate) pour la résolution synchrone des champs (TargetingView.build, chaîne de résolution)
         this.toMessage = vi.fn(async () => ({id: "messageId"}));
     });
 

@@ -46,8 +46,9 @@ export default class PlayCard {
 
     /**
      * Callback principal du jeu d'une carte, déclenché à la validation du dialogue.
-     * Recalcule le contenu (bonus de caractéristiques, variables X/Y), vérifie que
-     * la carte peut être utilisée, gère la logique de rejouabilité (passive ou à
+     * Le contenu est déjà entièrement recalculé en amont (bonus de caractéristiques,
+     * variables X/Y, données dérivées) par `playValidatedCard` ; cette méthode vérifie
+     * que la carte peut être utilisée, gère la logique de rejouabilité (passive ou à
      * charges), transfère la carte vers la défausse le cas échéant, puis applique
      * les effets de la carte.
      *
@@ -62,14 +63,6 @@ export default class PlayCard {
      * @returns {Promise<*>|null} La promesse du transfert de la carte, ou null si la carte n'est pas transférée.
      */
     static async callBackplayCard(to, fd, cardContent, hasVariables, initCardContents, currentCards, card) {
-        // Recalcul de la carte à partir des bonus de caractéristiques
-        CardEffect.replaceCardContentAbilitiesBonus(cardContent);
-        // Recalcul de la carte à partir des valeurs X, Y donné par l'utilisateur
-        if (!await CardEffect.replaceCardContentXAndYValue(cardContent, hasVariables, fd.XXX, fd.YYY)) {
-            return;
-        }
-        await CardEffect.prepareDataFromCard(cardContent);
-
         if (!CardEffect.checkIfCanUseCard(cardContent, card)) {
             return;
         }
@@ -85,7 +78,7 @@ export default class PlayCard {
                     content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.localize("FQCARDENGINE.InfoMsgPassiveSpell")}</div>`
                 });
             } else if (cardContent?.replayable) {
-                cardContent.replayable = await RollService.rollResultAsync(cardContent.replayable);
+                cardContent.replayable = RollService.rollResultSync(cardContent.replayable);
                 if (Number(cardContent?.replayable) > 1) {
                     CardEffect.rewriteCardContent(card, initCardContents, {
                         replayable: Number(cardContent?.replayable) - 1, hasBeenPlayed: true

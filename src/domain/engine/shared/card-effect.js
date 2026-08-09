@@ -198,7 +198,7 @@ export default class CardEffect {
      */
     static async createEffectsFromData(currentEffect) {
         return Promise.all(currentEffect.data.map(async effect => {
-            effect = await CardEffect.numerizeEffectObjValue(effect);
+            effect = CardEffect.numerizeEffectObjValue(effect);
             if (!effect.name) {
                 effect.name = effect.label;
             }
@@ -291,18 +291,18 @@ export default class CardEffect {
      *
      * @returns {Promise<object>} Le même objet avec ses valeurs numérisées/évaluées.
      */
-    static async numerizeEffectObjValue(content) {
+    static numerizeEffectObjValue(content) {
         for (const key in Object.values(content)) {
             if (content.hasOwnProperty(key)) {
                 if (typeof content[key] === "object") {
-                    content[key] = await CardEffect.numerizeEffectObjValue(content[key]);
+                    content[key] = CardEffect.numerizeEffectObjValue(content[key]);
                 } else if (!isNaN(content[key])) {
                     content[key] = Number(content[key]);
                 } else if (typeof content[key] === "string" && content[key][0] === "+") {
                     // Do nothing
                 } else {
                     try {
-                        content[key] = await RollService.rollResultAsync(content[key]);
+                        content[key] = RollService.rollResultSync(content[key]);
                     } catch (e) {
                         console.error(e);
                     }
@@ -331,11 +331,11 @@ export default class CardEffect {
         const numeric = Number(applyEffectsFormulas.formula);
         const isNumber = !isNaN(numeric);
 
-        const roll = isNumber ? null : await new Roll(applyEffectsFormulas.formula).evaluate();
+        const roll = isNumber ? null : await new Roll(applyEffectsFormulas.formula).evaluate(); //TODO
         const total = isNumber ? numeric : roll.total;
         if (roll) Damage.applyDiceAppearance(roll); // dés à la couleur du joueur
         for (let i = 0; i < applyEffectsFormulas.effects.length; i++) {
-            applyEffectsFormulas.effects[i].result = await RollService.rollResultAsync(applyEffectsFormulas.effects[i].result);
+            applyEffectsFormulas.effects[i].result = RollService.rollResultSync(applyEffectsFormulas.effects[i].result);
         }
 
         // On PRÉPARE ici l'effet déclenché (données + message) sans encore
@@ -422,53 +422,53 @@ export default class CardEffect {
      *
      * @param {object} cardContent - Le contenu (choix) de la carte à préparer.
      *
-     * @returns {Promise<void>}
+     * @returns {void}
      */
-    static async prepareDataFromCard(cardContent) {
+    static prepareDataFromCard(cardContent) {
         // TARGETING
         if (cardContent?.minReach || cardContent?.maxReach) {
-            cardContent.minReach = await RollService.rollResultAsync(cardContent.minReach);
-            cardContent.maxReach = await RollService.rollResultAsync(cardContent.maxReach) + Number(Constants.actorFQ.bonus.range);
+            cardContent.minReach = RollService.rollResultSync(cardContent.minReach);
+            cardContent.maxReach = RollService.rollResultSync(cardContent.maxReach) + Number(Constants.actorFQ.bonus.range);
         }
         if (cardContent?.nbTargets) {
-            cardContent.nbTargets = await RollService.rollResultAsync(cardContent.nbTargets);
+            cardContent.nbTargets = RollService.rollResultSync(cardContent.nbTargets);
         }
 
         // COST HP
         if (cardContent?.hp) {
-            cardContent.hp = await RollService.rollResultAsync(cardContent.hp);
+            cardContent.hp = RollService.rollResultSync(cardContent.hp);
         }
 
         // COST ACTION
         if (cardContent?.action) {
-            cardContent.action = await RollService.rollResultAsync(cardContent.action);
+            cardContent.action = RollService.rollResultSync(cardContent.action);
         }
 
         // COST MANA
         if (cardContent?.mana) {
-            cardContent.mana = await RollService.rollResultAsync(cardContent.mana);
+            cardContent.mana = RollService.rollResultSync(cardContent.mana);
         }
 
         // COST ZEAL
         if (cardContent?.zeal) {
-            cardContent.zeal = await RollService.rollResultAsync(cardContent.zeal);
+            cardContent.zeal = RollService.rollResultSync(cardContent.zeal);
         }
 
         // COST DRAW
         if (cardContent?.draw) {
-            cardContent.draw = await RollService.rollResultAsync(cardContent.draw);
+            cardContent.draw = RollService.rollResultSync(cardContent.draw);
         }
         // COST DROP
         if (cardContent?.drop) {
-            cardContent.drop = await RollService.rollResultAsync(cardContent.drop);
+            cardContent.drop = RollService.rollResultSync(cardContent.drop);
         }
 
         // BONUSES
         if (cardContent.bonusCrit) {
-            cardContent.bonusCrit = await RollService.rollResultAsync(cardContent.bonusCrit);
+            cardContent.bonusCrit = RollService.rollResultSync(cardContent.bonusCrit);
         }
         if (cardContent.bonusEva) {
-            cardContent.bonusEva = await RollService.rollResultAsync(cardContent.bonusEva);
+            cardContent.bonusEva = RollService.rollResultSync(cardContent.bonusEva);
         }
     }
 
@@ -580,59 +580,69 @@ export default class CardEffect {
     }
 
     /**
-     * Valide et applique les valeurs X et Y d'une carte : résout les bornes
-     * (xmax/ymax), vérifie que XXX/YYY respectent les min/max (avertit sinon),
-     * puis substitue les variables — soit par les valeurs saisies, soit par des
-     * valeurs calculées (cibles, portée, système du personnage).
+     * Résout les bornes `xmax`/`ymax` d'un contenu de carte (en place, comme
+     * auparavant) puis juge les valeurs X/Y saisies contre `xmax`/`xmin`/`ymax`/`ymin`.
+     * Ne publie AUCUN avertissement et ne lève rien : renvoie un verdict que
+     * l'appelant traduit en `FormError`. Le blocage vit ainsi dans `playValidatedCard`
+     * (qui garde la dialog ouverte), sur le même patron que le garde de ciblage.
+     * La résolution en place de `xmax`/`ymax` reproduit l'état antérieur (la carte
+     * jouée porte ses bornes résolues).
+     *
+     * @param {object} cardContent - Le contenu (choix) de la carte.
+     * @param {number} XXX         - La valeur X saisie.
+     * @param {number} YYY         - La valeur Y saisie.
+     *
+     * @returns {{messageKey: string, format: object}|null} Le verdict de dépassement (clé i18n + args de format), ou null si les bornes sont respectées.
+     */
+    static evaluateXYBounds(cardContent, XXX, YYY) {
+        if (cardContent?.xmax) {
+            cardContent.xmax = RollService.rollResultSync(cardContent.xmax);
+        }
+        if (cardContent?.ymax) {
+            cardContent.ymax = RollService.rollResultSync(cardContent.ymax);
+        }
+        if (cardContent?.xmin) {
+            cardContent.xmin = RollService.rollResultSync(cardContent.xmin);
+        }
+        if (cardContent?.ymin) {
+            cardContent.ymin = RollService.rollResultSync(cardContent.ymin);
+        }
+
+        if (cardContent?.xmax && (XXX > Number(cardContent.xmax) || XXX < 0)) {
+            return {messageKey: "FQCARDENGINE.WarningMsgXValueSuperiorXMax", format: {xmax: cardContent.xmax}};
+        }
+        if (cardContent?.xmin && XXX < Number(cardContent.xmin)) {
+            return {messageKey: "FQCARDENGINE.WarningMsgXValueInferiorXMin", format: {xmin: cardContent.xmin}};
+        }
+        if (cardContent?.ymax && (YYY > Number(cardContent.ymax) || YYY < 0)) {
+            return {messageKey: "FQCARDENGINE.WarningMsgYValueSuperiorYMax", format: {ymax: cardContent.ymax}};
+        }
+        if (cardContent?.ymin && YYY < Number(cardContent.ymin)) {
+            return {messageKey: "FQCARDENGINE.WarningMsgYValueInferiorYMin", format: {ymin: cardContent.ymin}};
+        }
+        return null;
+    }
+
+    /**
+     * Substitue les variables X/Y dans un contenu de carte : soit par les valeurs
+     * saisies (`hasVariables`), soit par des valeurs calculées (`xvalue`/`yvalue` via
+     * `getXYValue`). Mute `cardContent` sur place. La validation des bornes est
+     * assurée en amont par `evaluateXYBounds`.
      *
      * @param {object}  cardContent  - Le contenu (choix) de la carte.
      * @param {boolean} hasVariables - True si l'utilisateur a saisi des valeurs X/Y.
      * @param {number}  XXX          - La valeur X saisie.
      * @param {number}  YYY          - La valeur Y saisie.
      *
-     * @returns {Promise<boolean>} True si les valeurs sont valides et appliquées, false sinon.
+     * @returns {void}
      */
-    static async replaceCardContentXAndYValue(cardContent, hasVariables, XXX, YYY) {
-        //Recalculate xmax and ymax before checking it and replace XXX and YYY value
-        //The others value are recalculated in checkIfCanUseCardAndPrepareDataFromIt
-        if (cardContent?.xmax) {
-            cardContent.xmax = await RollService.rollResultAsync(cardContent.xmax);
-        }
-        if (cardContent?.ymax) {
-            cardContent.ymax = await RollService.rollResultAsync(cardContent.ymax);
-        }
-
-        if (cardContent?.xmax) {
-            if (XXX > Number(cardContent?.xmax) || XXX < 0) {
-                createWarning(game.i18n.format("FQCARDENGINE.WarningMsgXValueSuperiorXMax", {xmax: cardContent.xmax}), {actor: game.user.character});
-                return false;
-            }
-        }
-
-        if (cardContent?.xmin && XXX < Number(cardContent?.xmin)) {
-            createWarning(game.i18n.format("FQCARDENGINE.WarningMsgXValueInferiorXMin", {xmin: cardContent.xmin}), {actor: game.user.character});
-            return false;
-        }
-
-        if (cardContent?.ymax) {
-            if (YYY > Number(cardContent?.ymax) || YYY < 0) {
-                createWarning(game.i18n.format("FQCARDENGINE.WarningMsgYValueSuperiorYMax", {ymax: cardContent.ymax}), {actor: game.user.character});
-                return false;
-            }
-        }
-
-        if (cardContent?.ymin && YYY < Number(cardContent?.ymin)) {
-            createWarning(game.i18n.format("FQCARDENGINE.WarningMsgYValueInferiorYMin", {ymin: cardContent.ymin}), {actor: game.user.character});
-            return false;
-        }
-
+    static substituteXAndYValue(cardContent, hasVariables, XXX, YYY) {
         if (hasVariables) {
             CardEffect.recalculatedWithWYValue(cardContent, XXX ? XXX : 0, YYY ? YYY : 0);
         } else if (cardContent && (cardContent.xvalue || cardContent.yvalue)) {
-            CardEffect.recalculatedWithWYValue(cardContent, await CardEffect.getXYValue(cardContent.xvalue, Constants.myTargets(cardContent.targetType)),
-                await CardEffect.getXYValue(cardContent.yvalue, Constants.myTargets(cardContent.targetType)));
+            CardEffect.recalculatedWithWYValue(cardContent, CardEffect.getXYValue(cardContent.xvalue, Constants.myTargets(cardContent.targetType)),
+                CardEffect.getXYValue(cardContent.yvalue, Constants.myTargets(cardContent.targetType)));
         }
-        return true;
     }
 
     /**
@@ -643,9 +653,9 @@ export default class CardEffect {
      * @param {string}   value     - Le mot-clé/expression décrivant la valeur à calculer.
      * @param {object[]} myTargets - Les cibles courantes.
      *
-     * @returns {Promise<number>} La valeur calculée.
+     * @returns {number} La valeur calculée.
      */
-    static async getXYValue(value, myTargets) {
+    static getXYValue(value, myTargets) {
         if (value === "nbTargets") {
             return myTargets.length ? myTargets.length : 0;
         } else if (myTargets.length === 1 && value === "reach") {
@@ -677,9 +687,9 @@ export default class CardEffect {
      * @param {object} obj - L'objet racine (typiquement `system` du personnage).
      * @param {string} key - Le chemin pointé de l'attribut.
      *
-     * @returns {Promise<number>} La valeur évaluée, ou 0 si le chemin est absent/vide.
+     * @returns {number} La valeur évaluée, ou 0 si le chemin est absent/vide.
      */
-    static async getNestedAttribute(obj, key) {
+    static getNestedAttribute(obj, key) {
         if (!key) {
             return 0;
         }
@@ -693,6 +703,6 @@ export default class CardEffect {
                 return 0;
             }
         }
-        return await RollService.rollResultAsync(value.toString());
+        return RollService.rollResultSync(value.toString());
     }
 }

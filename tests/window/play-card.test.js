@@ -100,7 +100,7 @@ describe("PlayCard", () => {
     });
 
     describe("callBackplayCard", () => {
-        test("should replace card content abilities bonus", async () => {
+        test("should NOT recalculate content (recalcul remonté dans playValidatedCard)", async () => {
             const cardContent = {};
             const card = {
                 id: "mockCardId", _id: "mockCardId",
@@ -110,8 +110,11 @@ describe("PlayCard", () => {
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
-            expect(CardEffect.replaceCardContentAbilitiesBonus).toHaveBeenCalledWith(cardContent);
-            expect(CardEffect.prepareDataFromCard).toHaveBeenCalledWith(cardContent);
+            // Le recalcul (bonus de caractéristiques, X/Y, données dérivées) a été remonté
+            // dans playValidatedCard : callBackplayCard ne résout plus rien.
+            expect(CardEffect.replaceCardContentAbilitiesBonus).not.toHaveBeenCalled();
+            expect(CardEffect.replaceCardContentXAndYValue).not.toHaveBeenCalled();
+            expect(CardEffect.prepareDataFromCard).not.toHaveBeenCalled();
         });
 
         test("should apply card effect and pass the card if needed", async () => {
@@ -161,23 +164,6 @@ describe("PlayCard", () => {
 
             // Restaure le comportement par défaut pour ne pas polluer les tests suivants.
             CardEffect.checkIfCanUseCard.mockReturnValue(true);
-        });
-
-        test("should not apply effect or pass card when replaceCardContentXAndYValue resolves false", async () => {
-            const cardContent = {};
-            const card = makeCard();
-            const currentCards = {pass: vi.fn().mockResolvedValue()};
-            CardEffect.checkIfCanUseCard.mockReturnValue(true);
-            CardEffect.replaceCardContentXAndYValue.mockResolvedValue(false);
-
-            await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
-
-            expect(CardEffect.replaceCardContentAbilitiesBonus).toHaveBeenCalled();
-            expect(CardEffect.applyCardEffect).not.toHaveBeenCalled();
-            expect(currentCards.pass).not.toHaveBeenCalled();
-
-            // Restaure le comportement par défaut pour ne pas polluer les tests suivants.
-            CardEffect.replaceCardContentXAndYValue.mockResolvedValue(true);
         });
 
         test("should call ui.notifications.error when currentCards.pass rejects", async () => {

@@ -22,6 +22,19 @@ vi.mock("../../src/domain/engine/play-card.js", () => ({
     }
 }));
 
+// Le recalcul du contenu vit désormais dans playValidatedCard : on espionne les
+// étapes (bloc remonté depuis callBackplayCard) sans exécuter la vraie résolution.
+// evaluateXYBounds renvoie null (aucun dépassement) par défaut ; la logique de
+// bornes elle-même est couverte unitairement dans fq-utils.test.js.
+vi.mock("../../src/domain/engine/shared/card-effect.js", () => ({
+    default: {
+        replaceCardContentAbilitiesBonus: vi.fn(),
+        evaluateXYBounds: vi.fn().mockReturnValue(null),
+        substituteXAndYValue: vi.fn(),
+        prepareDataFromCard: vi.fn()
+    }
+}));
+
 globalThis.socketlib = {
     registerModule: vi.fn(() => ({register: vi.fn()}))
 };
@@ -30,6 +43,7 @@ globalThis.socketlib = {
 // dépendre du rendu DOM/Handlebars/Dialog (hors périmètre de ce test).
 await import("../../src/init-engine.js");
 const PlayCard = (await import("../../src/domain/engine/play-card.js")).default;
+const CardEffect = (await import("../../src/domain/engine/shared/card-effect.js")).default;
 
 /**
  * Construit un contexte `ctx` minimal pour `playValidatedCard`, sans variables
@@ -76,6 +90,43 @@ describe("playValidatedCard", () => {
         expect(PlayCard.callBackplayCard).toHaveBeenCalledWith(
             to, fd, cardContent, ctx.hasVariables, ctx.initCardContents, ctx.currentCards, ctx.card
         );
+    });
+
+    test("cas nominal : recalcule le contenu (abilities → bornes → substitution → prepareDataFromCard) avant de déléguer", () => {
+        const ctx = makeCtx();
+        const to = {id: "discard-pile"};
+        const fd = {XXX: undefined, YYY: undefined};
+        const cardContent = ctx.firstChoice;
+
+        window.FqCardEngineModule.playValidatedCard(to, fd, cardContent, ctx);
+
+        expect(CardEffect.replaceCardContentAbilitiesBonus).toHaveBeenCalledWith(cardContent);
+        expect(CardEffect.evaluateXYBounds).toHaveBeenCalledWith(cardContent, fd.XXX, fd.YYY);
+        expect(CardEffect.substituteXAndYValue).toHaveBeenCalledWith(cardContent, ctx.hasVariables, fd.XXX, fd.YYY);
+        expect(CardEffect.prepareDataFromCard).toHaveBeenCalledWith(cardContent);
+        // Ordre : abilities → prepareDataFromCard → délégation au moteur.
+        const orderAbilities = CardEffect.replaceCardContentAbilitiesBonus.mock.invocationCallOrder[0];
+        const orderPrepare = CardEffect.prepareDataFromCard.mock.invocationCallOrder[0];
+        const orderDelegate = PlayCard.callBackplayCard.mock.invocationCallOrder[0];
+        expect(orderAbilities).toBeLessThan(orderPrepare);
+        expect(orderPrepare).toBeLessThan(orderDelegate);
+    });
+
+    test("garde de bornes : un verdict de dépassement lève FormError et n'appelle ni substituteXAndYValue ni callBackplayCard", () => {
+        const ctx = makeCtx();
+        const to = {id: "discard-pile"};
+        const fd = {XXX: 99, YYY: undefined};
+        const cardContent = ctx.firstChoice;
+        // evaluateXYBounds est couvert unitairement ailleurs ; ici on prouve le
+        // câblage verdict → throw FormError (la substitution/délégation n'a pas lieu).
+        CardEffect.evaluateXYBounds.mockReturnValueOnce({
+            messageKey: "FQCARDENGINE.WarningMsgXValueSuperiorXMax", format: {xmax: 10}
+        });
+
+        expect(() => window.FqCardEngineModule.playValidatedCard(to, fd, cardContent, ctx)).toThrow();
+        expect(CardEffect.substituteXAndYValue).not.toHaveBeenCalled();
+        expect(CardEffect.prepareDataFromCard).not.toHaveBeenCalled();
+        expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
     });
 
     test("garde XXX : fd.XXX === null lève FormError et n'appelle pas callBackplayCard", () => {

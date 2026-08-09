@@ -1,15 +1,11 @@
-import TargetingResolver from "../../engine/shared/targeting-resolver.js";
+import CardEffect from "../../engine/shared/card-effect.js";
+import ObjectUtils from "../../../core/utils/object.utils.js";
 import TargetingPredicates from "../../engine/shared/targeting-predicates.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import Constants from "../../constants.js";
 
 /**
- * View-model d'affichage du ciblage pour la dialog « Jouer la carte ». Fonction
- * PURE (aucune manipulation DOM) : réutilise strictement la logique de ciblage
- * figée en Phase 8 (`TargetingResolver` + `TargetingPredicates` + `Constants.myTargets`)
- * afin de garantir « ce qu'on voit = ce qui bloque ». C'est le seul cœur testable
- * de la Phase 9 ; le rendu du panneau et son interactivité sont du DOM Foundry.
- * Toutes les méthodes sont statiques : la classe sert de namespace.
+ * View-model d'affichage du ciblage pour la "dialog-play" .
  */
 export default class TargetingView {
     /**
@@ -22,27 +18,27 @@ export default class TargetingView {
      *          Le view-model : ciblage manuel ?, nombre requis, nombre courant, portées résolues, et les cibles courantes.
      */
     static build(cardContent, fd = {}) {
-        // `manual` = gating IDENTIQUE au garde-fou Phase 8 (card-actions.js) : ciblage
-        // manuel (targetType ≠ Skeletons, donc Default/absent) ET portée déclarée.
         const manual = cardContent?.targetType !== CardFqSystem.TARGET_TYPE_SKELETON
             && !!(cardContent?.minReach || cardContent?.maxReach);
 
-        // Court-circuit : quand le ciblage n'est pas manuel, le panneau ne s'affiche
-        // pas (le partial est gaté par `manual`). On évite ainsi tout calcul inutile —
-        // en particulier `myTargets("Skeletons")`, qui résout les squelettes de la scène.
         if (!manual) {
             return {manual: false, required: 0, count: 0, minReach: undefined, maxReach: undefined, targets: []};
         }
 
-        const resolvedNb = TargetingResolver.resolveNbTargets(cardContent, fd);
-        const required = resolvedNb || 1;
+        const cc = ObjectUtils.deepCopy(cardContent);
+        CardEffect.replaceCardContentAbilitiesBonus(cc);
+        CardEffect.recalculatedWithWYValue(cc, fd?.XXX ?? 0, fd?.YYY ?? 0);
+
+        const required = (cc.nbTargets ? new Roll(String(cc.nbTargets)).evaluateSync().total : cc.nbTargets) || 1;
 
         const tokens = Constants.myTargets(cardContent?.targetType);
-        const {minReach, maxReach} = TargetingResolver.resolveReach(cardContent, fd);
+        const {minReach, maxReach} = (cc.minReach || cc.maxReach)
+            ? {
+                minReach: new Roll(String(cc.minReach)).evaluateSync().total,
+                maxReach: new Roll(String(cc.maxReach)).evaluateSync().total + Number(Constants.actorFQ.bonus.range)
+            }
+            : {minReach: cc.minReach, maxReach: cc.maxReach};
 
-        // État hors-portée : uniquement si le token du lanceur existe sur la scène.
-        // Sinon, le garde-fou Phase 8 bloque déjà le jeu via NoTokenOnScene — le
-        // panneau n'a pas à ré-implémenter ce verdict (dist laissée à null).
         const casterToken = TargetingPredicates.findCasterToken(game.user.character);
         const outOfReachByToken = new Map();
         if (casterToken) {

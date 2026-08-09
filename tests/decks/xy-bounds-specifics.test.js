@@ -200,22 +200,26 @@ describe("EXHA-03 : bornes X — acceptées aux bornes, rejetées hors bornes", 
     );
 
     test.each(xCandidates.filter(entry => entry.xmin > 0))(
-        "$deckFile :: $cardName :: choix $choiceIndex — X rejeté à xmin-1=$xmin (aucun hpCalls, WarningMsgXValueInferiorXMin)",
+        "$deckFile :: $cardName :: choix $choiceIndex — X rejeté à xmin-1=$xmin (FormError WarningMsgXValueInferiorXMin, aucun hpCalls)",
         async ({card, choiceIndex, xmin}) => {
             const belowMin = await playChoice(card, choiceIndex, {world: abundantWorld(), fd: {XXX: xmin - 1, YYY: 0}});
-            expect(belowMin.threw).toBe(false);
+            // Dépassement de borne : FormError levée dans playValidatedCard (dialog non fermée),
+            // en amont du moteur — plus de message de chat, plus aucun effet appliqué.
+            expect(belowMin.threw).toBe(true);
+            expect(belowMin.error).toBeInstanceOf(FormError);
+            expect(belowMin.error.message).toContain("FQCARDENGINE.WarningMsgXValueInferiorXMin");
             expect(belowMin.hpCalls).toHaveLength(0);
-            expect(chatText(belowMin)).toContain("FQCARDENGINE.WarningMsgXValueInferiorXMin");
         }
     );
 
     test.each(xCandidates)(
-        "$deckFile :: $cardName :: choix $choiceIndex — X rejeté à xmax+1=$xmax (aucun hpCalls, WarningMsgXValueSuperiorXMax)",
+        "$deckFile :: $cardName :: choix $choiceIndex — X rejeté à xmax+1=$xmax (FormError WarningMsgXValueSuperiorXMax, aucun hpCalls)",
         async ({card, choiceIndex, xmax}) => {
             const aboveMax = await playChoice(card, choiceIndex, {world: abundantWorld(), fd: {XXX: xmax + 1, YYY: 0}});
-            expect(aboveMax.threw).toBe(false);
+            expect(aboveMax.threw).toBe(true);
+            expect(aboveMax.error).toBeInstanceOf(FormError);
+            expect(aboveMax.error.message).toContain("FQCARDENGINE.WarningMsgXValueSuperiorXMax");
             expect(aboveMax.hpCalls).toHaveLength(0);
-            expect(chatText(aboveMax)).toContain("FQCARDENGINE.WarningMsgXValueSuperiorXMax");
         }
     );
 });
@@ -234,9 +238,10 @@ describe("EXHA-03 : bornes Y — au moins une carte à ymax", () => {
                 world: abundantWorld(),
                 fd: {XXX: xmin, YYY: ymax + 1}
             });
-            expect(result.threw).toBe(false);
+            expect(result.threw).toBe(true);
+            expect(result.error).toBeInstanceOf(FormError);
+            expect(result.error.message).toContain("FQCARDENGINE.WarningMsgYValueSuperiorYMax");
             expect(result.hpCalls).toHaveLength(0);
-            expect(chatText(result)).toContain("FQCARDENGINE.WarningMsgYValueSuperiorYMax");
         }
     );
 

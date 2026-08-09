@@ -5,7 +5,7 @@ import RollService from "../../engine/roll/roll-service.js";
 import Minion from "../../engine/shared/minion.js";
 import PlayCard from "../../engine/play-card.js";
 import FormError from "../../../core/error/form-error.model.js";
-import TargetingResolver from "../../engine/shared/targeting-resolver.js";
+import CardEffect from "../../engine/shared/card-effect.js";
 import ResourceHandler from "../../engine/shared/resource-handler.js";
 import {PILE_TYPE} from "../../trading/trading-cards.js";
 
@@ -367,9 +367,10 @@ export default {
 
     /**
      * Valide et déclenche le jeu effectif d'une carte, une fois les données du
-     * formulaire du dialogue (bouton OK) extraites via `getCardContent`. Vérifie
-     * le placement des sbires et les variables X/Y saisies, publie le message de
-     * chat de choix multiple le cas échéant, puis délègue au pipeline du moteur.
+     * formulaire du dialogue (bouton OK) extraites via `getCardContent`. Vérifie le
+     * placement des sbires, recalcule tout le contenu de façon synchrone (bonus de
+     * caractéristiques, variables X/Y, données dérivées), garde le ciblage, publie le
+     * message de chat de choix multiple le cas échéant, puis délègue au moteur.
      *
      * @param {Cards}  to  - La pile de défausse cible.
      * @param {object} fd  - Les données du formulaire du dialogue (XXX, YYY, down…).
@@ -395,11 +396,21 @@ export default {
         if (fd.XXX === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorXXX"));
         if (fd.YYY === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorYYY"));
 
+        // Recalcul complet du contenu avec els caracteristiques dnd5E
+        CardEffect.replaceCardContentAbilitiesBonus(cardContent);
+
+        // Garde de bornes max et min de X/Y
+        const boundVerdict = CardEffect.evaluateXYBounds(cardContent, fd.XXX, fd.YYY);
+        if (boundVerdict) {
+            throw new FormError(game.i18n.format(boundVerdict.messageKey, boundVerdict.format));
+        }
+        // calcul X/Y
+        CardEffect.substituteXAndYValue(cardContent, hasVariables, fd.XXX, fd.YYY);
+        CardEffect.prepareDataFromCard(cardContent);
+
         // ── Garde-fou de ciblage ──
         if (cardContent?.minReach || cardContent?.maxReach) {
-            const nbTargets = TargetingResolver.resolveNbTargets(cardContent, fd);
-            const {minReach, maxReach} = TargetingResolver.resolveReach(cardContent, fd);
-            const {verdict} = ResourceHandler.evaluateTargeting(game.user.character, nbTargets, minReach, maxReach, cardContent.targetType);
+            const {verdict} = ResourceHandler.evaluateTargeting(game.user.character, cardContent.nbTargets, cardContent.minReach, cardContent.maxReach, cardContent.targetType);
             const errorKey = TARGETING_FORM_ERROR[verdict];
             if (errorKey) {
                 throw new FormError(game.i18n.localize(errorKey));

@@ -49,35 +49,35 @@ export default class Minion {
             actorData.name = actorData.name + "_" + Math.floor(Math.random() * 1000000);
             if (minion.data) {
                 if (minion.data.hp) {
-                    actorData.system.attributes.hp.max = await RollService.rollResultAsync(minion.data.hp);
-                    actorData.system.attributes.hp.value = await RollService.rollResultAsync(minion.data.hp);
+                    actorData.system.attributes.hp.max = RollService.rollResultSync(minion.data.hp);
+                    actorData.system.attributes.hp.value = RollService.rollResultSync(minion.data.hp);
                 }
                 if (minion.data.critical) {
-                    actorData.system.fq.attributes.critical = await RollService.rollResultAsync(minion.data.critical);
+                    actorData.system.fq.attributes.critical = RollService.rollResultSync(minion.data.critical);
                 }
                 if (minion.data.evasion) {
-                    actorData.system.fq.attributes.evasion = await RollService.rollResultAsync(minion.data.evasion);
+                    actorData.system.fq.attributes.evasion = RollService.rollResultSync(minion.data.evasion);
                 }
                 if (minion.data.action) {
-                    actorData.system.fq.action.max = await RollService.rollResultAsync(minion.data.action);
-                    actorData.system.fq.action.value = await RollService.rollResultAsync(minion.data.action);
+                    actorData.system.fq.action.max = RollService.rollResultSync(minion.data.action);
+                    actorData.system.fq.action.value = RollService.rollResultSync(minion.data.action);
                 }
                 if (minion.data.mana) {
-                    actorData.system.fq.mana.max = await RollService.rollResultAsync(minion.data.mana);
-                    actorData.system.fq.mana.value = await RollService.rollResultAsync(minion.data.mana);
+                    actorData.system.fq.mana.max = RollService.rollResultSync(minion.data.mana);
+                    actorData.system.fq.mana.value = RollService.rollResultSync(minion.data.mana);
                 }
                 if (minion.data.zeal) {
                     actorData.system.fq.zeal.max = DEFAULT_MAX_ZEAL;
-                    actorData.system.fq.zeal.value = await RollService.rollResultAsync(minion.data.zeal);
+                    actorData.system.fq.zeal.value = RollService.rollResultSync(minion.data.zeal);
                 }
                 if (minion.data.damageBonus) {
-                    actorData.system.fq.bonus.damage = await RollService.rollResultAsync(minion.data.damageBonus);
+                    actorData.system.fq.bonus.damage = RollService.rollResultSync(minion.data.damageBonus);
                 }
                 if (minion.data.healBonus) {
-                    actorData.system.fq.bonus.heal = await RollService.rollResultAsync(minion.data.healBonus);
+                    actorData.system.fq.bonus.heal = RollService.rollResultSync(minion.data.healBonus);
                 }
                 if (minion.data.movement) {
-                    actorData.system.attributes.movement.walk = await RollService.rollResultAsync(minion.data.movement);
+                    actorData.system.attributes.movement.walk = RollService.rollResultSync(minion.data.movement);
                 }
             }
             actorData.ownership[game.userId] = 3;

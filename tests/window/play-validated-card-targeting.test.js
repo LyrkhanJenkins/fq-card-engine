@@ -62,7 +62,8 @@ function makeCtx(cardContent) {
 
 /**
  * Monte le monde (avec surcharges) puis installe le `Roll` déterministe pour que
- * `TargetingResolver` évalue réellement les formules (evaluateSync).
+ * la résolution des champs (prepareDataFromCard, via evaluateSync) évalue réellement
+ * les formules.
  *
  * @param {object} [overrides] - Surcharges transmises à `mountWorld`.
  *
@@ -121,7 +122,10 @@ describe("Garde-fou de ciblage — blocage par FormError (dialog non fermée)", 
 
     test("cible hors portée → FormErrorOutOfReach, non délégué", () => {
         mountForGuard(); // 1 cible à distance 1 du lanceur
-        const choice = makeChoice({targetType: "Default", maxReach: "0"}); // portée 0 < distance 1
+        // Portée résolue [2,3] positive (cible à distance 1 < minReach 2 → hors portée).
+        // On garde une portée POSITIVE : depuis la remontée, la garde d'entrée
+        // s'évalue sur les valeurs résolues, une portée nulle serait falsy.
+        const choice = makeChoice({targetType: "Default", minReach: "2", maxReach: "3"});
         expect(() => play(choice)).toThrow("FQCARDENGINE.DialogPlayFormErrorOutOfReach");
         expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
     });
@@ -166,12 +170,14 @@ describe("Garde-fou de ciblage — cas nominal", () => {
         expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
     });
 
-    test("le garde-fou ne mute pas le cardContent (portées restent brutes)", () => {
+    test("le bloc de recalcul résout le cardContent en place (portées/nbTargets numériques)", () => {
+        // La non-mutation appartient désormais à TargetingView.build (plan 11-04) ;
+        // ici, playValidatedCard résout le contenu en place avant de déléguer.
         mountForGuard();
         const choice = makeChoice({targetType: "Default", minReach: "1", maxReach: "3", nbTargets: "2"});
         play(choice);
-        expect(choice.minReach).toBe("1");
-        expect(choice.maxReach).toBe("3");
-        expect(choice.nbTargets).toBe("2");
+        expect(choice.minReach).toBe(1);
+        expect(choice.maxReach).toBe(3);
+        expect(choice.nbTargets).toBe(2);
     });
 });

@@ -337,9 +337,9 @@ export class DeterministicRoll {
 
     /**
      * Variante synchrone d'`evaluate()` : même évaluation (déjà synchrone en
-     * interne), exposée pour le résolveur de ciblage synchrone
-     * (`TargetingResolver`, qui doit rester synchrone pour que le garde-fou de la
-     * dialog garde celle-ci ouverte).
+     * interne), exposée pour la résolution synchrone des champs de carte
+     * (`TargetingView.build` et la chaîne de résolution de `playValidatedCard`, qui
+     * doit rester synchrone pour que le garde-fou de la dialog garde celle-ci ouverte).
      *
      * @returns {DeterministicRoll} L'instance elle-même (comme le vrai `Roll`).
      */

@@ -1,4 +1,3 @@
-import Damage from "./damage.js";
 import Constants from "../../constants.js";
 
 /**
@@ -9,29 +8,14 @@ import Constants from "../../constants.js";
 export default class RollService {
 
     /**
-     * Lance un jet de dés et attend le résultat, avec affichage optionnel dans le chat.
+     * Évalue une formule de façon SYNCHRONE
      *
-     * @param {string|number} formula        - La formule de jet (convertie en chaîne).
-     * @param {boolean}       [display=false] - Si true, publie le résultat dans un message de chat.
-     * @param {Promise[]}     [dsnAnimations=[]] - Collecteur des promesses d'animations Dice So Nice :
-     *        la promesse du jet y est empilée (au lieu d'être attendue) pour un affichage simultané ;
-     *        l'appelant attend l'ensemble via `Promise.all` au bon moment.
+     * @param {string|number} formula - La formule de jet (convertie en chaîne).
      *
-     * @returns {Promise<number>} Le total du jet.
+     * @returns {number} Le total du jet.
      */
-    static async rollResultAsync(formula, display = false, dsnAnimations = []) {
-        const roll = await new Roll(formula.toString()).evaluate();
-        if (display === false) {
-            return roll.total;
-        }
-        Damage.applyDiceAppearance(roll); // dés à la couleur du joueur
-        const msg = await roll.toMessage();
-        // Même principe que Damage : on empile la promesse d'animation dans le
-        // collecteur fourni au lieu de l'attendre, pour un affichage simultané des dés.
-        if (game.dice3d && roll.isDeterministic === false) {
-            dsnAnimations.push(game.dice3d.waitFor3DAnimationByMessageID(msg.id));
-        }
-        return roll.total;
+    static rollResultSync(formula) {
+        return new Roll(formula.toString()).evaluateSync().total;
     }
 
     /**

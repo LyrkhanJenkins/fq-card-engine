@@ -5,8 +5,9 @@ Feat :
 - Message de chat consolidé (choix + résultats) + clic → carte SVG
 - Choix des cartes localisé et traduit en français
 - Affichage des resources spécifiques (critique, défausse, ...etc ) dans la main ou la dialog play
-- Ciblage possible depuis la dialog-play et erreur remonté avant de jouer la carte
+- Ciblage possible depuis la dialog-play et erreur de ciblage remonté avant de jouer la carte
 - Implémentation de la dissipation d'effet
+- Erreur de valeur X et Y (dépassements) bloquant avant de jouer la carte sur dialog-play
 
 Fix :
 - Correction affichage dos de carte dans la dialog-play
