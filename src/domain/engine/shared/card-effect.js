@@ -53,22 +53,15 @@ export default class CardEffect {
                 card.parent.draw(card.source, cardContent.draw, {chatNotification: false, how: 2});
             }
             if (cardContent.minions && Array.isArray(cardContent.minions)) {
-                for (const minion of cardContent.minions) {
-                    if (fd.minionLeft) {
-                        await Minion.createActor(minion, "left");
-                        fd.minionLeft = false;
-                    }
-                    if (fd.minionUp) {
-                        await Minion.createActor(minion, "up");
-                        fd.minionUp = false;
-                    }
-                    if (fd.minionRight) {
-                        await Minion.createActor(minion, "right");
-                        fd.minionRight = false;
-                    }
-                    if (fd.minionDown) {
-                        await Minion.createActor(minion, "down");
-                        fd.minionDown = false;
+                const selectedLocations = [];
+                if (fd.minionLeft) selectedLocations.push("left");
+                if (fd.minionUp) selectedLocations.push("up");
+                if (fd.minionRight) selectedLocations.push("right");
+                if (fd.minionDown) selectedLocations.push("down");
+                for (let i = 0; i < selectedLocations.length; i++) {
+                    const minion = cardContent.minions[i];
+                    if (minion) {
+                        await Minion.createActor(minion, selectedLocations[i]);
                     }
                 }
             }

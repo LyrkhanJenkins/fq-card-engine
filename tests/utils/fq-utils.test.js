@@ -476,22 +476,34 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(draw).toHaveBeenCalledWith("sourceRef", 2, {chatNotification: false, how: 2});
         });
 
-        it("minions : appelle createActor par emplacement sélectionné et repasse chaque flag à false", async () => {
+        it("minions : un seul sbire pour une seule direction sélectionnée", async () => {
             const spy = vi.spyOn(Minion, "createActor").mockResolvedValue(undefined);
             const minion = {name: "goblin"};
             const cardContent = makeChoice({minions: [minion]});
-            const fd = {minionLeft: true, minionUp: true, minionRight: true, minionDown: true};
+            const fd = {minionDown: true};
 
             await CardEffect.applyCardEffect(cardContent, makeCard(), fd);
 
-            expect(spy).toHaveBeenCalledWith(minion, "left");
-            expect(spy).toHaveBeenCalledWith(minion, "up");
-            expect(spy).toHaveBeenCalledWith(minion, "right");
+            expect(spy).toHaveBeenCalledTimes(1);
             expect(spy).toHaveBeenCalledWith(minion, "down");
-            expect(fd.minionLeft).toBe(false);
-            expect(fd.minionUp).toBe(false);
-            expect(fd.minionRight).toBe(false);
-            expect(fd.minionDown).toBe(false);
+
+            spy.mockRestore();
+        });
+
+        it("minions : un sbire DISTINCT par emplacement sélectionné (minion[i] → i-ème direction)", async () => {
+            const spy = vi.spyOn(Minion, "createActor").mockResolvedValue(undefined);
+            const m1 = {name: "goblin"};
+            const m2 = {name: "orc"};
+            const m3 = {name: "kobold"};
+            const cardContent = makeChoice({minions: [m1, m2, m3]});
+            // 2 directions sélectionnées (ordre parcouru : left, up, right, down).
+            const fd = {minionLeft: true, minionUp: false, minionRight: true, minionDown: false};
+
+            await CardEffect.applyCardEffect(cardContent, makeCard(), fd);
+
+            expect(spy).toHaveBeenCalledTimes(2);
+            expect(spy).toHaveBeenNthCalledWith(1, m1, "left");
+            expect(spy).toHaveBeenNthCalledWith(2, m2, "right");
 
             spy.mockRestore();
         });
