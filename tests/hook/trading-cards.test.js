@@ -122,20 +122,4 @@ describe("trading-cards", () => {
             expect(card.updateSource).not.toHaveBeenCalled();
         });
     });
-
-    describe("dealCards / returnCards (no-op)", () => {
-        it("dealCards n'a aucun effet observable", () => {
-            const hook = getHook("dealCards");
-
-            expect(() => hook({}, {}, {})).not.toThrow();
-            expect(hook({}, {}, {})).toBeUndefined();
-        });
-
-        it("returnCards n'a aucun effet observable", () => {
-            const hook = getHook("returnCards");
-
-            expect(() => hook({}, {}, {})).not.toThrow();
-            expect(hook({}, {}, {})).toBeUndefined();
-        });
-    });
 });

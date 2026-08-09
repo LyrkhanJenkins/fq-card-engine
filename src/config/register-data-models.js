@@ -30,11 +30,6 @@ export function registerDataModels() {
         return mergeSchema(schema, ActionFQTemplate.defineSchema());
     }, "WRAPPER");
 
-    libWrapper.register(FqCardEngineModule.moduleName, `foundry.documents.Cards.defineSchema`, function (wrapper, ...args) {
-        const schema = wrapper(...args);
-        return mergeSchema(schema, ActionFQTemplate.defineSchema());
-    }, "WRAPPER");
-
     CONFIG.Cards.dataModels = {
         deck: CardsFqSystem, hand: CardsFqSystem, pile: CardsFqSystem
     };

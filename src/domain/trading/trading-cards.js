@@ -8,12 +8,12 @@ export const SPELLBOOK_TYPE = "SPELLBOOK";
 export default class TradingCards {
 
     /**
-     * Map des fonctions debounce indexées par userId.
+     * Fonctions debounce indexées par userId.
      * Garantit qu'un seul appel à deleteDeckForUser/createDeckForUser est effectué
      * par utilisateur dans une fenêtre de 300 ms, même si updateItem est déclenché
      * plusieurs fois simultanément (cas du multi-classe).
      *
-     * @type {Map<string, function>}
+     * @type {Object<string, function>}
      */
     static debouncedUpdateDeckByUser = {};
 
@@ -183,9 +183,8 @@ export default class TradingCards {
         for (const i in allFQClasses) {
             const classe = allFQClasses[i];
             const level = Number(classe.system.levels) ? Number(classe.system.levels) : 0;
-            const patternCompendium = await game.packs.get(FqCardEngineModule.moduleName + ".decks-pattern-fq8").getDocuments();
             const nameOriginPatternDeck = classe?.name + " Base";
-            const deckCompendium = patternCompendium.find(pack => pack.name === nameOriginPatternDeck);
+            const deckCompendium = compendium.find(pack => pack.name === nameOriginPatternDeck);
             let classeCards = deckCompendium ? [...deckCompendium.cards] : [];
             allCards = allCards.concat(classeCards.filter(c => c.system.fq.level <= level));
         }
@@ -203,7 +202,6 @@ export default class TradingCards {
         // --- Calcul du delta (cartes gagnées / perdues) par classe ---
         let cardsToAdd = [];
         let cardsToRemove = [];
-        const patternCompendium = await game.packs.get(FqCardEngineModule.moduleName + ".decks-pattern-fq8").getDocuments();
 
         const allClassNames = new Set([...Object.keys(oldClassLevels), ...Object.keys(newClassLevels)]);
         for (const className of allClassNames) {
@@ -212,7 +210,7 @@ export default class TradingCards {
             if (newLevel === oldLevel) continue;
 
             const nameOriginPatternDeck = className + " Base";
-            const deckCompendium = patternCompendium.find(pack => pack.name === nameOriginPatternDeck);
+            const deckCompendium = compendium.find(pack => pack.name === nameOriginPatternDeck);
             if (!deckCompendium) continue;
             const classeCards = [...deckCompendium.cards];
 

@@ -1,28 +1,9 @@
 /**
  * Helpers génériques sur les objets et le système de fichiers, sans logique
- * métier FQ (copie profonde, identifiant aléatoire, tirage de fichier).
+ * métier FQ (copie profonde, tirage de fichier).
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
 export default class ObjectUtils {
-
-    /**
-     * Génère un identifiant aléatoire alphanumérique en majuscules.
-     *
-     * @param {number} length - La longueur de l'identifiant à générer.
-     *
-     * @returns {string} L'identifiant aléatoire.
-     */
-    static generateRandomId(length) {
-        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        let result = "";
-
-        for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * characters.length);
-            result += characters.charAt(randomIndex);
-        }
-
-        return result;
-    }
 
     /**
      * Effectue une copie profonde d'une valeur (objets et tableaux inclus). Les

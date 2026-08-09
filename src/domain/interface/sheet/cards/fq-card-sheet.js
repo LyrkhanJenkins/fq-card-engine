@@ -10,15 +10,6 @@ import CardFqSystem from "../../../system/cards/card-fq-system.mjs";
  */
 export default class FqCardSheet extends foundry.applications.sheets.CardConfig {
 
-    /**
-     * @inheritDoc
-     * @param {object} options - Les options de l'application Foundry.
-     * @param {...*}   args    - Les arguments additionnels transmis à la classe parente.
-     */
-    constructor(options, ...args) {
-        super(options, ...args);
-    }
-
     /** @inheritDoc */
     static DEFAULT_OPTIONS = {
         classes: ["card-config"],

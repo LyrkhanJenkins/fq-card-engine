@@ -56,7 +56,7 @@ Hooks.on("setup", function () {
         label: "FQCARDENGINE.FQCardConfig", makeDefault: true
     });
 
-    if (game.settings.get(FqCardEngineModule.moduleName, "PlayerLimitCardsRight") == true) {
+    if (game.settings.get(FqCardEngineModule.moduleName, "PlayerLimitCardsRight")) {
         CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
     }
     const adminRights = CONFIG.FqCardEngine.options.playerLimitCardsRight === false || game.user.isGM;
@@ -75,7 +75,7 @@ Hooks.on("setup", function () {
         for (let i = 0; i < count; i++) {
             new HandBoard(i);
         }
-        if (game.settings.get(FqCardEngineModule.moduleName, "DisplayHandName") == true) {
+        if (game.settings.get(FqCardEngineModule.moduleName, "DisplayHandName")) {
             $("#fq-card-engine-container").addClass("show-names");
         }
         $(".fq-card-engine-hide-show").click(function () {
@@ -123,22 +123,22 @@ Hooks.on("setup", function () {
         });
         //initialize Options from saved settings
         CONFIG.FqCardEngine.options.cardClick = game.settings.get(FqCardEngineModule.moduleName, "CardClick");
-        if (game.settings.get(FqCardEngineModule.moduleName, "HideMessages") == true) {
+        if (game.settings.get(FqCardEngineModule.moduleName, "HideMessages")) {
             CONFIG.FqCardEngine.options.hideMessages = true;
         }
-        if (game.settings.get(FqCardEngineModule.moduleName, "GMUsingCards") == true) {
+        if (game.settings.get(FqCardEngineModule.moduleName, "GMUsingCards")) {
             CONFIG.FqCardEngine.options.GMUsingCards = true;
         }
-        if (game.settings.get(FqCardEngineModule.moduleName, "RollInitiative") == true) {
+        if (game.settings.get(FqCardEngineModule.moduleName, "RollInitiative")) {
             CONFIG.FqCardEngine.options.rollInitiative = true;
         }
-        if (game.settings.get(FqCardEngineModule.moduleName, "BetterChatMessages") == true) {
+        if (game.settings.get(FqCardEngineModule.moduleName, "BetterChatMessages")) {
             CONFIG.FqCardEngine.options.betterChatMessages = true;
         }
-        if (game.settings.get(FqCardEngineModule.moduleName, "FaceUpMode") == true) {
+        if (game.settings.get(FqCardEngineModule.moduleName, "FaceUpMode")) {
             CONFIG.FqCardEngine.options.faceUpMode = true;
         }
-        if (game.settings.get(FqCardEngineModule.moduleName, "ShowPlayedPlayerNames") == true) {
+        if (game.settings.get(FqCardEngineModule.moduleName, "ShowPlayedPlayerNames")) {
             CONFIG.FqCardEngine.options.showPlayedPlayerNames = true;
         }
         game.socket.on(FqCardEngineModule.eventName, data => {

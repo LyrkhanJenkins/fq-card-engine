@@ -283,7 +283,6 @@
           "color": "#317d0e",
           "packs": [
             "decks-pattern-fq8",
-            "decks-fq8",
             "decks-fq8-generated"
           ],
           "folders": []

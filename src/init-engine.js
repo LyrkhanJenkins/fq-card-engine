@@ -15,9 +15,6 @@ CONFIG.FqCardEngine = {
         hideMessages: false,
         faceUpMode: false,
         showPlayedPlayerNames: false,
-        position: "",
-        size: "",
-        positionDefault: "right_bar",
         cardClick: "play_card"
     }, documentClass: HandBoard
 };

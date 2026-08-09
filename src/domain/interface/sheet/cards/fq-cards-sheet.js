@@ -10,13 +10,6 @@ import DisplayCard from "../../shared/display-card.js";
  * @extends foundry.applications.sheets.CardDeckConfig
  */
 export default class FqCardsSheet extends foundry.applications.sheets.CardDeckConfig {
-    /**
-     * @param {object} object  - Le document Cards (deck) associé à la feuille.
-     * @param {object} options - Les options de l'application Foundry.
-     */
-    constructor(object, options) {
-        super(object, options);
-    }
 
     /**
      * Identifiants des hooks de carte enregistrés à l'ouverture, retirés à la
@@ -147,19 +140,6 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
         const li = target.closest("[data-card-id]");
         const card = this.document.cards.get(li?.dataset.cardId);
         if (!card) return;
-        await FqCardsSheet.#showCardOverlay(card);
-    }
-
-    /**
-     * Monte un voile noir plein écran affichant une carte en grand : le rendu SVG
-     * complet (`card-svg.hbs`) pour une carte visible, ou simplement l'image de dos
-     * pour une carte face cachée. Aucun impact moteur ; clic n'importe où = fermeture.
-     *
-     * @param {Card} card - La carte à afficher en grand.
-     *
-     * @returns {Promise<void>}
-     */
-    static async #showCardOverlay(card) {
         await DisplayCard.showCardOverlay(card);
     }
 
