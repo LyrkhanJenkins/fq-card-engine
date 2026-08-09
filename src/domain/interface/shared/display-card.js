@@ -299,6 +299,20 @@ export default class DisplayCard {
     }
 
     /**
+     * Indique si un bonus « string » (dégâts / soin) est renseigné, c.-à-d. non
+     * vide et différent de « 0 » — utilisé pour n'afficher la pastille que si le
+     * bonus est supérieur à 0.
+     *
+     * @param {string|null|undefined} str - La valeur brute du bonus.
+     *
+     * @returns {boolean} Vrai si le bonus doit être affiché.
+     */
+    static hasBonusStr(str) {
+        const s = (str ?? "").toString().trim();
+        return s !== "" && s !== "0";
+    }
+
+    /**
      * Construit les données de bulle communes à toutes les vues d'une carte (main,
      * dialogue « Jouer la carte », voile plein écran) : coûts, portées, réactivité,
      * rejouabilité, limite d'exemplaires, classe, et les indicateurs de modificateur

@@ -1,3 +1,5 @@
+import Constants from "../../constants.js";
+
 /**
  * Utilitaires de géométrie sur le canvas Foundry : calculs de distances entre
  * tokens (en tenant compte de leur taille), et repérage des cases adjacentes.
@@ -105,7 +107,7 @@ export default class Geometry {
      * @returns {boolean} True si la case adjacente est occupée, false sinon.
      */
     static locationIsOccupied(location) {
-        const myToken = game.canvas?.scene?.tokens?.find(t => t.actorId === game.user?.character?.id);
+        const myToken = Constants.myToken;
         return !!game.scenes.find(s => s.active).tokens?.find(t =>
             t.x === Geometry.getXAdjacentLocation(myToken, location) &&
             t.y === Geometry.getYAdjacentLocation(myToken, location));

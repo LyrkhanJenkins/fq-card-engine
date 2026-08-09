@@ -1,7 +1,6 @@
 import DisplayCard from "../shared/display-card.js";
 import TargetingView from "../shared/targeting-view.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
-import RollService from "../../engine/roll/roll-service.js";
 import Minion from "../../engine/shared/minion.js";
 import PlayCard from "../../engine/play-card.js";
 import FormError from "../../../core/error/form-error.model.js";
@@ -32,20 +31,6 @@ let openPlayDialog = null;
  * `init-engine.js`. Les méthodes utilisant `this` restent appelées via la façade.
  */
 export default {
-    /**
-     * Indique si un bonus « string » (dégâts / soin) est renseigné, c.-à-d. non
-     * vide et différent de « 0 » — utilisé pour n'afficher la pastille que si le
-     * bonus est supérieur à 0.
-     *
-     * @param {string|null|undefined} str - La valeur brute du bonus.
-     *
-     * @returns {boolean} Vrai si le bonus doit être affiché.
-     */
-    hasBonusStr(str) {
-        const s = (str ?? "").toString().trim();
-        return s !== "" && s !== "0";
-    },
-
     //one of the cards was clicked, based on options pick what to do
     /**
      * Réagit au clic sur une carte selon le réglage `cardClick` : ouvrir le
@@ -161,8 +146,8 @@ export default {
             healBonus: character.system?.fq?.bonus?.heal ?? "",
             showSacrifice: (character.system?.fq?.special?.sacrificedSkeleton ?? 0) > 0,
             showRangeBonus: (character.system?.fq?.bonus?.range ?? 0) > 0,
-            showDamageBonus: this.hasBonusStr(character.system?.fq?.bonus?.damage),
-            showHealBonus: this.hasBonusStr(character.system?.fq?.bonus?.heal),
+            showDamageBonus: DisplayCard.hasBonusStr(character.system?.fq?.bonus?.damage),
+            showHealBonus: DisplayCard.hasBonusStr(character.system?.fq?.bonus?.heal),
         } : null;
 
         let description = DisplayCard.getDescriptionFromCard(card);
@@ -175,22 +160,8 @@ export default {
             description: description,
             descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
             titleSize: DisplayCard.getTitleSizeForCardSvg(name),
-            action: DisplayCard.getNumberForBubbleCardSvg(firstChoice.action),
-            mana: DisplayCard.getNumberForBubbleCardSvg(firstChoice.mana),
-            zeal: DisplayCard.getNumberForBubbleCardSvg(firstChoice.zeal),
-            minReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.minReach),
-            maxReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.maxReach),
+            ...DisplayCard.buildBubbleData(firstChoice, card),
 
-            actionMod: RollService.hasAbilitiesBonus(firstChoice.action),
-            manaMod: RollService.hasAbilitiesBonus(firstChoice.mana),
-            zealMod: RollService.hasAbilitiesBonus(firstChoice.zeal),
-            reachMod: RollService.hasAbilitiesBonus(firstChoice.minReach) || RollService.hasAbilitiesBonus(firstChoice.maxReach),
-            replayableMod: RollService.hasAbilitiesBonus(firstChoice.replayable),
-
-            reactive: firstChoice.reactive,
-            replayable: firstChoice?.replayable === "passif" ? "P" : !firstChoice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(firstChoice?.replayable),
-            maxSameCard: card.system.fq?.maxSameCard,
-            fqClass: card.system.fq?.class,
             discards,
             panel,
             charStats,

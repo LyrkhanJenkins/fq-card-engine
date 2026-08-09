@@ -1,3 +1,5 @@
+import DisplayCard from "../shared/display-card.js";
+
 /**
  * Jauges du personnage dans le HUD (PV / action / mana / zèle) et bascule de leur
  * affichage. Extrait de la façade `FqCardEngineModule` ; réassemblé par spread
@@ -59,12 +61,6 @@ export default {
             }
         };
 
-        // Un bonus « string » (dégâts/soin) est présent s'il n'est ni vide ni « 0 ».
-        const hasBonusStr = (str) => {
-            const s = (str ?? "").toString().trim();
-            return s !== "" && s !== "0";
-        };
-
         setChip("fq-cg-critical", null, attributes?.critical ?? 0);
         setChip("fq-cg-evasion", null, attributes?.evasion ?? 0);
         setChip("fq-cg-drop", null, character.system?.fq?.cards?.currentDrop ?? 0);
@@ -75,8 +71,8 @@ export default {
         const range = bonus?.range ?? 0;
         setChip("fq-cg-range", "fq-cg-range-chip", range, range > 0);
 
-        setChip("fq-cg-damage", "fq-cg-damage-chip", bonus?.damage, hasBonusStr(bonus?.damage));
-        setChip("fq-cg-heal", "fq-cg-heal-chip", bonus?.heal, hasBonusStr(bonus?.heal));
+        setChip("fq-cg-damage", "fq-cg-damage-chip", bonus?.damage, DisplayCard.hasBonusStr(bonus?.damage));
+        setChip("fq-cg-heal", "fq-cg-heal-chip", bonus?.heal, DisplayCard.hasBonusStr(bonus?.heal));
     },
 
     /**

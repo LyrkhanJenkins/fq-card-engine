@@ -146,13 +146,16 @@ export default class ResourceHandler {
     }
 
     /**
-     * Verdicts possibles de l'évaluation du ciblage (objet gelé).
+     * Verdicts possibles de l'évaluation du ciblage (objet gelé). Les verdicts de
+     * comptage réutilisent les valeurs de `TargetingPredicates.TARGET_COUNT`
+     * (source unique) pour éviter toute désynchronisation silencieuse ; s'y
+     * ajoutent les verdicts propres au ciblage (token du lanceur, portée).
      */
     static TARGETING_VERDICT = Object.freeze({
-        OK: "ok",
-        NO_TARGET: "none",
-        MULTIPLE_NOT_ALLOWED: "multipleNotAllowed",
-        TOO_MANY: "tooMany",
+        OK: TargetingPredicates.TARGET_COUNT.OK,
+        NO_TARGET: TargetingPredicates.TARGET_COUNT.NONE,
+        MULTIPLE_NOT_ALLOWED: TargetingPredicates.TARGET_COUNT.MULTIPLE_NOT_ALLOWED,
+        TOO_MANY: TargetingPredicates.TARGET_COUNT.TOO_MANY,
         NO_CASTER_TOKEN: "noCasterToken",
         OUT_OF_REACH: "outOfReach",
     });
