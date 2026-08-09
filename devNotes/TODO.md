@@ -4,12 +4,6 @@
 ### Fix à prioriser
 
 ### Versions prévues
-#### 2.0.2
-- Tests fonctionnels + montée de version jusqu'à la dernière v14
-- Docs a finir de relire
-- FQ Restraint movement, tester decommenter, revoir les commits, ajouter un RELEASE, faire le README, publier le package et l'ajouter en recommandation des modules
-- PATCH--> RELEASE
-
 #### 2.0.3
 - La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR
 - Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de

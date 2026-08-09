@@ -685,6 +685,13 @@
     letter-spacing: 0.05em;
 }
 
+/* Trop de cibles sélectionnées : le compteur (panneau + barre flottante) passe
+   au rouge */
+.fq-play-targets-counter.fq-play-target--oor,
+.fq-play-targeting-bar-label.fq-play-target--oor {
+    color: rgba(var(--fq-danger-d-rgb), 0.9);
+}
+
 /* ── Mode ciblage ── */
 /* Pendant le ciblage : on efface l'overlay (opacité 0) et on le rend traversant
    (pointer-events) pour libérer le canvas, sans fermer la dialog (état préservé).

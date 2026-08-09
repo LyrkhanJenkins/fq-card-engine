@@ -259,6 +259,7 @@ export default {
             const updateBar = (view) => {
                 const label = targetingBar?.querySelector(".fq-play-targeting-bar-label");
                 if (label) {
+                    label.classList.toggle("fq-play-target--oor", view.tooMuchTargets);
                     label.textContent = `${game.i18n.localize("FQCARDENGINE.TargetingPanelInProgress")} ${view.count} / ${view.required}`;
                 }
             };

@@ -65,6 +65,6 @@ export default class TargetingView {
             };
         });
 
-        return {manual, required, count: tokens.length, minReach, maxReach, targets};
+        return {manual, required, count: tokens.length, tooMuchTargets: tokens.length > required, minReach, maxReach, targets};
     }
 }
