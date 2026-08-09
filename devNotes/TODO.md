@@ -2,6 +2,11 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
+- Remplacer les new Roll
+- Description de Frappe Solaire mal noté
+- Revoir Arme secrètes
+- On ne voit pas assez les dots qui permettent de faire d'autres sorts (malédiction, brulure), afficher l'effet sur les tokens (ET dans la dialog-play?
+- Problème avec la carte malédiction (affichage des dégâts)
 
 ### Versions prévues
 
@@ -11,9 +16,6 @@
   fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
 - Deplacer les controles d'utilisation d'une carte dans un fichier JS et les tester
-- Pour les réactifs ptetre travaillé sur des evenements pour pouvoir les jouer ( j'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
-  , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> - Revoir tir reflexe (jouer même si pas attaquer?)
-- Un réactif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème
 - Rajouter des règles d'architectures
 - Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
 - Passage en typescript?
@@ -36,6 +38,9 @@
     -  -> enlever JSON après utilisation?
     - (Facultatif: les noms des choix peuvent être localisé)
     - Peut être qu'une fois que c'est fait, on a pas besoin de plusiuers formules d'application d'effet ( à voir)
+- Pour les réactifs ptetre travaillé sur des evenements pour pouvoir les jouer ( j'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
+  , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> - Revoir tir reflexe (jouer même si pas attaquer?)
+- Un réactif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème
 - L'esquive fait demi-dégâts
 - Gérer du ciblage speciale : Zone -> utiliser le ciblage de zone avec la dialog-play
 - Plus de carte qui dissipent des effets ou qui ont des chances de dissiper des effets
@@ -92,6 +97,7 @@
 - Dé à 0 face : les cartes en `1d(expr)` (ex. `1d(2*@str)`, `1d(@str)`, `1d(2*@wis)`, `1d(2*@dex)`) plantent au vrai Roll si le modificateur concerné vaut 0.
 - `1d(4-XXX)` (EarthFracture) et `1d(6-XXX)` (GiantStalactite) produisent des faces ≤ 0 (dé invalide) quand XXX est élevé.
 - `playDialog` : `firstChoice.replayable` est lu sans garde de nullité (`str.includes` plante si le champ est absent).
+- Est ce que l'animation de pioche de carte est trops rapide?
 
 ### Chore:
 - Migration Eizh complète avec les niveaux
