@@ -4,8 +4,6 @@
 ### Fix à prioriser
 
 ### Versions prévues
-#### 2.0.2
-- Revoire l'affichage des bulles pour le X et le S (Tir précis)
 
 #### 2.0.3
 - La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR

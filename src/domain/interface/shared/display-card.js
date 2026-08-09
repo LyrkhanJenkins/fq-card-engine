@@ -11,25 +11,20 @@ import RollService from "../../engine/roll/roll-service.js";
 export default class DisplayCard {
     /**
      * Calcule la valeur à afficher dans une bulle de carte (action, mana, portée…).
-     * Renvoie « 0 » si vide, « ∞ » au-delà de 99, « S » si une variable spéciale
-     * (X/Y) est renseignée, la valeur évaluée du jet sinon, ou l'expression
-     * algébrique simplifiée si des variables subsistent.
+     * Renvoie « 0 » si vide, « ∞ » au-delà de 99, la valeur évaluée du jet, ou
+     * l'expression algébrique simplifiée si des variables subsistent (XXX→X, YYY→Y).
      *
-     * @param {string} str         - L'expression brute de la bulle (peut contenir des bonus/variables).
-     * @param {object} cardContent - Le contenu (choix) de la carte, portant `xvalue`/`yvalue`.
+     * @param {string} str - L'expression brute de la bulle (peut contenir des bonus/variables).
      *
      * @returns {string|number} La valeur ou le symbole à afficher.
      */
-    static getNumberForBubbleCardSvg(str, cardContent) {
+    static getNumberForBubbleCardSvg(str) {
         if (str === "" || !str) {
             return "0";
         }
         const match = str.match(/-?\d+/g);
         if (match?.length && match[0] > 99) return "∞";
         let result = RollService.replaceAbilitiesBonus(str);
-        if ((result.includes("XXX") && cardContent.xvalue) || (result.includes("YYY") && cardContent.yvalue)) {
-            return "S";
-        }
         try {
             const roll = new Roll(result).evaluateSync();
             return roll.total;
@@ -339,15 +334,15 @@ export default class DisplayCard {
                 description: description,
                 descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
                 titleSize: DisplayCard.getTitleSizeForCardSvg(name),
-                action: DisplayCard.getNumberForBubbleCardSvg(firstChoice.action, firstChoice),
-                mana: DisplayCard.getNumberForBubbleCardSvg(firstChoice.mana, firstChoice),
-                zeal: DisplayCard.getNumberForBubbleCardSvg(firstChoice.zeal, firstChoice),
-                minReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.minReach, firstChoice),
-                maxReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.maxReach, firstChoice),
+                action: DisplayCard.getNumberForBubbleCardSvg(firstChoice.action),
+                mana: DisplayCard.getNumberForBubbleCardSvg(firstChoice.mana),
+                zeal: DisplayCard.getNumberForBubbleCardSvg(firstChoice.zeal),
+                minReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.minReach),
+                maxReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.maxReach),
                 maxSameCard: card.system.fq?.maxSameCard,
                 fqClass: card.system.fq?.class,
                 reactive: firstChoice.reactive,
-                replayable: firstChoice?.replayable === "passif" ? "P" : !firstChoice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(firstChoice?.replayable, firstChoice),
+                replayable: firstChoice?.replayable === "passif" ? "P" : !firstChoice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(firstChoice?.replayable),
             };
             wrap.innerHTML = await foundry.applications.handlebars.renderTemplate(
                 "modules/fq-card-engine/src/templates/partials/card-svg.hbs", renderData);

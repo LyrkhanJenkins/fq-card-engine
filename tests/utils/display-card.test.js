@@ -65,7 +65,7 @@ describe("DisplayCard.getNumberForBubbleCardSvg", () => {
         expect(DisplayCard.getNumberForBubbleCardSvg("100", {})).toBe("∞");
     });
 
-    describe("branches restantes (S / evaluateSync / simplify)", () => {
+    describe("branches restantes (evaluateSync / simplify)", () => {
         beforeEach(() => {
             // RollService.replaceAbilitiesBonus lit Constants.actorAbi.<abi>.mod sans
             // chaînage optionnel : il faut poser les 6 caractéristiques pour ne pas
@@ -75,30 +75,32 @@ describe("DisplayCard.getNumberForBubbleCardSvg", () => {
             };
         });
 
-        it("renvoie « S » quand XXX est présent et cardContent.xvalue est renseigné", () => {
-            expect(DisplayCard.getNumberForBubbleCardSvg("XXX+2", {xvalue: 5})).toBe("S");
-        });
-
-        it("renvoie « S » quand YYY est présent et cardContent.yvalue est renseigné", () => {
-            expect(DisplayCard.getNumberForBubbleCardSvg("YYY+2", {yvalue: 5})).toBe("S");
-        });
-
         it("renvoie le total évalué quand l'expression est une formule de dés valide", () => {
             globalThis.Roll = vi.fn(function (formula) {
                 this.formula = formula;
                 this.evaluateSync = () => ({total: 42});
             });
-            expect(DisplayCard.getNumberForBubbleCardSvg("1+2", {})).toBe(42);
+            expect(DisplayCard.getNumberForBubbleCardSvg("1+2")).toBe(42);
         });
 
-        it("retombe sur simplifyExpression quand l'évaluation échoue (variables non résolues)", () => {
+        it("simplifie l'expression (XXX→X) quand l'évaluation échoue, même avec xvalue renseigné", () => {
             globalThis.Roll = vi.fn(function (formula) {
                 this.formula = formula;
                 this.evaluateSync = () => {
                     throw new Error("cannot evaluate variable");
                 };
             });
-            expect(DisplayCard.getNumberForBubbleCardSvg("XXX", {})).toBe("X");
+            expect(DisplayCard.getNumberForBubbleCardSvg("XXX")).toBe("X");
+        });
+
+        it("simplifie l'expression (YYY→Y) quand l'évaluation échoue", () => {
+            globalThis.Roll = vi.fn(function (formula) {
+                this.formula = formula;
+                this.evaluateSync = () => {
+                    throw new Error("cannot evaluate variable");
+                };
+            });
+            expect(DisplayCard.getNumberForBubbleCardSvg("YYY")).toBe("Y");
         });
     });
 });
