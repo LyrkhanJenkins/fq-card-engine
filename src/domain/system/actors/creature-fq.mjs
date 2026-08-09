@@ -1,12 +1,11 @@
 const {SchemaField, NumberField, StringField} = foundry.data.fields;
 
 /**
+ * Champs de schéma FQ communs aux personnages et aux PNJ.
  *
- * System data definition for Characters and NPC FQ.
- *
- * @property {object} fq.hp
- * @property {number} fq.hp.value                 Current action points.
- * @property {number} fq.hp.max                   Maximum action points.
+ * @property {object} fq.action
+ * @property {number} fq.action.value               Current action points.
+ * @property {number} fq.action.max                 Maximum action points.
  * @property {object} fq.mana
  * @property {number} fq.mana.value                 Current mana points.
  * @property {number} fq.mana.max                   Maximum mana points.
@@ -19,7 +18,9 @@ const {SchemaField, NumberField, StringField} = foundry.data.fields;
  * @property {number} fq.attributes.evasion         Evasion Score.
  * @property {object} fq.bonus
  * @property {number} fq.bonus.range                Bonus of range.
- * @property {number} fq.bonus.dot                 DOT or HOT.
+ * @property {string} fq.bonus.damage               Damage bonus formula.
+ * @property {string} fq.bonus.heal                 Heal bonus formula.
+ * @property {number} fq.bonus.dot                  DOT or HOT.
  */
 export default class CreatureFQTemplate {
 

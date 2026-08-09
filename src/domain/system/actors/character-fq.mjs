@@ -10,6 +10,8 @@ const {SchemaField, NumberField} = foundry.data.fields;
  * @property {number} fq.cards.hand                 Start Hand.
  * @property {number} fq.cards.pick                 Pick card score.
  * @property {number} fq.cards.currentDrop          Current discard card score.
+ * @property {object} fq.special
+ * @property {number} fq.special.sacrificedSkeleton Sacrificed skeletons count.
  */
 export default class CharacterDataFQ {
     /**
