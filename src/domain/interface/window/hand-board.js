@@ -1,6 +1,5 @@
 import {DECK_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
 import DisplayCard from "../shared/display-card.js";
-import RollService from "../../engine/roll/roll-service.js";
 
 /**
  * Représente une barre de main affichée à l'écran (le module peut en gérer
@@ -28,6 +27,10 @@ export default class HandBoard {
         // Regroupement des cartes d'une même pioche pour l'animation de révélation.
         this._drawRevealBuffer = [];
         this._drawRevealTimer = null;
+        // Ids des hooks de synchronisation, retirés dans remove() pour éviter que
+        // les barres détruites (ex. réduction du nombre de barres joueur) laissent
+        // des hooks orphelins agir sur un DOM disparu.
+        this._hookIds = {};
         let t = this;
 
         foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand.hbs", {
@@ -59,20 +62,20 @@ export default class HandBoard {
          * Hooks to listen to changes in this hand
          * Useful: CONFIG.debug.hooks = true
          */
-        Hooks.on("updateCard", function (target, data) {
+        this._hookIds.updateCard = Hooks.on("updateCard", function (target, data) {
             if (!!data.drawn || data.sort !== undefined || data.face !== undefined
                 || data.system?.fq?.choices !== undefined) {
                 t.update();
             }
         });
 
-        Hooks.on("deleteCard", function (target) {
+        this._hookIds.deleteCard = Hooks.on("deleteCard", function (target) {
             if (!!target && !!target.parent && (!!t.currentCards && (target.parent._id ? target.parent._id : target.parent.data._id) == (t.currentCards._id ? t.currentCards._id : t.currentCards.data._id))) {
                 t.update();
             }
         });
 
-        Hooks.on("createCard", function (target, options, userId) {
+        this._hookIds.createCard = Hooks.on("createCard", function (target, options, userId) {
             if (!!target && !!target.parent && (!!t.currentCards && (target.parent._id ? target.parent._id : target.parent.data._id) == (t.currentCards._id ? t.currentCards._id : t.currentCards.data._id))) {
                 t.update();
                 // Révélation cosmétique : uniquement pour le joueur qui pioche
@@ -85,7 +88,7 @@ export default class HandBoard {
             }
         });
 
-        Hooks.on("updateUser", function (target, data) {
+        this._hookIds.updateUser = Hooks.on("updateUser", function (target, data) {
             //GM informs others not informaed by players
             if (data != undefined && data.flags !== undefined) {
                 if (data.flags[FqCardEngineModule.moduleName] !== undefined) {
@@ -120,22 +123,7 @@ export default class HandBoard {
             description: description,
             descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
             titleSize: DisplayCard.getTitleSizeForCardSvg(name),
-            action : DisplayCard.getNumberForBubbleCardSvg(cardContent.action),
-            mana : DisplayCard.getNumberForBubbleCardSvg(cardContent.mana),
-            zeal : DisplayCard.getNumberForBubbleCardSvg(cardContent.zeal),
-            minReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.minReach),
-            maxReach : DisplayCard.getNumberForBubbleCardSvg(cardContent.maxReach),
-
-            actionMod : RollService.hasAbilitiesBonus(cardContent.action),
-            manaMod : RollService.hasAbilitiesBonus(cardContent.mana),
-            zealMod : RollService.hasAbilitiesBonus(cardContent.zeal),
-            reachMod : RollService.hasAbilitiesBonus(cardContent.minReach) || RollService.hasAbilitiesBonus(cardContent.maxReach),
-            replayableMod : RollService.hasAbilitiesBonus(cardContent.replayable),
-
-            reactive : cardContent.reactive,
-            replayable : cardContent?.replayable === "passif" ? "P" : !cardContent?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(cardContent?.replayable),
-            maxSameCard : c.system.fq?.maxSameCard,
-            fqClass : c.system.fq?.class,
+            ...DisplayCard.buildBubbleData(cardContent, c),
             hasBeenPlayed: cardContent?.hasBeenPlayed,
             passiveHasBeenPlayedOnRound: cardContent?.passivePlayedRound && cardContent?.passivePlayedRound?.toString() === game.combat?.round?.toString(),
             isFQBase: c.system?.fq?.isBase,
@@ -317,9 +305,7 @@ export default class HandBoard {
         this.update();
         if (game.user.isGM) {
             //check to see if user has a hand selected already
-            if (game.user.isGM) {
-                FqCardEngineModule.updatePlayerBarCounts();
-            }
+            FqCardEngineModule.updatePlayerBarCounts();
             let id = this.currentUser.getFlag(FqCardEngineModule.moduleName, "CardsID-" + this.playerBarCount);
             if (id) {
                 this.storeCardsID(id);
@@ -815,10 +801,10 @@ export default class HandBoard {
             if (this.currentUser) {
                 const color = this.currentUser.color ?? this.currentUser.data?.color ?? "";
                 panel.style.setProperty("--fq-player-color", color);
-                sidebar.style.setProperty("--fq-player-color", color);
+                sidebar?.style.setProperty("--fq-player-color", color);
             } else {
                 panel.style.removeProperty("--fq-player-color");
-                sidebar.style.removeProperty("--fq-player-color");
+                sidebar?.style.removeProperty("--fq-player-color");
             }
         }
     }
@@ -938,11 +924,16 @@ export default class HandBoard {
     }
 
     /**
-     * Retire du DOM l'élément HTML de la barre.
+     * Retire du DOM l'élément HTML de la barre et désenregistre ses hooks de
+     * synchronisation.
      *
      * @returns {void}
      */
     remove() {
+        for (const [hook, id] of Object.entries(this._hookIds)) {
+            Hooks.off(hook, id);
+        }
+        this._hookIds = {};
         if (this.html) {
             this.html.remove();
         }

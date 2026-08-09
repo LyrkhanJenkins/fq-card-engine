@@ -30,7 +30,7 @@ export default class DisplayCard {
             return roll.total;
         } catch (error) {
             // Dans le cas ou il y a des variables
-            result = result.replace("XXX", "X").replace("YYY", "Y");
+            result = result.replaceAll("XXX", "X").replaceAll("YYY", "Y");
             result = DisplayCard.simplifyExpression(result);
             return result;
         }
@@ -149,7 +149,7 @@ export default class DisplayCard {
     static transformForDescription(val) {
         const abilities = Constants.actorAbi;
         if (typeof val === "string") {
-            return  val.replace("XXX","X").replace("YYY","Y")
+            return  val.replaceAll("XXX","X").replaceAll("YYY","Y")
                 .replace(/@int/g, abilities?.int?.mod + "(🧠)")
                 .replace(/@wis/g, abilities?.wis?.mod + "(🦉)")
                 .replace(/@cha/g, abilities?.cha?.mod + "(✨️)")
@@ -299,6 +299,51 @@ export default class DisplayCard {
     }
 
     /**
+     * Indique si un bonus « string » (dégâts / soin) est renseigné, c.-à-d. non
+     * vide et différent de « 0 » — utilisé pour n'afficher la pastille que si le
+     * bonus est supérieur à 0.
+     *
+     * @param {string|null|undefined} str - La valeur brute du bonus.
+     *
+     * @returns {boolean} Vrai si le bonus doit être affiché.
+     */
+    static hasBonusStr(str) {
+        const s = (str ?? "").toString().trim();
+        return s !== "" && s !== "0";
+    }
+
+    /**
+     * Construit les données de bulle communes à toutes les vues d'une carte (main,
+     * dialogue « Jouer la carte », voile plein écran) : coûts, portées, réactivité,
+     * rejouabilité, limite d'exemplaires, classe, et les indicateurs de modificateur
+     * (`*Mod`) signalant qu'un coût/portée dépend d'une caractéristique (@str, @int…).
+     * Le voile plein écran ignore simplement les `*Mod` qu'il n'affiche pas.
+     *
+     * @param {object} [choice={}] - Le choix (contenu) de la carte.
+     * @param {Card}   [card=null] - La carte (pour `maxSameCard`/`class`).
+     *
+     * @returns {object} Les données de bulle communes.
+     */
+    static buildBubbleData(choice = {}, card = null) {
+        return {
+            action: DisplayCard.getNumberForBubbleCardSvg(choice.action),
+            mana: DisplayCard.getNumberForBubbleCardSvg(choice.mana),
+            zeal: DisplayCard.getNumberForBubbleCardSvg(choice.zeal),
+            minReach: DisplayCard.getNumberForBubbleCardSvg(choice.minReach),
+            maxReach: DisplayCard.getNumberForBubbleCardSvg(choice.maxReach),
+            reactive: choice.reactive,
+            replayable: choice?.replayable === "passif" ? "P" : !choice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(choice?.replayable),
+            maxSameCard: card?.system?.fq?.maxSameCard,
+            fqClass: card?.system?.fq?.class,
+            actionMod: RollService.hasAbilitiesBonus(choice.action),
+            manaMod: RollService.hasAbilitiesBonus(choice.mana),
+            zealMod: RollService.hasAbilitiesBonus(choice.zeal),
+            reachMod: RollService.hasAbilitiesBonus(choice.minReach) || RollService.hasAbilitiesBonus(choice.maxReach),
+            replayableMod: RollService.hasAbilitiesBonus(choice.replayable),
+        };
+    }
+
+    /**
      * Monte un voile noir plein écran affichant une carte en grand : le rendu SVG
      * complet (`card-svg.hbs`) pour une carte visible, ou simplement l'image de dos
      * pour une carte face cachée. Aucun impact moteur ; clic n'importe où = fermeture.
@@ -334,15 +379,7 @@ export default class DisplayCard {
                 description: description,
                 descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
                 titleSize: DisplayCard.getTitleSizeForCardSvg(name),
-                action: DisplayCard.getNumberForBubbleCardSvg(firstChoice.action),
-                mana: DisplayCard.getNumberForBubbleCardSvg(firstChoice.mana),
-                zeal: DisplayCard.getNumberForBubbleCardSvg(firstChoice.zeal),
-                minReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.minReach),
-                maxReach: DisplayCard.getNumberForBubbleCardSvg(firstChoice.maxReach),
-                maxSameCard: card.system.fq?.maxSameCard,
-                fqClass: card.system.fq?.class,
-                reactive: firstChoice.reactive,
-                replayable: firstChoice?.replayable === "passif" ? "P" : !firstChoice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(firstChoice?.replayable),
+                ...DisplayCard.buildBubbleData(firstChoice, card),
             };
             wrap.innerHTML = await foundry.applications.handlebars.renderTemplate(
                 "modules/fq-card-engine/src/templates/partials/card-svg.hbs", renderData);

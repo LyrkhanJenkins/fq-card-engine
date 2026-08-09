@@ -71,7 +71,7 @@ export default {
         let sort = function (card) {
             const closest = event.target.closest("[data-card-id]");
             if (closest) {
-                const siblings = cards.cards.filter(c => c.id ? c.id : c._id !== card.id);
+                const siblings = cards.cards.filter(c => (c.id ?? c._id) !== card.id);
                 const target = cards.cards.get(closest.dataset.cardId);
                 const updateData = SortingHelpers.performIntegerSort(card, {target, siblings}).map(u => {
                     return {_id: u.target.id, sort: u.update.sort};
@@ -84,6 +84,7 @@ export default {
             fromUuid(data.uuid).then(function (card) {
                 if (!card) {
                     ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropUUIDError"));
+                    return;
                 }
                 let cardList = [];
                 cardList.push(card._id);
@@ -115,7 +116,7 @@ export default {
                     ui.notifications.error(error);
                 });
             } else {//already a part of the hand, just sort
-                sort();
+                sort(card);
             }
         }
     },
