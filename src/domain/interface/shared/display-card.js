@@ -69,6 +69,43 @@ export default class DisplayCard {
     }
 
     /**
+     * Retourne la taille de police adaptée à la longueur de la valeur affichée
+     * dans une bulle ronde (action, mana, zèle, rejouable), pour que le texte
+     * tienne dans le cercle même quand la valeur est une expression (ex. « 2X+2Y »).
+     *
+     * @param {string|number} value - La valeur affichée dans la bulle.
+     *
+     * @returns {number} La taille de police (px) à appliquer.
+     */
+    static getBubbleSizeForCardSvg(value) {
+        let bubbleSize = {2: 36, 3: 30, 4: 25, 5: 21, 6: 18, 9999: 15};
+        const length = (value ?? "").toString().length;
+        return bubbleSize[Object.keys(bubbleSize)
+            .map(Number)
+            .sort((a, b) => a - b)
+            .find(limit => length <= limit)];
+    }
+
+    /**
+     * Retourne la taille de police adaptée à la longueur du texte de portée
+     * (« minReach | maxReach »), pour que les deux valeurs tiennent dans la bulle
+     * de portée même quand ce sont des expressions.
+     *
+     * @param {string|number} minReach - La portée minimale affichée.
+     * @param {string|number} maxReach - La portée maximale affichée.
+     *
+     * @returns {number} La taille de police (px) à appliquer.
+     */
+    static getReachSizeForCardSvg(minReach, maxReach) {
+        let reachSize = {6: 28, 8: 23, 10: 19, 12: 16, 9999: 13};
+        const length = `${minReach ?? ""} | ${maxReach ?? ""}`.length;
+        return reachSize[Object.keys(reachSize)
+            .map(Number)
+            .sort((a, b) => a - b)
+            .find(limit => length <= limit)];
+    }
+
+    /**
      * Extrait et met en forme la description d'une carte à partir de sa face
      * visible, en interpolant les valeurs des choix (`system.fq.choices`) et en
      * transformant les tokens en symboles lisibles.
@@ -324,14 +361,20 @@ export default class DisplayCard {
      * @returns {object} Les données de bulle communes.
      */
     static buildBubbleData(choice = {}, card = null) {
+        const action = DisplayCard.getNumberForBubbleCardSvg(choice.action);
+        const mana = DisplayCard.getNumberForBubbleCardSvg(choice.mana);
+        const zeal = DisplayCard.getNumberForBubbleCardSvg(choice.zeal);
+        const minReach = DisplayCard.getNumberForBubbleCardSvg(choice.minReach);
+        const maxReach = DisplayCard.getNumberForBubbleCardSvg(choice.maxReach);
+        const replayable = choice?.replayable === "passif" ? "P" : !choice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(choice?.replayable);
         return {
-            action: DisplayCard.getNumberForBubbleCardSvg(choice.action),
-            mana: DisplayCard.getNumberForBubbleCardSvg(choice.mana),
-            zeal: DisplayCard.getNumberForBubbleCardSvg(choice.zeal),
-            minReach: DisplayCard.getNumberForBubbleCardSvg(choice.minReach),
-            maxReach: DisplayCard.getNumberForBubbleCardSvg(choice.maxReach),
+            action,
+            mana,
+            zeal,
+            minReach,
+            maxReach,
             reactive: choice.reactive,
-            replayable: choice?.replayable === "passif" ? "P" : !choice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(choice?.replayable),
+            replayable,
             maxSameCard: card?.system?.fq?.maxSameCard,
             fqClass: card?.system?.fq?.class,
             actionMod: RollService.hasAbilitiesBonus(choice.action),
@@ -339,6 +382,11 @@ export default class DisplayCard {
             zealMod: RollService.hasAbilitiesBonus(choice.zeal),
             reachMod: RollService.hasAbilitiesBonus(choice.minReach) || RollService.hasAbilitiesBonus(choice.maxReach),
             replayableMod: RollService.hasAbilitiesBonus(choice.replayable),
+            actionSize: DisplayCard.getBubbleSizeForCardSvg(action),
+            manaSize: DisplayCard.getBubbleSizeForCardSvg(mana),
+            zealSize: DisplayCard.getBubbleSizeForCardSvg(zeal),
+            replayableSize: DisplayCard.getBubbleSizeForCardSvg(replayable),
+            reachSize: DisplayCard.getReachSizeForCardSvg(minReach, maxReach),
         };
     }
 

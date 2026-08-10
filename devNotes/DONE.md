@@ -21,6 +21,7 @@ Fix :
 - On consomme les ressources FQ au bon moment quand on lance les dégâts de l'arme
 - Plus d'affichage de 'S' dans les bulles ( temporaire ? )
 - Correction de plusieurs cartes : Frappe Solaire, Attaque en cercle, Secret Weapons, Malédiction
+- Font size des bulles variables
 
 - Chore :
 - Redécoupage et suppression du code mort CSS

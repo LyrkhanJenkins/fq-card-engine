@@ -121,6 +121,40 @@ describe("DisplayCard.getDescriptionSizeForCardSvg / getTitleSizeForCardSvg", ()
     });
 });
 
+describe("DisplayCard.getBubbleSizeForCardSvg", () => {
+    it("garde la taille par défaut (36) pour une valeur courte (≤ 2 caractères)", () => {
+        expect(DisplayCard.getBubbleSizeForCardSvg("8")).toBe(36);
+        expect(DisplayCard.getBubbleSizeForCardSvg(10)).toBe(36);
+        expect(DisplayCard.getBubbleSizeForCardSvg("2X")).toBe(36);
+    });
+
+    it("réduit progressivement la taille quand la valeur s'allonge", () => {
+        expect(DisplayCard.getBubbleSizeForCardSvg("8+X")).toBe(30);      // 3 caractères
+        expect(DisplayCard.getBubbleSizeForCardSvg("8+4X")).toBe(25);     // 4 caractères
+        expect(DisplayCard.getBubbleSizeForCardSvg("2X+2Y")).toBe(21);    // 5 caractères
+        expect(DisplayCard.getBubbleSizeForCardSvg("2X+20Y")).toBe(18);   // 6 caractères
+        expect(DisplayCard.getBubbleSizeForCardSvg("10X+200Y")).toBe(15); // au-delà
+    });
+
+    it("ne lève pas sur null/undefined (taille par défaut)", () => {
+        expect(DisplayCard.getBubbleSizeForCardSvg(null)).toBe(36);
+        expect(DisplayCard.getBubbleSizeForCardSvg(undefined)).toBe(36);
+    });
+});
+
+describe("DisplayCard.getReachSizeForCardSvg", () => {
+    it("garde la taille par défaut (28) pour une portée courte", () => {
+        expect(DisplayCard.getReachSizeForCardSvg("1", "5")).toBe(28); // « 1 | 5 » = 5 caractères
+    });
+
+    it("réduit la taille quand les valeurs de portée s'allongent", () => {
+        expect(DisplayCard.getReachSizeForCardSvg("10", "12")).toBe(23);    // « 10 | 12 » = 7
+        expect(DisplayCard.getReachSizeForCardSvg("2X", "3X+2")).toBe(19);  // « 2X | 3X+2 » = 9
+        expect(DisplayCard.getReachSizeForCardSvg("2X+1", "3X+2")).toBe(16);// « 2X+1 | 3X+2 » = 11
+        expect(DisplayCard.getReachSizeForCardSvg("2X+10", "3X+20")).toBe(13); // au-delà
+    });
+});
+
 describe("DisplayCard.getDescriptionFromCard", () => {
     it("renvoie une description vide transformée quand face est null", () => {
         const card = {face: null, system: {fq: {choices: []}}};

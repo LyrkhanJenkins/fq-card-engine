@@ -178,7 +178,7 @@
     <line x1="22" y1="137" x2="94" y2="137" stroke="#625b53" stroke-width="2"></line>
 
     {{#if reachMod}}
-        <text x="56" y="142" text-anchor="middle" font-size="28" font-weight="700"
+        <text x="56" y="142" text-anchor="middle" font-size="{{ reachSize }}" font-weight="700"
               font-family="Lucida Calligraphy"
               fill="green">
 
@@ -186,7 +186,7 @@
             {{ maxReach }}
         </text>
     {{else}}
-        <text x="56" y="142" text-anchor="middle" font-size="28" font-weight="700"
+        <text x="56" y="142" text-anchor="middle" font-size="{{ reachSize }}" font-weight="700"
               font-family="Lucida Calligraphy"
               fill="black">
 
@@ -198,14 +198,14 @@
     <!-- Points d'actions-->
     {{#if actionMod}}
         <circle cx="68" cy="222" r="42" fill="url(#goldMana)" stroke="#1f1f1f" stroke-width="5"></circle>
-        <text x="66" y="230" text-anchor="middle" font-size="36" font-weight="700"
+        <text x="66" y="230" text-anchor="middle" font-size="{{ actionSize }}" font-weight="700"
               font-family="Lucida Calligraphy"
               fill="green">
             {{ action }}
         </text>
     {{else}}
         <circle cx="68" cy="222" r="42" fill="url(#goldMana)" stroke="#1f1f1f" stroke-width="5"></circle>
-        <text x="66" y="230" text-anchor="middle" font-size="36" font-weight="700"
+        <text x="66" y="230" text-anchor="middle" font-size="{{ actionSize }}" font-weight="700"
               font-family="Lucida Calligraphy"
               fill="black">
             {{ action }}
@@ -215,14 +215,14 @@
     <!-- Mana -->
     {{#if manaMod}}
         <circle cx="112" cy="298" r="42" fill="url(#blueMana)" stroke="#1f1f1f" stroke-width="6"></circle>
-        <text x="110" y="306" text-anchor="middle" font-size="36" font-weight="700"
+        <text x="110" y="306" text-anchor="middle" font-size="{{ manaSize }}" font-weight="700"
               font-family="Lucida Calligraphy"
               fill="green">
             {{ mana }}
         </text>
     {{else}}
         <circle cx="112" cy="298" r="42" fill="url(#blueMana)" stroke="#1f1f1f" stroke-width="6"></circle>
-        <text x="110" y="306" text-anchor="middle" font-size="36" font-weight="700"
+        <text x="110" y="306" text-anchor="middle" font-size="{{ manaSize }}" font-weight="700"
               font-family="Lucida Calligraphy"
               fill="black">
             {{ mana }}
@@ -246,13 +246,13 @@
     <!-- Zèle -->
     {{#if zealMod}}
         <circle cx="180" cy="357" r="42" fill="url(#redMana)" stroke="#1f1f1f" stroke-width="6"></circle>
-        <text x="179" y="366" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy"
+        <text x="179" y="366" text-anchor="middle" font-size="{{ zealSize }}" font-weight="700" font-family="Lucida Calligraphy"
               fill="green">
             {{ zeal }}
         </text>
     {{else}}
         <circle cx="180" cy="357" r="42" fill="url(#redMana)" stroke="#1f1f1f" stroke-width="6"></circle>
-        <text x="179" y="366" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy"
+        <text x="179" y="366" text-anchor="middle" font-size="{{ zealSize }}" font-weight="700" font-family="Lucida Calligraphy"
               fill="black">
             {{ zeal }}
         </text>
@@ -272,13 +272,13 @@
         <!-- Passif -->
         {{#if replayableMod}}
             <circle cx="355" cy="360" r="42" fill="url(#greenMana)" stroke="#1f1f1f" stroke-width="6"></circle>
-            <text x="353" y="372" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy"
+            <text x="353" y="372" text-anchor="middle" font-size="{{ replayableSize }}" font-weight="700" font-family="Lucida Calligraphy"
                   fill="green">
                 {{ replayable }}
             </text>
         {{else}}
             <circle cx="355" cy="360" r="42" fill="url(#greenMana)" stroke="#1f1f1f" stroke-width="6"></circle>
-            <text x="353" y="372" text-anchor="middle" font-size="36" font-weight="700" font-family="Lucida Calligraphy"
+            <text x="353" y="372" text-anchor="middle" font-size="{{ replayableSize }}" font-weight="700" font-family="Lucida Calligraphy"
                   fill="black">
                 {{ replayable }}
             </text>
