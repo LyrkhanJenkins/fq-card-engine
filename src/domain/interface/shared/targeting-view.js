@@ -3,6 +3,7 @@ import ObjectUtils from "../../../core/utils/object.utils.js";
 import TargetingPredicates from "../../engine/shared/targeting-predicates.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import Constants from "../../constants.js";
+import RollService from "../../engine/roll/roll-service.js";
 
 /**
  * View-model d'affichage du ciblage pour la "dialog-play" .
@@ -29,13 +30,13 @@ export default class TargetingView {
         CardEffect.replaceCardContentAbilitiesBonus(cc);
         CardEffect.recalculatedWithWYValue(cc, fd?.XXX ?? 0, fd?.YYY ?? 0);
 
-        const required = (cc.nbTargets ? new Roll(String(cc.nbTargets)).evaluateSync().total : cc.nbTargets) || 1;
+        const required = (cc.nbTargets ? RollService.rollResultSync(cc.nbTargets) : cc.nbTargets) || 1;
 
         const tokens = Constants.myTargets(cardContent?.targetType);
         const {minReach, maxReach} = (cc.minReach || cc.maxReach)
             ? {
-                minReach: new Roll(String(cc.minReach)).evaluateSync().total,
-                maxReach: new Roll(String(cc.maxReach)).evaluateSync().total + Number(Constants.actorFQ.bonus.range)
+                minReach: RollService.rollResultSync(cc.minReach),
+                maxReach: RollService.rollResultSync(cc.maxReach) + Number(Constants.actorFQ.bonus.range)
             }
             : {minReach: cc.minReach, maxReach: cc.maxReach};
 

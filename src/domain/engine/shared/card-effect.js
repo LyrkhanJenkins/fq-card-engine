@@ -214,11 +214,7 @@ export default class CardEffect {
                 let value = effect.changes[changeKey].value;
                 if (!["system.fq.bonus.damage", "system.fq.bonus.heal"].includes(effect.changes[changeKey].key)) {
                     try {
-                        const roll = await new Roll(effect.changes[changeKey].value.toString()).evaluate();
-                        if (!roll) {
-                            throw new Error();
-                        }
-                        value = Number(roll.total);
+                        value = Number(RollService.rollResultSync(effect.changes[changeKey].value));
                     } catch (e) {
                         value = effect.changes[changeKey].value;
                     }

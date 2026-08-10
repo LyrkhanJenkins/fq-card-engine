@@ -27,7 +27,7 @@ Fix :
 - Refacto architecture et todo techniques en suspens
 - Variabiliser toutes les couleurs dans le css
 - Ajout de la recommandation du module "FQ Restrain movement"
-- Suppression code mort, dépendance inutiles passe de simplification
+- Suppression code mort, dépendance inutiles, passe de simplification et de factorisation
 
 v2.0.1:
 Feat :

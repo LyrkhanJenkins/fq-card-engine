@@ -26,8 +26,7 @@ export default class DisplayCard {
         if (match?.length && match[0] > 99) return "∞";
         let result = RollService.replaceAbilitiesBonus(str);
         try {
-            const roll = new Roll(result).evaluateSync();
-            return roll.total;
+            return RollService.rollResultSync(result);
         } catch (error) {
             // Dans le cas ou il y a des variables
             result = result.replaceAll("XXX", "X").replaceAll("YYY", "Y");
