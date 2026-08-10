@@ -498,7 +498,7 @@
   "FQCARDTITLE.InhibitingCape" : "Cape Inhibitrice",
   "FQCARDDESCRIPTION.InhibitingCape" : "Enlève 1 effet néfaste sur vous et vous perdez (2 - @con) points de vie",
   "FQCARDTITLE.SecretWeapons" : "Armes Secrètes",
-  "FQCARDDESCRIPTION.SecretWeapons" : "Défaussez-vous de X cartes, inflige {0_damage} dégâts inesquivables et incritiquables. Si ce sort élimine la cible, annulez le dernier sort qui a permis d’activer la capacité.",
+  "FQCARDDESCRIPTION.SecretWeapons" : "Défaussez-vous de X cartes, inflige {0_damage} dégâts inesquivables et incritiquables.",
   "FQCARDTITLE.QuickDodge" : "Vive-Esquive",
   "FQCARDDESCRIPTION.QuickDodge" : "Lorsque vous subissez des dégâts, récupérez 2*@dex points de vie. (Peut éviter de tomber à 0 point de vie)",
   "FQCARDTITLE.Conversion" : "Conversion",

@@ -498,7 +498,7 @@
   "FQCARDTITLE.InhibitingCape" : "Inhibiting Cape",
   "FQCARDDESCRIPTION.InhibitingCape" : "Remove 1 detrimental effect from yourself and you lose (2 - @con) health points.",
   "FQCARDTITLE.SecretWeapons" : "Secret Weapons",
-  "FQCARDDESCRIPTION.SecretWeapons" : "Discard X cards, dealing (X + @cha) unavoidable and non-critical damage. If this spell eliminates the target, cancel the last spell that triggered this ability.",
+  "FQCARDDESCRIPTION.SecretWeapons" : "Discard X cards, dealing (X + @cha) unavoidable and non-critical damage.",
   "FQCARDTITLE.QuickDodge" : "Quick Dodge",
   "FQCARDDESCRIPTION.QuickDodge" : "When you take damage, recover 2*@dex health points. (Can prevent falling to 0 health points)",
   "FQCARDTITLE.Conversion" : "Conversion",
