@@ -370,7 +370,7 @@
   "FQCARDTITLE.EarthFracture" : "Earth Fracture",
   "FQCARDDESCRIPTION.EarthFracture" : "Deals {0_damage} damage (Xmax = {0_xmax}).\n1d(4-X) chance to apply an earth effect that reduces the target's dodge by 1 for 4 turns.",
   "FQCARDTITLE.VoidAssassin" : "Void Assassin",
-  "FQCARDDESCRIPTION.VoidAssassin" : "Requires 2 different elemental effects. +1 to critical chance for this attack for each effect applied to the target.\nDeals {0_damage} damage (Xmax = {0_xmax}, Ymax = {0_ymax}).",
+  "FQCARDDESCRIPTION.VoidAssassin" : "Requires 2 different elemental effects. +1 to critical chance for this attack for each effect applied to the target. Deals {0_damage} damage (Xmax = {0_xmax}, Ymax = {0_ymax}).",
   "FQCARDTITLE.TurnBoosterIV" : "Turn Booster IV",
   "FQCARDDESCRIPTION.TurnBoosterIV" : "Recover 4 action points.",
   "FQCARDTITLE.ManaRecoveryII" : "Mana Recovery II",

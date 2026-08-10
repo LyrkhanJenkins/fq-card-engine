@@ -102,9 +102,23 @@ export default class CardEffect {
     }
 
     /**
+     * Indique si la carte vise autrui plutôt que son lanceur : vrai si elle a une portée
+     * (`minReach`/`maxReach`) ou cible des squelettes. Sans portée, le sort est considéré
+     * comme se ciblant lui-même. Source de vérité unique du ciblage (effets, message de chat).
+     *
+     * @param {object} cardContent - Le contenu (choix) de la carte.
+     *
+     * @returns {boolean} True si la carte vise la/les cible(s), false si elle vise le lanceur.
+     */
+    static cardTargetsOthers(cardContent) {
+        return Boolean(cardContent?.minReach || cardContent?.maxReach ||
+            cardContent?.targetType === CardFqSystem.TARGET_TYPE_SKELETON);
+    }
+
+    /**
      * Indique si un effet déclenché s'applique à la/les cible(s) résolue(s) plutôt qu'au
-     * lanceur : vrai si l'effet n'est pas `self` ET que la carte a une portée (ou cible des
-     * squelettes). Source de vérité unique partagée par l'ajout et le retrait d'effet.
+     * lanceur : vrai si l'effet n'est pas `self` ET que la carte vise autrui
+     * (cf. {@link CardEffect.cardTargetsOthers}). Utilisé par l'ajout et le retrait d'effet.
      *
      * @param {object} currentEffectData - L'effet déclenché (`self`).
      * @param {object} cardContent       - Le contenu (choix) de la carte.
@@ -112,8 +126,7 @@ export default class CardEffect {
      * @returns {boolean} True si l'effet vise la/les cible(s), false s'il vise le lanceur.
      */
     static effectAppliesToTargets(currentEffectData, cardContent) {
-        return !currentEffectData.self && Boolean(cardContent?.minReach || cardContent?.maxReach ||
-            cardContent.targetType === CardFqSystem.TARGET_TYPE_SKELETON);
+        return !currentEffectData.self && CardEffect.cardTargetsOthers(cardContent);
     }
 
     /**

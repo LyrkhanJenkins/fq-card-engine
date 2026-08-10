@@ -211,10 +211,10 @@ export default class PlayCard {
 
         let targets = [];
         try {
-            targets = Constants.myTargets(cardContent.targetType).map(target => ({
+            targets = CardEffect.cardTargetsOthers(cardContent) ? Constants.myTargets(cardContent.targetType).map(target => ({
                 name: target.document?.name ?? target.name ?? "",
                 img: target.document?.texture?.src
-            }));
+            })) : [];
         } catch (e) {
             // Certains types de cible (ex. squelettes) supposent un contexte de scène
             // complet absent hors jeu : on retombe sur une liste vide plutôt que
