@@ -458,7 +458,7 @@
   "FQCARDTITLE.DiagonalAttack" : "Diagonal Attack",
   "FQCARDDESCRIPTION.DiagonalAttack" : "Deals {0_damage} damage on the diagonals.",
   "FQCARDTITLE.CircleAttack" : "Circle Attack",
-  "FQCARDDESCRIPTION.CircleAttack" : "Deals {0_damage} damage to targets within range. Increasing the range also increases the minimum range for this attack.",
+  "FQCARDDESCRIPTION.CircleAttack" : "Deals {0_damage} damage to targets within range. X, being the range bonus, also reduces the minimum range.",
   "FQCARDTITLE.LightEnergy" : "Light Energy",
   "FQCARDDESCRIPTION.LightEnergy" : "Place this card face up in front of you; you may play it a second time for the same cost.\nDeals {0_damage} damage or restores {1_heal} health.\nGrants 1 zeal point when you have used both charges of the spell.",
   "FQCARDTITLE.Curse" : "Curse",
