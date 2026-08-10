@@ -20,7 +20,7 @@ Fix :
 - Dialog-play doit se fermer si on ouvre une autre dialog-play (problème avec ciblage)
 - On consomme les ressources FQ au bon moment quand on lance les dégâts de l'arme
 - Plus d'affichage de 'S' dans les bulles ( temporaire ? )
-- Correction de plusieurs cartes : Frappe Solaire, Attaque en cercle, Secret Weapons
+- Correction de plusieurs cartes : Frappe Solaire, Attaque en cercle, Secret Weapons, Malédiction
 
 - Chore :
 - Redécoupage et suppression du code mort CSS

@@ -4,7 +4,6 @@
 ### Fix à prioriser
 - Faire en sorte de reduire la font size des buble si elels deviennent trop grande (Attaque En Cercle)
 - On ne voit pas assez les dots qui permettent de faire d'autres sorts (malédiction, brulure), afficher l'effet sur les tokens (ET dans la dialog-play?
-- Problème avec la carte malédiction (affichage des dégâts)
 
 ### Versions prévues
 

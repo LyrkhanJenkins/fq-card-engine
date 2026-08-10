@@ -462,7 +462,7 @@
   "FQCARDTITLE.LightEnergy" : "Light Energy",
   "FQCARDDESCRIPTION.LightEnergy" : "Place this card face up in front of you; you may play it a second time for the same cost.\nDeals {0_damage} damage or restores {1_heal} health.\nGrants 1 zeal point when you have used both charges of the spell.",
   "FQCARDTITLE.Curse" : "Curse",
-  "FQCARDDESCRIPTION.Curse" : "Deals {0_damage} damage per turn for 3 turns.\n(Unavoidable, Non-critical)",
+  "FQCARDDESCRIPTION.Curse" : "Deals @wis damage per turn for 3 turns.\n(Unavoidable, Non-critical)",
   "FQCARDTITLE.MagicShield" : "Magic Shield",
   "FQCARDDESCRIPTION.MagicShield" : "Prevents the next 2*@wis wounds on a target and increases healing by 2 while the shield is active.\n(The number of wounds prevented can be stacked up to 2 times, up to 12 points.)",
   "FQCARDTITLE.Exorcism" : "Exorcism",
