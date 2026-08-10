@@ -1,3 +1,35 @@
+Update 2.0.2:
+    Feat:
+        - Card draw animation
+        - Show the card on click within decks/libraries
+        - Consolidated chat message (choices + results) + click -> SVG card
+        - Localized card choices, translated into French
+        - Show specific resources (critical, discard, etc.) in the hand or the play dialog
+        - Targeting available from the play dialog, with targeting errors reported before playing the card
+        - Effect dispel implementation
+        - X and Y value errors (overflows) blocking before playing the card in the play dialog
+    Chore:
+        - Restructure and remove dead CSS code
+        - Architecture refactor and pending technical todos
+        - Turn all CSS colors into variables
+        - Add recommendation of the "FQ Restrain movement" module
+        - Remove dead code and unnecessary dependencies, simplification and factorization pass
+    Fix:
+        - Fix card back display in the play dialog
+        - Fix create-deck macro to use the FQ owner
+        - Show FX after dice rolls
+        - Fix frost aura
+        - GM "create all decks" macro no longer opens every deck
+        - No animation when drawing base cards
+        - If applyEffectsFormulas.formula equals 1, skip the roll and validate immediately
+        - The play dialog now closes when another play dialog opens (targeting issue)
+        - Consume FQ resources at the right time when rolling weapon damage
+        - No more 'S' shown in bubbles (temporary?)
+        - Fix several cards: Solar Strike, Circle Attack, Secret Weapons, Curse, Elemental Magic, Tornado, Earth Fracture
+        - Variable bubble font size
+        - Fix effect expiration
+        - Show temporary malus/bonus or those forced to be visible
+
 Update 2.0.1:
     Feat:
         - Default card illustration and FQ logo on pause
