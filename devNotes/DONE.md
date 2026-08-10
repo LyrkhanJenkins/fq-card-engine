@@ -20,12 +20,14 @@ Fix :
 - Dialog-play doit se fermer si on ouvre une autre dialog-play (problème avec ciblage)
 - On consomme les ressources FQ au bon moment quand on lance les dégâts de l'arme
 - Plus d'affichage de 'S' dans les bulles ( temporaire ? )
+- Correction de plusieurs cartes : Frappe Solaire, Attaque en cercle
 
-Chore :
+- Chore :
 - Redécoupage et suppression du code mort CSS
 - Refacto architecture et todo techniques en suspens
 - Variabiliser toutes les couleurs dans le css
 - Ajout de la recommandation du module "FQ Restrain movement"
+- Suppression code mort, dépendance inutiles passe de simplification
 
 v2.0.1:
 Feat :

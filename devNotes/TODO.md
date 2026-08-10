@@ -3,7 +3,6 @@
 
 ### Fix à prioriser
 - Remplacer les new Roll
-- Description de Frappe Solaire mal noté
 - Revoir Arme secrètes
 - Faire en sorte de reduire la font size des buble si elels deviennent trop grande (Attaque En Cercle)
 - On ne voit pas assez les dots qui permettent de faire d'autres sorts (malédiction, brulure), afficher l'effet sur les tokens (ET dans la dialog-play?

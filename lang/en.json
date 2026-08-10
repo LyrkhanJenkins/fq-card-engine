@@ -598,7 +598,7 @@
   "FQCARDTITLE.BlueBlood" : "Blue Blood",
   "FQCARDDESCRIPTION.BlueBlood" : "Sacrifice 2X hit points to gain X mana points.\nXmax = {0_xmax}",
   "FQCARDTITLE.SolarStrike" : "Solar Strike",
-  "FQCARDDESCRIPTION.SolarStrike" : "Reduce your @con and @wis to 0 for 3 turns.\nDeal {0_damage} radiant damage.",
+  "FQCARDDESCRIPTION.SolarStrike" : "Reduce your constitution(❤\uFE0F) and your wisdom(\uD83E\uDD89) to 0 for 3 turns. Deal {0_damage} radiant damage.",
   "FQCARDTITLE.Chastisement" : "Chastisement",
   "FQCARDDESCRIPTION.Chastisement" : "If the target is cursed, deal {0_damage} necrotic damage.",
   "FQCARDTITLE.ChiMaster" : "Chi Master",

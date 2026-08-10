@@ -598,7 +598,7 @@
   "FQCARDTITLE.BlueBlood" : "Sang Bleu",
   "FQCARDDESCRIPTION.BlueBlood" : "Sacrifie 2X points de vie en X points de mana\nXmax = {0_xmax}",
   "FQCARDTITLE.SolarStrike" : "Frappe Solaire",
-  "FQCARDDESCRIPTION.SolarStrike" : "Réduit votre @con et votre @wis à 0 pendant 3 tours.\nInflige {0_damage} dégâts radiants",
+  "FQCARDDESCRIPTION.SolarStrike" : "Réduit votre constitution(❤\uFE0F) et votre sagesse(\uD83E\uDD89) à 0 pendant 3 tours. Inflige {0_damage} dégâts radiants",
   "FQCARDTITLE.Chastisement" : "Châtiments",
   "FQCARDDESCRIPTION.Chastisement" : "Si la cible est maudite, Inflige {0_damage} dégâts nécrotiques.",
   "FQCARDTITLE.ChiMaster" : "Maître Du Chi",
