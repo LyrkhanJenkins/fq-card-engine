@@ -4,22 +4,8 @@
 ### Fix à prioriser
 
 ### Versions prévues
-
-#### 2.0.3
-- La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR
-- Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de
-  fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
-- Gestions des principales Custom eval dans des méthodes (comme les xvalue)
-- Deplacer les controles d'utilisation d'une carte dans un fichier JS et les tester
-- Rajouter des règles d'architectures
-- Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
-- Passage en typescript?
-  -> Remplacer empty-hand-message.html (par un gros bouton de configuration?) (commit 27 mai 2026)?
-- Tests fonctionnels + montée de version jusqu'à la dernière v14
-- PATCH--> RELEASE
-
 #### 2.1.0
-- Se poser pour refelchir la caractérisation :
+- Se poser pour refraichir la caractérisation :
   - Refaire une passe de toutes els fonctionnalités + celles à venir ET donner plus de cartes qui utilisent ces fonctionnalités
   - QU'est ce qui caractérisent une classe , faire une passe des sorts qui ne caracterise pas la classe
 - Des choix de cartes ne sont plus des choix mais des executions après un autre choix 
@@ -33,6 +19,8 @@
     -  -> enlever JSON après utilisation?
     - (Facultatif: les noms des choix peuvent être localisé)
     - Peut être qu'une fois que c'est fait, on a pas besoin de plusiuers formules d'application d'effet ( à voir)
+- Deplacer les contrôles d'utilisation d'une carte dans un fichier JS et les tester
+- Gestions des principales Custom eval dans des méthodes (comme les xvalue)
 - Pour les réactifs ptetre travaillé sur des evenements pour pouvoir les jouer ( j'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
   , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> - Revoir tir reflexe (jouer même si pas attaquer?)
 - Un réactif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème
@@ -77,6 +65,13 @@
   -> Si joueur alors ce dernier ne peut avoir qu'une main, pas de configuration
 - Volée de shuriken et shuriken, effet spéciaux à changer
 - Revoir createEffectsFromData a simplifier -> Pas de transformation spécifiques
+- La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR
+- Passage sur tout le code inutile, redispatchable et ne plus cité d'autre nom - Refacto pour s'affranchir du code de
+  fq-card-engine - Parcourir les attributs de FqCardEngineModule et enlever ce qui ne sert à rien
+- Rajouter des règles d'architectures
+- Généraliser la récupération d'un token avec game.canvas.tokens.get("cUb1KOvLxsIS9IuN");
+- Remplacer empty-hand-message.html (par un gros bouton de configuration?) (commit 27 mai 2026)?
+- Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Plus de sound effects et FX differents
 
 #### 2.2.x
