@@ -350,18 +350,18 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
      * Fabrique un objet « donnée d'effet » (active effect) vierge, avec un
      * changement initial et une durée non renseignée.
      *
-     * @returns {object} La donnée d'effet par défaut (label, icon, changes, duration…).
+     * @returns {object} La donnée d'effet par défaut (name, img, showIcon, changes, duration…).
      */
     static addDataEffect() {
         return {
-            label: "",
-            icon: "",
+            name: "",
+            img: "",
             expireOnDamage: false,
+            showIcon: 1,
             changes: [{}],
             duration: {
-                startTime: "",
-                rounds: "",
-                turns: ""
+                value: "",
+                units: "rounds"
             }
         };
     }

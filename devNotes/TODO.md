@@ -2,7 +2,6 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-- On ne voit pas assez les dots qui permettent de faire d'autres sorts (malédiction, brulure), afficher l'effet sur les tokens (ET dans la dialog-play?
 
 ### Versions prévues
 
@@ -77,6 +76,7 @@
 - Supprimer la notion de joueur par main si le joueur n'a qu'une main possible
   -> Si joueur alors ce dernier ne peut avoir qu'une main, pas de configuration
 - Volée de shuriken et shuriken, effet spéciaux à changer
+- Revoir createEffectsFromData a simplifier -> Pas de transformation spécifiques
 - Plus de sound effects et FX differents
 
 #### 2.2.x

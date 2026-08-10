@@ -67,8 +67,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Earth Effect",
-                          "icon": "icons/magic/earth/barrier-stone-explosion-debris.webp",
+                          "name": "Earth Effect",
+                          "img": "icons/magic/earth/barrier-stone-explosion-debris.webp",
                           "changes": [
                             {
                               "key": "system.fq.attributes.evasion",
@@ -84,9 +84,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "0",
-                            "turns": "0"
+                            "value": "4",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -199,8 +198,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Air Effect",
-                          "icon": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
+                          "name": "Air Effect",
+                          "img": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
                           "changes": [
                             {
                               "key": "system.attributes.movement.walk",
@@ -216,9 +215,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "0",
-                            "turns": "0"
+                            "value": "2",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -428,8 +426,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Frost",
-                          "icon": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
+                          "name": "Frost",
+                          "img": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
                           "changes": [
                             {
                               "key": "system.fq.action.max",
@@ -445,9 +443,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "3",
-                            "turns": "0"
+                            "value": "3",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -563,8 +560,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Burn",
-                          "icon": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
+                          "name": "Burn",
+                          "img": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
                           "changes": [
                             {
                               "key": "system.fq.bonus.dot",
@@ -580,9 +577,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "3",
-                            "turns": "0"
+                            "value": "3",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -885,8 +881,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Fog",
-                          "icon": "icons/magic/air/fog-gas-smoke-gray.webp",
+                          "name": "Fog",
+                          "img": "icons/magic/air/fog-gas-smoke-gray.webp",
                           "changes": [
                             {
                               "key": "system.fq.attributes.critical",
@@ -902,9 +898,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "3",
-                            "turns": "0"
+                            "value": "3",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -1427,8 +1422,8 @@
                       "result": "1",
                       "data": [
                         {
-                          "label": "Incantation +XXX",
-                          "icon": "icons/magic/symbols/runes-carved-stone-yellow.webp",
+                          "name": "Incantation +XXX",
+                          "img": "icons/magic/symbols/runes-carved-stone-yellow.webp",
                           "changes": [
                             {
                               "key": "system.fq.action.max",
@@ -1438,9 +1433,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "1",
-                            "turns": "0"
+                            "value": "1",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -1557,8 +1551,8 @@
                       "removeEffectName": "",
                       "data": [
                         {
-                          "label": "Magic Plastron",
-                          "icon": "icons/magic/defensive/shield-barrier-flaming-pentagon-blue-yellow.webp",
+                          "name": "Magic Plastron",
+                          "img": "icons/magic/defensive/shield-barrier-flaming-pentagon-blue-yellow.webp",
                           "changes": [
                             {
                               "key": "system.attributes.hp.tempmax",
@@ -1574,9 +1568,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "3",
-                            "turns": "0"
+                            "value": "3",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -1926,8 +1919,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Damage Propagation",
-                          "icon": "icons/magic/sonic/explosion-impact-shock-wave.webp",
+                          "name": "Damage Propagation",
+                          "img": "icons/magic/sonic/explosion-impact-shock-wave.webp",
                           "changes": [
                             {
                               "key": "system.fq.bonus.dot",
@@ -1937,9 +1930,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "3",
-                            "turns": "0"
+                            "value": "3",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -2053,8 +2045,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Burn",
-                          "icon": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
+                          "name": "Burn",
+                          "img": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
                           "changes": [
                             {
                               "key": "system.fq.bonus.dot",
@@ -2070,9 +2062,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "3",
-                            "turns": "0"
+                            "value": "3",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -2133,8 +2124,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Frost",
-                          "icon": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
+                          "name": "Frost",
+                          "img": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
                           "changes": [
                             {
                               "key": "system.fq.action.max",
@@ -2143,16 +2134,15 @@
                               "priority": null
                             },
                             {
-                              "key": "macro.executre",
+                              "key": "macro.execute",
                               "value": "jb2a.aura_themed.01.orbit.loop.cold",
                               "type": "custom",
                               "priority": null
                             }
                           ],
                           "duration": {
-                            "startTime": "",
-                            "rounds": "3",
-                            "turns": ""
+                            "value": "3",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -2217,8 +2207,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Air Effect",
-                          "icon": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
+                          "name": "Air Effect",
+                          "img": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
                           "changes": [
                             {
                               "key": "system.attributes.movement.walk",
@@ -2234,9 +2224,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "0",
-                            "turns": "0"
+                            "value": "2",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -2297,8 +2286,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Earth Effect",
-                          "icon": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "name": "Earth Effect",
+                          "img": "icons/magic/earth/barrier-stone-explosion-debris.webp",
                           "changes": [
                             {
                               "key": "system.fq.attributes.evasion",
@@ -2314,9 +2303,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "0",
-                            "turns": "0"
+                            "value": "4",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -2427,8 +2415,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Air Effect",
-                          "icon": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
+                          "name": "Air Effect",
+                          "img": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
                           "changes": [
                             {
                               "key": "system.attributes.movement.walk",
@@ -2444,9 +2432,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "2",
-                            "turns": "0"
+                            "value": "2",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -2562,8 +2549,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Earth Effect",
-                          "icon": "icons/magic/earth/barrier-stone-explosion-debris.webp",
+                          "name": "Earth Effect",
+                          "img": "icons/magic/earth/barrier-stone-explosion-debris.webp",
                           "changes": [
                             {
                               "key": "system.fq.attributes.critical",
@@ -2579,9 +2566,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "2*@wis",
-                            "turns": "0"
+                            "value": "2*@wis",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -2693,8 +2679,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Burn",
-                          "icon": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
+                          "name": "Burn",
+                          "img": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
                           "changes": [
                             {
                               "key": "system.fq.bonus.dot",
@@ -2710,9 +2696,8 @@
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "3",
-                            "turns": "0"
+                            "value": "3",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }
@@ -2824,8 +2809,8 @@
                       "self": false,
                       "data": [
                         {
-                          "label": "Frost",
-                          "icon": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
+                          "name": "Frost",
+                          "img": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
                           "changes": [
                             {
                               "key": "system.fq.action.max",
@@ -2834,16 +2819,15 @@
                               "priority": null
                             },
                             {
-                              "key": "macro.executre",
+                              "key": "macro.execute",
                               "value": "jb2a.aura_themed.01.orbit.loop.cold",
                               "type": "custom",
                               "priority": null
                             }
                           ],
                           "duration": {
-                            "startTime": "0",
-                            "rounds": "4",
-                            "turns": "0"
+                            "value": "4",
+                            "units": "rounds"
                           },
                           "expireOnDamage": false
                         }

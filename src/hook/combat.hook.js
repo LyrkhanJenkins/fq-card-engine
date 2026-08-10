@@ -57,7 +57,8 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
         ui.notifications.warn("FQCARDENGINE.WarningCombattantsWithNoActor", {localize: true});
     }
     if (CombatTurn.isLocalUserFirstActiveGM()) {
-        await CombatTurn.deleteExpiredEffects();
+        // Suppression des effets expirés de l'acteur dont le tour COMMENCE (combattant
+        // courant) : l'effet disparaît au début du tour de l'acteur affecté, pas au round.
         if (combat.current.round !== combat.previous.round) { // It's a new round
             CombatTurn.resetAction(combatants);
             if (combat.previous.round === 0) { // It's the first round
@@ -95,5 +96,6 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
                 }
             }
         }
+        await CombatTurn.deleteExpiredEffects(combat.combatant?.actor);
     }
 });

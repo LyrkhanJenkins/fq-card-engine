@@ -12,29 +12,26 @@ import {socket} from "../../hook/integration/socketlib.hook.js";
  */
 export default class CombatTurn {
     /**
-     * Supprime, sur tous les tokens de la scène active, les effets temporaires
-     * dont la durée restante est nulle ou négative.
+     * Supprime les effets temporaires expirés (durée restante ≤ 0) de l'acteur fourni.
+     * Appelé au changement de tour avec l'acteur du combattant COURANT : la suppression
+     * intervient ainsi au DÉBUT DU TOUR de l'acteur affecté (et non à la frontière de
+     * round), en cohérence avec l'expiry natif `turnStart` de Foundry v14 — le cœur
+     * calcule déjà `duration.remaining` ; on ne fait que déclencher la suppression au
+     * bon moment, pour le bon acteur.
+     *
+     * @param {Actor} [actor] - L'acteur dont on purge les effets expirés (no-op si absent).
      *
      * @returns {Promise<void>}
      */
-    static async deleteExpiredEffects() {
-        const expiredEffects = Array.from(game.scenes?.active?.tokens ?? [])
-            .flatMap((x) => {
-                const actor = x.actor;
-                if (actor == null)
-                    return [];
-                return actor.appliedEffects;
-            })
+    static async deleteExpiredEffects(actor) {
+        const expiredEffects = (actor?.appliedEffects ?? [])
             .filter((x) =>
                 (x.isTemporary &&
                     x.duration.remaining != null &&
                     x.duration.remaining <= 0)
             );
 
-        let promises = [];
-        expiredEffects.forEach((x) => promises.push(x.delete()));
-
-        await Promise.all(promises);
+        await Promise.all(expiredEffects.map((x) => x.delete()));
     }
 
     /**

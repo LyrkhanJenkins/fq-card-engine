@@ -414,7 +414,7 @@ export default class Damage {
                 }
             }
             if (targetActor?.effects && targetActor.effects.size > 0) {
-                targetActor.effects.filter(effect => effect?.flags?.expireOnDamage).forEach(effect => {
+                targetActor.effects.filter(effect => effect?.flags?.[FqCardEngineModule.moduleName]?.expireOnDamage).forEach(effect => {
                     effect.delete();
                 });
             }

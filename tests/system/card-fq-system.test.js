@@ -157,6 +157,65 @@ describe("CardFqSystem.getChoiceSchema", () => {
     });
 });
 
+describe("CardFqSystem durée v14 (value/units)", () => {
+
+    // Navigation : getApplyEffectsFormulaSchema().effects.data.duration
+    function getDurationSchema() {
+        return CardFqSystem.getApplyEffectsFormulaSchema().effects.data.duration;
+    }
+
+    it("expose value/units et n'a plus startTime/rounds/turns", () => {
+        const duration = getDurationSchema();
+
+        expect(duration).toHaveProperty("value");
+        expect(duration).toHaveProperty("units");
+        expect(duration).not.toHaveProperty("startTime");
+        expect(duration).not.toHaveProperty("rounds");
+        expect(duration).not.toHaveProperty("turns");
+    });
+
+    it("a pour unité par défaut 'rounds' et verrouille les choix sur DURATION_UNITS_CHOICES", () => {
+        const duration = getDurationSchema();
+
+        expect(duration.units.initial()).toBe("rounds");
+        expect(duration.units.choices).toEqual(CardFqSystem.DURATION_UNITS_CHOICES);
+        expect(duration.units.choices).toEqual({
+            rounds: "FQCARDENGINE.DurationUnitRounds",
+            turns: "FQCARDENGINE.DurationUnitTurns",
+        });
+    });
+});
+
+describe("CardFqSystem données d'effet alignées v14 (name/img/showIcon)", () => {
+
+    function getDataSchema() {
+        return CardFqSystem.getApplyEffectsFormulaSchema().effects.data;
+    }
+
+    it("expose name/img/showIcon et n'a plus label/icon/showOnToken", () => {
+        const data = getDataSchema();
+
+        expect(data).toHaveProperty("name");
+        expect(data).toHaveProperty("img");
+        expect(data).toHaveProperty("showIcon");
+        expect(data).not.toHaveProperty("label");
+        expect(data).not.toHaveProperty("icon");
+        expect(data).not.toHaveProperty("showOnToken");
+    });
+
+    it("showIcon : défaut 1 (Conditional, aligné Foundry) et choix verrouillés sur SHOW_ICON_CHOICES", () => {
+        const data = getDataSchema();
+
+        expect(data.showIcon.initial).toBe(1);
+        expect(data.showIcon.choices).toEqual(CardFqSystem.SHOW_ICON_CHOICES);
+        expect(data.showIcon.choices).toEqual({
+            0: "FQCARDENGINE.ShowIconNever",
+            1: "FQCARDENGINE.ShowIconConditional",
+            2: "FQCARDENGINE.ShowIconAlways",
+        });
+    });
+});
+
 describe("CardFqSystem.getMessageSchema", () => {
 
     it("expose les champs key/arg d'un message localisable", () => {

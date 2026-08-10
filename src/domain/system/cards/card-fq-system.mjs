@@ -29,6 +29,17 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         Object.keys(CONST.ACTIVE_EFFECT_CHANGE_TYPES).map(key => [key, key])
     );
 
+    static DURATION_UNITS_CHOICES = {
+        rounds: "FQCARDENGINE.DurationUnitRounds",
+        turns: "FQCARDENGINE.DurationUnitTurns"
+    };
+
+    static SHOW_ICON_CHOICES = {
+        0: "FQCARDENGINE.ShowIconNever",
+        1: "FQCARDENGINE.ShowIconConditional",
+        2: "FQCARDENGINE.ShowIconAlways"
+    };
+
     /**
      * Définit le schéma de données FQ d'une carte : nombre max d'exemplaires,
      * classe, niveau, indicateur de carte de base, et la liste des choix jouables.
@@ -158,14 +169,21 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                 self: new BooleanField({required: true, label: "FQCARDENGINE.SelfApplyEffect"}),
                 // Le données de l'effets
                 data: new ArrayField(new SchemaField({
-                    label: new StringField({required: true, label: "FQCARDENGINE.EffectLabel"}),
-                    icon: new FilePathField({
+                    name: new StringField({required: true, label: "FQCARDENGINE.EffectLabel"}),
+                    img: new FilePathField({
                         categories: ["IMAGE"],
                         initial: () => this.DEFAULT_ICON,
                         required: true,
                         label: "FQCARDENGINE.EffectIcon"
                     }),
                     expireOnDamage: new BooleanField({required: true, label: "FQCARDENGINE.EffectExpireOnDamage"}),
+                    showIcon: new NumberField({
+                        required: true,
+                        initial: 1,
+                        choices: this.SHOW_ICON_CHOICES,
+                        localize: true,
+                        label: "FQCARDENGINE.EffectShowIcon"
+                    }),
                     // Les changements d'état de l'effet
                     changes: new ArrayField(new SchemaField({
                         key: new StringField({required: true, label: "FQCARDENGINE.EffectChangeKey"}),
@@ -185,9 +203,14 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                         }),
                     }), {label: "FQCARDENGINE.EffectChanges"}),
                     duration: new SchemaField({
-                        startTime: new StringField({required: true, label: "FQCARDENGINE.EffectStartTime"}),
-                        rounds: new StringField({required: true, label: "FQCARDENGINE.EffectRounds"}),
-                        turns: new StringField({required: true, label: "FQCARDENGINE.EffectTurns"}),
+                        value: new StringField({required: true, label: "FQCARDENGINE.EffectDurationValue"}),
+                        units: new StringField({
+                            required: true,
+                            choices: this.DURATION_UNITS_CHOICES,
+                            initial: () => "rounds",
+                            localize: true,
+                            label: "FQCARDENGINE.EffectDurationUnits"
+                        }),
                     }),
                 }), {label: "FQCARDENGINE.EffectDatas"}),
                 removeEffectName: new StringField({required: true, label: "FQCARDENGINE.RemoveEffectName"}),

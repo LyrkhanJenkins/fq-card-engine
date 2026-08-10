@@ -53,6 +53,10 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        // Façade globale du module, référencée par CardEffect.createEffectsFromData
+        // (`FqCardEngineModule.moduleName`, portée des flags d'effet). Reposée avant
+        // chaque test pour neutraliser l'`afterEach` d'un sous-describe qui l'annule.
+        globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
     });
 
     it("rollResultSync : évalue une formule et renvoie son total (synchrone)", () => {
@@ -124,26 +128,42 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         }));
     });
 
-    it("createEffectsFromData recopie label → name si manquant", async () => {
+    it("préserve les champs déjà alignés v14 (name/img/showIcon) sans les transformer", async () => {
         const input = {
             data: [
-                {label: "Effet A", changes: []},
-                {label: "Ignoré", name: "Déjà nommé", changes: []},
+                {name: "Effet A", img: "icons/x.webp", showIcon: 2, changes: []},
             ],
         };
 
-        const result = await CardEffect.createEffectsFromData(input);
+        const [res] = await CardEffect.createEffectsFromData(input);
 
-        expect(result[0].name).toBe("Effet A");
-        expect(result[1].name).toBe("Déjà nommé");
+        expect(res.name).toBe("Effet A");
+        expect(res.img).toBe("icons/x.webp");
+        expect(res.showIcon).toBe(2);
     });
 
-    it("mappe duration (startTime/rounds/turns) et définit origin", async () => {
+    it("porte expireOnDamage dans flags[fq-card-engine] et retire le champ à plat", async () => {
+        const input = {
+            data: [
+                {name: "Expirable", expireOnDamage: true, changes: []},
+                {name: "Persistant", expireOnDamage: false, changes: []},
+            ],
+        };
+
+        const [expirable, persistant] = await CardEffect.createEffectsFromData(input);
+
+        expect(expirable.flags["fq-card-engine"].expireOnDamage).toBe(true);
+        expect(persistant.flags["fq-card-engine"].expireOnDamage).toBe(false);
+        expect(expirable).not.toHaveProperty("expireOnDamage");
+        expect(persistant).not.toHaveProperty("expireOnDamage");
+    });
+
+    it("résout la durée v14 {value, units} et définit origin ; pas de start ni résidu", async () => {
         const input = {
             data: [
                 {
-                    label: "Durée",
-                    duration: {startTime: 10, rounds: 2, turns: 1},
+                    name: "Durée",
+                    duration: {value: "2", units: "rounds"},
                     changes: [],
                 },
             ],
@@ -151,10 +171,47 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
 
         const [res] = await CardEffect.createEffectsFromData(input);
 
-        expect(res.startTime).toBe(10);
-        expect(res.rounds).toBe(2);
-        expect(res.turns).toBe(1);
+        // rollResultSync (Roll mocké) renvoie le total déterministe (10) pour value="2".
+        expect(res.duration).toEqual({value: 10, units: "rounds"});
         expect(res.origin).toBe("FQ Effect");
+        // Aucun `start` fourni (Foundry le fixe au round/tour courant dans _preCreate).
+        expect(res.start).toBeUndefined();
+    });
+
+    it("préserve l'unité turns du schéma", async () => {
+        const input = {
+            data: [{name: "Turns", duration: {value: "3", units: "turns"}, changes: []}],
+        };
+
+        const [res] = await CardEffect.createEffectsFromData(input);
+
+        expect(res.duration).toEqual({value: 10, units: "turns"});
+    });
+
+    it("durée vide (value \"\") → effet permanent : duration retirée, origin défini", async () => {
+        const input = {
+            data: [
+                {
+                    name: "Permanent",
+                    duration: {value: "", units: "rounds"},
+                    changes: [],
+                },
+            ],
+        };
+
+        const [res] = await CardEffect.createEffectsFromData(input);
+
+        expect(res.duration).toBeUndefined();
+        expect(res.origin).toBe("FQ Effect");
+    });
+
+    it("resolveDurationComponent : vide→0, non-finie→0, formule→total du jet", () => {
+        expect(CardEffect.resolveDurationComponent("")).toBe(0);
+        expect(CardEffect.resolveDurationComponent("   ")).toBe(0);
+        expect(CardEffect.resolveDurationComponent(undefined)).toBe(0);
+        expect(CardEffect.resolveDurationComponent(null)).toBe(0);
+        // Roll mocké → total déterministe (10) pour toute formule non vide.
+        expect(CardEffect.resolveDurationComponent("2")).toBe(10);
     });
 
     it("n'évalue pas quand key ∈ [\"system.fq.bonus.damage\",\"system.fq.bonus.heal\"]", async () => {

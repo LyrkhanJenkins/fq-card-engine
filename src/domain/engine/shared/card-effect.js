@@ -178,6 +178,29 @@ export default class CardEffect {
     }
 
 
+
+    /**
+     * Résout une composante de durée (rounds/turns) d'un effet en nombre entier.
+     * Les chaînes vides/absentes valent 0 (aucune durée) sans lancer de jet ; sinon
+     * la valeur est évaluée comme une formule (les @caractéristiques et X/Y ayant déjà
+     * été substitués en amont). Toute erreur ou valeur non finie retombe à 0.
+     *
+     * @param {string|number} raw - La composante de durée à résoudre.
+     *
+     * @returns {number} La durée résolue (0 si vide, invalide ou non finie).
+     */
+    static resolveDurationComponent(raw) {
+        if (raw === undefined || raw === null || raw.toString().trim() === "") {
+            return 0;
+        }
+        try {
+            const value = Number(RollService.rollResultSync(raw));
+            return Number.isFinite(value) ? value : 0;
+        } catch (e) {
+            return 0;
+        }
+    }
+
     /**
      * Construit les données d'effets actifs à partir d'un effet de carte :
      * numérise les valeurs, renseigne le nom et la durée, importe les macros
@@ -185,27 +208,30 @@ export default class CardEffect {
      * dégâts/soin conservés tels quels).
      *
      * @param {object}   currentEffect       - L'effet source.
-     * @param {object[]} currentEffect.data  - Les données d'effet à transformer.
      *
      * @returns {Promise<object[]>} Les données d'effets actifs prêtes à être créées.
      */
     static async createEffectsFromData(currentEffect) {
         return Promise.all(currentEffect.data.map(async effect => {
-            if (!effect.name) {
-                effect.name = effect.label;
-            }
-            // Foundry a renommé le champ image des ActiveEffect « icon » → « img » (v11).
-            // Les données de cartes utilisent encore « icon » : sans cette normalisation,
-            // l'effet est créé sans image et aucune icône n'apparaît sur le token.
-            if (!effect.img && effect.icon) {
-                effect.img = effect.icon;
-            }
+            // Les données d'effet sont déjà alignées sur le schéma v14 des ActiveEffect
+            // (`name`, `img`, `showIcon`, `changes`, `duration`) : aucun renommage ici.
+            // `expireOnDamage` est un concept FQ (pas un champ ActiveEffect) : on le porte
+            // dans les flags du module — sinon Foundry le supprimerait à la création et le
+            // retrait d'effet sur dégâts ne se déclencherait jamais (cf. Damage.applyActorHpModification).
+            const moduleName = FqCardEngineModule.moduleName;
+            effect.flags = {
+                ...effect.flags,
+                [moduleName]: {...effect.flags?.[moduleName], expireOnDamage: !!effect.expireOnDamage}
+            };
+            delete effect.expireOnDamage;
             if (effect.duration) {
-                const {startTime, rounds, turns} = effect.duration;
-                effect.startTime = startTime;
-                effect.rounds = rounds;
+                const value = CardEffect.resolveDurationComponent(effect.duration.value);
+                if (value > 0) {
+                    effect.duration = {value, units: effect.duration.units};
+                } else {
+                    delete effect.duration;
+                }
                 effect.origin = OriginFQEffectLabel;
-                effect.turns = turns;
             }
             for (let changeKey in effect.changes) {
                 if (effect.changes[changeKey].key === "macro.execute") {

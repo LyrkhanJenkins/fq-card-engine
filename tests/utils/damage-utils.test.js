@@ -7,6 +7,9 @@ describe("Damage", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        // Façade globale du module, référencée par Damage.applyActorHpModification
+        // (`FqCardEngineModule.moduleName`, portée du flag `expireOnDamage`).
+        globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
         actor = {
             _id: "targetActorId",
             system: {
@@ -253,8 +256,8 @@ describe("Damage", () => {
         });
 
         it("damageFQ: removes effects flagged expireOnDamage only", () => {
-            const expiringEffect = {flags: {expireOnDamage: true}, delete: vi.fn()};
-            const persistentEffect = {flags: {}, delete: vi.fn()};
+            const expiringEffect = {flags: {"fq-card-engine": {expireOnDamage: true}}, delete: vi.fn()};
+            const persistentEffect = {flags: {"fq-card-engine": {expireOnDamage: false}}, delete: vi.fn()};
             setupTargetActor({temp: 0, value: 20, max: 20, tempmax: 0}, {
                 size: 2,
                 filter: (fn) => [expiringEffect, persistentEffect].filter(fn)
