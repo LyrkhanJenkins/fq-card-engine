@@ -5,6 +5,10 @@
 
 ### Versions prévues
 #### 2.1.0
+- Ajouter les dégâts de l'armes à certaines cartes -> Tests et recalibrage avec les sorts aussi sans armes à faire (jsuis allé très vite il faudrait revoir les dégâts)
+- Simplifier les formules à l'affichage sur les cartes (formule entre crochet condensé (afficher que cette carte prends les dégâts de l'arme par une icone))
+  - Peut être afficher dans des bulles aussi tout ce qui modifie la carte plutôt que les icones @con, @dec, @wpn
+- Tests pour tester toutes les formules dans les jsons des cartes
 - Se poser pour refraichir la caractérisation :
   - Refaire une passe de toutes els fonctionnalités + celles à venir ET donner plus de cartes qui utilisent ces fonctionnalités
   - QU'est ce qui caractérisent une classe , faire une passe des sorts qui ne caracterise pas la classe
@@ -60,7 +64,8 @@
 - faire bouger tornade effet magique
 - Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens (vérifier que c'est pas déjà fait)
 - J'ai l'impression que ya pas la bonne couleur de dé quand on fait le roll damage depuis une arme équipé (grave?)
-- Valeurs sentinelles (`-9999`, `999999999`, `99999999`) utilisées comme drapeaux (pas de crit, cible inesquivable, portée/cibles infinies, rejouable infini) : fragiles, à remplacer par de vrais flags.
+- Valeurs sentinelles (`-9999`, `999999999`, `99999999`) utilisées comme drapeaux (pas de crit, cible inesquivable, 
+ portée/cibles infinies, rejouable infini) : fragiles, à remplacer par de vrais flags.
 - Supprimer la notion de joueur par main si le joueur n'a qu'une main possible
   -> Si joueur alors ce dernier ne peut avoir qu'une main, pas de configuration
 - Volée de shuriken et shuriken, effet spéciaux à changer
@@ -79,6 +84,7 @@
 - Ajout des cartes pour les 9 classes (jusqu'au niveau 10)
 - Migrations objets dnd5e v FQ OU comment plus les mettre en avant?
 - Prise en compte des resistances, absorption des dégâts
+- Prise en compte des jet d'attaque (pour toucher les monstres)?
 - Sort qui touche tous les alliés du canvas? tous les ennemis de canvas? (AURA)
 - MINOR--> RELEASE
 
@@ -94,6 +100,7 @@
 - Migration Eizh complète avec les niveaux
 
 ### Feat:
+- Est ce qu'on limite le nombre de carte de base max?
 - Possibilité de choisir des cartes dans un changement de niveau (Pour le moment impossible dans le advancement sans
   recreer une fenêtre )
 - Vérifier qu'un GM est connecté pour pouvoir lancer les cartes

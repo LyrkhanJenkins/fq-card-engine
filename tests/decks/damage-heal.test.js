@@ -110,6 +110,10 @@ function isSimpleAxisChoice(choice, field) {
     const formula = choice[field];
     return isFilled(formula)
         && !/XXX|YYY/.test(String(formula))
+        // Cartes à jeton d'arme (@wpnR/@wpnM) : dégâts dépendants de l'arme équipée
+        // et injouables sans elle → hors matrice déterministe (couvertes par les
+        // tests dédiés tests/{engine,decks}/weapon-damage*.test.js).
+        && !/@wpn[RM]/.test(String(choice.damage ?? ""))
         && !(choice.customEvals && choice.customEvals.length)
         && !(choice.applyEffectsFormulas && choice.applyEffectsFormulas.length)
         && !choice.reactive

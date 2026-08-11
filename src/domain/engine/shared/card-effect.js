@@ -1,6 +1,7 @@
 import ResourceHandler from "./resource-handler.js";
 import Damage from "../roll/damage.js";
 import RollService from "../roll/roll-service.js";
+import WeaponDamage from "../roll/weapon-damage.js";
 import Minion from "./minion.js";
 import Geometry from "./geometry.js";
 import Constants, {
@@ -43,6 +44,8 @@ export default class CardEffect {
 
         if (cardContent) {
             ResourceHandler.consumeResources(cardContent, game.user?.character);
+            // Injection des dégâts de l'arme équipée (@wpnR/@wpnM)
+            WeaponDamage.substituteInDamage(cardContent, game.user?.character);
             if (cardContent.damage) {
                 resultArray.push(...await Damage.buildDamageDiceLauncher(game.user.character, cardContent, dsnAnimations));
             }
@@ -530,6 +533,14 @@ export default class CardEffect {
                 ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDraw"), game.user.character);
                 return false;
             }
+        }
+
+        // ARME : une carte exigeant un type d'arme (@wpnR/@wpnM) est injouable sans
+        // l'arme équipée correspondante, au même titre qu'un manque de ressources.
+        const weaponWarningKey = WeaponDamage.getMissingWeaponWarningKey(cardContent, game.user.character);
+        if (weaponWarningKey) {
+            ResourceHandler.createUserWarningMessage(game.i18n.localize(weaponWarningKey), game.user.character);
+            return false;
         }
 
         return ResourceHandler.checkResources(cardContent, game.user.character);

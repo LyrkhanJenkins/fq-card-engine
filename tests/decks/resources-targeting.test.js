@@ -91,7 +91,11 @@ async function reachAllowsFixtureDistance(choice) {
  * @returns {boolean} True si le choix est éligible.
  */
 function isSimpleChoice(choice) {
-    return !(choice.customEvals && choice.customEvals.length)
+    // Cartes à jeton d'arme (@wpnR/@wpnM) : injouables sans l'arme équipée
+    // (garde-fou checkIfCanUseCard) → hors matrice ressources/portée déterministe
+    // (couvertes par les tests dédiés weapon-damage*.test.js).
+    return !/@wpn[RM]/.test(String(choice.damage ?? ""))
+        && !(choice.customEvals && choice.customEvals.length)
         && !(choice.applyEffectsFormulas && choice.applyEffectsFormulas.length)
         && !choice.reactive
         && !isFilled(choice.xmin) && !isFilled(choice.xmax)

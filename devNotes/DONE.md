@@ -1,3 +1,7 @@
+v2.1.0:
+Feat :
+- Ajout des dégâts de l'arme équipée aux cartes concernées
+
 v2.0.2:
 Feat :
 - Animation de pioche de carte
