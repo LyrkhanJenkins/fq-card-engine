@@ -65,21 +65,27 @@ export default class WeaponDamage {
     }
 
     /**
-     * Résout l'activité d'attaque d'une arme. Chemin principal : l'API dnd5e 5.x
-     * `activities.getByType("attack")`. Fallback itératif si `getByType` est absent.
+     * Résout l'activité porteuse de dégâts d'une arme : l'activité de dégâts en
+     * priorité, sinon l'activité d'attaque (certaines armes n'ont qu'une activité
+     * "damage", cf. `dnd5e.rollDamageV2` qui traite les deux types). Chemin
+     * principal : l'API dnd5e 5.x `activities.getByType`. Fallback itératif si
+     * `getByType` est absent.
      *
      * @param {object} weapon - L'item arme.
      *
-     * @returns {object|undefined} L'activité d'attaque, ou undefined si absente.
+     * @returns {object|undefined} L'activité de dégâts ou d'attaque, ou undefined si absente.
      */
     static getAttackActivity(weapon) {
         const activities = weapon.system?.activities;
-        const byType = activities?.getByType?.("attack")?.[0];
-        if (byType) {
-            return byType;
+        for (const type of ["damage","attack"]) {
+            const byType = activities?.getByType?.(type)?.[0];
+            if (byType) {
+                return byType;
+            }
         }
         if (activities && typeof activities[Symbol.iterator] === "function") {
-            return [...activities].find(a => a?.type === "attack");
+            return [...activities].find(a => a?.type === "damage") ??
+                [...activities].find(a => a?.type === "attack");
         }
         return undefined;
     }

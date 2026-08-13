@@ -36,6 +36,25 @@ function makeActivity(rolls) {
     return {type: "attack", use: vi.fn(), getDamageConfig: vi.fn(() => ({rolls}))};
 }
 
+/**
+ * Item arme équipé exposant des activités par type (ex. seulement "damage").
+ *
+ * @param {string}                 typeValue  - La catégorie dnd5e (`system.type.value`).
+ * @param {Object<string, object>} byTypeMap  - Les activités indexées par type.
+ *
+ * @returns {object} L'item arme.
+ */
+function makeWeaponWithActivities(typeValue, byTypeMap) {
+    return {
+        type: "weapon",
+        system: {
+            equipped: true,
+            type: {value: typeValue},
+            activities: {getByType: t => (byTypeMap[t] ? [byTypeMap[t]] : [])}
+        }
+    };
+}
+
 function actorWith(...items) {
     return {items};
 }
@@ -74,8 +93,23 @@ describe("WeaponDamage.getEquippedWeaponDamageFormula", () => {
         expect(WeaponDamage.getEquippedWeaponDamageFormula(undefined, RANGED)).toBe("0");
     });
 
-    test("arme du type sans activité d'attaque → '0'", () => {
+    test("arme du type sans activité d'attaque ni de dégâts → '0'", () => {
         expect(WeaponDamage.getEquippedWeaponDamageFormula(actorWith(makeWeapon("martialR", null)), RANGED)).toBe("0");
+    });
+
+    test("arme avec seulement une activité 'damage' : la formule est extraite", () => {
+        const damageActivity = {type: "damage", use: vi.fn(), getDamageConfig: vi.fn(() => ({rolls: [{parts: ["2d6", "@mod"], data: {mod: 2}}]}))};
+        const actor = actorWith(makeWeaponWithActivities("martialM", {damage: damageActivity}));
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("2d6 + 2");
+        expect(damageActivity.use).not.toHaveBeenCalled();
+    });
+
+    test("arme avec activités 'attack' ET 'damage' : les dégâts sont prioritaires", () => {
+        const attackActivity = {type: "attack", use: vi.fn(), getDamageConfig: vi.fn(() => ({rolls: [{parts: ["1d8", "@mod"], data: {mod: 3}}]}))};
+        const damageActivity = {type: "damage", use: vi.fn(), getDamageConfig: vi.fn(() => ({rolls: [{parts: ["2d6"], data: {}}]}))};
+        const actor = actorWith(makeWeaponWithActivities("simpleR", {attack: attackActivity, damage: damageActivity}));
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, RANGED)).toBe("2d6");
+        expect(attackActivity.getDamageConfig).not.toHaveBeenCalled();
     });
 
     test("getDamageConfig qui lève → '0' (aucune exception propagée)", () => {

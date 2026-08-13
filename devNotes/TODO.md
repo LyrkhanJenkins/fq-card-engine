@@ -5,9 +5,9 @@
 
 ### Versions prévues
 #### 2.1.0
-- Ajouter les dégâts de l'armes à certaines cartes -> Tests et recalibrage avec les sorts aussi sans armes à faire (jsuis allé très vite il faudrait revoir les dégâts)
 - Simplifier les formules à l'affichage sur les cartes (formule entre crochet condensé (afficher que cette carte prends les dégâts de l'arme par une icone))
-  - Peut être afficher dans des bulles aussi tout ce qui modifie la carte plutôt que les icones @con, @dec, @wpn
+  - Peut-être afficher dans des bulles aussi tout ce qui modifie la carte plutôt que les icones @con, @dec, @wpn
+- Remonter le raccourci pour utiliser l'arme au niveau du hand-container
 - Tests pour tester toutes les formules dans les jsons des cartes
 - Se poser pour refraichir la caractérisation :
   - Refaire une passe de toutes els fonctionnalités + celles à venir ET donner plus de cartes qui utilisent ces fonctionnalités
@@ -54,6 +54,7 @@
 - Première carte du Maître d'Armes et du Guerrier Runique
 - Chercher dans votre défausse action
 - Afficher d'autres auras (exemple: bouclier magique, nuage de dague...)
+- Refaire un rééquilibrage des cartes après réécriture
 - Gérer les cartes incolores
 - Déplacer les cibles automatiquement (Example: Tir supersonique, Frappe avec salto arrière...)
 
