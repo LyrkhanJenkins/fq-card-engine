@@ -229,7 +229,7 @@ describe("integration/dnd5e", () => {
             expect(ResourceHandler.consumeResources).toHaveBeenCalledWith(fq, actor);
         });
 
-        it("ne consomme pas les ressources FQ pour une activité d'attaque", async () => {
+        it("consomme les ressources FQ au jet pour une activité d'attaque (armes, avec ou sans bypass)", async () => {
             const hook = getHook("dnd5e.rollDamageV2");
             vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
             vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
@@ -237,7 +237,8 @@ describe("integration/dnd5e", () => {
             vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
 
             const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
-            const item = {actor, system: {fq: {action: -1}}};
+            const fq = {action: -1};
+            const item = {actor, system: {fq}};
             const subject = {
                 item, actor, type: "attack",
                 range: {value: 0, reach: 0}
@@ -246,7 +247,7 @@ describe("integration/dnd5e", () => {
 
             await hook([roll], {subject});
 
-            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
+            expect(ResourceHandler.consumeResources).toHaveBeenCalledWith(fq, actor);
         });
 
         it("joue les FX seulement après la fin des animations de dés (Dice So Nice)", async () => {
@@ -280,6 +281,104 @@ describe("integration/dnd5e", () => {
 
             expect(Fx.handleSpecialEffect).toHaveBeenCalled();
             expect(diceDoneWhenFxPlayed).toBe(true);
+        });
+
+    });
+
+    describe("dnd5e.preRollAttackV2", () => {
+        beforeEach(() => {
+            globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+        });
+
+        function buildAttackConfig({itemType = "weapon", fq = {action: -1}} = {}) {
+            const actor = {id: "actor-1"};
+            const activity = {
+                actor,
+                item: {type: itemType, system: {fq}},
+                rollDamage: vi.fn()
+            };
+            return {config: {subject: activity}, activity, actor, fq};
+        }
+
+        it("laisse passer le jet d'attaque quand le réglage de bypass est désactivé", () => {
+            const hook = getHook("dnd5e.preRollAttackV2");
+            game.settings.get.mockReturnValue(false);
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            const {config, activity} = buildAttackConfig();
+
+            const result = hook(config, {}, {});
+
+            expect(result).toBe(true);
+            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
+            expect(activity.rollDamage).not.toHaveBeenCalled();
+        });
+
+        it("bypass actif : lance directement les dégâts sans consommer ici (consommation dans rollDamageV2)", () => {
+            const hook = getHook("dnd5e.preRollAttackV2");
+            game.settings.get.mockReturnValue(true);
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            const {config, activity} = buildAttackConfig();
+
+            const result = hook(config, {}, {});
+
+            expect(result).toBe(false);
+            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
+            expect(activity.rollDamage).toHaveBeenCalledWith({}, {configure: false});
+        });
+
+        it("bypass actif : ignore les activités qui ne viennent pas d'une arme", () => {
+            const hook = getHook("dnd5e.preRollAttackV2");
+            game.settings.get.mockReturnValue(true);
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            const {config, activity} = buildAttackConfig({itemType: "spell"});
+
+            const result = hook(config, {}, {});
+
+            expect(result).toBe(true);
+            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
+            expect(activity.rollDamage).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("dnd5e.preRollDamageV2", () => {
+        beforeEach(() => {
+            globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+        });
+
+        it("laisse la modale de dégâts quand le réglage de bypass est désactivé", () => {
+            const hook = getHook("dnd5e.preRollDamageV2");
+            game.settings.get.mockReturnValue(false);
+            const config = {subject: {item: {type: "weapon"}}};
+            const dialog = {configure: true};
+
+            const result = hook(config, dialog, {});
+
+            expect(result).toBe(true);
+            expect(dialog.configure).toBe(true);
+        });
+
+        it("bypass actif : supprime la modale de dégâts des armes (cas activité damage seule)", () => {
+            const hook = getHook("dnd5e.preRollDamageV2");
+            game.settings.get.mockReturnValue(true);
+            const config = {subject: {item: {type: "weapon"}}};
+            const dialog = {configure: true};
+
+            const result = hook(config, dialog, {});
+
+            expect(result).toBe(true);
+            expect(dialog.configure).toBe(false);
+        });
+
+        it("bypass actif : ne touche pas la modale des jets qui ne viennent pas d'une arme", () => {
+            const hook = getHook("dnd5e.preRollDamageV2");
+            game.settings.get.mockReturnValue(true);
+            const config = {subject: {item: {type: "spell"}}};
+            const dialog = {configure: true};
+
+            const result = hook(config, dialog, {});
+
+            expect(result).toBe(true);
+            expect(dialog.configure).toBe(true);
         });
     });
 });

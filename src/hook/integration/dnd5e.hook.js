@@ -67,8 +67,7 @@ Hooks.on("dnd5e.preRollAttackV2", (config, _dialog, _message) => {
     // Réglage "BypassWeaponAttackRoll" (monde, défaut false) : le jet d'attaque des
     // armes est court-circuité et remplacé par un jet de dégâts normal lancé
     // directement (sans modale de configuration ni critique), comme si l'attaque
-    // réussissait toujours (pas de classe d'armure). L'événement souris n'est pas
-    // transmis pour que les raccourcis clavier ne puissent pas forcer un critique.
+    // réussissait toujours (pas de classe d'armure).
     if (!game.settings.get(FqCardEngineModule.moduleName, "BypassWeaponAttackRoll")) {
         return true;
     }
@@ -80,6 +79,22 @@ Hooks.on("dnd5e.preRollAttackV2", (config, _dialog, _message) => {
     return false;
 });
 
+Hooks.on("dnd5e.preRollDamageV2", (config, dialog, _message) => {
+    // Réglage "BypassWeaponAttackRoll" : supprime aussi la modale de configuration
+    // des dégâts des armes. Nécessaire pour les armes n'ayant qu'une activité
+    // "damage" (pas d'attaque à court-circuiter, donc `preRollAttackV2` ne les
+    // voit jamais) ; sans effet supplémentaire pour le chemin bypass, qui passe
+    // déjà `configure: false`.
+    if (!game.settings.get(FqCardEngineModule.moduleName, "BypassWeaponAttackRoll")) {
+        return true;
+    }
+    if (config.subject?.item?.type !== "weapon") {
+        return true;
+    }
+    dialog.configure = false;
+    return true;
+});
+
 Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     const item = subject.item;
     const squareDistance = game.system.grid.distance;
@@ -89,7 +104,7 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     if (!subject.item) {
         return;
     }
-    if (["heal",  "damage"].includes(subject.type)) {
+    if (["heal", "damage", "attack"].includes(subject.type)) {
         ResourceHandler.consumeResources(item.system?.fq, subject.actor);
     }
     let resultArray = [];
