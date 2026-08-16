@@ -35,6 +35,8 @@
   "FQCARDENGINE.RollInitiativeNameSettingHint": "Roll Normal Initiative In start combat and cards creating minions",
   "FQCARDENGINE.BetterChatMessagesSetting": "Better Chat Messages",
   "FQCARDENGINE.BetterChatMessagesSettingHint": "Messages in Chat are displayed with card images and descriptions",
+  "FQCARDENGINE.BypassWeaponAttackRollSetting": "Bypass Weapon Attack Roll",
+  "FQCARDENGINE.BypassWeaponAttackRollSettingHint": "Weapon attack rolls are replaced by the damage roll, as if the attack always hits (no armor class)",
   "FQCARDENGINE.FaceUpModeSetting": "Face Up Mode",
   "FQCARDENGINE.FaceUpModeSettingHint": "Disables the ability to flip and shows the face when using the module",
   "FQCARDENGINE.ChooseForGMTitle": "Assign User or Hand",

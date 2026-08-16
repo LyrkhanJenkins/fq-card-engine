@@ -1,6 +1,7 @@
 v2.1.0:
 Feat :
 - Ajout des dégâts de l'arme équipée aux cartes concernées
+- Option pour bypassé les modales d'attaque et de dégâts (pas de classe d'armure)
 
 v2.0.2:
 Feat :

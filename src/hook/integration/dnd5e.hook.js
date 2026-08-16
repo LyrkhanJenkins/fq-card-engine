@@ -63,6 +63,23 @@ Hooks.on("dnd5e.preUseActivity", (activity, usageConfig, dialogConfig, messageCo
 
 });
 
+Hooks.on("dnd5e.preRollAttackV2", (config, _dialog, _message) => {
+    // Réglage "BypassWeaponAttackRoll" (monde, défaut false) : le jet d'attaque des
+    // armes est court-circuité et remplacé par un jet de dégâts normal lancé
+    // directement (sans modale de configuration ni critique), comme si l'attaque
+    // réussissait toujours (pas de classe d'armure). L'événement souris n'est pas
+    // transmis pour que les raccourcis clavier ne puissent pas forcer un critique.
+    if (!game.settings.get(FqCardEngineModule.moduleName, "BypassWeaponAttackRoll")) {
+        return true;
+    }
+    const activity = config.subject;
+    if (activity?.item?.type !== "weapon") {
+        return true;
+    }
+    activity.rollDamage({}, {configure: false});
+    return false;
+});
+
 Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     const item = subject.item;
     const squareDistance = game.system.grid.distance;
