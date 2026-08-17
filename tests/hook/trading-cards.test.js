@@ -1,6 +1,6 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 import {makeDeck} from "../factories.js";
-import TradingCards, {DECK_TYPE} from "../../src/domain/trading/trading-cards.js";
+import TradingCards, {DECK_TYPE, PILE_TYPE} from "../../src/domain/trading/trading-cards.js";
 import "../../src/hook/trading-cards.hook.js";
 
 function getHook(name) {
@@ -97,6 +97,74 @@ describe("trading-cards", () => {
             hook(card, data, {}, "user-1");
 
             expect(card.updateSource).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("recallCardsFromPiles", () => {
+
+        // Collection embarquée minimale : un tableau doté d'un `get` par id,
+        // comme l'EmbeddedCollection Foundry consommée par recallCardsFromPiles.
+        function makeEmbedded(cards) {
+            return Object.assign([...cards], {get: (id) => cards.find(c => c.id === id)});
+        }
+
+        function makeTestDeck(cards) {
+            return {
+                id: "deck-1",
+                system: {fq: {type: DECK_TYPE}},
+                cards: makeEmbedded(cards),
+                updateEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+        }
+
+        function makeTestPile(cards) {
+            return {
+                system: {fq: {type: PILE_TYPE}},
+                cards: makeEmbedded(cards),
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+        }
+
+        it("ramène au deck ses cartes défaussées dans n'importe quelle pile, sans toucher aux autres", async () => {
+            const deck = makeTestDeck([{id: "c1", drawn: true}, {id: "c2", drawn: true}]);
+            const ownPile = makeTestPile([{id: "c1", origin: deck}]);
+            const otherPile = makeTestPile([
+                {id: "c2", origin: deck},
+                {id: "x1", origin: {id: "other-deck"}}
+            ]);
+            game.cards = [ownPile, otherPile, deck]; // le deck n'est pas une pile : ignoré
+
+            const recalled = await TradingCards.recallCardsFromPiles(deck);
+
+            expect(recalled).toBe(2);
+            expect(deck.updateEmbeddedDocuments).toHaveBeenCalledWith("Card", [{_id: "c1", drawn: false}]);
+            expect(deck.updateEmbeddedDocuments).toHaveBeenCalledWith("Card", [{_id: "c2", drawn: false}]);
+            expect(ownPile.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["c1"]);
+            expect(otherPile.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["c2"]);
+        });
+
+        it("supprime la copie orpheline (originale absente du deck) sans mise à jour du deck", async () => {
+            const deck = makeTestDeck([]);
+            const pile = makeTestPile([{id: "gone", origin: deck}]);
+            game.cards = [pile];
+
+            const recalled = await TradingCards.recallCardsFromPiles(deck);
+
+            expect(recalled).toBe(1);
+            expect(deck.updateEmbeddedDocuments).not.toHaveBeenCalled();
+            expect(pile.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["gone"]);
+        });
+
+        it("pile sans carte du deck (ou sans origin) : aucune opération", async () => {
+            const deck = makeTestDeck([{id: "c1", drawn: true}]);
+            const pile = makeTestPile([{id: "x1", origin: {id: "other-deck"}}, {id: "x2"}]);
+            game.cards = [pile];
+
+            const recalled = await TradingCards.recallCardsFromPiles(deck);
+
+            expect(recalled).toBe(0);
+            expect(deck.updateEmbeddedDocuments).not.toHaveBeenCalled();
+            expect(pile.deleteEmbeddedDocuments).not.toHaveBeenCalled();
         });
     });
 });

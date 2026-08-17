@@ -35,6 +35,68 @@
     transition: background 0.5s ease;
 }
 
+.fq-draw-reveal-banner {
+    position: absolute;
+    top: 8%;
+    left: 0;
+    right: 0;
+    padding: 0.3em 4vw;
+    text-align: center;
+    pointer-events: none;
+    font-size: clamp(1.8rem, 5vw, 3.6rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(var(--fq-cream-rgb), 0.98);
+    text-shadow: 0 0 22px var(--fq-gold-glow),
+                 0 2px 10px rgba(var(--fq-black-rgb), 0.9);
+    background: linear-gradient(90deg,
+        rgba(var(--fq-gold-rgb), 0) 0%,
+        rgba(var(--fq-gold-rgb), 0.22) 18%,
+        rgba(var(--fq-gold-rgb), 0.30) 50%,
+        rgba(var(--fq-gold-rgb), 0.22) 82%,
+        rgba(var(--fq-gold-rgb), 0) 100%);
+    border-top: 2px solid rgba(var(--fq-gold-rgb), 0.55);
+    border-bottom: 2px solid rgba(var(--fq-gold-rgb), 0.55);
+    opacity: 0;
+}
+
+.fq-draw-reveal-overlay.fq-draw-reveal-in .fq-draw-reveal-banner {
+    animation: fq-draw-reveal-banner-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1.2) forwards,
+               fq-draw-reveal-banner-pulse 1.6s ease-in-out 0.55s infinite;
+}
+
+@keyframes fq-draw-reveal-banner-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-24px) scale(0.92);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Respiration lumineuse : le halo du texte enfle et retombe. */
+@keyframes fq-draw-reveal-banner-pulse {
+    0%, 100% {
+        text-shadow: 0 0 22px var(--fq-gold-glow),
+                     0 2px 10px rgba(var(--fq-black-rgb), 0.9);
+    }
+    50% {
+        text-shadow: 0 0 34px var(--fq-gold-glow),
+                     0 0 64px var(--fq-gold-glow),
+                     0 2px 10px rgba(var(--fq-black-rgb), 0.9);
+    }
+}
+
+/* La bannière s'estompe avec l'aspiration des cartes vers la main. */
+.fq-draw-reveal-overlay.fq-draw-reveal-out .fq-draw-reveal-banner {
+    animation: none;
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+}
+
 /* La volée de cartes, agrandie et centrée. --fq-scale est fixé en JS. */
 .fq-draw-reveal-stage {
     --fq-scale: 2.4;

@@ -15,7 +15,8 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     default: {},
     socket: {
         executeAsUser: vi.fn(),
-        executeAsGM: vi.fn()
+        executeAsGM: vi.fn(),
+        executeForEveryone: vi.fn()
     }
 }));
 
@@ -50,6 +51,7 @@ function makeCombatant({actorId = "actor-1", fq = {}, attributes = {}, effects} 
     const actor = {
         id: actorId,
         _id: actorId,
+        name: actorId,
         update: vi.fn().mockResolvedValue(undefined),
         system: {
             fq: {
@@ -85,6 +87,7 @@ beforeEach(() => {
 
     socket.executeAsUser.mockReset();
     socket.executeAsGM.mockReset();
+    socket.executeForEveryone.mockReset();
 });
 
 describe("hook/combat.hook.js", () => {
@@ -376,6 +379,7 @@ describe("hook/combat.hook.js", () => {
             const hand = {id: "hand-1"};
             vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) =>
                 typeFq === DECK_TYPE ? deck : hand);
+            const recallSpy = vi.spyOn(TradingCards, "recallCardsFromPiles").mockResolvedValue(undefined);
 
             const combat = {
                 round: 2, turn: 0,
@@ -390,10 +394,11 @@ describe("hook/combat.hook.js", () => {
             expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.special.sacrificedSkeleton": 0});
             expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
             expect(socket.executeAsUser).toHaveBeenCalledWith("drawCard", "player-user", "hand-1", "deck-1", 2);
+            expect(recallSpy).not.toHaveBeenCalled();
             expect(ChatMessage.create).not.toHaveBeenCalled();
         });
 
-        it("tour d'un joueur, deck insuffisant (mais non vide) : pioche le reste, exhaustion +1, message d'alerte", async () => {
+        it("tour d'un joueur, deck insuffisant (mais non vide) : pioche le reste, exhaustion +1, message d'alerte, défausse rappelée dans le deck", async () => {
             const combatant = makeCombatant({
                 actorId: "player-actor",
                 fq: {cards: {hand: 2, pick: 3, currentDrop: 0}},
@@ -403,10 +408,17 @@ describe("hook/combat.hook.js", () => {
                 {id: "player-user", character: {id: "player-actor"}, active: true}
             ], {activeGM: {id: GM_ID}});
 
-            const deck = {id: "deck-1", availableCards: [{}]}; // 1 carte dispo <= pick(3), mais > 0
+            const deck = {id: "deck-1", availableCards: [{id: "r1"}]}; // 1 carte dispo <= pick(3), mais > 0
             const hand = {id: "hand-1"};
             vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) =>
                 typeFq === DECK_TYPE ? deck : hand);
+            // Le recyclage regarnit le deck avec 3 cartes défaussées (la restante
+            // r1 n'est pas encore piochée : elle est toujours disponible)
+            const recallSpy = vi.spyOn(TradingCards, "recallCardsFromPiles").mockImplementation(async () => {
+                deck.availableCards = [{id: "r1"}, {id: "p1"}, {id: "p2"}, {id: "p3"}];
+                return 3;
+            });
+            const sampleSpy = vi.spyOn(TradingCards, "sampleCardIds").mockReturnValue(["p2", "p1"]);
 
             const combat = {
                 round: 2, turn: 0,
@@ -418,12 +430,87 @@ describe("hook/combat.hook.js", () => {
 
             await getHook("combatTurnChange")(combat, {}, {});
 
-            // Pioche les cartes restantes (1, pas le pick demandé de 3)
-            expect(socket.executeAsUser).toHaveBeenCalledWith("drawCard", "player-user", "hand-1", "deck-1", 1);
+            // Une SEULE pioche : la restante garantie + 2 recyclées au hasard (pick 3)
+            expect(recallSpy).toHaveBeenCalledWith(deck);
+            expect(sampleSpy).toHaveBeenCalledWith([{id: "p1"}, {id: "p2"}, {id: "p3"}], 2);
+            expect(socket.executeAsUser).toHaveBeenCalledTimes(1);
+            expect(socket.executeAsUser).toHaveBeenCalledWith("passCards", "player-user", "hand-1", "deck-1", ["r1", "p2", "p1"]);
             expect(combatant.actor.update).toHaveBeenCalledWith({"system.attributes.exhaustion": 1});
-            expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
-                content: expect.stringContaining("FQCARDENGINE.WarningMsgNoMoreCardInDeck")
-            }));
+            // L'alerte « deck mélangé » est diffusée à tous, plus de message de chat
+            expect(socket.executeForEveryone).toHaveBeenCalledWith("deckShuffledAlert", "player-user", "player-actor");
+            expect(ChatMessage.create).not.toHaveBeenCalled();
+        });
+
+        it("tour d'un joueur, deck vide, recyclage partiel : pioche plafonnée aux cartes recyclées", async () => {
+            const combatant = makeCombatant({
+                actorId: "player-actor",
+                fq: {cards: {hand: 2, pick: 3, currentDrop: 0}},
+                attributes: {exhaustion: 0, hp: {value: 10, max: 10}}
+            });
+            game.users = Object.assign([
+                {id: "player-user", character: {id: "player-actor"}, active: true}
+            ], {activeGM: {id: GM_ID}});
+
+            const deck = {id: "deck-1", availableCards: []}; // deck vide
+            const hand = {id: "hand-1"};
+            vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) =>
+                typeFq === DECK_TYPE ? deck : hand);
+            // Une seule carte défaussée à recycler : la pioche est plafonnée à 1 (pick 3)
+            const recallSpy = vi.spyOn(TradingCards, "recallCardsFromPiles").mockImplementation(async () => {
+                deck.availableCards = [{id: "p1"}];
+                return 1;
+            });
+            vi.spyOn(TradingCards, "sampleCardIds").mockReturnValue(["p1"]);
+
+            const combat = {
+                round: 2, turn: 0,
+                previous: {round: 1, turn: 3},
+                current: {round: 2, turn: 0},
+                combatants: [combatant],
+                combatant
+            };
+
+            await getHook("combatTurnChange")(combat, {}, {});
+
+            expect(recallSpy).toHaveBeenCalledWith(deck);
+            expect(socket.executeAsUser).toHaveBeenCalledTimes(1);
+            expect(socket.executeAsUser).toHaveBeenCalledWith("passCards", "player-user", "hand-1", "deck-1", ["p1"]);
+            expect(combatant.actor.update).toHaveBeenCalledWith({"system.attributes.exhaustion": 1});
+            expect(socket.executeForEveryone).toHaveBeenCalledWith("deckShuffledAlert", "player-user", "player-actor");
+        });
+
+        it("tour d'un joueur, deck vide et rien à recycler : aucune pioche, exhaustion +1", async () => {
+            const combatant = makeCombatant({
+                actorId: "player-actor",
+                fq: {cards: {hand: 2, pick: 3, currentDrop: 0}},
+                attributes: {exhaustion: 0, hp: {value: 10, max: 10}}
+            });
+            game.users = Object.assign([
+                {id: "player-user", character: {id: "player-actor"}, active: true}
+            ], {activeGM: {id: GM_ID}});
+
+            const deck = {id: "deck-1", availableCards: []}; // deck vide, défausses vides
+            const hand = {id: "hand-1"};
+            vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) =>
+                typeFq === DECK_TYPE ? deck : hand);
+            const recallSpy = vi.spyOn(TradingCards, "recallCardsFromPiles").mockResolvedValue(0);
+            vi.spyOn(TradingCards, "sampleCardIds").mockReturnValue([]);
+
+            const combat = {
+                round: 2, turn: 0,
+                previous: {round: 1, turn: 3},
+                current: {round: 2, turn: 0},
+                combatants: [combatant],
+                combatant
+            };
+
+            await getHook("combatTurnChange")(combat, {}, {});
+
+            expect(recallSpy).toHaveBeenCalledWith(deck);
+            expect(socket.executeAsUser).not.toHaveBeenCalled();
+            expect(combatant.actor.update).toHaveBeenCalledWith({"system.attributes.exhaustion": 1});
+            // Rien recyclé : pas d'alerte « deck mélangé »
+            expect(socket.executeForEveryone).not.toHaveBeenCalled();
         });
 
         it("drawPick avec pickScore <= 0 (cards.pick négatif) : alerte sans appel socket", async () => {

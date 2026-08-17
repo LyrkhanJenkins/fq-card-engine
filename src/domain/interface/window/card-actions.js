@@ -86,7 +86,8 @@ export default {
         const handCards = [...currentCards.cards].sort(FqCardEngineModule.cardSort); // toutes les cartes de la main courante
         const currentIndex = handCards.findIndex(c => c.id === card.id);
 
-        const discards = game.cards.filter(c => (c !== currentCards) && (c.system.fq.type === PILE_TYPE) && c.testUserPermission(game.user, "LIMITED"));
+        const discards = game.cards.filter(c => (c !== currentCards) && (c.system.fq.type === PILE_TYPE) && c.testUserPermission(game.user, "LIMITED"))
+            .sort((a, b) => Number(b.system.fq.owner === game.user.id) - Number(a.system.fq.owner === game.user.id));
 
         if (!discards.length) return ui.notifications.warn("FQCARDENGINE.WarningPileMissingForPlayer", {localize: true});
         if (currentCards.permission !== CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {

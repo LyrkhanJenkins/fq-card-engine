@@ -632,6 +632,15 @@ export default class HandBoard {
         stage.className = "fq-draw-reveal-stage";
         overlay.appendChild(stage);
 
+        const shuffledAt = FqCardEngineModule.pendingShuffleReveal;
+        FqCardEngineModule.pendingShuffleReveal = null;
+        if (shuffledAt && (Date.now() - shuffledAt) < 10000) {
+            const banner = document.createElement("div");
+            banner.className = "fq-draw-reveal-banner";
+            banner.textContent = game.i18n.localize("FQCARDENGINE.InfoMsgDeckShuffledSelf");
+            overlay.appendChild(banner);
+        }
+
         // Taille responsive : cartes aussi grandes que possible selon la hauteur
         // d'écran, mais assez petites pour que toute la volée tienne en largeur.
         const scaleByHeight = (window.innerHeight * 0.55) / 130;

@@ -5,6 +5,7 @@ import Minion from "../../domain/engine/shared/minion.js";
 import ObjectUtils from "../../core/utils/object.utils.js";
 import TokenHud from "../../domain/interface/shared/token-hud.js";
 import PlayCard from "../../domain/engine/play-card.js";
+import {showDeckShuffledAlert} from "../../core/utils/dialog.utils.js";
 
 /**
  * Instance socketlib du module, initialisée au hook `socketlib.ready`.
@@ -28,4 +29,6 @@ Hooks.once("socketlib.ready", () => {
     socket.register("updateDeckForUser", TradingCards.updateDeckForUser);
     socket.register("deleteDeckForUser", TradingCards.deleteDeckForUser);
     socket.register("deleteToken", TokenHud.deleteToken);
+    socket.register("deckShuffledAlert", showDeckShuffledAlert);
+    socket.register("passCards", TradingCards.passCards);
 });

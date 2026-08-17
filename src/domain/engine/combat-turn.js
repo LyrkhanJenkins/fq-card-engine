@@ -156,12 +156,48 @@ export default class CombatTurn {
             const deck = TradingCards.getFirstDeck(user?.id, DECK_TYPE);
             const hand = TradingCards.getFirstDeck(user?.id, HAND_TYPE);
             if (user && deck && hand) {
-                if (user.active) {
-                    await socket.executeAsUser("drawCard", user.id, hand.id, deck.id, combatant1.actor.system.fq.cards.hand);
-                } else {
-                    await socket.executeAsGM("drawCard", hand.id, deck.id, combatant1.actor.system.fq.cards.hand);
-                }
+                await CombatTurn.drawCards(user, hand, deck, combatant1.actor.system.fq.cards.hand);
             }
+        }
+    }
+
+    /**
+     * Fait piocher `drawScore` cartes du deck vers la main. La pioche s'exécute
+     * côté joueur s'il est connecté, sinon côté MJ via socket. Pur transfert de
+     * cartes : aucune gestion d'épuisement ni d'avertissement.
+     *
+     * @param {object} user      - L'utilisateur qui pioche.
+     * @param {Cards}  hand      - La main de destination.
+     * @param {Cards}  deck      - Le deck source.
+     * @param {number} drawScore - Le nombre de cartes à piocher.
+     *
+     * @returns {Promise<void>}
+     */
+    static async drawCards(user, hand, deck, drawScore) {
+        if (user.active) {
+            await socket.executeAsUser("drawCard", user.id, hand.id, deck.id, drawScore);
+        } else {
+            await socket.executeAsGM("drawCard", hand.id, deck.id, drawScore);
+        }
+    }
+
+    /**
+     * Fait piocher les cartes désignées (par id) du deck vers la main, en un seul
+     * transfert. Même routage que `drawCards` : côté joueur s'il est connecté,
+     * sinon côté MJ via socket.
+     *
+     * @param {object}   user    - L'utilisateur qui pioche.
+     * @param {Cards}    hand    - La main de destination.
+     * @param {Cards}    deck    - Le deck source.
+     * @param {string[]} cardIds - Les ids des cartes du deck à piocher.
+     *
+     * @returns {Promise<void>}
+     */
+    static async passCards(user, hand, deck, cardIds) {
+        if (user.active) {
+            await socket.executeAsUser("passCards", user.id, hand.id, deck.id, cardIds);
+        } else {
+            await socket.executeAsGM("passCards", hand.id, deck.id, cardIds);
         }
     }
 
@@ -180,11 +216,7 @@ export default class CombatTurn {
      */
     static async drawPick(user, actor, hand, deck, pickScore) {
         if (pickScore > 0) {
-            if (user.active) {
-                await socket.executeAsUser("drawCard", user.id, hand.id, deck.id, pickScore);
-            } else {
-                await socket.executeAsGM("drawCard", hand.id, deck.id, pickScore);
-            }
+            await CombatTurn.drawCards(user, hand, deck, pickScore);
             if (actor.system.attributes.exhaustion > 0) {
                 actor.update({
                     "system.attributes.hp.value": actor.system.attributes.hp.value

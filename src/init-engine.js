@@ -28,6 +28,7 @@ window.FqCardEngineModule = {
     moduleName: "fq-card-engine",
     eventName: "module.fq-card-engine",
     handMax: 10,
+    pendingShuffleReveal: null,
 
     ...CharGauges,
     ...BoardLayout,

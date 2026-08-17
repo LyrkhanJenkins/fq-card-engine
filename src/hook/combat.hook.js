@@ -1,7 +1,7 @@
 import {OriginFQEffectLabel} from "../domain/constants.js";
-import {createWarning} from "../core/utils/chat.utils.js";
 import TradingCards, {DECK_TYPE, HAND_TYPE} from "../domain/trading/trading-cards.js";
 import CombatTurn from "../domain/engine/combat-turn.js";
+import {socket} from "./integration/socketlib.hook.js";
 
 Hooks.on("deleteCombat", async function (combat, _delta) {
     if (CombatTurn.isLocalUserFirstActiveGM()) {
@@ -81,18 +81,30 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
             const hand = TradingCards.getFirstDeck(user?.id, HAND_TYPE);
 
             if (deck && hand && actor.system.fq.cards?.pick) {
-                const nextPick = deck.availableCards.length - actor.system.fq.cards.pick;
                 if (deck.availableCards.length > actor.system.fq.cards.pick) {
                     await CombatTurn.drawPick(user, actor, hand, deck, actor.system.fq.cards.pick);
                 } else {
-                    if (deck.availableCards.length > 0) {
-                        await CombatTurn.drawPick(user, actor, hand, deck, deck.availableCards.length); // Piochez les cartes restantes
+                    const remainingIds = deck.availableCards.map(c => c.id);
+                    const recalled = await TradingCards.recallCardsFromPiles(deck);
+                    if (recalled > 0) {
+                        socket.executeForEveryone("deckShuffledAlert", user.id, actor.name);
+                    }
+                    const recycled = deck.availableCards.filter(c => !remainingIds.includes(c.id));
+                    const missing = actor.system.fq.cards.pick - remainingIds.length;
+                    const drawIds = remainingIds.concat(TradingCards.sampleCardIds(recycled, missing));
+                    if (drawIds.length > 0) {
+                        await CombatTurn.passCards(user, hand, deck, drawIds);
+                        if (actor.system.attributes.exhaustion > 0) {
+                            actor.update({
+                                "system.attributes.hp.value": actor.system.attributes.hp.value
+                                    - actor.system.attributes.exhaustion
+                            });
+                        }
                     }
                     actor.update({
                         "system.attributes.exhaustion":
                             actor.system.attributes.exhaustion + 1
                     });
-                    createWarning(game.i18n.format("FQCARDENGINE.WarningMsgNoMoreCardInDeck", {pick: -nextPick}), {actor});
                 }
             }
         }

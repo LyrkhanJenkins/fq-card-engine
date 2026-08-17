@@ -219,6 +219,42 @@ describe("TradingCards", () => {
         expect(drawSpy).toHaveBeenCalledWith(deck, 3, {chatNotification: false, how: 2});
     });
 
+    // ─── passCards ────────────────────────────────────────────────────────────
+
+    it("should pass the requested card ids from the deck to the hand in one transfer", async () => {
+        const passSpy = vi.fn().mockResolvedValue([]);
+        const hand = {id: "handId"};
+        const deck = {id: "deckId", pass: passSpy};
+        global.game.cards = {
+            get: vi.fn(id => (id === "handId" ? hand : deck))
+        };
+
+        await TradingCards.passCards("handId", "deckId", ["c1", "c2"]);
+
+        expect(passSpy).toHaveBeenCalledWith(hand, ["c1", "c2"], {chatNotification: false});
+    });
+
+    // ─── sampleCardIds ────────────────────────────────────────────────────────
+
+    it("should sample the requested number of distinct card ids", () => {
+        const cards = [{id: "a"}, {id: "b"}, {id: "c"}, {id: "d"}];
+
+        const sampled = TradingCards.sampleCardIds(cards, 2);
+
+        expect(sampled).toHaveLength(2);
+        expect(new Set(sampled).size).toBe(2);
+        sampled.forEach(id => expect(["a", "b", "c", "d"]).toContain(id));
+    });
+
+    it("should cap the sample to the pool size and handle non-positive counts", () => {
+        const cards = [{id: "a"}, {id: "b"}];
+
+        expect(TradingCards.sampleCardIds(cards, 5).sort()).toEqual(["a", "b"]);
+        expect(TradingCards.sampleCardIds(cards, 0)).toEqual([]);
+        expect(TradingCards.sampleCardIds(cards, -2)).toEqual([]);
+        expect(TradingCards.sampleCardIds([], 3)).toEqual([]);
+    });
+
     // ─── deleteCardsForDeck ───────────────────────────────────────────────────
 
     it("should delete the given cards from the deck via deleteEmbeddedDocuments", async () => {

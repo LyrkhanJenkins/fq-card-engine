@@ -359,19 +359,88 @@ export default class TradingCards {
 
 
     /**
-     * Pioche des cartes depuis un deck vers une main.
+     * Ramène dans le deck toutes ses cartes actuellement défaussées, en balayant
+     * TOUTES les piles FQ : le dialogue de jeu permet de défausser dans une autre
+     * pile que la sienne (cas du MJ qui a permission sur toutes les piles), les
+     * cartes d'un deck peuvent donc être dispersées. Même mécanique que
+     * `Cards#recall` d'une pile : l'originale du deck est remarquée non piochée,
+     * la copie défaussée est supprimée.
+     *
+     * @param {Cards} deck - Le deck FQ dont on récupère les cartes défaussées.
+     *
+     * @returns {Promise<number>} Le nombre de cartes ramenées dans le deck.
+     */
+    static async recallCardsFromPiles(deck) {
+        let recalled = 0;
+        for (const pile of game.cards.filter(c => c.system.fq.type === PILE_TYPE)) {
+            const pileCards = pile.cards.filter(c => c.origin?.id === deck.id);
+            if (!pileCards.length) continue;
+            const toUpdate = pileCards.filter(c => deck.cards.get(c.id))
+                .map(c => ({_id: c.id, drawn: false}));
+            if (toUpdate.length) {
+                await deck.updateEmbeddedDocuments("Card", toUpdate);
+            }
+            await pile.deleteEmbeddedDocuments("Card", pileCards.map(c => c.id));
+            recalled += pileCards.length;
+        }
+        return recalled;
+    }
+
+    /**
+     * Pioche des cartes depuis un deck vers une main. La pioche est attendue :
+     * l'appelant (y compris via socket) n'est libéré qu'une fois les cartes
+     * effectivement transférées, ce qui permet d'enchaîner sans course une
+     * seconde pioche après recyclage de la défausse.
      *
      * @param {string} handId    - L'id du jeu de type « hand » qui reçoit les cartes.
      * @param {string} deckId    - L'id du deck source.
      * @param {number} drawScore - Le nombre de cartes à piocher.
      *
-     * @returns {void}
+     * @returns {Promise<void>}
      */
-    static drawCard(handId, deckId, drawScore) {
+    static async drawCard(handId, deckId, drawScore) {
         const hand = game.cards.get(handId);
         const deck = game.cards.get(deckId);
-        hand.draw(deck, drawScore, {
+        await hand.draw(deck, drawScore, {
             chatNotification: false, how: 2
         });
+    }
+
+    /**
+     * Pioche des cartes désignées par leurs ids depuis un deck vers une main, en
+     * un seul transfert. Contrairement à `drawCard` (tirage aléatoire), les
+     * cartes sont choisies par l'appelant — utilisé pour regrouper en une seule
+     * pioche (donc une seule animation de révélation) les cartes restantes du
+     * deck et celles issues du recyclage de la défausse.
+     *
+     * @param {string}   handId  - L'id du jeu de type « hand » qui reçoit les cartes.
+     * @param {string}   deckId  - L'id du deck source.
+     * @param {string[]} cardIds - Les ids des cartes du deck à piocher.
+     *
+     * @returns {Promise<void>}
+     */
+    static async passCards(handId, deckId, cardIds) {
+        const hand = game.cards.get(handId);
+        const deck = game.cards.get(deckId);
+        await deck.pass(hand, cardIds, {chatNotification: false});
+    }
+
+    /**
+     * Tire au hasard jusqu'à `count` ids parmi les cartes fournies
+     * (mélange de Fisher-Yates partiel, sans doublon).
+     *
+     * @param {object[]} cards - Les cartes candidates.
+     * @param {number}   count - Le nombre d'ids souhaité.
+     *
+     * @returns {string[]} Les ids tirés (moins si le vivier est plus petit).
+     */
+    static sampleCardIds(cards, count) {
+        const pool = cards.map(c => c.id);
+        const n = Math.max(0, Math.min(count, pool.length));
+        for (let i = 0; i < n; i++) {
+            const j = i + Math.floor(Math.random() * (pool.length - i));
+            [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
+        return pool.slice(0, n);
     }
 }
