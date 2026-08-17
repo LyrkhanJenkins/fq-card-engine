@@ -166,7 +166,7 @@ export default class PlayCard {
                 id: cardID,
                 back: (card.face == null || fd.down),
                 img: img,
-                deckName: card.origin.name,
+                deckName: card.origin?.name ?? "",
                 name: (card.face !== null && !fd.down) ? game.i18n.localize(card.name) : game.i18n.localize("FQCARDENGINE.CardHidden"),
                 action: game.i18n.localize(actionLabel),
                 hidden: !!fd.down,

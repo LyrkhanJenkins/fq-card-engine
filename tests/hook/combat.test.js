@@ -123,6 +123,39 @@ describe("hook/combat.hook.js", () => {
 
             expect(deck.recall).not.toHaveBeenCalled();
         });
+
+        it("supprime des mains/piles les cartes orphelines (sans origin), que recall ne rapatrie pas", async () => {
+            const deck = {id: "deck-1", system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
+            const hand = {
+                system: {fq: {type: HAND_TYPE}},
+                cards: [
+                    {id: "generated-card", origin: null},
+                    {id: "normal-card", origin: deck}
+                ],
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+            game.cards = [deck, hand];
+
+            // deleteCombat attend resetCards : permet d'asserter après la purge
+            await getHook("deleteCombat")({combatants: []}, {});
+
+            expect(deck.recall).toHaveBeenCalledWith({chatNotification: false});
+            expect(hand.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["generated-card"]);
+        });
+
+        it("ne touche pas aux mains/piles sans carte orpheline", async () => {
+            const deck = {id: "deck-1", system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
+            const hand = {
+                system: {fq: {type: HAND_TYPE}},
+                cards: [{id: "normal-card", origin: deck}],
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+            game.cards = [deck, hand];
+
+            await getHook("deleteCombat")({combatants: []}, {});
+
+            expect(hand.deleteEmbeddedDocuments).not.toHaveBeenCalled();
+        });
     });
 
     // ─── Tâche 2 : hooks de cycle de vie + garde MJ + drawBaseCards ────────

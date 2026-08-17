@@ -499,6 +499,11 @@
 
                 </div>
                 <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.GenerateCard"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.generateCard value=choice.generateCard
+                                name=(concat "system.fq.choices." i ".generateCard") rootId=../rootId}}
+                </div>
+                <div class="form-fields">
                     <label>{{localize "FQCARDENGINE.NewFQSystemAfterFirstPlay"}}</label>
                     {{formInput ../fields.fq.fields.choices.element.fields.afterFirstPlay value=choice.afterFirstPlay
                                 elementType="textarea"

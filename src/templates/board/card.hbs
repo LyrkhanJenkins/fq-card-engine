@@ -2,7 +2,7 @@
         class="fq-card fq-card-engine-card{{#if isFQBase}} fq-card-is-base
                 {{/if}}{{#if passiveHasBeenPlayedOnRound}} has-been-played-on-round{{ else }}{{#if
                 hasBeenPlayed}} has-been-played
-                {{/if}}{{/if}}{{#if back}} fq-card--back{{/if}}"
+                {{/if}}{{/if}}{{#if isGenerated}} fq-card--generated{{/if}}{{#if back}} fq-card--back{{/if}}"
         data-card-id="{{ id }}"
         data-card-uuid="{{ uuid }}"
         data-cards-id="{{ cardsid }}"

@@ -255,7 +255,10 @@ export function wrapCard(rawCard, {sourceSize = 40, drawnCards = []} = {}) {
         system: rawCard.system,
         update: vi.fn().mockResolvedValue(null),
         flip: vi.fn().mockResolvedValue(null),
-        parent: {draw: vi.fn().mockResolvedValue([])},
+        parent: {
+            draw: vi.fn().mockResolvedValue([]),
+            createEmbeddedDocuments: vi.fn().mockResolvedValue([])
+        },
         source: {cards: {size: sourceSize}, drawnCards}
     };
 }
@@ -299,8 +302,8 @@ function applyDiceControl(dice) {
  * @param {object} [opts.cardOptions] - Options transmises à `wrapCard`.
  *
  * @returns {Promise<object>} Le résultat riche : `{threw, error, hpCalls, logCalls,
- *          effectsCreated, effectsRemoved, activeEffectCalls, chatMessages, draws, passCalls,
- *          updates, card, cardContent}`.
+ *          effectsCreated, effectsRemoved, activeEffectCalls, chatMessages, draws,
+ *          generatedCards, passCalls, updates, card, cardContent}`.
  */
 export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
     await ensureEngineLoaded();
@@ -364,6 +367,7 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
         activeEffectCalls: globalThis.ActiveEffect.implementation.create.mock.calls,
         chatMessages: globalThis.ChatMessage.create.mock.calls.map(call => call[0]),
         draws: card.parent.draw.mock.calls,
+        generatedCards: card.parent.createEmbeddedDocuments.mock.calls,
         passCalls: currentCards.pass.mock.calls,
         updates: globalThis.game.user.character.update.mock.calls,
         card,

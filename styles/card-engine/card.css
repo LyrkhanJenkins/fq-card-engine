@@ -165,6 +165,26 @@
     filter: saturate(0) brightness(0.6);
 }
 
+.fq-card--generated {
+    animation: fq-generated-glow 1.3s ease-in-out 24;
+}
+
+@keyframes fq-generated-glow {
+    0%, 100% {
+        filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85)) drop-shadow(0 0 5px rgba(var(--fq-success-hi-rgb), 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85)) drop-shadow(0 0 6px rgba(var(--fq-success-hi-rgb), 1)) drop-shadow(0 0 22px rgba(var(--fq-success-hi-rgb), 0.85));
+    }
+}
+
+/* Accessibilité : un seul cycle lent de même durée totale, sans pulsations. */
+@media (prefers-reduced-motion: reduce) {
+    .fq-card--generated {
+        animation: fq-generated-glow 5.2s ease-in-out 1;
+    }
+}
+
 /* ============================================================
    VISUALISEUR DE CARTE
    Clic sur une carte de la liste (cards.hbs) → affichage en grand

@@ -1,6 +1,8 @@
 import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
 import DisplayCard from "../shared/display-card.js";
 
+const GENERATED_GLOW_DURATION_MS = 24000;
+
 /**
  * Représente une barre de main affichée à l'écran (le module peut en gérer
  * plusieurs). Une barre est liée à un jeu de cartes (`currentCards`) et, côté MJ,
@@ -127,6 +129,7 @@ export default class HandBoard {
             hasBeenPlayed: cardContent?.hasBeenPlayed,
             passiveHasBeenPlayedOnRound: cardContent?.passivePlayedRound && cardContent?.passivePlayedRound?.toString() === game.combat?.round?.toString(),
             isFQBase: c.system?.fq?.isBase,
+            isGenerated: Date.now() - (c.flags?.[FqCardEngineModule.moduleName]?.generatedAt ?? 0) < GENERATED_GLOW_DURATION_MS,
             cardsid: this.currentCards._id ? this.currentCards._id : this.currentCards.data._id,
             uuid: c.uuid,
             back: forceFace ? false : (c.face == null),

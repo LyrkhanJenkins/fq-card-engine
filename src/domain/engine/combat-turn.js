@@ -102,7 +102,8 @@ export default class CombatTurn {
 
     /**
      * Rappelle toutes les cartes de tous les decks FQ (retour des cartes jouées),
-     * puis redistribue les cartes de base. Réservé au premier MJ actif.
+     * supprime les cartes orphelines restantes, puis redistribue les cartes de
+     * base. Réservé au premier MJ actif.
      *
      * @returns {Promise<void>}
      */
@@ -112,7 +113,30 @@ export default class CombatTurn {
                 .filter(c => c.system.fq.type === DECK_TYPE)) {
                 await deck.recall({chatNotification: false});
             }
+            await CombatTurn.deleteOrphanCards();
             CombatTurn.drawBaseCards();
+        }
+    }
+
+    /**
+     * Supprime des mains et des piles les cartes sans deck d'origine résoluble
+     * (`origin` nul : copie générée via `generateCard`, deck supprimé, carte
+     * créée à la main…) : `recall()` ne les rapatrie jamais et elles
+     * s'accumuleraient d'un combat à l'autre. Réservé au premier MJ actif.
+     *
+     * @returns {Promise<void>}
+     */
+    static async deleteOrphanCards() {
+        if (CombatTurn.isLocalUserFirstActiveGM()) {
+            for (const stack of game.cards
+                .filter(c => c.system.fq.type !== DECK_TYPE)) {
+                const orphanIds = stack.cards
+                    .filter(c => !c.origin)
+                    .map(c => c.id);
+                if (orphanIds.length) {
+                    await stack.deleteEmbeddedDocuments("Card", orphanIds);
+                }
+            }
         }
     }
 

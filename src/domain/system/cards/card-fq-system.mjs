@@ -135,10 +135,9 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                 path: new StringField({required: true, label: "FQCARDENGINE.CardVisual"}),
                 onTarget: new BooleanField({required: true, label: "FQCARDENGINE.CardVisualOnTarget"}),
             }),
-            // Json qui va redéfinir dans la main le system.fq de la carte
+            generateCard: new StringField({required: true, label: "FQCARDENGINE.GenerateCard"}),
             afterFirstPlay: new StringField({required: true, label: "FQCARDENGINE.NewFQSystemAfterFirstPlay"}),
 
-            // Not in form, calculated Value for second use of cards
             passivePlayedRound: new StringField({required: false}),
             hasBeenPlayed: new BooleanField({required: false}),
 

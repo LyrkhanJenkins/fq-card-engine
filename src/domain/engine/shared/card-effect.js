@@ -55,6 +55,9 @@ export default class CardEffect {
             if (cardContent.draw) {
                 card.parent.draw(card.source, cardContent.draw, {chatNotification: false, how: 2});
             }
+            if (cardContent.generateCard) {
+                await CardEffect.generateCardInHand(cardContent.generateCard, card.parent);
+            }
             if (cardContent.minions && Array.isArray(cardContent.minions)) {
                 const selectedLocations = [];
                 if (fd.minionLeft) selectedLocations.push("left");
@@ -102,6 +105,56 @@ export default class CardEffect {
                 content: `<div style='font-style: italic'>${game.i18n.localize("FQCARDENGINE.InfoMsgNoAddedEffect")}</div>`
             });
         }
+    }
+
+    /**
+     * Résout une référence `compendium.deck.carte` vers une carte embarquée dans
+     * un deck de compendium. Le nom du compendium peut être l'id complet
+     * (`scope.nom`) ou le nom seul, et le nom de la carte peut contenir des
+     * points (clés i18n type `FQCARDTITLE.xxx`) : le pack est résolu par le
+     * préfixe le plus long, le segment suivant est le deck, le reste la carte.
+     *
+     * @param {string} reference - La référence `compendium.deck.carte`.
+     *
+     * @returns {Promise<Card|null>} La carte trouvée, ou null si la référence est irrésoluble.
+     */
+    static async resolveCompendiumCard(reference) {
+        const parts = reference.split(".").map(part => part.trim());
+        const byFullId = parts.length > 3 ? game.packs.get(parts.slice(0, 2).join(".")) : null;
+        const pack = byFullId ?? (parts.length > 2 ? game.packs.find(p => p.metadata?.name === parts[0]) : null);
+        const deckIndex = byFullId ? 2 : 1;
+        const deck = pack ? (await pack.getDocuments()).find(doc => doc.name === parts[deckIndex]) : null;
+        return deck?.cards.find(c => c.name === parts.slice(deckIndex + 1).join(".")) ?? null;
+    }
+
+    /**
+     * Crée dans la main une copie de la carte de compendium référencée par
+     * `reference` (`compendium.deck.carte`) : la copie arrive face visible, non
+     * piochée et sans deck d'origine (elle sera défaussée comme une carte
+     * normale). Si la référence ne peut pas être résolue, publie un
+     * avertissement sans bloquer le reste des effets de la carte jouée.
+     *
+     * @param {string} reference - La référence `compendium.deck.carte`.
+     * @param {Cards}  hand      - La main dans laquelle créer la copie.
+     *
+     * @returns {Promise<Card[]|null>} Les cartes créées, ou null si la référence est invalide.
+     */
+    static async generateCardInHand(reference, hand) {
+        const compendiumCard = await CardEffect.resolveCompendiumCard(reference);
+        if (!compendiumCard) {
+            createWarning(game.i18n.format("FQCARDENGINE.WarningMsgGenerateCardNotFound", {name: reference}), {actor: game.user.character});
+            return null;
+        }
+        const data = compendiumCard.toObject();
+        delete data._id;
+        data.drawn = false;
+        data.origin = null;
+        data.face = data.face ?? 0;
+        // Horodate la génération : la main applique un halo vert temporaire
+        // (`.fq-card--generated`) tant que la carte vient d'arriver (cf. hand-board.js).
+        const moduleName = FqCardEngineModule.moduleName;
+        data.flags = {...data.flags, [moduleName]: {...data.flags?.[moduleName], generatedAt: Date.now()}};
+        return hand.createEmbeddedDocuments("Card", [data]);
     }
 
     /**
@@ -527,9 +580,8 @@ export default class CardEffect {
             }
         }
 
-        // COST DRAW
         if (cardContent?.draw) {
-            if ((card.source.cards.size - card.source.drawnCards.length) < cardContent.draw) {
+            if (((card.source?.cards?.size ?? 0) - (card.source?.drawnCards?.length ?? 0)) < cardContent.draw) {
                 ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDraw"), game.user.character);
                 return false;
             }

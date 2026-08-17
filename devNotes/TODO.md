@@ -34,8 +34,6 @@
 - Gérer du ciblage spéciale : Zone -> utiliser le ciblage de zone avec la dialog-play
 - Plus de carte qui dissipent des effets ou qui ont des chances de dissiper des effets
 - Faire des sorts qui s'active au bout du enieme tour, action de la carte au bout d'un certain temps
-- Pouvoir générer une carte après utilisation d'une autre à partir d'un modèle
-- Utilisation des armes équipés
 - Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts suivant le zèle qu'a la cible plutôt que la chargé
   - Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
 - Refonte des cartes :

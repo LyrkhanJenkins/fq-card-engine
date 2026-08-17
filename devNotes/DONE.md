@@ -4,6 +4,7 @@ Feat :
 - Option pour bypassé les modales d'attaque et de dégâts (pas de classe d'armure)
 - Ajout d'une macro raccourci pour lancer les dégâts de l'arme du combattant courant
 - Quand le deck est vidé, la défausse est repioché
+- Pouvoir générer une carte après utilisation d'une autre carte
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur
