@@ -57,7 +57,7 @@
   "download": "https://gitlab.com/final-quest/fq-card-engine/-/jobs/15814816078/artifacts/raw/fq-card-engine.zip",
   "compatibility": {
     "minimum": "14",
-    "verified": "14.365"
+    "verified": "14.366"
   },
   "relationships": {
     "systems": [
@@ -114,7 +114,7 @@
         "reason": "The DAE module is used with to make actor's effect with visual FX",
         "compatibility": {
           "minimum": "14.0.0",
-          "verified": "14.0.12"
+          "verified": "14.0.13"
         }
       },
       {
