@@ -16,6 +16,7 @@
   "FQCARDENGINE.ResetHandConfirmQuestion": "Place all cards back in their original Deck?",
   "FQCARDENGINE.DeckList": "List of Hands",
   "FQCARDENGINE.OpenHand": "Stack Window",
+  "FQCARDENGINE.OpenDeck": "Open deck and spellbook",
   "FQCARDENGINE.OpenCardStack": "Card Stack",
   "FQCARDENGINE.ValidatedCards": "Validated Cards",
   "FQCARDENGINE.Pass": "Pass Cards",

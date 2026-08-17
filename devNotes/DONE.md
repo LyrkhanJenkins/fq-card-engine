@@ -4,6 +4,9 @@ Feat :
 - Option pour bypassé les modales d'attaque et de dégâts (pas de classe d'armure)
 - Ajout d'une macro raccourci pour lancer les dégâts de l'arme du combattant courant
 
+Fix :
+- Correction du bouton OpenDeck dans la main du joueur
+
 v2.0.2:
 Feat :
 - Animation de pioche de carte

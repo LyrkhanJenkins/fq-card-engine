@@ -16,6 +16,7 @@
   "FQCARDENGINE.ResetHandConfirmQuestion": "Rappeler toutes les cartes dans leur paquet original ?",
   "FQCARDENGINE.DeckList": "Liste des Mains",
   "FQCARDENGINE.OpenHand": "Main du joueur",
+  "FQCARDENGINE.OpenDeck": "Ouvrir le deck et la bibliothèque",
   "FQCARDENGINE.OpenCardStack": "Pile de cartes",
   "FQCARDENGINE.ValidatedCards": "Valider les cartes",
   "FQCARDENGINE.Pass": "Passer des cartes",

@@ -1,4 +1,4 @@
-import {DECK_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
+import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
 import DisplayCard from "../shared/display-card.js";
 
 /**
@@ -550,8 +550,8 @@ export default class HandBoard {
      */
     async openDeck() {
         const userId = this.currentUser?._id ?? this.currentUser?.data?._id ?? game.userId;
-        const deck = game.cards.find(c => c.system.fq.type === DECK_TYPE && c.ownership[userId] === 3);
-        const spellBook = game.cards.find(c => c.system.fq.type === SPELLBOOK_TYPE && c.ownership[userId] === 3);
+        const deck = TradingCards.getFirstDeck(userId, DECK_TYPE);
+        const spellBook = TradingCards.getFirstDeck(userId, SPELLBOOK_TYPE);
         if (deck) {
             deck.sheet.render(true, {
                 position: {
@@ -563,7 +563,7 @@ export default class HandBoard {
         if (spellBook) {
             spellBook.sheet.render(true, {
                 position: {
-                    left: 110 + deck.sheet.position.width,
+                    left: 110 + (deck ? deck.sheet.position.width : 0),
                     top: 100
                 }
             });
