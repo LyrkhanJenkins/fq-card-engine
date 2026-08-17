@@ -81,10 +81,7 @@ Hooks.on("dnd5e.preRollAttackV2", (config, _dialog, _message) => {
 
 Hooks.on("dnd5e.preRollDamageV2", (config, dialog, _message) => {
     // Réglage "BypassWeaponAttackRoll" : supprime aussi la modale de configuration
-    // des dégâts des armes. Nécessaire pour les armes n'ayant qu'une activité
-    // "damage" (pas d'attaque à court-circuiter, donc `preRollAttackV2` ne les
-    // voit jamais) ; sans effet supplémentaire pour le chemin bypass, qui passe
-    // déjà `configure: false`.
+    // des dégâts des armes.
     if (!game.settings.get(FqCardEngineModule.moduleName, "BypassWeaponAttackRoll")) {
         return true;
     }

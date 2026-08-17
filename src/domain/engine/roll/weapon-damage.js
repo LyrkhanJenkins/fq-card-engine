@@ -1,3 +1,5 @@
+import ResourceHandler from "../shared/resource-handler.js";
+
 /**
  * Table des jetons d'arme : jeton → catégories dnd5e acceptées
  * (`weapon.system.type.value`) et clé i18n de l'avertissement affiché si aucune
@@ -88,6 +90,27 @@ export default class WeaponDamage {
                 [...activities].find(a => a?.type === "attack");
         }
         return undefined;
+    }
+
+    /**
+     * Déclenche l'usage de toutes les armes équipées d'un acteur, après validation
+     * que c'est bien son tour de combat. Avertit si aucune arme n'est équipée.
+     * Logique partagée entre le bouton du HUD de token (`shared/token-hud.js`) et
+     * la macro de combat (`FqCardEngineModule.rollCurrentCombattantWeaponDamage`).
+     *
+     * @param {object} actor - L'acteur qui porte les armes.
+     *
+     * @returns {void}
+     */
+    static useEquippedWeapons(actor) {
+        if (!ResourceHandler.validateUseSpellInTurn(actor)) {
+            return;
+        }
+        const armes = actor.items.filter(i => i.type === "weapon" && i.system.equipped);
+        if (!armes.length) return ui.notifications.warn(game.i18n.localize("FQCARDENGINE.TokenDamageNoWeaponWarningMsg"));
+        for (let arme of armes) {
+            arme.use();
+        }
     }
 
     /**

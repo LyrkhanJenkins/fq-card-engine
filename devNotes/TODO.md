@@ -5,9 +5,9 @@
 
 ### Versions prévues
 #### 2.1.0
+- Montée en 14.366
 - Simplifier les formules à l'affichage sur les cartes (formule entre crochet condensé (afficher que cette carte prends les dégâts de l'arme par une icone))
   - Peut-être afficher dans des bulles aussi tout ce qui modifie la carte plutôt que les icones @con, @dec, @wpn
-- Remonter le raccourci pour utiliser l'arme au niveau du hand-container
 - Tests pour tester toutes les formules dans les jsons des cartes
 - Se poser pour refraichir la caractérisation :
   - Refaire une passe de toutes els fonctionnalités + celles à venir ET donner plus de cartes qui utilisent ces fonctionnalités
@@ -22,14 +22,16 @@
     - Dans le formulaire rajouter si un champ execution après choix, remplacement choix, comprenant les autre choix
     -  -> enlever JSON après utilisation?
     - (Facultatif: les noms des choix peuvent être localisé)
-    - Peut être qu'une fois que c'est fait, on a pas besoin de plusiuers formules d'application d'effet ( à voir)
-- Deplacer les contrôles d'utilisation d'une carte dans un fichier JS et les tester
+    - Peut-être qu'une fois que c'est fait, on a pas besoin de plusieurs formules d'application d'effet ( à voir)
+- Déplacer les contrôles d'utilisation d'une carte dans un fichier JS et les tester
+- Permettre de créer des cartes temporaires ?
+- Remettre toute sa défausse dans sa pioche quand on arrive au bout
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
-- Pour les réactifs ptetre travaillé sur des evenements pour pouvoir les jouer ( j'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
-  , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> - Revoir tir reflexe (jouer même si pas attaquer?)
+- Pour les réactifs : travailler sur des événements pour pouvoir les jouer (« J'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
+  , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> Revoir tir réflexe (jouer même si pas attaquer?)
 - Un réactif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème
-- L'esquive fait demi-dégâts
-- Gérer du ciblage speciale : Zone -> utiliser le ciblage de zone avec la dialog-play
+- L'esquive fait demi-dégâts (Esquive critique? Double-critique?)
+- Gérer du ciblage spéciale : Zone -> utiliser le ciblage de zone avec la dialog-play
 - Plus de carte qui dissipent des effets ou qui ont des chances de dissiper des effets
 - Faire des sorts qui s'active au bout du enieme tour, action de la carte au bout d'un certain temps
 - Pouvoir générer une carte après utilisation d'une autre à partir d'un modèle

@@ -1,5 +1,6 @@
-import {describe, expect, test, vi} from "vitest";
+import {afterEach, describe, expect, test, vi} from "vitest";
 import WeaponDamage from "../../src/domain/engine/roll/weapon-damage.js";
+import ResourceHandler from "../../src/domain/engine/shared/resource-handler.js";
 
 /**
  * Phase 12/13 — Helper `WeaponDamage` (appels directs, sans harnais). Couvre la
@@ -129,5 +130,43 @@ describe("WeaponDamage.getEquippedWeaponDamageFormula", () => {
         const activity = makeActivity([{parts: ["1d8", "@mod"], data: {mod: 3}}]);
         WeaponDamage.getEquippedWeaponDamageFormula(actorWith(makeWeapon("martialR", activity)), RANGED);
         expect(activity.getDamageConfig).toHaveBeenCalledWith({attackMode: "oneHanded"});
+    });
+});
+
+describe("WeaponDamage.useEquippedWeapons", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    function makeUsableWeapon(equipped = true) {
+        return {type: "weapon", system: {equipped}, use: vi.fn()};
+    }
+
+    test("hors de son tour de combat : aucune arme utilisée", () => {
+        vi.spyOn(ResourceHandler, "validateUseSpellInTurn").mockReturnValue(false);
+        const weapon = makeUsableWeapon();
+        WeaponDamage.useEquippedWeapons({items: [weapon]});
+        expect(weapon.use).not.toHaveBeenCalled();
+    });
+
+    test("aucune arme équipée : avertit sans rien utiliser", () => {
+        vi.spyOn(ResourceHandler, "validateUseSpellInTurn").mockReturnValue(true);
+        const unequipped = makeUsableWeapon(false);
+        WeaponDamage.useEquippedWeapons({items: [unequipped]});
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.TokenDamageNoWeaponWarningMsg");
+        expect(unequipped.use).not.toHaveBeenCalled();
+    });
+
+    test("utilise chaque arme équipée (et ignore le reste de l'inventaire)", () => {
+        vi.spyOn(ResourceHandler, "validateUseSpellInTurn").mockReturnValue(true);
+        const sword = makeUsableWeapon();
+        const bow = makeUsableWeapon();
+        const unequipped = makeUsableWeapon(false);
+        const potion = {type: "consumable", system: {equipped: true}, use: vi.fn()};
+        WeaponDamage.useEquippedWeapons({items: [sword, bow, unequipped, potion]});
+        expect(sword.use).toHaveBeenCalled();
+        expect(bow.use).toHaveBeenCalled();
+        expect(unequipped.use).not.toHaveBeenCalled();
+        expect(potion.use).not.toHaveBeenCalled();
     });
 });

@@ -1,0 +1,27 @@
+{
+  "name": "Weapon Damage",
+  "type": "script",
+  "author": "eLD9iPNHJXGMQX6z",
+  "img": "icons/svg/sword.svg",
+  "scope": "global",
+  "command": "FqCardEngineModule.rollCurrentCombattantWeaponDamage();",
+  "folder": null,
+  "flags": {},
+  "_id": "fqWpnDmgMacro001",
+  "sort": 500000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "coreVersion": "13.347",
+    "systemId": "dnd5e",
+    "systemVersion": "3.0.4",
+    "createdTime": 1755442800000,
+    "modifiedTime": 1755442800000,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!macros!fqWpnDmgMacro001"
+}

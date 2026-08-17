@@ -6,6 +6,7 @@ import BoardLayout from "./domain/interface/window/board-layout.js";
 import HandBars from "./domain/interface/window/hand-bars.js";
 import CardActions from "./domain/interface/window/card-actions.js";
 import DragDrop from "./domain/interface/window/drag-drop.js";
+import WeaponDamage from "./domain/engine/roll/weapon-damage.js";
 
 CONFIG.FqCardEngine = {
     options: {
@@ -33,6 +34,22 @@ window.FqCardEngineModule = {
     ...HandBars,
     ...CardActions,
     ...DragDrop,
+
+    /**
+     * Entrée macro : utilise les armes équipées du combattant courant si un combat
+     * est démarré et que c'est le tour d'un token contrôlé par l'utilisateur
+     * (délégué à `WeaponDamage.useEquippedWeapons`). Avertit sinon.
+     *
+     * @returns {void}
+     */
+    rollCurrentCombattantWeaponDamage() {
+        const actor = game.combat?.started ? game.combat.combatant?.actor : undefined;
+        if (!actor?.isOwner) {
+            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.WarningMsgPlayOutOfHisRound"));
+            return;
+        }
+        WeaponDamage.useEquippedWeapons(actor);
+    },
 
     /**
      * Met à jour les decks d'un utilisateur (délégué à `Deck.updateDeckForUser`).

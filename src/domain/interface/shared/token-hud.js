@@ -1,4 +1,4 @@
-import ResourceHandler from "../../engine/shared/resource-handler.js";
+import WeaponDamage from "../../engine/roll/weapon-damage.js";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
 
 /**
@@ -121,14 +121,7 @@ export default class TokenHud {
         bouton.dataset.tooltip = game.i18n.localize("FQCARDENGINE.TokenDamageButton");
         bouton.innerHTML = `<img src="icons/svg/sword.svg" width="36" height="36">`;
         bouton.addEventListener("click", async () => {
-            if (!ResourceHandler.validateUseSpellInTurn(actor)) {
-                return;
-            }
-            const armes = actor.items.filter(i => i.type === "weapon" && i.system.equipped);
-            if (!armes.length) return ui.notifications.warn(game.i18n.localize("FQCARDENGINE.TokenDamageNoWeaponWarningMsg"));
-            for (let arme of armes) {
-                arme.use();
-            }
+            WeaponDamage.useEquippedWeapons(actor);
         });
 
         column.appendChild(bouton);
