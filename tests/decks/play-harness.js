@@ -141,14 +141,16 @@ function deepMerge(target, source) {
  * de taille 5, distance 1 — et une pile de défausse. `overrides.character` et
  * `overrides.targetActor` sont fusionnés en profondeur dans le personnage/la
  * cible ; `overrides.combat` positionne `game.combat` (`null` par défaut, hors
- * combat) ; tout autre champ de premier niveau est fusionné dans `game`.
+ * combat) ; `overrides.discardPile` est fusionné dans la pile de défausse (ex.
+ * `cards` pour peupler la pile, consommé par `retrieveFromDiscard`) ; tout autre
+ * champ de premier niveau est fusionné dans `game`.
  *
  * @param {object} [overrides] - Surcharges (voir description).
  *
  * @returns {object} Le `game` monté (aussi assigné à `globalThis.game`).
  */
 export function mountWorld(overrides = {}) {
-    const {character: characterOverrides, targetActor: targetActorOverrides, combat, ...gameOverrides} = overrides;
+    const {character: characterOverrides, targetActor: targetActorOverrides, combat, discardPile: discardPileOverrides, ...gameOverrides} = overrides;
     const fixture = loadWorldFixture();
 
     let character = {
@@ -196,11 +198,13 @@ export function mountWorld(overrides = {}) {
     // ActiveEffect : espion global assertable (createEffectsFromData/playApplyEffectsFormulas).
     globalThis.ActiveEffect = {implementation: {create: vi.fn()}};
 
-    lastDiscardPile = {
+    lastDiscardPile = deepMerge({
         id: fixture.discardPile.id,
         system: {fq: {type: "PILE"}},
-        testUserPermission: vi.fn(() => true)
-    };
+        cards: []
+    }, discardPileOverrides ?? {});
+    lastDiscardPile.testUserPermission = vi.fn(() => true);
+    lastDiscardPile.pass = vi.fn().mockResolvedValue([]);
 
     const base = {
         canvas: {scene: {dimensions: {size: fixture.gridSize}, tokens: [myToken, targetToken]}},
@@ -257,7 +261,8 @@ export function wrapCard(rawCard, {sourceSize = 40, drawnCards = []} = {}) {
         flip: vi.fn().mockResolvedValue(null),
         parent: {
             draw: vi.fn().mockResolvedValue([]),
-            createEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            createEmbeddedDocuments: vi.fn().mockResolvedValue([]),
+            updateEmbeddedDocuments: vi.fn().mockResolvedValue([])
         },
         source: {cards: {size: sourceSize}, drawnCards}
     };
@@ -303,7 +308,7 @@ function applyDiceControl(dice) {
  *
  * @returns {Promise<object>} Le résultat riche : `{threw, error, hpCalls, logCalls,
  *          effectsCreated, effectsRemoved, activeEffectCalls, chatMessages, draws,
- *          generatedCards, passCalls, updates, card, cardContent}`.
+ *          generatedCards, passCalls, retrieveCalls, discardPile, updates, card, cardContent}`.
  */
 export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
     await ensureEngineLoaded();
@@ -369,6 +374,9 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
         draws: card.parent.draw.mock.calls,
         generatedCards: card.parent.createEmbeddedDocuments.mock.calls,
         passCalls: currentCards.pass.mock.calls,
+        retrieveCalls: to.pass.mock.calls,
+        handCardUpdates: card.parent.updateEmbeddedDocuments.mock.calls,
+        discardPile: to,
         updates: globalThis.game.user.character.update.mock.calls,
         card,
         cardContent

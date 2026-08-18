@@ -125,7 +125,7 @@ describe("hook/combat.hook.js", () => {
         });
 
         it("supprime des mains/piles les cartes orphelines (sans origin), que recall ne rapatrie pas", async () => {
-            const deck = {id: "deck-1", system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
+            const deck = {id: "deck-1", type: "deck", system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
             const hand = {
                 system: {fq: {type: HAND_TYPE}},
                 cards: [
@@ -143,8 +143,50 @@ describe("hook/combat.hook.js", () => {
             expect(hand.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["generated-card"]);
         });
 
+        it("supprime aussi les cartes dont l'origine n'est pas un deck (générée défaussée : origin = la main)", async () => {
+            // Cards#pass estampille la main quittée comme origine des cartes générées
+            // défaussées : elles ne sont plus `origin: null` mais restent orphelines.
+            const deck = {id: "deck-1", type: "deck", system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
+            const hand = {type: "hand", system: {fq: {type: HAND_TYPE}}, cards: [], deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])};
+            const pile = {
+                system: {fq: {type: "PILE"}},
+                cards: [
+                    {id: "generated-discarded", origin: hand},
+                    {id: "normal-card", origin: deck}
+                ],
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+            game.cards = [deck, hand, pile];
+
+            await getHook("deleteCombat")({combatants: []}, {});
+
+            expect(pile.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["generated-discarded"]);
+        });
+
+        it("ne balaie jamais les spellbooks ni les decks importés (leurs cartes sont chez elles, origin nul)", async () => {
+            const deck = {id: "deck-1", type: "deck", system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
+            const spellbook = {
+                type: "deck",
+                system: {fq: {type: "SPELLBOOK"}},
+                cards: [{id: "spellbook-card", origin: null}],
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+            const importedDeck = {
+                type: "deck",
+                system: {fq: {type: ""}},
+                cards: [{id: "imported-card", origin: null}],
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+            game.cards = [deck, spellbook, importedDeck];
+
+            await getHook("deleteCombat")({combatants: []}, {});
+
+            expect(spellbook.deleteEmbeddedDocuments).not.toHaveBeenCalled();
+            expect(importedDeck.deleteEmbeddedDocuments).not.toHaveBeenCalled();
+        });
+
         it("ne touche pas aux mains/piles sans carte orpheline", async () => {
-            const deck = {id: "deck-1", system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
+            const deck = {id: "deck-1", type: "deck", system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
             const hand = {
                 system: {fq: {type: HAND_TYPE}},
                 cards: [{id: "normal-card", origin: deck}],

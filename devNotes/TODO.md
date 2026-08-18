@@ -5,13 +5,10 @@
 
 ### Versions prévues
 #### 2.1.0
-- Montée en 14.366
+- Première carte du Maître d'Armes et du Guerrier Runique
 - Simplifier les formules à l'affichage sur les cartes (formule entre crochet condensé (afficher que cette carte prends les dégâts de l'arme par une icone))
   - Peut-être afficher dans des bulles aussi tout ce qui modifie la carte plutôt que les icones @con, @dec, @wpn
-- Tests pour tester toutes les formules dans les jsons des cartes
-- Se poser pour refraichir la caractérisation :
-  - Refaire une passe de toutes els fonctionnalités + celles à venir ET donner plus de cartes qui utilisent ces fonctionnalités
-  - QU'est ce qui caractérisent une classe , faire une passe des sorts qui ne caracterise pas la classe
+- Tests pour tester toutes les formules dans les jsons des cartese
 - Des choix de cartes ne sont plus des choix mais des executions après un autre choix 
   OU une transformation à la prochaine execution
     - Filtrer les vrais choix pour la dialog, et executer en queue tous les choix qui se succède
@@ -24,7 +21,6 @@
     - (Facultatif: les noms des choix peuvent être localisé)
     - Peut-être qu'une fois que c'est fait, on a pas besoin de plusieurs formules d'application d'effet ( à voir)
 - Déplacer les contrôles d'utilisation d'une carte dans un fichier JS et les tester
-- Permettre de créer des cartes temporaires ?
 - Remettre toute sa défausse dans sa pioche quand on arrive au bout
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
 - Pour les réactifs : travailler sur des événements pour pouvoir les jouer (« J'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
@@ -32,27 +28,29 @@
 - Un réactif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème
 - L'esquive fait demi-dégâts (Esquive critique? Double-critique?)
 - Gérer du ciblage spéciale : Zone -> utiliser le ciblage de zone avec la dialog-play
-- Plus de carte qui dissipent des effets ou qui ont des chances de dissiper des effets
 - Faire des sorts qui s'active au bout du enieme tour, action de la carte au bout d'un certain temps
 - Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts suivant le zèle qu'a la cible plutôt que la chargé
   - Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
+
 - Refonte des cartes :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
-    - Refaire des cartes pour chacune des classes qui ont trop de sorts les mêmes et bien les diviser par chaque niveau
-      et en distribuer la moitié du nombre max. Bien faire la différenceciation des classes
-    - Les spécificités des classes doivent être plus marqués et ne pas retrouvé trop les mêmes sorts pour chacunes des classes
-    - Ajout des dégâts armes pour les cartes :
-      - Ajouts des dégâts de l'arme équipé pour les sorts de CàC
-      - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en premier
-      - Afficher sur la carte
-    - Gérer les passifs hors de la main, comme les pouvoirs ...
-      - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
-        utilisation), réécriture des passifs
-      - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
-        d'actions/mana/pioches?)
-
-- Première carte du Maître d'Armes et du Guerrier Runique
-- Chercher dans votre défausse action
+    - Relire et faire un point sur la caracterisation avant tout
+  - Se poser pour refraichir la caractérisation :
+    - Refaire une passe de toutes els fonctionnalités + celles à venir ET donner plus de cartes qui utilisent ces fonctionnalités
+    - QU'est ce qui caractérisent une classe , faire une passe des sorts qui ne caracterise pas la class
+      - Refaire des cartes pour chacune des classes qui ont trop de sorts les mêmes et bien les diviser par chaque niveau
+        et en distribuer la moitié du nombre max. Bien faire la différenceciation des classes
+      - Plus de carte qui dissipent des effets ou qui ont des chances de dissiper des effets
+      - Les spécificités des classes doivent être plus marqués et ne pas retrouvé trop les mêmes sorts pour chacunes des classes
+      - Ajout des dégâts armes pour les cartes :
+        - Ajouts des dégâts de l'arme équipé pour les sorts de CàC
+        - Pouvoir choisir l'arme à utiliser pour le sort si utilisation de l'arme en mettant la première arme équipé en premier
+        - Afficher sur la carte
+      - Gérer les passifs hors de la main, comme les pouvoirs ...
+        - Carte Incantation et les passifs en général pas très claire, réécrire ptetre les règle (coute 0 après première
+          utilisation), réécriture des passifs
+        - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
+          d'actions/mana/pioches?)
 - Afficher d'autres auras (exemple: bouclier magique, nuage de dague...)
 - Refaire un rééquilibrage des cartes après réécriture
 - Gérer les cartes incolores

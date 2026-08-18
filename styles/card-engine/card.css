@@ -186,6 +186,48 @@
 }
 
 /* ============================================================
+   DIALOG DE RÉCUPÉRATION EN DÉFAUSSE
+   Grille des cartes éligibles (retrieveFromDiscard) : chaque option est
+   un label radio + image, la carte cochée est mise en évidence.
+   ============================================================ */
+
+.fq-retrieve-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+.fq-retrieve-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    padding: 4px;
+    max-width: 110px;
+    text-align: center;
+}
+
+.fq-retrieve-option input[type="radio"] {
+    display: none;
+}
+
+.fq-retrieve-option img {
+    width: 96px;
+    border: none;
+}
+
+.fq-retrieve-option:has(input:checked) {
+    border-color: rgba(var(--fq-success-hi-rgb), 0.9);
+    box-shadow: 0 0 8px rgba(var(--fq-success-hi-rgb), 0.6);
+}
+
+/* ============================================================
    VISUALISEUR DE CARTE
    Clic sur une carte de la liste (cards.hbs) → affichage en grand
    sur un voile noir, pour la regarder. Voile simple, aucune animation.

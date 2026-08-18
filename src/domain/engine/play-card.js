@@ -63,7 +63,7 @@ export default class PlayCard {
      * @returns {Promise<*>|null} La promesse du transfert de la carte, ou null si la carte n'est pas transférée.
      */
     static async callBackplayCard(to, fd, cardContent, hasVariables, initCardContents, currentCards, card) {
-        if (!CardEffect.checkIfCanUseCard(cardContent, card)) {
+        if (!CardEffect.checkIfCanUseCard(cardContent, card, to)) {
             return;
         }
 
@@ -118,7 +118,7 @@ export default class PlayCard {
             });
         }
 
-        await CardEffect.applyCardEffect(cardContent, card, fd);
+        await CardEffect.applyCardEffect(cardContent, card, fd, to);
 
         return result;
     }

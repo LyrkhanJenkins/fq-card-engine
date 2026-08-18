@@ -130,7 +130,7 @@ describe("PlayCard", () => {
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
-            expect(CardEffect.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
+            expect(CardEffect.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {}, {});
             expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
 
@@ -145,7 +145,7 @@ describe("PlayCard", () => {
 
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
-            expect(CardEffect.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {});
+            expect(CardEffect.applyCardEffect).toHaveBeenCalledWith(cardContent, card, {}, {});
             expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
 

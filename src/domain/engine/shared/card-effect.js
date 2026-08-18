@@ -32,10 +32,11 @@ export default class CardEffect {
      * @param {object} cardContent - Le contenu (choix) de la carte jouée.
      * @param {Card}   card        - La carte jouée.
      * @param {object} fd          - Les données du formulaire (emplacements de sbires, etc.).
+     * @param {Cards}  [to]        - La pile de défausse cible (récupération de carte).
      *
      * @returns {Promise<void>}
      */
-    static async applyCardEffect(cardContent, card, fd) {
+    static async applyCardEffect(cardContent, card, fd, to) {
         let resultArray = [];
         // Collecteur local des animations Dice So Nice de ce jet de carte : créé à la
         // volée et passé aux méthodes de jet. Chaque dé y dépose sa promesse d'animation
@@ -57,6 +58,9 @@ export default class CardEffect {
             }
             if (cardContent.generateCard) {
                 await CardEffect.generateCardInHand(cardContent.generateCard, card.parent);
+            }
+            if (cardContent.retrieveFromDiscard?.trim()) {
+                await CardEffect.retrieveCardFromDiscard(cardContent.retrieveFromDiscard, to, card);
             }
             if (cardContent.minions && Array.isArray(cardContent.minions)) {
                 const selectedLocations = [];
@@ -155,6 +159,160 @@ export default class CardEffect {
         const moduleName = FqCardEngineModule.moduleName;
         data.flags = {...data.flags, [moduleName]: {...data.flags?.[moduleName], generatedAt: Date.now()}};
         return hand.createEmbeddedDocuments("Card", [data]);
+    }
+
+    /**
+     * Résout une récupération en défausse (`retrieveFromDiscard`) en deux modes :
+     * `*` → mode CHOIX (`choose: true`), toute la pile est éligible et le joueur
+     * choisira UNE carte ; liste de noms séparés par des virgules → mode TOUTES
+     * (`choose: false`), chaque nom listé doit correspondre à une carte DISTINCTE
+     * de la pile (un nom en double exige deux exemplaires), toutes seront
+     * récupérées sans dialog, et les noms sans correspondance sont rapportés dans
+     * `missing` (la carte est alors injouable). La carte jouée elle-même
+     * (`excludeCardId`) est toujours exclue : au moment où l'effet s'applique,
+     * elle vient d'arriver (ou arrive) dans la pile et ne peut pas se récupérer
+     * elle-même.
+     *
+     * @param {string} spec          - La spécification (`*` ou liste de noms séparés par des virgules).
+     * @param {Cards}  pile          - La pile de défausse.
+     * @param {string} excludeCardId - L'id de la carte jouée, à exclure.
+     *
+     * @returns {{choose: boolean, cards: Card[], missing: string[]}} Le mode, les cartes résolues et les noms manquants.
+     */
+    static resolveDiscardRetrieval(spec, pile, excludeCardId) {
+        const trimmed = spec?.trim() ?? "";
+        const available = (pile?.cards ?? []).filter(c => c.id !== excludeCardId);
+        if (trimmed === "*") {
+            return {choose: true, cards: available, missing: []};
+        }
+        const names = trimmed.split(",").map(name => name.trim()).filter(Boolean);
+        const remaining = [...available];
+        const cards = [];
+        const missing = [];
+        for (const name of names) {
+            const index = remaining.findIndex(c => c.name === name);
+            if (index === -1) {
+                missing.push(name);
+            } else {
+                cards.push(remaining[index]);
+                remaining.splice(index, 1);
+            }
+        }
+        return {choose: false, cards, missing};
+    }
+
+    /**
+     * Publie l'avertissement d'indisponibilité d'une récupération en défausse :
+     * les noms manquants (mode liste, localisés) si la résolution en rapporte,
+     * sinon l'avertissement générique de pile sans carte récupérable.
+     *
+     * @param {{cards: Card[], missing: string[]}} retrieval - La résolution (cf. {@link CardEffect.resolveDiscardRetrieval}).
+     *
+     * @returns {void}
+     */
+    static warnRetrievalUnavailable(retrieval) {
+        const message = retrieval.missing.length
+            ? game.i18n.format("FQCARDENGINE.WarningMsgMissingRetrievableCards",
+                {names: retrieval.missing.map(name => game.i18n.localize(name)).join(", ")})
+            : game.i18n.localize("FQCARDENGINE.WarningMsgNoRetrievableCard");
+        ResourceHandler.createUserWarningMessage(message, game.user.character);
+    }
+
+    /**
+     * Ouvre la dialog de choix de la carte à récupérer dans la défausse : chaque
+     * carte éligible est présentée face révélée (image + nom localisé), y compris
+     * les cartes défaussées face cachée. Renvoie l'id de la carte choisie, ou
+     * undefined si la dialog est fermée sans valider (aucune récupération).
+     *
+     * @param {Card[]} cards - Les cartes éligibles de la défausse.
+     *
+     * @returns {Promise<string|undefined>} L'id de la carte choisie, ou undefined.
+     */
+    static async chooseDiscardCardDialog(cards) {
+        const options = cards.map((c, i) => {
+            const img = c.faces?.[c.face ?? 0]?.img ?? c.faces?.[0]?.img ?? "";
+            const name = game.i18n.localize(c.name);
+            return `<label class="fq-retrieve-option">
+                <input type="radio" name="cardId" value="${c.id}" ${i === 0 ? "checked" : ""}/>
+                <img src="${img}" alt="${name}"/>
+                <span>${name}</span>
+            </label>`;
+        }).join("");
+        try {
+            return await foundry.applications.api.DialogV2.prompt({
+                window: {title: game.i18n.localize("FQCARDENGINE.RetrieveCardTitle")},
+                content: `<div class="fq-retrieve-grid">${options}</div>`,
+                ok: {callback: (event, button) => button.form.elements.cardId.value}
+            });
+        } catch (e) {
+            // Dialog fermée/annulée sans choix : aucune carte récupérée.
+            return undefined;
+        }
+    }
+
+    /**
+     * Récupère une ou plusieurs cartes de la défausse vers la main
+     * (`retrieveFromDiscard`) : résout la récupération
+     * (cf. {@link CardEffect.resolveDiscardRetrieval}) puis, en mode `*`, fait
+     * choisir UNE carte au joueur via une dialog (choix automatique s'il n'y en a
+     * qu'une éligible) ; en mode liste, récupère TOUTES les cartes listées sans
+     * dialog. Les cartes sont DÉPLACÉES — contrairement à `generateCard` qui crée
+     * une copie, chacune garde son deck d'origine et sera défaussée/rappelée
+     * normalement. Elles reviennent face visible (même défaussées face cachée) et
+     * sont horodatées `generatedAt` pour le halo vert temporaire de la main
+     * (cf. hand-board.js).
+     *
+     * @param {string} spec       - La spécification (`*` ou liste de noms séparés par des virgules).
+     * @param {Cards}  pile       - La pile de défausse cible du jeu de la carte.
+     * @param {Card}   playedCard - La carte jouée (exclue, et dont le parent est la main).
+     *
+     * @returns {Promise<Card[]|null>} Les cartes déplacées, ou null si aucune récupération.
+     */
+    static async retrieveCardFromDiscard(spec, pile, playedCard) {
+        const retrieval = CardEffect.resolveDiscardRetrieval(spec, pile, playedCard.id);
+        if (retrieval.missing.length || !retrieval.cards.length) {
+            // Garde de lançabilité déjà passée en amont : ce repli ne devrait servir
+            // que si la pile a changé entre la validation et l'application des effets.
+            CardEffect.warnRetrievalUnavailable(retrieval);
+            return null;
+        }
+        let toRetrieve = retrieval.cards;
+        if (retrieval.choose) {
+            const chosenId = toRetrieve.length === 1 ? toRetrieve[0].id : await CardEffect.chooseDiscardCardDialog(toRetrieve);
+            if (!chosenId) {
+                return null;
+            }
+            toRetrieve = [toRetrieve.find(c => c.id === chosenId)];
+        }
+        const moduleName = FqCardEngineModule.moduleName;
+        const retrieved = [];
+        // Un transfert par carte : `updateData` (face à révéler) est propre à chacune.
+        for (const chosen of toRetrieve) {
+            const passed = await pile.pass(playedCard.parent, [chosen.id], {
+                action: "pass",
+                chatNotification: !CONFIG.FqCardEngine.options.hideMessages,
+                updateData: {
+                    face: chosen.face ?? 0,
+                    flags: {[moduleName]: {generatedAt: Date.now()}}
+                }
+            }).catch(err => {
+                ui.notifications.error(err.message);
+                return null;
+            });
+            if (Array.isArray(passed)) {
+                retrieved.push(...passed);
+                // Une carte sans deck d'origine (générée) se voit estampiller par
+                // Cards#pass l'origine du stack qu'elle quitte (la main lors de sa
+                // défausse). De retour en main avec `origin = la main`, elle serait
+                // considérée `isHome` (v14 : origin === parent) et la prochaine
+                // défausse la COPIERAIT vers la pile en la laissant en main (doublon
+                // d'id fatal). On ne conserve donc l'origine que si c'est un vrai deck.
+                if (chosen.origin?.type !== "deck") {
+                    await playedCard.parent.updateEmbeddedDocuments("Card", [{_id: chosen.id, origin: null}]);
+                }
+            }
+        }
+        return retrieved;
     }
 
     /**
@@ -533,10 +691,11 @@ export default class CardEffect {
      *
      * @param {object} cardContent - Le contenu (choix) de la carte, déjà préparé.
      * @param {Card}   card        - La carte concernée.
+     * @param {Cards}  [to]        - La pile de défausse cible (garde de récupération).
      *
      * @returns {boolean} True si la carte peut être jouée, false sinon.
      */
-    static checkIfCanUseCard(cardContent, card) {
+    static checkIfCanUseCard(cardContent, card, to) {
 
         if (cardContent.customEvals && Array.isArray(cardContent.customEvals)) {
             let iscustomEvals = true;
@@ -583,6 +742,14 @@ export default class CardEffect {
         if (cardContent?.draw) {
             if (((card.source?.cards?.size ?? 0) - (card.source?.drawnCards?.length ?? 0)) < cardContent.draw) {
                 ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDraw"), game.user.character);
+                return false;
+            }
+        }
+
+        if (cardContent?.retrieveFromDiscard?.trim()) {
+            const retrieval = CardEffect.resolveDiscardRetrieval(cardContent.retrieveFromDiscard, to, card.id);
+            if (retrieval.missing.length || !retrieval.cards.length) {
+                CardEffect.warnRetrievalUnavailable(retrieval);
                 return false;
             }
         }

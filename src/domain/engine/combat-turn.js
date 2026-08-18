@@ -1,4 +1,4 @@
-import TradingCards, {DECK_TYPE, HAND_TYPE} from "../trading/trading-cards.js";
+import TradingCards, {DECK_TYPE, HAND_TYPE, PILE_TYPE} from "../trading/trading-cards.js";
 import {createWarning} from "../../core/utils/chat.utils.js";
 import {socket} from "../../hook/integration/socketlib.hook.js";
 
@@ -119,19 +119,16 @@ export default class CombatTurn {
     }
 
     /**
-     * Supprime des mains et des piles les cartes sans deck d'origine résoluble
-     * (`origin` nul : copie générée via `generateCard`, deck supprimé, carte
-     * créée à la main…) : `recall()` ne les rapatrie jamais et elles
-     * s'accumuleraient d'un combat à l'autre. Réservé au premier MJ actif.
+     * Supprime des mains et des piles les cartes sans deck d'origine
      *
      * @returns {Promise<void>}
      */
     static async deleteOrphanCards() {
         if (CombatTurn.isLocalUserFirstActiveGM()) {
             for (const stack of game.cards
-                .filter(c => c.system.fq.type !== DECK_TYPE)) {
+                .filter(c => [HAND_TYPE, PILE_TYPE].includes(c.system.fq.type))) {
                 const orphanIds = stack.cards
-                    .filter(c => !c.origin)
+                    .filter(c => c.origin?.type !== "deck")
                     .map(c => c.id);
                 if (orphanIds.length) {
                     await stack.deleteEmbeddedDocuments("Card", orphanIds);

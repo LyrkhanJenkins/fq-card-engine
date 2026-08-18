@@ -136,6 +136,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                 onTarget: new BooleanField({required: true, label: "FQCARDENGINE.CardVisualOnTarget"}),
             }),
             generateCard: new StringField({required: true, label: "FQCARDENGINE.GenerateCard"}),
+            retrieveFromDiscard: new StringField({required: true, label: "FQCARDENGINE.RetrieveFromDiscard"}),
             afterFirstPlay: new StringField({required: true, label: "FQCARDENGINE.NewFQSystemAfterFirstPlay"}),
 
             passivePlayedRound: new StringField({required: false}),

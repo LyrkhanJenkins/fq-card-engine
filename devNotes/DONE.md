@@ -5,9 +5,13 @@ Feat :
 - Ajout d'une macro raccourci pour lancer les dégâts de l'arme du combattant courant
 - Quand le deck est vidé, la défausse est repioché
 - Pouvoir générer une carte après utilisation d'une autre carte
+- Pouvoir récupérer une carte de la défausse dans la main (toutes ou une liste donnée)
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur
+
+Chore :
+- Support de la version 14.366
 
 v2.0.2:
 Feat :

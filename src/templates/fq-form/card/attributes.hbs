@@ -504,6 +504,11 @@
                                 name=(concat "system.fq.choices." i ".generateCard") rootId=../rootId}}
                 </div>
                 <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.RetrieveFromDiscard"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.retrieveFromDiscard value=choice.retrieveFromDiscard
+                                name=(concat "system.fq.choices." i ".retrieveFromDiscard") rootId=../rootId}}
+                </div>
+                <div class="form-fields">
                     <label>{{localize "FQCARDENGINE.NewFQSystemAfterFirstPlay"}}</label>
                     {{formInput ../fields.fq.fields.choices.element.fields.afterFirstPlay value=choice.afterFirstPlay
                                 elementType="textarea"
