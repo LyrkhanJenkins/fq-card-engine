@@ -57,14 +57,16 @@ describe("CardFqSystem.defineSchema", () => {
         expect(CardFqSystem.defineSchema().fq.class.initial()).toBe("neutral");
     });
 
-    it("liste les 8 classes de CLASS_CHOICE comme choix possibles", () => {
+    it("liste les 10 classes de CLASS_CHOICE comme choix possibles", () => {
         expect(CardFqSystem.defineSchema().fq.class.choices).toEqual(CardFqSystem.CLASS_CHOICE);
         expect(CardFqSystem.defineSchema().fq.class.choices).toEqual({
             "neutral": "neutral",
             "elementalist": "elementalist",
+            "fencing-master": "fencing-master",
             "guardian": "guardian",
             "illusionist": "illusionist",
             "monk": "monk",
+            "runic-warrior": "runic-warrior",
             "trapper": "trapper",
             "white-mage": "white-mage",
             "witch": "witch",
