@@ -75,6 +75,19 @@ describe("WeaponDamage.getEquippedWeaponDamageFormula", () => {
         expect(activity.use).not.toHaveBeenCalled();
     });
 
+    test("jeton @abilities.<abr>.mod dans les parts : résolu en valeur concrète via le rollData", () => {
+        const activity = makeActivity([{parts: ["1d8", "@mod", "@abilities.str.mod"], data: {mod: 3, abilities: {str: {mod: 3}, dex: {mod: 1}}}}]);
+        const actor = actorWith(makeWeapon("martialM", activity));
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("1d8 + 3 + 3");
+        expect(activity.use).not.toHaveBeenCalled();
+    });
+
+    test("jeton @abilities.<abr>.mod sans rollData correspondant → 0 (jamais de jeton résiduel)", () => {
+        const activity = makeActivity([{parts: ["1d6", "@abilities.cha.mod"], data: {mod: 2}}]);
+        const actor = actorWith(makeWeapon("simpleR", activity));
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, RANGED)).toBe("1d6 + 0");
+    });
+
     test("sélection par type quand mêlée ET distance équipées", () => {
         const melee = makeWeapon("martialM", makeActivity([{parts: ["1d10", "@mod"], data: {mod: 4}}]));
         const ranged = makeWeapon("simpleR", makeActivity([{parts: ["1d6", "@mod"], data: {mod: 2}}]));

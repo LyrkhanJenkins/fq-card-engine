@@ -1,5 +1,8 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
+import fs from "fs";
+import path from "path";
 import DisplayCard from "../../src/domain/interface/shared/display-card.js";
+import {ABILITY_EMOJIS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, WEAPON_EMOJIS} from "../../src/domain/interface/shared/formula-display.js";
 
 describe("DisplayCard.simplifyExpression", () => {
 
@@ -242,10 +245,61 @@ describe("DisplayCard.transformForDescription", () => {
 
     it("substitue les tokens de type de dégâts par leur symbole", () => {
         const result = DisplayCard.transformForDescription("[fire] [poison] [slashing]");
-        expect(result).toBe("[🔥] [☠️] [🗡️]");
+        expect(result).toBe("[🔥] [☠️] [🔪]");
     });
 
     it("remplace la première occurrence de XXX/YYY par X/Y", () => {
         expect(DisplayCard.transformForDescription("XXX dmg, YYY heal")).toBe("X dmg, Y heal");
+    });
+
+    it("consomme ABILITY_EMOJIS comme source unique de vérité (13-03, D-06)", () => {
+        game.user.character.system.abilities = {
+            str: {mod: 1}, dex: {mod: 1}, con: {mod: 1}, int: {mod: 1}, wis: {mod: 1}, cha: {mod: 1}
+        };
+        for (const [ability, emoji] of Object.entries(ABILITY_EMOJIS)) {
+            expect(DisplayCard.transformForDescription(`@${ability}`)).toContain(emoji);
+        }
+    });
+
+    it("consomme DAMAGE_TYPE_EMOJIS comme source unique de vérité", () => {
+        for (const [type, emoji] of Object.entries(DAMAGE_TYPE_EMOJIS)) {
+            expect(DisplayCard.transformForDescription(`[${type}]`)).toBe(`[${emoji}]`);
+        }
+    });
+});
+
+describe("DisplayCard.wrapEmojiTooltips (AFF-04)", () => {
+    it("enveloppe chaque emoji connu d'un span data-tooltip avec sa clé i18n", () => {
+        expect(DisplayCard.wrapEmojiTooltips("2d6+4 (⚔️💪) [🔪]")).toBe(
+            "2d6+4 (<span data-tooltip=\"FQCARDENGINE.TooltipWeaponMelee\">⚔️</span>" +
+            "<span data-tooltip=\"FQCARDENGINE.TooltipAbilityStr\">💪</span>) " +
+            "[<span data-tooltip=\"FQCARDENGINE.TooltipDamageSlashing\">🔪</span>]"
+        );
+    });
+
+    it("couvre la totalité des emojis des trois tables sources", () => {
+        for (const emoji of [...Object.values(ABILITY_EMOJIS), ...Object.values(WEAPON_EMOJIS), ...Object.values(DAMAGE_TYPE_EMOJIS)]) {
+            const wrapped = DisplayCard.wrapEmojiTooltips(emoji);
+            expect(wrapped).toContain(`data-tooltip="${EMOJI_TOOLTIP_KEYS[emoji]}"`);
+        }
+    });
+
+    it("échappe le HTML du texte avant enveloppement (la description devient du markup)", () => {
+        expect(DisplayCard.wrapEmojiTooltips("<b>1d6</b> & \"2\"")).toBe("&lt;b&gt;1d6&lt;/b&gt; &amp; &quot;2&quot;");
+    });
+
+    it("laisse intacts le texte sans emoji connu et les valeurs non-string", () => {
+        expect(DisplayCard.wrapEmojiTooltips("Inflige 1d6 dégâts")).toBe("Inflige 1d6 dégâts");
+        expect(DisplayCard.wrapEmojiTooltips(null)).toBe(null);
+        expect(DisplayCard.wrapEmojiTooltips(undefined)).toBe(undefined);
+    });
+
+    it("chaque clé de tooltip existe dans lang/fr.json ET lang/en.json", () => {
+        const fr = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../lang/fr.json"), "utf-8"));
+        const en = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../lang/en.json"), "utf-8"));
+        for (const key of Object.values(EMOJI_TOOLTIP_KEYS)) {
+            expect(fr[key], `clé fr manquante : ${key}`).toBeTruthy();
+            expect(en[key], `clé en manquante : ${key}`).toBeTruthy();
+        }
     });
 });

@@ -34,10 +34,12 @@ export default class WeaponDamage {
     /**
      * Formule de dégâts complète (dé + `@mod` résolu en valeur concrète + bonus
      * magique) de la première arme équipée d'une des `categories`, telle que dnd5e
-     * la calcule via l'activité d'attaque, à une main. Le `@mod` est résolu ici car
-     * le pipeline de dégâts FQ ne dispose pas du `rollData` de l'arme. Renvoie
-     * `"0"` si aucune arme / activité, ou si `getDamageConfig` échoue ; ne lève
-     * jamais et n'appelle jamais `activity.use()`.
+     * la calcule via l'activité d'attaque, à une main. Les jetons `@mod` et
+     * `@abilities.<abr>.mod` sont résolus ici en valeurs concrètes car le pipeline
+     * de dégâts FQ ne dispose pas du `rollData` de l'arme — un jeton laissé
+     * littéral s'évaluerait à 0 au jet et ferait échouer le repli d'affichage.
+     * Renvoie `"0"` si aucune arme / activité, ou si `getDamageConfig` échoue ;
+     * ne lève jamais et n'appelle jamais `activity.use()`.
      *
      * @param {object}   actor      - L'acteur porteur.
      * @param {string[]} categories - Les catégories d'arme acceptées.
@@ -60,7 +62,12 @@ export default class WeaponDamage {
             return "0";
         }
         const formula = (config?.rolls ?? [])
-            .map(roll => roll?.parts?.join(" + ").replaceAll("@mod", String(roll?.data?.mod ?? 0)))
+            .map(roll => {
+                const data = roll?.data ?? {};
+                return roll?.parts?.join(" + ")
+                    .replaceAll("@mod", String(data.mod ?? 0))
+                    .replace(/@abilities\.(\w+)\.mod/g, (_, abr) => String(data.abilities?.[abr]?.mod ?? 0));
+            })
             .filter(part => part)
             .join(" + ");
         return formula || "0";

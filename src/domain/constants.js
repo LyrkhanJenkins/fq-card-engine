@@ -69,6 +69,17 @@ export default class Constants {
     }
 
     /**
+     * Accès au personnage de l'utilisateur courant, source d'acteur commune à la
+     * résolution des jetons d'arme (@wpnM/@wpnR) à l'affichage, cohérente avec les
+     * autres accesseurs statiques (actorAttr, actorAbi, actorFQ).
+     *
+     * @returns {object|undefined} Le personnage de l'utilisateur courant, ou undefined si aucun.
+     */
+    static get actorCurrent() {
+        return game.user.character;
+    }
+
+    /**
      * Détermine si un document est une classe FQ (source « FQ » et type « class »).
      *
      * @param {object} document - Le document Foundry à tester.

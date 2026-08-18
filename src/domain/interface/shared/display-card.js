@@ -1,5 +1,6 @@
 import Constants from "../../constants.js";
 import RollService from "../../engine/roll/roll-service.js";
+import FormulaDisplay, {ABILITY_EMOJIS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, FORMULA_FIELDS} from "./formula-display.js";
 
 /**
  * Utilitaires de présentation d'une carte : extraction du titre, de la
@@ -129,7 +130,8 @@ export default class DisplayCard {
         }
         const flat = Object.fromEntries(
             c.system.fq?.choices.flatMap((choice, i) =>
-                Object.entries(choice).map(([k, v]) => [`${i}_${k}`, v])
+                Object.entries(choice).map(([k, v]) =>
+                    [`${i}_${k}`, FORMULA_FIELDS.includes(k) ? FormulaDisplay.forDisplay(v) : v])
             )
         );
         return DisplayCard.transformForDescription(game.i18n.format(description, flat));
@@ -176,7 +178,10 @@ export default class DisplayCard {
     /**
      * Transforme une chaîne de description en remplaçant les variables (XXX/YYY),
      * les références de caractéristiques (@int, @str…) par leur modificateur et
-     * un emoji, et les types de dégâts ([fire], [cold]…) par leur symbole.
+     * un emoji, et les types de dégâts ([fire], [cold]…) par leur symbole. La
+     * table de caractéristiques (`ABILITY_EMOJIS`, `formula-display.js`) est
+     * la source unique de vérité, consommée aussi par le groupe d'indicateurs
+     * de `FormulaDisplay.collectSources` (D-06).
      *
      * @param {string} val - La chaîne à transformer (renvoyée telle quelle si non-string).
      *
@@ -185,28 +190,42 @@ export default class DisplayCard {
     static transformForDescription(val) {
         const abilities = Constants.actorAbi;
         if (typeof val === "string") {
-            return  val.replaceAll("XXX","X").replaceAll("YYY","Y")
-                .replace(/@int/g, abilities?.int?.mod + "(🧠)")
-                .replace(/@wis/g, abilities?.wis?.mod + "(🦉)")
-                .replace(/@cha/g, abilities?.cha?.mod + "(✨️)")
-                .replace(/@str/g, abilities?.str?.mod + "(💪)")
-                .replace(/@dex/g, abilities?.dex?.mod + "(🎯)")
-                .replace(/@con/g, abilities?.con?.mod + "(❤️)")
-                .replace(/\[acid]/g, "[🧪]")
-                .replace(/\[bludgeoning]/g, "[⚒️]")
-                .replace(/\[cold]/g, "[🧊]")
-                .replace(/\[fire]/g, "[🔥]")
-                .replace(/\[force]/g, "[🌀]")
-                .replace(/\[lightning]/g, "[🌩️]")
-                .replace(/\[necrotic]/g, "[🩸]")
-                .replace(/\[piercing]/g, "[🏹]")
-                .replace(/\[poison]/g, "[☠️]")
-                .replace(/\[psychic]/g, "[👁️]")
-                .replace(/\[radiant]/g, "[☀️]")
-                .replace(/\[slashing]/g, "[🗡️]")
-                .replace(/\[thunder]/g, "[🌪️]");
+            let result = val.replaceAll("XXX", "X").replaceAll("YYY", "Y");
+            for (const [ability, emoji] of Object.entries(ABILITY_EMOJIS)) {
+                result = result.replace(new RegExp(`@${ability}`, "g"), `${abilities?.[ability]?.mod}(${emoji})`);
+            }
+            for (const [type, emoji] of Object.entries(DAMAGE_TYPE_EMOJIS)) {
+                result = result.replace(new RegExp(`\\[${type}]`, "g"), `[${emoji}]`);
+            }
+            return result;
         }
         return val;
+    }
+
+    /**
+     * Enveloppe chaque emoji connu (caractéristiques, armes, types de dégâts)
+     * d'un `<span data-tooltip="…">` pour le tooltip natif Foundry, localisé
+     * automatiquement par le TooltipManager. Le texte est d'abord échappé HTML
+     * (la description devient du markup via le helper `fqEmojiTooltips` de
+     * `card-svg.hbs`) — les emojis ne sont pas affectés par l'échappement.
+     *
+     * @param {*} text - La description transformée (renvoyée telle quelle si non-string).
+     *
+     * @returns {*} Le HTML avec les emojis porteurs de tooltip, ou `text` inchangé.
+     */
+    static wrapEmojiTooltips(text) {
+        if (typeof text !== "string") {
+            return text;
+        }
+        let escaped = text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+        for (const [emoji, key] of Object.entries(EMOJI_TOOLTIP_KEYS)) {
+            escaped = escaped.replaceAll(emoji, `<span data-tooltip="${key}">${emoji}</span>`);
+        }
+        return escaped;
     }
 
     /**

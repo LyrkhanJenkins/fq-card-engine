@@ -7,6 +7,11 @@ import FqCardSheet from "../domain/interface/sheet/cards/fq-card-sheet.js";
 import DisplayCard from "../domain/interface/shared/display-card.js";
 
 Hooks.on("setup", function () {
+    // Helper de tooltips sur les emojis des cartes : la description devient du
+    // HTML (échappé) où chaque emoji connu porte un data-tooltip localisé.
+    Handlebars.registerHelper("fqEmojiTooltips",
+        text => new Handlebars.SafeString(DisplayCard.wrapEmojiTooltips(text)));
+
     // Ajoute les jauges FQ (action/mana/zèle) aux attributs suivables du HUD de
     // jeton et du tracker de combat. dnd5e peuple `CONFIG.Actor.trackableAttributes`
     // dans son propre hook `setup`, exécuté avant celui-ci (le système est chargé
