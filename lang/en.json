@@ -160,7 +160,6 @@
   "FQCARDENGINE.Xvalue": "Xvalue",
   "FQCARDENGINE.Yvalue": "Yvalue",
   "FQCARDENGINE.Replayable": "Replayable",
-  "FQCARDENGINE.NewFQSystemAfterFirstPlay": "new JSON after use",
   "FQCARDENGINE.GenerateCard": "Generate card",
   "FQCARDENGINE.RetrieveFromDiscard": "Retrieve from discard",
   "FQCARDENGINE.CardSound": "Sound",

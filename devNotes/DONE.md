@@ -6,7 +6,9 @@ Feat :
 - Quand le deck est vidé, la défausse est repioché
 - Pouvoir générer une carte après utilisation d'une autre carte
 - Pouvoir récupérer une carte de la défausse dans la main (toutes ou une liste donnée)
-
+- Simplifier les formules à l'affichage sur les cartes + tooltips
+- Suppression du "JSON Après utilisation" -> Remplacer par les cartes générées
+  
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur
 

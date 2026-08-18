@@ -146,7 +146,7 @@ describe("CardFqSystem.getChoiceSchema", () => {
             "damage", "heal", "bonusCrit", "bonusEva",
             "xmin", "xmax", "ymin", "ymax", "xvalue", "yvalue",
             "applyEffectsFormulas", "messages", "minions",
-            "replayable", "sound", "visual", "afterFirstPlay",
+            "replayable", "sound", "visual",
             "customEvals",
         ]));
     });

@@ -6,8 +6,6 @@
 ### Versions prévues
 #### 2.1.0
 - Première carte du Maître d'Armes et du Guerrier Runique
-- Simplifier les formules à l'affichage sur les cartes (formule entre crochet condensé (afficher que cette carte prends les dégâts de l'arme par une icone))
-  - Peut-être afficher dans des bulles aussi tout ce qui modifie la carte plutôt que les icones @con, @dec, @wpn
 - Tests pour tester toutes les formules dans les jsons des cartese
 - Des choix de cartes ne sont plus des choix mais des executions après un autre choix 
   OU une transformation à la prochaine execution

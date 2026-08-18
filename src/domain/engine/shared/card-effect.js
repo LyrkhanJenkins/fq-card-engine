@@ -154,11 +154,31 @@ export default class CardEffect {
         data.drawn = false;
         data.origin = null;
         data.face = data.face ?? 0;
+        CardEffect.stampGeneratedPassives(data.system?.fq?.choices);
         // Horodate la génération : la main applique un halo vert temporaire
         // (`.fq-card--generated`) tant que la carte vient d'arriver (cf. hand-board.js).
         const moduleName = FqCardEngineModule.moduleName;
         data.flags = {...data.flags, [moduleName]: {...data.flags?.[moduleName], generatedAt: Date.now()}};
         return hand.createEmbeddedDocuments("Card", [data]);
+    }
+
+    /**
+     * Horodate au round courant les choix passifs d'une carte générée qui se
+     * déclarent déjà joués (`hasBeenPlayed`). Un passif généré remplace une carte
+     * dont l'effet vient d'être appliqué : il ne doit donc pas être rejouable
+     * avant le round suivant. Les autres choix sont laissés intacts, ce qui rend
+     * le marquage propre aux seules cartes qui le demandent.
+     *
+     * @param {object[]} [choices] - Les choix de la carte générée, modifiés sur place.
+     *
+     * @returns {void}
+     */
+    static stampGeneratedPassives(choices) {
+        for (const choice of choices ?? []) {
+            if (choice?.replayable === "passif" && choice?.hasBeenPlayed) {
+                choice.passivePlayedRound = game.combat?.round?.toString() ?? "";
+            }
+        }
     }
 
     /**
@@ -479,10 +499,9 @@ export default class CardEffect {
     }
 
     /**
-     * Réécrit les contenus (choix) d'une carte en fusionnant `newValue`, en
-     * appliquant l'éventuel état `afterFirstPlay`, puis met à jour la carte. La
-     * mise à jour de `system.fq.choices` déclenche le hook `updateCard` qui
-     * rafraîchit la main.
+     * Réécrit les contenus (choix) d'une carte en fusionnant `newValue` dans
+     * chacun d'eux, puis met à jour la carte. La mise à jour de
+     * `system.fq.choices` déclenche le hook `updateCard` qui rafraîchit la main.
      *
      * @param {Card}     card         - La carte à mettre à jour.
      * @param {object[]} cardContents - Les contenus (choix) d'origine.
@@ -491,12 +510,7 @@ export default class CardEffect {
      * @returns {void}
      */
     static rewriteCardContent(card, cardContents, newValue) {
-        cardContents = cardContents.map(content => {
-            if (content.afterFirstPlay) {
-                content = JSON.parse(content.afterFirstPlay);
-            }
-            return (CardEffect.stringifyObjValue({...content, ...newValue}));
-        });
+        cardContents = cardContents.map(content => CardEffect.stringifyObjValue({...content, ...newValue}));
         card.update({
             "system.fq.choices": cardContents
         });

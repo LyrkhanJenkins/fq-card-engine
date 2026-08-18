@@ -965,17 +965,6 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
                 "system.fq.choices": [{a: "1", b: "2"}]
             });
         });
-
-        it("content.afterFirstPlay (JSON) remplace le contenu d'origine avant la fusion", () => {
-            const card = {update: vi.fn()};
-            const cardContents = [{afterFirstPlay: JSON.stringify({c: 3})}];
-
-            CardEffect.rewriteCardContent(card, cardContents, {d: 4});
-
-            expect(card.update).toHaveBeenCalledWith({
-                "system.fq.choices": [{c: "3", d: "4"}]
-            });
-        });
     });
 
     describe("getRandomFileFromFolder", () => {

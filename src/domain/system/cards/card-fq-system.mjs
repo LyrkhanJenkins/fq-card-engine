@@ -128,7 +128,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                 })
             }), {label: "FQCARDENGINE.Minions"}),
 
-            // La carte est rejouable (A mettre avec afterFirstPlay si réécriture après utilisation)
+            // La carte est rejouable (« passif » = reste en main, ou nombre de charges)
             replayable: new StringField({required: true, label: "FQCARDENGINE.Replayable"}),
             // Specific sound to play after card use
             sound: new StringField({required: true, label: "FQCARDENGINE.CardSound"}),
@@ -139,7 +139,6 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             }),
             generateCard: new StringField({required: true, label: "FQCARDENGINE.GenerateCard"}),
             retrieveFromDiscard: new StringField({required: true, label: "FQCARDENGINE.RetrieveFromDiscard"}),
-            afterFirstPlay: new StringField({required: true, label: "FQCARDENGINE.NewFQSystemAfterFirstPlay"}),
 
             passivePlayedRound: new StringField({required: false}),
             hasBeenPlayed: new BooleanField({required: false}),

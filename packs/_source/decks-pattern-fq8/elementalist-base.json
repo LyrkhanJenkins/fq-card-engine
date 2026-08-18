@@ -107,7 +107,6 @@
                 "path": "fq.elementalist.earthFracture",
                 "onTarget": true
               },
-              "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
@@ -238,7 +237,6 @@
                 "path": "fq.elementalist.tornado",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
@@ -329,7 +327,6 @@
               ],
               "replayable": "",
               "sound": "",
-              "afterFirstPlay": "",
               "name": "",
               "applyEffectsFormulas": [],
               "minions": [],
@@ -470,7 +467,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
@@ -600,7 +596,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
@@ -690,7 +685,6 @@
               ],
               "replayable": "",
               "sound": "",
-              "afterFirstPlay": "",
               "name": "",
               "applyEffectsFormulas": [],
               "minions": [],
@@ -785,7 +779,6 @@
               ],
               "replayable": "",
               "sound": "",
-              "afterFirstPlay": "",
               "name": "",
               "applyEffectsFormulas": [],
               "minions": [],
@@ -932,7 +925,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
@@ -1026,7 +1018,6 @@
               ],
               "replayable": "",
               "sound": "",
-              "afterFirstPlay": "",
               "name": "",
               "applyEffectsFormulas": [],
               "messages": [],
@@ -1120,7 +1111,6 @@
               ],
               "replayable": "",
               "sound": "",
-              "afterFirstPlay": "",
               "name": "",
               "applyEffectsFormulas": [],
               "minions": [],
@@ -1228,7 +1218,6 @@
               ],
               "replayable": "",
               "sound": "",
-              "afterFirstPlay": "",
               "name": "",
               "applyEffectsFormulas": [],
               "messages": [],
@@ -1327,7 +1316,6 @@
               ],
               "replayable": "",
               "sound": "",
-              "afterFirstPlay": "",
               "name": "",
               "applyEffectsFormulas": [],
               "messages": [],
@@ -1451,9 +1439,8 @@
                   ]
                 }
               ],
-              "replayable": "passif",
+              "replayable": "",
               "sound": "modules/fq-card-engine/sounds/specific_spells/incantation.mp3",
-              "afterFirstPlay": "{ \"action\": \"-(XXX)\", \"xmax\": \"0+@int\", \"replayable\": \"passif\", \"hasBeenPlayed\": \"true\", \"addingRolls\": [ { \"title\": \"Incantation\", \"formula\": \"1\", \"effects\": [ { \"result\": \"1\", \"data\": [ { \"label\": \"Incantation +XXX\", \"icon\": \"icons/magic/symbols/runes-carved-stone-yellow.webp\", \"changes\": [ { \"key\": \"system.fq.action.max\", \"value\": \"XXX\", \"mode\": \"2\" } ], \"duration\": { \"startTime\": \"0\", \"rounds\": \"1\", \"turns\": \"0\" } } ], \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgIncantationEffect\", \"arg\": { \"action\": \"XXX\" } } ] } ] } ] }",
               "name": "",
               "messages": [],
               "minions": [],
@@ -1463,7 +1450,8 @@
                 "path": "",
                 "onTarget": false
               },
-              "hasBeenPlayed": false
+              "hasBeenPlayed": false,
+              "generateCard": "fq-card-engine.decks-pattern-fq8.Elementalist Generated.FQCARDTITLE.Incantation"
             }
           ],
           "level": 4,
@@ -1631,7 +1619,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
@@ -1724,7 +1711,6 @@
               ],
               "replayable": "",
               "sound": "",
-              "afterFirstPlay": "",
               "name": "",
               "applyEffectsFormulas": [],
               "messages": [],
@@ -1823,7 +1809,6 @@
               ],
               "replayable": "",
               "sound": "",
-              "afterFirstPlay": "",
               "name": "",
               "applyEffectsFormulas": [],
               "messages": [],
@@ -1958,18 +1943,18 @@
                   ]
                 }
               ],
-              "replayable": "passif",
+              "replayable": "",
               "sound": "",
               "visual": {
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "{ \"minReach\": \"1\", \"maxReach\": \"9\", \"replayable\": \"passif\", \"customEval\": [ { \"test\": \"!!game.combat.flags.FQLogs && (!![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent && ![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets && !![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.minReach && !![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.damage && ![...game.user.targets].map(t => t.document.actorId).includes([...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.targetsId[0]))\", \"messages\": [ { \"key\": \"FQCARDENGINE.CardWarningMsgDamagePropagation\", \"arg\": {} } ] } ], \"addingRolls\": [ { \"title\": \"Damage Propagation\", \"formula\": \"1\", \"effects\": [ { \"result\": \"1\", \"data\": [ { \"label\": \"Damage Propagation\", \"icon\": \"icons/magic/sonic/explosion-impact-shock-wave.webp\", \"changes\": [ { \"key\": \"system.fq.bonus.dot\", \"value\": \"@wis\", \"mode\": \"2\" }, { \"key\": \"macro.tokenMagic\", \"value\": \"shockwave\", \"mode\": \"0\" } ], \"duration\": { \"startTime\": \"0\", \"rounds\": \"3\", \"turns\": \"0\" } } ], \"messages\": [ { \"key\": \"FQCARDENGINE.CardMsgDamagePropagationEffect\", \"arg\": { \"damage\": \"@wis\" } } ] } ] } ] }",
               "name": "",
               "messages": [],
               "minions": [],
               "hasBeenPlayed": false,
-              "targetType": "Default"
+              "targetType": "Default",
+              "generateCard": "fq-card-engine.decks-pattern-fq8.Elementalist Generated.FQCARDTITLE.DamagePropagation"
             }
           ],
           "level": 4,
@@ -2085,7 +2070,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "messages": [],
               "minions": [],
               "hasBeenPlayed": false,
@@ -2168,7 +2152,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "messages": [],
               "minions": [],
               "hasBeenPlayed": false,
@@ -2247,7 +2230,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "messages": [],
               "minions": [],
               "hasBeenPlayed": false,
@@ -2326,7 +2308,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "messages": [],
               "minions": [],
               "hasBeenPlayed": false,
@@ -2459,7 +2440,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
@@ -2589,7 +2569,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
@@ -2719,7 +2698,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
@@ -2853,7 +2831,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "name": "",
               "messages": [],
               "minions": [],
@@ -2950,7 +2927,6 @@
                 "path": "",
                 "onTarget": false
               },
-              "afterFirstPlay": "",
               "name": "",
               "applyEffectsFormulas": [],
               "messages": [],

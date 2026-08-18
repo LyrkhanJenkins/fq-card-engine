@@ -89,7 +89,7 @@ function referencesCombatApi(choice) {
 /**
  * Dérive les surcharges `opts.world` (transmises à `mountWorld` par
  * `playChoice`) nécessaires pour qu'un « game cohérent » puisse évaluer
- * N'IMPORTE QUEL choix des 7 decks sans exception non maîtrisée, en ne
+ * N'IMPORTE QUEL choix des decks pattern sans exception non maîtrisée, en ne
  * s'appuyant QUE sur la forme du choix — jamais sur son nom ou celui de sa
  * carte. Ce n'est PAS une réimplémentation de logique métier : c'est la
  * complétion, au niveau du monde de test, de champs Foundry génériques que le
@@ -211,8 +211,8 @@ describe("Balayage global des decks pattern fq8 (07-03 — EXHA-05)", () => {
     // Invariant (c) / garde-fou d'auto-couverture : le compte est calculé
     // dynamiquement depuis le glob — une carte ajoutée au JSON du deck-pattern
     // fait mécaniquement grimper ce total, sans toucher à ce fichier.
-    test("balaie au moins 187 choix des 7 decks pattern fq8 (garde-fou d'auto-couverture)", () => {
-        expect(deckFiles.length).toBe(7);
+    test("balaie au moins 187 choix des 9 decks pattern fq8 (garde-fou d'auto-couverture)", () => {
+        expect(deckFiles.length).toBe(9);
         expect(sweepEntries.length).toBeGreaterThanOrEqual(187);
     });
 });
