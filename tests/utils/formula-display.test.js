@@ -377,10 +377,28 @@ describe("FormulaDisplay.forDisplay — assemblage et cas d'arme", () => {
         expect(FormulaDisplay.forDisplay("(@wpnM)[slashing]", actor)).toBe("1d8+3 (⚔️) [slashing]");
     });
 
-    it("plusieurs groupes de type, chacun replié indépendamment, groupe d'emojis à la toute fin", () => {
+    it("plusieurs groupes de type : chaque groupe porte les icônes de ses propres jetons", () => {
         const actor = makeCanonicalActor();
         expect(FormulaDisplay.forDisplay("(1+@int+1d4)[thunder]+(1+@wis+1d4)[cold]", actor))
-            .toBe("1d4+4 [thunder]+1d4+2 [cold] (🧠🦉)");
+            .toBe("1d4+4 (🧠) [thunder]+1d4+2 (🦉) [cold]");
+    });
+
+    it("un groupe sans jeton de modification n'affiche aucune parenthèse, même si un autre groupe en a", () => {
+        const actor = makeCanonicalActor();
+        expect(FormulaDisplay.forDisplay("(2*@int)[thunder]+2d8[fire]", actor))
+            .toBe("6 (🧠) [thunder]+2d8 [fire]");
+    });
+
+    it("un même jeton présent dans deux groupes affiche son icône dans chacun", () => {
+        const actor = makeCanonicalActor();
+        expect(FormulaDisplay.forDisplay("(@str+1d4)[slashing]+(@str+1d6)[fire]", actor))
+            .toBe("1d4+2 (💪) [slashing]+1d6+2 (💪) [fire]");
+    });
+
+    it("l'icône d'arme reste dans le groupe où son jeton est écrit", () => {
+        const actor = makeCanonicalActor();
+        expect(FormulaDisplay.forDisplay("(@wpnM+@str)[slashing]+(1+@wpnR)[piercing]", actor))
+            .toBe("1d8+5 (⚔️💪) [slashing]+1d6+3 (🏹) [piercing]");
     });
 
     it("aucune parenthèse d'emojis quand aucune source de modification n'est présente", () => {
@@ -548,8 +566,12 @@ describe("FormulaDisplay — instantané du corpus", () => {
                 "(@wpnM + @str + 1d4)[slashing]", "1d8+1d4+5 (⚔️💪) [slashing]"],
             ["arme de mêlée seule", "(@wpnM)[slashing]", "1d8+3 (⚔️) [slashing]"],
             ["arme à distance + caractéristique + dés multiples", "(@wpnR + @dex + 2d3)[force]", "1d6+2d3+3 (🏹🎯) [force]"],
-            ["multi-groupes de type, groupe d'emojis unique en fin de chaîne",
-                "(1+@int+1d4)[thunder]+(1+@wis+1d4)[cold]", "1d4+4 [thunder]+1d4+2 [cold] (🧠🦉)"],
+            ["multi-groupes de type, un groupe d'emojis par groupe de dégâts",
+                "(1+@int+1d4)[thunder]+(1+@wis+1d4)[cold]", "1d4+4 (🧠) [thunder]+1d4+2 (🦉) [cold]"],
+            ["multi-groupes de type, second groupe sans source de modification",
+                "(2*@int)[thunder]+2d8[fire]", "6 (🧠) [thunder]+2d8 [fire]"],
+            ["multi-groupes de type, sources différentes de part et d'autre",
+                "(@int+1d10)[fire]+(4+@wis+1d4)[cold]", "1d10+3 (🧠) [fire]+1d4+5 (🦉) [cold]"],
             ["sans jeton de type (aucun crochet)", "(2*@wis)+1d8", "1d8+2 (🦉)"],
             ["variable X pure, sans source ni type", "(3*XXX)", "3X"],
             ["formule purement constante, sans type", "-5", "-5"],

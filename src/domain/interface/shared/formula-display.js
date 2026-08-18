@@ -123,13 +123,19 @@ export default class FormulaDisplay {
             return raw;
         }
         try {
-            const sources = FormulaDisplay.collectSources(raw);
-            const withWeapons = FormulaDisplay.substituteWeaponTokens(raw, actor);
-            const normalized = withWeapons.replaceAll("XXX", "X").replaceAll("YYY", "Y");
-            const withAbilities = FormulaDisplay.substituteAbilityTokens(normalized);
-            const segments = FormulaDisplay.splitDamageSegments(withAbilities)
-                .map(({expr, type}) => ({expr: FormulaDisplay.foldExpression(expr), type}));
-            return FormulaDisplay.assembleFolded(segments, sources);
+            const segments = FormulaDisplay.splitDamageSegments(raw).map(({expr, type}) => {
+                // Le découpage en segments et la collecte des sources se font sur
+                // la chaîne BRUTE : c'est ce qui rattache chaque icône au groupe de
+                // dégâts où son jeton a été écrit. Les formules d'arme substituées
+                // ne portent jamais de jeton de type, le découpage est donc le même
+                // avant et après substitution.
+                const sources = FormulaDisplay.collectSources(expr);
+                const withWeapons = FormulaDisplay.substituteWeaponTokens(expr, actor);
+                const normalized = withWeapons.replaceAll("XXX", "X").replaceAll("YYY", "Y");
+                const withAbilities = FormulaDisplay.substituteAbilityTokens(normalized);
+                return {expr: FormulaDisplay.foldExpression(withAbilities), type, sources};
+            });
+            return FormulaDisplay.assembleFolded(segments);
         } catch {
             return FormulaDisplay.fallback(raw, actor);
         }
@@ -160,7 +166,7 @@ export default class FormulaDisplay {
      * Remplace, dans une chaîne, chaque jeton de caractéristique (`@str`…) par
      * le modificateur numérique nu du personnage de l'utilisateur courant
      * (aucun emoji inline produit ici, D-05 : le détail se déplace dans le
-     * groupe de sources en fin de formule).
+     * groupe de sources du segment).
      *
      * @param {string} str - La chaîne contenant d'éventuels jetons de caractéristique.
      *
@@ -184,11 +190,14 @@ export default class FormulaDisplay {
     }
 
     /**
-     * Liste dédupliquée des emojis de source de modification présents dans la
+     * Liste dédupliquée des emojis de source de modification présents dans une
      * chaîne BRUTE (avant substitution) : d'abord les icônes d'arme (jetons
      * `@wpnM`/`@wpnR`), puis les icônes de caractéristique dans l'ordre
      * canonique `str, dex, con, int, wis, cha`. Détection par simple présence
-     * du jeton, indépendamment du signe du modificateur (D-06).
+     * du jeton, indépendamment du signe du modificateur (D-06). Appelée par
+     * `forDisplay` sur CHAQUE segment de type de dégâts, la déduplication est
+     * donc locale au segment : un même jeton présent dans deux groupes de
+     * dégâts affiche son icône dans chacun.
      *
      * @param {string} raw - La chaîne brute (non transformée) à inspecter.
      *
@@ -443,27 +452,27 @@ export default class FormulaDisplay {
     }
 
     /**
-     * Assemble les segments repliés avec les symboles de type et le groupe de
-     * sources (D-03/D-05) : aucune parenthèse autour de la formule repliée,
-     * symbole de type accolé en fin de groupe. Pour un segment unique, le
-     * groupe de sources s'insère entre la formule et le symbole de type
-     * (exemple verrouillé D-05). Pour plusieurs segments, chacun est rendu
-     * `<formule> [<type>]`, joints par `+`, et le groupe de sources est ajouté
-     * une seule fois à la toute fin.
+     * Assemble les segments repliés, chacun avec SON propre groupe de sources
+     * et son symbole de type (D-03/D-05) : aucune parenthèse autour de la
+     * formule repliée, groupe de sources inséré entre la formule et le symbole
+     * de type, segments joints par `+`. Chaque icône reste ainsi accolée au
+     * groupe de dégâts dans lequel son jeton a été écrit, au lieu d'être
+     * reportée dans un groupe unique en fin de chaîne.
      *
-     * @param {Array<{expr: string, type: string|null}>} segments - Les segments déjà repliés.
-     * @param {string[]}                                  sources  - Les emojis de source (déjà collectés sur la chaîne brute).
+     * @param {Array<{expr: string, type: string|null, sources: string[]}>} segments - Les segments déjà repliés, chacun porteur de ses propres emojis de source.
      *
      * @returns {string} La formule assemblée, prête à l'affichage.
      */
-    static assembleFolded(segments, sources) {
-        const sourceGroup = sources.length ? ` (${sources.join("")})` : "";
-        if (segments.length <= 1) {
-            const {expr, type} = segments[0] ?? {expr: "0", type: null};
-            return `${expr}${sourceGroup}${type ? ` ${type}` : ""}`;
+    static assembleFolded(segments) {
+        if (!segments.length) {
+            return "0";
         }
-        const joined = segments.map(({expr, type}) => `${expr}${type ? ` ${type}` : ""}`).join("+");
-        return `${joined}${sourceGroup}`;
+        return segments
+            .map(({expr, type, sources}) => {
+                const sourceGroup = sources?.length ? ` (${sources.join("")})` : "";
+                return `${expr}${sourceGroup}${type ? ` ${type}` : ""}`;
+            })
+            .join("+");
     }
 
     /**
