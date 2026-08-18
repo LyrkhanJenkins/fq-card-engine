@@ -17,9 +17,11 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static CLASS_CHOICE = {
         "neutral": this.NEUTRAL_CLASS,
         "elementalist": "elementalist",
+        "fencing-master": "fencing-master",
         "guardian": "guardian",
         "illusionist": "illusionist",
         "monk": "monk",
+        "runic-warrior": "runic-warrior",
         "trapper": "trapper",
         "white-mage": "white-mage",
         "witch": "witch"
