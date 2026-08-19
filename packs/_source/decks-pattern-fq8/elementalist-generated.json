@@ -106,8 +106,7 @@
                 "path": "",
                 "onTarget": false
               },
-              "hasBeenPlayed": true,
-              "generateCard": ""
+              "hasBeenPlayed": true
             }
           ],
           "level": 4,
@@ -242,8 +241,7 @@
               "messages": [],
               "minions": [],
               "hasBeenPlayed": true,
-              "targetType": "Default",
-              "generateCard": ""
+              "targetType": "Default"
             }
           ],
           "level": 4,

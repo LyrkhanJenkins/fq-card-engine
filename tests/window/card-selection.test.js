@@ -336,20 +336,35 @@ describe("playCardSelection — encart « proposer des cartes » d'une carte jou
         expect(CardSelection.hasCardSelection(undefined)).toBe(false);
     });
 
-    test("mode liste : voile non annulable, nombre à choisir réduit au vivier, copies générées dans la main", async () => {
+    test("mode liste : voile non annulable, copies générées dans la main", async () => {
         const hand = makeStack("hand-1");
-        const veil = vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => cards);
+        const veil = vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => [cards[0]]);
 
         const result = await CardSelection.playCardSelection(
-            makeContent({chooseCardsList: LIST, chooseCardsCount: "5"}), hand);
+            makeContent({chooseCardsList: LIST, chooseCardsCount: "1"}), hand);
 
         expect(veil).toHaveBeenCalledTimes(1);
         const [candidates, count, options] = veil.mock.calls[0];
         expect(candidates.map(c => c.name)).toEqual(["FQCARDTITLE.CardA", "FQCARDTITLE.CardB"]);
-        expect(count).toBe(2);
+        expect(count).toBe(1);
         expect(options).toEqual({cancellable: false});
         const [embeddedName, data] = hand.createEmbeddedDocuments.mock.calls[0];
         expect(embeddedName).toBe("Card");
+        expect(data.map(d => d.origin)).toEqual([null]);
+        expect(result).toHaveLength(1);
+    });
+
+    test("choix forcé (nombre à choisir couvrant le vivier) : pas de voile, tout arrive en main", async () => {
+        const hand = makeStack("hand-1");
+        const veil = vi.spyOn(CardSelection, "openSelectionVeil");
+
+        const result = await CardSelection.playCardSelection(
+            makeContent({chooseCardsList: LIST, chooseCardsCount: "5"}), hand);
+
+        expect(veil).not.toHaveBeenCalled();
+        const [embeddedName, data] = hand.createEmbeddedDocuments.mock.calls[0];
+        expect(embeddedName).toBe("Card");
+        expect(data.map(d => d.name)).toEqual(["FQCARDTITLE.CardA", "FQCARDTITLE.CardB"]);
         expect(data.map(d => d.origin)).toEqual([null, null]);
         expect(result).toHaveLength(2);
     });
@@ -357,12 +372,14 @@ describe("playCardSelection — encart « proposer des cartes » d'une carte jou
     test("exclusion du deck du joueur : les cartes déjà possédées (par nom) sortent du vivier", async () => {
         const hand = makeStack("hand-1");
         vi.spyOn(TradingCards, "getFirstDeck").mockReturnValue({cards: [{name: "FQCARDTITLE.CardA"}]});
-        const veil = vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => cards);
+        const veil = vi.spyOn(CardSelection, "openSelectionVeil");
 
         await CardSelection.playCardSelection(
             makeContent({chooseCardsList: LIST, chooseCardsCount: "1", chooseCardsExcludeDeck: true}), hand);
 
-        expect(veil.mock.calls[0][0].map(c => c.name)).toEqual(["FQCARDTITLE.CardB"]);
+        // Une seule candidate restante pour un choix de 1 : choix forcé, pas de voile.
+        expect(veil).not.toHaveBeenCalled();
+        expect(hand.createEmbeddedDocuments.mock.calls[0][1].map(d => d.name)).toEqual(["FQCARDTITLE.CardB"]);
     });
 
     test("mode deck : source + niveaux filtrent les candidates, nb proposées borne le voile", async () => {
@@ -372,11 +389,10 @@ describe("playCardSelection — encart « proposer des cartes » d'une carte jou
 
         await CardSelection.playCardSelection(
             makeContent({chooseCardsFrom: "fq-card-engine.decks-pattern-fq8.Deck A",
-                chooseCardsLevels: "1,2", chooseCardsProposed: "1", chooseCardsCount: "1"}), hand);
+                chooseCardsLevels: "1,2", chooseCardsProposed: "2", chooseCardsCount: "1"}), hand);
 
         const [candidates, count] = veil.mock.calls[0];
-        expect(candidates).toHaveLength(1);
-        expect(["FQCARDTITLE.A1", "FQCARDTITLE.A2"]).toContain(candidates[0].name);
+        expect(candidates.map(c => c.name).sort()).toEqual(["FQCARDTITLE.A1", "FQCARDTITLE.A2"]);
         expect(count).toBe(1);
     });
 

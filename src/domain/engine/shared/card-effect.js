@@ -13,7 +13,6 @@ import {createWarning} from "../../../core/utils/chat.utils.js";
 import {ERROR_COLOR} from "../../../core/constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
-import CardGenerated from "./card-generated.js";
 import CardSelection from "../../interface/window/card-selection.js";
 
 /**
@@ -57,9 +56,6 @@ export default class CardEffect {
             }
             if (cardContent.draw) {
                 card.parent.draw(card.source, cardContent.draw, {chatNotification: false, how: 2});
-            }
-            if (cardContent.generateCard) {
-                await CardEffect.generateCardInHand(cardContent.generateCard, card.parent);
             }
             if (cardContent.retrieveFromDiscard?.trim()) {
                 await CardEffect.retrieveCardFromDiscard(cardContent.retrieveFromDiscard, to, card);
@@ -114,27 +110,6 @@ export default class CardEffect {
                 content: `<div style='font-style: italic'>${game.i18n.localize("FQCARDENGINE.InfoMsgNoAddedEffect")}</div>`
             });
         }
-    }
-
-    /**
-     * Crée dans la main une copie de la carte de compendium référencée par
-     * `reference` (`compendium.deck.carte`) : la copie arrive face visible, non
-     * piochée et sans deck d'origine (elle sera défaussée comme une carte
-     * normale). Si la référence ne peut pas être résolue, publie un
-     * avertissement sans bloquer le reste des effets de la carte jouée.
-     *
-     * @param {string} reference - La référence `compendium.deck.carte`.
-     * @param {Cards}  hand      - La main dans laquelle créer la copie.
-     *
-     * @returns {Promise<Card[]|null>} Les cartes créées, ou null si la référence est invalide.
-     */
-    static async generateCardInHand(reference, hand) {
-        const compendiumCard = await CardGenerated.resolveCompendiumCard(reference);
-        if (!compendiumCard) {
-            createWarning(game.i18n.format("FQCARDENGINE.WarningMsgGenerateCardNotFound", {name: reference}), {actor: game.user.character});
-            return null;
-        }
-        return hand.createEmbeddedDocuments("Card", [CardGenerated.buildGeneratedCardData(compendiumCard)]);
     }
 
     /**
@@ -232,8 +207,8 @@ export default class CardEffect {
      * (cf. {@link CardEffect.resolveDiscardRetrieval}) puis, en mode `*`, fait
      * choisir UNE carte au joueur via une dialog (choix automatique s'il n'y en a
      * qu'une éligible) ; en mode liste, récupère TOUTES les cartes listées sans
-     * dialog. Les cartes sont DÉPLACÉES — contrairement à `generateCard` qui crée
-     * une copie, chacune garde son deck d'origine et sera défaussée/rappelée
+     * dialog. Les cartes sont DÉPLACÉES — contrairement aux copies générées de
+     * l'encart 🃏, chacune garde son deck d'origine et sera défaussée/rappelée
      * normalement. Elles reviennent face visible (même défaussées face cachée) et
      * sont horodatées `generatedAt` pour le halo vert temporaire de la main
      * (cf. hand-board.js).

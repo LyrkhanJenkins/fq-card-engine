@@ -433,8 +433,10 @@ export default class CardSelection {
      * joueur si demandé, tire au hasard le nombre proposé (vide = toutes),
      * réduit le nombre à choisir au vivier réellement disponible (vivier vide →
      * avertissement de chat, l'effet est passé), puis ouvre le voile SANS
-     * annulation possible (les coûts de la carte sont déjà payés) et crée les
-     * copies générées dans la MAIN du joueur (comme `generateCard`) — sans deck
+     * annulation possible (les coûts de la carte sont déjà payés) — sauf si le
+     * nombre à choisir couvre tout le vivier, auquel cas toutes les cartes sont
+     * prises directement sans voile — et crée les
+     * copies générées dans la MAIN du joueur — sans deck
      * d'origine, elles se défaussent normalement puis sont détruites au
      * nettoyage de combat.
      *
@@ -481,7 +483,11 @@ export default class CardSelection {
                 {actor: game.user.character});
             return null;
         }
-        const chosen = await CardSelection.openSelectionVeil(candidates, count, {cancellable: false});
+        // Choix forcé (autant de cartes à choisir que de proposées) : le voile
+        // non annulable n'offrirait aucune décision réelle, on prend tout direct.
+        const chosen = count === candidates.length
+            ? candidates
+            : await CardSelection.openSelectionVeil(candidates, count, {cancellable: false});
         if (!chosen) {
             return null;
         }

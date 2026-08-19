@@ -128,6 +128,39 @@ describe("chooseCards* — proposition de cartes au jeu de la carte", () => {
         expect(result.generatedCards).toHaveLength(1);
     });
 
+    test("choix forcé (nb à choisir >= nb proposées) : pas de voile, toutes les cartes arrivent en main", async () => {
+        const veil = vi.spyOn(CardSelection, "openSelectionVeil");
+        const card = makeChooserCard({
+            chooseCardsList: "decks-pattern-fq8.Proposed deck.FQCARDTITLE.ProposedA," +
+                "decks-pattern-fq8.Proposed deck.FQCARDTITLE.ProposedB",
+            chooseCardsCount: "2"
+        });
+
+        const result = await playChoice(card, 0, {world: {packs: makePacks()}});
+
+        expect(result.threw).toBe(false);
+        expect(veil).not.toHaveBeenCalled();
+        const [embeddedName, data] = result.generatedCards[0];
+        expect(embeddedName).toBe("Card");
+        expect(data.map(c => c.name).sort()).toEqual(["FQCARDTITLE.ProposedA", "FQCARDTITLE.ProposedB"]);
+        expect(result.chatMessages.some(m => m.content?.includes("FQCARDENGINE.InfoMsgCardsAddedToHand"))).toBe(true);
+    });
+
+    test("choix forcé par vivier réduit (nb à choisir > cartes résolubles) : pas de voile non plus", async () => {
+        const veil = vi.spyOn(CardSelection, "openSelectionVeil");
+        const card = makeChooserCard({
+            chooseCardsList: "decks-pattern-fq8.Proposed deck.FQCARDTITLE.ProposedA",
+            chooseCardsCount: "3"
+        });
+
+        const result = await playChoice(card, 0, {world: {packs: makePacks()}});
+
+        expect(result.threw).toBe(false);
+        expect(veil).not.toHaveBeenCalled();
+        const [, data] = result.generatedCards[0];
+        expect(data.map(c => c.name)).toEqual(["FQCARDTITLE.ProposedA"]);
+    });
+
     test("vivier vide (référence irrésoluble) : avertissements de chat, pas de voile, le jeu continue", async () => {
         const veil = vi.spyOn(CardSelection, "openSelectionVeil");
         const card = makeChooserCard({

@@ -211,8 +211,8 @@ describe("Balayage global des decks pattern fq8 (07-03 — EXHA-05)", () => {
     // Invariant (c) / garde-fou d'auto-couverture : le compte est calculé
     // dynamiquement depuis le glob — une carte ajoutée au JSON du deck-pattern
     // fait mécaniquement grimper ce total, sans toucher à ce fichier.
-    test("balaie au moins 230 choix des 15 decks pattern fq8 (garde-fou d'auto-couverture)", () => {
-        expect(deckFiles.length).toBe(15);
+    test("balaie au moins 230 choix des 16 decks pattern fq8 (garde-fou d'auto-couverture)", () => {
+        expect(deckFiles.length).toBe(16);
         expect(sweepEntries.length).toBeGreaterThanOrEqual(230);
     });
 });

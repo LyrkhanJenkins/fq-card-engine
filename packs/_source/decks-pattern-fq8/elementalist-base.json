@@ -1451,7 +1451,7 @@
                 "onTarget": false
               },
               "hasBeenPlayed": false,
-              "generateCard": "fq-card-engine.decks-pattern-fq8.Elementalist Generated.FQCARDTITLE.Incantation"
+              "chooseCardsList": "fq-card-engine.decks-pattern-fq8.Elementalist Generated.FQCARDTITLE.Incantation"
             }
           ],
           "level": 4,
@@ -1954,7 +1954,7 @@
               "minions": [],
               "hasBeenPlayed": false,
               "targetType": "Default",
-              "generateCard": "fq-card-engine.decks-pattern-fq8.Elementalist Generated.FQCARDTITLE.DamagePropagation"
+              "chooseCardsList": "fq-card-engine.decks-pattern-fq8.Elementalist Generated.FQCARDTITLE.DamagePropagation"
             }
           ],
           "level": 4,

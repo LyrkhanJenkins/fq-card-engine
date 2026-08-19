@@ -111,6 +111,13 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             xvalue: new StringField({required: true, label: "FQCARDENGINE.Xvalue"}),
             yvalue: new StringField({required: true, label: "FQCARDENGINE.Yvalue"}),
 
+            chooseCardsList: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsList"}),
+            chooseCardsFrom: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsFrom"}),
+            chooseCardsLevels: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsLevels"}),
+            chooseCardsProposed: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsProposed"}),
+            chooseCardsCount: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsCount"}),
+            chooseCardsExcludeDeck: new BooleanField({required: false, label: "FQCARDENGINE.ChooseCardsExcludeDeck"}),
+
             // Formule supplémentaire pour apppliquer des effets
             applyEffectsFormulas: new ArrayField(this.getApplyEffectsFormulaSchema(), {label: "FQCARDENGINE.ApplyEffectsFormulas"}),
             // Messages spéciaux à display aux joueurs après utilisation de la carte (utilise localize)
@@ -130,25 +137,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
 
             // La carte est rejouable (« passif » = reste en main, ou nombre de charges)
             replayable: new StringField({required: true, label: "FQCARDENGINE.Replayable"}),
-            // Specific sound to play after card use
-            sound: new StringField({required: true, label: "FQCARDENGINE.CardSound"}),
-            // Specific FX with Sequence to display after card use
-            visual: new SchemaField({
-                path: new StringField({required: true, label: "FQCARDENGINE.CardVisual"}),
-                onTarget: new BooleanField({required: true, label: "FQCARDENGINE.CardVisualOnTarget"}),
-            }),
-            generateCard: new StringField({required: true, label: "FQCARDENGINE.GenerateCard"}),
             retrieveFromDiscard: new StringField({required: true, label: "FQCARDENGINE.RetrieveFromDiscard"}),
-
-            chooseCardsList: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsList"}),
-            chooseCardsFrom: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsFrom"}),
-            chooseCardsLevels: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsLevels"}),
-            chooseCardsProposed: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsProposed"}),
-            chooseCardsCount: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsCount"}),
-            chooseCardsExcludeDeck: new BooleanField({required: false, label: "FQCARDENGINE.ChooseCardsExcludeDeck"}),
-
-            passivePlayedRound: new StringField({required: false}),
-            hasBeenPlayed: new BooleanField({required: false}),
 
             // Custom actions
             customEvals: new ArrayField(new SchemaField({
@@ -157,6 +146,17 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                 // message to display if test false
                 errorMessages: new ArrayField(this.getMessageSchema(), {label: "FQCARDENGINE.CustomEvalErrorMessages"}),
             }), {label: "FQCARDENGINE.CustomEvals"}),
+
+            // Specific sound to play after card use
+            sound: new StringField({required: true, label: "FQCARDENGINE.CardSound"}),
+            // Specific FX with Sequence to display after card use
+            visual: new SchemaField({
+                path: new StringField({required: true, label: "FQCARDENGINE.CardVisual"}),
+                onTarget: new BooleanField({required: true, label: "FQCARDENGINE.CardVisualOnTarget"}),
+            }),
+
+            passivePlayedRound: new StringField({required: false}),
+            hasBeenPlayed: new BooleanField({required: false}),
         });
     }
 

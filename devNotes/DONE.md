@@ -4,16 +4,14 @@ Feat :
 - Option pour bypassé les modales d'attaque et de dégâts (pas de classe d'armure)
 - Ajout d'une macro raccourci pour lancer les dégâts de l'arme du combattant courant
 - Quand le deck est vidé, la défausse est repioché
-- Pouvoir générer une carte après utilisation d'une autre carte
 - Pouvoir récupérer une carte de la défausse dans la main (toutes ou une liste donnée)
 - Simplifier les formules à l'affichage sur les cartes + tooltips
 - Suppression du "JSON Après utilisation" -> Remplacer par les cartes générées
-- Génère des cartes dans la défausse parmi un choix proposé au joueur
+- Génère des cartes dans la main avec un choix possible proposé au joueur
 - Creation des classes et token du Guerrier Runique et du Maître d'Armes
 - Premières cartes du Guerrier Runique et du Maître d'Armes (En cours...)
 - Ajout d'un score de bonus pour tout type de carte
 - Pris en compte de rwak et mwark dans les jets de dégâts sans attaque
-- 
   
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

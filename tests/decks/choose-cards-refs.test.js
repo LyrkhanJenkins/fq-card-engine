@@ -4,10 +4,10 @@ import path from "path";
 
 /**
  * Garde-fou de cohérence des encarts 🃏 « Proposer des cartes » des decks
- * pattern (même esprit que le garde-fou des références `generateCard`) :
- * une référence `chooseCardsFrom` qui ne résout plus vers un deck existant,
- * ou des filtres de niveaux qui ne matchent plus aucune rune, dégénèrent en
- * silence en jeu (warning « aucune candidate ») — ce test casse à la place.
+ * pattern : une référence `chooseCardsList` ou `chooseCardsFrom` qui ne résout
+ * plus vers un deck/une carte existants, ou des filtres de niveaux qui ne
+ * matchent plus aucune rune, dégénèrent en silence en jeu (warning « aucune
+ * candidate ») — ce test casse à la place.
  */
 
 const DECKS_DIR = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq8");
@@ -19,11 +19,15 @@ const decks = fs.readdirSync(DECKS_DIR)
 const decksByName = new Map(decks.map(deck => [deck.name, deck]));
 
 const chooseEntries = [];
+const listEntries = [];
 for (const deck of decks) {
     for (const card of deck.cards) {
         card.system.fq.choices.forEach((choice, choiceIndex) => {
             if (choice.chooseCardsFrom?.trim()) {
                 chooseEntries.push({deckName: deck.name, cardName: card.name, choiceIndex, choice});
+            }
+            for (const reference of (choice.chooseCardsList ?? "").split(",").map(part => part.trim()).filter(Boolean)) {
+                listEntries.push({deckName: deck.name, cardName: card.name, choiceIndex, reference});
             }
         });
     }
@@ -59,6 +63,24 @@ describe("Références des encarts 🃏 des decks pattern fq8", () => {
             if (proposed) {
                 expect(proposed).toBeGreaterThanOrEqual(wanted);
             }
+        }
+    );
+
+    test("au moins une référence de liste est découverte (auto-couverture)", () => {
+        expect(listEntries.length).toBeGreaterThanOrEqual(1);
+    });
+
+    test.each(listEntries)(
+        "$deckName :: $cardName :: choix $choiceIndex → $reference",
+        ({reference}) => {
+            // Chaque référence de liste désigne une carte d'un deck du pack pattern, par id complet.
+            expect(reference.startsWith(`${PACK_ID}.`)).toBe(true);
+            const rest = reference.slice(PACK_ID.length + 1);
+            const targetDeck = decks.find(deck => rest.startsWith(`${deck.name}.`));
+            expect(targetDeck, `deck introuvable pour « ${reference} »`).toBeDefined();
+            const targetName = rest.slice(targetDeck.name.length + 1);
+            expect(targetDeck.cards.some(card => card.name === targetName),
+                `carte « ${targetName} » absente du deck « ${targetDeck.name} »`).toBe(true);
         }
     );
 });
