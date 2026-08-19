@@ -19,7 +19,7 @@ const {default: CardSelection} = await import("../../src/domain/interface/window
  * `playValidatedCard` : quand le choix joué porte une source (liste de
  * références ou deck de compendium), le voile de sélection s'ouvre en mode NON
  * annulable après application des effets, et les cartes validées arrivent dans
- * la défausse cible en copies « générées » (sans deck d'origine — donc
+ * la MAIN du joueur en copies « générées » (sans deck d'origine — donc
  * supprimées par le nettoyage de combat) ; vivier vide → simple avertissement
  * de chat, le jeu de la carte n'est pas bloqué. Le voile lui-même est stubbé
  * (DOM → UAT visuel Foundry).
@@ -79,7 +79,7 @@ describe("chooseCards* — proposition de cartes au jeu de la carte", () => {
         vi.clearAllMocks();
     });
 
-    test("mode liste : le voile s'ouvre non annulable et les cartes validées arrivent en défausse sans origine", async () => {
+    test("mode liste : le voile s'ouvre non annulable et les cartes validées arrivent en main sans origine", async () => {
         const veil = vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => [cards[0]]);
         const card = makeChooserCard({
             chooseCardsList: "decks-pattern-fq8.Proposed deck.FQCARDTITLE.ProposedA," +
@@ -93,7 +93,7 @@ describe("chooseCards* — proposition de cartes au jeu de la carte", () => {
         expect(veil).toHaveBeenCalledTimes(1);
         expect(veil.mock.calls[0][1]).toBe(1);
         expect(veil.mock.calls[0][2]).toEqual({cancellable: false});
-        const [embeddedName, [data]] = result.discardPile.createEmbeddedDocuments.mock.calls[0];
+        const [embeddedName, [data]] = result.generatedCards[0];
         expect(embeddedName).toBe("Card");
         // Le vivier est mélangé avant proposition : la carte créée est l'une des deux proposées.
         expect(["FQCARDTITLE.ProposedA", "FQCARDTITLE.ProposedB"]).toContain(data.name);
@@ -103,8 +103,10 @@ describe("chooseCards* — proposition de cartes au jeu de la carte", () => {
         expect(typeof data.flags["fq-card-engine"].generatedAt).toBe("number");
         // Marqueur durable : recyclage en deck épuisé + destruction au nettoyage de combat
         expect(data.flags["fq-card-engine"].generated).toBe(true);
-        // Le jeu annonce les cartes ajoutées à la défausse dans le chat
-        expect(result.chatMessages.some(m => m.content?.includes("FQCARDENGINE.InfoMsgCardsAddedToDiscard"))).toBe(true);
+        // La défausse n'est pas touchée : les copies arrivent dans la main
+        expect(result.discardPile.createEmbeddedDocuments).not.toHaveBeenCalled();
+        // Le jeu annonce les cartes ajoutées à la main dans le chat
+        expect(result.chatMessages.some(m => m.content?.includes("FQCARDENGINE.InfoMsgCardsAddedToHand"))).toBe(true);
         // Aucun message vide : displayResult ne publie rien sans résultat ni message manuel
         expect(result.chatMessages.some(m => m.content === "<div class=\"fq-card-engine-result\"></div>")).toBe(false);
     });
@@ -123,7 +125,7 @@ describe("chooseCards* — proposition de cartes au jeu de la carte", () => {
         expect(result.threw).toBe(false);
         const [candidates] = veil.mock.calls[0];
         expect(candidates.map(c => c.name).sort()).toEqual(["FQCARDTITLE.ProposedA", "FQCARDTITLE.ProposedB"]);
-        expect(result.discardPile.createEmbeddedDocuments).toHaveBeenCalledTimes(1);
+        expect(result.generatedCards).toHaveLength(1);
     });
 
     test("vivier vide (référence irrésoluble) : avertissements de chat, pas de voile, le jeu continue", async () => {
@@ -137,7 +139,7 @@ describe("chooseCards* — proposition de cartes au jeu de la carte", () => {
 
         expect(result.threw).toBe(false);
         expect(veil).not.toHaveBeenCalled();
-        expect(result.discardPile.createEmbeddedDocuments).not.toHaveBeenCalled();
+        expect(result.generatedCards).toHaveLength(0);
         expect(result.chatMessages.some(m => m.content?.includes("FQCARDENGINE.WarningMsgChooseCardsNoCandidates"))).toBe(true);
         // La carte jouée part bien à la défausse malgré l'absence de vivier
         expect(result.passCalls).toHaveLength(1);

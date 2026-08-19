@@ -336,43 +336,43 @@ describe("playCardSelection — encart « proposer des cartes » d'une carte jou
         expect(CardSelection.hasCardSelection(undefined)).toBe(false);
     });
 
-    test("mode liste : voile non annulable, nombre à choisir réduit au vivier, copies générées dans la pile", async () => {
-        const pile = makeStack("pile-1");
+    test("mode liste : voile non annulable, nombre à choisir réduit au vivier, copies générées dans la main", async () => {
+        const hand = makeStack("hand-1");
         const veil = vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => cards);
 
         const result = await CardSelection.playCardSelection(
-            makeContent({chooseCardsList: LIST, chooseCardsCount: "5"}), pile);
+            makeContent({chooseCardsList: LIST, chooseCardsCount: "5"}), hand);
 
         expect(veil).toHaveBeenCalledTimes(1);
         const [candidates, count, options] = veil.mock.calls[0];
         expect(candidates.map(c => c.name)).toEqual(["FQCARDTITLE.CardA", "FQCARDTITLE.CardB"]);
         expect(count).toBe(2);
         expect(options).toEqual({cancellable: false});
-        const [embeddedName, data] = pile.createEmbeddedDocuments.mock.calls[0];
+        const [embeddedName, data] = hand.createEmbeddedDocuments.mock.calls[0];
         expect(embeddedName).toBe("Card");
         expect(data.map(d => d.origin)).toEqual([null, null]);
         expect(result).toHaveLength(2);
     });
 
     test("exclusion du deck du joueur : les cartes déjà possédées (par nom) sortent du vivier", async () => {
-        const pile = makeStack("pile-1");
+        const hand = makeStack("hand-1");
         vi.spyOn(TradingCards, "getFirstDeck").mockReturnValue({cards: [{name: "FQCARDTITLE.CardA"}]});
         const veil = vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => cards);
 
         await CardSelection.playCardSelection(
-            makeContent({chooseCardsList: LIST, chooseCardsCount: "1", chooseCardsExcludeDeck: true}), pile);
+            makeContent({chooseCardsList: LIST, chooseCardsCount: "1", chooseCardsExcludeDeck: true}), hand);
 
         expect(veil.mock.calls[0][0].map(c => c.name)).toEqual(["FQCARDTITLE.CardB"]);
     });
 
     test("mode deck : source + niveaux filtrent les candidates, nb proposées borne le voile", async () => {
         game.packs = makeLeveledPacks();
-        const pile = makeStack("pile-1");
+        const hand = makeStack("hand-1");
         const veil = vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => [cards[0]]);
 
         await CardSelection.playCardSelection(
             makeContent({chooseCardsFrom: "fq-card-engine.decks-pattern-fq8.Deck A",
-                chooseCardsLevels: "1,2", chooseCardsProposed: "1", chooseCardsCount: "1"}), pile);
+                chooseCardsLevels: "1,2", chooseCardsProposed: "1", chooseCardsCount: "1"}), hand);
 
         const [candidates, count] = veil.mock.calls[0];
         expect(candidates).toHaveLength(1);
@@ -381,27 +381,27 @@ describe("playCardSelection — encart « proposer des cartes » d'une carte jou
     });
 
     test("vivier vide après exclusion : avertissement de chat, pas de voile, renvoie null", async () => {
-        const pile = makeStack("pile-1");
+        const hand = makeStack("hand-1");
         vi.spyOn(TradingCards, "getFirstDeck").mockReturnValue(
             {cards: [{name: "FQCARDTITLE.CardA"}, {name: "FQCARDTITLE.CardB"}]});
         const veil = vi.spyOn(CardSelection, "openSelectionVeil");
 
         const result = await CardSelection.playCardSelection(
-            makeContent({chooseCardsList: LIST, chooseCardsCount: "1", chooseCardsExcludeDeck: true}), pile);
+            makeContent({chooseCardsList: LIST, chooseCardsCount: "1", chooseCardsExcludeDeck: true}), hand);
 
         expect(result).toBeNull();
         expect(veil).not.toHaveBeenCalled();
         expect(game.i18n.localize).toHaveBeenCalledWith("FQCARDENGINE.WarningMsgChooseCardsNoCandidates");
-        expect(pile.createEmbeddedDocuments).not.toHaveBeenCalled();
+        expect(hand.createEmbeddedDocuments).not.toHaveBeenCalled();
     });
 
     test("deck du joueur introuvable alors que l'exclusion est demandée : rien n'est proposé", async () => {
-        const pile = makeStack("pile-1");
+        const hand = makeStack("hand-1");
         vi.spyOn(TradingCards, "getFirstDeck").mockReturnValue(undefined);
         const veil = vi.spyOn(CardSelection, "openSelectionVeil");
 
         const result = await CardSelection.playCardSelection(
-            makeContent({chooseCardsList: LIST, chooseCardsCount: "1", chooseCardsExcludeDeck: true}), pile);
+            makeContent({chooseCardsList: LIST, chooseCardsCount: "1", chooseCardsExcludeDeck: true}), hand);
 
         expect(result).toBeNull();
         expect(veil).not.toHaveBeenCalled();

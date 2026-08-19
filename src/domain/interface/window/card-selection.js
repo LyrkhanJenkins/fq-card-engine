@@ -434,14 +434,16 @@ export default class CardSelection {
      * réduit le nombre à choisir au vivier réellement disponible (vivier vide →
      * avertissement de chat, l'effet est passé), puis ouvre le voile SANS
      * annulation possible (les coûts de la carte sont déjà payés) et crée les
-     * copies générées dans la défausse cible — détruites au nettoyage de combat.
+     * copies générées dans la MAIN du joueur (comme `generateCard`) — sans deck
+     * d'origine, elles se défaussent normalement puis sont détruites au
+     * nettoyage de combat.
      *
      * @param {object} cardContent - Le contenu (choix) de la carte jouée.
-     * @param {Cards}  pile        - La pile de défausse cible du jeu de la carte.
+     * @param {Cards}  hand        - La main du joueur ayant joué la carte.
      *
      * @returns {Promise<Card[]|null>} Les cartes créées, ou null si rien à proposer.
      */
-    static async playCardSelection(cardContent, pile) {
+    static async playCardSelection(cardContent, hand) {
         const list = cardContent.chooseCardsList?.trim();
         const proposed = Number(cardContent.chooseCardsProposed) || 0;
         const wanted = Number(cardContent.chooseCardsCount) || 1;
@@ -483,10 +485,11 @@ export default class CardSelection {
         if (!chosen) {
             return null;
         }
-        const created = await CardSelection.applySelection(chosen, "discard", [pile]);
+        const data = chosen.map(card => CardGenerated.buildGeneratedCardData(card));
+        const created = await hand.createEmbeddedDocuments("Card", data);
         ChatMessage.create({
             speaker: ChatMessage.getSpeaker({actor: game.user.character}),
-            content: `<div style='font-style: italic'>${game.i18n.format("FQCARDENGINE.InfoMsgCardsAddedToDiscard",
+            content: `<div style='font-style: italic'>${game.i18n.format("FQCARDENGINE.InfoMsgCardsAddedToHand",
                 {names: chosen.map(card => game.i18n.localize(card.name)).join(", ")})}</div>`
         });
         return created;

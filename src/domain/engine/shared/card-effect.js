@@ -65,7 +65,7 @@ export default class CardEffect {
                 await CardEffect.retrieveCardFromDiscard(cardContent.retrieveFromDiscard, to, card);
             }
             if (CardSelection.hasCardSelection(cardContent)) {
-                await CardSelection.playCardSelection(cardContent, to);
+                await CardSelection.playCardSelection(cardContent, card.parent);
             }
             if (cardContent.minions && Array.isArray(cardContent.minions)) {
                 const selectedLocations = [];
