@@ -70,6 +70,28 @@ describe("Constants", () => {
 
             expect(Constants.isActorInCombat).toBe(false);
         });
+
+        it("actorCurrent tolère l'absence de game.user", () => {
+            game.user = undefined;
+
+            expect(Constants.actorCurrent).toBeUndefined();
+        });
+
+        it("actorToken renvoie le token de l'acteur demandé, ou undefined", () => {
+            expect(Constants.actorToken("userCharacterId")).toEqual(expect.objectContaining({actorId: "userCharacterId"}));
+            expect(Constants.actorToken("inconnu")).toBeUndefined();
+            expect(Constants.actorToken(undefined)).toBeUndefined();
+        });
+
+        it("currentTargets renvoie les cibles sélectionnées, ou un tableau vide sans cibles", () => {
+            expect(Constants.currentTargets).toEqual([...game.user.targets]);
+
+            game.user.targets = new Set();
+            expect(Constants.currentTargets).toEqual([]);
+
+            game.user = undefined;
+            expect(Constants.currentTargets).toEqual([]);
+        });
     });
 
     describe("logique métier", () => {

@@ -14,6 +14,7 @@ import {ERROR_COLOR} from "../../../core/constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
 import CardSelection from "../../interface/window/card-selection.js";
+import CardCondition from "./card-condition.js";
 
 /**
  * Résolution et application des effets d'une carte : variables et bonus (X/Y,
@@ -45,14 +46,26 @@ export default class CardEffect {
         const dsnAnimations = [];
 
         if (cardContent) {
-            ResourceHandler.consumeResources(cardContent, game.user?.character);
+            ResourceHandler.consumeResources(cardContent, Constants.actorCurrent);
             // Injection des dégâts de l'arme équipée (@wpnR/@wpnM)
-            WeaponDamage.substituteInDamage(cardContent, game.user?.character);
+            WeaponDamage.substituteInDamage(cardContent, Constants.actorCurrent);
+            if (cardContent.executeEval) {
+                cardContent.executeEval = cardContent.executeEval?.replaceAll("&gt;", ">").replaceAll("&lt;", "<")
+                    .replaceAll("&amp;", "&");
+                // Exécuté AVANT les jets : le script peut ajuster le contenu de la carte
+                // (ex : Bouclier Divin calcule son soin depuis les derniers dégâts subis).
+                // Un script défaillant ne doit pas avorter le jeu : les coûts sont payés.
+                try {
+                    eval(cardContent.executeEval);
+                } catch (e) {
+                    console.error(e);
+                }
+            }
             if (cardContent.damage) {
-                resultArray.push(...await Damage.buildDamageDiceLauncher(game.user.character, cardContent, dsnAnimations));
+                resultArray.push(...await Damage.buildDamageDiceLauncher(Constants.actorCurrent, cardContent, dsnAnimations));
             }
             if (cardContent.heal) {
-                resultArray.push(...await Damage.buildHealDiceLauncher(game.user.character, cardContent, dsnAnimations));
+                resultArray.push(...await Damage.buildHealDiceLauncher(Constants.actorCurrent, cardContent, dsnAnimations));
             }
             if (cardContent.draw) {
                 card.parent.draw(card.source, cardContent.draw, {chatNotification: false, how: 2});
@@ -76,12 +89,6 @@ export default class CardEffect {
                     }
                 }
             }
-            if (cardContent.executeEval) {
-                cardContent.executeEval = cardContent.executeEval?.replaceAll("&gt;", ">").replaceAll("&lt;", "<")
-                    .replaceAll("&amp;", "&");
-                eval(cardContent.executeEval);
-            }
-
             let cardMessages = CardEffect.translateMessages(cardContent.messages);
             if (cardContent.applyEffectsFormulas) {
                 for (let i = 0; i < cardContent.applyEffectsFormulas.length; i++) {
@@ -102,11 +109,11 @@ export default class CardEffect {
                 await socket.executeAsGM("applyActorHpModification", res.targetTokenId, res.value, res.type);
             }
 
-            Damage.displayResult(game.user.character, resultArray, cardMessages);
+            Damage.displayResult(Constants.actorCurrent, resultArray, cardMessages);
             await socket.executeAsGM("logCardPlayed", resultArray, cardContent);
         } else {
             ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
                 content: `<div style='font-style: italic'>${game.i18n.localize("FQCARDENGINE.InfoMsgNoAddedEffect")}</div>`
             });
         }
@@ -166,7 +173,7 @@ export default class CardEffect {
             ? game.i18n.format("FQCARDENGINE.WarningMsgMissingRetrievableCards",
                 {names: retrieval.missing.map(name => game.i18n.localize(name)).join(", ")})
             : game.i18n.localize("FQCARDENGINE.WarningMsgNoRetrievableCard");
-        ResourceHandler.createUserWarningMessage(message, game.user.character);
+        ResourceHandler.createUserWarningMessage(message, Constants.actorCurrent);
     }
 
     /**
@@ -318,7 +325,7 @@ export default class CardEffect {
                 }
             }
         } else {
-            const actor = game.user.character;
+            const actor = Constants.actorCurrent;
             const effects = actor?.effects?.contents ?? [];
             const effectId = effects.length ? await CardEffect.resolveEffectIdToRemove(effects, name) : undefined;
             if (effectId) {
@@ -512,7 +519,7 @@ export default class CardEffect {
 
         if (roll) {
             const msg = await roll.toMessage({
-                speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
                 flavor: message
             });
 
@@ -536,7 +543,7 @@ export default class CardEffect {
                         await socket.executeAsGM("addEffectForTarget", effects[effectsKey], target.id);
                     }
                 } else {
-                    ActiveEffect.implementation.create(effects[effectsKey], {parent: game.user.character});
+                    ActiveEffect.implementation.create(effects[effectsKey], {parent: Constants.actorCurrent});
                 }
             }
         }
@@ -642,51 +649,43 @@ export default class CardEffect {
      */
     static checkIfCanUseCard(cardContent, card, to) {
 
-        if (cardContent.customEvals && Array.isArray(cardContent.customEvals)) {
-            let iscustomEvals = true;
-            cardContent.customEvals.forEach(customEval => {
-                // Contrôle de la carte personnalisée
-                if (customEval.script) {
-                    try {
-                        if (!eval(customEval.script)) {
-                            let cardMessages = CardEffect.translateMessages(customEval.errorMessages);
-                            if (cardMessages?.length) {
-                                cardMessages.forEach(warningMsg => {
-                                    createWarning(warningMsg, {actor: game.user.character});
-                                });
-                            } else {
-                                createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgCardConditionNotMet"), {actor: game.user.character});
-                            }
-                            iscustomEvals = false;
-                        }
-                    } catch (e) {
-                        console.error(e);
-                        createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgErrorReadingCardSpecialCondition"), {actor: game.user.character, color: ERROR_COLOR});
-                    }
+        const conditions = CardCondition.evaluate(cardContent, card, to);
+        if (!conditions.ok) {
+            conditions.failures.forEach(failure => {
+                if (failure.thrown) {
+                    console.error(failure.thrown);
+                    createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgErrorReadingCardSpecialCondition"), {actor: Constants.actorCurrent, color: ERROR_COLOR});
+                    return;
+                }
+                const cardMessages = CardEffect.translateMessages(failure.errorMessages);
+                if (cardMessages?.length) {
+                    cardMessages.forEach(warningMsg => {
+                        createWarning(warningMsg, {actor: Constants.actorCurrent});
+                    });
+                } else {
+                    createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgCardConditionNotMet"), {actor: Constants.actorCurrent});
                 }
             });
-            if (!iscustomEvals) {
-                return false;
-            }
+            return false;
         }
 
         if (game.combat != null) {
             if (cardContent?.replayable === "passif" && cardContent?.hasBeenPlayed && cardContent?.passivePlayedRound === game.combat?.round.toString()) {
-                createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPassiveSpellAlreadyUsed"), {actor: game.user.character});
+                createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPassiveSpellAlreadyUsed"), {actor: Constants.actorCurrent});
                 return false;
             }
             // S'agit t-il d'un sort réactive et peut on la jouer?
-            if (cardContent && !cardContent.reactive && !ResourceHandler.validateUseSpellInTurn(game.user?.character)) {
+            if (cardContent && !cardContent.reactive && !ResourceHandler.validateUseSpellInTurn(Constants.actorCurrent)) {
                 return false;
-            } else if (cardContent?.reactive && (!game.combat || game.combat.combatant.actor?.id === game.user?.character?.id)) {
-                createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPlayReactiveCard"), {actor: game.user.character});
+            } else if (cardContent?.reactive && (!game.combat || game.combat.combatant.actor?.id === Constants.actorCurrent?.id)) {
+                createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPlayReactiveCard"), {actor: Constants.actorCurrent});
                 return false;
             }
         }
 
         if (cardContent?.draw) {
             if (((card.source?.cards?.size ?? 0) - (card.source?.drawnCards?.length ?? 0)) < cardContent.draw) {
-                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDraw"), game.user.character);
+                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDraw"), Constants.actorCurrent);
                 return false;
             }
         }
@@ -701,13 +700,13 @@ export default class CardEffect {
 
         // ARME : une carte exigeant un type d'arme (@wpnR/@wpnM) est injouable sans
         // l'arme équipée correspondante, au même titre qu'un manque de ressources.
-        const weaponWarningKey = WeaponDamage.getMissingWeaponWarningKey(cardContent, game.user.character);
+        const weaponWarningKey = WeaponDamage.getMissingWeaponWarningKey(cardContent, Constants.actorCurrent);
         if (weaponWarningKey) {
-            ResourceHandler.createUserWarningMessage(game.i18n.localize(weaponWarningKey), game.user.character);
+            ResourceHandler.createUserWarningMessage(game.i18n.localize(weaponWarningKey), Constants.actorCurrent);
             return false;
         }
 
-        return ResourceHandler.checkResources(cardContent, game.user.character);
+        return ResourceHandler.checkResources(cardContent, Constants.actorCurrent);
     }
 
 
@@ -847,7 +846,7 @@ export default class CardEffect {
             }
         } else {
             // Sinon ça concerne le systeme du personnage
-            return CardEffect.getNestedAttribute(game.user.character?.system, value);
+            return CardEffect.getNestedAttribute(Constants.actorCurrent?.system, value);
         }
     }
 

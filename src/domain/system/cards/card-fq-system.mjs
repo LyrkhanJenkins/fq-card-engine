@@ -146,6 +146,9 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                 // message to display if test false
                 errorMessages: new ArrayField(this.getMessageSchema(), {label: "FQCARDENGINE.CustomEvalErrorMessages"}),
             }), {label: "FQCARDENGINE.CustomEvals"}),
+            // Script à effets de bord exécuté au jeu effectif de la carte (applyCardEffect),
+            // contrairement aux customEvals qui doivent rester des prédicats purs
+            executeEval: new StringField({required: true, label: "FQCARDENGINE.ExecuteEval"}),
 
             // Specific sound to play after card use
             sound: new StringField({required: true, label: "FQCARDENGINE.CardSound"}),

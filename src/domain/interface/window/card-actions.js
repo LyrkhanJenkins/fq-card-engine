@@ -1,3 +1,4 @@
+import Constants from "../../constants.js";
 import DisplayCard from "../shared/display-card.js";
 import TargetingView from "../shared/targeting-view.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
@@ -111,12 +112,12 @@ export default {
         const hasYVariable = !firstChoice.yvalue && !!firstChoiceString.match(/YYY/);
         const hasVariables = hasXVariable || hasYVariable;
 
-        if (!game.user.character) {
+        if (!Constants.actorCurrent) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoOwnedCharacter"));
             return;
         }
 
-        const character = game.user.character;
+        const character = Constants.actorCurrent;
         // Panneau de ciblage
         // (source de vérité unique → « ce qu'on voit = ce qui bloque »). Calculé pour le
         // premier choix au rendu initial ; recalculé en direct par le hook renderDialog
@@ -382,7 +383,7 @@ export default {
 
         // ── Garde-fou de ciblage ──
         if (cardContent?.minReach || cardContent?.maxReach) {
-            const {verdict} = ResourceHandler.evaluateTargeting(game.user.character, cardContent.nbTargets, cardContent.minReach, cardContent.maxReach, cardContent.targetType);
+            const {verdict} = ResourceHandler.evaluateTargeting(Constants.actorCurrent, cardContent.nbTargets, cardContent.minReach, cardContent.maxReach, cardContent.targetType);
             const errorKey = TARGETING_FORM_ERROR[verdict];
             if (errorKey) {
                 throw new FormError(game.i18n.localize(errorKey));
@@ -391,7 +392,7 @@ export default {
 
         if (cardContents.length > 1 && !CONFIG.FqCardEngine.options.betterChatMessages) {
             ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
                 content: `<div>${game.i18n.format("FQCARDENGINE.ChatMessageCardEffectChoice", {nameContent: game.i18n.localize(fd.nameContent)})}</div>`
             });
         }

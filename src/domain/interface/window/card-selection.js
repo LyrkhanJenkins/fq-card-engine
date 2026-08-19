@@ -1,3 +1,4 @@
+import Constants from "../../constants.js";
 import CardGenerated from "../../engine/shared/card-generated.js";
 import TradingCards, {DECK_TYPE, PILE_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
 import DisplayCard from "../shared/display-card.js";
@@ -472,7 +473,7 @@ export default class CardSelection {
         const pool = await CardSelection.resolveCardPool(references);
         if (list && pool.missing.length) {
             createWarning(game.i18n.format("FQCARDENGINE.WarningMsgChooseCardsNotFound",
-                {names: pool.missing.join(", ")}), {actor: game.user.character});
+                {names: pool.missing.join(", ")}), {actor: Constants.actorCurrent});
         }
         const candidates = CardSelection.sampleDistinct(
             pool.cards.filter(card => !excludedNames?.has(card.name)), proposed);
@@ -480,7 +481,7 @@ export default class CardSelection {
         const count = Math.min(wanted, candidates.length);
         if (!count) {
             createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgChooseCardsNoCandidates"),
-                {actor: game.user.character});
+                {actor: Constants.actorCurrent});
             return null;
         }
         // Choix forcé (autant de cartes à choisir que de proposées) : le voile
@@ -494,7 +495,7 @@ export default class CardSelection {
         const data = chosen.map(card => CardGenerated.buildGeneratedCardData(card));
         const created = await hand.createEmbeddedDocuments("Card", data);
         ChatMessage.create({
-            speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+            speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
             content: `<div style='font-style: italic'>${game.i18n.format("FQCARDENGINE.InfoMsgCardsAddedToHand",
                 {names: chosen.map(card => game.i18n.localize(card.name)).join(", ")})}</div>`
         });

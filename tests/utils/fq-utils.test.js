@@ -272,17 +272,16 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             }));
         });
 
-        it("script qui lève : logue console.error et publie WarningMsgErrorReadingCardSpecialCondition", () => {
+        it("script qui lève : carte injouable, logue console.error et publie WarningMsgErrorReadingCardSpecialCondition", () => {
             const cardContent = makeChoice({customEvals: [{script: "nExistePas("}]});
             const card = makeCard();
             const spy = vi.spyOn(console, "error").mockImplementation(() => {
             });
 
-            // NOTE : la branche catch ne met PAS iscustomEvals à false — on ne
-            // se prononce donc pas sur la valeur de retour ici, uniquement sur
-            // le logging et le message publié.
-            CardEffect.checkIfCanUseCard(cardContent, card);
+            // Une condition illisible ne doit jamais rendre la carte jouable.
+            const result = CardEffect.checkIfCanUseCard(cardContent, card);
 
+            expect(result).toBe(false);
             expect(spy).toHaveBeenCalled();
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
                 content: expect.stringContaining("#C04200")
@@ -575,6 +574,17 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(globalThis.__evalProbe).toBe(42);
 
             delete globalThis.__evalProbe;
+        });
+
+        it("executeEval qui lève : logue console.error et le jeu de la carte continue", async () => {
+            const spy = vi.spyOn(console, "error").mockImplementation(() => {
+            });
+            const cardContent = makeChoice({executeEval: "nExistePas("});
+
+            await expect(CardEffect.applyCardEffect(cardContent, makeCard(), {})).resolves.not.toThrow();
+
+            expect(spy).toHaveBeenCalled();
+            spy.mockRestore();
         });
 
         it("applyEffectsFormulas non vide : appelle playApplyEffectsFormulas et concatène les messages", async () => {

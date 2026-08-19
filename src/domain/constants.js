@@ -47,7 +47,7 @@ export default class Constants {
      * @returns {object|undefined} Le bloc `system.attributes`, ou undefined si aucun personnage.
      */
     static get actorAttr() {
-        return game.user.character?.system?.attributes;
+        return Constants.actorCurrent?.system?.attributes;
     }
 
     /**
@@ -56,7 +56,7 @@ export default class Constants {
      * @returns {object|undefined} Le bloc `system.abilities`, ou undefined si aucun personnage.
      */
     static get actorAbi() {
-        return game.user.character?.system?.abilities;
+        return Constants.actorCurrent?.system?.abilities;
     }
 
     /**
@@ -65,7 +65,7 @@ export default class Constants {
      * @returns {object|undefined} Le bloc `system.fq`, ou undefined si aucun personnage.
      */
     static get actorFQ() {
-        return game.user.character?.system?.fq;
+        return Constants.actorCurrent?.system?.fq;
     }
 
     /**
@@ -76,7 +76,7 @@ export default class Constants {
      * @returns {object|undefined} Le personnage de l'utilisateur courant, ou undefined si aucun.
      */
     static get actorCurrent() {
-        return game.user.character;
+        return game.user?.character;
     }
 
     /**
@@ -151,7 +151,17 @@ export default class Constants {
             // Récupère tous les squelettes de la scene active qui sont en combat
             return [...game.canvas?.scene?.tokens ?? []].map(t => t.object).filter(t => t.name.includes("Skeleton") && [...game.combat?.combatants ?? []].map(c => c.tokenId).includes(t.id));
         }
-        return [...game.user.targets];
+        return Constants.currentTargets;
+    }
+
+    /**
+     * Les tokens actuellement ciblés par l'utilisateur courant — l'accès unique
+     * partagé par le moteur et les prédicats de condition.
+     *
+     * @returns {object[]} Les tokens ciblés (tableau vide si aucun).
+     */
+    static get currentTargets() {
+        return [...(game.user?.targets ?? [])];
     }
 
     /**
@@ -160,7 +170,19 @@ export default class Constants {
      * @returns {string|undefined} L'id de l'acteur, ou undefined si aucun personnage.
      */
     static get myId() {
-        return game.user.character?.id;
+        return Constants.actorCurrent?.id;
+    }
+
+    /**
+     * Retourne le token de la scène active porté par un acteur — la recherche
+     * unique partagée par le moteur, les prédicats de ciblage et de condition.
+     *
+     * @param {string} [actorId] - L'id de l'acteur recherché.
+     *
+     * @returns {object|undefined} Le document token, ou undefined si absent.
+     */
+    static actorToken(actorId) {
+        return game.canvas?.scene?.tokens?.find(t => t.actorId === actorId);
     }
 
     /**
@@ -169,7 +191,7 @@ export default class Constants {
      * @returns {object|undefined} Le document token, ou undefined si absent.
      */
     static get myToken() {
-        return game.canvas?.scene?.tokens?.find(t => t.actorId === Constants.myId);
+        return Constants.actorToken(Constants.myId);
     }
 
     /**
@@ -178,6 +200,6 @@ export default class Constants {
      * @returns {boolean} True si l'acteur est un combattant du combat en cours.
      */
     static get isActorInCombat() {
-        return !!game.combat?.combatants?.some(c => c.actorId === game.user.character?.id);
+        return !!game.combat?.combatants?.some(c => c.actorId === Constants.myId);
     }
 }

@@ -25,12 +25,12 @@ export default class PlayCard {
      */
     static async discardCard(to, fd, cardContent, card, currentCards) {
         if (cardContent?.hasBeenPlayed) {
-            createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgCantDropPlayedCard"), {actor: game.user.character});
+            createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgCantDropPlayedCard"), {actor: Constants.actorCurrent});
             return;
         }
 
         // Add +1 on drop card
-        game.user.character.update({
+        Constants.actorCurrent.update({
             "system.fq.cards.currentDrop": Constants.actorFQ.cards.currentDrop + 1
         });
         this.renderChatMessage(to, fd, card, "FQCARDENGINE.CardDiscard");
@@ -74,7 +74,7 @@ export default class PlayCard {
                     hasBeenPlayed: true, passivePlayedRound: game.combat?.round.toString()
                 });
                 ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                    speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
                     content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.localize("FQCARDENGINE.InfoMsgPassiveSpell")}</div>`
                 });
             } else if (cardContent?.replayable) {
@@ -86,12 +86,12 @@ export default class PlayCard {
                 }
                 if (Number(cardContent.replayable) > 100) {
                     ChatMessage.create({
-                        speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                        speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
                         content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.format("FQCARDENGINE.InfoMsgReplayableSpell")}</div>`
                     });
                 } else {
                     ChatMessage.create({
-                        speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                        speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
                         content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.format("FQCARDENGINE.InfoMsgRemainingCharge",
                             {remainingCharge: Number(cardContent.replayable) - 1})}</div>`
                     });
@@ -250,7 +250,7 @@ export default class PlayCard {
             let FQLogs = game.combat.flags.fq?.logs ? game.combat.flags.fq?.logs : [];
             let resultArray = [...initResultatArray];
             FQLogs.push({
-                "actorId": game.user.character.id,
+                "actorId": Constants.actorCurrent.id,
                 "targetsId": Constants.myTargets(cardContent.targetType).map(t => t.document.actorId),
                 "round": game.combat.round,
                 "turn": game.combat.turn,

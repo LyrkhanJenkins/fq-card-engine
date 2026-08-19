@@ -1,5 +1,6 @@
 import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
 import DisplayCard from "../shared/display-card.js";
+import CardCondition from "../../engine/shared/card-condition.js";
 
 const GENERATED_GLOW_DURATION_MS = 24000;
 
@@ -98,6 +99,17 @@ export default class HandBoard {
                 }
             }
         });
+
+        // Réévaluation du glow des réactifs (isReactiveReady) : sa jouabilité
+        // dépend d'événements sans lien avec les documents cartes — logs de
+        // combat (carte jouée, attaque/sort dnd5e via updateCombat), changement
+        // de combattant, début/fin de combat, changement de cible. Débouncé car
+        // renderCards reconstruit tout le DOM de la main et targetToken se
+        // déclenche une fois par token (dé)ciblé.
+        this._refreshReactiveGlow = foundry.utils.debounce(() => t.update(), 150);
+        for (const hook of ["updateCombat", "combatTurnChange", "createCombat", "deleteCombat", "targetToken"]) {
+            this._hookIds[hook] = Hooks.on(hook, () => t._refreshReactiveGlow());
+        }
         //auto register to listen for updates
         FqCardEngineModule.handMiniBarList.push(this);
     }
@@ -130,6 +142,10 @@ export default class HandBoard {
             passiveHasBeenPlayedOnRound: cardContent?.passivePlayedRound && cardContent?.passivePlayedRound?.toString() === game.combat?.round?.toString(),
             isFQBase: c.system?.fq?.isBase,
             isGenerated: Date.now() - (c.flags?.[FqCardEngineModule.moduleName]?.generatedAt ?? 0) < GENERATED_GLOW_DURATION_MS,
+            // Le verdict s'évalue avec le personnage de l'utilisateur LOCAL : pas de
+            // glow sur les barres qui affichent la main d'un autre joueur (vue MJ).
+            isReactiveReady: (!this.currentUser || this.currentUser.id === game.user?.id)
+                && CardCondition.isReactiveReady(cardContent, c),
             cardsid: this.currentCards._id ? this.currentCards._id : this.currentCards.data._id,
             uuid: c.uuid,
             back: forceFace ? false : (c.face == null),

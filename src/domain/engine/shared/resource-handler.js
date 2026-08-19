@@ -225,7 +225,7 @@ export default class ResourceHandler {
             outOfReach.forEach(({target, dist}) => {
                 createWarning(game.i18n.format("FQCARDENGINE.WarningMsgCantReachTarget", {
                     targetName: target.name, minReach, maxReach, dist
-                }), {actor: game.user.character});
+                }), {actor: Constants.actorCurrent});
             });
         }
     }
@@ -263,7 +263,7 @@ export default class ResourceHandler {
      */
     static validateUseSpellInTurn(actor) {
         if (!game.combat || game.combat.combatant?.actor?.id !== actor?.id) {
-            createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPlayOutOfHisRound"), {actor: game.user.character});
+            createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPlayOutOfHisRound"), {actor: Constants.actorCurrent});
             return false;
         }
         return true;

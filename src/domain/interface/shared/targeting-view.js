@@ -40,7 +40,7 @@ export default class TargetingView {
             }
             : {minReach: cc.minReach, maxReach: cc.maxReach};
 
-        const casterToken = TargetingPredicates.findCasterToken(game.user.character);
+        const casterToken = TargetingPredicates.findCasterToken(Constants.actorCurrent);
         const outOfReachByToken = new Map();
         if (casterToken) {
             for (const entry of TargetingPredicates.findOutOfReachTargets(casterToken, tokens, minReach, maxReach)) {

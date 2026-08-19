@@ -40,6 +40,9 @@
     --fq-success-hi-rgb: 90, 230, 90;
     --fq-success-deep-rgb: 20, 60, 20;
 
+    /* Orange (avertissement / réactif prêt) — aligné sur WARNING_COLOR #E36934 */
+    --fq-warning-rgb: 227, 105, 52;
+
     /* ═══════════════════════════════════════════════════════════
        JETONS SÉMANTIQUES — habillage de l'interface cartes
        (partagés par le container, les overlays et les dialogues)

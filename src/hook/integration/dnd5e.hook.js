@@ -97,7 +97,7 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     const squareDistance = game.system.grid.distance;
     const minReach = Math.trunc((subject.range.value ? squareDistance : subject.range.reach) ?? 0) / squareDistance;
     const maxReach = Math.trunc((subject.range.value ?? subject.range.reach) ?? 0) / squareDistance;
-    const token = game.canvas.scene.tokens.find(t => t.actorId === subject.actor.id);
+    const token = Constants.actorToken(subject.actor.id);
     if (!subject.item) {
         return;
     }

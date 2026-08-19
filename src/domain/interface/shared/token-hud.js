@@ -1,3 +1,4 @@
+import Constants from "../../constants.js";
 import WeaponDamage from "../../engine/roll/weapon-damage.js";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
 
@@ -55,13 +56,13 @@ export default class TokenHud {
                     .play();
             }
             ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor: game.user.character}),
+                speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
                 content: `<span>${game.i18n.format("FQCARDENGINE.SacrifySkeletonMsg")}, ${game.i18n.format("FQCARDENGINE.SacrificedScoreSkeletonMsg",
-                    {"sacrifice": game.user.character.system.fq.special.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)})}</span>`
+                    {"sacrifice": Constants.actorCurrent.system.fq.special.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)})}</span>`
             });
-            game.user.character.update({
+            Constants.actorCurrent.update({
                 "system.fq.special.sacrificedSkeleton":
-                    game.user.character.system.fq.special.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)
+                    Constants.actorCurrent.system.fq.special.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)
             });
             socket.executeAsGM("deleteToken", token.id);
         });

@@ -1,3 +1,4 @@
+import Constants from "../domain/constants.js";
 import HandBoard from "../domain/interface/window/hand-board.js";
 import FqCharacterSheet from "../domain/interface/sheet/actor/fq-character-sheet.js";
 import FqNpcSheet from "../domain/interface/sheet/actor/fq-npc-sheet.js";
@@ -162,7 +163,7 @@ Hooks.on("setup", function () {
         });
 
         Hooks.on("updateActor", (actor) => {
-            if (game.user?.character?.id === actor.id) {
+            if (Constants.actorCurrent?.id === actor.id) {
                 FqCardEngineModule.updateCharGauges();
             }
         });

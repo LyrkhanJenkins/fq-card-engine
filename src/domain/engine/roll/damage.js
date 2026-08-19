@@ -449,8 +449,8 @@ export default class Damage {
                 ...newActor.prototypeToken,
                 actorId: newActor._id,
                 effects: [],
-                x: Geometry.getXAdjacentLocation(game.canvas?.scene?.tokens?.find(t => t.actorId === currentUser?.character?.id), location),
-                y: Geometry.getYAdjacentLocation(game.canvas?.scene?.tokens?.find(t => t.actorId === currentUser?.character?.id), location)
+                x: Geometry.getXAdjacentLocation(Constants.actorToken(currentUser?.character?.id), location),
+                y: Geometry.getYAdjacentLocation(Constants.actorToken(currentUser?.character?.id), location)
             };
             await scene.createEmbeddedDocuments("Token", [tokenData]).then(async t => {
                 const token = t[0];

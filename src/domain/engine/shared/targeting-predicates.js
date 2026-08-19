@@ -1,4 +1,5 @@
 import Geometry from "./geometry.js";
+import Constants from "../../constants.js";
 
 /**
  * Prédicats purs de ciblage, extraits de `ResourceHandler.checkIfCanCardCanReachTargets`
@@ -43,15 +44,15 @@ export default class TargetingPredicates {
     }
 
     /**
-     * Recherche le token du lanceur sur la scène active — même recherche que le
-     * moteur (`game.canvas.scene.tokens.find(t => t.actorId === actor.id)`).
+     * Recherche le token du lanceur sur la scène active — délègue à la recherche
+     * unique `Constants.actorToken`.
      *
      * @param {object} actor - L'acteur lanceur.
      *
      * @returns {object|null} Le document token du lanceur, ou null si absent.
      */
     static findCasterToken(actor) {
-        return game.canvas?.scene?.tokens?.find(t => t.actorId === actor?.id) ?? null;
+        return Constants.actorToken(actor?.id) ?? null;
     }
 
     /**

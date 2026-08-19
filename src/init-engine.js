@@ -7,6 +7,7 @@ import HandBars from "./domain/interface/window/hand-bars.js";
 import CardActions from "./domain/interface/window/card-actions.js";
 import DragDrop from "./domain/interface/window/drag-drop.js";
 import WeaponDamage from "./domain/engine/roll/weapon-damage.js";
+import CardCondition from "./domain/engine/shared/card-condition.js";
 
 CONFIG.FqCardEngine = {
     options: {
@@ -24,6 +25,7 @@ CONFIG.FqCardEngine = {
 // hand-board) et le binding `this` des méthodes sont préservés à l'identique.
 window.FqCardEngineModule = {
     cst: Constants,
+    cond: CardCondition,
     handMiniBarList: new Array(),
     moduleName: "fq-card-engine",
     eventName: "module.fq-card-engine",

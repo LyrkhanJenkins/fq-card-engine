@@ -185,6 +185,31 @@
     }
 }
 
+/* Réactif prêt : les conditions de la carte sont réunies hors de son tour.
+   Même mécanisme que le glow des générées mais orange et CONTINU (l'état dure
+   tant que la condition tient) ; déclaré après pour l'emporter si les deux
+   classes cohabitent. */
+.fq-card--reactive-ready {
+    animation: fq-reactive-ready-glow 1.3s ease-in-out infinite;
+}
+
+@keyframes fq-reactive-ready-glow {
+    0%, 100% {
+        filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85)) drop-shadow(0 0 5px rgba(var(--fq-warning-rgb), 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85)) drop-shadow(0 0 6px rgba(var(--fq-warning-rgb), 1)) drop-shadow(0 0 22px rgba(var(--fq-warning-rgb), 0.85));
+    }
+}
+
+/* Accessibilité : halo orange statique, sans pulsations. */
+@media (prefers-reduced-motion: reduce) {
+    .fq-card--reactive-ready {
+        animation: none;
+        filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85)) drop-shadow(0 0 12px rgba(var(--fq-warning-rgb), 0.8));
+    }
+}
+
 /* ============================================================
    DIALOG DE RÉCUPÉRATION EN DÉFAUSSE
    Grille des cartes éligibles (retrieveFromDiscard) : chaque option est

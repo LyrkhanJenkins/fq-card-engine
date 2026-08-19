@@ -12,6 +12,7 @@ Feat :
 - Premières cartes du Guerrier Runique et du Maître d'Armes (En cours...)
 - Ajout d'un score de bonus pour tout type de carte
 - Pris en compte de rwak et mwark dans les jets de dégâts sans attaque
+- Affichage d'une surbrillance aux réactifs lorsque ceux-ci sont utilisables
   
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

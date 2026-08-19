@@ -1,3 +1,4 @@
+import Constants from "../../constants.js";
 import DisplayCard from "../shared/display-card.js";
 
 /**
@@ -13,7 +14,7 @@ export default {
      * @returns {void}
      */
     updateCharGauges: function () {
-        const character = game.user?.character;
+        const character = Constants.actorCurrent;
         const gauges = document.getElementById("fq-char-gauges");
         const toggle = document.getElementById("fq-char-gauges-toggle");
         if (!gauges) return;

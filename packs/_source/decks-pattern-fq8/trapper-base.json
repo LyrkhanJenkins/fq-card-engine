@@ -465,7 +465,7 @@
               "yvalue": "",
               "customEvals": [
                 {
-                  "script": "game.user.targets.size === 1 || game.user.targets.size > 9 || ([...game.user.targets].map(t => t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)) && [...game.user.targets].map(t => t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)))",
+                  "script": "game.user.targets.size === 1 || game.user.targets.size > 9 || FqCardEngineModule.cond.targetsWithinSquare(3)",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgSquareEffect",
@@ -882,7 +882,17 @@
               "messages": [],
               "minions": [],
               "hasBeenPlayed": false,
-              "customEvals": [],
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.tookDamageThisRound()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoDamageTakenThisRound",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
               "targetType": "Default"
             }
           ],
@@ -1182,7 +1192,7 @@
               "yvalue": "",
               "customEvals": [
                 {
-                  "script": "game.user.targets.size === 1 || game.user.targets.size !== 2 || ((Math.abs([...game.user.targets][0].x - [...game.user.targets][1].x) === game.canvas?.scene?.dimensions?.size && [...game.user.targets][0].y === [...game.user.targets][1].y ) || (Math.abs([...game.user.targets][0].y - [...game.user.targets][1].y) === game.canvas?.scene?.dimensions?.size && [...game.user.targets][0].x === [...game.user.targets][1].x))",
+                  "script": "game.user.targets.size !== 2 || FqCardEngineModule.cond.targetsAdjacentPair()",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgTargetAdjacents",
@@ -1323,7 +1333,7 @@
               ],
               "customEvals": [
                 {
-                  "script": "(!!game.combat.flags.FQLogs && (!![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id).filter(l => l.resultArray.filter(r => r.evasion).length).length))",
+                  "script": "FqCardEngineModule.cond.attackEvadedThisRound()",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgSpellAvoided",
@@ -1466,7 +1476,7 @@
               ],
               "customEvals": [
                 {
-                  "script": "(!game.combat.flags.FQLogs || ![...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()) || ([...game.combat.flags.FQLogs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop().cardContent.name === 'Ambush')",
+                  "script": "!FqCardEngineModule.cond.hasPlayedCardThisRound() || FqCardEngineModule.cond.lastPlayedCardIs(\"Ambush\")",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgOnlyThisSpellThisTurn",
@@ -1655,7 +1665,7 @@
               "yvalue": "",
               "customEvals": [
                 {
-                  "script": "game.user.targets.size === 1 || game.user.targets.size > 5 || ([...game.user.targets].filter(pt => [...game.user.targets].filter(t => (Math.abs(t.x - pt.x) === game.canvas?.scene?.dimensions?.size && t.y === pt.y) || (Math.abs(t.y - pt.y) === game.canvas?.scene?.dimensions?.size && t.x === pt.x)).length === [...game.user.targets].length - 1).length >= 1)",
+                  "script": "game.user.targets.size === 1 || game.user.targets.size > 5 || FqCardEngineModule.cond.targetsClustered()",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgTargetAdjacents",
@@ -1987,7 +1997,17 @@
               "messages": [],
               "minions": [],
               "hasBeenPlayed": false,
-              "customEvals": []
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -2113,7 +2133,17 @@
               "messages": [],
               "minions": [],
               "hasBeenPlayed": false,
-              "customEvals": []
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

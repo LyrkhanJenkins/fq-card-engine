@@ -782,7 +782,26 @@
               "name": "",
               "applyEffectsFormulas": [],
               "minions": [],
-              "customEvals": [],
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.tookDamageThisRound()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoDamageTakenThisRound",
+                      "arg": ""
+                    }
+                  ]
+                },
+                {
+                  "script": "FqCardEngineModule.cond.missingMana()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgManaFull",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
               "targetType": "Default",
               "visual": {
                 "path": "",
@@ -910,7 +929,7 @@
               ],
               "customEvals": [
                 {
-                  "script": "![...game.user.targets].length || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Air Effect' || e.name === 'Earth Effect').length).length",
+                  "script": "!game.user.targets.size || FqCardEngineModule.cond.targetsHaveEffect([\"Air Effect\", \"Earth Effect\"])",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
@@ -1007,7 +1026,7 @@
               "yvalue": "",
               "customEvals": [
                 {
-                  "script": "[...game.user.targets].length !== 1 || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Burn' || e.name === 'Frost').length).length",
+                  "script": "game.user.targets.size !== 1 || FqCardEngineModule.cond.targetsHaveEffect([\"Burn\", \"Frost\"])",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
@@ -1198,7 +1217,7 @@
               "yvalue": "",
               "customEvals": [
                 {
-                  "script": "[...game.user.targets].length < 1 || [...game.user.targets].length > 9 || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Burn' || e.name === 'Earth Effect').length).length",
+                  "script": "game.user.targets.size < 1 || game.user.targets.size > 9 || FqCardEngineModule.cond.targetsHaveEffect([\"Burn\", \"Earth Effect\"])",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
@@ -1207,7 +1226,7 @@
                   ]
                 },
                 {
-                  "script": "game.user.targets.size === 1 || game.user.targets.size > 9 || ([...game.user.targets].map(t => t.x/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)) && [...game.user.targets].map(t => t.y/game.canvas?.scene?.dimensions?.size ).every((val, index, arr) => arr.every((v, i) => i === index || Math.abs(val - v) <= 2)))",
+                  "script": "game.user.targets.size === 1 || game.user.targets.size > 9 || FqCardEngineModule.cond.targetsWithinSquare(3)",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgSquareEffect",
@@ -1305,7 +1324,7 @@
               "yvalue": "",
               "customEvals": [
                 {
-                  "script": "![...game.user.targets].length || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Burn' || e.name === 'Frost' || e.name === 'Earth Effect' || e.name === 'Air Effect').length > 1).length",
+                  "script": "!game.user.targets.size || FqCardEngineModule.cond.targetsHaveEffect([\"Burn\", \"Frost\", \"Earth Effect\", \"Air Effect\"], 2)",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgMissingNbEffect",
@@ -1604,7 +1623,7 @@
               ],
               "customEvals": [
                 {
-                  "script": "[...game.user.targets].some(t =>\n  t.actor?.effects.some(e => e?.name === \"Earth Effect\" || e?.name === \"Frost\")\n)",
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Earth Effect\", \"Frost\"])",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
@@ -1700,7 +1719,7 @@
               "yvalue": "",
               "customEvals": [
                 {
-                  "script": "game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Air Effect' || e.name === 'Frost').length).length",
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Air Effect\", \"Frost\"])",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
@@ -1798,7 +1817,7 @@
               "yvalue": "",
               "customEvals": [
                 {
-                  "script": "game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Burn' || e.name === 'Air Effect').length).length",
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Burn\", \"Air Effect\"])",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
@@ -1934,7 +1953,7 @@
               ],
               "customEvals": [
                 {
-                  "script": "!!game.combat.flags.fq?.logs && (!![...game.combat.flags.fq?.logs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent && ![...game.combat.flags.fq?.logs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.nbTargets && !![...game.combat.flags.fq?.logs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.minReach && !![...game.combat.flags.fq?.logs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.cardContent.damage && ![...game.user.targets].map(t => t.document.actorId).includes([...game.combat.flags.fq?.logs].filter(log => log.round === game.combat.round && log.actorId === game.user.character.id)?.pop()?.targetsId[0]))",
+                  "script": "FqCardEngineModule.cond.lastPlayedDamageCardOnOtherTarget()",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgDamagePropagation",
@@ -2912,7 +2931,7 @@
               "yvalue": "",
               "customEvals": [
                 {
-                  "script": "![...game.user.targets].length || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Burn' || e.name === 'Frost' || e.name === 'Earth Effect' || e.name === 'Air Effect').length > 3).length",
+                  "script": "!game.user.targets.size || FqCardEngineModule.cond.targetsHaveEffect([\"Burn\", \"Frost\", \"Earth Effect\", \"Air Effect\"], 4)",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgMissingNbEffect",

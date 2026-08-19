@@ -524,6 +524,13 @@
                 {{/each}}
                 <button type="button" data-action="addCustomEval" data-index="{{i}}">➕ {{localize
                         "FQCARDENGINE.AddCustomEval"}}</button>
+                <label>{{localize "FQCARDENGINE.ExecuteEval"}}</label>
+                <div class="form-fields">
+                    {{formInput ../fields.fq.fields.choices.element.fields.executeEval
+                                value=choice.executeEval
+                                elementType="textarea"
+                                name=(concat "system.fq.choices." i ".executeEval") rootId=../rootId}}
+                </div>
             </fieldset>
             <fieldset>
                 <legend>🎨 <label>{{localize "FQCARDENGINE.CardCosmetics"}} </label></legend>

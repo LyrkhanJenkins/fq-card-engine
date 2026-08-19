@@ -1,0 +1,452 @@
+import {beforeEach, describe, expect, it} from "vitest";
+import CardCondition from "../../src/domain/engine/shared/card-condition.js";
+
+/**
+ * Prédicats génériques `FqCardEngineModule.cond.*` de CardCondition : logs de
+ * combat, portée/géométrie des cibles, effets actifs, état du personnage,
+ * pioche/main. Tous silencieux et tolérants à l'absence de combat/scène/acteur.
+ */
+
+const GRID = 100;
+
+/** Construit un token canvas-like (avec son document) pour la scène de test. */
+function makeToken({id, actorId, x = 0, y = 0, width = 1, height = 1, effects = []}) {
+    return {
+        id, x, y,
+        actor: {id: actorId, effects},
+        document: {id, actorId, x, y, width, height}
+    };
+}
+
+/** Installe une scène, un combat et des cibles de test sur le global `game`. */
+function mountScene({tokens = [], targets = [], logs = null, round = 2, character} = {}) {
+    game.user.character = character ?? {id: "me"};
+    game.user.targets = new Set(targets);
+    game.canvas = {scene: {dimensions: {size: GRID}, tokens: tokens.map(t => t.document)}};
+    game.combat = logs === null ? null : {round, flags: {fq: {logs}}};
+}
+
+const me = () => makeToken({id: "tokMe", actorId: "me", x: 0, y: 0});
+const foe = (x = GRID, y = 0) => makeToken({id: "tokFoe", actorId: "foe", x, y});
+
+/** Entrée de log : `attacker` inflige `value` dégâts FQ au token `targetTokenId`. */
+function damageLog({attacker = "foe", targetActorId = "me", targetTokenId = "tokMe", value = 5, evasion = false, round = 2, cardContent = {}}) {
+    return {
+        actorId: attacker,
+        targetsId: [targetActorId],
+        round,
+        resultArray: {0: {type: "damageFQ", value, evasion, targetTokenId}},
+        cardContent
+    };
+}
+
+describe("CardCondition — prédicats de logs de combat", () => {
+
+    it("tookDamageThisRound : vrai si une entrée de dégâts effectifs touche mon token ce round", () => {
+        mountScene({tokens: [me(), foe()], logs: [damageLog({value: 5})]});
+
+        expect(CardCondition.tookDamageThisRound()).toBe(true);
+    });
+
+    it("tookDamageThisRound : faux si les dégâts sont à 0 (esquive), d'un autre round, ou hors combat", () => {
+        mountScene({tokens: [me(), foe()], logs: [damageLog({value: 0, evasion: true})]});
+        expect(CardCondition.tookDamageThisRound()).toBe(false);
+
+        mountScene({tokens: [me(), foe()], logs: [damageLog({round: 1})]});
+        expect(CardCondition.tookDamageThisRound()).toBe(false);
+
+        mountScene({tokens: [me(), foe()], logs: null});
+        expect(CardCondition.tookDamageThisRound()).toBe(false);
+    });
+
+    it("tookDamageThisRound : faux sans token du personnage sur la scène", () => {
+        mountScene({tokens: [foe()], logs: [damageLog({})]});
+
+        expect(CardCondition.tookDamageThisRound()).toBe(false);
+    });
+
+    it("attackerWithinReach : vrai si le dernier assaillant du round est à portée", () => {
+        mountScene({tokens: [me(), foe(GRID, 0)], logs: [damageLog({})]});
+
+        expect(CardCondition.attackerWithinReach(1)).toBe(true);
+        expect(CardCondition.attackerWithinReach(6)).toBe(true);
+    });
+
+    it("attackerWithinReach : faux si l'assaillant est trop loin ou si aucun dégât subi", () => {
+        mountScene({tokens: [me(), foe(3 * GRID, 0)], logs: [damageLog({})]});
+        expect(CardCondition.attackerWithinReach(1)).toBe(false);
+        expect(CardCondition.attackerWithinReach(3)).toBe(true);
+
+        mountScene({tokens: [me(), foe()], logs: []});
+        expect(CardCondition.attackerWithinReach(1)).toBe(false);
+    });
+
+    it("tookSpellThisRound : vrai si une carte à coût de mana m'a ciblé ce round", () => {
+        mountScene({tokens: [me()], logs: [damageLog({cardContent: {mana: -1}})]});
+        expect(CardCondition.tookSpellThisRound()).toBe(true);
+
+        mountScene({tokens: [me()], logs: [damageLog({cardContent: {mana: 2}})]});
+        expect(CardCondition.tookSpellThisRound()).toBe(false);
+
+        mountScene({tokens: [me()], logs: [{actorId: "foe", targetsId: ["autre"], round: 2, cardContent: {mana: -1}}]});
+        expect(CardCondition.tookSpellThisRound()).toBe(false);
+    });
+
+    it("attackEvadedThisRound : vrai si l'une de mes attaques du round a été esquivée", () => {
+        mountScene({tokens: [me(), foe()], logs: [damageLog({attacker: "me", targetActorId: "foe", targetTokenId: "tokFoe", value: 0, evasion: true})]});
+        expect(CardCondition.attackEvadedThisRound()).toBe(true);
+
+        mountScene({tokens: [me(), foe()], logs: [damageLog({attacker: "me", targetActorId: "foe", targetTokenId: "tokFoe"})]});
+        expect(CardCondition.attackEvadedThisRound()).toBe(false);
+    });
+
+    it("hasPlayedCardThisRound / lastPlayedCardIs : basés sur mes logs du round", () => {
+        mountScene({tokens: [me()], logs: [
+            {actorId: "me", targetsId: [], round: 2, resultArray: {}, cardContent: {name: "Ambush"}},
+            {actorId: "foe", targetsId: [], round: 2, resultArray: {}, cardContent: {name: "Autre"}}
+        ]});
+
+        expect(CardCondition.hasPlayedCardThisRound()).toBe(true);
+        expect(CardCondition.lastPlayedCardIs("Ambush")).toBe(true);
+        expect(CardCondition.lastPlayedCardIs("Autre")).toBe(false);
+
+        mountScene({tokens: [me()], logs: []});
+        expect(CardCondition.hasPlayedCardThisRound()).toBe(false);
+        expect(CardCondition.lastPlayedCardIs("Ambush")).toBe(false);
+    });
+
+    it("lastPlayedCardCostMana : ma dernière carte du combat (tous rounds) coûtait du mana", () => {
+        mountScene({tokens: [me()], logs: [
+            {actorId: "me", targetsId: [], round: 1, resultArray: {}, cardContent: {mana: -2}}
+        ]});
+        expect(CardCondition.lastPlayedCardCostMana()).toBe(true);
+
+        mountScene({tokens: [me()], logs: [
+            {actorId: "me", targetsId: [], round: 1, resultArray: {}, cardContent: {mana: -2}},
+            {actorId: "me", targetsId: [], round: 2, resultArray: {}, cardContent: {mana: ""}}
+        ]});
+        expect(CardCondition.lastPlayedCardCostMana()).toBe(false);
+
+        mountScene({tokens: [me()], logs: []});
+        expect(CardCondition.lastPlayedCardCostMana()).toBe(false);
+    });
+
+    it("lastPlayedDamageCardOnOtherTarget : dernière carte = attaque mono-cible sur une autre cible", () => {
+        const enemy = foe();
+        const propagationReady = {actorId: "me", targetsId: ["autre"], round: 2, resultArray: {},
+            cardContent: {damage: "1d6", minReach: "1", nbTargets: ""}};
+
+        mountScene({tokens: [me(), enemy], targets: [enemy], logs: [propagationReady]});
+        expect(CardCondition.lastPlayedDamageCardOnOtherTarget()).toBe(true);
+
+        // même cible que la carte précédente → pas de propagation
+        mountScene({tokens: [me(), enemy], targets: [enemy], logs: [{...propagationReady, targetsId: ["foe"]}]});
+        expect(CardCondition.lastPlayedDamageCardOnOtherTarget()).toBe(false);
+
+        // carte multi-cibles, sans dégâts ou sans portée → non éligible
+        mountScene({tokens: [me(), enemy], targets: [enemy], logs: [{...propagationReady, cardContent: {damage: "1d6", minReach: "1", nbTargets: "3"}}]});
+        expect(CardCondition.lastPlayedDamageCardOnOtherTarget()).toBe(false);
+        mountScene({tokens: [me(), enemy], targets: [enemy], logs: [{...propagationReady, cardContent: {damage: "", minReach: "1", nbTargets: ""}}]});
+        expect(CardCondition.lastPlayedDamageCardOnOtherTarget()).toBe(false);
+
+        // aucune carte jouée ce round
+        mountScene({tokens: [me(), enemy], targets: [enemy], logs: []});
+        expect(CardCondition.lastPlayedDamageCardOnOtherTarget()).toBe(false);
+    });
+
+    it("targetsDealtDamageThisRound : vrai si chaque cible a infligé des dégâts ce round", () => {
+        const enemy = foe();
+        mountScene({tokens: [me(), enemy], targets: [enemy], logs: [damageLog({attacker: "foe"})]});
+        expect(CardCondition.targetsDealtDamageThisRound()).toBe(true);
+
+        mountScene({tokens: [me(), enemy], targets: [enemy], logs: [damageLog({attacker: "autre"})]});
+        expect(CardCondition.targetsDealtDamageThisRound()).toBe(false);
+
+        mountScene({tokens: [me(), enemy], targets: [], logs: [damageLog({attacker: "foe"})]});
+        expect(CardCondition.targetsDealtDamageThisRound()).toBe(false);
+    });
+
+    it("targetsTookDamageThisRound : vrai si chaque cible a subi des dégâts ce round", () => {
+        const enemy = foe();
+        mountScene({tokens: [me(), enemy], targets: [enemy], logs: [damageLog({attacker: "me", targetActorId: "foe", targetTokenId: "tokFoe"})]});
+        expect(CardCondition.targetsTookDamageThisRound()).toBe(true);
+
+        mountScene({tokens: [me(), enemy], targets: [enemy], logs: [damageLog({})]});
+        expect(CardCondition.targetsTookDamageThisRound()).toBe(false);
+    });
+});
+
+describe("CardCondition — portée et géométrie des cibles", () => {
+
+    it("targetsWithinReach : lit la portée depuis le contenu de la carte", () => {
+        const enemy = foe(2 * GRID, 0);
+        mountScene({tokens: [me(), enemy], targets: [enemy]});
+
+        expect(CardCondition.targetsWithinReach({minReach: "1", maxReach: "3"})).toBe(true);
+        expect(CardCondition.targetsWithinReach({minReach: "1", maxReach: "1"})).toBe(false);
+        expect(CardCondition.targetsWithinReach({minReach: "3", maxReach: "6"})).toBe(false);
+    });
+
+    it("targetsWithinReach : faux sans portée déclarée, sans cible ou sans token lanceur", () => {
+        const enemy = foe();
+        mountScene({tokens: [me(), enemy], targets: [enemy]});
+        expect(CardCondition.targetsWithinReach({minReach: "", maxReach: ""})).toBe(false);
+        expect(CardCondition.targetsWithinReach(undefined)).toBe(false);
+
+        mountScene({tokens: [me()], targets: []});
+        expect(CardCondition.targetsWithinReach({minReach: "1", maxReach: "3"})).toBe(false);
+
+        mountScene({tokens: [enemy], targets: [enemy]});
+        expect(CardCondition.targetsWithinReach({minReach: "1", maxReach: "3"})).toBe(false);
+    });
+
+    it("targetsWithinReach : une portée démarrant à 0 est déclarée (maxReach porte la décision)", () => {
+        const enemy = foe(GRID, 0);
+        mountScene({tokens: [me(), enemy], targets: [enemy]});
+
+        expect(CardCondition.targetsWithinReach({minReach: "0", maxReach: "6"})).toBe(true);
+    });
+
+    it("targetsAlignedWithSelf : toutes les cibles sur ma colonne ou ma ligne", () => {
+        const a = makeToken({id: "a", actorId: "a", x: 0, y: 2 * GRID});
+        const b = makeToken({id: "b", actorId: "b", x: 0, y: 5 * GRID});
+        mountScene({tokens: [me(), a, b], targets: [a, b]});
+        expect(CardCondition.targetsAlignedWithSelf()).toBe(true);
+
+        const c = makeToken({id: "c", actorId: "c", x: GRID, y: 2 * GRID});
+        mountScene({tokens: [me(), a, c], targets: [a, c]});
+        expect(CardCondition.targetsAlignedWithSelf()).toBe(false);
+
+        mountScene({tokens: [me()], targets: []});
+        expect(CardCondition.targetsAlignedWithSelf()).toBe(false);
+    });
+
+    it("targetsDiagonalWithSelf : toutes les cibles à |Δx| = |Δy| de mon token", () => {
+        const diag = makeToken({id: "d", actorId: "d", x: 2 * GRID, y: 2 * GRID});
+        mountScene({tokens: [me(), diag], targets: [diag]});
+        expect(CardCondition.targetsDiagonalWithSelf()).toBe(true);
+
+        const off = makeToken({id: "o", actorId: "o", x: 2 * GRID, y: GRID});
+        mountScene({tokens: [me(), off], targets: [off]});
+        expect(CardCondition.targetsDiagonalWithSelf()).toBe(false);
+    });
+
+    it("targetsWithinSquare : toutes les cibles dans un carré de n×n cases", () => {
+        const a = makeToken({id: "a", actorId: "a", x: 0, y: 0});
+        const b = makeToken({id: "b", actorId: "b", x: 2 * GRID, y: 2 * GRID});
+        mountScene({tokens: [a, b], targets: [a, b]});
+        expect(CardCondition.targetsWithinSquare(3)).toBe(true);
+        expect(CardCondition.targetsWithinSquare(2)).toBe(false);
+
+        mountScene({tokens: [], targets: []});
+        expect(CardCondition.targetsWithinSquare(3)).toBe(false);
+    });
+
+    it("targetsAlignedOnOneSide : cibles sur ma colonne/ligne et toutes du même côté", () => {
+        const myTok = me();
+        const near = makeToken({id: "n", actorId: "n", x: 0, y: 2 * GRID});
+        const far = makeToken({id: "f", actorId: "f", x: 0, y: 4 * GRID});
+        mountScene({tokens: [myTok, near, far], targets: [near, far]});
+        expect(CardCondition.targetsAlignedOnOneSide()).toBe(true);
+
+        // de part et d'autre de mon token → refusé
+        const behind = makeToken({id: "b", actorId: "b", x: 0, y: -2 * GRID});
+        mountScene({tokens: [myTok, near, behind], targets: [near, behind]});
+        expect(CardCondition.targetsAlignedOnOneSide()).toBe(false);
+
+        // hors de ma colonne/ligne → refusé
+        const offAxis = makeToken({id: "o", actorId: "o", x: GRID, y: 2 * GRID});
+        mountScene({tokens: [myTok, offAxis], targets: [offAxis]});
+        expect(CardCondition.targetsAlignedOnOneSide()).toBe(false);
+
+        mountScene({tokens: [myTok], targets: []});
+        expect(CardCondition.targetsAlignedOnOneSide()).toBe(false);
+    });
+
+    it("targetsAdjacentPair : exactement deux cibles orthogonalement adjacentes", () => {
+        const a = makeToken({id: "a", actorId: "a", x: 0, y: 0});
+        const b = makeToken({id: "b", actorId: "b", x: GRID, y: 0});
+        mountScene({tokens: [a, b], targets: [a, b]});
+        expect(CardCondition.targetsAdjacentPair()).toBe(true);
+
+        const diag = makeToken({id: "d", actorId: "d", x: GRID, y: GRID});
+        mountScene({tokens: [a, diag], targets: [a, diag]});
+        expect(CardCondition.targetsAdjacentPair()).toBe(false);
+
+        mountScene({tokens: [a], targets: [a]});
+        expect(CardCondition.targetsAdjacentPair()).toBe(false);
+    });
+
+    it("targetsClustered : une cible centrale touche toutes les autres", () => {
+        const center = makeToken({id: "c", actorId: "c", x: GRID, y: GRID});
+        const up = makeToken({id: "u", actorId: "u", x: GRID, y: 0});
+        const left = makeToken({id: "l", actorId: "l", x: 0, y: GRID});
+        mountScene({tokens: [center, up, left], targets: [center, up, left]});
+        expect(CardCondition.targetsClustered()).toBe(true);
+
+        const far = makeToken({id: "f", actorId: "f", x: 5 * GRID, y: 5 * GRID});
+        mountScene({tokens: [center, up, far], targets: [center, up, far]});
+        expect(CardCondition.targetsClustered()).toBe(false);
+
+        mountScene({tokens: [center], targets: [center]});
+        expect(CardCondition.targetsClustered()).toBe(true);
+    });
+});
+
+describe("CardCondition — effets actifs", () => {
+
+    it("selfHasEffect : sans liste, vrai dès qu'un effet est porté ; avec liste, filtre par nom", () => {
+        mountScene({character: {id: "me", effects: [{name: "Burn"}]}});
+        expect(CardCondition.selfHasEffect()).toBe(true);
+        expect(CardCondition.selfHasEffect(["Burn"])).toBe(true);
+        expect(CardCondition.selfHasEffect(["Frost"])).toBe(false);
+
+        mountScene({character: {id: "me", effects: []}});
+        expect(CardCondition.selfHasEffect()).toBe(false);
+    });
+
+    it("targetsHaveEffect : au moins une cible portant minCount effets parmi les noms", () => {
+        const cursed = makeToken({id: "a", actorId: "a", effects: [{name: "Curse"}]});
+        const clean = makeToken({id: "b", actorId: "b", effects: []});
+        mountScene({tokens: [cursed, clean], targets: [cursed, clean]});
+        expect(CardCondition.targetsHaveEffect(["Curse"])).toBe(true);
+        expect(CardCondition.targetsHaveEffect(["Burn"])).toBe(false);
+
+        const doubly = makeToken({id: "d", actorId: "d", effects: [{name: "Burn"}, {name: "Frost"}]});
+        mountScene({tokens: [doubly], targets: [doubly]});
+        expect(CardCondition.targetsHaveEffect(["Burn", "Frost", "Curse"], 2)).toBe(true);
+        expect(CardCondition.targetsHaveEffect(["Burn", "Frost", "Curse"], 3)).toBe(false);
+
+        mountScene({tokens: [], targets: []});
+        expect(CardCondition.targetsHaveEffect(["Curse"])).toBe(false);
+    });
+
+    it("targetsHaveEffect sans liste : n'importe quel effet porté par une cible", () => {
+        const buffed = makeToken({id: "a", actorId: "a", effects: [{name: "Quelconque"}]});
+        mountScene({tokens: [buffed], targets: [buffed]});
+        expect(CardCondition.targetsHaveEffect()).toBe(true);
+
+        const clean = makeToken({id: "b", actorId: "b", effects: []});
+        mountScene({tokens: [clean], targets: [clean]});
+        expect(CardCondition.targetsHaveEffect()).toBe(false);
+    });
+});
+
+describe("CardCondition — état du personnage", () => {
+
+    it("counterWithinCap / counterEquals : compteurs des flags FQ", () => {
+        mountScene({character: {id: "me", flags: {fq: {bladeCharging: 10}}}});
+        expect(CardCondition.counterWithinCap("bladeCharging", 2, 12)).toBe(true);
+        expect(CardCondition.counterWithinCap("bladeCharging", "3", 12)).toBe(false);
+        expect(CardCondition.counterEquals("bladeCharging", 10)).toBe(true);
+        expect(CardCondition.counterEquals("bladeCharging", 12)).toBe(false);
+
+        mountScene({character: {id: "me"}});
+        expect(CardCondition.counterWithinCap("bladeCharging", 12, 12)).toBe(true);
+        expect(CardCondition.counterEquals("bladeCharging", 0)).toBe(true);
+    });
+
+    it("specialAtLeast : attribut spécial FQ au minimum requis", () => {
+        mountScene({character: {id: "me", system: {fq: {special: {sacrificedSkeleton: 2}}}}});
+        expect(CardCondition.specialAtLeast("sacrificedSkeleton")).toBe(true);
+        expect(CardCondition.specialAtLeast("sacrificedSkeleton", 3)).toBe(false);
+
+        mountScene({character: {id: "me"}});
+        expect(CardCondition.specialAtLeast("sacrificedSkeleton")).toBe(false);
+    });
+
+    it("hasMana / missingMana : réserve de mana", () => {
+        mountScene({character: {id: "me", system: {fq: {mana: {value: 2, max: 5}}}}});
+        expect(CardCondition.hasMana()).toBe(true);
+        expect(CardCondition.hasMana(3)).toBe(false);
+        expect(CardCondition.missingMana()).toBe(true);
+
+        mountScene({character: {id: "me", system: {fq: {mana: {value: 5, max: 5}}}}});
+        expect(CardCondition.missingMana()).toBe(false);
+
+        mountScene({character: {id: "me"}});
+        expect(CardCondition.hasMana()).toBe(false);
+        expect(CardCondition.missingMana()).toBe(false);
+    });
+
+    it("missingHp : points de vie manquants", () => {
+        mountScene({character: {id: "me", system: {attributes: {hp: {value: 3, max: 10}}}}});
+        expect(CardCondition.missingHp()).toBe(true);
+
+        mountScene({character: {id: "me", system: {attributes: {hp: {value: 10, max: 10}}}}});
+        expect(CardCondition.missingHp()).toBe(false);
+
+        expect(CardCondition.missingHp({system: {attributes: {hp: {value: 1, max: 2}}}})).toBe(true);
+        expect(CardCondition.missingHp(undefined)).toBe(false);
+    });
+});
+
+describe("CardCondition.isReactiveReady — verdict du glow des réactifs", () => {
+
+    function reactiveChoice(overrides = {}) {
+        return {reactive: true, customEvals: [], ...overrides};
+    }
+
+    it("faux si le choix n'est pas réactif ou hors combat", () => {
+        mountScene({tokens: [me()], logs: []});
+        game.combat.combatant = {actor: {id: "foe"}};
+        expect(CardCondition.isReactiveReady(reactiveChoice({reactive: false}))).toBe(false);
+        expect(CardCondition.isReactiveReady(undefined)).toBe(false);
+
+        mountScene({tokens: [me()], logs: null});
+        expect(CardCondition.isReactiveReady(reactiveChoice())).toBe(false);
+    });
+
+    it("faux pendant mon propre tour, vrai hors de mon tour", () => {
+        mountScene({tokens: [me()], logs: []});
+        game.combat.combatant = {actor: {id: "me"}};
+        expect(CardCondition.isReactiveReady(reactiveChoice())).toBe(false);
+
+        game.combat.combatant = {actor: {id: "foe"}};
+        expect(CardCondition.isReactiveReady(reactiveChoice())).toBe(true);
+    });
+
+    it("vrai quand le combat n'a pas encore de combattant actif", () => {
+        mountScene({tokens: [me()], logs: []});
+        game.combat.combatant = undefined;
+
+        expect(CardCondition.isReactiveReady(reactiveChoice())).toBe(true);
+    });
+
+    it("suit le verdict des customEvals : échec ou erreur = non prêt", () => {
+        mountScene({tokens: [me()], logs: []});
+        game.combat.combatant = {actor: {id: "foe"}};
+
+        expect(CardCondition.isReactiveReady(reactiveChoice({customEvals: [{script: "true"}]}))).toBe(true);
+        expect(CardCondition.isReactiveReady(reactiveChoice({customEvals: [{script: "false"}]}))).toBe(false);
+        expect(CardCondition.isReactiveReady(reactiveChoice({customEvals: [{script: "nExistePas("}]}))).toBe(false);
+    });
+
+    it("évalue les variables XXX/YYY à 1 sans muter le choix d'origine", () => {
+        mountScene({tokens: [me()], logs: []});
+        game.combat.combatant = {actor: {id: "foe"}};
+        const choice = reactiveChoice({customEvals: [{script: "XXX + YYY === 2"}]});
+
+        expect(CardCondition.isReactiveReady(choice)).toBe(true);
+        expect(choice.customEvals[0].script).toBe("XXX + YYY === 2");
+    });
+});
+
+describe("CardCondition — pioche et main", () => {
+
+    it("deckHasCards : cartes restantes dans la pioche d'origine", () => {
+        const card = {source: {cards: {size: 10}, drawnCards: [1, 2, 3]}};
+        expect(CardCondition.deckHasCards(card)).toBe(true);
+        expect(CardCondition.deckHasCards(card, 7)).toBe(true);
+        expect(CardCondition.deckHasCards(card, 8)).toBe(false);
+        expect(CardCondition.deckHasCards(undefined)).toBe(false);
+    });
+
+    it("handHasOtherCards : autres cartes dans la main (la carte exclue)", () => {
+        const card = {parent: {cards: {size: 3}}};
+        expect(CardCondition.handHasOtherCards(card)).toBe(true);
+        expect(CardCondition.handHasOtherCards(card, 2)).toBe(true);
+        expect(CardCondition.handHasOtherCards(card, 3)).toBe(false);
+        expect(CardCondition.handHasOtherCards({parent: {cards: {size: 1}}})).toBe(false);
+    });
+});
