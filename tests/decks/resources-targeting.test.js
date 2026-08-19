@@ -158,6 +158,14 @@ function abundantWorld(extra = {}) {
                     cards: {currentDrop: 999}
                 }
             }
+        },
+        // Une défausse d'une carte : satisfait la garde de lançabilité de tout
+        // choix `retrieveFromDiscard` (en mode `*`, l'unique éligible est
+        // auto-choisie SANS DialogV2 — non mocké ici) ; les autres choix
+        // ignorent la pile. Sans elle, ces cartes seraient rejetées avant même
+        // la consommation de coûts sous test.
+        discardPile: {
+            cards: [{id: "abundant-p1", name: "FQCARDTITLE.AbundantRetrievable", face: 0, origin: null, faces: [{img: "images/abundant-p1.png"}]}]
         }
     }, extra);
 }

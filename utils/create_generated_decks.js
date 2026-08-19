@@ -415,6 +415,78 @@ listesCards["Elementalist Lvl5"] = listesCards["Elementalist Lvl4"].concat([
     "FQCARDTITLE.MagicPlastron"
 ]);
 
+// RUNIC WARRIOR — deck volontairement minuscule : la montée en puissance
+// passe par les runes générées en combat (encart 🃏 des gravures), pas par
+// l'ajout de cartes au deck.
+listesCards["Runic-Warrior Lvl1"] = [
+    "FQCARDTITLE.RunicStrike",
+    "FQCARDTITLE.RunicStrike",
+    "FQCARDTITLE.RunicStrike",
+    "FQCARDTITLE.MinorEngraving",
+    "FQCARDTITLE.MinorEngraving"
+];
+
+listesCards["Runic-Warrior Lvl2"] = listesCards["Runic-Warrior Lvl1"].concat([
+    "FQCARDTITLE.RunicStrike",
+    "FQCARDTITLE.MinorEngraving"
+]);
+
+listesCards["Runic-Warrior Lvl3"] = listesCards["Runic-Warrior Lvl2"].concat([
+    "FQCARDTITLE.RefinedEngraving",
+    "FQCARDTITLE.RunicEcho"
+]);
+
+listesCards["Runic-Warrior Lvl4"] = listesCards["Runic-Warrior Lvl3"].concat([
+    "FQCARDTITLE.RefinedEngraving",
+    "FQCARDTITLE.DoubleEngraving"
+]);
+
+listesCards["Runic-Warrior Lvl5"] = listesCards["Runic-Warrior Lvl4"].concat([
+    "FQCARDTITLE.DoubleEngraving",
+    "FQCARDTITLE.PerfectEngraving"
+]);
+
+// FENCING MASTER
+listesCards["Fencing-Master Lvl1"] = [
+    "FQCARDTITLE.MasterStrike",
+    "FQCARDTITLE.MasterStrike",
+    "FQCARDTITLE.MasterStrike",
+    "FQCARDTITLE.MarksmanShot",
+    "FQCARDTITLE.MarksmanShot",
+    "FQCARDTITLE.KnifeBelt",
+    "FQCARDTITLE.KnifeBelt"
+];
+
+listesCards["Fencing-Master Lvl2"] = listesCards["Fencing-Master Lvl1"].concat([
+    "FQCARDTITLE.MasterStrike",
+    "FQCARDTITLE.SharpeningOil",
+    "FQCARDTITLE.BalancedGrip",
+    "FQCARDTITLE.TurnBoosterV"
+]);
+
+listesCards["Fencing-Master Lvl3"] = listesCards["Fencing-Master Lvl2"].concat([
+    "FQCARDTITLE.Riposte",
+    "FQCARDTITLE.DoubleStrike",
+    "FQCARDTITLE.KnifeSharpening",
+    "FQCARDTITLE.MarksmanShot"
+]);
+
+listesCards["Fencing-Master Lvl4"] = listesCards["Fencing-Master Lvl3"].concat([
+    "FQCARDTITLE.SwiftStrike",
+    "FQCARDTITLE.SwiftShot",
+    "FQCARDTITLE.CrushingBlow",
+    "FQCARDTITLE.SharpeningOil",
+    "FQCARDTITLE.TurnBoosterV"
+]);
+
+listesCards["Fencing-Master Lvl5"] = listesCards["Fencing-Master Lvl4"].concat([
+    "FQCARDTITLE.WeaponMastery",
+    "FQCARDTITLE.BladeDance",
+    "FQCARDTITLE.HeavyShot",
+    "FQCARDTITLE.CrushingBlow",
+    "FQCARDTITLE.KnifeSharpening"
+]);
+
 // 📂 Répertoires
 const packsSource = "./packs/_source/";
 const cardsGeneratedPackFolder = packsSource + "./decks-fq8-generated/";

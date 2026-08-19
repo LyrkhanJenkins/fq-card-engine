@@ -131,7 +131,8 @@ export default class FormulaDisplay {
                 // avant et après substitution.
                 const sources = FormulaDisplay.collectSources(expr);
                 const withWeapons = FormulaDisplay.substituteWeaponTokens(expr, actor);
-                const normalized = withWeapons.replaceAll("XXX", "X").replaceAll("YYY", "Y");
+                const withBonuses = FormulaDisplay.substituteNamedBonusTokens(withWeapons, actor);
+                const normalized = withBonuses.replaceAll("XXX", "X").replaceAll("YYY", "Y");
                 const withAbilities = FormulaDisplay.substituteAbilityTokens(normalized);
                 return {expr: FormulaDisplay.foldExpression(withAbilities), type, sources};
             });
@@ -160,6 +161,25 @@ export default class FormulaDisplay {
             }
         }
         return result;
+    }
+
+    /**
+     * Remplace, dans une chaîne, chaque jeton de bonus nommé (`@bonus.<nom>`)
+     * par la valeur `system.fq.bonus.cards.<nom>` de l'acteur, ou `0` si aucune
+     * valeur n'est déclarée. Sémantique identique à
+     * `RollService.replaceNamedBonus`, appliquée AVANT la simplification pour
+     * que le jeton n'atteigne jamais `foldExpression`.
+     *
+     * @param {string} str   - La chaîne contenant d'éventuels jetons `@bonus.<nom>`.
+     * @param {object} actor - L'acteur porteur des bonus nommés.
+     *
+     * @returns {string} La chaîne avec les bonus nommés substitués.
+     */
+    static substituteNamedBonusTokens(str, actor) {
+        return str.replace(/@bonus\.(\w+)/g, (_, name) => {
+            const bonus = Number(actor?.system?.fq?.bonus?.cards?.[name]);
+            return Number.isFinite(bonus) ? bonus.toString() : "0";
+        });
     }
 
     /**

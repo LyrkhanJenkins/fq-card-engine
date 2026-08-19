@@ -2,10 +2,14 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
+Réaranger attributes.hbs?
+Problème de rapidité
+Simplification de pickRandomCardRefs
+Faire un tour des constantes
+Faire en sorte que le hud et/ou une autre macro pour utiliser la première arme à distance équipée
 
 ### Versions prévues
 #### 2.1.0
-- Première carte du Maître d'Armes et du Guerrier Runique
 - Tests pour tester toutes les formules dans les jsons des cartes
 - Déplacer les contrôles d'utilisation d'une carte dans un fichier JS et les tester
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)

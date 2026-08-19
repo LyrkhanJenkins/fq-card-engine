@@ -1086,7 +1086,7 @@
           "units": ""
         },
         "type": {
-          "value": "simpleM",
+          "value": "simpleR",
           "baseItem": ""
         },
         "mastery": "",

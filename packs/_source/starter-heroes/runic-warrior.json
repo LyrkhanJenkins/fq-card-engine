@@ -1,5 +1,5 @@
 {
-  "name": "Runic Warrior",
+  "name": "Runic-Warrior",
   "type": "character",
   "_id": "gO3QaKtcQd3XwvYx",
   "img": "modules/fq-card-engine/images/classes/runic-warrior_token.png",
@@ -652,7 +652,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Runic Warrior",
+    "name": "Runic-Warrior",
     "displayName": 0,
     "actorLink": true,
     "width": 1,
@@ -748,7 +748,7 @@
   },
   "items": [
     {
-      "name": "Runic Warrior",
+      "name": "Runic-Warrior",
       "type": "class",
       "img": "modules/fq-card-engine/images/classes/runic-warrior_class.png",
       "effects": [],

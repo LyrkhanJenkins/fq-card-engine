@@ -1,5 +1,5 @@
 {
-  "name": "Fencing Master",
+  "name": "Fencing-Master",
   "type": "character",
   "_id": "uJSNPmJQdrXlqAyK",
   "img": "modules/fq-card-engine/images/classes/fencing-master_token.png",
@@ -652,7 +652,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Fencing Master",
+    "name": "Fencing-Master",
     "displayName": 0,
     "actorLink": true,
     "width": 1,
@@ -748,7 +748,7 @@
   },
   "items": [
     {
-      "name": "Fencing Master",
+      "name": "Fencing-Master",
       "type": "class",
       "img": "modules/fq-card-engine/images/classes/fencing-master_class.png",
       "effects": [],
@@ -1822,7 +1822,7 @@
           "units": ""
         },
         "type": {
-          "value": "simpleM",
+          "value": "simpleR",
           "baseItem": ""
         },
         "mastery": "",

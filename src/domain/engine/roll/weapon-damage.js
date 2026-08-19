@@ -61,7 +61,7 @@ export default class WeaponDamage {
         } catch {
             return "0";
         }
-        const formula = (config?.rolls ?? [])
+        let formula = (config?.rolls ?? [])
             .map(roll => {
                 const data = roll?.data ?? {};
                 return roll?.parts?.join(" + ")
@@ -70,7 +70,39 @@ export default class WeaponDamage {
             })
             .filter(part => part)
             .join(" + ");
-        return formula || "0";
+        if (!formula) {
+            return "0";
+        }
+        // dnd5e n'injecte `system.bonuses.mwak/rwak.damage` que pour les
+        // activités d'ATTAQUE (`BaseActivityData.actionType` vaut le type de
+        // l'activité — "damage" pour les armes FQ — et `_processDamagePart`
+        // lit alors `system.bonuses.damage.damage`, qui n'existe pas). Le
+        // bonus d'arme de l'acteur est donc ajouté ici pour ces activités.
+        if (activity.type !== "attack") {
+            const bonus = WeaponDamage.getActorWeaponDamageBonus(actor, weapon);
+            if (bonus) {
+                formula = `${formula} + (${bonus})`;
+            }
+        }
+        return formula;
+    }
+
+    /**
+     * Bonus de dégâts d'arme de l'acteur applicable à une arme : `mwak` pour
+     * une arme de mêlée (`simpleM`/`martialM`), `rwak` pour une arme à distance
+     * (`system.bonuses.<type>.damage`, alimenté notamment par des effets de
+     * cartes). Renvoie `""` si le bonus est vide ou nul.
+     *
+     * @param {object} actor  - L'acteur porteur.
+     * @param {object} weapon - L'arme équipée.
+     *
+     * @returns {string} Le bonus de dégâts (formule), ou `""`.
+     */
+    static getActorWeaponDamageBonus(actor, weapon) {
+        const category = weapon?.system?.type?.value ?? "";
+        const actionType = category.endsWith("R") ? "rwak" : "mwak";
+        const bonus = actor?.system?.bonuses?.[actionType]?.damage;
+        return (bonus && !/^0+$/.test(String(bonus).trim())) ? String(bonus) : "";
     }
 
     /**

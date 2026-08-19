@@ -27,12 +27,31 @@ export default class RollService {
      * @returns {string} La chaîne avec les modificateurs substitués.
      */
     static replaceAbilitiesBonus(str) {
-        return str.replaceAll("@str", Constants.actorAbi.str.mod.toString())
+        return RollService.replaceNamedBonus(str)
+            .replaceAll("@str", Constants.actorAbi.str.mod.toString())
             .replaceAll("@dex", Constants.actorAbi.dex.mod.toString())
             .replaceAll("@con", Constants.actorAbi.con.mod.toString())
             .replaceAll("@int", Constants.actorAbi.int.mod.toString())
             .replaceAll("@wis", Constants.actorAbi.wis.mod.toString())
             .replaceAll("@cha", Constants.actorAbi.cha.mod.toString());
+    }
+
+    /**
+     * Remplace chaque jeton de bonus nommé (`@bonus.<nom>`) par la valeur
+     * `system.fq.bonus.cards.<nom>` du personnage courant (posée par des effets
+     * actifs), ou `0` si aucune valeur n'est déclarée. Les jetons de bonus sont
+     * résolus AVANT les caractéristiques : `@bonus.` doit disparaître de la
+     * chaîne sans jamais être tronqué par un autre remplacement.
+     *
+     * @param {string} str - La chaîne contenant d'éventuels jetons `@bonus.<nom>`.
+     *
+     * @returns {string} La chaîne avec les bonus nommés substitués.
+     */
+    static replaceNamedBonus(str) {
+        return str.replace(/@bonus\.(\w+)/g, (_, name) => {
+            const bonus = Number(Constants.actorFQ?.bonus?.cards?.[name]);
+            return Number.isFinite(bonus) ? bonus.toString() : "0";
+        });
     }
 
     /**

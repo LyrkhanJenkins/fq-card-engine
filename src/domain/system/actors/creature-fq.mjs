@@ -1,4 +1,4 @@
-const {SchemaField, NumberField, StringField} = foundry.data.fields;
+const {SchemaField, NumberField, StringField, ObjectField} = foundry.data.fields;
 
 /**
  * Champs de schéma FQ communs aux personnages et aux PNJ.
@@ -77,6 +77,11 @@ export default class CreatureFQTemplate {
                 dot: new NumberField({
                     nullable: false, integer: true, initial: 0, label: "FQCARDENGINE.HitPointsOnTime"
                 }),
+                // Bonus nommés : objet {nom → valeur numérique}, alimenté par des
+                // effets actifs dont la clé est `system.fq.bonus.cards.<nom>` et
+                // consommé par les jetons `@bonus.<nom>` des formules de cartes
+                // (RollService.replaceNamedBonus : absent → 0).
+                cards: new ObjectField({label: "FQCARDENGINE.CardDamageBonus"}),
             }, {label: "FQCARDENGINE.Bonuses"}),
         };
     }
