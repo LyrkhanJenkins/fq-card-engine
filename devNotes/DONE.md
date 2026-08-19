@@ -9,6 +9,7 @@ Feat :
 - Simplifier les formules à l'affichage sur les cartes + tooltips
 - Suppression du "JSON Après utilisation" -> Remplacer par les cartes générées
 - Génère des cartes dans la défausse parmi un choix proposé au joueur
+- Creation des classes et token du Guerrier Runique et du Maître d'Armes
   
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

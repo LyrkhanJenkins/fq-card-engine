@@ -2,12 +2,12 @@
   "_id": "DXP6pf6gl0rrwHrx",
   "name": "Illusionist",
   "type": "character",
-  "img": "modules/fq-card-engine/images/classes/Concept_Art_brown_fighter_with_enchanted_whip_and_dagger_1.png",
+  "img": "modules/fq-card-engine/images/classes/illusionist_token.png",
   "items": [
     {
       "name": "Illusionist",
       "type": "class",
-      "img": "modules/fq-card-engine/images/classes/craiyon_153049_brown_thief_mage_fantasy_knifes_whip_levitate_around_him.png",
+      "img": "modules/fq-card-engine/images/classes/illusionist_class.png",
       "effects": [],
       "folder": null,
       "flags": {
@@ -1716,7 +1716,7 @@
     "appendNumber": false,
     "prependAdjective": false,
     "texture": {
-      "src": "modules/fq-card-engine/images/classes/Concept_Art_brown_fighter_with_enchanted_whip_and_dagger_1.png",
+      "src": "modules/fq-card-engine/images/classes/illusionist_token.png",
       "anchorX": 0.5,
       "anchorY": 0.5,
       "offsetX": 0,
