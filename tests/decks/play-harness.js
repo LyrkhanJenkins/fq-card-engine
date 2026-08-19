@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import {forceDie, installDeterministicRoll, pushDie, resetDiceControl} from "./deterministic-roll.js";
 import {defaultFdFor} from "./fd-table.js";
+import ZoneTargeting from "../../src/domain/interface/shared/zone-targeting.js";
 
 /**
  * Socle du driver de test exhaustif (07-02) : monte un `game` Foundry cohérent
@@ -338,6 +339,13 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
     };
 
     const socket = await getSocketSpy();
+
+    // La pose interactive de zone (canvas) est hors périmètre du harnais : pour
+    // une carte « Zone », la zone est considérée posée — le garde-fou de pose a
+    // ses propres tests (play-validated-card-targeting / zone-targeting).
+    if (cardContent?.targetType === "Zone") {
+        vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(true);
+    }
 
     let threw = false;
     let error = null;

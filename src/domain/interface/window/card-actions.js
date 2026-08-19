@@ -1,12 +1,15 @@
 import Constants from "../../constants.js";
 import DisplayCard from "../shared/display-card.js";
 import TargetingView from "../shared/targeting-view.js";
+import ZoneTargeting from "../shared/zone-targeting.js";
+import AdjacentTargeting from "../shared/adjacent-targeting.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
 import Minion from "../../engine/shared/minion.js";
 import PlayCard from "../../engine/play-card.js";
 import FormError from "../../../core/error/form-error.model.js";
 import CardEffect from "../../engine/shared/card-effect.js";
 import ResourceHandler from "../../engine/shared/resource-handler.js";
+import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {PILE_TYPE} from "../../trading/trading-cards.js";
 
 // Correspondance verdict de ciblage (`ResourceHandler.TARGETING_VERDICT`) → clé du
@@ -278,15 +281,58 @@ export default {
                 ui.notifications.info(game.i18n.localize("FQCARDENGINE.TargetingPanelTargetHint"));
             };
 
-            // Bouton « 🎯 Cibler » : listener DÉLÉGUÉ sur `root` (survit au re-rendu du panneau).
+            // Pose de zone (targetType « Zone ») : le canvas est libéré (CSS) le temps
+            // de la pose interactive, les cibles sont acquises par la région posée,
+            // puis le panneau se rafraîchit avec les cibles finales. Ni barre ni
+            // outil « target » : la pose est modale côté canvas (clic pour poser,
+            // clic droit/Échap pour annuler).
+            const enterZonePlacement = async () => {
+                const {fd, cardContent} = this.getCardContent(root, cardContents, discards);
+                root.classList.add("fq-targeting-mode");
+                ui.notifications.info(game.i18n.localize("FQCARDENGINE.TargetingPanelZoneHint"));
+                try {
+                    await ZoneTargeting.placeZoneAndAcquireTargets(cardContent, fd);
+                } finally {
+                    root.classList.remove("fq-targeting-mode");
+                    renderPanel();
+                }
+            };
+
+            // Ciblage « Adjacent » : acquisition automatique des tokens autour du
+            // lanceur — au rendu initial, au changement de choix et à la saisie de
+            // X/Y (certaines portées dépendent de XXX). Le garde-fou ré-acquiert
+            // au moment du jeu, l'aperçu du panneau n'est donc jamais bloquant.
+            const acquireIfAdjacent = () => {
+                const {fd, cardContent} = this.getCardContent(root, cardContents, discards);
+                if (cardContent?.targetType !== CardFqSystem.TARGET_TYPE_ADJACENT) return;
+                AdjacentTargeting.acquireTargets(cardContent, fd);
+                renderPanel();
+            };
+            acquireIfAdjacent();
+            root.querySelectorAll("input[name=\"XXX\"], input[name=\"YYY\"]")
+                .forEach(el => el.addEventListener("change", () => acquireIfAdjacent()));
+
+            // Boutons « 🎯 Cibler » / « ⭕ Poser la zone » : listeners DÉLÉGUÉS sur
+            // `root` (survivent au re-rendu du panneau).
             root.addEventListener("click", (event) => {
+                if (event.target.closest(".fq-play-zone-btn")) {
+                    event.preventDefault();
+                    enterZonePlacement();
+                    return;
+                }
                 if (!event.target.closest(".fq-play-target-btn")) return;
                 event.preventDefault();
                 enterTargeting();
             });
 
             const targetHookId = Hooks.on("targetToken", () => renderPanel());
-            root.querySelector("select[name=\"nameContent\"]")?.addEventListener("change", () => renderPanel());
+            // Changer de choix invalide la zone posée (l'autre choix peut avoir une
+            // toute autre forme/taille de zone, voire ne pas être une zone).
+            root.querySelector("select[name=\"nameContent\"]")?.addEventListener("change", () => {
+                ZoneTargeting.clearPlacement();
+                acquireIfAdjacent();
+                renderPanel();
+            });
             // Nettoyage obligatoire à la fermeture de CETTE dialog : retirer le hook
             // targetToken (pas de fuite), enlever la barre et revenir à l'outil « select »
             // si on ferme en plein ciblage.
@@ -294,6 +340,7 @@ export default {
                 if (closedApp !== app) return;
                 if (openPlayDialog === app) openPlayDialog = null;
                 Hooks.off("targetToken", targetHookId);
+                ZoneTargeting.clearPlacement();
                 targetingBar?.remove();
                 if (root.classList.contains("fq-targeting-mode")) {
                     ui.controls?.activate?.({control: "tokens", tool: "select"});
@@ -381,8 +428,24 @@ export default {
         CardEffect.substituteXAndYValue(cardContent, hasVariables, fd.XXX, fd.YYY);
         CardEffect.prepareDataFromCard(cardContent);
 
-        // ── Garde-fou de ciblage ──
-        if (cardContent?.minReach || cardContent?.maxReach) {
+        // ── Garde-fou de ciblage ── Pour une carte Zone, POSER LA ZONE SUFFIT :
+        // les cibles ont été acquises à la pose (même aucune — la zone peut tomber
+        // sur du vide), la portée y a déjà été contrôlée, nbTargets ne s'applique pas.
+        if (cardContent?.targetType === CardFqSystem.TARGET_TYPE_ZONE) {
+            if (!ZoneTargeting.hasPlacement()) {
+                throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorNoZone"));
+            }
+        } else if (cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT) {
+            // Acquisition automatique au moment du jeu (les tokens ont pu bouger
+            // depuis l'aperçu du panneau) : l'anneau vide bloque le jeu.
+            const {status, count} = AdjacentTargeting.acquireWithin(cardContent.minReach, cardContent.maxReach);
+            if (status === AdjacentTargeting.ACQUISITION.NO_CASTER_TOKEN) {
+                throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorNoTokenOnScene"));
+            }
+            if (count === 0) {
+                throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorNoAdjacentTarget"));
+            }
+        } else if (cardContent?.minReach || cardContent?.maxReach) {
             const {verdict} = ResourceHandler.evaluateTargeting(Constants.actorCurrent, cardContent.nbTargets, cardContent.minReach, cardContent.maxReach, cardContent.targetType);
             const errorKey = TARGETING_FORM_ERROR[verdict];
             if (errorKey) {

@@ -1204,7 +1204,7 @@
               "drop": "",
               "minReach": "3",
               "maxReach": "10",
-              "nbTargets": "4",
+              "nbTargets": "",
               "damage": "(2+@wis+1d4)[force]+(1+@int+1d4)[fire]",
               "heal": "",
               "bonusCrit": "",
@@ -1217,20 +1217,11 @@
               "yvalue": "",
               "customEvals": [
                 {
-                  "script": "game.user.targets.size < 1 || game.user.targets.size > 9 || FqCardEngineModule.cond.targetsHaveEffect([\"Burn\", \"Earth Effect\"])",
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Burn\", \"Earth Effect\"])",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgMissingEffect",
                       "arg": "{\"effectName1\": \"Earth Effect\",\"effectName2\": \"Burn\"}"
-                    }
-                  ]
-                },
-                {
-                  "script": "game.user.targets.size === 1 || game.user.targets.size > 9 || FqCardEngineModule.cond.targetsWithinSquare(3)",
-                  "errorMessages": [
-                    {
-                      "key": "FQCARDENGINE.CardWarningMsgSquareEffect",
-                      "arg": "{\"area\": \"3x3\"}"
                     }
                   ]
                 }
@@ -1241,12 +1232,14 @@
               "applyEffectsFormulas": [],
               "messages": [],
               "minions": [],
-              "targetType": "Default",
+              "targetType": "Zone",
               "visual": {
                 "path": "",
                 "onTarget": false
               },
-              "hasBeenPlayed": false
+              "hasBeenPlayed": false,
+              "zoneShape": "rectangle",
+              "zoneSize": "3"
             }
           ],
           "level": 3,
@@ -1706,7 +1699,7 @@
               "drop": "",
               "minReach": "1",
               "maxReach": "1",
-              "nbTargets": "4",
+              "nbTargets": "",
               "damage": "(1+@int+1d4)[thunder]+(1+@wis+1d4)[cold]",
               "heal": "",
               "bonusCrit": "",
@@ -1734,7 +1727,7 @@
               "applyEffectsFormulas": [],
               "messages": [],
               "minions": [],
-              "targetType": "Default",
+              "targetType": "Adjacent",
               "visual": {
                 "path": "",
                 "onTarget": false

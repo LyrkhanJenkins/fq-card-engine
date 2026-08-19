@@ -626,8 +626,9 @@
     text-align: right;
 }
 
-/* Bouton « 🎯 Cibler » — cliquable malgré .fq-play-targets { pointer-events: none }. */
-.fq-play-target-btn {
+/* Boutons « 🎯 Cibler » / « ⭕ Poser la zone » — cliquables malgré .fq-play-targets { pointer-events: none }. */
+.fq-play-target-btn,
+.fq-play-zone-btn {
     pointer-events: auto;
     cursor: pointer;
     font-family: 'Palatino Linotype', Georgia, serif;
@@ -640,12 +641,16 @@
     padding: 9px 22px;
 }
 
-.fq-play-target-btn:hover {
+.fq-play-target-btn:hover,
+.fq-play-zone-btn:hover {
     color: rgba(var(--fq-gold-hi-rgb), 1);
     border-color: rgba(var(--fq-gold-rgb), 0.9);
     background: rgba(var(--fq-panel-c-rgb), 0.85);
 }
 
+/* Le bouton de zone clignote tant que la zone n'est pas posée (c'est la pose,
+   pas le nombre de cibles, qui conditionne le jeu d'une carte Zone). */
+.fq-play-zone-btn:not(.fq-play-zone-btn--placed),
 .fq-play-targets-content:not(:has(.fq-play-target)) .fq-play-target-btn {
     animation: fqTargetBtnBlink 1s ease-in-out infinite;
     border-color: rgba(var(--fq-gold-hi2-rgb), 0.95);

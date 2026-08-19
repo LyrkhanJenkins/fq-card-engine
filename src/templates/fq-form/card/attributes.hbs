@@ -82,6 +82,25 @@
                     {{formInput ../fields.fq.fields.choices.element.fields.nbTargets value=choice.nbTargets
                                 name=(concat "system.fq.choices." i ".nbTargets") rootId=../rootId}}
                 </div>
+                <div class="form-fields fq-zone-fields">
+                    <label>{{localize "FQCARDENGINE.ZoneShape"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.zoneShape value=choice.zoneShape
+                                localize=true
+                                name=(concat "system.fq.choices." i ".zoneShape") rootId=../rootId}}
+
+                    <label>{{localize "FQCARDENGINE.ZoneSize"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.zoneSize value=choice.zoneSize
+                                name=(concat "system.fq.choices." i ".zoneSize") rootId=../rootId}}
+                </div>
+                <div class="form-fields fq-zone-fields">
+                    <label>{{localize "FQCARDENGINE.ZoneAngle"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.zoneAngle value=choice.zoneAngle
+                                name=(concat "system.fq.choices." i ".zoneAngle") rootId=../rootId}}
+
+                    <label>{{localize "FQCARDENGINE.ZoneWidth"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.zoneWidth value=choice.zoneWidth
+                                name=(concat "system.fq.choices." i ".zoneWidth") rootId=../rootId}}
+                </div>
                 <div class="form-fields">
                     <label>{{localize "FQCARDENGINE.Damage"}}</label>
                     {{formInput ../fields.fq.fields.choices.element.fields.damage value=choice.damage

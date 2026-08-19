@@ -1,4 +1,5 @@
 import CardEffect from "../../engine/shared/card-effect.js";
+import ZoneTargeting from "./zone-targeting.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
 import TargetingPredicates from "../../engine/shared/targeting-predicates.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
@@ -15,12 +16,15 @@ export default class TargetingView {
      * @param {object} cardContent - Le choix de carte sélectionné.
      * @param {object} [fd={}]     - Les données du formulaire (XXX/YYY saisis).
      *
-     * @returns {{manual: boolean, required: number, count: number, minReach: *, maxReach: *, targets: object[]}}
-     *          Le view-model : ciblage manuel ?, nombre requis, nombre courant, portées résolues, et les cibles courantes.
+     * @returns {{manual: boolean, isZone: boolean|undefined, required: number, count: number, minReach: *, maxReach: *, targets: object[]}}
+     *          Le view-model : ciblage manuel ?, ciblage par zone ?, nombre requis, nombre courant, portées résolues, et les cibles courantes.
      */
     static build(cardContent, fd = {}) {
-        const manual = cardContent?.targetType !== CardFqSystem.TARGET_TYPE_SKELETON
-            && !!(cardContent?.minReach || cardContent?.maxReach);
+        const isZone = cardContent?.targetType === CardFqSystem.TARGET_TYPE_ZONE;
+        const isAdjacent = cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT;
+        const manual = isZone || isAdjacent
+            || (cardContent?.targetType !== CardFqSystem.TARGET_TYPE_SKELETON
+                && !!(cardContent?.minReach || cardContent?.maxReach));
 
         if (!manual) {
             return {manual: false, required: 0, count: 0, minReach: undefined, maxReach: undefined, targets: []};
@@ -40,9 +44,12 @@ export default class TargetingView {
             }
             : {minReach: cc.minReach, maxReach: cc.maxReach};
 
+        // Pour une zone, la portée se contrôle à la pose (lanceur → origine de la
+        // zone) : aucun marquage hors-portée par token, les tokens en bordure
+        // d'une zone posée à portée restent des cibles valides.
         const casterToken = TargetingPredicates.findCasterToken(Constants.actorCurrent);
         const outOfReachByToken = new Map();
-        if (casterToken) {
+        if (casterToken && !isZone && !isAdjacent) {
             for (const entry of TargetingPredicates.findOutOfReachTargets(casterToken, tokens, minReach, maxReach)) {
                 outOfReachByToken.set(entry.target, entry.dist);
             }
@@ -61,6 +68,18 @@ export default class TargetingView {
                 dist: outOfReachByToken.get(t) ?? null,
             };
         });
+
+        // Une zone touche tout ce qu'elle couvre : nbTargets ne limite pas, et
+        // c'est la POSE de la zone (zonePlaced) qui conditionne le jeu de la carte.
+        if (isZone) {
+            return {manual, isZone, zonePlaced: ZoneTargeting.hasPlacement(), required: tokens.length, count: tokens.length, tooMuchTargets: false, minReach, maxReach, targets};
+        }
+
+        // « Adjacent » : cibles acquises automatiquement autour du lanceur —
+        // rien à cibler à la main, nbTargets ne limite pas.
+        if (isAdjacent) {
+            return {manual, isAdjacent, required: tokens.length, count: tokens.length, tooMuchTargets: false, minReach, maxReach, targets};
+        }
 
         return {manual, required, count: tokens.length, tooMuchTargets: tokens.length > required, minReach, maxReach, targets};
     }

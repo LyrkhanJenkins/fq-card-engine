@@ -14,7 +14,8 @@ Faire en sorte que le hud et/ou une autre macro pour utiliser la première arme 
 - Déplacer les contrôles d'utilisation d'une carte dans un fichier JS et les tester
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
 - L'esquive fait demi-dégâts (Esquive critique? Double-critique?)
-- Gérer du ciblage spéciale : Zone -> utiliser le ciblage de zone avec la dialog-play
+- Gérer un type de cible, tous les alliés, tous les ennemis
+- Gérer les fx pour les zones?
 - Faire des sorts qui s'active au bout du enieme tour, action de la carte au bout d'un certain temps
 - Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts suivant le zèle qu'a la cible plutôt que la chargé
   - Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?

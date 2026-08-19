@@ -24,6 +24,7 @@ const {mountWorld, ensureEngineLoaded} = await import("../decks/play-harness.js"
 const {installDeterministicRoll, resetDiceControl} = await import("../decks/deterministic-roll.js");
 const PlayCard = (await import("../../src/domain/engine/play-card.js")).default;
 const Constants = (await import("../../src/domain/constants.js")).default;
+const ZoneTargeting = (await import("../../src/domain/interface/shared/zone-targeting.js")).default;
 const {makeCard, makeChoice} = await import("../factories.js");
 
 await ensureEngineLoaded();
@@ -159,6 +160,73 @@ describe("Garde-fou de ciblage — Skeletons contrôlé", () => {
         const choice = makeChoice({targetType: "Skeletons", maxReach: "3"});
         expect(() => play(choice)).not.toThrow();
         expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe("Garde-fou de ciblage — Zone (poser la zone EST la condition de jeu)", () => {
+    afterEach(() => vi.restoreAllMocks());
+
+    test("Zone non posée → FormError NoZone, non délégué", () => {
+        mountForGuard();
+        vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(false);
+        const choice = makeChoice({targetType: "Zone", maxReach: "3"});
+        expect(() => play(choice)).toThrow("FQCARDENGINE.DialogPlayFormErrorNoZone");
+        expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+    });
+
+    test("Zone non posée SANS portée déclarée → FormError NoZone (la garde s'applique aussi sans portée)", () => {
+        mountForGuard();
+        vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(false);
+        const choice = makeChoice({targetType: "Zone", minReach: "", maxReach: ""});
+        expect(() => play(choice)).toThrow("FQCARDENGINE.DialogPlayFormErrorNoZone");
+        expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+    });
+
+    test("Zone posée + 0 cible → délègue (la zone peut tomber sur du vide)", () => {
+        mountForGuard({user: {targets: []}});
+        vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(true);
+        const choice = makeChoice({targetType: "Zone", maxReach: "3"});
+        expect(() => play(choice)).not.toThrow();
+        expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
+    });
+
+    test("Zone posée + plusieurs cibles sans nbTargets → délègue (le nombre n'est pas limité)", () => {
+        mountForGuard({user: {targets: [targetLike("A"), targetLike("B")]}});
+        vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(true);
+        const choice = makeChoice({targetType: "Zone", maxReach: "3"});
+        expect(() => play(choice)).not.toThrow();
+        expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
+    });
+
+    test("Zone posée + cible individuellement hors portée → délègue (portée contrôlée à la pose, pas par token)", () => {
+        mountForGuard(); // cible à distance 1 < minReach 2 : bloquerait en Default
+        vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(true);
+        const choice = makeChoice({targetType: "Zone", minReach: "2", maxReach: "3"});
+        expect(() => play(choice)).not.toThrow();
+        expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe("Garde-fou de ciblage — Adjacent (acquisition automatique autour du lanceur)", () => {
+    test("Adjacent + voisin à distance 1 → délègue", () => {
+        mountForGuard(); // token cible de la fixture à distance 1 du lanceur
+        const choice = makeChoice({targetType: "Adjacent", minReach: "1", maxReach: "1"});
+        expect(() => play(choice)).not.toThrow();
+        expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
+    });
+
+    test("Adjacent + anneau vide → FormError NoAdjacentTarget, non délégué", () => {
+        mountForGuard(); // la seule cible est à distance 1, hors de l'anneau [2,3]
+        const choice = makeChoice({targetType: "Adjacent", minReach: "2", maxReach: "3"});
+        expect(() => play(choice)).toThrow("FQCARDENGINE.DialogPlayFormErrorNoAdjacentTarget");
+        expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+    });
+
+    test("Adjacent + pas de token du lanceur → FormError NoTokenOnScene, non délégué", () => {
+        mountForGuard({canvas: {scene: {tokens: []}}});
+        const choice = makeChoice({targetType: "Adjacent", maxReach: "1"});
+        expect(() => play(choice)).toThrow("FQCARDENGINE.DialogPlayFormErrorNoTokenOnScene");
+        expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
     });
 });
 

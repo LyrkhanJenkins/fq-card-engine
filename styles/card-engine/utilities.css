@@ -12,6 +12,17 @@
     overflow-y: auto;
 }
 
+/* Champs de zone du formulaire de carte : visibles uniquement quand le type de
+   cible du choix est « Zone ». Pur CSS (la sheet ne re-rend pas au changement
+   du select) : `:has(option:checked)` suit la sélection en direct. */
+.fq-form-attributes [data-choice] .fq-zone-fields {
+    display: none;
+}
+
+.fq-form-attributes [data-choice]:has(select[name$=".targetType"] option[value="Zone"]:checked) .fq-zone-fields {
+    display: flex;
+}
+
 .effect-legend {
     display: flex;
     flex-direction: row;

@@ -9,10 +9,21 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static DEFAULT_ICON = "icons/consumables/drinks/alcohol-beer-mug-yellow.webp";
     static TARGET_TYPE_SKELETON = "Skeletons";
     static TARGET_TYPE_DEFAULT = "Default";
+    static TARGET_TYPE_ZONE = "Zone";
+    static TARGET_TYPE_ADJACENT = "Adjacent";
     static NEUTRAL_CLASS = "neutral";
     static TARGET_TYPE_CHOICE = {
         "Default": this.TARGET_TYPE_DEFAULT,
-        "Skeletons": this.TARGET_TYPE_SKELETON
+        "Skeletons": this.TARGET_TYPE_SKELETON,
+        "Zone": this.TARGET_TYPE_ZONE,
+        "Adjacent": this.TARGET_TYPE_ADJACENT
+    };
+    // Formes de zone posables sur le canvas (types de RegionShapeData Foundry v14).
+    static ZONE_SHAPE_CHOICE = {
+        circle: "FQCARDENGINE.ZoneShapeCircle",
+        cone: "FQCARDENGINE.ZoneShapeCone",
+        rectangle: "FQCARDENGINE.ZoneShapeRectangle",
+        line: "FQCARDENGINE.ZoneShapeLine"
     };
     static CLASS_CHOICE = {
         "neutral": this.NEUTRAL_CLASS,
@@ -95,6 +106,20 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             minReach: new StringField({required: true, label: "FQCARDENGINE.MinReach"}),
             maxReach: new StringField({required: true, label: "FQCARDENGINE.MaxReach"}),
             nbTargets: new StringField({required: true, label: "FQCARDENGINE.NbTargets"}),
+
+            // Zone (targetType « Zone ») : forme posée sur le canvas et dimensions en cases.
+            // zoneSize = rayon (cercle/cône), largeur (rectangle) ou longueur (ligne) ;
+            // zoneAngle = ouverture du cône en degrés ; zoneWidth = hauteur du rectangle
+            // ou épaisseur de la ligne (défaut : zoneSize / 1 case).
+            zoneShape: new StringField({
+                required: true,
+                label: "FQCARDENGINE.ZoneShape",
+                choices: this.ZONE_SHAPE_CHOICE,
+                initial: () => "circle",
+            }),
+            zoneSize: new StringField({required: true, label: "FQCARDENGINE.ZoneSize"}),
+            zoneAngle: new StringField({required: true, label: "FQCARDENGINE.ZoneAngle"}),
+            zoneWidth: new StringField({required: true, label: "FQCARDENGINE.ZoneWidth"}),
 
             damage: new StringField({required: true, label: "FQCARDENGINE.Damage"}),
             heal: new StringField({required: true, label: "FQCARDENGINE.Heal"}),

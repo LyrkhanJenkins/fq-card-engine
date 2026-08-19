@@ -132,7 +132,16 @@ describe("CardFqSystem.getChoiceSchema", () => {
         expect(CardFqSystem.getChoiceSchema().targetType.choices).toEqual({
             "Default": "Default",
             "Skeletons": "Skeletons",
+            "Zone": "Zone",
+            "Adjacent": "Adjacent",
         });
+    });
+
+    it("expose les champs de zone (forme, taille, angle, largeur) avec cercle par défaut", () => {
+        const choice = CardFqSystem.getChoiceSchema();
+        expect(choice.zoneShape.initial()).toBe("circle");
+        expect(choice.zoneShape.choices).toEqual(CardFqSystem.ZONE_SHAPE_CHOICE);
+        expect(Object.keys(choice)).toEqual(expect.arrayContaining(["zoneShape", "zoneSize", "zoneAngle", "zoneWidth"]));
     });
 
     it("expose les champs de coûts, ciblage, dégâts/soins, options avancées et rejeu", () => {

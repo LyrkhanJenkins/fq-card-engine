@@ -275,8 +275,9 @@ export default class CardEffect {
 
     /**
      * Indique si la carte vise autrui plutôt que son lanceur : vrai si elle a une portée
-     * (`minReach`/`maxReach`) ou cible des squelettes. Sans portée, le sort est considéré
-     * comme se ciblant lui-même. Source de vérité unique du ciblage (effets, message de chat).
+     * (`minReach`/`maxReach`), cible des squelettes, une zone ou les tokens adjacents.
+     * Sans portée, le sort est considéré comme se ciblant lui-même. Source de vérité
+     * unique du ciblage (effets, message de chat).
      *
      * @param {object} cardContent - Le contenu (choix) de la carte.
      *
@@ -284,7 +285,9 @@ export default class CardEffect {
      */
     static cardTargetsOthers(cardContent) {
         return Boolean(cardContent?.minReach || cardContent?.maxReach ||
-            cardContent?.targetType === CardFqSystem.TARGET_TYPE_SKELETON);
+            cardContent?.targetType === CardFqSystem.TARGET_TYPE_SKELETON ||
+            cardContent?.targetType === CardFqSystem.TARGET_TYPE_ZONE ||
+            cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT);
     }
 
     /**

@@ -4,9 +4,21 @@
 {{#if manual}}
     <span class="fq-play-targets-title">{{localize "FQCARDENGINE.TargetingPanelTitle"}}</span>
 
-    <button type="button" class="fq-play-target-btn">🎯 {{localize "FQCARDENGINE.TargetingPanelTargetButton"}}</button>
+    {{#if isZone}}
+        <button type="button" class="fq-play-zone-btn{{#if zonePlaced}} fq-play-zone-btn--placed{{/if}}">⭕ {{localize "FQCARDENGINE.TargetingPanelZoneButton"}}</button>
 
-    <div class="fq-play-targets-counter{{#if tooMuchTargets}} fq-play-target--oor{{/if}}">{{localize "FQCARDENGINE.TargetingPanelCounterLabel"}} {{count}} / {{required}}</div>
+        {{#if zonePlaced}}
+            <div class="fq-play-targets-counter">✓ {{localize "FQCARDENGINE.TargetingPanelZonePlaced"}} — {{localize "FQCARDENGINE.TargetingPanelCounterLabel"}} {{count}}</div>
+        {{else}}
+            <div class="fq-play-targets-counter fq-play-target--oor">{{localize "FQCARDENGINE.TargetingPanelZoneNotPlaced"}}</div>
+        {{/if}}
+    {{else if isAdjacent}}
+        <div class="fq-play-targets-counter">{{localize "FQCARDENGINE.TargetingPanelAdjacentLabel"}} {{count}}</div>
+    {{else}}
+        <button type="button" class="fq-play-target-btn">🎯 {{localize "FQCARDENGINE.TargetingPanelTargetButton"}}</button>
+
+        <div class="fq-play-targets-counter{{#if tooMuchTargets}} fq-play-target--oor{{/if}}">{{localize "FQCARDENGINE.TargetingPanelCounterLabel"}} {{count}} / {{required}}</div>
+    {{/if}}
 
     {{#each targets}}
         <div class="fq-play-target{{#if outOfReach}} fq-play-target--oor{{/if}}">
