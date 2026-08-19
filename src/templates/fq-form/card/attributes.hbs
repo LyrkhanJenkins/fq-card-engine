@@ -479,24 +479,11 @@
                     "FQCARDENGINE.AddCustomEval"}}</button>
             </fieldset>
             <fieldset>
-                <legend>📜 <label>{{localize "FQCARDENGINE.OtherCardAttributes"}} </label></legend>
+                <legend>🃏 <label>{{localize "FQCARDENGINE.CardManipulationLegend"}} </label></legend>
                 <div class="form-fields">
                     <label>{{localize "FQCARDENGINE.Replayable"}}</label>
                     {{formInput ../fields.fq.fields.choices.element.fields.replayable value=choice.replayable
                                 name=(concat "system.fq.choices." i ".replayable") rootId=../rootId}}
-                    <label>{{localize "FQCARDENGINE.CardSound"}}</label>
-                    {{formInput ../fields.fq.fields.choices.element.fields.sound value=choice.sound
-                                name=(concat "system.fq.choices." i ".sound") rootId=../rootId}}
-                </div>
-                <div class="form-fields">
-                    <label>{{localize "FQCARDENGINE.CardVisual"}}</label>
-                    {{formInput ../fields.fq.fields.choices.element.fields.visual.fields.path value=choice.visual.path
-                                name=(concat "system.fq.choices." i ".visual.path") rootId=../rootId}}
-                    <label>{{localize "FQCARDENGINE.CardVisualOnTarget"}}</label>
-                    {{formInput ../fields.fq.fields.choices.element.fields.visual.fields.onTarget
-                                value=choice.visual.onTarget
-                                name=(concat "system.fq.choices." i ".visual.onTarget") rootId=../rootId}}
-
                 </div>
                 <div class="form-fields">
                     <label>{{localize "FQCARDENGINE.GenerateCard"}}</label>
@@ -508,9 +495,6 @@
                     {{formInput ../fields.fq.fields.choices.element.fields.retrieveFromDiscard value=choice.retrieveFromDiscard
                                 name=(concat "system.fq.choices." i ".retrieveFromDiscard") rootId=../rootId}}
                 </div>
-            </fieldset>
-            <fieldset>
-                <legend>🃏 <label>{{localize "FQCARDENGINE.ChooseCardsLegend"}} </label></legend>
                 <div class="form-fields">
                     <label>{{localize "FQCARDENGINE.ChooseCardsList"}}</label>
                     {{formInput ../fields.fq.fields.choices.element.fields.chooseCardsList value=choice.chooseCardsList
@@ -535,6 +519,23 @@
                     {{formInput ../fields.fq.fields.choices.element.fields.chooseCardsExcludeDeck
                                 value=choice.chooseCardsExcludeDeck
                                 name=(concat "system.fq.choices." i ".chooseCardsExcludeDeck") rootId=../rootId}}
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>🎨 <label>{{localize "FQCARDENGINE.CardCosmetics"}} </label></legend>
+                <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.CardSound"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.sound value=choice.sound
+                                name=(concat "system.fq.choices." i ".sound") rootId=../rootId}}
+                </div>
+                <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.CardVisual"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.visual.fields.path value=choice.visual.path
+                                name=(concat "system.fq.choices." i ".visual.path") rootId=../rootId}}
+                    <label>{{localize "FQCARDENGINE.CardVisualOnTarget"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.visual.fields.onTarget
+                                value=choice.visual.onTarget
+                                name=(concat "system.fq.choices." i ".visual.onTarget") rootId=../rootId}}
                 </div>
             </fieldset>
         </fieldset>
