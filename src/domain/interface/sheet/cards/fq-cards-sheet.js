@@ -54,8 +54,10 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
 
     /**
      * Enrichit le contexte de la partie « cards » : détermine si le deck affiché
-     * est le deck ou le grimoire (spellbook) du joueur courant, et marque les
-     * cartes du grimoire déjà présentes en nombre maximal dans le deck (`isMaxReached`).
+     * est le deck ou le grimoire (spellbook) du joueur courant, marque les
+     * cartes du grimoire déjà présentes en nombre maximal dans le deck
+     * (`isMaxReached`), et signale les cartes générées (`isGenerated`, flag
+     * `generated` — copies recyclées dans le deck, détruites en fin de combat).
      *
      * @inheritDoc
      * @param {string} partId  - L'identifiant de la partie de gabarit en cours de rendu.
@@ -69,6 +71,11 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
         if (partId === "cards") {
             partContext.isYourDeck = (partContext?.document.system?.fq?.type === DECK_TYPE && partContext?.document.system?.fq?.owner === game.user.id);
             partContext.isYourSpellbook = (partContext?.document.system?.fq?.type === SPELLBOOK_TYPE && partContext?.document.system?.fq?.owner === game.user.id);
+
+            const moduleName = globalThis.FqCardEngineModule?.moduleName;
+            for (const cardCtx of partContext.cards ?? []) {
+                cardCtx.isGenerated = Boolean(cardCtx.flags?.[moduleName]?.generated);
+            }
 
             if (partContext.isYourSpellbook) {
                 const deck = TradingCards.getFirstDeck(game.user.id, DECK_TYPE, false);

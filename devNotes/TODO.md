@@ -6,21 +6,10 @@
 ### Versions prévues
 #### 2.1.0
 - Première carte du Maître d'Armes et du Guerrier Runique
-- Tests pour tester toutes les formules dans les jsons des cartese
-- Des choix de cartes ne sont plus des choix mais des executions après un autre choix 
-  OU une transformation à la prochaine execution
-    - Filtrer les vrais choix pour la dialog, et executer en queue tous les choix qui se succède
-    - Renommer le mot choix c'est plus un effet de la carte mais j'ai déjà effet
-    - Dans le formulaire remonté rejouable en haut -> l'encart devient FX de la carte, et en haut avec rejouable, yaura
-  aussi lancé dans X tours, génère une autre carte : "Comportement special"
-    - Dans le formulaire, plusieurs type de "choix" : Choix (de base), execution après choix, remplacement choix,
-    - Dans le formulaire rajouter si un champ execution après choix, remplacement choix, comprenant les autre choix
-    -  -> enlever JSON après utilisation?
-    - (Facultatif: les noms des choix peuvent être localisé)
-    - Peut-être qu'une fois que c'est fait, on a pas besoin de plusieurs formules d'application d'effet ( à voir)
+- Tests pour tester toutes les formules dans les jsons des cartes
 - Déplacer les contrôles d'utilisation d'une carte dans un fichier JS et les tester
-- Remettre toute sa défausse dans sa pioche quand on arrive au bout
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
+- Gérer des pièges
 - Pour les réactifs : travailler sur des événements pour pouvoir les jouer (« J'ai subi de dégâts ce tour, ma cible a joué un sort ce tour,
   , ...) et afficher en surbrillance une carte réactive qui peut être jouée -> Revoir tir réflexe (jouer même si pas attaquer?)
 - Un réactif peut être joué à son tour également? Faire un spike des réactifs a qui ça pose problème

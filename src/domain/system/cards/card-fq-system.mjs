@@ -140,6 +140,13 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             generateCard: new StringField({required: true, label: "FQCARDENGINE.GenerateCard"}),
             retrieveFromDiscard: new StringField({required: true, label: "FQCARDENGINE.RetrieveFromDiscard"}),
 
+            chooseCardsList: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsList"}),
+            chooseCardsFrom: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsFrom"}),
+            chooseCardsLevels: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsLevels"}),
+            chooseCardsProposed: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsProposed"}),
+            chooseCardsCount: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsCount"}),
+            chooseCardsExcludeDeck: new BooleanField({required: false, label: "FQCARDENGINE.ChooseCardsExcludeDeck"}),
+
             passivePlayedRound: new StringField({required: false}),
             hasBeenPlayed: new BooleanField({required: false}),
 

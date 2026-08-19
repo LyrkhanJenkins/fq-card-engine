@@ -1,0 +1,167 @@
+/* ============================================================
+   FQ CARD ENGINE — Voile de sélection de cartes proposées
+   Même famille visuelle que la révélation de pioche
+   (styles/card-engine/draw-reveal.css) : voile noir plein écran,
+   cartes rendues via card.hbs ; ici le joueur clique pour
+   sélectionner exactement N cartes puis valide (ou annule).
+   ============================================================ */
+
+.fq-card-selection-overlay {
+    /* L'overlay est monté sur <body>, hors de #fq-card-engine-container :
+       on redéclare les tailles de carte (portées par le container), sinon
+       leur calc(undefined) → 0 et les cartes sont invisibles. */
+    --fq-card-w: 94px;
+    --fq-card-h: 130px;
+
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3vh;
+    background: rgba(var(--fq-black-rgb), 0);
+    opacity: 0;
+    transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+.fq-card-selection-overlay.fq-card-selection-in {
+    background: rgba(var(--fq-black-rgb), 0.82);
+    opacity: 1;
+}
+
+.fq-card-selection-banner {
+    padding: 0.3em 4vw;
+    text-align: center;
+    pointer-events: none;
+    font-size: clamp(1.4rem, 3.5vw, 2.6rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(var(--fq-cream-rgb), 0.98);
+    text-shadow: 0 0 22px var(--fq-gold-glow),
+                 0 2px 10px rgba(var(--fq-black-rgb), 0.9);
+}
+
+/* La volée de cartes candidates, repliable sur plusieurs rangées. Le padding
+   réserve juste la place du soulèvement/halo au survol (un padding trop grand
+   ferait dépasser le contenu du max-height → scrollbar permanente). */
+.fq-card-selection-stage {
+    --fq-scale: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--fq-card-w) * var(--fq-scale) * 0.12)
+         calc(var(--fq-card-w) * var(--fq-scale) * 0.10);
+    max-width: 96vw;
+    max-height: 74vh;
+    overflow-y: auto;
+    padding: calc(var(--fq-card-h) * var(--fq-scale) * 0.12)
+             calc(var(--fq-card-w) * var(--fq-scale) * 0.10);
+}
+
+/* Carte candidate : neutralise le chevauchement de la main, entrée en fondu. */
+.fq-card-selection-card.fq-card,
+.fq-card-selection-card.fq-card-engine-card {
+    margin-left: 0 !important;
+    z-index: 10 !important;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(24px) scale(0.8);
+}
+
+.fq-card-selection-overlay.fq-card-selection-in .fq-card-selection-card {
+    animation: fq-card-selection-enter 0.4s cubic-bezier(0.2, 0.7, 0.2, 1.2) forwards;
+    animation-delay: var(--fq-selection-delay, 0ms);
+}
+
+@keyframes fq-card-selection-enter {
+    0% {
+        opacity: 0;
+        transform: translateY(24px) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.fq-card-selection-card .fq-card-inner {
+    transition: transform 0.15s ease, filter 0.15s ease;
+    transform-origin: center center;
+}
+
+/* Survol : pop modéré. `!important` requis pour neutraliser la règle générique
+   de la main (`.fq-card:hover .fq-card-inner` à -28px/1.25 !important) qui
+   ferait déborder la carte du stage (image rognée par l'overflow). */
+.fq-card-selection-overlay .fq-card-selection-card:hover .fq-card-inner {
+    transform: translateY(-5px) scale(1.05) !important;
+    filter: drop-shadow(0 0 8px rgba(var(--fq-gold-rgb), 0.5))
+            drop-shadow(0 6px 16px rgba(var(--fq-black-rgb), 0.95)) !important;
+    z-index: 100;
+}
+
+/* Carte sélectionnée : halo doré permanent + légère élévation. */
+.fq-card-selection-overlay .fq-card-selection-card--selected .fq-card-inner,
+.fq-card-selection-overlay .fq-card-selection-card--selected:hover .fq-card-inner {
+    transform: translateY(-8px) scale(1.06) !important;
+    filter: drop-shadow(0 0 12px var(--fq-gold-glow))
+            drop-shadow(0 0 26px var(--fq-gold-glow))
+            brightness(1.12) !important;
+}
+
+.fq-card-selection-footer {
+    display: flex;
+    align-items: center;
+    gap: 1.4em;
+    font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+}
+
+.fq-card-selection-counter {
+    min-width: 3.5em;
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: rgba(var(--fq-cream-rgb), 0.98);
+    text-shadow: 0 0 14px var(--fq-gold-glow);
+}
+
+.fq-card-selection-footer button {
+    padding: 0.45em 1.6em;
+    font-size: inherit;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 6px;
+    cursor: pointer;
+    color: rgba(var(--fq-cream-rgb), 0.98);
+    background: rgba(var(--fq-black-rgb), 0.55);
+    border: 2px solid rgba(var(--fq-gold-rgb), 0.55);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.fq-card-selection-footer button:hover:enabled {
+    border-color: rgba(var(--fq-gold-rgb), 0.95);
+    box-shadow: 0 0 14px var(--fq-gold-glow);
+}
+
+.fq-card-selection-validate:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.fq-card-selection-cancel {
+    border-color: rgba(var(--fq-cream-rgb), 0.30) !important;
+}
+
+/* Accessibilité : réduit les mouvements sans supprimer la sélection. */
+@media (prefers-reduced-motion: reduce) {
+    .fq-card-selection-overlay,
+    .fq-card-selection-card,
+    .fq-card-selection-card .fq-card-inner {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

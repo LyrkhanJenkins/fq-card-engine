@@ -509,6 +509,34 @@
                                 name=(concat "system.fq.choices." i ".retrieveFromDiscard") rootId=../rootId}}
                 </div>
             </fieldset>
+            <fieldset>
+                <legend>🃏 <label>{{localize "FQCARDENGINE.ChooseCardsLegend"}} </label></legend>
+                <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.ChooseCardsList"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.chooseCardsList value=choice.chooseCardsList
+                                name=(concat "system.fq.choices." i ".chooseCardsList") rootId=../rootId}}
+                </div>
+                <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.ChooseCardsFrom"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.chooseCardsFrom value=choice.chooseCardsFrom
+                                name=(concat "system.fq.choices." i ".chooseCardsFrom") rootId=../rootId}}
+                    <label>{{localize "FQCARDENGINE.ChooseCardsLevels"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.chooseCardsLevels value=choice.chooseCardsLevels
+                                name=(concat "system.fq.choices." i ".chooseCardsLevels") rootId=../rootId}}
+                </div>
+                <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.ChooseCardsProposed"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.chooseCardsProposed value=choice.chooseCardsProposed
+                                name=(concat "system.fq.choices." i ".chooseCardsProposed") rootId=../rootId}}
+                    <label>{{localize "FQCARDENGINE.ChooseCardsCount"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.chooseCardsCount value=choice.chooseCardsCount
+                                name=(concat "system.fq.choices." i ".chooseCardsCount") rootId=../rootId}}
+                    <label>{{localize "FQCARDENGINE.ChooseCardsExcludeDeck"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.chooseCardsExcludeDeck
+                                value=choice.chooseCardsExcludeDeck
+                                name=(concat "system.fq.choices." i ".chooseCardsExcludeDeck") rootId=../rootId}}
+                </div>
+            </fieldset>
         </fieldset>
     {{/each}}
     <button type="button" class="add-choice" data-action="addChoice">➕ {{localize "FQCARDENGINE.AddChoice"}}</button>

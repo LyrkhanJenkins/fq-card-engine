@@ -22,7 +22,7 @@
     </header>
     <ol class="cards scrollable" data-cards>
         {{#each cards as |card|}}
-            <li class="flexrow{{#if card.isMaxReached}} max-reached{{/if}}" data-card-id="{{card.id}}">
+            <li class="flexrow{{#if card.isMaxReached}} max-reached{{/if}}{{#if card.isGenerated}} fq-generated{{/if}}" data-card-id="{{card.id}}">
                 {{#if @root.isYourSpellbook}}
                     <a class="move-left" data-action="fqMoveCardDeck" data-tooltip="FQCARDENGINE.MoveCardDeck"
                         {{disabled card.isMaxReached}}>
@@ -31,7 +31,9 @@
                 {{/if}}
                 <img class="face fq-card-viewable" src="{{card.img}}" alt="{{localize card.name}}" loading="lazy"
                      data-action="fqViewCard" data-tooltip="FQCARDENGINE.ViewCard">
-                <strong class="name">{{localize card.name}}</strong>
+                <strong class="name">{{localize card.name}}{{#if card.isGenerated}}
+                    <span class="fq-generated-badge" data-tooltip="FQCARDENGINE.GeneratedCardBadgeTooltip">✨</span>
+                {{/if}}</strong>
                 <div class="drawn">{{card.system.fq.level}}</div>
                 <div class="drawn">{{card.system.fq.maxSameCard}}</div>
                 <div class="drawn">

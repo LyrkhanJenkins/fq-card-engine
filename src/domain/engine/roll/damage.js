@@ -314,7 +314,7 @@ export default class Damage {
      * @returns {void}
      */
     static displayResult(actor, resultArray, manualActions) {
-        if (resultArray.length > 0 || manualActions) {
+        if (resultArray.length > 0 || manualActions?.length > 0) {
             let message = `<div class="fq-card-engine-result">`;
             if (resultArray.length !== 0) {
                 message += `<div class="fq-card-engine-result-title">${game.i18n.localize("FQCARDENGINE.InfoMsgPartCardResult")}</div>`;

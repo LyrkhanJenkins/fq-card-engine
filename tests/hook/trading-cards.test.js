@@ -108,20 +108,32 @@ describe("trading-cards", () => {
             return Object.assign([...cards], {get: (id) => cards.find(c => c.id === id)});
         }
 
-        function makeTestDeck(cards) {
+        function makeTestDeck(cards, owner) {
             return {
                 id: "deck-1",
-                system: {fq: {type: DECK_TYPE}},
+                system: {fq: {type: DECK_TYPE, owner}},
                 cards: makeEmbedded(cards),
-                updateEmbeddedDocuments: vi.fn().mockResolvedValue([])
+                updateEmbeddedDocuments: vi.fn().mockResolvedValue([]),
+                createEmbeddedDocuments: vi.fn().mockResolvedValue([])
             };
         }
 
-        function makeTestPile(cards) {
+        function makeTestPile(cards, owner) {
             return {
-                system: {fq: {type: PILE_TYPE}},
+                system: {fq: {type: PILE_TYPE, owner}},
                 cards: makeEmbedded(cards),
                 deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+        }
+
+        /** Copie générée défaussée : flag `generated`, origine = la main quittée (v14). */
+        function makeGeneratedPileCard(id) {
+            const data = {name: id, drawn: false, face: 0, flags: {"fq-card-engine": {generated: true, generatedAt: 1}}};
+            return {
+                id,
+                origin: {type: "hand"},
+                flags: data.flags,
+                toObject: () => JSON.parse(JSON.stringify({...data, _id: id}))
             };
         }
 
@@ -165,6 +177,41 @@ describe("trading-cards", () => {
             expect(recalled).toBe(0);
             expect(deck.updateEmbeddedDocuments).not.toHaveBeenCalled();
             expect(pile.deleteEmbeddedDocuments).not.toHaveBeenCalled();
+        });
+
+        it("déplace les cartes générées de la pile du même joueur dans le deck (piochables à nouveau)", async () => {
+            globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+            const deck = makeTestDeck([{id: "c1", drawn: true}], "user-1");
+            const pile = makeTestPile([
+                makeGeneratedPileCard("gen-1"),
+                {id: "c1", origin: deck}
+            ], "user-1");
+            game.cards = [pile];
+
+            const recalled = await TradingCards.recallCardsFromPiles(deck);
+
+            expect(recalled).toBe(2);
+            const [embeddedName, [data]] = deck.createEmbeddedDocuments.mock.calls[0];
+            expect(embeddedName).toBe("Card");
+            expect(data._id).toBeUndefined();
+            expect(data.drawn).toBe(false);
+            expect(data.origin).toBeNull();
+            // Le flag survit au transfert : le nettoyage de combat saura la supprimer du deck
+            expect(data.flags["fq-card-engine"].generated).toBe(true);
+            expect(pile.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["c1", "gen-1"]);
+        });
+
+        it("ne recycle pas les cartes générées d'une pile appartenant à un autre joueur", async () => {
+            globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+            const deck = makeTestDeck([], "user-1");
+            const otherPile = makeTestPile([makeGeneratedPileCard("gen-1")], "user-2");
+            game.cards = [otherPile];
+
+            const recalled = await TradingCards.recallCardsFromPiles(deck);
+
+            expect(recalled).toBe(0);
+            expect(deck.createEmbeddedDocuments).not.toHaveBeenCalled();
+            expect(otherPile.deleteEmbeddedDocuments).not.toHaveBeenCalled();
         });
     });
 });

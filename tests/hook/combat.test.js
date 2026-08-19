@@ -185,6 +185,24 @@ describe("hook/combat.hook.js", () => {
             expect(importedDeck.deleteEmbeddedDocuments).not.toHaveBeenCalled();
         });
 
+        it("supprime des decks les cartes générées qui y ont été recyclées en cours de combat", async () => {
+            globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+            const deck = {
+                id: "deck-1", type: "deck", system: {fq: {type: DECK_TYPE}},
+                recall: vi.fn().mockResolvedValue(undefined),
+                cards: [
+                    {id: "gen-recycled", flags: {"fq-card-engine": {generated: true, generatedAt: 1}}},
+                    {id: "normal-card", flags: {}}
+                ],
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+            game.cards = [deck];
+
+            await getHook("deleteCombat")({combatants: []}, {});
+
+            expect(deck.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["gen-recycled"]);
+        });
+
         it("ne touche pas aux mains/piles sans carte orpheline", async () => {
             const deck = {id: "deck-1", type: "deck", system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
             const hand = {

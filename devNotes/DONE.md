@@ -8,6 +8,7 @@ Feat :
 - Pouvoir récupérer une carte de la défausse dans la main (toutes ou une liste donnée)
 - Simplifier les formules à l'affichage sur les cartes + tooltips
 - Suppression du "JSON Après utilisation" -> Remplacer par les cartes générées
+- Génère des cartes dans la défausse parmi un choix proposé au joueur
   
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

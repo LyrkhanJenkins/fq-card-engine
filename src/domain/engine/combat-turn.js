@@ -114,7 +114,32 @@ export default class CombatTurn {
                 await deck.recall({chatNotification: false});
             }
             await CombatTurn.deleteOrphanCards();
+            await CombatTurn.deleteGeneratedDeckCards();
             CombatTurn.drawBaseCards();
+        }
+    }
+
+    /**
+     * Supprime des decks les cartes générées (flag `generated`) qui y ont été
+     * recyclées en cours de combat par `TradingCards.recallCardsFromPiles` :
+     * une carte générée est piochable le temps du combat mais ne survit pas au
+     * nettoyage. À appeler APRÈS le `recall` des decks, pour que les copies
+     * piochées soient d'abord revenues chez elles.
+     *
+     * @returns {Promise<void>}
+     */
+    static async deleteGeneratedDeckCards() {
+        if (CombatTurn.isLocalUserFirstActiveGM()) {
+            const moduleName = globalThis.FqCardEngineModule?.moduleName;
+            for (const deck of game.cards
+                .filter(c => c.system.fq.type === DECK_TYPE)) {
+                const generatedIds = [...(deck.cards ?? [])]
+                    .filter(c => c.flags?.[moduleName]?.generated)
+                    .map(c => c.id);
+                if (generatedIds.length) {
+                    await deck.deleteEmbeddedDocuments("Card", generatedIds);
+                }
+            }
         }
     }
 

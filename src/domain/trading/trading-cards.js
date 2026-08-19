@@ -364,24 +364,44 @@ export default class TradingCards {
      * pile que la sienne (cas du MJ qui a permission sur toutes les piles), les
      * cartes d'un deck peuvent donc être dispersées. Même mécanique que
      * `Cards#recall` d'une pile : l'originale du deck est remarquée non piochée,
-     * la copie défaussée est supprimée.
+     * la copie défaussée est supprimée. Les cartes GÉNÉRÉES (flag `generated`,
+     * sans deck d'origine) défaussées dans la pile du même joueur sont quant à
+     * elles DÉPLACÉES dans le deck — elles redeviennent piochables le temps du
+     * combat, avant leur destruction au nettoyage (`deleteGeneratedDeckCards`).
      *
      * @param {Cards} deck - Le deck FQ dont on récupère les cartes défaussées.
      *
      * @returns {Promise<number>} Le nombre de cartes ramenées dans le deck.
      */
     static async recallCardsFromPiles(deck) {
+        const moduleName = globalThis.FqCardEngineModule?.moduleName;
         let recalled = 0;
         for (const pile of game.cards.filter(c => c.system.fq.type === PILE_TYPE)) {
             const pileCards = pile.cards.filter(c => c.origin?.id === deck.id);
-            if (!pileCards.length) continue;
+            // Une carte générée n'a pas d'originale dans le deck : on ne la
+            // rattache qu'à la pile de son propriétaire (`fq.owner`), et son
+            // origine éventuelle n'est jamais un deck
+            const generated = pile.system.fq.owner === deck.system.fq.owner
+                ? pile.cards.filter(c => c.flags?.[moduleName]?.generated && c.origin?.type !== "deck")
+                : [];
+            if (!pileCards.length && !generated.length) continue;
             const toUpdate = pileCards.filter(c => deck.cards.get(c.id))
                 .map(c => ({_id: c.id, drawn: false}));
             if (toUpdate.length) {
                 await deck.updateEmbeddedDocuments("Card", toUpdate);
             }
-            await pile.deleteEmbeddedDocuments("Card", pileCards.map(c => c.id));
-            recalled += pileCards.length;
+            if (generated.length) {
+                const data = generated.map(c => {
+                    const d = c.toObject();
+                    delete d._id;
+                    d.drawn = false;
+                    d.origin = null;
+                    return d;
+                });
+                await deck.createEmbeddedDocuments("Card", data, {keepId: false});
+            }
+            await pile.deleteEmbeddedDocuments("Card", pileCards.concat(generated).map(c => c.id));
+            recalled += pileCards.length + generated.length;
         }
         return recalled;
     }

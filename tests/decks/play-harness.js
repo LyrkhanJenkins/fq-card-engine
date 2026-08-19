@@ -205,6 +205,7 @@ export function mountWorld(overrides = {}) {
     }, discardPileOverrides ?? {});
     lastDiscardPile.testUserPermission = vi.fn(() => true);
     lastDiscardPile.pass = vi.fn().mockResolvedValue([]);
+    lastDiscardPile.createEmbeddedDocuments = vi.fn().mockResolvedValue([]);
 
     const base = {
         canvas: {scene: {dimensions: {size: fixture.gridSize}, tokens: [myToken, targetToken]}},

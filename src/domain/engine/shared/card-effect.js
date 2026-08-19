@@ -13,6 +13,8 @@ import {createWarning} from "../../../core/utils/chat.utils.js";
 import {ERROR_COLOR} from "../../../core/constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
+import CardGenerated from "./card-generated.js";
+import CardSelection from "../../interface/window/card-selection.js";
 
 /**
  * Résolution et application des effets d'une carte : variables et bonus (X/Y,
@@ -61,6 +63,9 @@ export default class CardEffect {
             }
             if (cardContent.retrieveFromDiscard?.trim()) {
                 await CardEffect.retrieveCardFromDiscard(cardContent.retrieveFromDiscard, to, card);
+            }
+            if (CardSelection.hasCardSelection(cardContent)) {
+                await CardSelection.playCardSelection(cardContent, to);
             }
             if (cardContent.minions && Array.isArray(cardContent.minions)) {
                 const selectedLocations = [];
@@ -112,26 +117,6 @@ export default class CardEffect {
     }
 
     /**
-     * Résout une référence `compendium.deck.carte` vers une carte embarquée dans
-     * un deck de compendium. Le nom du compendium peut être l'id complet
-     * (`scope.nom`) ou le nom seul, et le nom de la carte peut contenir des
-     * points (clés i18n type `FQCARDTITLE.xxx`) : le pack est résolu par le
-     * préfixe le plus long, le segment suivant est le deck, le reste la carte.
-     *
-     * @param {string} reference - La référence `compendium.deck.carte`.
-     *
-     * @returns {Promise<Card|null>} La carte trouvée, ou null si la référence est irrésoluble.
-     */
-    static async resolveCompendiumCard(reference) {
-        const parts = reference.split(".").map(part => part.trim());
-        const byFullId = parts.length > 3 ? game.packs.get(parts.slice(0, 2).join(".")) : null;
-        const pack = byFullId ?? (parts.length > 2 ? game.packs.find(p => p.metadata?.name === parts[0]) : null);
-        const deckIndex = byFullId ? 2 : 1;
-        const deck = pack ? (await pack.getDocuments()).find(doc => doc.name === parts[deckIndex]) : null;
-        return deck?.cards.find(c => c.name === parts.slice(deckIndex + 1).join(".")) ?? null;
-    }
-
-    /**
      * Crée dans la main une copie de la carte de compendium référencée par
      * `reference` (`compendium.deck.carte`) : la copie arrive face visible, non
      * piochée et sans deck d'origine (elle sera défaussée comme une carte
@@ -144,41 +129,12 @@ export default class CardEffect {
      * @returns {Promise<Card[]|null>} Les cartes créées, ou null si la référence est invalide.
      */
     static async generateCardInHand(reference, hand) {
-        const compendiumCard = await CardEffect.resolveCompendiumCard(reference);
+        const compendiumCard = await CardGenerated.resolveCompendiumCard(reference);
         if (!compendiumCard) {
             createWarning(game.i18n.format("FQCARDENGINE.WarningMsgGenerateCardNotFound", {name: reference}), {actor: game.user.character});
             return null;
         }
-        const data = compendiumCard.toObject();
-        delete data._id;
-        data.drawn = false;
-        data.origin = null;
-        data.face = data.face ?? 0;
-        CardEffect.stampGeneratedPassives(data.system?.fq?.choices);
-        // Horodate la génération : la main applique un halo vert temporaire
-        // (`.fq-card--generated`) tant que la carte vient d'arriver (cf. hand-board.js).
-        const moduleName = FqCardEngineModule.moduleName;
-        data.flags = {...data.flags, [moduleName]: {...data.flags?.[moduleName], generatedAt: Date.now()}};
-        return hand.createEmbeddedDocuments("Card", [data]);
-    }
-
-    /**
-     * Horodate au round courant les choix passifs d'une carte générée qui se
-     * déclarent déjà joués (`hasBeenPlayed`). Un passif généré remplace une carte
-     * dont l'effet vient d'être appliqué : il ne doit donc pas être rejouable
-     * avant le round suivant. Les autres choix sont laissés intacts, ce qui rend
-     * le marquage propre aux seules cartes qui le demandent.
-     *
-     * @param {object[]} [choices] - Les choix de la carte générée, modifiés sur place.
-     *
-     * @returns {void}
-     */
-    static stampGeneratedPassives(choices) {
-        for (const choice of choices ?? []) {
-            if (choice?.replayable === "passif" && choice?.hasBeenPlayed) {
-                choice.passivePlayedRound = game.combat?.round?.toString() ?? "";
-            }
-        }
+        return hand.createEmbeddedDocuments("Card", [CardGenerated.buildGeneratedCardData(compendiumCard)]);
     }
 
     /**

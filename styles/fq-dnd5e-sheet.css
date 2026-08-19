@@ -184,6 +184,16 @@ form .form-group .minion-checkbox {
 .cards ol li.max-reached {
     opacity: 0.3;
 }
+/* Carte générée recyclée dans le deck : teinte verte + badge ✨ (détruite en fin de combat) */
+.cards ol li.fq-generated {
+    background: rgba(var(--fq-success-hi-rgb), 0.12);
+    border-radius: 4px;
+}
+.cards ol li.fq-generated .name .fq-generated-badge {
+    margin-left: 0.35em;
+    text-shadow: 0 0 6px rgba(var(--fq-success-hi-rgb), 0.9);
+    cursor: help;
+}
 .cards ol li .move-left:not(.disabled):active i {
     transform: scale(0.85);
 }
