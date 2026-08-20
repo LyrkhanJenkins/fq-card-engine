@@ -2,23 +2,18 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-Réaranger attributes.hbs?
-Problème de rapidité
-Simplification de pickRandomCardRefs
-Faire un tour des constantes
-Faire en sorte que le hud et/ou une autre macro pour utiliser la première arme à distance équipée
 
 ### Versions prévues
 #### 2.1.0
+- Faire en sorte que le hud et/ou une autre macro pour utiliser la première arme à distance équipée
 - Tests pour tester toutes les formules dans les jsons des cartes
 - Déplacer les contrôles d'utilisation d'une carte dans un fichier JS et les tester
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
 - L'esquive fait demi-dégâts (Esquive critique? Double-critique?)
 - Gérer un type de cible, tous les alliés, tous les ennemis
 - Gérer les fx pour les zones?
-- Faire des sorts qui s'active au bout du enieme tour, action de la carte au bout d'un certain temps
-- Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts suivant le zèle qu'a la cible plutôt que la chargé
-  - Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
+- Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts 
+suivant le zèle qu'a la cible plutôt que la chargé Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
 
 - Refonte des cartes :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
@@ -39,7 +34,6 @@ Faire en sorte que le hud et/ou une autre macro pour utiliser la première arme 
           utilisation), réécriture des passifs
         - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
           d'actions/mana/pioches?)
-- Afficher d'autres auras (exemple: bouclier magique, nuage de dague...)
 - Refaire un rééquilibrage des cartes après réécriture
 - Gérer les cartes incolores
 - Déplacer les cibles automatiquement (Example: Tir supersonique, Frappe avec salto arrière...)
@@ -47,7 +41,6 @@ Faire en sorte que le hud et/ou une autre macro pour utiliser la première arme 
 - MINOR--> RELEASE
 
 #### 2.1.1
-- Revoir les effets visuels et audio
 - faire bouger tornade effet magique
 - Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens (vérifier que c'est pas déjà fait)
 - J'ai l'impression que ya pas la bonne couleur de dé quand on fait le roll damage depuis une arme équipé (grave?)

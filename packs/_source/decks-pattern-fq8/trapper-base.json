@@ -757,6 +757,12 @@
                               "value": "0",
                               "type": "override",
                               "priority": null
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.entangle.02.loop.02.green",
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2235,6 +2241,12 @@
                               "key": "system.attributes.movement.climb",
                               "value": "0",
                               "type": "override",
+                              "priority": null
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.entangle.02.loop.02.green",
+                              "type": "custom",
                               "priority": null
                             }
                           ],

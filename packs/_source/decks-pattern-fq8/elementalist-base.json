@@ -907,6 +907,12 @@
                               "value": "-@wis",
                               "type": "add",
                               "priority": null
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.fog_cloud.01.white",
+                              "type": "custom",
+                              "priority": null
                             }
                           ],
                           "duration": {
@@ -2131,7 +2137,7 @@
                             },
                             {
                               "key": "macro.execute",
-                              "value": "jb2a.aura_themed.01.orbit.loop.cold",
+                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.cold",
                               "type": "custom",
                               "priority": null
                             }
@@ -2810,7 +2816,7 @@
                             },
                             {
                               "key": "macro.execute",
-                              "value": "jb2a.aura_themed.01.orbit.loop.cold",
+                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.cold",
                               "type": "custom",
                               "priority": null
                             }
