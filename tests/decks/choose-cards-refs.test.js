@@ -23,8 +23,10 @@ const listEntries = [];
 for (const deck of decks) {
     for (const card of deck.cards) {
         card.system.fq.choices.forEach((choice, choiceIndex) => {
-            if (choice.chooseCardsFrom?.trim()) {
-                chooseEntries.push({deckName: deck.name, cardName: card.name, choiceIndex, choice});
+            // Une source par entrée : un encart multi-sources (`;`) est vérifié
+            // source par source, comme le moteur les déroule.
+            for (const source of (choice.chooseCardsFrom ?? "").split(";").map(part => part.trim()).filter(Boolean)) {
+                chooseEntries.push({deckName: deck.name, cardName: card.name, choiceIndex, choice, source});
             }
             for (const reference of (choice.chooseCardsList ?? "").split(",").map(part => part.trim()).filter(Boolean)) {
                 listEntries.push({deckName: deck.name, cardName: card.name, choiceIndex, reference});
@@ -40,10 +42,10 @@ describe("Références des encarts 🃏 des decks pattern fq8", () => {
 
     test.each(chooseEntries)(
         "$deckName :: $cardName :: choix $choiceIndex",
-        ({choice}) => {
+        ({choice, source}) => {
             // La source désigne un deck du pack pattern, par son id complet.
-            expect(choice.chooseCardsFrom.startsWith(`${PACK_ID}.`)).toBe(true);
-            const targetName = choice.chooseCardsFrom.slice(PACK_ID.length + 1);
+            expect(source.startsWith(`${PACK_ID}.`)).toBe(true);
+            const targetName = source.slice(PACK_ID.length + 1);
             const target = decksByName.get(targetName);
             expect(target, `deck source introuvable : ${targetName}`).toBeDefined();
 

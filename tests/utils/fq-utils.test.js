@@ -8,6 +8,8 @@ import ResourceHandler from "../../src/domain/engine/shared/resource-handler.js"
 import Damage from "../../src/domain/engine/roll/damage.js";
 import Geometry from "../../src/domain/engine/shared/geometry.js";
 import {socket} from "../../src/hook/integration/socketlib.hook.js";
+import CombatTurn from "../../src/domain/engine/combat-turn.js";
+import Constants from "../../src/domain/constants.js";
 import {makeCard, makeChoice} from "../factories.js";
 
 vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
@@ -522,14 +524,15 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
     // / prepareDataFromCard / checkIfCanUseCard ─────────────────────────────────
 
     describe("applyCardEffect — branches draw/minions/executeEval/applyEffectsFormulas/HP", () => {
-        it("draw : délègue à card.parent.draw(card.source, draw, {chatNotification:false, how:2})", async () => {
-            const draw = vi.fn();
-            const card = makeCard({parent: {draw}, source: "sourceRef"});
+        it("draw : délègue à CombatTurn.drawWithRecall (même pioche qu'en début de tour)", async () => {
+            const spy = vi.spyOn(CombatTurn, "drawWithRecall").mockResolvedValue(2);
+            const hand = {draw: vi.fn()};
+            const card = makeCard({parent: hand, source: "sourceRef"});
             const cardContent = makeChoice({draw: 2});
 
             await CardEffect.applyCardEffect(cardContent, card, {});
 
-            expect(draw).toHaveBeenCalledWith("sourceRef", 2, {chatNotification: false, how: 2});
+            expect(spy).toHaveBeenCalledWith(game.user, Constants.actorCurrent, hand, "sourceRef", 2);
         });
 
         it("minions : un seul sbire pour une seule direction sélectionnée", async () => {

@@ -8,6 +8,7 @@ Feat :
 - Simplifier les formules à l'affichage sur les cartes + tooltips
 - Suppression du "JSON Après utilisation" -> Remplacer par les cartes générées
 - Génère des cartes dans la main avec un choix possible proposé au joueur
+- Possibilité de supprimer des cartes générés dans la défausse
 - Creation des classes et token du Guerrier Runique et du Maître d'Armes
 - Premières cartes du Guerrier Runique et du Maître d'Armes (En cours...)
 - Ajout d'un score de bonus pour tout type de carte
@@ -17,6 +18,7 @@ Feat :
 - Ciblage de tous les adjacents
 - Ciblage de tous les alliés, ciblage de tous les ennemis
 - Gestion des fx pour les zones
+- Macro et hud pour utiliser la première arme à distance équipée
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

@@ -19,6 +19,69 @@ export default class RollService {
     }
 
     /**
+     * Évalue une formule pouvant contenir des DÉS, en restant synchrone.
+     *
+     * Foundry refuse d'évaluer un dé en synchrone (un dé peut être fourni par une
+     * source externe, donc de façon asynchrone) et lève alors « This Roll contains
+     * terms that cannot be synchronously evaluated ». Or la résolution d'une carte
+     * doit rester synchrone pour que le garde-fou de la dialog puisse la garder
+     * ouverte. Les dés sont donc tirés ici avec le générateur de Foundry, puis la
+     * formule devenue déterministe est évaluée normalement. Une formule sans dé
+     * passe directement par {@link RollService.rollResultSync}.
+     *
+     * @param {string|number} formula - La formule de jet (convertie en chaîne).
+     *
+     * @returns {number} Le total du jet.
+     */
+    static rollDiceSync(formula) {
+        const str = formula.toString();
+        try {
+            return RollService.rollResultSync(str);
+        } catch (error) {
+            const rolled = RollService.replaceDiceByResults(str);
+            if (rolled === str) {
+                throw error;
+            }
+            return RollService.rollResultSync(rolled);
+        }
+    }
+
+    /**
+     * Remplace chaque notation de dés (`NdM`) d'une formule par le total d'un
+     * tirage effectif. Les notations à taille de face calculée (`1d(2*@str)`) ne
+     * sont pas concernées : elles restent telles quelles.
+     *
+     * @param {string} str - La formule contenant d'éventuelles notations de dés.
+     *
+     * @returns {string} La formule avec les dés remplacés par leur résultat.
+     */
+    static replaceDiceByResults(str) {
+        return str.replace(/(\d*)d(\d+)/gi, (match, count, faces) => {
+            const nbDice = Number(count || 1);
+            const nbFaces = Number(faces);
+            if (!Number.isInteger(nbDice) || !Number.isInteger(nbFaces) || nbDice < 1 || nbFaces < 1) {
+                return match;
+            }
+            let total = 0;
+            for (let i = 0; i < nbDice; i++) {
+                total += Math.ceil(RollService.randomUniform() * nbFaces);
+            }
+            return String(total);
+        });
+    }
+
+    /**
+     * Tire un nombre aléatoire dans [0, 1[ via le générateur de Foundry quand il
+     * est disponible (respecte une éventuelle configuration de jets), sinon via
+     * `Math.random`.
+     *
+     * @returns {number} Le nombre aléatoire tiré.
+     */
+    static randomUniform() {
+        return typeof CONFIG?.Dice?.randomUniform === "function" ? CONFIG.Dice.randomUniform() : Math.random();
+    }
+
+    /**
      * Remplace dans une chaîne les références de caractéristiques (@str, @dex,
      * @con, @int, @wis, @cha) par le modificateur correspondant du personnage.
      *

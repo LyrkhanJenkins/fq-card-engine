@@ -5,15 +5,8 @@
 
 ### Versions prévues
 #### 2.1.0
-- Faire en sorte que le hud et/ou une autre macro pour utiliser la première arme à distance équipée
-- Tests pour tester toutes les formules dans les jsons des cartes
-- Déplacer les contrôles d'utilisation d'une carte dans un fichier JS et les tester
-- Gestions des principales Custom eval dans des méthodes (comme les xvalue)
-- L'esquive fait demi-dégâts (Esquive critique? Double-critique?)
-- Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts 
-suivant le zèle qu'a la cible plutôt que la chargé Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
 
-- Refonte des cartes :
+- A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Relire et faire un point sur la caracterisation avant tout
   - Se poser pour refraichir la caractérisation :
@@ -32,13 +25,37 @@ suivant le zèle qu'a la cible plutôt que la chargé Ou découper en plusieurs 
           utilisation), réécriture des passifs
         - Repasse sur toutes les cartes (orthographe, gras, @str ou @for, faire des cartes communes pour points
           d'actions/mana/pioches?)
-- Refaire un rééquilibrage des cartes après réécriture
-- Gérer les cartes incolores
-- Déplacer les cibles automatiquement (Example: Tir supersonique, Frappe avec salto arrière...)
+    - Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts
+      suivant le zèle qu'a la cible plutôt que la chargé Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
+    - Refaire un rééquilibrage des cartes après réécriture
+    - Gérer les cartes incolores
+    - Déplacer les cibles automatiquement (Example: Tir supersonique, Frappe avec salto arrière...)
 
+
+Refonte des Cartes : 
+
+    - Faire les nouvelles cartes pour Guerrier Runique
+    - Faire les nouvelles cartes pour Maître d'Armes
+    - Finaliser la doc pour la caractérisation
+    - Feature manquantes?
+    - Identifier cartes ne correspondant pas a la caractérisation. (Modifier ET/OU déplacer)
+    - Ajouter les nouvelles caractérisations pour chaque classe
+    - Equilibrage du nombre de cartes par deck et par niveau jusqu'au 10
+    - Equilibrage et tests
+    
+
+TODO Spécifique :
+- Guerrier Runique : 
+  - Vérifier que les runes doivent augmenter les score de runes
+  - les runes de niveau élévé coute bc plus de zele et mana
+  - Faire des runes qui peuvent chercher des runes plus élévé, (impossible à jouer ce tour-ci)
+  - Equilibrage niveau par niveau sans jouer
+  - Jouer une partie
+  - Rééquilibrage
 - MINOR--> RELEASE
 
 #### 2.1.1
+- L'esquive fait demi-dégâts (Esquive critique? Double-critique?)
 - faire bouger tornade effet magique
 - Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens (vérifier que c'est pas déjà fait)
 - J'ai l'impression que ya pas la bonne couleur de dé quand on fait le roll damage depuis une arme équipé (grave?)

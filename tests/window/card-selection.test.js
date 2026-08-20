@@ -396,6 +396,38 @@ describe("playCardSelection — encart « proposer des cartes » d'une carte jou
         expect(count).toBe(1);
     });
 
+    test("sources multiples : une proposition par source, les cartes retenues s'additionnent", async () => {
+        game.packs = makeLeveledPacks();
+        const hand = makeStack("hand-1");
+        const veil = vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => [cards[0]]);
+
+        const created = await CardSelection.playCardSelection(
+            makeContent({
+                chooseCardsFrom: "fq-card-engine.decks-pattern-fq8.Deck A;fq-card-engine.decks-pattern-fq8.Deck B",
+                chooseCardsLevels: "1,2", chooseCardsProposed: "2", chooseCardsCount: "1"
+            }), hand);
+
+        // Un voile par source, chacun borné à son propre deck.
+        expect(veil).toHaveBeenCalledTimes(2);
+        expect(veil.mock.calls[0][0].map(c => c.name).sort()).toEqual(["FQCARDTITLE.A1", "FQCARDTITLE.A2"]);
+        expect(veil.mock.calls[1][0].map(c => c.name).sort()).toEqual(["FQCARDTITLE.B1", "FQCARDTITLE.B2"]);
+        // Une carte retenue de chaque côté, toutes créées dans la main.
+        expect(hand.createEmbeddedDocuments).toHaveBeenCalledTimes(2);
+        expect(created).toHaveLength(2);
+    });
+
+    test("source unique : le séparateur de sources ne change rien au comportement d'origine", async () => {
+        game.packs = makeLeveledPacks();
+        const hand = makeStack("hand-1");
+        const veil = vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => [cards[0]]);
+
+        await CardSelection.playCardSelection(
+            makeContent({chooseCardsFrom: "fq-card-engine.decks-pattern-fq8.Deck A;",
+                chooseCardsLevels: "1,2", chooseCardsProposed: "2", chooseCardsCount: "1"}), hand);
+
+        expect(veil).toHaveBeenCalledTimes(1);
+    });
+
     test("vivier vide après exclusion : avertissement de chat, pas de voile, renvoie null", async () => {
         const hand = makeStack("hand-1");
         vi.spyOn(TradingCards, "getFirstDeck").mockReturnValue(

@@ -358,6 +358,46 @@ export default class TradingCards {
     }
 
 
+
+    /**
+     * Liste, pile par pile, les cartes qu'un rappel ramènerait dans le deck :
+     * les cartes du deck qui y sont défaussées, et les cartes GÉNÉRÉES présentes
+     * dans la pile du même propriétaire (elles n'ont pas d'originale dans le
+     * deck, et leur origine éventuelle n'est jamais un deck). Source unique de
+     * sélection du rappel (cf. {@link TradingCards.recallCardsFromPiles}) et de
+     * son décompte (cf. {@link TradingCards.countRecallableCards}).
+     *
+     * @param {Cards} deck - Le deck FQ concerné.
+     *
+     * @returns {{pile: Cards, pileCards: Card[], generated: Card[]}[]} Les piles porteuses et leurs cartes rappelables.
+     */
+    static getRecallableCardsByPile(deck) {
+        const moduleName = globalThis.FqCardEngineModule?.moduleName;
+        return game.cards.filter(c => c.system.fq.type === PILE_TYPE)
+            .map(pile => ({
+                pile,
+                pileCards: pile.cards.filter(c => c.origin?.id === deck.id),
+                generated: pile.system.fq.owner === deck.system.fq.owner
+                    ? pile.cards.filter(c => c.flags?.[moduleName]?.generated && c.origin?.type !== "deck")
+                    : []
+            }))
+            .filter(entry => entry.pileCards.length || entry.generated.length);
+    }
+
+    /**
+     * Compte les cartes qu'un rappel ramènerait dans le deck, sans rien déplacer.
+     * Sert aux gardes de lançabilité : une pioche est possible tant que le deck
+     * ET sa défausse réunis contiennent assez de cartes.
+     *
+     * @param {Cards} deck - Le deck FQ concerné.
+     *
+     * @returns {number} Le nombre de cartes rappelables.
+     */
+    static countRecallableCards(deck) {
+        return TradingCards.getRecallableCardsByPile(deck)
+            .reduce((total, {pileCards, generated}) => total + pileCards.length + generated.length, 0);
+    }
+
     /**
      * Ramène dans le deck toutes ses cartes actuellement défaussées, en balayant
      * TOUTES les piles FQ : le dialogue de jeu permet de défausser dans une autre
@@ -374,17 +414,8 @@ export default class TradingCards {
      * @returns {Promise<number>} Le nombre de cartes ramenées dans le deck.
      */
     static async recallCardsFromPiles(deck) {
-        const moduleName = globalThis.FqCardEngineModule?.moduleName;
         let recalled = 0;
-        for (const pile of game.cards.filter(c => c.system.fq.type === PILE_TYPE)) {
-            const pileCards = pile.cards.filter(c => c.origin?.id === deck.id);
-            // Une carte générée n'a pas d'originale dans le deck : on ne la
-            // rattache qu'à la pile de son propriétaire (`fq.owner`), et son
-            // origine éventuelle n'est jamais un deck
-            const generated = pile.system.fq.owner === deck.system.fq.owner
-                ? pile.cards.filter(c => c.flags?.[moduleName]?.generated && c.origin?.type !== "deck")
-                : [];
-            if (!pileCards.length && !generated.length) continue;
+        for (const {pile, pileCards, generated} of TradingCards.getRecallableCardsByPile(deck)) {
             const toUpdate = pileCards.filter(c => deck.cards.get(c.id))
                 .map(c => ({_id: c.id, drawn: false}));
             if (toUpdate.length) {

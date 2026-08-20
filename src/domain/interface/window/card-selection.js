@@ -428,50 +428,43 @@ export default class CardSelection {
     }
 
     /**
-     * Applique l'encart « proposer des cartes » d'un choix joué : construit le
-     * vivier (liste de références prioritaire, sinon deck source filtré par
-     * niveaux), écarte les cartes déjà présentes (par nom) dans le deck du
-     * joueur si demandé, tire au hasard le nombre proposé (vide = toutes),
-     * réduit le nombre à choisir au vivier réellement disponible (vivier vide →
-     * avertissement de chat, l'effet est passé), puis ouvre le voile SANS
+     * Découpe la source de l'encart « proposer des cartes » en sources
+     * indépendantes, séparées par `;`. Chaque source vaut une proposition
+     * distincte : une carte bicolore (`Blue Runes;Red Runes`) propose ainsi une
+     * rune de chaque couleur, avec les mêmes `proposed`/`count` de chaque côté.
+     *
+     * @param {string} from - La ou les sources (`compendium.deck`, séparées par `;`).
+     *
+     * @returns {string[]} Les sources non vides, dans l'ordre déclaré.
+     */
+    static parseSources(from) {
+        return (from ?? "").split(";").map(part => part.trim()).filter(Boolean);
+    }
+
+    /**
+     * Déroule UNE proposition : résout les références en cartes, écarte les
+     * cartes exclues, tire au hasard le nombre proposé (vide = toutes), réduit le
+     * nombre à choisir au vivier réellement disponible (vivier vide →
+     * avertissement de chat, la proposition est passée), puis ouvre le voile SANS
      * annulation possible (les coûts de la carte sont déjà payés) — sauf si le
      * nombre à choisir couvre tout le vivier, auquel cas toutes les cartes sont
-     * prises directement sans voile — et crée les
-     * copies générées dans la MAIN du joueur — sans deck
-     * d'origine, elles se défaussent normalement puis sont détruites au
-     * nettoyage de combat.
+     * prises directement sans voile — et crée les copies générées dans la MAIN du
+     * joueur — sans deck d'origine, elles se défaussent normalement puis sont
+     * détruites au nettoyage de combat.
      *
-     * @param {object} cardContent - Le contenu (choix) de la carte jouée.
-     * @param {Cards}  hand        - La main du joueur ayant joué la carte.
+     * @param {string[]} references            - Les références de cartes du vivier.
+     * @param {object}   options               - Les paramètres de la proposition.
+     * @param {number}   options.proposed      - Le nombre de cartes proposées (0 = toutes).
+     * @param {number}   options.wanted        - Le nombre de cartes à retenir.
+     * @param {Set<string>|null} options.excludedNames - Les noms de cartes écartés du vivier.
+     * @param {Cards}    options.hand          - La main où créer les copies générées.
+     * @param {boolean}  options.warnMissing   - True pour signaler les références irrésolues.
      *
-     * @returns {Promise<Card[]|null>} Les cartes créées, ou null si rien à proposer.
+     * @returns {Promise<Card[]|null>} Les cartes créées, ou null si rien n'a été proposé.
      */
-    static async playCardSelection(cardContent, hand) {
-        const list = cardContent.chooseCardsList?.trim();
-        const proposed = Number(cardContent.chooseCardsProposed) || 0;
-        const wanted = Number(cardContent.chooseCardsCount) || 1;
-
-        let excludedNames = null;
-        if (cardContent.chooseCardsExcludeDeck) {
-            const deck = TradingCards.getFirstDeck(game.user.id, DECK_TYPE);
-            if (!deck) {
-                return null;
-            }
-            excludedNames = new Set([...deck.cards].map(card => card.name));
-        }
-
-        let references;
-        if (list) {
-            references = list.split(",").map(part => part.trim()).filter(Boolean);
-        } else {
-            references = await CardSelection.pickRandomCardRefs({
-                from: cardContent.chooseCardsFrom,
-                levels: CardSelection.parseLevels(cardContent.chooseCardsLevels),
-                count: 0
-            });
-        }
+    static async playSelectionPass(references, {proposed, wanted, excludedNames, hand, warnMissing}) {
         const pool = await CardSelection.resolveCardPool(references);
-        if (list && pool.missing.length) {
+        if (warnMissing && pool.missing.length) {
             createWarning(game.i18n.format("FQCARDENGINE.WarningMsgChooseCardsNotFound",
                 {names: pool.missing.join(", ")}), {actor: Constants.actorCurrent});
         }
@@ -500,5 +493,48 @@ export default class CardSelection {
                 {names: chosen.map(card => game.i18n.localize(card.name)).join(", ")})}</div>`
         });
         return created;
+    }
+
+    /**
+     * Applique l'encart « proposer des cartes » d'un choix joué : construit le
+     * vivier (liste de références prioritaire, sinon deck(s) source filtré(s) par
+     * niveaux) et déroule une proposition par source (cf.
+     * {@link CardSelection.playSelectionPass}). Une liste de références décrit
+     * toujours un vivier unique ; une source de deck peut en déclarer plusieurs
+     * (`;`), chacune proposant alors son propre lot de cartes.
+     *
+     * @param {object} cardContent - Le contenu (choix) de la carte jouée.
+     * @param {Cards}  hand        - La main du joueur ayant joué la carte.
+     *
+     * @returns {Promise<Card[]|null>} Les cartes créées, ou null si rien à proposer.
+     */
+    static async playCardSelection(cardContent, hand) {
+        const list = cardContent.chooseCardsList?.trim();
+        const proposed = Number(cardContent.chooseCardsProposed) || 0;
+        const wanted = Number(cardContent.chooseCardsCount) || 1;
+
+        let excludedNames = null;
+        if (cardContent.chooseCardsExcludeDeck) {
+            const deck = TradingCards.getFirstDeck(game.user.id, DECK_TYPE);
+            if (!deck) {
+                return null;
+            }
+            excludedNames = new Set([...deck.cards].map(card => card.name));
+        }
+
+        const levels = CardSelection.parseLevels(cardContent.chooseCardsLevels);
+        const sources = list ? [null] : CardSelection.parseSources(cardContent.chooseCardsFrom);
+        const created = [];
+        for (const source of sources) {
+            const references = list
+                ? list.split(",").map(part => part.trim()).filter(Boolean)
+                : await CardSelection.pickRandomCardRefs({from: source, levels, count: 0});
+            const cards = await CardSelection.playSelectionPass(references,
+                {proposed, wanted, excludedNames, hand, warnMissing: Boolean(list)});
+            if (cards) {
+                created.push(...cards);
+            }
+        }
+        return created.length ? created : null;
     }
 }

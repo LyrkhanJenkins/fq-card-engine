@@ -207,6 +207,7 @@ export function mountWorld(overrides = {}) {
     lastDiscardPile.testUserPermission = vi.fn(() => true);
     lastDiscardPile.pass = vi.fn().mockResolvedValue([]);
     lastDiscardPile.createEmbeddedDocuments = vi.fn().mockResolvedValue([]);
+    lastDiscardPile.deleteEmbeddedDocuments = vi.fn().mockResolvedValue([]);
 
     const base = {
         canvas: {scene: {dimensions: {size: fixture.gridSize}, tokens: [myToken, targetToken]}},
@@ -266,7 +267,16 @@ export function wrapCard(rawCard, {sourceSize = 40, drawnCards = []} = {}) {
             createEmbeddedDocuments: vi.fn().mockResolvedValue([]),
             updateEmbeddedDocuments: vi.fn().mockResolvedValue([])
         },
-        source: {cards: {size: sourceSize}, drawnCards}
+        // Le deck source est consommé comme un vrai `Cards` : `availableCards` est
+        // la liste des cartes non encore piochées (ce que lit la pioche), et `id`
+        // circule par socket jusqu'à `TradingCards.drawCard`.
+        source: {
+            id: "harness-deck",
+            cards: {size: sourceSize},
+            drawnCards,
+            availableCards: Array.from({length: Math.max(0, sourceSize - drawnCards.length)},
+                (_, i) => ({id: `harness-deck-card-${i}`}))
+        }
     };
 }
 
@@ -380,10 +390,16 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
             .flatMap(call => call[1] ?? []),
         activeEffectCalls: globalThis.ActiveEffect.implementation.create.mock.calls,
         chatMessages: globalThis.ChatMessage.create.mock.calls.map(call => call[0]),
-        draws: card.parent.draw.mock.calls,
+        // La pioche d'une carte passe par le même routage que la pioche de tour
+        // (`CombatTurn.drawCards` → socket `drawCard`) : on ramène les appels à la
+        // forme historique `[deck, nombre]` attendue par les tests.
+        draws: socketCalls
+            .filter(call => call[0] === "drawCard")
+            .map(call => [call[2], call[3]]),
         generatedCards: card.parent.createEmbeddedDocuments.mock.calls,
         passCalls: currentCards.pass.mock.calls,
         retrieveCalls: to.pass.mock.calls,
+        destroyCalls: to.deleteEmbeddedDocuments.mock.calls,
         handCardUpdates: card.parent.updateEmbeddedDocuments.mock.calls,
         discardPile: to,
         updates: globalThis.game.user.character.update.mock.calls,

@@ -16,6 +16,9 @@ import {socket} from "../../../hook/integration/socketlib.hook.js";
 import CardSelection from "../../interface/window/card-selection.js";
 import CardCondition from "./card-condition.js";
 
+import TradingCards from "../../trading/trading-cards.js";
+import CombatTurn from "../combat-turn.js";
+
 /**
  * Résolution et application des effets d'une carte : variables et bonus (X/Y,
  * caractéristiques), jets de dégâts/soins, pioche, sbires, effets actifs,
@@ -68,10 +71,15 @@ export default class CardEffect {
                 resultArray.push(...await Damage.buildHealDiceLauncher(Constants.actorCurrent, cardContent, dsnAnimations));
             }
             if (cardContent.draw) {
-                card.parent.draw(card.source, cardContent.draw, {chatNotification: false, how: 2});
+                // Même chemin que la pioche de début de tour, remélange de la défausse compris.
+                await CombatTurn.drawWithRecall(game.user, Constants.actorCurrent, card.parent,
+                    card.source, cardContent.draw);
             }
             if (cardContent.retrieveFromDiscard?.trim()) {
                 await CardEffect.retrieveCardFromDiscard(cardContent.retrieveFromDiscard, to, card);
+            }
+            if (cardContent.destroyFromDiscard?.trim()) {
+                await CardEffect.destroyCardFromDiscard(cardContent.destroyFromDiscard, to, card);
             }
             if (CardSelection.hasCardSelection(cardContent)) {
                 await CardSelection.playCardSelection(cardContent, card.parent);
@@ -131,15 +139,19 @@ export default class CardEffect {
      * elle vient d'arriver (ou arrive) dans la pile et ne peut pas se récupérer
      * elle-même.
      *
-     * @param {string} spec          - La spécification (`*` ou liste de noms séparés par des virgules).
-     * @param {Cards}  pile          - La pile de défausse.
-     * @param {string} excludeCardId - L'id de la carte jouée, à exclure.
+     * @param {string}  spec                   - La spécification (`*` ou liste de noms séparés par des virgules).
+     * @param {Cards}   pile                   - La pile de défausse.
+     * @param {string}  excludeCardId          - L'id de la carte jouée, à exclure.
+     * @param {object}  [options]              - Les options de résolution.
+     * @param {boolean} [options.generatedOnly] - True pour ne retenir que les copies générées.
      *
      * @returns {{choose: boolean, cards: Card[], missing: string[]}} Le mode, les cartes résolues et les noms manquants.
      */
-    static resolveDiscardRetrieval(spec, pile, excludeCardId) {
+    static resolveDiscardRetrieval(spec, pile, excludeCardId, {generatedOnly = false} = {}) {
         const trimmed = spec?.trim() ?? "";
-        const available = (pile?.cards ?? []).filter(c => c.id !== excludeCardId);
+        const available = (pile?.cards ?? [])
+            .filter(c => c.id !== excludeCardId)
+            .filter(c => !generatedOnly || CardEffect.isGeneratedCard(c));
         if (trimmed === "*") {
             return {choose: true, cards: available, missing: []};
         }
@@ -160,6 +172,19 @@ export default class CardEffect {
     }
 
     /**
+     * Indique si une carte est une copie générée en cours de partie (encart 🃏,
+     * runes gravées…) plutôt qu'une carte permanente du deck du joueur. Seules
+     * ces copies peuvent être détruites depuis la défausse.
+     *
+     * @param {Card} card - La carte à qualifier.
+     *
+     * @returns {boolean} True si la carte porte le drapeau `generated` du module.
+     */
+    static isGeneratedCard(card) {
+        return Boolean(card?.flags?.[FqCardEngineModule.moduleName]?.generated);
+    }
+
+    /**
      * Publie l'avertissement d'indisponibilité d'une récupération en défausse :
      * les noms manquants (mode liste, localisés) si la résolution en rapporte,
      * sinon l'avertissement générique de pile sans carte récupérable.
@@ -177,16 +202,34 @@ export default class CardEffect {
     }
 
     /**
+     * Publie l'avertissement d'indisponibilité d'une destruction en défausse :
+     * les noms manquants (mode liste, localisés) si la résolution en rapporte,
+     * sinon l'avertissement générique de pile sans carte générée à détruire.
+     *
+     * @param {{cards: Card[], missing: string[]}} destruction - La résolution (cf. {@link CardEffect.resolveDiscardRetrieval}).
+     *
+     * @returns {void}
+     */
+    static warnDestructionUnavailable(destruction) {
+        const message = destruction.missing.length
+            ? game.i18n.format("FQCARDENGINE.WarningMsgMissingDestroyableCards",
+                {names: destruction.missing.map(name => game.i18n.localize(name)).join(", ")})
+            : game.i18n.localize("FQCARDENGINE.WarningMsgNoDestroyableCard");
+        ResourceHandler.createUserWarningMessage(message, Constants.actorCurrent);
+    }
+
+    /**
      * Ouvre la dialog de choix de la carte à récupérer dans la défausse : chaque
      * carte éligible est présentée face révélée (image + nom localisé), y compris
      * les cartes défaussées face cachée. Renvoie l'id de la carte choisie, ou
      * undefined si la dialog est fermée sans valider (aucune récupération).
      *
-     * @param {Card[]} cards - Les cartes éligibles de la défausse.
+     * @param {Card[]} cards      - Les cartes éligibles de la défausse.
+     * @param {string} [titleKey] - La clé i18n du titre de la dialog.
      *
      * @returns {Promise<string|undefined>} L'id de la carte choisie, ou undefined.
      */
-    static async chooseDiscardCardDialog(cards) {
+    static async chooseDiscardCardDialog(cards, titleKey = "FQCARDENGINE.RetrieveCardTitle") {
         const options = cards.map((c, i) => {
             const img = c.faces?.[c.face ?? 0]?.img ?? c.faces?.[0]?.img ?? "";
             const name = game.i18n.localize(c.name);
@@ -198,7 +241,7 @@ export default class CardEffect {
         }).join("");
         try {
             return await foundry.applications.api.DialogV2.prompt({
-                window: {title: game.i18n.localize("FQCARDENGINE.RetrieveCardTitle")},
+                window: {title: game.i18n.localize(titleKey)},
                 content: `<div class="fq-retrieve-grid">${options}</div>`,
                 ok: {callback: (event, button) => button.form.elements.cardId.value}
             });
@@ -271,6 +314,50 @@ export default class CardEffect {
             }
         }
         return retrieved;
+    }
+
+    /**
+     * Détruit définitivement une ou plusieurs cartes de la défausse
+     * (`destroyFromDiscard`). Seules les **copies générées** en cours de partie
+     * sont éligibles : une carte permanente du deck ne peut jamais être détruite
+     * par une carte. Résolution identique à la récupération
+     * (cf. {@link CardEffect.resolveDiscardRetrieval}) : `*` → le joueur choisit
+     * UNE carte via une dialog (choix automatique s'il n'y en a qu'une éligible) ;
+     * liste de noms → toutes les cartes listées, sans dialog. Contrairement à la
+     * récupération, les cartes ne changent pas de pile : elles disparaissent, et
+     * ne seront donc plus rappelées dans le deck au remélange.
+     *
+     * @param {string} spec       - La spécification (`*` ou liste de noms séparés par des virgules).
+     * @param {Cards}  pile       - La pile de défausse cible du jeu de la carte.
+     * @param {Card}   playedCard - La carte jouée (exclue de la résolution).
+     *
+     * @returns {Promise<Card[]|null>} Les cartes détruites, ou null si aucune destruction.
+     */
+    static async destroyCardFromDiscard(spec, pile, playedCard) {
+        const destruction = CardEffect.resolveDiscardRetrieval(spec, pile, playedCard.id, {generatedOnly: true});
+        if (destruction.missing.length || !destruction.cards.length) {
+            // Garde de lançabilité déjà passée en amont : ce repli ne devrait servir
+            // que si la pile a changé entre la validation et l'application des effets.
+            CardEffect.warnDestructionUnavailable(destruction);
+            return null;
+        }
+        let toDestroy = destruction.cards;
+        if (destruction.choose) {
+            const chosenId = toDestroy.length === 1
+                ? toDestroy[0].id
+                : await CardEffect.chooseDiscardCardDialog(toDestroy, "FQCARDENGINE.DestroyCardTitle");
+            if (!chosenId) {
+                return null;
+            }
+            toDestroy = [toDestroy.find(c => c.id === chosenId)];
+        }
+        await pile.deleteEmbeddedDocuments("Card", toDestroy.map(c => c.id));
+        ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
+            content: `<div style='font-style: italic'>${game.i18n.format("FQCARDENGINE.InfoMsgCardsDestroyed",
+                {names: toDestroy.map(c => game.i18n.localize(c.name)).join(", ")})}</div>`
+        });
+        return toDestroy;
     }
 
     /**
@@ -593,48 +680,48 @@ export default class CardEffect {
     static prepareDataFromCard(cardContent) {
         // TARGETING
         if (cardContent?.minReach || cardContent?.maxReach) {
-            cardContent.minReach = RollService.rollResultSync(cardContent.minReach);
-            cardContent.maxReach = RollService.rollResultSync(cardContent.maxReach) + Number(Constants.actorFQ.bonus.range);
+            cardContent.minReach = RollService.rollDiceSync(cardContent.minReach);
+            cardContent.maxReach = RollService.rollDiceSync(cardContent.maxReach) + Number(Constants.actorFQ.bonus.range);
         }
         if (cardContent?.nbTargets) {
-            cardContent.nbTargets = RollService.rollResultSync(cardContent.nbTargets);
+            cardContent.nbTargets = RollService.rollDiceSync(cardContent.nbTargets);
         }
 
         // COST HP
         if (cardContent?.hp) {
-            cardContent.hp = RollService.rollResultSync(cardContent.hp);
+            cardContent.hp = RollService.rollDiceSync(cardContent.hp);
         }
 
         // COST ACTION
         if (cardContent?.action) {
-            cardContent.action = RollService.rollResultSync(cardContent.action);
+            cardContent.action = RollService.rollDiceSync(cardContent.action);
         }
 
         // COST MANA
         if (cardContent?.mana) {
-            cardContent.mana = RollService.rollResultSync(cardContent.mana);
+            cardContent.mana = RollService.rollDiceSync(cardContent.mana);
         }
 
         // COST ZEAL
         if (cardContent?.zeal) {
-            cardContent.zeal = RollService.rollResultSync(cardContent.zeal);
+            cardContent.zeal = RollService.rollDiceSync(cardContent.zeal);
         }
 
         // COST DRAW
         if (cardContent?.draw) {
-            cardContent.draw = RollService.rollResultSync(cardContent.draw);
+            cardContent.draw = RollService.rollDiceSync(cardContent.draw);
         }
         // COST DROP
         if (cardContent?.drop) {
-            cardContent.drop = RollService.rollResultSync(cardContent.drop);
+            cardContent.drop = RollService.rollDiceSync(cardContent.drop);
         }
 
         // BONUSES
         if (cardContent.bonusCrit) {
-            cardContent.bonusCrit = RollService.rollResultSync(cardContent.bonusCrit);
+            cardContent.bonusCrit = RollService.rollDiceSync(cardContent.bonusCrit);
         }
         if (cardContent.bonusEva) {
-            cardContent.bonusEva = RollService.rollResultSync(cardContent.bonusEva);
+            cardContent.bonusEva = RollService.rollDiceSync(cardContent.bonusEva);
         }
     }
 
@@ -688,7 +775,11 @@ export default class CardEffect {
         }
 
         if (cardContent?.draw) {
-            if (((card.source?.cards?.size ?? 0) - (card.source?.drawnCards?.length ?? 0)) < cardContent.draw) {
+            // La défausse compte : elle sera remélangée dans le deck au moment du
+            // tirage. Seul un deck ET une défausse trop courts rendent la carte injouable.
+            const available = (card.source?.cards?.size ?? 0) - (card.source?.drawnCards?.length ?? 0);
+            const recallable = card.source ? TradingCards.countRecallableCards(card.source) : 0;
+            if ((available + recallable) < cardContent.draw) {
                 ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDraw"), Constants.actorCurrent);
                 return false;
             }
@@ -698,6 +789,15 @@ export default class CardEffect {
             const retrieval = CardEffect.resolveDiscardRetrieval(cardContent.retrieveFromDiscard, to, card.id);
             if (retrieval.missing.length || !retrieval.cards.length) {
                 CardEffect.warnRetrievalUnavailable(retrieval);
+                return false;
+            }
+        }
+
+        if (cardContent?.destroyFromDiscard?.trim()) {
+            const destruction = CardEffect.resolveDiscardRetrieval(cardContent.destroyFromDiscard, to, card.id,
+                {generatedOnly: true});
+            if (destruction.missing.length || !destruction.cards.length) {
+                CardEffect.warnDestructionUnavailable(destruction);
                 return false;
             }
         }

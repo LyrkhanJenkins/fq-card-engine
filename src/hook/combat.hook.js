@@ -81,31 +81,7 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
             const hand = TradingCards.getFirstDeck(user?.id, HAND_TYPE);
 
             if (deck && hand && actor.system.fq.cards?.pick) {
-                if (deck.availableCards.length > actor.system.fq.cards.pick) {
-                    await CombatTurn.drawPick(user, actor, hand, deck, actor.system.fq.cards.pick);
-                } else {
-                    const remainingIds = deck.availableCards.map(c => c.id);
-                    const recalled = await TradingCards.recallCardsFromPiles(deck);
-                    if (recalled > 0) {
-                        socket.executeForEveryone("deckShuffledAlert", user.id, actor.name);
-                    }
-                    const recycled = deck.availableCards.filter(c => !remainingIds.includes(c.id));
-                    const missing = actor.system.fq.cards.pick - remainingIds.length;
-                    const drawIds = remainingIds.concat(TradingCards.sampleCardIds(recycled, missing));
-                    if (drawIds.length > 0) {
-                        await CombatTurn.passCards(user, hand, deck, drawIds);
-                        if (actor.system.attributes.exhaustion > 0) {
-                            actor.update({
-                                "system.attributes.hp.value": actor.system.attributes.hp.value
-                                    - actor.system.attributes.exhaustion
-                            });
-                        }
-                    }
-                    actor.update({
-                        "system.attributes.exhaustion":
-                            actor.system.attributes.exhaustion + 1
-                    });
-                }
+                await CombatTurn.drawWithRecall(user, actor, hand, deck, actor.system.fq.cards.pick);
             }
         }
         await CombatTurn.deleteExpiredEffects(combat.combatant?.actor);

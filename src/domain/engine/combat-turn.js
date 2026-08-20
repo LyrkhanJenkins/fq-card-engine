@@ -263,14 +263,50 @@ export default class CombatTurn {
     static async drawPick(user, actor, hand, deck, pickScore) {
         if (pickScore > 0) {
             await CombatTurn.drawCards(user, hand, deck, pickScore);
-            if (actor.system.attributes.exhaustion > 0) {
-                actor.update({
-                    "system.attributes.hp.value": actor.system.attributes.hp.value
-                        - actor.system.attributes.exhaustion
-                });
-            }
         } else {
             createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgNoPickScore"), {actor});
         }
+    }
+
+    /**
+     * Fait piocher `count` cartes du deck vers la main en gérant l'épuisement du
+     * deck : tant qu'il reste assez de cartes disponibles, c'est une pioche
+     * normale ; sinon la défausse est d'abord ramenée dans le deck
+     * (cf. {@link TradingCards.recallCardsFromPiles}, alerte de remélange à tous
+     * les clients), le tirage se complète avec les cartes recyclées et le
+     * personnage gagne un rang d'épuisement. Source unique de la pioche pour le
+     * début de tour ET pour les cartes qui font piocher : une carte ne doit jamais
+     * échouer faute de cartes alors que la défausse est pleine.
+     *
+     * @param {object} user  - L'utilisateur qui pioche.
+     * @param {object} actor - Le personnage de l'utilisateur.
+     * @param {Cards}  hand  - La main de destination.
+     * @param {Cards}  deck  - Le deck source.
+     * @param {number} count - Le nombre de cartes à piocher.
+     *
+     * @returns {Promise<number>} Le nombre de cartes effectivement piochées.
+     */
+    static async drawWithRecall(user, actor, hand, deck, count) {
+        if (!user || !actor || !hand || !deck) {
+            return 0;
+        }
+        // Un score de pioche nul ou négatif passe par `drawPick`, qui publie
+        // l'avertissement dédié plutôt que de piocher.
+        if (deck.availableCards.length > count) {
+            await CombatTurn.drawPick(user, actor, hand, deck, count);
+            return count > 0 ? count : 0;
+        }
+        const remainingIds = deck.availableCards.map(c => c.id);
+        const recalled = await TradingCards.recallCardsFromPiles(deck);
+        if (recalled > 0) {
+            socket.executeForEveryone("deckShuffledAlert", user.id, actor.name);
+        }
+        const recycled = deck.availableCards.filter(c => !remainingIds.includes(c.id));
+        const missing = count - remainingIds.length;
+        const drawIds = remainingIds.concat(TradingCards.sampleCardIds(recycled, missing));
+        if (drawIds.length > 0) {
+            await CombatTurn.passCards(user, hand, deck, drawIds);
+        }
+        return drawIds.length;
     }
 }

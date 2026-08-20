@@ -163,9 +163,14 @@ function abundantWorld(extra = {}) {
         // choix `retrieveFromDiscard` (en mode `*`, l'unique éligible est
         // auto-choisie SANS DialogV2 — non mocké ici) ; les autres choix
         // ignorent la pile. Sans elle, ces cartes seraient rejetées avant même
-        // la consommation de coûts sous test.
+        // la consommation de coûts sous test. Elle porte le drapeau `generated`
+        // pour satisfaire de la même façon les choix `destroyFromDiscard`, qui
+        // n'acceptent que les copies générées.
         discardPile: {
-            cards: [{id: "abundant-p1", name: "FQCARDTITLE.AbundantRetrievable", face: 0, origin: null, faces: [{img: "images/abundant-p1.png"}]}]
+            cards: [{
+                id: "abundant-p1", name: "FQCARDTITLE.AbundantRetrievable", face: 0, origin: null,
+                faces: [{img: "images/abundant-p1.png"}], flags: {"fq-card-engine": {generated: true}}
+            }]
         }
     }, extra);
 }

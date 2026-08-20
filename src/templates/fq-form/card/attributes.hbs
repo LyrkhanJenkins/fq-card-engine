@@ -167,6 +167,12 @@
                                 value=choice.retrieveFromDiscard
                                 name=(concat "system.fq.choices." i ".retrieveFromDiscard") rootId=../rootId}}
                 </div>
+                <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.DestroyFromDiscard"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.destroyFromDiscard
+                                value=choice.destroyFromDiscard
+                                name=(concat "system.fq.choices." i ".destroyFromDiscard") rootId=../rootId}}
+                </div>
             </fieldset>
             <fieldset>
                 <legend>🎴 <label>{{localize "FQCARDENGINE.CardGenerationLegend"}} </label></legend>

@@ -180,6 +180,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             // La carte est rejouable (« passif » = reste en main, ou nombre de charges)
             replayable: new StringField({required: true, label: "FQCARDENGINE.Replayable"}),
             retrieveFromDiscard: new StringField({required: true, label: "FQCARDENGINE.RetrieveFromDiscard"}),
+            destroyFromDiscard: new StringField({required: true, label: "FQCARDENGINE.DestroyFromDiscard"}),
 
             // Custom actions
             customEvals: new ArrayField(new SchemaField({

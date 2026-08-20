@@ -584,6 +584,18 @@ export default class CardCondition {
     }
 
     /**
+     * Indique si le personnage s'est défaussé d'au moins `n` cartes pendant le
+     * tour courant (compteur `fq.cards.currentDrop`, remis à zéro à chaque tour).
+     *
+     * @param {number} [n] - Le minimum requis (défaut 1).
+     *
+     * @returns {boolean} True si le nombre de défausses du tour atteint `n`.
+     */
+    static droppedThisTurn(n = 1) {
+        return Number(Constants.actorFQ?.cards?.currentDrop ?? 0) >= n;
+    }
+
+    /**
      * Indique si un acteur a des points de vie manquants.
      *
      * @param {object} [actor] - L'acteur ; à défaut, le personnage de l'utilisateur.

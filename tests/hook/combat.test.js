@@ -491,7 +491,7 @@ describe("hook/combat.hook.js", () => {
             expect(ChatMessage.create).not.toHaveBeenCalled();
         });
 
-        it("tour d'un joueur, deck insuffisant (mais non vide) : pioche le reste, exhaustion +1, message d'alerte, défausse rappelée dans le deck", async () => {
+        it("tour d'un joueur, deck insuffisant (mais non vide) : pioche le reste sans épuisement, message d'alerte, défausse rappelée dans le deck", async () => {
             const combatant = makeCombatant({
                 actorId: "player-actor",
                 fq: {cards: {hand: 2, pick: 3, currentDrop: 0}},
@@ -528,7 +528,10 @@ describe("hook/combat.hook.js", () => {
             expect(sampleSpy).toHaveBeenCalledWith([{id: "p1"}, {id: "p2"}, {id: "p3"}], 2);
             expect(socket.executeAsUser).toHaveBeenCalledTimes(1);
             expect(socket.executeAsUser).toHaveBeenCalledWith("passCards", "player-user", "hand-1", "deck-1", ["r1", "p2", "p1"]);
-            expect(combatant.actor.update).toHaveBeenCalledWith({"system.attributes.exhaustion": 1});
+            // L'épuisement n'est plus infligé quand le deck se vide : la règle a été
+            // retirée de `drawWithRecall`, la pioche se contente de remélanger.
+            expect(combatant.actor.update.mock.calls.flat()
+                .some(update => "system.attributes.exhaustion" in update)).toBe(false);
             // L'alerte « deck mélangé » est diffusée à tous, plus de message de chat
             expect(socket.executeForEveryone).toHaveBeenCalledWith("deckShuffledAlert", "player-user", "player-actor");
             expect(ChatMessage.create).not.toHaveBeenCalled();
@@ -568,11 +571,14 @@ describe("hook/combat.hook.js", () => {
             expect(recallSpy).toHaveBeenCalledWith(deck);
             expect(socket.executeAsUser).toHaveBeenCalledTimes(1);
             expect(socket.executeAsUser).toHaveBeenCalledWith("passCards", "player-user", "hand-1", "deck-1", ["p1"]);
-            expect(combatant.actor.update).toHaveBeenCalledWith({"system.attributes.exhaustion": 1});
+            // L'épuisement n'est plus infligé quand le deck se vide : la règle a été
+            // retirée de `drawWithRecall`, la pioche se contente de remélanger.
+            expect(combatant.actor.update.mock.calls.flat()
+                .some(update => "system.attributes.exhaustion" in update)).toBe(false);
             expect(socket.executeForEveryone).toHaveBeenCalledWith("deckShuffledAlert", "player-user", "player-actor");
         });
 
-        it("tour d'un joueur, deck vide et rien à recycler : aucune pioche, exhaustion +1", async () => {
+        it("tour d'un joueur, deck vide et rien à recycler : aucune pioche, aucun épuisement", async () => {
             const combatant = makeCombatant({
                 actorId: "player-actor",
                 fq: {cards: {hand: 2, pick: 3, currentDrop: 0}},
@@ -601,7 +607,10 @@ describe("hook/combat.hook.js", () => {
 
             expect(recallSpy).toHaveBeenCalledWith(deck);
             expect(socket.executeAsUser).not.toHaveBeenCalled();
-            expect(combatant.actor.update).toHaveBeenCalledWith({"system.attributes.exhaustion": 1});
+            // L'épuisement n'est plus infligé quand le deck se vide : la règle a été
+            // retirée de `drawWithRecall`, la pioche se contente de remélanger.
+            expect(combatant.actor.update.mock.calls.flat()
+                .some(update => "system.attributes.exhaustion" in update)).toBe(false);
             // Rien recyclé : pas d'alerte « deck mélangé »
             expect(socket.executeForEveryone).not.toHaveBeenCalled();
         });
