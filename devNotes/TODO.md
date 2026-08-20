@@ -40,6 +40,7 @@ Refonte des Cartes :
     - Feature manquantes?
     - Identifier cartes ne correspondant pas a la caractérisation. (Modifier ET/OU déplacer)
     - Ajouter les nouvelles caractérisations pour chaque classe
+    - Faire un tour des features et en implémenter pour les classes en manquant (comme la cardSelection par exemple avec des cartes générés) (Si ça respecte la caractérisation)
     - Equilibrage du nombre de cartes par deck et par niveau jusqu'au 10
     - Equilibrage et tests
     
@@ -47,8 +48,6 @@ Refonte des Cartes :
 TODO Spécifique :
 - Guerrier Runique : 
   - Vérifier que les runes doivent augmenter les score de runes
-  - les runes de niveau élévé coute bc plus de zele et mana
-  - Faire des runes qui peuvent chercher des runes plus élévé, (impossible à jouer ce tour-ci)
   - Equilibrage niveau par niveau sans jouer
   - Jouer une partie
   - Rééquilibrage

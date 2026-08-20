@@ -5,7 +5,7 @@ import {socket} from "../../hook/integration/socketlib.hook.js";
 /**
  * Action FQ déclenchée par les hooks Foundry pendant le changement d'état du combat : réinitialisation des
  * ressources (action, zèle, défausses, squelettes) au fil des rounds, pioche de
- * la main et des cartes de base, gestion de l'épuisement et suppression des
+ * la main et des cartes de base, gestion de l'épuisement du deck et suppression des
  * effets expirés. La plupart des opérations ne s'exécutent que pour le premier
  * MJ actif afin d'éviter les doublons.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
@@ -249,8 +249,7 @@ export default class CombatTurn {
 
     /**
      * Fait piocher à un joueur `pickScore` cartes de son deck vers sa main en
-     * début de tour. Applique les dégâts d'épuisement s'il y a lieu, ou avertit
-     * si le score de pioche est nul.
+     * début de tour, ou avertit si le score de pioche est nul.
      *
      * @param {object} user      - L'utilisateur qui pioche.
      * @param {object} actor     - Le personnage de l'utilisateur.
@@ -273,8 +272,8 @@ export default class CombatTurn {
      * deck : tant qu'il reste assez de cartes disponibles, c'est une pioche
      * normale ; sinon la défausse est d'abord ramenée dans le deck
      * (cf. {@link TradingCards.recallCardsFromPiles}, alerte de remélange à tous
-     * les clients), le tirage se complète avec les cartes recyclées et le
-     * personnage gagne un rang d'épuisement. Source unique de la pioche pour le
+     * les clients) et le tirage se complète avec les cartes recyclées. Source
+     * unique de la pioche pour le
      * début de tour ET pour les cartes qui font piocher : une carte ne doit jamais
      * échouer faute de cartes alors que la défausse est pleine.
      *
