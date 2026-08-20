@@ -429,8 +429,10 @@
   "FQCARDENGINE.SacrifySkeletonButton": "Sacrifier le squelette",
   "FQCARDENGINE.SacrifySkeletonMsg": "Un squelette a été sacrifié!",
   "FQCARDENGINE.SacrificedScoreSkeletonMsg": "Votre score de sacrifice est à {sacrifice}",
-  "FQCARDENGINE.TokenDamageButton": "Appliquer les dégâts des armes équipés",
-  "FQCARDENGINE.TokenDamageNoWeaponWarningMsg": "⚠️ Aucune arme équipée !",
+  "FQCARDENGINE.TokenMeleeDamageButton": "Attaquer avec la première arme de mêlée équipée",
+  "FQCARDENGINE.TokenRangedDamageButton": "Attaquer avec la première arme à distance équipée",
+  "FQCARDENGINE.TokenDamageNoMeleeWeaponWarningMsg": "⚠️ Aucune arme de mêlée équipée !",
+  "FQCARDENGINE.TokenDamageNoRangedWeaponWarningMsg": "⚠️ Aucune arme à distance équipée !",
   "FQCARDENGINE.Class": "Classe",
 
   "FQCARDTITLE.Fireball" : "Boule de feu",

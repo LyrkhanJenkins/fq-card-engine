@@ -2,13 +2,22 @@ import ResourceHandler from "../shared/resource-handler.js";
 
 /**
  * Table des jetons d'arme : jeton → catégories dnd5e acceptées
- * (`weapon.system.type.value`) et clé i18n de l'avertissement affiché si aucune
- * arme du type n'est équipée.
- * @type {Object<string, {categories: string[], warningKey: string}>}
+ * (`weapon.system.type.value`), clé i18n de l'avertissement affiché si aucune
+ * arme du type n'est équipée (garde-fou de cartes), et clé i18n de la
+ * notification équivalente pour le bouton HUD / la macro.
+ * @type {Object<string, {categories: string[], warningKey: string, hudWarningKey: string}>}
  */
 export const WEAPON_TOKENS = {
-    "@wpnR": {categories: ["simpleR", "martialR"], warningKey: "FQCARDENGINE.WarningMsgNoRangedWeapon"},
-    "@wpnM": {categories: ["simpleM", "martialM"], warningKey: "FQCARDENGINE.WarningMsgNoMeleeWeapon"}
+    "@wpnR": {
+        categories: ["simpleR", "martialR"],
+        warningKey: "FQCARDENGINE.WarningMsgNoRangedWeapon",
+        hudWarningKey: "FQCARDENGINE.TokenDamageNoRangedWeaponWarningMsg"
+    },
+    "@wpnM": {
+        categories: ["simpleM", "martialM"],
+        warningKey: "FQCARDENGINE.WarningMsgNoMeleeWeapon",
+        hudWarningKey: "FQCARDENGINE.TokenDamageNoMeleeWeaponWarningMsg"
+    }
 };
 
 /**
@@ -132,24 +141,25 @@ export default class WeaponDamage {
     }
 
     /**
-     * Déclenche l'usage de toutes les armes équipées d'un acteur, après validation
-     * que c'est bien son tour de combat. Avertit si aucune arme n'est équipée.
-     * Logique partagée entre le bouton du HUD de token (`shared/token-hud.js`) et
-     * la macro de combat (`FqCardEngineModule.rollCurrentCombattantWeaponDamage`).
+     * Déclenche l'usage de la première arme équipée d'un acteur du type demandé
+     * (`@wpnM` mêlée / `@wpnR` distance), après validation que c'est bien son tour
+     * de combat. Avertit si aucune arme du type n'est équipée. Logique partagée
+     * entre les boutons du HUD de token (`shared/token-hud.js`) et les macros de
+     * combat (`FqCardEngineModule.rollCurrentCombattantWeaponDamage`).
      *
-     * @param {object} actor - L'acteur qui porte les armes.
+     * @param {object} actor       - L'acteur qui porte les armes.
+     * @param {string} weaponToken - Le jeton d'arme (clé de `WEAPON_TOKENS`).
      *
      * @returns {void}
      */
-    static useEquippedWeapons(actor) {
+    static useFirstEquippedWeapon(actor, weaponToken) {
         if (!ResourceHandler.validateUseSpellInTurn(actor)) {
             return;
         }
-        const armes = actor.items.filter(i => i.type === "weapon" && i.system.equipped);
-        if (!armes.length) return ui.notifications.warn(game.i18n.localize("FQCARDENGINE.TokenDamageNoWeaponWarningMsg"));
-        for (let arme of armes) {
-            arme.use();
-        }
+        const {categories, hudWarningKey} = WEAPON_TOKENS[weaponToken];
+        const arme = WeaponDamage.getEquippedWeapon(actor, categories);
+        if (!arme) return ui.notifications.warn(game.i18n.localize(hudWarningKey));
+        arme.use();
     }
 
     /**

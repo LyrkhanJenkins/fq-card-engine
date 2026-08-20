@@ -81,7 +81,7 @@ describe("render-token", () => {
             expect(colLeft.children.length).toBe(0);
         });
 
-        it("ajoute le bouton de dégâts (MJ + personnage) sans bouton squelette pour un token non-squelette", () => {
+        it("ajoute les boutons de dégâts mêlée/distance (MJ + personnage) sans bouton squelette pour un token non-squelette", () => {
             const hook = getHook("renderTokenHUD");
             const {container, colLeft} = buildHudHtml();
             game.user.isGM = true;
@@ -90,7 +90,7 @@ describe("render-token", () => {
 
             hook({object: hudObject}, container, {});
 
-            expect(colLeft.children.length).toBe(1);
+            expect(colLeft.children.length).toBe(2);
             expect(colLeft.querySelector("[data-action='skeleton-sacrificed']")).toBeNull();
         });
 
@@ -104,7 +104,7 @@ describe("render-token", () => {
 
             hook({object: hudObject}, container, {});
 
-            expect(colLeft.children.length).toBe(2);
+            expect(colLeft.children.length).toBe(3);
             expect(colLeft.querySelector("[data-action='skeleton-sacrificed']")).not.toBeNull();
         });
 

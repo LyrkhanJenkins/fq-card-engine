@@ -429,8 +429,10 @@
   "FQCARDENGINE.SacrifySkeletonButton": "Sacrify Skeleton",
   "FQCARDENGINE.SacrifySkeletonMsg": "Skeleton has been sacrificed!",
   "FQCARDENGINE.SacrificedScoreSkeletonMsg": "Your sacrifice score is {sacrifice}",
-  "FQCARDENGINE.TokenDamageButton": "Apply weapon damage",
-  "FQCARDENGINE.TokenDamageNoWeaponWarningMsg": "⚠️ No weapon equipped !",
+  "FQCARDENGINE.TokenMeleeDamageButton": "Attack with the first equipped melee weapon",
+  "FQCARDENGINE.TokenRangedDamageButton": "Attack with the first equipped ranged weapon",
+  "FQCARDENGINE.TokenDamageNoMeleeWeaponWarningMsg": "⚠️ No melee weapon equipped !",
+  "FQCARDENGINE.TokenDamageNoRangedWeaponWarningMsg": "⚠️ No ranged weapon equipped !",
   "FQCARDENGINE.Class": "Class",
 
   "FQCARDTITLE.Fireball" : "Fireball",

@@ -18,9 +18,9 @@ const WeaponDamage = (await import("../../src/domain/engine/roll/weapon-damage.j
 
 /**
  * Entrée macro `FqCardEngineModule.rollCurrentCombattantWeaponDamage` : ne
- * délègue à `WeaponDamage.useEquippedWeapons` que si un combat est démarré et
- * que le combattant courant est un acteur contrôlé par l'utilisateur ; avertit
- * « hors de son tour » sinon.
+ * délègue à `WeaponDamage.useFirstEquippedWeapon` (avec le jeton d'arme reçu)
+ * que si un combat est démarré et que le combattant courant est un acteur
+ * contrôlé par l'utilisateur ; avertit « hors de son tour » sinon.
  */
 describe("FqCardEngineModule.rollCurrentCombattantWeaponDamage", () => {
     afterEach(() => {
@@ -30,7 +30,7 @@ describe("FqCardEngineModule.rollCurrentCombattantWeaponDamage", () => {
 
     test("aucun combat démarré : avertit « hors de son tour » sans utiliser d'arme", () => {
         game.combat = undefined;
-        const useSpy = vi.spyOn(WeaponDamage, "useEquippedWeapons").mockImplementation(() => {});
+        const useSpy = vi.spyOn(WeaponDamage, "useFirstEquippedWeapon").mockImplementation(() => {});
 
         window.FqCardEngineModule.rollCurrentCombattantWeaponDamage();
 
@@ -40,7 +40,7 @@ describe("FqCardEngineModule.rollCurrentCombattantWeaponDamage", () => {
 
     test("combat créé mais non démarré : avertit « hors de son tour » sans utiliser d'arme", () => {
         game.combat = {started: false, combatant: {actor: {isOwner: true}}};
-        const useSpy = vi.spyOn(WeaponDamage, "useEquippedWeapons").mockImplementation(() => {});
+        const useSpy = vi.spyOn(WeaponDamage, "useFirstEquippedWeapon").mockImplementation(() => {});
 
         window.FqCardEngineModule.rollCurrentCombattantWeaponDamage();
 
@@ -50,7 +50,7 @@ describe("FqCardEngineModule.rollCurrentCombattantWeaponDamage", () => {
 
     test("combattant courant non contrôlé par l'utilisateur : avertit « hors de son tour »", () => {
         game.combat = {started: true, combatant: {actor: {isOwner: false}}};
-        const useSpy = vi.spyOn(WeaponDamage, "useEquippedWeapons").mockImplementation(() => {});
+        const useSpy = vi.spyOn(WeaponDamage, "useFirstEquippedWeapon").mockImplementation(() => {});
 
         window.FqCardEngineModule.rollCurrentCombattantWeaponDamage();
 
@@ -58,14 +58,14 @@ describe("FqCardEngineModule.rollCurrentCombattantWeaponDamage", () => {
         expect(useSpy).not.toHaveBeenCalled();
     });
 
-    test("combat démarré et tour d'un token contrôlé : utilise les armes du combattant", () => {
+    test("combat démarré et tour d'un token contrôlé : utilise l'arme du type demandé", () => {
         const actor = {isOwner: true};
         game.combat = {started: true, combatant: {actor}};
-        const useSpy = vi.spyOn(WeaponDamage, "useEquippedWeapons").mockImplementation(() => {});
+        const useSpy = vi.spyOn(WeaponDamage, "useFirstEquippedWeapon").mockImplementation(() => {});
 
-        window.FqCardEngineModule.rollCurrentCombattantWeaponDamage();
+        window.FqCardEngineModule.rollCurrentCombattantWeaponDamage("@wpnM");
 
-        expect(useSpy).toHaveBeenCalledWith(actor);
+        expect(useSpy).toHaveBeenCalledWith(actor, "@wpnM");
         expect(ui.notifications.warn).not.toHaveBeenCalled();
     });
 });

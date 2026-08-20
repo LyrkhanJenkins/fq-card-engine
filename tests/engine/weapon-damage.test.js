@@ -146,40 +146,48 @@ describe("WeaponDamage.getEquippedWeaponDamageFormula", () => {
     });
 });
 
-describe("WeaponDamage.useEquippedWeapons", () => {
+describe("WeaponDamage.useFirstEquippedWeapon", () => {
     afterEach(() => {
         vi.restoreAllMocks();
     });
 
-    function makeUsableWeapon(equipped = true) {
-        return {type: "weapon", system: {equipped}, use: vi.fn()};
+    function makeUsableWeapon(typeValue, equipped = true) {
+        return {type: "weapon", system: {equipped, type: {value: typeValue}}, use: vi.fn()};
     }
 
     test("hors de son tour de combat : aucune arme utilisée", () => {
         vi.spyOn(ResourceHandler, "validateUseSpellInTurn").mockReturnValue(false);
-        const weapon = makeUsableWeapon();
-        WeaponDamage.useEquippedWeapons({items: [weapon]});
+        const weapon = makeUsableWeapon("simpleM");
+        WeaponDamage.useFirstEquippedWeapon({items: [weapon]}, "@wpnM");
         expect(weapon.use).not.toHaveBeenCalled();
     });
 
-    test("aucune arme équipée : avertit sans rien utiliser", () => {
+    test("aucune arme de mêlée équipée : avertit sans rien utiliser", () => {
         vi.spyOn(ResourceHandler, "validateUseSpellInTurn").mockReturnValue(true);
-        const unequipped = makeUsableWeapon(false);
-        WeaponDamage.useEquippedWeapons({items: [unequipped]});
-        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.TokenDamageNoWeaponWarningMsg");
-        expect(unequipped.use).not.toHaveBeenCalled();
+        const bow = makeUsableWeapon("simpleR");
+        const unequippedSword = makeUsableWeapon("simpleM", false);
+        WeaponDamage.useFirstEquippedWeapon({items: [bow, unequippedSword]}, "@wpnM");
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.TokenDamageNoMeleeWeaponWarningMsg");
+        expect(bow.use).not.toHaveBeenCalled();
+        expect(unequippedSword.use).not.toHaveBeenCalled();
     });
 
-    test("utilise chaque arme équipée (et ignore le reste de l'inventaire)", () => {
+    test("aucune arme à distance équipée : avertit avec la clé « distance »", () => {
         vi.spyOn(ResourceHandler, "validateUseSpellInTurn").mockReturnValue(true);
-        const sword = makeUsableWeapon();
-        const bow = makeUsableWeapon();
-        const unequipped = makeUsableWeapon(false);
-        const potion = {type: "consumable", system: {equipped: true}, use: vi.fn()};
-        WeaponDamage.useEquippedWeapons({items: [sword, bow, unequipped, potion]});
+        const sword = makeUsableWeapon("martialM");
+        WeaponDamage.useFirstEquippedWeapon({items: [sword]}, "@wpnR");
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.TokenDamageNoRangedWeaponWarningMsg");
+        expect(sword.use).not.toHaveBeenCalled();
+    });
+
+    test("utilise seulement la première arme équipée du type demandé", () => {
+        vi.spyOn(ResourceHandler, "validateUseSpellInTurn").mockReturnValue(true);
+        const bow = makeUsableWeapon("martialR");
+        const sword = makeUsableWeapon("simpleM");
+        const dagger = makeUsableWeapon("simpleM");
+        WeaponDamage.useFirstEquippedWeapon({items: [bow, sword, dagger]}, "@wpnM");
         expect(sword.use).toHaveBeenCalled();
-        expect(bow.use).toHaveBeenCalled();
-        expect(unequipped.use).not.toHaveBeenCalled();
-        expect(potion.use).not.toHaveBeenCalled();
+        expect(bow.use).not.toHaveBeenCalled();
+        expect(dagger.use).not.toHaveBeenCalled();
     });
 });

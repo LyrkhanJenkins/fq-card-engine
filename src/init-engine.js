@@ -39,19 +39,22 @@ window.FqCardEngineModule = {
     ...DragDrop,
 
     /**
-     * Entrée macro : utilise les armes équipées du combattant courant si un combat
-     * est démarré et que c'est le tour d'un token contrôlé par l'utilisateur
-     * (délégué à `WeaponDamage.useEquippedWeapons`). Avertit sinon.
+     * Entrée macro : utilise la première arme équipée du type demandé (`@wpnM`
+     * mêlée / `@wpnR` distance) du combattant courant si un combat est démarré et
+     * que c'est le tour d'un token contrôlé par l'utilisateur (délégué à
+     * `WeaponDamage.useFirstEquippedWeapon`). Avertit sinon.
+     *
+     * @param {string} weaponToken - Le jeton d'arme (clé de `WEAPON_TOKENS`).
      *
      * @returns {void}
      */
-    rollCurrentCombattantWeaponDamage() {
+    rollCurrentCombattantWeaponDamage(weaponToken) {
         const actor = game.combat?.started ? game.combat.combatant?.actor : undefined;
         if (!actor?.isOwner) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.WarningMsgPlayOutOfHisRound"));
             return;
         }
-        WeaponDamage.useEquippedWeapons(actor);
+        WeaponDamage.useFirstEquippedWeapon(actor, weaponToken);
     },
 
     /**

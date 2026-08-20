@@ -1,14 +1,14 @@
 {
-  "name": "Weapon Damage",
+  "name": "Ranged Weapon Damage",
   "type": "script",
   "author": "eLD9iPNHJXGMQX6z",
-  "img": "icons/svg/sword.svg",
+  "img": "icons/weapons/bows/shortbow-recurve-yellow.webp",
   "scope": "global",
-  "command": "FqCardEngineModule.rollCurrentCombattantWeaponDamage();",
+  "command": "FqCardEngineModule.rollCurrentCombattantWeaponDamage(\"@wpnR\");",
   "folder": null,
   "flags": {},
-  "_id": "fqWpnDmgMacro001",
-  "sort": 500000,
+  "_id": "fqWpnDmgMacro002",
+  "sort": 510000,
   "ownership": {
     "default": 0
   },
@@ -23,5 +23,5 @@
     "duplicateSource": null,
     "exportSource": null
   },
-  "_key": "!macros!fqWpnDmgMacro001"
+  "_key": "!macros!fqWpnDmgMacro002"
 }

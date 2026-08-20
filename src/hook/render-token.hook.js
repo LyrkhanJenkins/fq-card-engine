@@ -11,6 +11,6 @@ Hooks.on("renderTokenHUD", (hud, html, data) => {
     const colLeft = html.querySelector(".col.left");
     if (!colLeft) return;
 
-    TokenHud.addDamageButton(colLeft, hud.object);
+    TokenHud.addDamageButtons(colLeft, hud.object);
     TokenHud.addSqueletonButton(colLeft, hud.object);
 });

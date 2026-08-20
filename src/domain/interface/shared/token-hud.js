@@ -105,26 +105,32 @@ export default class TokenHud {
     }
 
     /**
-     * Ajoute au HUD du token un bouton « infliger des dégâts » qui déclenche l'usage
-     * de toutes les armes équipées de l'acteur, après validation de l'usage d'un sort
-     * dans le tour.
+     * Ajoute au HUD du token deux boutons « infliger des dégâts » : l'un déclenche
+     * l'usage de la première arme de mêlée équipée de l'acteur, l'autre celui de la
+     * première arme à distance équipée, après validation de l'usage d'un sort dans
+     * le tour.
      *
-     * @param {HTMLElement} column - La colonne du HUD où insérer le bouton.
+     * @param {HTMLElement} column - La colonne du HUD où insérer les boutons.
      * @param {object}      token  - Le token dont l'acteur porte les armes.
      *
      * @returns {void}
      */
-    static addDamageButton(column, token) {
+    static addDamageButtons(column, token) {
         const actor = token.actor;
-        const bouton = document.createElement("button");
-        bouton.type = "button";
-        bouton.classList.add("control-icon");
-        bouton.dataset.tooltip = game.i18n.localize("FQCARDENGINE.TokenDamageButton");
-        bouton.innerHTML = `<img src="icons/svg/sword.svg" width="36" height="36">`;
-        bouton.addEventListener("click", async () => {
-            WeaponDamage.useEquippedWeapons(actor);
-        });
-
-        column.appendChild(bouton);
+        const configs = [
+            {weaponToken: "@wpnM", icon: "icons/weapons/swords/scimitar-guard-gold.webp", tooltipKey: "FQCARDENGINE.TokenMeleeDamageButton"},
+            {weaponToken: "@wpnR", icon: "icons/weapons/bows/shortbow-recurve-yellow.webp", tooltipKey: "FQCARDENGINE.TokenRangedDamageButton"}
+        ];
+        for (const {weaponToken, icon, tooltipKey} of configs) {
+            const bouton = document.createElement("button");
+            bouton.type = "button";
+            bouton.classList.add("control-icon");
+            bouton.dataset.tooltip = game.i18n.localize(tooltipKey);
+            bouton.innerHTML = `<img src="${icon}" width="36" height="36">`;
+            bouton.addEventListener("click", async () => {
+                WeaponDamage.useFirstEquippedWeapon(actor, weaponToken);
+            });
+            column.appendChild(bouton);
+        }
     }
 }
