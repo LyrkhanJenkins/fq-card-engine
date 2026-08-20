@@ -1,0 +1,16 @@
+# Fins de ligne : dépôt ET copie de travail en LF.
+#
+# Les outils qui réécrivent des fichiers entiers écrivent toujours en \n
+# (utils/packs.mjs pour build:json / build:db, utils/create_generated_decks.js).
+# Sans cette règle, core.autocrlf restitue du CRLF au checkout et la moindre
+# extraction rejoue une différence de fins de ligne sur tout le fichier.
+* text=auto eol=lf
+
+# Bases LevelDB du monde de test et médias : aucune conversion.
+tests/script/test-world/data/** -text
+*.png binary
+*.PNG binary
+*.webp binary
+*.webm binary
+*.mp3 binary
+*.m4a binary
