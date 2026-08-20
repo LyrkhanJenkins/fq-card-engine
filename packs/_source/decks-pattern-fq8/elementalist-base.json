@@ -333,7 +333,7 @@
               "customEvals": [],
               "targetType": "Default",
               "visual": {
-                "path": "",
+                "path": "jb2a.energy_strands.in.green.01",
                 "onTarget": false
               },
               "hasBeenPlayed": false
@@ -464,7 +464,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.ray_of_frost.blue",
                 "onTarget": false
               },
               "name": "",
@@ -593,8 +593,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.fireball.explosion.orange",
+                "onTarget": true
               },
               "name": "",
               "messages": [],
@@ -804,7 +804,7 @@
               ],
               "targetType": "Default",
               "visual": {
-                "path": "",
+                "path": "jb2a.energy_strands.in.green.01",
                 "onTarget": false
               },
               "hasBeenPlayed": false
@@ -941,8 +941,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.fog_cloud.01.white",
+                "onTarget": true
               },
               "name": "",
               "messages": [],
@@ -1043,7 +1043,7 @@
               "minions": [],
               "targetType": "Default",
               "visual": {
-                "path": "",
+                "path": "jb2a.fire_bolt.orange",
                 "onTarget": false
               },
               "hasBeenPlayed": false
@@ -1234,8 +1234,8 @@
               "minions": [],
               "targetType": "Zone",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.falling_rocks.top.1x1.grey",
+                "onTarget": true
               },
               "hasBeenPlayed": false,
               "zoneShape": "rectangle",
@@ -1334,8 +1334,8 @@
               "minions": [],
               "targetType": "Default",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.melee_generic.slash.02.001.blue",
+                "onTarget": true
               },
               "hasBeenPlayed": false
             }
@@ -1459,7 +1459,7 @@
               "customEvals": [],
               "targetType": "Default",
               "visual": {
-                "path": "",
+                "path": "jb2a.magic_signs.circle.02.transmutation.intro.yellow",
                 "onTarget": false
               },
               "hasBeenPlayed": false,
@@ -1628,8 +1628,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.shield.01.complete.01.blue",
+                "onTarget": true
               },
               "name": "",
               "messages": [],
@@ -1729,8 +1729,8 @@
               "minions": [],
               "targetType": "Adjacent",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.ice_spikes.radial.burst.white",
+                "onTarget": true
               },
               "hasBeenPlayed": false
             }
@@ -1827,7 +1827,7 @@
               "minions": [],
               "targetType": "Default",
               "visual": {
-                "path": "",
+                "path": "jb2a.scorching_ray.01.orange",
                 "onTarget": false
               },
               "hasBeenPlayed": false
@@ -1958,7 +1958,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.chain_lightning.primary.blue",
                 "onTarget": false
               },
               "name": "",
@@ -2079,7 +2079,7 @@
               "replayable": "passif",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.fire_bolt.orange",
                 "onTarget": false
               },
               "messages": [],
@@ -2161,7 +2161,7 @@
               "replayable": "passif",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.ray_of_frost.blue",
                 "onTarget": false
               },
               "messages": [],
@@ -2239,7 +2239,7 @@
               "replayable": "passif",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.chain_lightning.primary.blue",
                 "onTarget": false
               },
               "messages": [],
@@ -2317,7 +2317,7 @@
               "replayable": "passif",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.eldritch_blast.purple",
                 "onTarget": false
               },
               "messages": [],
@@ -2449,8 +2449,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.whirlwind.bluegrey",
+                "onTarget": true
               },
               "name": "",
               "messages": [],
@@ -2707,7 +2707,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.burning_hands.01.orange",
                 "onTarget": false
               },
               "name": "",
@@ -2840,7 +2840,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.spell_projectile.ice_shard.blue",
                 "onTarget": false
               },
               "name": "",
@@ -2936,7 +2936,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.magic_missile.purple",
                 "onTarget": false
               },
               "name": "",

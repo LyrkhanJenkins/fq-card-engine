@@ -103,7 +103,7 @@
               "customEvals": [],
               "targetType": "Default",
               "visual": {
-                "path": "",
+                "path": "jb2a.magic_signs.circle.02.transmutation.intro.yellow",
                 "onTarget": false
               },
               "hasBeenPlayed": true
@@ -234,7 +234,7 @@
               "replayable": "passif",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.chain_lightning.primary.blue",
                 "onTarget": false
               },
               "name": "",

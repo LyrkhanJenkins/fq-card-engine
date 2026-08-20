@@ -77,7 +77,7 @@
               "replayable": "",
               "sound": "specific_spells/tamed_wolf.mp3",
               "visual": {
-                "path": "",
+                "path": "jb2a.magic_signs.circle.02.conjuration.intro.yellow",
                 "onTarget": false
               },
               "name": "",
@@ -162,7 +162,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.arrow.physical.white.01",
                 "onTarget": false
               },
               "name": "",
@@ -378,7 +378,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.arrow.physical.white.01",
                 "onTarget": false
               },
               "name": "",
@@ -467,8 +467,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.volley_of_projectiles_Circle.arrow.001.001.orangeyellow",
+                "onTarget": true
               },
               "name": "",
               "applyEffectsFormulas": [],
@@ -655,7 +655,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.energy_strands.in.green.01",
                 "onTarget": false
               },
               "name": "",
@@ -779,8 +779,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.spike_trap.05x05ft.top.holes.normal.01.01",
+                "onTarget": true
               },
               "name": "",
               "messages": [],
@@ -866,7 +866,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.arrow.physical.white.01",
                 "onTarget": false
               },
               "name": "",
@@ -1099,7 +1099,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.arrow.poison.green.01",
                 "onTarget": false
               },
               "name": "",
@@ -1186,7 +1186,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.template_line_piercing.generic.01.orange",
                 "onTarget": false
               },
               "name": "",
@@ -1472,7 +1472,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.smoke.puff.centered.grey",
                 "onTarget": false
               },
               "name": "",
@@ -1563,7 +1563,7 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
+                "path": "jb2a.bullet.Snipe.blue",
                 "onTarget": false
               },
               "name": "",
@@ -1651,8 +1651,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.explosion.01.orange",
+                "onTarget": true
               },
               "name": "",
               "applyEffectsFormulas": [],
@@ -1745,7 +1745,7 @@
               "replayable": "",
               "sound": "specific_spells/enraged_bear.mp3",
               "visual": {
-                "path": "",
+                "path": "jb2a.magic_signs.circle.02.conjuration.intro.yellow",
                 "onTarget": false
               },
               "name": "",
@@ -1965,8 +1965,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.spike_trap.05x05ft.top.holes.normal.01.02",
+                "onTarget": true
               },
               "name": "",
               "applyEffectsFormulas": [],
@@ -2102,8 +2102,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.explosion.top_fracture.flask.01",
+                "onTarget": true
               },
               "name": "",
               "messages": [],
@@ -2253,8 +2253,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "",
-                "onTarget": false
+                "path": "jb2a.entangle.green",
+                "onTarget": true
               },
               "name": "",
               "messages": [],
