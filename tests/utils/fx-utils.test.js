@@ -19,7 +19,7 @@ function makeChainableSequence() {
     const chainable = {};
     const chainMethods = [
         "effect", "file", "atLocation", "size", "stretchTo", "waitUntilFinished",
-        "animation", "on", "fadeIn", "opacity", "duration", "sound"
+        "animation", "on", "fadeIn", "opacity", "duration", "sound", "rotate"
     ];
     chainMethods.forEach(method => {
         chainable[method] = vi.fn(() => chainable);
@@ -162,6 +162,80 @@ describe("Fx", () => {
 
             const instances = globalThis.Sequence.mock.results.map(r => r.value);
             expect(instances.some(seq => seq.atLocation.mock.calls.length > 0 && seq.play.mock.calls.length > 0)).toBe(true);
+        });
+    });
+
+    describe("effets de zone (_createSequenceForZone / _createTargetFeedback)", () => {
+
+        beforeEach(() => {
+            game.modules.set("sequencer", {active: true});
+            globalThis.Sequence = vi.fn().mockImplementation(function () {
+                return makeChainableSequence();
+            });
+        });
+
+        it("cercle -> effet à l'emplacement de la zone, taille = diamètre en cases", () => {
+            Fx._createSequenceForZone("file.webm", {type: "circle", x: 300, y: 400, size: 6});
+
+            const seq = globalThis.Sequence.mock.results[0].value;
+            expect(seq.atLocation).toHaveBeenCalledWith({x: 300, y: 400});
+            expect(seq.size).toHaveBeenCalledWith(6, {gridUnits: true});
+            expect(seq.play).toHaveBeenCalled();
+        });
+
+        it("rectangle -> taille largeur/hauteur en cases et rotation inversée", () => {
+            Fx._createSequenceForZone("file.webm", {type: "rectangle", x: 150, y: 150, width: 3, height: 2, rotation: 45});
+
+            const seq = globalThis.Sequence.mock.results[0].value;
+            expect(seq.size).toHaveBeenCalledWith({width: 3, height: 2}, {gridUnits: true});
+            expect(seq.rotate).toHaveBeenCalledWith(-45);
+        });
+
+        it("ligne/cône -> étiré de l'origine vers le point d'arrivée", () => {
+            Fx._createSequenceForZone("file.webm", {type: "line", x: 0, y: 0, endX: 200, endY: 0});
+
+            const seq = globalThis.Sequence.mock.results[0].value;
+            expect(seq.atLocation).toHaveBeenCalledWith({x: 0, y: 0});
+            expect(seq.stretchTo).toHaveBeenCalledWith({x: 200, y: 0});
+            expect(seq.size).not.toHaveBeenCalled();
+        });
+
+        it("handleSpecialEffect avec zonePlacement -> branche zone, même sans cible (zone sur du vide)", async () => {
+            const cardContent = {damage: "1d6", maxReach: 6, targetType: "Zone",
+                zonePlacement: {type: "circle", x: 10, y: 20, size: 2}};
+
+            await Fx.handleSpecialEffect(cardContent, [], {actorId: "userCharacterId"}, "fire");
+
+            const instances = globalThis.Sequence.mock.results.map(r => r.value);
+            expect(instances.some(seq => seq.atLocation.mock.calls.some(c => c[0]?.x === 10 && c[0]?.y === 20))).toBe(true);
+            expect(instances.some(seq => seq.stretchTo.mock.calls.length > 0)).toBe(false);
+        });
+
+        it("_createTargetFeedback : dégâts non esquivés -> clignotement joué sur la cible", () => {
+            const target = {id: "t1"};
+
+            Fx._createTargetFeedback(target, {damage: "1d6"}, false);
+
+            const seq = globalThis.Sequence.mock.results[0].value;
+            expect(seq.animation).toHaveBeenCalled();
+            expect(seq.on).toHaveBeenCalledWith(target);
+            expect(seq.play).toHaveBeenCalled();
+        });
+
+        it("_createTargetFeedback : esquive -> effet et son d'esquive sur la cible", () => {
+            const target = {id: "t1"};
+
+            Fx._createTargetFeedback(target, {damage: "1d6"}, true);
+
+            const seq = globalThis.Sequence.mock.results[0].value;
+            expect(seq.file).toHaveBeenCalledWith("modules/fq-card-engine/visuals/generics/other/evasion.webm");
+            expect(seq.animation).not.toHaveBeenCalled();
+        });
+
+        it("_createTargetFeedback : ni dégâts ni esquive -> aucune séquence", () => {
+            Fx._createTargetFeedback({id: "t1"}, {heal: "1d4"}, false);
+
+            expect(globalThis.Sequence).not.toHaveBeenCalled();
         });
     });
 

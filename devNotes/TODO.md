@@ -10,8 +10,6 @@
 - Déplacer les contrôles d'utilisation d'une carte dans un fichier JS et les tester
 - Gestions des principales Custom eval dans des méthodes (comme les xvalue)
 - L'esquive fait demi-dégâts (Esquive critique? Double-critique?)
-- Gérer un type de cible, tous les alliés, tous les ennemis
-- Gérer les fx pour les zones?
 - Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts 
 suivant le zèle qu'a la cible plutôt que la chargé Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
 

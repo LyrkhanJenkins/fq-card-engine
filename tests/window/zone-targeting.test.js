@@ -95,6 +95,16 @@ describe("ZoneTargeting — état « zone posée » (condition de jeu des cartes
         expect(ZoneTargeting.hasPlacement()).toBe(false);
     });
 
+    test("pose valide → la géométrie FX est capturée, clearPlacement l'oublie", async () => {
+        const region = regionLike({type: "circle", x: 2, y: 7, radius: 10}, () => false);
+        mountZoneWorld(region, [casterToken()]);
+        await ZoneTargeting.placeZoneAndAcquireTargets(
+            makeChoice({targetType: "Zone", zoneShape: "circle", zoneSize: "2", maxReach: "3"}));
+        expect(ZoneTargeting.getPlacement()).toEqual({type: "circle", x: 2, y: 7, size: 4});
+        ZoneTargeting.clearPlacement();
+        expect(ZoneTargeting.getPlacement()).toBeNull();
+    });
+
     test("pose annulée → hasPlacement reste faux", async () => {
         mountZoneWorld(null, [casterToken()]);
         await ZoneTargeting.placeZoneAndAcquireTargets(
@@ -108,6 +118,38 @@ describe("ZoneTargeting — état « zone posée » (condition de jeu des cartes
         await ZoneTargeting.placeZoneAndAcquireTargets(
             makeChoice({targetType: "Zone", zoneShape: "circle", zoneSize: "2", maxReach: "3"}));
         expect(ZoneTargeting.hasPlacement()).toBe(false);
+    });
+});
+
+describe("ZoneTargeting.buildPlacementFx — géométrie FX normalisée (grille 5)", () => {
+    test("cercle : taille = diamètre converti en cases", () => {
+        mountZoneWorld();
+        expect(ZoneTargeting.buildPlacementFx({type: "circle", x: 30, y: 40, radius: 10}))
+            .toEqual({type: "circle", x: 30, y: 40, size: 4});
+    });
+
+    test("rectangle : ancrage ramené au centre, dimensions en cases, rotation conservée", () => {
+        mountZoneWorld();
+        expect(ZoneTargeting.buildPlacementFx({type: "rectangle", x: 10, y: 20, width: 10, height: 20, rotation: 30}))
+            .toEqual({type: "rectangle", x: 15, y: 30, width: 2, height: 4, rotation: 30});
+    });
+
+    test("cône : point d'arrivée à distance radius dans la direction de rotation", () => {
+        mountZoneWorld();
+        const fx = ZoneTargeting.buildPlacementFx({type: "cone", x: 0, y: 0, radius: 10, rotation: 90});
+        expect(fx.type).toBe("cone");
+        expect(fx.endX).toBeCloseTo(0);
+        expect(fx.endY).toBeCloseTo(10);
+    });
+
+    test("ligne sans rotation : point d'arrivée à distance length vers l'est", () => {
+        mountZoneWorld();
+        expect(ZoneTargeting.buildPlacementFx({type: "line", x: 5, y: 5, length: 20}))
+            .toEqual({type: "line", x: 5, y: 5, endX: 25, endY: 5});
+    });
+
+    test("forme absente → null", () => {
+        expect(ZoneTargeting.buildPlacementFx(null)).toBeNull();
     });
 });
 

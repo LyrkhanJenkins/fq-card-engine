@@ -5,7 +5,7 @@ import {socket} from "../../../hook/integration/socketlib.hook.js";
  * Utilitaires d'effets audiovisuels lors du jeu des cartes, s'appuyant sur le
  * module Sequencer et les macros avancées. Gère la sélection des fichiers vidéo
  * (dégâts, soin, buff, esquive, critique) et sonores, et la construction des
- * séquences visuelles vers soi ou vers les cibles.
+ * séquences visuelles vers soi, vers les cibles ou à l'emplacement d'une zone.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
 export default class Fx {
@@ -82,13 +82,73 @@ export default class Fx {
             }
         });
 
-        if (hasTargets && cardContent.maxReach) {
+        if (cardContent.zonePlacement) {
+            Fx._createSequenceForZone(effectFile, cardContent.zonePlacement);
+            targets.forEach(target => {
+                Fx._createTargetFeedback(target, cardContent, [...resultArray].find(res => res.targetTokenId === target.id)?.evasion);
+            });
+        } else if (hasTargets && cardContent.maxReach) {
             targets.forEach(target => {
                 Fx._createSequenceForTarget(effectFile, myToken, target, cardContent, [...resultArray].find(res => res.targetTokenId === target.id)?.evasion);
             });
         } else {
             Fx._createSequenceForSelf(effectFile, myToken);
         }
+    }
+
+    /**
+     * Construit et joue la séquence visuelle unique d'un effet de zone, à
+     * l'emplacement et aux dimensions de la zone posée (géométrie précalculée
+     * par `ZoneTargeting.buildPlacementFx`) : cercle et rectangle à l'échelle de
+     * la forme, cône et ligne étirés vers leur point d'arrivée.
+     *
+     * @param {string} effectFile - Le chemin du fichier vidéo d'effet.
+     * @param {object} placement  - La géométrie de la zone (`{type, x, y, ...}`).
+     *
+     * @returns {void}
+     */
+    static _createSequenceForZone(effectFile, placement) {
+        const seq = new Sequence().effect().file(effectFile).atLocation({x: placement.x, y: placement.y});
+
+        if (placement.type === "cone" || placement.type === "line") {
+            seq.stretchTo({x: placement.endX, y: placement.endY});
+        } else if (placement.type === "rectangle") {
+            seq.size({width: placement.width, height: placement.height}, {gridUnits: true});
+            if (placement.rotation) {
+                // Sequencer tourne en sens antihoraire, Foundry en sens horaire.
+                seq.rotate(-placement.rotation);
+            }
+        } else {
+            seq.size(placement.size, {gridUnits: true});
+        }
+        seq.play();
+    }
+
+    /**
+     * Joue le retour visuel individuel d'une cible couverte par une zone :
+     * clignotement si elle encaisse des dégâts, effet et son d'esquive sinon.
+     * Le visuel du sort lui-même est porté par la séquence de zone, pas par la cible.
+     *
+     * @param {object}  target      - Le token cible.
+     * @param {object}  cardContent - Le contenu (choix) de la carte jouée.
+     * @param {boolean} isEvade     - True si la cible a esquivé l'effet.
+     *
+     * @returns {void}
+     */
+    static _createTargetFeedback(target, cardContent, isEvade) {
+        if (!isEvade && !cardContent.damage) {
+            return;
+        }
+        const seq = new Sequence();
+
+        if (cardContent.damage && !isEvade) {
+            Fx.getBlinkAnimation(seq, target, 100, 8);
+        }
+        if (isEvade) {
+            seq.effect().file(this.GENERIC_VISUAL_PATH + "other/evasion.webm").atLocation(target)
+                .size(2.5, {gridUnits: true}).sound().file(this.SOUND_PATH + "evasion/1.mp3");
+        }
+        seq.play();
     }
 
     /**

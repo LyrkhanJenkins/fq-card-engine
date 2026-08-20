@@ -441,6 +441,10 @@ export default {
             if (!ZoneTargeting.hasPlacement()) {
                 throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorNoZone"));
             }
+            // Snapshot de la géométrie posée : la dialog (et donc l'état statique
+            // de ZoneTargeting) peut se fermer avant que les FX ne jouent — Fx lit
+            // ce champ sur le cardContent, jamais ZoneTargeting directement.
+            cardContent.zonePlacement = ZoneTargeting.getPlacement();
         } else if (cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT) {
             // Acquisition automatique au moment du jeu (les tokens ont pu bouger
             // depuis l'aperçu du panneau) : l'anneau vide bloque le jeu.

@@ -31,6 +31,11 @@ export default class ZoneTargeting {
     // Remis à zéro à la fermeture de la dialog et au changement de choix.
     static #zonePlaced = false;
 
+    // Géométrie FX de la dernière zone posée (voir `buildPlacementFx`), snapshotée
+    // dans le cardContent au moment du jeu — la dialog peut se fermer (et donc
+    // `clearPlacement` tourner) avant que les FX ne jouent.
+    static #placementFx = null;
+
     /**
      * Indique si une zone a été posée pour la dialog courante.
      *
@@ -41,12 +46,70 @@ export default class ZoneTargeting {
     }
 
     /**
+     * Retourne la géométrie FX de la zone posée pour la dialog courante.
+     *
+     * @returns {object|null} La géométrie (voir `buildPlacementFx`), ou null si aucune pose.
+     */
+    static getPlacement() {
+        return ZoneTargeting.#placementFx;
+    }
+
+    /**
      * Oublie la zone posée (fermeture de la dialog, changement de choix).
      *
      * @returns {void}
      */
     static clearPlacement() {
         ZoneTargeting.#zonePlaced = false;
+        ZoneTargeting.#placementFx = null;
+    }
+
+    /**
+     * Normalise la première forme d'une région posée en géométrie prête pour les
+     * FX : position d'ancrage en pixels, dimensions converties en cases, et point
+     * d'arrivée précalculé pour les formes directionnelles (cône/ligne) — le
+     * consommateur (Fx) n'a ainsi aucune trigonométrie à faire.
+     * La rotation est interprétée en convention canvas (0° vers l'est, sens
+     * horaire écran) ; pour un rectangle, l'ancrage est ramené à son centre.
+     *
+     * @param {object} shape - La donnée de forme (`RegionShapeData`) de la région posée.
+     *
+     * @returns {object|null} `{type, x, y, ...}` selon la forme (circle: `size` ;
+     *          rectangle: `width`/`height`/`rotation` ; cone/line: `endX`/`endY`), ou null sans forme.
+     */
+    static buildPlacementFx(shape) {
+        if (!shape) {
+            return null;
+        }
+        const gridSize = game.canvas?.scene?.dimensions?.size || 100;
+        const rad = ((shape.rotation ?? 0) * Math.PI) / 180;
+
+        if (shape.type === "cone" || shape.type === "line") {
+            const dist = (shape.type === "cone" ? shape.radius : shape.length) ?? 0;
+            return {
+                type: shape.type,
+                x: shape.x,
+                y: shape.y,
+                endX: shape.x + dist * Math.cos(rad),
+                endY: shape.y + dist * Math.sin(rad)
+            };
+        }
+        if (shape.type === "rectangle") {
+            return {
+                type: "rectangle",
+                x: shape.x + (shape.width ?? 0) / 2,
+                y: shape.y + (shape.height ?? 0) / 2,
+                width: (shape.width ?? 0) / gridSize,
+                height: (shape.height ?? 0) / gridSize,
+                rotation: shape.rotation ?? 0
+            };
+        }
+        return {
+            type: "circle",
+            x: shape.x,
+            y: shape.y,
+            size: (2 * (shape.radius ?? 0)) / gridSize
+        };
     }
 
     /**
@@ -138,6 +201,7 @@ export default class ZoneTargeting {
             const covered = ZoneTargeting.tokensCoveredByRegion(region);
             ZoneTargeting.retargetTo(covered);
             ZoneTargeting.#zonePlaced = true;
+            ZoneTargeting.#placementFx = ZoneTargeting.buildPlacementFx(region.shapes?.[0]);
             return {status: ZoneTargeting.PLACEMENT.OK, count: covered.length};
         } finally {
             await region.delete().catch(e => console.warn("fq-card-engine | Suppression de la région de ciblage impossible", e));

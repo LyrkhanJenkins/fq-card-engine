@@ -14,7 +14,10 @@ Feat :
 - Pris en compte de rwak et mwark dans les jets de dégâts sans attaque
 - Affichage d'une surbrillance aux réactifs lorsque ceux-ci sont utilisables
 - Ciblage de zone (cercle/cône/rectangle/ligne) : pose d'une zone sur le canvas depuis la dialog-play, les tokens couverts deviennent les cibles
-  
+- Ciblage de tous les adjacents
+- Ciblage de tous les alliés, ciblage de tous les ennemis
+- Gestion des fx pour les zones
+
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur
 
