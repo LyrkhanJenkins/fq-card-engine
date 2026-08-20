@@ -468,7 +468,8 @@ listesCards["Fencing-Master Lvl3"] = listesCards["Fencing-Master Lvl2"].concat([
     "FQCARDTITLE.Riposte",
     "FQCARDTITLE.DoubleStrike",
     "FQCARDTITLE.KnifeSharpening",
-    "FQCARDTITLE.MarksmanShot"
+    "FQCARDTITLE.MarksmanShot",
+    "FQCARDTITLE.HiddenSheath"
 ]);
 
 listesCards["Fencing-Master Lvl4"] = listesCards["Fencing-Master Lvl3"].concat([
@@ -476,7 +477,8 @@ listesCards["Fencing-Master Lvl4"] = listesCards["Fencing-Master Lvl3"].concat([
     "FQCARDTITLE.SwiftShot",
     "FQCARDTITLE.CrushingBlow",
     "FQCARDTITLE.SharpeningOil",
-    "FQCARDTITLE.TurnBoosterV"
+    "FQCARDTITLE.TurnBoosterV",
+    "FQCARDTITLE.KnifeVolley"
 ]);
 
 listesCards["Fencing-Master Lvl5"] = listesCards["Fencing-Master Lvl4"].concat([
@@ -484,7 +486,8 @@ listesCards["Fencing-Master Lvl5"] = listesCards["Fencing-Master Lvl4"].concat([
     "FQCARDTITLE.BladeDance",
     "FQCARDTITLE.HeavyShot",
     "FQCARDTITLE.CrushingBlow",
-    "FQCARDTITLE.KnifeSharpening"
+    "FQCARDTITLE.KnifeSharpening",
+    "FQCARDTITLE.PoisonCoating"
 ]);
 
 // 📂 Répertoires
