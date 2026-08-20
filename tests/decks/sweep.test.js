@@ -87,6 +87,19 @@ function referencesCombatApi(choice) {
 }
 
 /**
+ * Indique si un choix utilise un ciblage « Combat » (`CombatEnemies`/
+ * `CombatAllies`) : son garde-fou de jeu exige un combat actif dont les
+ * combattants correspondent aux tokens de la scène (avec disposition).
+ *
+ * @param {object} choice - Le choix (contenu) de la carte.
+ *
+ * @returns {boolean} True si le choix cible les combattants du combat actif.
+ */
+function usesCombatTargeting(choice) {
+    return choice.targetType === "CombatEnemies" || choice.targetType === "CombatAllies";
+}
+
+/**
  * Dérive les surcharges `opts.world` (transmises à `mountWorld` par
  * `playChoice`) nécessaires pour qu'un « game cohérent » puisse évaluer
  * N'IMPORTE QUEL choix des decks pattern sans exception non maîtrisée, en ne
@@ -123,8 +136,10 @@ function sweepWorldOverridesFor(choice) {
                 grid: {distance: 1, size: worldFixture.gridSize},
                 tokens: [
                     {
+                        id: "sweep-my-token",
                         actorId: worldFixture.character.id,
                         name: worldFixture.character.name,
+                        disposition: 1,
                         x: worldFixture.myToken.x,
                         y: worldFixture.myToken.y,
                         width: worldFixture.myToken.width,
@@ -132,8 +147,10 @@ function sweepWorldOverridesFor(choice) {
                         object: {id: "sweep-my-object-token", name: worldFixture.character.name}
                     },
                     {
+                        id: worldFixture.target.tokenId,
                         actorId: worldFixture.target.actorId,
                         name: worldFixture.target.name,
+                        disposition: -1,
                         x: worldFixture.target.x,
                         y: worldFixture.target.y,
                         width: worldFixture.target.width,
@@ -146,11 +163,16 @@ function sweepWorldOverridesFor(choice) {
         packs: {get: vi.fn(() => ({getDocuments: vi.fn(async () => (choice.minions ?? []).map(minionDocFor))}))}
     };
 
-    if (referencesCombatApi(choice)) {
+    if (referencesCombatApi(choice) || usesCombatTargeting(choice)) {
         world.combat = {
             round: 1,
             combatant: {actor: {id: worldFixture.character.id}},
-            combatants: [],
+            // Les deux tokens de la scène sont combattants : un choix « Combat »
+            // trouve ainsi son ennemi (le token cible, disposition opposée) ou
+            // son allié (le token du lanceur lui-même).
+            combatants: usesCombatTargeting(choice)
+                ? [{tokenId: "sweep-my-token"}, {tokenId: worldFixture.target.tokenId}]
+                : [],
             flags: {fq: {logs: []}}
         };
     }

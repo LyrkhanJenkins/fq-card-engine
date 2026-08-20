@@ -287,7 +287,8 @@ export default class CardEffect {
         return Boolean(cardContent?.minReach || cardContent?.maxReach ||
             cardContent?.targetType === CardFqSystem.TARGET_TYPE_SKELETON ||
             cardContent?.targetType === CardFqSystem.TARGET_TYPE_ZONE ||
-            cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT);
+            cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT ||
+            CardFqSystem.isCombatTargetType(cardContent?.targetType));
     }
 
     /**

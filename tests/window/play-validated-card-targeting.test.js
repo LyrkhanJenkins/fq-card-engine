@@ -230,6 +230,57 @@ describe("Garde-fou de ciblage — Adjacent (acquisition automatique autour du l
     });
 });
 
+describe("Garde-fou de ciblage — Combat (acquisition automatique des combattants)", () => {
+    // Tokens de scène dans la géométrie de world-fixture : lanceur (5,5) allié
+    // (disposition 1), ennemi à distance 1 (0,5) — tous deux combattants.
+    const combatScene = () => ({
+        canvas: {scene: {tokens: [
+            {id: "caster", actorId: "world-character", x: 5, y: 5, width: 1, height: 1, disposition: 1, object: {setTarget: vi.fn()}},
+            {id: "enemy", actorId: "enemy-actor", x: 0, y: 5, width: 1, height: 1, disposition: -1, object: {setTarget: vi.fn()}},
+        ]}},
+        combat: {combatants: [{tokenId: "caster"}, {tokenId: "enemy"}]},
+    });
+
+    test("CombatEnemies + combattant ennemi à portée → délègue", () => {
+        mountForGuard(combatScene());
+        const choice = makeChoice({targetType: "CombatEnemies", minReach: "1", maxReach: "3"});
+        expect(() => play(choice)).not.toThrow();
+        expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
+    });
+
+    test("CombatAllies + minReach 0 → le lanceur lui-même suffit, délègue", () => {
+        mountForGuard(combatScene());
+        const choice = makeChoice({targetType: "CombatAllies", minReach: "0", maxReach: "3"});
+        expect(() => play(choice)).not.toThrow();
+        expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
+    });
+
+    test("Combat + aucun combat actif → FormError NoCombat, non délégué", () => {
+        const world = combatScene();
+        delete world.combat;
+        mountForGuard(world); // combat null par défaut dans mountWorld
+        const choice = makeChoice({targetType: "CombatEnemies", minReach: "1", maxReach: "3"});
+        expect(() => play(choice)).toThrow("FQCARDENGINE.DialogPlayFormErrorNoCombat");
+        expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+    });
+
+    test("Combat + aucun combattant du bon camp à portée → FormError NoCombatTarget, non délégué", () => {
+        mountForGuard(combatScene()); // l'ennemi est à distance 1, hors de l'anneau [2,3]
+        const choice = makeChoice({targetType: "CombatEnemies", minReach: "2", maxReach: "3"});
+        expect(() => play(choice)).toThrow("FQCARDENGINE.DialogPlayFormErrorNoCombatTarget");
+        expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+    });
+
+    test("Combat + pas de token du lanceur → FormError NoTokenOnScene, non délégué", () => {
+        const world = combatScene();
+        world.canvas.scene.tokens = world.canvas.scene.tokens.filter(t => t.id !== "caster");
+        mountForGuard(world);
+        const choice = makeChoice({targetType: "CombatEnemies", maxReach: "3"});
+        expect(() => play(choice)).toThrow("FQCARDENGINE.DialogPlayFormErrorNoTokenOnScene");
+        expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+    });
+});
+
 describe("Garde-fou de ciblage — cas nominal", () => {
     test("cible unique à portée (Default) délègue à callBackplayCard", () => {
         mountForGuard(); // 1 cible à distance 1

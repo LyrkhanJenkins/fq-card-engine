@@ -11,13 +11,30 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static TARGET_TYPE_DEFAULT = "Default";
     static TARGET_TYPE_ZONE = "Zone";
     static TARGET_TYPE_ADJACENT = "Adjacent";
+    static TARGET_TYPE_COMBAT_ENEMIES = "CombatEnemies";
+    static TARGET_TYPE_COMBAT_ALLIES = "CombatAllies";
     static NEUTRAL_CLASS = "neutral";
     static TARGET_TYPE_CHOICE = {
-        "Default": this.TARGET_TYPE_DEFAULT,
-        "Skeletons": this.TARGET_TYPE_SKELETON,
-        "Zone": this.TARGET_TYPE_ZONE,
-        "Adjacent": this.TARGET_TYPE_ADJACENT
+        "Default": "FQCARDENGINE.TargetTypeDefault",
+        "Skeletons": "FQCARDENGINE.TargetTypeSkeletons",
+        "Zone": "FQCARDENGINE.TargetTypeZone",
+        "Adjacent": "FQCARDENGINE.TargetTypeAdjacent",
+        "CombatEnemies": "FQCARDENGINE.TargetTypeCombatEnemies",
+        "CombatAllies": "FQCARDENGINE.TargetTypeCombatAllies"
     };
+
+    /**
+     * Indique si un type de ciblage est un ciblage « combat » (ennemis ou alliés
+     * du combat actif) — les deux variantes partagent la même acquisition
+     * automatique et les mêmes gardes.
+     *
+     * @param {string} targetType - Le type de ciblage FQ.
+     *
+     * @returns {boolean} True pour `CombatEnemies` et `CombatAllies`.
+     */
+    static isCombatTargetType(targetType) {
+        return targetType === this.TARGET_TYPE_COMBAT_ENEMIES || targetType === this.TARGET_TYPE_COMBAT_ALLIES;
+    }
     // Formes de zone posables sur le canvas (types de RegionShapeData Foundry v14).
     static ZONE_SHAPE_CHOICE = {
         circle: "FQCARDENGINE.ZoneShapeCircle",

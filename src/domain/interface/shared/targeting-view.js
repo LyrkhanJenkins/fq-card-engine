@@ -22,7 +22,8 @@ export default class TargetingView {
     static build(cardContent, fd = {}) {
         const isZone = cardContent?.targetType === CardFqSystem.TARGET_TYPE_ZONE;
         const isAdjacent = cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT;
-        const manual = isZone || isAdjacent
+        const isCombat = CardFqSystem.isCombatTargetType(cardContent?.targetType);
+        const manual = isZone || isAdjacent || isCombat
             || (cardContent?.targetType !== CardFqSystem.TARGET_TYPE_SKELETON
                 && !!(cardContent?.minReach || cardContent?.maxReach));
 
@@ -49,7 +50,7 @@ export default class TargetingView {
         // d'une zone posée à portée restent des cibles valides.
         const casterToken = TargetingPredicates.findCasterToken(Constants.actorCurrent);
         const outOfReachByToken = new Map();
-        if (casterToken && !isZone && !isAdjacent) {
+        if (casterToken && !isZone && !isAdjacent && !isCombat) {
             for (const entry of TargetingPredicates.findOutOfReachTargets(casterToken, tokens, minReach, maxReach)) {
                 outOfReachByToken.set(entry.target, entry.dist);
             }
@@ -79,6 +80,15 @@ export default class TargetingView {
         // rien à cibler à la main, nbTargets ne limite pas.
         if (isAdjacent) {
             return {manual, isAdjacent, required: tokens.length, count: tokens.length, tooMuchTargets: false, minReach, maxReach, targets};
+        }
+
+        // « Combat » : combattants acquis automatiquement (la portée filtre à
+        // l'acquisition) — rien à cibler à la main, nbTargets ne limite pas.
+        if (isCombat) {
+            const combatLabelKey = cardContent?.targetType === CardFqSystem.TARGET_TYPE_COMBAT_ALLIES
+                ? "FQCARDENGINE.TargetingPanelCombatAlliesLabel"
+                : "FQCARDENGINE.TargetingPanelCombatEnemiesLabel";
+            return {manual, isCombat, combatLabelKey, required: tokens.length, count: tokens.length, tooMuchTargets: false, minReach, maxReach, targets};
         }
 
         return {manual, required, count: tokens.length, tooMuchTargets: tokens.length > required, minReach, maxReach, targets};

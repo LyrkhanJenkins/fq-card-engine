@@ -954,7 +954,7 @@
               "messages": [],
               "minions": [],
               "hasBeenPlayed": false,
-              "targetType": "Default"
+              "targetType": "CombatEnemies"
             }
           ],
           "level": 2,

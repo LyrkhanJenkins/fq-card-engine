@@ -14,6 +14,8 @@
         {{/if}}
     {{else if isAdjacent}}
         <div class="fq-play-targets-counter">{{localize "FQCARDENGINE.TargetingPanelAdjacentLabel"}} {{count}}</div>
+    {{else if isCombat}}
+        <div class="fq-play-targets-counter">{{localize combatLabelKey}} {{count}}</div>
     {{else}}
         <button type="button" class="fq-play-target-btn">🎯 {{localize "FQCARDENGINE.TargetingPanelTargetButton"}}</button>
 

@@ -3,6 +3,7 @@ import DisplayCard from "../shared/display-card.js";
 import TargetingView from "../shared/targeting-view.js";
 import ZoneTargeting from "../shared/zone-targeting.js";
 import AdjacentTargeting from "../shared/adjacent-targeting.js";
+import CombatTargeting from "../shared/combat-targeting.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
 import Minion from "../../engine/shared/minion.js";
 import PlayCard from "../../engine/play-card.js";
@@ -298,19 +299,24 @@ export default {
                 }
             };
 
-            // Ciblage « Adjacent » : acquisition automatique des tokens autour du
-            // lanceur — au rendu initial, au changement de choix et à la saisie de
-            // X/Y (certaines portées dépendent de XXX). Le garde-fou ré-acquiert
+            // Ciblages automatiques « Adjacent » et « Combat » : acquisition sans
+            // interaction — au rendu initial, au changement de choix et à la saisie
+            // de X/Y (certaines portées dépendent de XXX). Le garde-fou ré-acquiert
             // au moment du jeu, l'aperçu du panneau n'est donc jamais bloquant.
-            const acquireIfAdjacent = () => {
+            const acquireIfAutomatic = () => {
                 const {fd, cardContent} = this.getCardContent(root, cardContents, discards);
-                if (cardContent?.targetType !== CardFqSystem.TARGET_TYPE_ADJACENT) return;
-                AdjacentTargeting.acquireTargets(cardContent, fd);
+                if (cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT) {
+                    AdjacentTargeting.acquireTargets(cardContent, fd);
+                } else if (CardFqSystem.isCombatTargetType(cardContent?.targetType)) {
+                    CombatTargeting.acquireTargets(cardContent, fd);
+                } else {
+                    return;
+                }
                 renderPanel();
             };
-            acquireIfAdjacent();
+            acquireIfAutomatic();
             root.querySelectorAll("input[name=\"XXX\"], input[name=\"YYY\"]")
-                .forEach(el => el.addEventListener("change", () => acquireIfAdjacent()));
+                .forEach(el => el.addEventListener("change", () => acquireIfAutomatic()));
 
             // Boutons « 🎯 Cibler » / « ⭕ Poser la zone » : listeners DÉLÉGUÉS sur
             // `root` (survivent au re-rendu du panneau).
@@ -330,7 +336,7 @@ export default {
             // toute autre forme/taille de zone, voire ne pas être une zone).
             root.querySelector("select[name=\"nameContent\"]")?.addEventListener("change", () => {
                 ZoneTargeting.clearPlacement();
-                acquireIfAdjacent();
+                acquireIfAutomatic();
                 renderPanel();
             });
             // Nettoyage obligatoire à la fermeture de CETTE dialog : retirer le hook
@@ -444,6 +450,20 @@ export default {
             }
             if (count === 0) {
                 throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorNoAdjacentTarget"));
+            }
+        } else if (CardFqSystem.isCombatTargetType(cardContent?.targetType)) {
+            // Acquisition automatique au moment du jeu (les combattants ont pu
+            // bouger, mourir ou rejoindre le combat depuis l'aperçu du panneau) :
+            // sans combat actif ni combattant du bon camp à portée, le jeu bloque.
+            const {status, count} = CombatTargeting.acquireCombatants(cardContent.targetType, cardContent.minReach, cardContent.maxReach);
+            if (status === CombatTargeting.ACQUISITION.NO_CASTER_TOKEN) {
+                throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorNoTokenOnScene"));
+            }
+            if (status === CombatTargeting.ACQUISITION.NO_COMBAT) {
+                throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorNoCombat"));
+            }
+            if (count === 0) {
+                throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorNoCombatTarget"));
             }
         } else if (cardContent?.minReach || cardContent?.maxReach) {
             const {verdict} = ResourceHandler.evaluateTargeting(Constants.actorCurrent, cardContent.nbTargets, cardContent.minReach, cardContent.maxReach, cardContent.targetType);

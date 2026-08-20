@@ -127,13 +127,15 @@ describe("CardFqSystem.getChoiceSchema", () => {
         expect(CardFqSystem.getChoiceSchema().targetType.initial()).toBe("Default");
     });
 
-    it("verrouille les choix de targetType sur TARGET_TYPE_CHOICE", () => {
+    it("verrouille les choix de targetType sur TARGET_TYPE_CHOICE (valeurs = clés i18n des libellés)", () => {
         expect(CardFqSystem.getChoiceSchema().targetType.choices).toEqual(CardFqSystem.TARGET_TYPE_CHOICE);
         expect(CardFqSystem.getChoiceSchema().targetType.choices).toEqual({
-            "Default": "Default",
-            "Skeletons": "Skeletons",
-            "Zone": "Zone",
-            "Adjacent": "Adjacent",
+            "Default": "FQCARDENGINE.TargetTypeDefault",
+            "Skeletons": "FQCARDENGINE.TargetTypeSkeletons",
+            "Zone": "FQCARDENGINE.TargetTypeZone",
+            "Adjacent": "FQCARDENGINE.TargetTypeAdjacent",
+            "CombatEnemies": "FQCARDENGINE.TargetTypeCombatEnemies",
+            "CombatAllies": "FQCARDENGINE.TargetTypeCombatAllies",
         });
     });
 

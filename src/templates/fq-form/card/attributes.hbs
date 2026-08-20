@@ -68,6 +68,7 @@
                 <div class="form-fields">
                     <label>{{localize "FQCARDENGINE.TargetType"}}</label>
                     {{formInput ../fields.fq.fields.choices.element.fields.targetType value=choice.targetType
+                                localize=true
                                 name=(concat "system.fq.choices." i ".targetType") rootId=../rootId}}
 
                     <label>{{localize "FQCARDENGINE.MinReach"}}</label>

@@ -171,6 +171,31 @@ describe("TargetingView.build — ciblage Adjacent", () => {
     });
 });
 
+describe("TargetingView.build — ciblage Combat (ennemis/alliés du combat)", () => {
+    test("CombatEnemies → manual/isCombat vrais, label ennemis, nbTargets ne limite pas, pas de hors-portée", () => {
+        mountDeterministic({user: {targets: [
+            {name: "A", document: {x: 0, y: 5, width: 1, height: 1}},
+            {name: "B", document: {x: 0, y: 5, width: 1, height: 1}},
+        ]}});
+        const view = TargetingView.build(makeChoice({targetType: "CombatEnemies", minReach: "2", maxReach: "3", nbTargets: "1"}));
+        expect(view.manual).toBe(true);
+        expect(view.isCombat).toBe(true);
+        expect(view.combatLabelKey).toBe("FQCARDENGINE.TargetingPanelCombatEnemiesLabel");
+        expect(view.count).toBe(2);
+        expect(view.required).toBe(2);
+        expect(view.tooMuchTargets).toBe(false);
+        expect(view.targets.every(t => !t.outOfReach)).toBe(true);
+    });
+
+    test("CombatAllies → label alliés, manual vrai même sans portée déclarée", () => {
+        mountDeterministic();
+        const view = TargetingView.build(makeChoice({targetType: "CombatAllies", minReach: "", maxReach: ""}));
+        expect(view.manual).toBe(true);
+        expect(view.isCombat).toBe(true);
+        expect(view.combatLabelKey).toBe("FQCARDENGINE.TargetingPanelCombatAlliesLabel");
+    });
+});
+
 describe("TargetingView.build — non-mutation du cardContent", () => {
     test("le choix passé n'est pas modifié", () => {
         mountDeterministic();
