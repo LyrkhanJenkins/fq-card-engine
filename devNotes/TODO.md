@@ -42,6 +42,7 @@ Refonte des Cartes :
     - Faire un tour des features et en implémenter pour les classes en manquant (comme la cardSelection par exemple avec des cartes générés) (Si ça respecte la caractérisation)
     - Equilibrage du nombre de cartes par deck et par niveau jusqu'au 10
     - Equilibrage et tests
+    - Dernier tour pour les abilities 
 
 - Le tri dans les decks sont cassés
 ##### Backlog par classe
