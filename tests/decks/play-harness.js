@@ -48,6 +48,9 @@ export const REQUIRED_MOCKS = [
     "../../src/hook/integration/socketlib.hook.js"
 ];
 
+// Utilisateur du monde monté (`game.userId` et `game.user.id`).
+const HARNESS_USER_ID = "harness-user";
+
 let enginePromise = null;
 let worldFixtureCache = null;
 let lastDiscardPile = null;
@@ -68,6 +71,18 @@ export async function ensureEngineLoaded() {
         enginePromise = import("../../src/init-engine.js");
     }
     await enginePromise;
+}
+
+/**
+ * Renvoie la pile de défausse du dernier monde monté. Utile aux tests qui doivent
+ * la fournir AVANT `playChoice` (ex. espion sur `TradingCards.getFirstDeck` pour
+ * le jeu direct d'une carte générée) : l'accesseur est résolu à l'appel, donc
+ * après le montage du monde.
+ *
+ * @returns {object|null} La pile de défausse mockée, ou null avant tout montage.
+ */
+export function getDiscardPile() {
+    return lastDiscardPile;
 }
 
 /**
@@ -222,8 +237,9 @@ export function mountWorld(overrides = {}) {
         },
         settings: {get: vi.fn(() => undefined), register: vi.fn()},
         packs: {get: vi.fn(() => ({getDocuments: vi.fn(async () => [])}))},
-        userId: "harness-user",
+        userId: HARNESS_USER_ID,
         user: {
+            id: HARNESS_USER_ID,
             character,
             isGM: false,
             color: "#ff0000",
@@ -277,8 +293,15 @@ export function wrapCard(rawCard, {sourceSize = 40, drawnCards = [], fromDeck = 
         flip: vi.fn().mockResolvedValue(null),
         parent: {
             draw: vi.fn().mockResolvedValue([]),
-            createEmbeddedDocuments: vi.fn().mockResolvedValue([]),
-            updateEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            // Comme Foundry, la création renvoie les documents créés : c'est eux
+            // que joue l'option « jouer aussitôt » des cartes générées.
+            createEmbeddedDocuments: vi.fn(async (_embeddedName, data) =>
+                (data ?? []).map((entry, i) => ({...entry, id: `generated-card-${i}`}))),
+            updateEmbeddedDocuments: vi.fn().mockResolvedValue([]),
+            // La main est aussi la pile de départ des cartes générées jouées
+            // aussitôt : leur défausse et leur destruction passent par elle.
+            pass: vi.fn().mockResolvedValue([]),
+            deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
         },
         // Le deck source est consommé comme un vrai `Cards` : `availableCards` est
         // la liste des cartes non encore piochées (ce que lit la pioche), et `id`
@@ -333,7 +356,7 @@ function applyDiceControl(dice) {
  *
  * @returns {Promise<object>} Le résultat riche : `{threw, error, hpCalls, logCalls,
  *          effectsCreated, effectsRemoved, activeEffectCalls, chatMessages, draws,
- *          generatedCards, passCalls, retrieveCalls, handDestroyCalls, deckDestroyCalls,
+ *          generatedCards, handPassCalls, passCalls, retrieveCalls, handDestroyCalls, deckDestroyCalls,
  *          discardPile, updates, card, cardContent}`.
  */
 export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
@@ -414,6 +437,8 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
             .filter(call => call[0] === "drawCard")
             .map(call => [call[2], call[3]]),
         generatedCards: card.parent.createEmbeddedDocuments.mock.calls,
+        // Défausse depuis la main : le jeu immédiat d'une carte générée y passe.
+        handPassCalls: card.parent.pass.mock.calls,
         passCalls: currentCards.pass.mock.calls,
         retrieveCalls: to.pass.mock.calls,
         destroyCalls: to.deleteEmbeddedDocuments.mock.calls,

@@ -13,8 +13,9 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
-const {playChoice} = await import("./play-harness.js");
+const {ensureEngineLoaded, getDiscardPile, playChoice} = await import("./play-harness.js");
 const {default: CardSelection} = await import("../../src/domain/interface/window/card-selection.js");
+const {default: TradingCards, PILE_TYPE} = await import("../../src/domain/trading/trading-cards.js");
 
 /**
  * Copie « générée » d'une carte de compendium via l'encart 🃏 (`chooseCardsList`
@@ -241,5 +242,65 @@ describe("chooseCardsList — passifs générés marqués joués au round couran
         expect(result.threw).toBe(false);
         const [, [data]] = result.generatedCards[0];
         expect(data.system.fq.choices[0].passivePlayedRound).toBe("");
+    });
+});
+
+/**
+ * Jeu immédiat (`chooseCardsPlayNow`) : la copie générée ne s'arrête pas en main,
+ * elle est jouée dans la foulée SANS dialogue — ses effets s'appliquent, elle
+ * part à la défausse du joueur, puis la carte génératrice finit son propre tour.
+ * La copie de compendium porte `1d4` de dégâts : le jet piloté rend le jeu de la
+ * copie observable dans les applications de PV.
+ */
+describe("chooseCardsPlayNow — la carte générée est jouée aussitôt, sans dialogue", () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+        // Le jeu direct vise la défausse du joueur : le harnais n'en publie pas
+        // dans `game.cards`, on la fournit à la résolution (après montage du monde).
+        vi.spyOn(TradingCards, "getFirstDeck").mockImplementation(
+            (_userId, typeFq) => (typeFq === PILE_TYPE ? getDiscardPile() : undefined));
+    });
+
+    /**
+     * Construit une carte génératrice à référence unique, avec ou sans jeu immédiat.
+     *
+     * @param {boolean} playNow - True pour demander le jeu immédiat de la copie.
+     *
+     * @returns {object} La carte brute consommable par `playChoice`.
+     */
+    function makePlayNowCard(playNow) {
+        const card = makeGeneratorCard("decks-pattern-fq8.Elementalist Base deck.FQCARDTITLE.GeneratedCopy");
+        card.system.fq.choices[0].chooseCardsPlayNow = playNow;
+        return card;
+    }
+
+    test("les effets de la copie s'appliquent et elle quitte la main pour la défausse", async () => {
+        // Le moteur doit être chargé pour espionner la façade avant le premier jeu.
+        await ensureEngineLoaded();
+        const dialog = vi.spyOn(window.FqCardEngineModule, "playDialog");
+
+        // 4 sur le d4 de la copie : la carte génératrice, elle, ne lance rien.
+        const result = await playChoice(makePlayNowCard(true), 0,
+            {world: {packs: makePacks()}, dice: [{faces: 4, value: 4}]});
+
+        expect(result.threw).toBe(false);
+        expect(dialog).not.toHaveBeenCalled();
+        // Les dégâts de la copie sont bien appliqués à la cible.
+        expect(result.hpCalls).toHaveLength(1);
+        expect(result.hpCalls[0].value).toBe(4);
+        // La copie passe de la main à la défausse du joueur.
+        expect(result.handPassCalls).toHaveLength(1);
+        const [to, ids] = result.handPassCalls[0];
+        expect(to).toBe(result.discardPile);
+        expect(ids).toEqual(["generated-card-0"]);
+    });
+
+    test("sans l'option, la copie reste en main : aucun effet joué", async () => {
+        const result = await playChoice(makePlayNowCard(false), 0,
+            {world: {packs: makePacks()}, dice: [{faces: 4, value: 4}]});
+
+        expect(result.generatedCards).toHaveLength(1);
+        expect(result.handPassCalls).toHaveLength(0);
+        expect(result.hpCalls).toHaveLength(0);
     });
 });

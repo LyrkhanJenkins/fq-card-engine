@@ -454,6 +454,82 @@ describe("playCardSelection — encart « proposer des cartes » d'une carte jou
         expect(result).toBeNull();
         expect(veil).not.toHaveBeenCalled();
     });
+
+    test("jeu immédiat : les cartes retenues sont jouées dans la foulée", async () => {
+        const hand = makeStack("hand-1");
+        const playNow = vi.spyOn(CardSelection, "playGeneratedCards").mockResolvedValue();
+
+        const created = await CardSelection.playCardSelection(
+            makeContent({chooseCardsList: LIST, chooseCardsCount: "5", chooseCardsPlayNow: true}), hand);
+
+        expect(playNow).toHaveBeenCalledWith(created, hand);
+    });
+
+    test("sans jeu immédiat : les cartes retenues restent en main", async () => {
+        const hand = makeStack("hand-1");
+        const playNow = vi.spyOn(CardSelection, "playGeneratedCards").mockResolvedValue();
+
+        await CardSelection.playCardSelection(
+            makeContent({chooseCardsList: LIST, chooseCardsCount: "5"}), hand);
+
+        expect(playNow).not.toHaveBeenCalled();
+    });
+
+    test("aucune carte retenue : pas de jeu immédiat malgré l'option", async () => {
+        const hand = makeStack("hand-1");
+        vi.spyOn(TradingCards, "getFirstDeck").mockReturnValue(
+            {cards: [{name: "FQCARDTITLE.CardA"}, {name: "FQCARDTITLE.CardB"}]});
+        const playNow = vi.spyOn(CardSelection, "playGeneratedCards").mockResolvedValue();
+
+        const result = await CardSelection.playCardSelection(
+            makeContent({chooseCardsList: LIST, chooseCardsCount: "1",
+                chooseCardsExcludeDeck: true, chooseCardsPlayNow: true}), hand);
+
+        expect(result).toBeNull();
+        expect(playNow).not.toHaveBeenCalled();
+    });
+});
+
+describe("playGeneratedCards — jeu immédiat des cartes générées", () => {
+    /** Carte générée minimale : un choix unique, sans saisie. */
+    function makeGenerated(id, choice) {
+        return {id, system: {fq: {choices: [{name: `FQCARDCHOICE.${id}`, ...choice}]}}};
+    }
+
+    test("chaque carte part dans le jeu normal, l'une après l'autre", async () => {
+        const hand = makeStack("hand-1");
+        const pile = makeStack("pile-1");
+        vi.spyOn(TradingCards, "getFirstDeck").mockReturnValue(pile);
+        let endFirst;
+        const playValidatedCard = vi.fn()
+            .mockImplementationOnce(() => new Promise(resolve => {
+                endFirst = resolve;
+            }))
+            .mockResolvedValue(null);
+        globalThis.FqCardEngineModule.playValidatedCard = playValidatedCard;
+        const cardA = makeGenerated("generated-a", {damage: "1d4"});
+        const cardB = makeGenerated("generated-b", {heal: "1d6"});
+
+        const done = CardSelection.playGeneratedCards([cardA, cardB], hand);
+        await Promise.resolve();
+
+        expect(playValidatedCard).toHaveBeenCalledTimes(1);
+        const [to, fd, cardContent, ctx] = playValidatedCard.mock.calls[0];
+        expect(to).toBe(pile);
+        // Formulaire d'un dialogue validé sans aucune saisie.
+        expect(fd).toEqual({to: "pile-1", nameContent: "FQCARDCHOICE.generated-a"});
+        expect(cardContent.damage).toBe("1d4");
+        // Le choix joué est une COPIE : le jeu recalcule le contenu sur place.
+        expect(cardContent).not.toBe(cardA.system.fq.choices[0]);
+        expect(ctx).toMatchObject({hasVariables: false, currentCards: hand, card: cardA});
+        expect(ctx.initCardContents).toBe(cardA.system.fq.choices);
+
+        endFirst(null);
+        await done;
+
+        expect(playValidatedCard).toHaveBeenCalledTimes(2);
+        expect(playValidatedCard.mock.calls[1][3].card).toBe(cardB);
+    });
 });
 
 describe("chooseCards — application de la sélection", () => {

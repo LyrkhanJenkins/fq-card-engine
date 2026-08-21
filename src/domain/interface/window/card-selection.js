@@ -2,6 +2,7 @@ import Constants from "../../constants.js";
 import CardGenerated from "../../engine/shared/card-generated.js";
 import TradingCards, {DECK_TYPE, PILE_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
 import DisplayCard from "../shared/display-card.js";
+import ObjectUtils from "../../../core/utils/object.utils.js";
 import {createWarning} from "../../../core/utils/chat.utils.js";
 
 /** Les destinations acceptées par {@link CardSelection.chooseCards}. */
@@ -503,6 +504,10 @@ export default class CardSelection {
      * toujours un vivier unique ; une source de deck peut en déclarer plusieurs
      * (`;`), chacune proposant alors son propre lot de cartes.
      *
+     * Si le choix demande le jeu immédiat (`chooseCardsPlayNow`), les cartes
+     * retenues ne s'arrêtent pas en main : elles sont jouées dans la foulée, sans
+     * dialogue (cf. {@link CardSelection.playGeneratedCards}).
+     *
      * @param {object} cardContent - Le contenu (choix) de la carte jouée.
      * @param {Cards}  hand        - La main du joueur ayant joué la carte.
      *
@@ -535,6 +540,39 @@ export default class CardSelection {
                 created.push(...cards);
             }
         }
-        return created.length ? created : null;
+        if (!created.length) {
+            return null;
+        }
+        if (cardContent.chooseCardsPlayNow) {
+            await CardSelection.playGeneratedCards(created, hand);
+        }
+        return created;
+    }
+
+    /**
+     * Joue les cartes générées dans la foulée de leur création, l'une après
+     * l'autre : chacune part dans `playValidatedCard`, le chemin de jeu de
+     * toutes les cartes, comme si le dialogue avait été validé sans rien saisir
+     * (unique choix, défausse du joueur). Une carte destinée au jeu immédiat est
+     * donc supposée jouable telle quelle — choix unique, sans variable X/Y ni
+     * sbire. Le jeu est appelé via la façade globale plutôt qu'importé :
+     * l'import fermerait le cycle `card-selection` → `card-actions` →
+     * `card-effect` → `card-selection`.
+     *
+     * @param {Card[]} cards - Les cartes générées à jouer.
+     * @param {Cards}  hand  - La main portant ces cartes.
+     *
+     * @returns {Promise<void>}
+     */
+    static async playGeneratedCards(cards, hand) {
+        const to = TradingCards.getFirstDeck(game.user.id, PILE_TYPE);
+        for (const card of cards) {
+            const initCardContents = card.system.fq.choices;
+            const cardContents = ObjectUtils.deepCopy(initCardContents);
+            const firstChoice = cardContents[0];
+            await globalThis.FqCardEngineModule.playValidatedCard(
+                to, {to: to.id, nameContent: firstChoice.name}, firstChoice,
+                {firstChoice, cardContents, hasVariables: false, initCardContents, currentCards: hand, card});
+        }
     }
 }

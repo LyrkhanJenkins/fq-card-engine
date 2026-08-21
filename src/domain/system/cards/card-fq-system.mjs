@@ -191,6 +191,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             chooseCardsProposed: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsProposed"}),
             chooseCardsCount: new StringField({required: true, label: "FQCARDENGINE.ChooseCardsCount"}),
             chooseCardsExcludeDeck: new BooleanField({required: false, label: "FQCARDENGINE.ChooseCardsExcludeDeck"}),
+            chooseCardsPlayNow: new BooleanField({required: false, label: "FQCARDENGINE.ChooseCardsPlayNow"}),
 
             // Formule supplémentaire pour apppliquer des effets
             applyEffectsFormulas: new ArrayField(this.getApplyEffectsFormulaSchema(), {label: "FQCARDENGINE.ApplyEffectsFormulas"}),
