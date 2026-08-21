@@ -42,15 +42,58 @@ Refonte des Cartes :
     - Faire un tour des features et en implémenter pour les classes en manquant (comme la cardSelection par exemple avec des cartes générés) (Si ça respecte la caractérisation)
     - Equilibrage du nombre de cartes par deck et par niveau jusqu'au 10
     - Equilibrage et tests
-    
 
-TODO Spécifique :
-- Guerrier Runique :
-  - Plus de taunt, des sorts qui génère des cartes de dégâts spécifique
-  - Vérifier que les runes doivent augmenter les score de runes
-  - Equilibrage niveau par niveau sans jouer
-  - Jouer une partie
-  - Rééquilibrage
+- Le tri dans les decks sont cassés
+##### Backlog par classe
+**Élémentaliste** : RAS notable.
+
+**Gardien** :
+- *Affutage* : le texte dit « +2X critique », le change applique `2*@cha` (X ne module que le coût).
+- *Montée de mana* : le texte mentionne « −1 action par @wis », coût fixe −1 dans les données.
+- *Renfort d'Armure* : durée illimitée dans les données vs « @con tours » dans le texte ; soigne @con/tour vs « 1 PV/tour ».
+- *Tourbillon De Lame* : message de chargement réutilise le seuil 12 du Chargement Des Lames alors que son cap est 8.
+- *Frappe provocatrice* : le texte propose « 4 PV si pas de mana », la 2ᵉ option coûte mana **et** PV.
+
+**Mage Blanc** :
+- *Exorcisme* : « coûte @cha en moins » non implémenté (coût fixe −7).
+- *Bouclier magique* : le texte (prévention de blessures, cumul ×2) ne correspond pas à l'implémentation (tempmax + soin).
+- *Frappe Solaire* : « réduit à 0 » vs override à 10 (mod 0) — cohérent en pratique, texte ambigu.
+
+**Trapper** :
+- *Tireur d'Élite* : texte « @int+7 » vs effet `10+@str` ; effet `self: false` sur un buff personnel.
+- *Ajustage de Tir* : texte « +@int », valeur appliquée +1.
+- *Pluie de Flèches* : annoncée incritiquable, `bonusCrit` vide.
+- `enraged-bear.json` : résidu `special.sacrificedSkeleton` copié des squelettes.
+
+**Moine** :
+- *Uppercut* : « piochez une carte » non implémenté (`draw` vide).
+- *Bouclier Zélé* : texte « 2+@cha zèle » vs `zeal: 1`.
+- *Déplacement Éclair* : texte « 7+@dex » vs données `6+@dex`.
+- Plusieurs effets auto-ciblés marqués `self: false` (Dissimulation, Bouclier Zélé).
+
+**Sorcière** :
+- SAG massivement utilisé par le deck mais absent de `primaryAbility` (INT+CHA).
+- Invulnérabilité par override `hp.value` (Canalisation) : fragile si l'effet expire mal.
+
+**Illusionniste** :
+- *Frappe Illusoire* : formule `(@wpnM + @str XXX)` — opérateur manquant, plantage probable au parsing.
+- *Passage éthéré* : `@wis` annoncé absent de la formule ; « incritiquable » non implémenté ; le swap de position est une action MJ manuelle.
+- *Shuriken* : message « 2 tours » vs durée 3 tours.
+- *Peste Noire* : `executeEval` sans garde sur acteur nul / doublons.
+
+**Maître d'Armes** :
+- Item `+1 mana (13) - M` résiduel dans les pools d'une classe sans mana (même anomalie chez le Gardien).
+- Chevauchement pools A (niv. 2‑7) et B (niv. 1‑7) : 4‑5 choix de stats par niveau aux niv. 2‑7. À confirmer.
+- Une seule arme `simpleR` existe (Arc de trappeur), aucune arme martiale : `@wpnR` sous-servi.
+
+**Guerrier Runique** :
+- *Rune de givre* : décrite « Réactive » mais `reactive: false` ; gain de zèle non documenté.
+- *Rune de glacier* : seule rune offensive à scaler sur @con — intentionnel ?
+- Critique absent des pools : choix de design ou oubli ?
+- Trous de niveaux dans les decks de runes (jaune sans niv. 5, bleu sans niv. 4, rouge sans niv. 3) : Gravure parfaite (niv. 4‑6) ne peut proposer que 2 runes bleues distinctes sur 3 demandées.
+- 20 cartes sur 21 en image placeholder `in_progress.png`.
+- Plus de taunt, des sorts qui génère des cartes de dégâts spécifique
+- Vérifier que les runes doivent augmenter les score de runes
 - MINOR--> RELEASE
 
 #### 2.1.1

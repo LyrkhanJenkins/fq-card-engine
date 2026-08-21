@@ -172,6 +172,8 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Boucle de jeu** : enchaîner les petites frappes → zèle → convertir en cartes/actions/burst ; l'ordre de jeu dans le tour est la compétence clé.
 
+Le seul a faire plus de dégâts avec toutes les cartes en main
+Le seul a pouvoir augmenter son zèle max
 ---
 
 # Sorcière
@@ -241,17 +243,21 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 # Guerrier Runique
 
-> « Entre en combat avec très peu de cartes ; ses runes en génèrent de nouvelles au fil de l'affrontement, rendant son deck de plus en plus puissant. »
-
 **Identité dnd5e** : d10, FOR + INT — frontliner qui frappe au corps à corps (`@wpnM`) mais scale sur l'Intelligence (dégâts des runes rouges).
 
-**Stats FQ** : action + main + pioche (le mieux doté en pioche du jeu) + mana. Il **a** du zèle (contrairement à l'idée initiale) ; c'est le **critique** qui lui est totalement fermé.
+**Stats FQ** : action + main + pioche (le mieux doté en pioche du jeu).
 
-**Rôle** : moteur / late-game carry. Départ délibérément faible (deck de base de 6 cartes dont 4 sans dégâts), montée en puissance par deck-building en cours de combat.
+**Rôle** : moteur / late-game carry. Départ délibérément faible (deck de base de 7 cartes), montée en puissance par deck-building en cours de combat.
 
 **Mécaniques signature** :
-- **Gravure = deck-building en combat** : les 4 cartes de gravure (`chooseCardsFrom` + `chooseCardsLevels`) proposent N runes d'une couleur au choix, le joueur en retient 1‑2 qui rejoignent la **défausse** (donc le deck au remélange). Montée : Mineure (2→1, niv. 1‑2) → Affinée (3→1, niv. 1‑4) → Double (4→2) → Parfaite (3→1, niv. 4‑6 uniquement).
-- **Identité des trois couleurs** : **Rouge** = dégâts (scaling `@int`, du 1d6+@int à `3d8+2*@int`, une zone) ; **Bleu** = survie (esquive temporaire, soins `@con`, l'unique réactive Rune d'égide) ; **Jaune** = économie (PA immédiats, `action.max` temporaire, pioche).
+- **Gravure = deck-building en combat** : les cartes de gravure proposent N runes d'une couleur au choix
+- **Identité des trois couleurs** : 
+  - **Rouge** = dégâts (scaling `@int`, du 1d6+@int à `3d8+2*@int`, une zone) ; 
+    - Ulti : Immortel avec 1 pv, dégâts augmentés par les runes rouges. coutant 8 de zèle OU fait gagner 1 de zèle?
+  - **Jaune** = survie (esquive temporaire, soins `@con`, l'unique réactive Rune d'égide) ;
+    - Ulti : coutant 25 d'action OU pioche une rune jaune aléatoire?
+  - **Bleu** = économie (PA immédiats, `action.max` temporaire, pioche).
+    - Ulti : Regagne x points de vie par tour, x étant le nombre de rune bleu joué. coutant 6 de mana...? OU
 - **Cascade inter-couleurs** : Rune de sang (rouge) → génère une bleue ; Rune de rempart (bleue) → une jaune ; Rune de débordement (jaune) → une rouge. Le deck s'auto-alimente sans repayer de gravure.
 - **Écho runique** : récupère n'importe quelle carte de la défausse **en main** (`retrieveFromDiscard: "*"`) — le raccourci qui transforme une rune fraîchement gravée en effet immédiat.
 - **Zèle de burst** : généré par Frappe runique / Rune de lame / Rune de givre / Gravure parfaite, dépensé par Tempête (−1) et Annihilation (−2).
@@ -262,62 +268,5 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - Aucune pioche hormis des pioche en défaussant sur 3 runes jaunes
 - Pas de sort de dégâts à distance
 - Pas de sort multi-cible
-- Pas de réactif ?
+- Pas de réactif
 ---
-
-## Annexe — écarts données ↔ textes relevés pendant l'analyse
-
-À traiter comme un backlog de vérification, pas comme des corrections déjà décidées.
-
-**Élémentaliste** : RAS notable.
-
-**Gardien** :
-- *Affutage* : le texte dit « +2X critique », le change applique `2*@cha` (X ne module que le coût).
-- *Montée de mana* : le texte mentionne « −1 action par @wis », coût fixe −1 dans les données.
-- *Renfort d'Armure* : durée illimitée dans les données vs « @con tours » dans le texte ; soigne @con/tour vs « 1 PV/tour ».
-- *Tourbillon De Lame* : message de chargement réutilise le seuil 12 du Chargement Des Lames alors que son cap est 8.
-- *Frappe provocatrice* : le texte propose « 4 PV si pas de mana », la 2ᵉ option coûte mana **et** PV.
-
-**Mage Blanc** :
-- *Exorcisme* : « coûte @cha en moins » non implémenté (coût fixe −7).
-- *Bouclier magique* : le texte (prévention de blessures, cumul ×2) ne correspond pas à l'implémentation (tempmax + soin).
-- *Frappe Solaire* : « réduit à 0 » vs override à 10 (mod 0) — cohérent en pratique, texte ambigu.
-
-**Trapper** :
-- *Tireur d'Élite* : texte « @int+7 » vs effet `10+@str` ; effet `self: false` sur un buff personnel.
-- *Ajustage de Tir* : texte « +@int », valeur appliquée +1.
-- *Pluie de Flèches* : annoncée incritiquable, `bonusCrit` vide.
-- `enraged-bear.json` : résidu `special.sacrificedSkeleton` copié des squelettes.
-
-**Moine** :
-- *Uppercut* : « piochez une carte » non implémenté (`draw` vide).
-- *Bouclier Zélé* : texte « 2+@cha zèle » vs `zeal: 1`.
-- *Déplacement Éclair* : texte « 7+@dex » vs données `6+@dex`.
-- Plusieurs effets auto-ciblés marqués `self: false` (Dissimulation, Bouclier Zélé).
-
-**Sorcière** :
-- SAG massivement utilisé par le deck mais absent de `primaryAbility` (INT+CHA).
-- Invulnérabilité par override `hp.value` (Canalisation) : fragile si l'effet expire mal.
-
-**Illusionniste** :
-- *Frappe Illusoire* : formule `(@wpnM + @str XXX)` — opérateur manquant, plantage probable au parsing.
-- *Passage éthéré* : `@wis` annoncé absent de la formule ; « incritiquable » non implémenté ; le swap de position est une action MJ manuelle.
-- *Shuriken* : message « 2 tours » vs durée 3 tours.
-- *Peste Noire* : `executeEval` sans garde sur acteur nul / doublons.
-
-**Maître d'Armes** :
-- Item `+1 mana (13) - M` résiduel dans les pools d'une classe sans mana (même anomalie chez le Gardien).
-- Chevauchement pools A (niv. 2‑7) et B (niv. 1‑7) : 4‑5 choix de stats par niveau aux niv. 2‑7. À confirmer.
-- Une seule arme `simpleR` existe (Arc de trappeur), aucune arme martiale : `@wpnR` sous-servi.
-
-**Guerrier Runique** :
-- *Rune de givre* : décrite « Réactive » mais `reactive: false` ; gain de zèle non documenté.
-- *Rune de glacier* : seule rune offensive à scaler sur @con — intentionnel ?
-- Critique absent des pools : choix de design ou oubli ?
-- Trous de niveaux dans les decks de runes (jaune sans niv. 5, bleu sans niv. 4, rouge sans niv. 3) : Gravure parfaite (niv. 4‑6) ne peut proposer que 2 runes bleues distinctes sur 3 demandées.
-- 20 cartes sur 21 en image placeholder `in_progress.png`.
-
-**Transverse** :
-- Valeurs sentinelles `-9999` / `999999` (incritiquable, inesquivable, portée/cibles infinies, rejouable infini) à remplacer un jour par de vrais drapeaux.
-- Formules `1d(expr)` qui plantent si le modificateur vaut 0.
-- L'historique (`historique/1.x_stats_cartes_classes.md`) contient 3 classes jamais implémentées (Gladiateur, Maître du temps, Mecha) et ignore le Maître d'Armes ; son modèle de runes (4 couleurs dont le vert) diffère de l'implémentation (3 couleurs, pas de stat rune).
