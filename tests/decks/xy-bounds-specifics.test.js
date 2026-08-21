@@ -590,12 +590,18 @@ async function filterByReach(entries) {
     return out;
 }
 
+// Le champ `replayable` porte trois mécaniques exclusives : un nombre de charges,
+// « passif », ou « ephemere ». Un lot par mécanique.
 const chargedReplayableCandidates = await filterByReach(rawEntries.filter(entry => isFilled(entry.choice.replayable)
     && entry.choice.replayable !== "passif"
+    && entry.choice.replayable !== "ephemere"
     && isSimpleReplayableChoice(entry.choice)));
 
 const passifCandidates = await filterByReach(rawEntries.filter(entry => entry.choice.replayable === "passif"
     && isSimpleReplayableChoice(entry.choice)));
+
+const ephemeralCandidates = rawEntries.filter(entry => entry.choice.replayable === "ephemere"
+    && isSimpleReplayableChoice(entry.choice));
 
 describe("Mécanique : replayable à charges — réécriture de la carte quand il reste plus d'une charge", () => {
     beforeEach(() => {
@@ -634,6 +640,30 @@ describe("Mécanique : replayable \"passif\" — réécrit la carte et ne la dé
     );
 });
 
+describe("Mécanique : replayable \"ephemere\" — détruite au jeu, jamais défaussée", () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
+    test.each(ephemeralCandidates)(
+        "$deckFile :: $cardName :: choix $choiceIndex — aucun passage à la défausse, carte supprimée de la main",
+        async ({card, choiceIndex}) => {
+            const result = await playChoice(card, choiceIndex, {world: abundantWorld()});
+            // Le monde fixture n'a ni combat ni cible à toute portée : une carte dont
+            // le ciblage n'aboutit pas est rejetée par une FormError, en amont de la
+            // mécanique. C'est le cas des trois cartes éphémères actuelles du dépôt
+            // (couteaux à portée 2-4, Frappe de Lumière sur alliés en combat) — la
+            // mécanique elle-même est caractérisée par tests/decks/ephemeral-card.test.js.
+            if (result.threw) {
+                expect(result.error).toBeInstanceOf(FormError);
+                return;
+            }
+            expect(result.passCalls).toHaveLength(0);
+            expect(result.handDestroyCalls).toEqual([["Card", [result.card.id]]]);
+        }
+    );
+});
+
 // ═══════════════════════════════════════════════════════════════════════
 // Défaut de données : une référence @-caractéristique non résolue retombe
 // sur 0 (jamais d'exception, toujours une valeur finie). Le dépôt ne
@@ -667,5 +697,6 @@ describe("Garde-fou d'auto-couverture", () => {
         expect(customEvalCandidates.length).toBeGreaterThanOrEqual(1);
         expect(chargedReplayableCandidates.length).toBeGreaterThanOrEqual(1);
         expect(passifCandidates.length).toBeGreaterThanOrEqual(1);
+        expect(ephemeralCandidates.length).toBeGreaterThanOrEqual(1);
     });
 });

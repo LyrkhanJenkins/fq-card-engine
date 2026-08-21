@@ -196,7 +196,8 @@ export default {
             },
         };
 
-        if (!card.system?.fq?.isBase) {
+        // Cartes de base et cartes éphémères : aucune défausse volontaire possible.
+        if (!card.system?.fq?.isBase && !CardFqSystem.hasEphemeralChoice(card)) {
             buttons = {
                 ...buttons, discard: {
                     icon: `<i class="fas fa-trash"></i>`,

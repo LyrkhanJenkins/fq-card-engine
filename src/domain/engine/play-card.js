@@ -1,19 +1,21 @@
 import Constants from "../constants.js";
 import CardEffect from "./shared/card-effect.js";
 import RollService from "./roll/roll-service.js";
+import CardFqSystem from "../system/cards/card-fq-system.mjs";
 import {createWarning} from "../../core/utils/chat.utils.js";
 
 /**
  * Orchestration du jeu et de la défausse d'une carte : gestion des cartes
- * rejouables (passives/à charges), application des effets, envoi des messages de
- * chat et transfert de la carte vers la pile de défausse.
+ * rejouables (passives/à charges), des cartes éphémères (détruites au jeu),
+ * application des effets, envoi des messages de chat et transfert de la carte
+ * vers la pile de défausse.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
 export default class PlayCard {
     /**
      * Défausse une carte vers la pile cible. Bloque la défausse d'une carte déjà
-     * jouée, incrémente le compteur de défausses du personnage puis transfère la
-     * carte (face cachée si demandé).
+     * jouée ou éphémère, incrémente le compteur de défausses du personnage puis
+     * transfère la carte (face cachée si demandé).
      *
      * @param {Cards}  to           - La pile de défausse cible.
      * @param {object} fd           - Les données du formulaire du dialogue (ex. `down` pour face cachée).
@@ -26,6 +28,14 @@ export default class PlayCard {
     static async discardCard(to, fd, cardContent, card, currentCards) {
         if (cardContent?.hasBeenPlayed) {
             createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgCantDropPlayedCard"), {actor: Constants.actorCurrent});
+            return;
+        }
+
+        // Une carte éphémère n'a qu'une sortie de la main : être jouée, ce qui la
+        // détruit. La défausser la rendrait récupérable/rappelable — interdit, au
+        // même titre qu'une carte de base (dont le bouton est déjà masqué).
+        if (CardFqSystem.hasEphemeralChoice(card)) {
+            createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgCantDropEphemeralCard"), {actor: Constants.actorCurrent});
             return;
         }
 
@@ -50,7 +60,9 @@ export default class PlayCard {
      * variables X/Y, données dérivées) par `playValidatedCard` ; cette méthode vérifie
      * que la carte peut être utilisée, gère la logique de rejouabilité (passive ou à
      * charges), transfère la carte vers la défausse le cas échéant, puis applique
-     * les effets de la carte.
+     * les effets de la carte. Un choix éphémère ne passe jamais par la défausse :
+     * la carte est détruite après application des effets
+     * (cf. {@link PlayCard.destroyPlayedCard}).
      *
      * @param {Cards}    to               - La pile de défausse cible.
      * @param {object}   fd               - Les données du formulaire du dialogue (XXX, YYY, down…).
@@ -67,9 +79,19 @@ export default class PlayCard {
             return;
         }
 
+        // Éphémère et rejouable partagent le champ `replayable` et s'excluent : le
+        // traitement « charges/passif » ci-dessous est donc court-circuité.
+        const ephemeral = CardFqSystem.isEphemeralChoice(cardContent);
+        if (ephemeral) {
+            ChatMessage.create({
+                speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
+                content: `<div style='color: darkred;font-style: italic;font-weight: 700'>${game.i18n.localize("FQCARDENGINE.InfoMsgEphemeralSpell")}</div>`
+            });
+        }
+
         // Check pour savoir si la carte est rejouable et si on va la passer à la défausse.
-        if (!!cardContent && !!cardContent?.replayable) {
-            if (cardContent?.replayable === "passif") {
+        if (!ephemeral && !!cardContent && !!cardContent?.replayable) {
+            if (cardContent?.replayable === CardFqSystem.REPLAYABLE_PASSIVE) {
                 CardEffect.rewriteCardContent(card, initCardContents, {
                     hasBeenPlayed: true, passivePlayedRound: game.combat?.round.toString()
                 });
@@ -105,9 +127,13 @@ export default class PlayCard {
 
         let result = null;
 
-        if (cardContent &&
-            (!cardContent.replayable || (cardContent.replayable !== "passif" && cardContent.replayable <= 1)) &&
-            (!game.user?.isGM || CONFIG.FqCardEngine.options.GMUsingCards)
+        // Le MJ conserve ses cartes en main (sauf option contraire) : ni défausse,
+        // ni destruction.
+        const leavesHand = !game.user?.isGM || CONFIG.FqCardEngine.options.GMUsingCards;
+
+        if (cardContent && !ephemeral &&
+            (!cardContent.replayable || (cardContent.replayable !== CardFqSystem.REPLAYABLE_PASSIVE && cardContent.replayable <= 1)) &&
+            leavesHand
         ) {
             result = currentCards.pass(to, [card.id], {
                 action: "pass",
@@ -120,7 +146,40 @@ export default class PlayCard {
 
         await CardEffect.applyCardEffect(cardContent, card, fd, to);
 
+        // Destruction APRÈS les effets : ceux-ci lisent encore la carte et sa main
+        // (récupération de défausse, réécriture du contenu, génération de cartes).
+        if (ephemeral && leavesHand) {
+            await PlayCard.destroyPlayedCard(card, currentCards);
+        }
+
         return result;
+    }
+
+    /**
+     * Détruit définitivement une carte éphémère qui vient d'être jouée : la copie
+     * présente dans la main est supprimée, ainsi que l'exemplaire d'origine resté
+     * dans le deck — Foundry conserve celui-ci, marqué « pioché », et le rappel de
+     * la défausse comme le remélange le remettraient sinon en circulation. Les
+     * deux documents portent le même id (la pioche copie la carte à l'identique).
+     * Une carte générée en cours de partie n'a pas d'exemplaire de deck : seule la
+     * copie de la main est supprimée.
+     *
+     * @param {Card}  card         - La carte jouée à détruire.
+     * @param {Cards} currentCards - La main courante contenant la carte.
+     *
+     * @returns {Promise<void>}
+     */
+    static async destroyPlayedCard(card, currentCards) {
+        const cardId = card.id ?? card._id;
+        const deck = card.origin;
+        try {
+            await currentCards?.deleteEmbeddedDocuments("Card", [cardId]);
+            if (deck?.cards?.get?.(cardId)) {
+                await deck.deleteEmbeddedDocuments("Card", [cardId]);
+            }
+        } catch (err) {
+            ui.notifications.error(err.message);
+        }
     }
 
     /**

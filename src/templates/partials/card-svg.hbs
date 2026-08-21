@@ -279,19 +279,21 @@
     {{/if}}
 
     {{#if replayable }}
-        <!-- Passif -->
-        {{#if replayableMod}}
-            <circle cx="355" cy="360" r="42" fill="url(#greenMana)" stroke="#1f1f1f" stroke-width="6"></circle>
-            <text x="353" y="372" text-anchor="middle" font-size="{{ replayableSize }}" font-weight="700" font-family="Lucida Calligraphy"
-                  fill="green">
-                {{ replayable }}
-            </text>
-        {{else}}
-            <circle cx="355" cy="360" r="42" fill="url(#greenMana)" stroke="#1f1f1f" stroke-width="6"></circle>
-            <text x="353" y="372" text-anchor="middle" font-size="{{ replayableSize }}" font-weight="700" font-family="Lucida Calligraphy"
-                  fill="black">
-                {{ replayable }}
-            </text>
-        {{/if}}
+        <!-- Rejouabilité : « P » passif, « E » éphémère, ou le nombre de charges -->
+        <g data-tooltip="{{ replayableTooltip }}">
+            {{#if replayableMod}}
+                <circle cx="355" cy="360" r="42" fill="url(#greenMana)" stroke="#1f1f1f" stroke-width="6"></circle>
+                <text x="353" y="372" text-anchor="middle" font-size="{{ replayableSize }}" font-weight="700" font-family="Lucida Calligraphy"
+                      fill="green">
+                    {{ replayable }}
+                </text>
+            {{else}}
+                <circle cx="355" cy="360" r="42" fill="url(#greenMana)" stroke="#1f1f1f" stroke-width="6"></circle>
+                <text x="353" y="372" text-anchor="middle" font-size="{{ replayableSize }}" font-weight="700" font-family="Lucida Calligraphy"
+                      fill="black">
+                    {{ replayable }}
+                </text>
+            {{/if}}
+        </g>
     {{/if}}
 </svg>

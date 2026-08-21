@@ -91,6 +91,20 @@ describe("PlayCard", () => {
             expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
 
+        test("should warn and not discard an ephemeral card", async () => {
+            const cardContent = {hasBeenPlayed: false, replayable: "ephemere"};
+            const card = {system: {fq: {choices: [{replayable: "ephemere"}]}}};
+            const currentCards = {pass: vi.fn().mockResolvedValue()};
+
+            await PlayCard.discardCard({}, {}, cardContent, card, currentCards);
+
+            expect(ChatMessage.create).toHaveBeenCalledWith({
+                speaker: expect.any(Object),
+                content: expect.stringContaining("FQCARDENGINE.WarningMsgCantDropEphemeralCard"),
+            });
+            expect(currentCards.pass).not.toHaveBeenCalled();
+        });
+
         test("should call ui.notifications.error when currentCards.pass rejects", async () => {
             const cardContent = {hasBeenPlayed: false};
             const card = makeCard();
@@ -179,6 +193,83 @@ describe("PlayCard", () => {
             await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
 
             expect(ui.notifications.error).toHaveBeenCalledWith("pass failed");
+        });
+    });
+
+    describe("destroyPlayedCard (carte éphémère)", () => {
+        /**
+         * Carte éphémère en main dont l'exemplaire d'origine est resté dans le deck
+         * sous le même id (ce que fait Foundry à la pioche).
+         *
+         * @returns {object} La carte espionnable.
+         */
+        function makeEphemeralCard() {
+            return {
+                id: "ephemeral", _id: "ephemeral", back: {img: "mockImg"}, flags: {},
+                system: {fq: {choices: [{replayable: "ephemere"}]}},
+                origin: {
+                    name: "mockDeck",
+                    cards: new Map([["ephemeral", {id: "ephemeral"}]]),
+                    deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+                }
+            };
+        }
+
+        test("ne défausse pas la carte et la supprime de la main ET du deck", async () => {
+            const card = makeEphemeralCard();
+            const currentCards = {
+                pass: vi.fn().mockResolvedValue(),
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+
+            await PlayCard.callBackplayCard({}, {}, {replayable: "ephemere"}, false, [], currentCards, card);
+
+            expect(currentCards.pass).not.toHaveBeenCalled();
+            expect(currentCards.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["ephemeral"]);
+            expect(card.origin.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["ephemeral"]);
+        });
+
+        test("carte générée (aucun exemplaire dans le deck) : seule la main est nettoyée", async () => {
+            const card = makeEphemeralCard();
+            card.origin.cards = new Map();
+            const currentCards = {
+                pass: vi.fn().mockResolvedValue(),
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+
+            await PlayCard.callBackplayCard({}, {}, {replayable: "ephemere"}, false, [], currentCards, card);
+
+            expect(currentCards.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["ephemeral"]);
+            expect(card.origin.deleteEmbeddedDocuments).not.toHaveBeenCalled();
+        });
+
+        test("le MJ qui conserve ses cartes (GMUsingCards désactivé) ne détruit rien", async () => {
+            const card = makeEphemeralCard();
+            const currentCards = {
+                pass: vi.fn().mockResolvedValue(),
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            };
+            game.user.isGM = true;
+            try {
+                await PlayCard.callBackplayCard({}, {}, {replayable: "ephemere"}, false, [], currentCards, card);
+            } finally {
+                game.user.isGM = false;
+            }
+
+            expect(currentCards.deleteEmbeddedDocuments).not.toHaveBeenCalled();
+            expect(card.origin.deleteEmbeddedDocuments).not.toHaveBeenCalled();
+        });
+
+        test("remonte une erreur de suppression en notification", async () => {
+            const card = makeEphemeralCard();
+            const currentCards = {
+                pass: vi.fn().mockResolvedValue(),
+                deleteEmbeddedDocuments: vi.fn().mockRejectedValue(new Error("boom"))
+            };
+
+            await PlayCard.callBackplayCard({}, {}, {replayable: "ephemere"}, false, [], currentCards, card);
+
+            expect(ui.notifications.error).toHaveBeenCalledWith("boom");
         });
     });
 

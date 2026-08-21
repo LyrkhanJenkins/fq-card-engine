@@ -246,10 +246,12 @@ export function mountWorld(overrides = {}) {
  * @param {object} [options] - Options d'enrobage.
  * @param {number} [options.sourceSize=40] - Taille simulée du deck source (pioche).
  * @param {string[]} [options.drawnCards=[]] - Cartes déjà piochées côté source.
+ * @param {boolean} [options.fromDeck=true] - False pour une carte générée en cours
+ *        de partie : aucun deck d'origine, donc aucun exemplaire à détruire côté deck.
  *
  * @returns {object} La carte enrobée (espions `update`/`flip`/`parent.draw`).
  */
-export function wrapCard(rawCard, {sourceSize = 40, drawnCards = []} = {}) {
+export function wrapCard(rawCard, {sourceSize = 40, drawnCards = [], fromDeck = true} = {}) {
     return {
         _id: rawCard._id,
         id: rawCard._id,
@@ -257,7 +259,18 @@ export function wrapCard(rawCard, {sourceSize = 40, drawnCards = []} = {}) {
         face: rawCard.face ?? 0,
         faces: rawCard.faces,
         back: rawCard.back ?? {img: ""},
-        origin: {name: "Harnais"},
+        // Le deck d'origine garde l'exemplaire pioché, sous le MÊME id que la copie
+        // de main (la pioche copie la carte à l'identique) : c'est lui que détruit
+        // la destruction d'une carte éphémère.
+        origin: fromDeck
+            ? {
+                id: "harness-deck",
+                name: "Harnais",
+                type: "deck",
+                cards: new Map([[rawCard._id, {id: rawCard._id}]]),
+                deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+            }
+            : null,
         flags: rawCard.flags ?? {},
         system: rawCard.system,
         update: vi.fn().mockResolvedValue(null),
@@ -320,7 +333,8 @@ function applyDiceControl(dice) {
  *
  * @returns {Promise<object>} Le résultat riche : `{threw, error, hpCalls, logCalls,
  *          effectsCreated, effectsRemoved, activeEffectCalls, chatMessages, draws,
- *          generatedCards, passCalls, retrieveCalls, discardPile, updates, card, cardContent}`.
+ *          generatedCards, passCalls, retrieveCalls, handDestroyCalls, deckDestroyCalls,
+ *          discardPile, updates, card, cardContent}`.
  */
 export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
     await ensureEngineLoaded();
@@ -334,7 +348,10 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
     const firstChoice = cardContents[0];
     const cardContent = cardContents[choiceIndex];
 
-    const currentCards = {pass: vi.fn().mockResolvedValue(null)};
+    const currentCards = {
+        pass: vi.fn().mockResolvedValue(null),
+        deleteEmbeddedDocuments: vi.fn().mockResolvedValue([])
+    };
     const to = lastDiscardPile;
 
     const firstChoiceString = JSON.stringify(firstChoice);
@@ -400,6 +417,9 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
         passCalls: currentCards.pass.mock.calls,
         retrieveCalls: to.pass.mock.calls,
         destroyCalls: to.deleteEmbeddedDocuments.mock.calls,
+        // Destruction d'une carte éphémère : copie de la main, puis exemplaire du deck.
+        handDestroyCalls: currentCards.deleteEmbeddedDocuments.mock.calls,
+        deckDestroyCalls: card.origin?.deleteEmbeddedDocuments?.mock?.calls ?? [],
         handCardUpdates: card.parent.updateEmbeddedDocuments.mock.calls,
         discardPile: to,
         updates: globalThis.game.user.character.update.mock.calls,

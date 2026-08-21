@@ -258,6 +258,11 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Boucle de jeu** : graver tôt (investir tours et mana) → gonfler main et PA → enchaîner les runes jaunes (carburant) pour rejouer les rouges dans le même tour ; les bleues font tenir la phase de montée.
 
+**Faiblesses** :
+- Aucune pioche hormis des pioche en défaussant sur 3 runes jaunes
+- Pas de sort de dégâts à distance
+- Pas de sort multi-cible
+- Pas de réactif ?
 ---
 
 ## Annexe — écarts données ↔ textes relevés pendant l'analyse

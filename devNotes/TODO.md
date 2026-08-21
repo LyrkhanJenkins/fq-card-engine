@@ -5,7 +5,6 @@
 
 ### Versions prévues
 #### 2.1.0
-
 - A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Relire et faire un point sur la caracterisation avant tout
@@ -46,7 +45,8 @@ Refonte des Cartes :
     
 
 TODO Spécifique :
-- Guerrier Runique : 
+- Guerrier Runique :
+  - Plus de taunt, des sorts qui génère des cartes de dégâts spécifique
   - Vérifier que les runes doivent augmenter les score de runes
   - Equilibrage niveau par niveau sans jouer
   - Jouer une partie

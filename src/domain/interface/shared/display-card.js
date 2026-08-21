@@ -1,5 +1,6 @@
 import Constants from "../../constants.js";
 import RollService from "../../engine/roll/roll-service.js";
+import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import FormulaDisplay, {ABILITY_EMOJIS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, FORMULA_FIELDS} from "./formula-display.js";
 
 /**
@@ -368,9 +369,35 @@ export default class DisplayCard {
     }
 
     /**
+     * Clé de localisation du tooltip expliquant la bulle de rejouabilité, choisie
+     * selon ce que la bulle affiche : « P » passif, « E » éphémère, « ∞ » rejouable
+     * sans limite, ou un nombre de charges restantes.
+     *
+     * @param {string|number|null} replayable - La valeur affichée dans la bulle.
+     *
+     * @returns {string|null} La clé du tooltip, ou null si la carte n'a pas de bulle.
+     */
+    static getReplayableTooltipKey(replayable) {
+        if (replayable === null || replayable === undefined || replayable === "") {
+            return null;
+        }
+        if (replayable === "P") {
+            return "FQCARDENGINE.TooltipReplayablePassive";
+        }
+        if (replayable === "E") {
+            return "FQCARDENGINE.TooltipReplayableEphemeral";
+        }
+        if (replayable === "∞") {
+            return "FQCARDENGINE.TooltipReplayableInfinite";
+        }
+        return "FQCARDENGINE.TooltipReplayableCharges";
+    }
+
+    /**
      * Construit les données de bulle communes à toutes les vues d'une carte (main,
      * dialogue « Jouer la carte », voile plein écran) : coûts, portées, réactivité,
-     * rejouabilité, limite d'exemplaires, classe, et les indicateurs de modificateur
+     * rejouabilité (« P » passif, « E » éphémère, ou le nombre de charges),
+     * limite d'exemplaires, classe, et les indicateurs de modificateur
      * (`*Mod`) signalant qu'un coût/portée dépend d'une caractéristique (@str, @int…).
      * Le voile plein écran ignore simplement les `*Mod` qu'il n'affiche pas.
      *
@@ -385,7 +412,9 @@ export default class DisplayCard {
         const zeal = DisplayCard.getNumberForBubbleCardSvg(choice.zeal);
         const minReach = DisplayCard.getNumberForBubbleCardSvg(choice.minReach);
         const maxReach = DisplayCard.getNumberForBubbleCardSvg(choice.maxReach);
-        const replayable = choice?.replayable === "passif" ? "P" : !choice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(choice?.replayable);
+        const replayable = choice?.replayable === CardFqSystem.REPLAYABLE_PASSIVE ? "P"
+            : CardFqSystem.isEphemeralChoice(choice) ? "E"
+                : !choice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(choice?.replayable);
         return {
             action,
             mana,
@@ -401,6 +430,7 @@ export default class DisplayCard {
             zealMod: RollService.hasAbilitiesBonus(choice.zeal),
             reachMod: RollService.hasAbilitiesBonus(choice.minReach) || RollService.hasAbilitiesBonus(choice.maxReach),
             replayableMod: RollService.hasAbilitiesBonus(choice.replayable),
+            replayableTooltip: DisplayCard.getReplayableTooltipKey(replayable),
             actionSize: DisplayCard.getBubbleSizeForCardSvg(action),
             manaSize: DisplayCard.getBubbleSizeForCardSvg(mana),
             zealSize: DisplayCard.getBubbleSizeForCardSvg(zeal),

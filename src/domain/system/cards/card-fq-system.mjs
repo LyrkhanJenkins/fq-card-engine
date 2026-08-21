@@ -14,6 +14,11 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static TARGET_TYPE_COMBAT_ENEMIES = "CombatEnemies";
     static TARGET_TYPE_COMBAT_ALLIES = "CombatAllies";
     static NEUTRAL_CLASS = "neutral";
+    // Valeurs non numériques du champ `replayable` d'un choix : « passif » (la
+    // carte reste en main, rejouable une fois par tour de combat) et « ephemere »
+    // (la carte est détruite définitivement au lieu d'être défaussée).
+    static REPLAYABLE_PASSIVE = "passif";
+    static REPLAYABLE_EPHEMERAL = "ephemere";
     static TARGET_TYPE_CHOICE = {
         "Default": "FQCARDENGINE.TargetTypeDefault",
         "Skeletons": "FQCARDENGINE.TargetTypeSkeletons",
@@ -34,6 +39,33 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
      */
     static isCombatTargetType(targetType) {
         return targetType === this.TARGET_TYPE_COMBAT_ENEMIES || targetType === this.TARGET_TYPE_COMBAT_ALLIES;
+    }
+
+    /**
+     * Indique si un choix est éphémère : jouer ce choix détruit définitivement la
+     * carte (copie de la main ET exemplaire du deck) au lieu de l'envoyer à la
+     * défausse. Éphémère et rejouable s'excluent : le champ `replayable` porte
+     * l'un ou l'autre.
+     *
+     * @param {object} [choice] - Le choix (contenu) d'une carte.
+     *
+     * @returns {boolean} True si le choix est éphémère.
+     */
+    static isEphemeralChoice(choice) {
+        return choice?.replayable === this.REPLAYABLE_EPHEMERAL;
+    }
+
+    /**
+     * Indique si une carte porte au moins un choix éphémère. Une telle carte ne
+     * peut pas être défaussée volontairement : sa seule sortie de la main est le
+     * jeu, qui la détruit.
+     *
+     * @param {Card} [card] - La carte.
+     *
+     * @returns {boolean} True si l'un des choix de la carte est éphémère.
+     */
+    static hasEphemeralChoice(card) {
+        return (card?.system?.fq?.choices ?? []).some(choice => CardFqSystem.isEphemeralChoice(choice));
     }
     // Formes de zone posables sur le canvas (types de RegionShapeData Foundry v14).
     static ZONE_SHAPE_CHOICE = {
@@ -177,7 +209,8 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                 })
             }), {label: "FQCARDENGINE.Minions"}),
 
-            // La carte est rejouable (« passif » = reste en main, ou nombre de charges)
+            // La carte est rejouable (« passif » = reste en main, ou nombre de charges),
+            // ou « ephemere » = détruite définitivement au jeu, sans passer par la défausse
             replayable: new StringField({required: true, label: "FQCARDENGINE.Replayable"}),
             retrieveFromDiscard: new StringField({required: true, label: "FQCARDENGINE.RetrieveFromDiscard"}),
             destroyFromDiscard: new StringField({required: true, label: "FQCARDENGINE.DestroyFromDiscard"}),

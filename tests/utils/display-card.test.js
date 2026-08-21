@@ -303,3 +303,53 @@ describe("DisplayCard.wrapEmojiTooltips (AFF-04)", () => {
         }
     });
 });
+
+describe("DisplayCard.buildBubbleData — bulle de rejouabilité", () => {
+
+    it("affiche « P » et le tooltip passif pour un choix passif", () => {
+        const data = DisplayCard.buildBubbleData({replayable: "passif"});
+
+        expect(data.replayable).toBe("P");
+        expect(data.replayableTooltip).toBe("FQCARDENGINE.TooltipReplayablePassive");
+    });
+
+    it("affiche « E » et le tooltip éphémère pour un choix éphémère", () => {
+        const data = DisplayCard.buildBubbleData({replayable: "ephemere"});
+
+        expect(data.replayable).toBe("E");
+        expect(data.replayableTooltip).toBe("FQCARDENGINE.TooltipReplayableEphemeral");
+    });
+
+    it("n'affiche aucune bulle ni tooltip quand le choix n'est pas rejouable", () => {
+        const data = DisplayCard.buildBubbleData({replayable: ""});
+
+        expect(data.replayable).toBeNull();
+        expect(data.replayableTooltip).toBeNull();
+    });
+
+    describe("valeurs numériques (Roll requis)", () => {
+        beforeEach(() => {
+            game.user.character.system.abilities = {
+                str: {mod: 0}, dex: {mod: 0}, con: {mod: 0}, int: {mod: 0}, wis: {mod: 0}, cha: {mod: 0}
+            };
+            globalThis.Roll = vi.fn(function (formula) {
+                this.formula = formula;
+                this.evaluateSync = () => ({total: Number(formula)});
+            });
+        });
+
+        it("affiche le nombre de charges et le tooltip correspondant", () => {
+            const data = DisplayCard.buildBubbleData({replayable: "3"});
+
+            expect(data.replayable).toBe(3);
+            expect(data.replayableTooltip).toBe("FQCARDENGINE.TooltipReplayableCharges");
+        });
+
+        it("affiche « ∞ » et le tooltip de rejouabilité sans limite au-delà de 99", () => {
+            const data = DisplayCard.buildBubbleData({replayable: "999999"});
+
+            expect(data.replayable).toBe("∞");
+            expect(data.replayableTooltip).toBe("FQCARDENGINE.TooltipReplayableInfinite");
+        });
+    });
+});
