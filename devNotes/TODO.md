@@ -2,8 +2,23 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-- Traduction de sorts orphelins
+- Arme de mélée naturelle a rajouter au script de dégâts.
+- Point de zèle trop au niveau 1
 - A la place de rune de mort 3, faire une rune coutant 0 qui fait une frappe de manne qui coute 7PA fait les dégâts des armes et qui regagne @str-1 mana
+- LEs éphémère ne se sont pas détruit, elles ont des dos dégueulasse
+- je ne vois pas la main de mon joueur
+- Bug de pioche (Runic-Warrior n'a pas assez de carte à piocher dans son deck)
+- La rune de célérité est ptetre trop forte
+- Bug witch, le cout de nécromancie n'est pas gratuit au tour d'après
+- Trop de pick pour le runic warrior
+- Frappe arcanique cassé?
+- problème avec les dé de vie et la constitution de la sorcière
+- Réactif à tooltipé, Afflux de vie ne devrait pas être réactif
+- rectiligne pour les monde de tests
+- Squelette trop faible?
+- Bug avec le squelette géant
+- Est ce qu'on peut voir systématiquement les points de vie des tokens?
+
 ### Versions prévues
 #### 3.0.0
 - A relire et caractériser :
