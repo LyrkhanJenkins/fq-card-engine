@@ -63,16 +63,17 @@ export default {
                 toolbar.updatePlayerBarCount();
                 let uID = u.getFlag(FqCardEngineModule.moduleName, "UserID-" + toolbar.id);
                 if (uID) {
-                    let cardsID = game.users.get(uID).getFlag(FqCardEngineModule.moduleName, "CardsID-" + toolbar.playerBarCount);
+                    // Le joueur associé peut avoir été supprimé du monde depuis que la
+                    // barre lui a été associée : sa disparition ne doit pas casser la
+                    // synchronisation des autres barres.
+                    let cardsID = game.users.get(uID)?.getFlag(FqCardEngineModule.moduleName, "CardsID-" + toolbar.playerBarCount);
                     let userCards = u.getFlag(FqCardEngineModule.moduleName, "CardsID-" + toolbar.id);
-                    if (userCards !== cardsID) {
-                        if (cardsID) {
-                            u.setFlag(FqCardEngineModule.moduleName, "CardsID-" + toolbar.id, cardsID);
-                            changed = true;
-                        } else {
-                            u.unsetFlag(FqCardEngineModule.moduleName, "CardsID-" + toolbar.id);
-                            changed = true;
-                        }
+                    // Un joueur qui n'a pas configuré sa propre barre ne renseigne aucun
+                    // id : on laisse alors la barre du MJ telle qu'il l'a choisie, au lieu
+                    // de l'effacer — sans quoi sa sélection manuelle ne tiendrait jamais.
+                    if (cardsID && userCards !== cardsID) {
+                        u.setFlag(FqCardEngineModule.moduleName, "CardsID-" + toolbar.id, cardsID);
+                        changed = true;
                     }
                 }
             }

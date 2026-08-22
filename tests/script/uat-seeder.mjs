@@ -65,8 +65,8 @@ export async function seedUatWorld({force = false} = {}) {
         step = "import des alliés";
         const allyActors = await importOpponents(plan.allies, `${FqCardEngineModule.moduleName}.minions-fq8`);
 
-        step = "scène (accès, regions, tokens)";
-        const refs = await setupScene(scene, plan, playerUser, heroActor, enemyActors, allyActors);
+        step = "scène (regions, tokens)";
+        const refs = await setupScene(scene, plan, heroActor, enemyActors, allyActors);
 
         step = "combat";
         await startSeedCombat(scene, plan, refs);
@@ -209,8 +209,8 @@ async function applyHeroPicksAndAttributes(actor, heroPlan) {
 async function assignHeroToPlayer(actor, playerUser) {
     await playerUser.update({character: actor.id});
     await FqCardEngineModule.updateDeckForUser(playerUser.id);
-    await bindGmHandBar(playerUser);
 }
+
 
 /**
  * Résout un acteur source par `uuid`, avec repli sur une recherche par nom
@@ -317,38 +317,21 @@ function buildRegionData(scene, region) {
     };
 }
 
-/**
- * Donne au user joueur le droit d'observer la scène. Sans lui, la scène est
- * absente de sa barre latérale (`ownership.default` vaut `NONE` sur la scène
- * héritée du template) et cliquer dessus reste sans effet.
- *
- * @param {object} scene      - La scène Foundry active.
- * @param {object} playerUser - Le user joueur du monde UAT.
- *
- * @returns {Promise<void>}
- */
-async function grantSceneAccess(scene, playerUser) {
-    const observer = CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER;
-    if ((scene.ownership[playerUser.id] ?? 0) >= observer) return;
-    await scene.update({[`ownership.${playerUser.id}`]: observer});
-}
 
 /**
- * Pose l'accès du joueur à la scène, les regions puis TOUS les tokens (héros,
- * ennemis, alliés) en un seul appel de `createEmbeddedDocuments`.
+ * Pose les regions puis TOUS les tokens (héros, ennemis, alliés) en un seul appel
+ * de `createEmbeddedDocuments`. La scène est déjà partagée en observation par le
+ * template, le joueur n'a donc aucune permission à recevoir ici.
  *
  * @param {object} scene        - La scène Foundry active.
  * @param {object} plan         - Le plan complet.
- * @param {object} playerUser   - Le user joueur du monde UAT.
  * @param {object} heroActor    - L'acteur héros créé.
  * @param {object[]} enemyActors - Les acteurs ennemis créés, dans l'ordre de `plan.enemies`.
  * @param {object[]} allyActors  - Les acteurs alliés créés, dans l'ordre de `plan.allies`.
  *
  * @returns {Promise<{heroToken: object, enemyTokens: object[], allyTokens: object[]}>}
  */
-async function setupScene(scene, plan, playerUser, heroActor, enemyActors, allyActors) {
-    await grantSceneAccess(scene, playerUser);
-
+async function setupScene(scene, plan, heroActor, enemyActors, allyActors) {
     if (plan.regions.length > 0) {
         await scene.createEmbeddedDocuments("Region", plan.regions.map(region => buildRegionData(scene, region)));
     }
@@ -422,24 +405,6 @@ async function startSeedCombat(scene, plan, refs) {
     return combat;
 }
 
-/**
- * (MJ) Associe la première barre du conteneur de main à la main du joueur. Les
- * barres du MJ sont mémorisées dans ses propres flags (`UserID-<n>` /
- * `CardsID-<n>`) : sans ce câblage, le MJ ouvre un conteneur vierge et doit
- * refaire l'association à la main dans chaque monde généré.
- *
- * @param {object} playerUser - Le user joueur du monde UAT.
- *
- * @returns {Promise<void>}
- */
-async function bindGmHandBar(playerUser) {
-    const hand = game.cards.find(cards => cards.type === "hand" && cards.system?.fq?.owner === playerUser.id);
-    if (!hand) return;
-
-    await game.user.setFlag(FqCardEngineModule.moduleName, "UserID-0", playerUser.id);
-    await game.user.setFlag(FqCardEngineModule.moduleName, "CardsID-0", hand.id);
-    FqCardEngineModule.updatePlayerHandsDelayed?.();
-}
 
 /**
  * Décrit une référence de `combat.order` par un nom lisible, pour le Journal.

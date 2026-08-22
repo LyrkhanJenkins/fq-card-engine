@@ -90,13 +90,21 @@ export default class RollService {
      * @returns {string} La chaîne avec les modificateurs substitués.
      */
     static replaceAbilitiesBonus(str) {
+        // Un utilisateur sans personnage assigné — typiquement le MJ qui affiche la
+        // main d'un joueur — n'a aucune caractéristique à substituer. Les jetons
+        // valent alors 0, comme `replaceNamedBonus` le fait déjà pour un bonus nommé
+        // absent. Sans ce repli, la lecture lève un TypeError qui remonte jusqu'au
+        // rendu de la main et l'annule entièrement, sans message.
+        const abilities = Constants.actorAbi;
+        const mod = (ability) => Number(abilities?.[ability]?.mod ?? 0).toString();
+
         return RollService.replaceNamedBonus(str)
-            .replaceAll("@str", Constants.actorAbi.str.mod.toString())
-            .replaceAll("@dex", Constants.actorAbi.dex.mod.toString())
-            .replaceAll("@con", Constants.actorAbi.con.mod.toString())
-            .replaceAll("@int", Constants.actorAbi.int.mod.toString())
-            .replaceAll("@wis", Constants.actorAbi.wis.mod.toString())
-            .replaceAll("@cha", Constants.actorAbi.cha.mod.toString());
+            .replaceAll("@str", mod("str"))
+            .replaceAll("@dex", mod("dex"))
+            .replaceAll("@con", mod("con"))
+            .replaceAll("@int", mod("int"))
+            .replaceAll("@wis", mod("wis"))
+            .replaceAll("@cha", mod("cha"));
     }
 
     /**
