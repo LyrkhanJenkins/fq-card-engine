@@ -2,14 +2,10 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-- Energie lumineuse, description trop complexe
 - Bug d'affichage de soin (carte de base) du mage blanc -> A voir après fix formules
 - No spellbook après montée jusqu'au niveau 4
-- PV n'ont pas changé quand on a fait take average
 - Frappe arcanique cassé?
 - Bug avec le squelette géant
-- Est-ce qu'on peut voir systématiquement les points de vie des tokens?
-  - commence avec un squelette, un mana et un zèle
 
 ### Questionnement
 - Guerrier Runique
@@ -22,7 +18,10 @@
 ### Versions prévues
 #### 3.0.0
 - Reactif jouable a son tour?
+
 - Problème avec les dé de vie et la constitution de la sorcière
+- PV n'ont pas changé quand on a fait take average
+
 - A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Relire et faire un point sur la caracterisation avant tout

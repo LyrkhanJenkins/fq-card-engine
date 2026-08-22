@@ -36,7 +36,11 @@ const FORCED_SETTINGS = [
     {module: MODULE_ID, key: "BypassWeaponAttackRoll", value: true, id: "fqUatSetting0003"},
     // fq-restrain-movement laisse le MJ hors restrictions par défaut ; en UAT on veut
     // au contraire qu'il soit soumis aux mêmes règles de déplacement que le joueur.
-    {module: "fq-restrain-movement", key: "gmNotRestrained", value: false, id: "fqUatSetting0004"}
+    {module: "fq-restrain-movement", key: "gmNotRestrained", value: false, id: "fqUatSetting0004"},
+    // CONST.GRID_DIAGONALS.RECTILINEAR : une diagonale coûte deux cases, la seule règle
+    // pour laquelle les portées des cartes sont conçues (voir README). Réglage de portée
+    // monde côté core : une scène ne peut pas la surcharger.
+    {module: "core", key: "gridDiagonals", value: 3, id: "fqUatSetting0005"}
 ];
 
 // Horodatage figé pour que le template one-shot reste reproductible à l'octet

@@ -71,6 +71,9 @@ export async function seedUatWorld({force = false} = {}) {
         step = "combat";
         await startSeedCombat(scene, plan, refs);
 
+        step = "jauges du héros";
+        await fillHeroGauges(heroActor);
+
         step = "journal récapitulatif";
         const journalEntry = await createRecapJournal(plan, pickNames);
 
@@ -282,6 +285,12 @@ function buildTokenData(scene, actor, placement, {disposition, actorLink}) {
         actorId: actor.id,
         actorLink,
         disposition,
+        // Les jetons de prototype des compendiums arrivent avec des modes d'affichage
+        // hétérogènes (0, 40, 50 selon la source). Dans un monde généré, la barre de vie
+        // doit être lisible sur tous les jetons sans survol (CONST.TOKEN_DISPLAY_MODES.ALWAYS),
+        // et la barre 1 branchée sur les points de vie, sans quoi elle resterait vide.
+        displayBars: 50,
+        bar1: {attribute: "attributes.hp"},
         width: placement.width ?? 1,
         height: placement.height ?? 1,
         x: sceneX + (placement.col * gridSize),
@@ -405,6 +414,30 @@ async function startSeedCombat(scene, plan, refs) {
     return combat;
 }
 
+/**
+ * Remet les jauges FQ du héros à plein, dernier geste du seed.
+ *
+ * Le héros est importé au niveau 1 du pack starter, puis porté au niveau du plan
+ * (classe principale, classes secondaires, picks de stats). Le système recalcule
+ * les MAXIMUMS au fil de ces ajouts mais laisse les valeurs courantes à ce qu'elles
+ * valaient à l'import : le mana démarre donc en retard d'un ou plusieurs points sur
+ * son maximum. Action et zèle sont déjà remis à plat par les hooks de combat du
+ * moteur ; on les reprend ici pour que le plateau de départ ne dépende pas de
+ * l'ordre d'exécution des hooks.
+ *
+ * @param {object} actor - L'acteur héros.
+ *
+ * @returns {Promise<void>}
+ */
+async function fillHeroGauges(actor) {
+    const fq = actor.system.fq ?? {};
+    const update = {};
+    if (fq.action?.max !== undefined) update["system.fq.action.value"] = fq.action.max;
+    if (fq.mana?.max !== undefined) update["system.fq.mana.value"] = fq.mana.max;
+    if (fq.zeal?.init !== undefined) update["system.fq.zeal.value"] = fq.zeal.init;
+
+    if (Object.keys(update).length > 0) await actor.update(update);
+}
 
 /**
  * Décrit une référence de `combat.order` par un nom lisible, pour le Journal.

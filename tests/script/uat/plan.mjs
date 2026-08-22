@@ -21,7 +21,7 @@ import {createRng} from "./rng.mjs";
  * l'appelant — typiquement `generate-world.mjs`).
  */
 
-export const PLAN_VERSION = 2;
+export const PLAN_VERSION = 3;
 
 /**
  * Identifiant constant de l'outil, écrit dans `plan.generator.tool`. C'est le
@@ -376,7 +376,11 @@ export function buildUatPlan({seed, options = {}, catalog, monsterIndex, minions
     const pattern = options.placement ?? rng.pick(PLACEMENT_PATTERNS);
 
     // --- Alliés ---------------------------------------------------------------
-    const alliesCount = options.allies !== undefined ? Number(options.allies) : rng.int(0, 2);
+    // Aucun allié par défaut : le tirage faisait apparaître un sbire — le plus souvent
+    // un squelette, ils sont cinq sur sept dans le pack — dans deux mondes sur trois,
+    // alors qu'un monde généré doit partir d'un plateau propre. Les alliés restent
+    // disponibles à la demande via --allies=N.
+    const alliesCount = options.allies !== undefined ? Number(options.allies) : 0;
     const allies = rng.sample(minions, alliesCount).map(minion => ({
         name: minion.name, uuid: minion.uuid, width: minion.width, height: minion.height
     }));

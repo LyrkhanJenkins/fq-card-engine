@@ -147,12 +147,15 @@ describe("template uat-base", () => {
     it("force les réglages de jeu attendus dans un monde UAT", () => {
         // Un monde UAT doit exercer le moteur dans sa configuration de jeu réelle :
         // droits de cartes limités côté joueur, initiative jetée automatiquement, jet
-        // d'attaque d'arme court-circuité, et MJ soumis aux restrictions de déplacement.
+        // d'attaque d'arme court-circuité, MJ soumis aux restrictions de déplacement,
+        // et diagonales rectilinéaires (CONST.GRID_DIAGONALS.RECTILINEAR = 3), la règle
+        // de grille pour laquelle les portées des cartes sont conçues.
         const expected = {
             "fq-card-engine.PlayerLimitCardsRight": true,
             "fq-card-engine.RollInitiative": true,
             "fq-card-engine.BypassWeaponAttackRoll": true,
-            "fq-restrain-movement.gmNotRestrained": false
+            "fq-restrain-movement.gmNotRestrained": false,
+            "core.gridDiagonals": 3
         };
 
         for (const [key, value] of Object.entries(expected)) {

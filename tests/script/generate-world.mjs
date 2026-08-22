@@ -153,7 +153,7 @@ function buildCli(argv) {
         .option("enemies", {type: "string", describe: "Nombre, ou liste explicite (\"Goblin x3, Ogre\")"})
         .option("difficulty", {type: "string", describe: "easy | normal | hard | deadly"})
         .option("placement", {type: "string", describe: "packed | scattered | line | melee"})
-        .option("allies", {type: "number", describe: "Nombre d'alliés"})
+        .option("allies", {type: "number", describe: "Nombre d'alliés (défaut 0)"})
         .option("regions", {type: "number", describe: "Nombre de regions"})
         .option("name", {type: "string", describe: "Nom du monde (défaut uat-<graine>)"})
         .option("worlds-dir", {type: "string", describe: "Dossier worlds cible (défaut le DataPath)"})
