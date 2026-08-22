@@ -4,7 +4,6 @@
 ### Fix à prioriser
 - Arme de mélée naturelle a rajouter au script de dégâts.
 - Point de zèle trop au niveau 1
-- A la place de rune de mort 3, faire une rune coutant 0 qui fait une frappe de manne qui coute 7PA fait les dégâts des armes et qui regagne @str-1 mana
 - LEs éphémère ne se sont pas détruit, elles ont des dos dégueulasse
 - je ne vois pas la main de mon joueur
 - Bug de pioche (Runic-Warrior n'a pas assez de carte à piocher dans son deck)
