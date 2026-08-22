@@ -205,7 +205,8 @@ describe("integration/dnd5e", () => {
             expect(Damage.displayResult)
                 .toHaveBeenCalledWith(actor, [{targetTokenId: "token-1", value: 5, type: "healFQ"}], null);
             expect(socket.executeAsGM)
-                .toHaveBeenCalledWith("logCardPlayed", expect.any(Array), expect.objectContaining({heal: "1d8"}));
+                .toHaveBeenCalledWith("logCardPlayed", expect.any(Array), expect.objectContaining({heal: "1d8"}),
+                    expect.any(String), expect.any(Array));
         });
 
         it("consomme les ressources FQ au jet pour une activité de dégâts (consommation différée)", async () => {

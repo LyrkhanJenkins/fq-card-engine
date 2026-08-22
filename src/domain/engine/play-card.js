@@ -302,21 +302,29 @@ export default class PlayCard {
      * carte jouée : acteur, cibles, round/tour, résultats et contenu de la carte.
      * N'a aucun effet hors combat.
      *
+     * Cette méthode s'exécute chez le MJ (socket `logCardPlayed`) : l'acteur et
+     * les cibles ne peuvent donc pas être déduits du contexte local — le MJ n'a
+     * pas forcément de personnage assigné et ses cibles ne sont pas celles du
+     * joueur. Ils sont résolus par l'appelant et passés en paramètres.
+     *
      * @param {object[]} initResultatArray - Le tableau des résultats de l'effet joué.
      * @param {object}   cardContent       - Le contenu (choix) de la carte jouée.
+     * @param {string}   actorId           - L'id de l'acteur qui joue la carte.
+     * @param {string[]} targetsId         - Les ids des acteurs ciblés.
      *
      * @returns {void}
      */
-    static logCardPlayed(initResultatArray, cardContent) {
+    static logCardPlayed(initResultatArray, cardContent, actorId, targetsId) {
         if (game.combat) {
-            let FQLogs = game.combat.flags.fq?.logs ? game.combat.flags.fq?.logs : [];
-            let resultArray = [...initResultatArray];
+            // Copie du tableau : muter en place celui des flags rendrait le diff
+            // de `update()` vide, et l'entrée ne serait ni persistée ni diffusée.
+            const FQLogs = [...(game.combat.flags.fq?.logs ?? [])];
             FQLogs.push({
-                "actorId": Constants.actorCurrent.id,
-                "targetsId": Constants.myTargets(cardContent.targetType).map(t => t.document.actorId),
+                "actorId": actorId,
+                "targetsId": targetsId ?? [],
                 "round": game.combat.round,
                 "turn": game.combat.turn,
-                resultArray: {...resultArray},
+                resultArray: {...initResultatArray},
                 "cardContent": {...cardContent}
             });
 

@@ -119,7 +119,8 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         expect(Damage.buildDamageDiceLauncher).toHaveBeenCalled();
         expect(Damage.buildHealDiceLauncher).toHaveBeenCalled();
         expect(Damage.displayResult).toHaveBeenCalled();
-        expect(socket.executeAsGM).toHaveBeenCalledWith("logCardPlayed", expect.any(Array), cardContent);
+        expect(socket.executeAsGM).toHaveBeenCalledWith("logCardPlayed", expect.any(Array), cardContent,
+            expect.any(String), expect.any(Array));
     });
 
     it("applyCardEffect - branche cardContent null : publie InfoMsgNoAddedEffect", async () => {

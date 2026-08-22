@@ -278,13 +278,9 @@ describe("TradingCards", () => {
                 turn: 1,
                 update: updateMock
             };
-            vi.spyOn(Constants, "myTargets").mockReturnValue([
-                {document: {actorId: "target1"}},
-                {document: {actorId: "target2"}}
-            ]);
-
             const cardContent = {targetType: "Default", damage: "1d6"};
-            PlayCard.logCardPlayed([{key: "Dégâts", value: 5}], cardContent);
+            PlayCard.logCardPlayed([{key: "Dégâts", value: 5}], cardContent, "userCharacterId",
+                ["target1", "target2"]);
 
             expect(updateMock).toHaveBeenCalledWith({
                 "flags.fq": {
@@ -296,6 +292,19 @@ describe("TradingCards", () => {
                     })]
                 }
             });
+        });
+
+        it("n'ajoute pas l'entrée dans le tableau des flags : muter en place viderait le diff de update()", () => {
+            const existing = [{actorId: "before", round: 1}];
+            const updateMock = vi.fn();
+            game.combat = {flags: {fq: {logs: existing}}, round: 2, turn: 1, update: updateMock};
+
+            PlayCard.logCardPlayed([], {targetType: "Default"}, "me", ["target1"]);
+
+            expect(existing).toHaveLength(1);
+            const {logs} = updateMock.mock.calls[0][0]["flags.fq"];
+            expect(logs).not.toBe(existing);
+            expect(logs).toHaveLength(2);
         });
 
         it("should not throw and do nothing when there is no active combat", () => {

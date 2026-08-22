@@ -158,7 +158,8 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
             }
 
             Damage.displayResult(item.actor, resultArray, null);
-            await socket.executeAsGM("logCardPlayed", resultArray, cardContent);
+            await socket.executeAsGM("logCardPlayed", resultArray, cardContent, item.actor.id,
+                Constants.myTargetActorIds(cardContent.targetType));
         }
     }
 });

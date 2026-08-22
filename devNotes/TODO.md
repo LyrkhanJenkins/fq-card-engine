@@ -2,20 +2,14 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-- je ne vois pas la main de mon joueur
-- rectiligne pour les monde de tests
 - Energie lumineuse, description trop complexe
+- Bug d'affichage de soin (carte de base) du mage blanc -> A voir après fix formules
 - No spellbook après montée jusqu'au niveau 4
-- Bug d'affichage de soin (carte de base) du mage blanc
-- Mettre français par défaut
 - PV n'ont pas changé quand on a fait take average
 - Frappe arcanique cassé?
-- Problème avec les dé de vie et la constitution de la sorcière
-- Squelette trop faible?
 - Bug avec le squelette géant
 - Est ce qu'on peut voir systématiquement les points de vie des tokens?
   - commence avec un squelette, un mana et un zèle
-- Reactif jouable a son tour?
 - Bug de la malediction instantanée, la cible n'a subit aucun dégâts...
 
 ### Questionnement
@@ -24,9 +18,12 @@
   - Trop de pick pour le runic warrior? Pioche à 1 pour commencer? (Ou assumer et réduire le cout en action des sorts)
     - Bug de pioche (Runic-Warrior n'a pas assez de carte à piocher dans son deck)
   - La rune de célérité est ptetre trop forte
+  - Squelette trop faible?
 
 ### Versions prévues
 #### 3.0.0
+- Reactif jouable a son tour?
+- Problème avec les dé de vie et la constitution de la sorcière
 - A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Relire et faire un point sur la caracterisation avant tout

@@ -149,9 +149,21 @@ export default class Constants {
     static myTargets(targetType = CardFqSystem.TARGET_TYPE_DEFAULT) {
         if (targetType === CardFqSystem.TARGET_TYPE_SKELETON) {
             // Récupère tous les squelettes de la scene active qui sont en combat
-            return [...game.canvas?.scene?.tokens ?? []].map(t => t.object).filter(t => t.name.includes("Skeleton") && [...game.combat?.combatants ?? []].map(c => c.tokenId).includes(t.id));
+            return [...game.canvas?.scene?.tokens ?? []].map(t => t.object).filter(t => t?.name?.includes("Skeleton") && [...game.combat?.combatants ?? []].map(c => c.tokenId).includes(t.id));
         }
         return Constants.currentTargets;
+    }
+
+    /**
+     * Les ids d'acteur des cibles courantes, forme attendue par le log de combat.
+     * Tolère les tokens dont le placeable n'est pas monté sur le canvas.
+     *
+     * @param {string} [targetType] - Le type de ciblage FQ.
+     *
+     * @returns {string[]} Les ids d'acteur ciblés.
+     */
+    static myTargetActorIds(targetType) {
+        return Constants.myTargets(targetType).map(t => t?.document?.actorId ?? t?.actorId).filter(Boolean);
     }
 
     /**

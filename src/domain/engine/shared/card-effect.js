@@ -118,7 +118,8 @@ export default class CardEffect {
             }
 
             Damage.displayResult(Constants.actorCurrent, resultArray, cardMessages);
-            await socket.executeAsGM("logCardPlayed", resultArray, cardContent);
+            await socket.executeAsGM("logCardPlayed", resultArray, cardContent, Constants.actorCurrent?.id,
+                Constants.myTargetActorIds(cardContent.targetType));
         } else {
             ChatMessage.create({
                 speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
