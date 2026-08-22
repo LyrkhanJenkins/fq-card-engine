@@ -2,22 +2,17 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-- Bouclier emphatique et bouclier vengeur (ne pas être utilisé x fois mais plutôt dopé les carac)
+- je ne vois pas la main de mon joueur
+- rectiligne pour les monde de tests
 - Les éphémère ne se sont pas détruit, elles ont des dos dégueulasse
+- Réactif à tooltipé, Afflux de vie ne devrait pas être réactif
 - Energie lumineuse, description trop complexe
 - No spellbook après montée jusqu'au niveau 4
 - Bug d'affichage de soin (carte de base) du mage blanc
 - Mettre français par défaut
 - PV n'ont pas changé quand on a fait take average
-- Formules trop complexes
-- je ne vois pas la main de mon joueur
-- Bug de pioche (Runic-Warrior n'a pas assez de carte à piocher dans son deck)
-- La rune de célérité est ptetre trop forte
-- Bug witch, le cout de nécromancie n'est pas gratuit au tour d'après
 - Frappe arcanique cassé?
 - Problème avec les dé de vie et la constitution de la sorcière
-- Réactif à tooltipé, Afflux de vie ne devrait pas être réactif
-- rectiligne pour les monde de tests
 - Squelette trop faible?
 - Bug avec le squelette géant
 - Est ce qu'on peut voir systématiquement les points de vie des tokens?
@@ -29,6 +24,8 @@
 - Guerrier Runique
   - Point de zèle trop au niveau 1?
   - Trop de pick pour le runic warrior? Pioche à 1 pour commencer? (Ou assumer et réduire le cout en action des sorts)
+    - Bug de pioche (Runic-Warrior n'a pas assez de carte à piocher dans son deck)
+  - La rune de célérité est ptetre trop forte
 
 ### Versions prévues
 #### 3.0.0
