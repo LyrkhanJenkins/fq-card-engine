@@ -105,6 +105,23 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
         expect(result.hpCalls[0].value).toBe(10);
     });
 
+    test("le bonus mwak s'applique à une arme naturelle (carte @wpnM)", async () => {
+        const result = await playChoice(makeCard("@wpnM"), 0, {
+            world: {
+                character: {
+                    items: [makeWeapon({category: "natural", activityType: "damage"})],
+                    system: {bonuses: {mwak: {damage: "2"}}}
+                }
+            },
+            dice: DICE
+        });
+
+        expect(result.threw).toBe(false);
+        expect(result.hpCalls).toHaveLength(1);
+        // 1d8(5) + mod(3) + bonus mwak(2) = 10
+        expect(result.hpCalls[0].value).toBe(10);
+    });
+
     test("une activité d'attaque n'ajoute pas le bonus une seconde fois (dnd5e le gère)", async () => {
         const result = await playChoice(makeCard("@wpnM"), 0, {
             world: {

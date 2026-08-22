@@ -14,7 +14,7 @@ export const WEAPON_TOKENS = {
         hudWarningKey: "FQCARDENGINE.TokenDamageNoRangedWeaponWarningMsg"
     },
     "@wpnM": {
-        categories: ["simpleM", "martialM"],
+        categories: ["simpleM", "martialM", "natural"],
         warningKey: "FQCARDENGINE.WarningMsgNoMeleeWeapon",
         hudWarningKey: "FQCARDENGINE.TokenDamageNoMeleeWeaponWarningMsg"
     }
@@ -98,7 +98,7 @@ export default class WeaponDamage {
 
     /**
      * Bonus de dégâts d'arme de l'acteur applicable à une arme : `mwak` pour
-     * une arme de mêlée (`simpleM`/`martialM`), `rwak` pour une arme à distance
+     * une arme de mêlée (`simpleM`/`martialM`/`natural`), `rwak` pour une arme à distance
      * (`system.bonuses.<type>.damage`, alimenté notamment par des effets de
      * cartes). Renvoie `""` si le bonus est vide ou nul.
      *

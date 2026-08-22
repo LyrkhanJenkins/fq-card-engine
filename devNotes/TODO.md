@@ -2,8 +2,6 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-- Arme de mélée naturelle a rajouter au script de dégâts.
-- Point de zèle trop au niveau 1
 - LEs éphémère ne se sont pas détruit, elles ont des dos dégueulasse
 - je ne vois pas la main de mon joueur
 - Bug de pioche (Runic-Warrior n'a pas assez de carte à piocher dans son deck)
@@ -11,12 +9,17 @@
 - Bug witch, le cout de nécromancie n'est pas gratuit au tour d'après
 - Trop de pick pour le runic warrior
 - Frappe arcanique cassé?
-- problème avec les dé de vie et la constitution de la sorcière
+- Problème avec les dé de vie et la constitution de la sorcière
 - Réactif à tooltipé, Afflux de vie ne devrait pas être réactif
 - rectiligne pour les monde de tests
 - Squelette trop faible?
 - Bug avec le squelette géant
 - Est ce qu'on peut voir systématiquement les points de vie des tokens?
+- 
+### Questionnement
+- Guerrier Runique
+  - Point de zèle trop au niveau 1
+  - Pioche à 1 pour commencer? (Ou assumer et réduire le cout en action des sorts)
 
 ### Versions prévues
 #### 3.0.0

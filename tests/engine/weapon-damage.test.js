@@ -12,7 +12,7 @@ import ResourceHandler from "../../src/domain/engine/shared/resource-handler.js"
  */
 
 const RANGED = ["simpleR", "martialR"];
-const MELEE = ["simpleM", "martialM"];
+const MELEE = ["simpleM", "martialM", "natural"];
 
 /**
  * Item arme équipé d'une catégorie donnée, exposant (ou non) une activité d'attaque.
@@ -96,6 +96,13 @@ describe("WeaponDamage.getEquippedWeaponDamageFormula", () => {
         expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("1d10 + 4");
     });
 
+    test("arme naturelle (natural) : traitée comme une arme de mêlée", () => {
+        const activity = makeActivity([{parts: ["2d6", "@mod"], data: {mod: 4}}]);
+        const actor = actorWith(makeWeapon("natural", activity));
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("2d6 + 4");
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, RANGED)).toBe("0");
+    });
+
     test("aucune arme du type → '0' (une épée équipée, on demande distance)", () => {
         const actor = actorWith(makeWeapon("martialM", makeActivity([{parts: ["1d8", "@mod"], data: {mod: 3}}])));
         expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, RANGED)).toBe("0");
@@ -160,6 +167,21 @@ describe("WeaponDamage.useFirstEquippedWeapon", () => {
         const weapon = makeUsableWeapon("simpleM");
         WeaponDamage.useFirstEquippedWeapon({items: [weapon]}, "@wpnM");
         expect(weapon.use).not.toHaveBeenCalled();
+    });
+
+    test("arme naturelle équipée : utilisée par le raccourci mêlée", () => {
+        vi.spyOn(ResourceHandler, "validateUseSpellInTurn").mockReturnValue(true);
+        const claws = makeUsableWeapon("natural");
+        WeaponDamage.useFirstEquippedWeapon({items: [claws]}, "@wpnM");
+        expect(claws.use).toHaveBeenCalled();
+    });
+
+    test("arme naturelle équipée : ignorée par le raccourci distance", () => {
+        vi.spyOn(ResourceHandler, "validateUseSpellInTurn").mockReturnValue(true);
+        const claws = makeUsableWeapon("natural");
+        WeaponDamage.useFirstEquippedWeapon({items: [claws]}, "@wpnR");
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.TokenDamageNoRangedWeaponWarningMsg");
+        expect(claws.use).not.toHaveBeenCalled();
     });
 
     test("aucune arme de mêlée équipée : avertit sans rien utiliser", () => {
