@@ -4,7 +4,7 @@
 ### Fix à prioriser
 
 ### Versions prévues
-#### 2.1.0
+#### 3.0.0
 - A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Relire et faire un point sur la caracterisation avant tout
@@ -97,7 +97,7 @@ Refonte des Cartes :
 - Vérifier que les runes doivent augmenter les score de runes
 - MINOR--> RELEASE
 
-#### 2.1.1
+#### 3.0.1
 - L'esquive fait demi-dégâts (Esquive critique? Double-critique?)
 - faire bouger tornade effet magique
 - Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens (vérifier que c'est pas déjà fait)
@@ -117,7 +117,7 @@ Refonte des Cartes :
 - Tests fonctionnels + montée de version jusqu'à la dernière v14
 - Plus de sound effects et FX differents
 
-#### 2.2.x
+#### 3.1.x
 - Prise en compte la classe d'armure de DND5E
 - Ajout des cartes pour les 9 classes (jusqu'au niveau 10)
 - Migrations objets dnd5e v FQ OU comment plus les mettre en avant?
