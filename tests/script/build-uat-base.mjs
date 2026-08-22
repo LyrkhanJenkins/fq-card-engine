@@ -26,13 +26,17 @@ const MODULE_ID = "fq-card-engine";
 const ARENA_SCENE_ID = "Pl5kNER7PeAwjkHI";
 const UNUSED_ARENA_IMAGE = "ancienne_arene_semoutiene.png";
 
-// Réglages de portée monde forcés dans tout monde UAT (demande utilisateur) : les
-// mondes générés doivent tester le moteur dans sa configuration de jeu réelle.
-// L'id est figé pour que la fabrication du template reste reproductible.
+// Réglages de portée monde forcés dans tout monde UAT : les mondes générés doivent
+// tester le moteur dans sa configuration de jeu réelle. Les réglages d'autres modules
+// activés dans le template en font partie. L'id est figé pour que la fabrication du
+// template reste reproductible.
 const FORCED_SETTINGS = [
-    {key: "PlayerLimitCardsRight", id: "fqUatSetting0001"},
-    {key: "RollInitiative", id: "fqUatSetting0002"},
-    {key: "BypassWeaponAttackRoll", id: "fqUatSetting0003"}
+    {module: MODULE_ID, key: "PlayerLimitCardsRight", value: true, id: "fqUatSetting0001"},
+    {module: MODULE_ID, key: "RollInitiative", value: true, id: "fqUatSetting0002"},
+    {module: MODULE_ID, key: "BypassWeaponAttackRoll", value: true, id: "fqUatSetting0003"},
+    // fq-restrain-movement laisse le MJ hors restrictions par défaut ; en UAT on veut
+    // au contraire qu'il soit soumis aux mêmes règles de déplacement que le joueur.
+    {module: "fq-restrain-movement", key: "gmNotRestrained", value: false, id: "fqUatSetting0004"}
 ];
 
 // Horodatage figé pour que le template one-shot reste reproductible à l'octet
@@ -64,7 +68,7 @@ async function exists(p) {
 
 function buildStats(overrides = {}) {
     return {
-        coreVersion: "14.366",
+        coreVersion: "14.367",
         systemId: "dnd5e",
         systemVersion: "5.3.3",
         createdTime: FIXED_STATS_TIME,
@@ -224,18 +228,18 @@ async function transformSettings() {
         }
 
         for (const forced of FORCED_SETTINGS) {
-            const key = `${MODULE_ID}.${forced.key}`;
+            const key = `${forced.module}.${forced.key}`;
             const existing = docsByKey.get(key);
             if (existing) {
                 // La valeur d'un réglage est stockée sérialisée en JSON, jamais en booléen brut.
-                existing.doc.value = "true";
+                existing.doc.value = JSON.stringify(forced.value);
                 await writeJson(existing.file, existing.doc);
                 continue;
             }
             await writeJson(path.join(tmpDir, `${forced.id}.json`), {
                 key,
                 user: null,
-                value: "true",
+                value: JSON.stringify(forced.value),
                 _id: forced.id,
                 _stats: buildStats(),
                 _key: `!settings!${forced.id}`
@@ -244,7 +248,7 @@ async function transformSettings() {
 
         await compilePack(tmpDir, dbPath, {recursive: true, log: false});
     });
-    console.info(`Réglages forcés à true : ${FORCED_SETTINGS.map(s => s.key).join(", ")}.`);
+    console.info(`Réglages forcés : ${FORCED_SETTINGS.map(s => `${s.module}.${s.key}=${s.value}`).join(", ")}.`);
 }
 
 async function transformMacros() {

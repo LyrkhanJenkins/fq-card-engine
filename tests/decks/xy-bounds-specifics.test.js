@@ -24,7 +24,7 @@ globalThis.Macro = class {
     static create = vi.fn(async () => ({}));
 };
 
-const {mountWorld, playChoice, getSocketSpy} = await import("./play-harness.js");
+const {mountWorld, playChoice, getSocketSpy, makeEquippedWeapon} = await import("./play-harness.js");
 const {DeterministicRoll, resetDiceControl} = await import("./deterministic-roll.js");
 const RollService = (await import("../../src/domain/engine/roll/roll-service.js")).default;
 
@@ -103,6 +103,10 @@ function deepMerge(target, source) {
 function abundantWorld(extra = {}) {
     return deepMerge({
         character: {
+            // Une arme de chaque type est équipée : une carte dont les dégâts
+            // portent un jeton d'arme (`@wpnM`/`@wpnR`) est injouable sans arme
+            // du type, et sa mécanique propre ne serait jamais atteinte.
+            items: [makeEquippedWeapon("martialM"), makeEquippedWeapon("martialR")],
             system: {
                 attributes: {hp: {value: 999, max: 999, temp: 0, tempmax: 0}},
                 fq: {

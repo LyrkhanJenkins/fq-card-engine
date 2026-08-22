@@ -144,15 +144,22 @@ describe("template uat-base", () => {
         expect(seedMacro.command).toContain("seedUatWorld");
     });
 
-    it("force à true les trois réglages de jeu attendus dans un monde UAT", () => {
+    it("force les réglages de jeu attendus dans un monde UAT", () => {
         // Un monde UAT doit exercer le moteur dans sa configuration de jeu réelle :
-        // droits de cartes limités côté joueur, initiative jetée automatiquement,
-        // et jet d'attaque d'arme court-circuité.
-        for (const key of ["PlayerLimitCardsRight", "RollInitiative", "BypassWeaponAttackRoll"]) {
-            const setting = settings.find(s => s.key === `fq-card-engine.${key}`);
+        // droits de cartes limités côté joueur, initiative jetée automatiquement, jet
+        // d'attaque d'arme court-circuité, et MJ soumis aux restrictions de déplacement.
+        const expected = {
+            "fq-card-engine.PlayerLimitCardsRight": true,
+            "fq-card-engine.RollInitiative": true,
+            "fq-card-engine.BypassWeaponAttackRoll": true,
+            "fq-restrain-movement.gmNotRestrained": false
+        };
+
+        for (const [key, value] of Object.entries(expected)) {
+            const setting = settings.find(s => s.key === key);
 
             expect(setting, `réglage manquant : ${key}`).toBeDefined();
-            expect(JSON.parse(setting.value), `réglage non activé : ${key}`).toBe(true);
+            expect(JSON.parse(setting.value), `valeur inattendue pour ${key}`).toBe(value);
         }
     });
 

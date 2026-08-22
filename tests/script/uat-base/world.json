@@ -2,10 +2,10 @@
   "title": "uat-base",
   "id": "uat-base",
   "system": "dnd5e",
-  "coreVersion": "14.366",
+  "coreVersion": "14.367",
   "compatibility": {
     "minimum": "14",
-    "verified": "14.366"
+    "verified": "14.367"
   },
   "systemVersion": "5.3.3",
   "playtime": 0,

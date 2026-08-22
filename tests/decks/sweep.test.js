@@ -27,7 +27,7 @@ globalThis.Macro = class {
     static create = vi.fn(async () => ({}));
 };
 
-const {playChoice} = await import("./play-harness.js");
+const {playChoice, makeEquippedWeapon} = await import("./play-harness.js");
 const FormError = (await import("../../src/core/error/form-error.model.js")).default;
 
 const DECKS_DIR = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq8");
@@ -122,6 +122,8 @@ function usesCombatTargeting(choice) {
  *     `myTargets(cardContent.targetType)` pour CHAQUE choix joué. Réutilise
  *     les noms déjà présents dans `world-fixture.json` (aucune invention).
  *   - `packs.get(...).getDocuments()` : voir `minionDocFor`.
+ *   - `character.items` : une arme équipée de chaque type, sans quoi tout choix
+ *     à jeton d'arme (`@wpnM`/`@wpnR`) serait refusé avant d'être joué.
  *   - `combat` : voir `referencesCombatApi` (uniquement si nécessaire).
  *
  * @param {object} choice - Le choix (contenu) de la carte à jouer.
@@ -130,6 +132,10 @@ function usesCombatTargeting(choice) {
  */
 function sweepWorldOverridesFor(choice) {
     const world = {
+        // Une arme de chaque type équipée : sans elle, tout choix dont les dégâts
+        // portent un jeton d'arme (`@wpnM`/`@wpnR`) est refusé par le garde-fou de
+        // lançabilité et ne serait jamais réellement joué par le balayage.
+        character: {items: [makeEquippedWeapon("martialM"), makeEquippedWeapon("martialR")]},
         folders: [{type: "Actor", name: "Temporaire", id: "sweep-temp-folder"}],
         canvas: {
             scene: {
@@ -233,8 +239,8 @@ describe("Balayage global des decks pattern fq8 (07-03 — EXHA-05)", () => {
     // Invariant (c) / garde-fou d'auto-couverture : le compte est calculé
     // dynamiquement depuis le glob — une carte ajoutée au JSON du deck-pattern
     // fait mécaniquement grimper ce total, sans toucher à ce fichier.
-    test("balaie au moins 230 choix des 16 decks pattern fq8 (garde-fou d'auto-couverture)", () => {
-        expect(deckFiles.length).toBe(16);
-        expect(sweepEntries.length).toBeGreaterThanOrEqual(230);
+    test("balaie au moins 330 choix des 17 decks pattern fq8 (garde-fou d'auto-couverture)", () => {
+        expect(deckFiles.length).toBe(17);
+        expect(sweepEntries.length).toBeGreaterThanOrEqual(330);
     });
 });

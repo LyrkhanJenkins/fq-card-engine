@@ -25,7 +25,7 @@ Fix :
 - Correction du bouton OpenDeck dans la main du joueur
 
 Chore :
-- Support de la version 14.366
+- Support de la version 14.366, 14.367
 
 v2.0.2:
 Feat :

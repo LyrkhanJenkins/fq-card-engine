@@ -98,6 +98,36 @@ export async function getSocketSpy() {
 }
 
 /**
+ * Arme dnd5e équipée d'une catégorie donnée (`weapon.system.type.value`), à
+ * placer dans `character.items` via les surcharges de `mountWorld`. Une carte
+ * dont les dégâts portent un jeton d'arme (`@wpnM`/`@wpnR`) est injouable tant
+ * qu'aucune arme de la catégorie n'est équipée : sans arme montée, sa mécanique
+ * n'est jamais atteinte. L'activité d'attaque produit une formule de dégâts
+ * CONSTANTE, pour ne consommer aucun dé et laisser intacte la séquence de dés
+ * pilotée par le test appelant.
+ *
+ * @param {string} category - La catégorie dnd5e (`simpleM`, `martialM`, `simpleR`, `martialR`).
+ * @param {string} [damage="2"] - La formule de dégâts rendue par l'activité d'attaque.
+ *
+ * @returns {object} L'arme consommable par `mountWorld` via `character.items`.
+ */
+export function makeEquippedWeapon(category, damage = "2") {
+    const attackActivity = {
+        type: "attack",
+        use: vi.fn(),
+        getDamageConfig: vi.fn(() => ({rolls: [{parts: [damage], data: {}}]}))
+    };
+    return {
+        type: "weapon",
+        system: {
+            equipped: true,
+            type: {value: category},
+            activities: {getByType: type => (type === "attack" ? [attackActivity] : [])}
+        }
+    };
+}
+
+/**
  * Réinstalle le `Roll` déterministe et vide les files de dés pilotés. Appelée
  * automatiquement par `playChoice` ; exposée séparément pour les fichiers de
  * test qui veulent contrôler ce cycle depuis leur propre `beforeEach`.
