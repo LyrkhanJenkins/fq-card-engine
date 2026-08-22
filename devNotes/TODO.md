@@ -2,7 +2,8 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-
+- Traduction de sorts orphelins
+- A la place de rune de mort 3, faire une rune coutant 0 qui fait une frappe de manne qui coute 7PA fait les dégâts des armes et qui regagne @str-1 mana
 ### Versions prévues
 #### 3.0.0
 - A relire et caractériser :
