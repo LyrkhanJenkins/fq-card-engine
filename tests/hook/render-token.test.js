@@ -56,13 +56,14 @@ describe("render-token", () => {
     });
 
     describe("renderTokenHUD", () => {
-        it("vide le contenu des .col quand l'utilisateur n'est pas MJ", () => {
+        it("vide les contrôles natifs pour un joueur quand la limitation des droits est active", () => {
             const hook = getHook("renderTokenHUD");
             const {container, colLeft, colRight} = buildHudHtml();
             colLeft.innerHTML = "<span>existing-left</span>";
             colRight.innerHTML = "<span>existing-right</span>";
             game.user.isGM = false;
             game.user.character = undefined;
+            CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
 
             hook({object: {}}, container, {});
 
@@ -70,13 +71,42 @@ describe("render-token", () => {
             expect(colRight.innerHTML).toBe("");
         });
 
-        it("retourne sans ajouter de bouton si l'utilisateur n'a pas de personnage", () => {
+        it("laisse les contrôles natifs au joueur quand la limitation des droits est désactivée", () => {
+            const hook = getHook("renderTokenHUD");
+            const {container, colLeft, colRight} = buildHudHtml();
+            colLeft.innerHTML = "<span>existing-left</span>";
+            colRight.innerHTML = "<span>existing-right</span>";
+            game.user.isGM = false;
+            game.user.character = undefined;
+            CONFIG.FqCardEngine.options.playerLimitCardsRight = false;
+
+            hook({object: {}}, container, {});
+
+            expect(colRight.innerHTML).toBe("<span>existing-right</span>");
+            expect(colLeft.innerHTML).toContain("existing-left");
+        });
+
+        it("ajoute les boutons de dégâts sur un token possédé même sans personnage assigné", () => {
             const hook = getHook("renderTokenHUD");
             const {container, colLeft} = buildHudHtml();
             game.user.isGM = true;
             game.user.character = undefined;
+            const hudObject = {document: {name: "Goblin"}, name: "Goblin", id: "token-1", actor: {items: [], isOwner: true}};
 
-            hook({object: {}}, container, {});
+            hook({object: hudObject}, container, {});
+
+            // Les boutons de dégâts portent sur l'acteur du token, pas sur le
+            // personnage de l'utilisateur : ils doivent apparaître quand même.
+            expect(colLeft.children.length).toBe(2);
+        });
+
+        it("n'ajoute aucun bouton de dégâts sur un token que l'utilisateur ne possède pas", () => {
+            const hook = getHook("renderTokenHUD");
+            const {container, colLeft} = buildHudHtml();
+            game.user.isGM = true;
+            const hudObject = {document: {name: "Goblin"}, name: "Goblin", id: "token-1", actor: {items: [], isOwner: false}};
+
+            hook({object: hudObject}, container, {});
 
             expect(colLeft.children.length).toBe(0);
         });
@@ -86,7 +116,7 @@ describe("render-token", () => {
             const {container, colLeft} = buildHudHtml();
             game.user.isGM = true;
             // game.user.character est déjà défini par défaut dans tests/setup.js.
-            const hudObject = {document: {name: "Goblin"}, name: "Goblin", id: "token-1", actor: {items: []}};
+            const hudObject = {document: {name: "Goblin"}, name: "Goblin", id: "token-1", actor: {items: [], isOwner: true}};
 
             hook({object: hudObject}, container, {});
 
@@ -99,7 +129,7 @@ describe("render-token", () => {
             const {container, colLeft} = buildHudHtml();
             game.user.isGM = true;
             const hudObject = {
-                document: {name: "Skeleton lvl 2"}, name: "Skeleton lvl 2", id: "token-2", actor: {items: []}
+                document: {name: "Skeleton lvl 2"}, name: "Skeleton lvl 2", id: "token-2", actor: {items: [], isOwner: true}
             };
 
             hook({object: hudObject}, container, {});
@@ -114,7 +144,7 @@ describe("render-token", () => {
             game.user.isGM = true;
             game.user.character.system.fq.special = {sacrificedSkeleton: 0};
             const hudObject = {
-                document: {name: "Skeleton lvl 2"}, name: "Skeleton lvl 2", id: "token-2", actor: {items: []}
+                document: {name: "Skeleton lvl 2"}, name: "Skeleton lvl 2", id: "token-2", actor: {items: [], isOwner: true}
             };
 
             hook({object: hudObject}, container, {});
