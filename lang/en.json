@@ -287,6 +287,7 @@
   "FQCARDENGINE.TooltipDamageRadiant": "Radiant damage",
   "FQCARDENGINE.TooltipDamageSlashing": "Slashing damage",
   "FQCARDENGINE.TooltipDamageThunder": "Thunder damage",
+  "FQCARDENGINE.TooltipReactive": "Reactive: the card can only be played during combat, and only outside your own turn.",
   "FQCARDENGINE.TooltipReplayablePassive": "Passive: the card stays in your hand and can only be replayed once per combat turn",
   "FQCARDENGINE.TooltipReplayableEphemeral": "Ephemeral: playing the card destroys it for good.",
   "FQCARDENGINE.TooltipReplayableCharges": "Replayable n times",

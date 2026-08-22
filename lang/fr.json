@@ -283,6 +283,7 @@
   "FQCARDENGINE.TooltipDamageRadiant": "Dégâts radiants",
   "FQCARDENGINE.TooltipDamageSlashing": "Dégâts tranchants",
   "FQCARDENGINE.TooltipDamageThunder": "Dégâts de tonnerre",
+  "FQCARDENGINE.TooltipReactive": "Réactif : la carte ne se joue qu'en combat, et uniquement hors de votre propre tour.",
   "FQCARDENGINE.TooltipReplayablePassive": "Passif : la carte reste en main et ne peut être rejouée qu'une fois par tour de combat",
   "FQCARDENGINE.TooltipReplayableEphemeral": "Éphémère : jouer la carte la détruit définitivement.",
   "FQCARDENGINE.TooltipReplayableCharges": "Rejouable n fois",
