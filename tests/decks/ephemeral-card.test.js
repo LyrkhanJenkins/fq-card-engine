@@ -14,6 +14,7 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {playChoice} = await import("./play-harness.js");
+const {default: CardEffect} = await import("../../src/domain/engine/shared/card-effect.js");
 
 /**
  * Cartes éphémères (`replayable: "ephemere"`), jouées via le VRAI
@@ -53,6 +54,9 @@ function makeCard(replayable = "ephemere") {
 describe("Carte éphémère — détruite au jeu, jamais défaussée", () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        // Les espions posés sur le moteur (effet en échec) ne doivent pas fuiter
+        // d'un test à l'autre, y compris quand une assertion casse avant leur retrait.
+        vi.restoreAllMocks();
     });
 
     test("la carte n'est pas passée à la défausse et est supprimée de la main ET du deck", async () => {
@@ -85,6 +89,18 @@ describe("Carte éphémère — détruite au jeu, jamais défaussée", () => {
         expect(result.threw).toBe(false);
         expect(result.handDestroyCalls).toEqual([["Card", [EPHEMERAL_CARD_ID]]]);
         expect(result.deckDestroyCalls).toHaveLength(0);
+    });
+
+    test("un effet qui échoue ne laisse pas en main une carte annoncée détruite", async () => {
+        const applyCardEffect = vi.spyOn(CardEffect, "applyCardEffect")
+            .mockRejectedValue(new Error("effet en échec"));
+
+        const result = await playChoice(makeCard(), 0);
+
+        expect(applyCardEffect).toHaveBeenCalled();
+        expect(result.handDestroyCalls).toEqual([["Card", [EPHEMERAL_CARD_ID]]]);
+        expect(result.deckDestroyCalls).toEqual([["Card", [EPHEMERAL_CARD_ID]]]);
+        applyCardEffect.mockRestore();
     });
 
     test("une carte NON éphémère garde le comportement historique : défaussée, jamais détruite", async () => {

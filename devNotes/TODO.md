@@ -4,7 +4,6 @@
 ### Fix à prioriser
 - je ne vois pas la main de mon joueur
 - rectiligne pour les monde de tests
-- Les éphémère ne se sont pas détruit, elles ont des dos dégueulasse
 - Réactif à tooltipé, Afflux de vie ne devrait pas être réactif
 - Energie lumineuse, description trop complexe
 - No spellbook après montée jusqu'au niveau 4

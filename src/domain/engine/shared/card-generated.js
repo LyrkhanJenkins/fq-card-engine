@@ -34,6 +34,15 @@ export default class CardGenerated {
         data.drawn = false;
         data.origin = null;
         data.face = data.face ?? 0;
+        // Foundry n'écrit pas le dos d'une carte : il le dérive de son deck porteur
+        // (`Card#prepareDerivedData`, via `origin`), et retombe sur son joker par
+        // défaut à défaut de deck. Une copie générée n'a justement pas de deck
+        // d'origine (`origin: null`) : le dos du deck de compendium copié est donc
+        // figé ici, sans quoi la carte porterait le joker en main comme en défausse.
+        data.back = {
+            ...data.back,
+            img: data.back?.img || compendiumCard.source?.img || compendiumCard.parent?.img || null
+        };
         CardGenerated.stampGeneratedPassives(data.system?.fq?.choices);
         const moduleName = globalThis.FqCardEngineModule?.moduleName;
         data.flags = {...data.flags, [moduleName]: {...data.flags?.[moduleName], generated: true, generatedAt: Date.now()}};

@@ -144,12 +144,15 @@ export default class PlayCard {
             });
         }
 
-        await CardEffect.applyCardEffect(cardContent, card, fd, to);
-
         // Destruction APRÈS les effets : ceux-ci lisent encore la carte et sa main
         // (récupération de défausse, réécriture du contenu, génération de cartes).
-        if (ephemeral && leavesHand) {
-            await PlayCard.destroyPlayedCard(card, currentCards);
+
+        try {
+            await CardEffect.applyCardEffect(cardContent, card, fd, to);
+        } finally {
+            if (ephemeral && leavesHand) {
+                await PlayCard.destroyPlayedCard(card, currentCards);
+            }
         }
 
         return result;

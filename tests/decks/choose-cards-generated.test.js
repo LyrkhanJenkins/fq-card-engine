@@ -36,6 +36,10 @@ const COMPENDIUM_CARD_DATA = {
     system: {fq: {choices: [{damage: "1d4", bonusCrit: "0", bonusEva: "0"}]}}
 };
 
+// Dos du deck de compendium copié : une copie générée n'ayant pas de deck
+// d'origine, c'est cette image qui doit être figée sur elle.
+const DECK_BACK_IMG = "modules/fq-card-engine/images/cards/back_elementalist.PNG";
+
 const worldFixture = JSON.parse(
     fs.readFileSync(path.join(process.cwd(), "tests", "decks", "world-fixture.json"), "utf-8")
 );
@@ -67,7 +71,10 @@ function makePacks({packName = "decks-pattern-fq8", scope = "fq-card-engine", de
         system: cardData.system,
         toObject: () => JSON.parse(JSON.stringify(cardData))
     };
-    const deck = {name: deckName, cards: [compendiumCard]};
+    const deck = {name: deckName, img: DECK_BACK_IMG, cards: [compendiumCard]};
+    // Foundry expose le deck porteur d'une carte via `Card#source` : c'est de lui
+    // que la copie générée hérite son dos.
+    compendiumCard.source = deck;
     const pack = {
         metadata: {name: packName},
         collection: `${scope}.${packName}`,
@@ -121,6 +128,15 @@ describe("chooseCardsList à référence unique — copie d'une carte de compend
         expect(typeof data.flags["fq-card-engine"].generatedAt).toBe("number");
         // Aucun avertissement de résolution publié
         expect(result.chatMessages.some(m => m.content?.includes("WarningMsgChooseCards"))).toBe(false);
+    });
+
+    test("la copie porte le dos du deck de compendium, jamais le joker par défaut de Foundry", async () => {
+        const card = makeGeneratorCard("decks-pattern-fq8.Elementalist Base deck.FQCARDTITLE.GeneratedCopy");
+
+        const result = await playChoice(card, 0, {world: {packs: makePacks()}});
+
+        const [, [data]] = result.generatedCards[0];
+        expect(data.back.img).toBe(DECK_BACK_IMG);
     });
 
     test("une référence par id complet 'scope.nomPack.deck.carte' est résolue via game.packs.get", async () => {
