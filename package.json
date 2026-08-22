@@ -10,6 +10,10 @@
     "test:ui": "vitest --ui",
     "testWorlds": "npm run testWorld:test",
     "testWorld:test": "node tests/script/copy-world.mjs test-world",
+    "testWorld:base": "node tests/script/build-uat-base.mjs",
+    "testWorld:random": "node tests/script/generate-world.mjs",
+    "testWorld:monsters": "node tests/script/build-monster-index.mjs",
+    "testWorld:clean": "node tests/script/clean-worlds.mjs",
     "lint": "eslint src ./tests",
     "lint:fix": "eslint src ./tests --fix",
     "lint:html": "eslint src ./tests -f html -o eslint-report.html"
@@ -19,6 +23,7 @@
     "@foundryvtt/foundryvtt-cli": "1.1.0",
     "@types/node": "24.13.3",
     "@vitest/coverage-v8": "4.1.10",
+    "classic-level": "1.4.1",
     "eslint": "9.39.5",
     "eslint-formatter-html": "2.7.3",
     "fancy-log": "2.0.0",

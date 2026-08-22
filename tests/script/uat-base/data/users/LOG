@@ -1,0 +1,16 @@
+2026/08/22-10:18:59.940 4038 Recovering log #76
+2026/08/22-10:18:59.980 4038 Delete type=0 #76
+2026/08/22-10:18:59.980 4038 Delete type=3 #74
+2026/08/22-10:19:00.023 3b70 Level-0 table #80: started
+2026/08/22-10:19:00.054 3b70 Level-0 table #80: 1346 bytes OK
+2026/08/22-10:19:00.070 3b70 Delete type=0 #78
+2026/08/22-10:19:00.071 3b70 Manual compaction at level-0 from '!users!uUbINdqSmS5ll9IK' @ 72057594037927935 : 1 .. '!users!uatPlayerUser001' @ 0 : 0; will stop at '!users!uUbINdqSmS5ll9IK' @ 84 : 1
+2026/08/22-10:19:00.071 3b70 Compacting 3@0 + 1@1 files
+2026/08/22-10:19:00.107 3b70 Generated table #81@0: 2 keys, 1142 bytes
+2026/08/22-10:19:00.107 3b70 Compacted 3@0 + 1@1 files => 1142 bytes
+2026/08/22-10:19:00.142 3b70 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/08/22-10:19:00.142 3b70 Delete type=2 #68
+2026/08/22-10:19:00.143 3b70 Delete type=2 #72
+2026/08/22-10:19:00.143 3b70 Delete type=2 #75
+2026/08/22-10:19:00.143 3b70 Delete type=2 #80
+2026/08/22-10:19:00.143 3b70 Manual compaction at level-0 from '!users!uUbINdqSmS5ll9IK' @ 84 : 1 .. '!users!uatPlayerUser001' @ 0 : 0; will stop at (end)
