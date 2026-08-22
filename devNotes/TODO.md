@@ -8,9 +8,8 @@
 - PV n'ont pas changé quand on a fait take average
 - Frappe arcanique cassé?
 - Bug avec le squelette géant
-- Est ce qu'on peut voir systématiquement les points de vie des tokens?
+- Est-ce qu'on peut voir systématiquement les points de vie des tokens?
   - commence avec un squelette, un mana et un zèle
-- Bug de la malediction instantanée, la cible n'a subit aucun dégâts...
 
 ### Questionnement
 - Guerrier Runique

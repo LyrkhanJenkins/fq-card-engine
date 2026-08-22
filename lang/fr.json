@@ -572,7 +572,7 @@
   "FQCARDTITLE.CircleAttack" : "Attaque En Cercle",
   "FQCARDDESCRIPTION.CircleAttack" : "Inflige {0_damage} dégâts aux cibles à portée. X, étant le bonus de portée, réduit également la portée minimale",
   "FQCARDTITLE.LightEnergy" : "Énergie Lumineuse",
-  "FQCARDDESCRIPTION.LightEnergy" : "Placez cette carte devant vous face visible, vous pourrez la jouer une seconde fois pour le même coût.\nInflige {0_damage} dégâts ou rend {1_heal} points de vie.\nDonne 1 point de zèle lorsque vous avez utilisé les deux charges du sort",
+  "FQCARDDESCRIPTION.LightEnergy" : "2 Charges.\nInflige {0_damage} dégâts ou rend {1_heal} points de vie.\nDonne 1 point de zèle lorsque vous avez utilisé les deux charges du sort",
   "FQCARDTITLE.Curse" : "Malédiction",
   "FQCARDDESCRIPTION.Curse" : "Inflige @wis points de dégâts par tour pendant 3 tours.\n(Inesquivable, Incritiquable)",
   "FQCARDTITLE.MagicShield" : "Bouclier magique",

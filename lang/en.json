@@ -572,7 +572,7 @@
   "FQCARDTITLE.CircleAttack" : "Circle Attack",
   "FQCARDDESCRIPTION.CircleAttack" : "Deals {0_damage} damage to targets within range. X, being the range bonus, also reduces the minimum range.",
   "FQCARDTITLE.LightEnergy" : "Light Energy",
-  "FQCARDDESCRIPTION.LightEnergy" : "Place this card face up in front of you; you may play it a second time for the same cost.\nDeals {0_damage} damage or restores {1_heal} health.\nGrants 1 zeal point when you have used both charges of the spell.",
+  "FQCARDDESCRIPTION.LightEnergy" : "2 Charges.\nDeals {0_damage} damage or restores {1_heal} health.\nGrants 1 zeal point when you have used both charges of the spell.",
   "FQCARDTITLE.Curse" : "Curse",
   "FQCARDDESCRIPTION.Curse" : "Deals @wis damage per turn for 3 turns.\n(Unavoidable, Non-critical)",
   "FQCARDTITLE.MagicShield" : "Magic Shield",
