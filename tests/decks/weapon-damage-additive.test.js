@@ -40,7 +40,7 @@ const wpnCard = {
     _id: "wpn-card-additive",
     name: "FQCARDTITLE.WpnAdditive",
     face: 0,
-    system: {fq: {choices: [{damage: "@wpnR + 1d6", bonusCrit: "0", bonusEva: "0"}]}}
+    system: {fq: {choices: [{damage: "@wpnR + 1d6", minReach: "1", maxReach: "1", bonusCrit: "0", bonusEva: "0"}]}}
 };
 
 describe("@wpnR additif à travers le pipeline de dégâts FQ", () => {

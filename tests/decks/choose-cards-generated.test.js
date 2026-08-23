@@ -33,7 +33,7 @@ const COMPENDIUM_CARD_DATA = {
     face: 0,
     drawn: true,
     origin: "some-deck-id",
-    system: {fq: {choices: [{damage: "1d4", bonusCrit: "0", bonusEva: "0"}]}}
+    system: {fq: {choices: [{damage: "1d4", minReach: "1", maxReach: "1", bonusCrit: "0", bonusEva: "0"}]}}
 };
 
 // Dos du deck de compendium copié : une copie générée n'ayant pas de deck

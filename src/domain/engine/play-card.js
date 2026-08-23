@@ -3,6 +3,7 @@ import CardEffect from "./shared/card-effect.js";
 import RollService from "./roll/roll-service.js";
 import CardFqSystem from "../system/cards/card-fq-system.mjs";
 import {createWarning} from "../../core/utils/chat.utils.js";
+import TargetingPredicates from "./shared/targeting-predicates.js";
 
 /**
  * Orchestration du jeu et de la défausse d'une carte : gestion des cartes
@@ -273,10 +274,12 @@ export default class PlayCard {
 
         let targets = [];
         try {
-            targets = CardEffect.cardTargetsOthers(cardContent) ? Constants.myTargets(cardContent.targetType).map(target => ({
+            // Un sort sans portée s'applique à son lanceur : le message montre alors
+            // le token du lanceur, pas les cibles restées sélectionnées sur la scène.
+            targets = TargetingPredicates.resolveTargets(cardContent).map(target => ({
                 name: target.document?.name ?? target.name ?? "",
                 img: target.document?.texture?.src
-            })) : [];
+            }));
         } catch (e) {
             // Certains types de cible (ex. squelettes) supposent un contexte de scène
             // complet absent hors jeu : on retombe sur une liste vide plutôt que

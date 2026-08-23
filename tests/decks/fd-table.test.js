@@ -68,7 +68,7 @@ describe("world-fixture.json — monde partagé", () => {
         const fixture = JSON.parse(raw);
 
         expect(fixture.gridSize).toBe(5);
-        expect(fixture.myToken).toEqual({x: 5, y: 5, width: 1, height: 1});
+        expect(fixture.myToken).toEqual({tokenId: "world-my-token", x: 5, y: 5, width: 1, height: 1});
         expect(fixture.target.x).toBe(0);
         expect(fixture.target.y).toBe(5);
 

@@ -3,6 +3,7 @@ import Damage from "../../domain/engine/roll/damage.js";
 import {socket} from "./socketlib.hook.js";
 import Constants from "../../domain/constants.js";
 import Fx from "../../domain/engine/shared/fx.js";
+import TargetingPredicates from "../../domain/engine/shared/targeting-predicates.js";
 
 /**
  * Indique si la logique FQ ne doit PAS s'appliquer à une activité dnd5e donnée :
@@ -159,7 +160,7 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
 
             Damage.displayResult(item.actor, resultArray, null);
             await socket.executeAsGM("logCardPlayed", resultArray, cardContent, item.actor.id,
-                Constants.myTargetActorIds(cardContent.targetType));
+                TargetingPredicates.resolveTargetActorIds(cardContent, item.actor));
         }
     }
 });

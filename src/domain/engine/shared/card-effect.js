@@ -18,6 +18,7 @@ import CardCondition from "./card-condition.js";
 
 import TradingCards from "../../trading/trading-cards.js";
 import CombatTurn from "../combat-turn.js";
+import TargetingPredicates from "./targeting-predicates.js";
 
 /**
  * Résolution et application des effets d'une carte : variables et bonus (X/Y,
@@ -119,7 +120,7 @@ export default class CardEffect {
 
             Damage.displayResult(Constants.actorCurrent, resultArray, cardMessages);
             await socket.executeAsGM("logCardPlayed", resultArray, cardContent, Constants.actorCurrent?.id,
-                Constants.myTargetActorIds(cardContent.targetType));
+                TargetingPredicates.resolveTargetActorIds(cardContent));
         } else {
             ChatMessage.create({
                 speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
@@ -362,21 +363,16 @@ export default class CardEffect {
     }
 
     /**
-     * Indique si la carte vise autrui plutôt que son lanceur : vrai si elle a une portée
-     * (`minReach`/`maxReach`), cible des squelettes, une zone ou les tokens adjacents.
-     * Sans portée, le sort est considéré comme se ciblant lui-même. Source de vérité
-     * unique du ciblage (effets, message de chat).
+     * Indique si la carte vise autrui plutôt que son lanceur — délègue au prédicat
+     * partagé {@link TargetingPredicates.cardTargetsOthers}, source de vérité unique
+     * du ciblage (accessible aussi aux modules qui ne peuvent pas importer `CardEffect`).
      *
      * @param {object} cardContent - Le contenu (choix) de la carte.
      *
      * @returns {boolean} True si la carte vise la/les cible(s), false si elle vise le lanceur.
      */
     static cardTargetsOthers(cardContent) {
-        return Boolean(cardContent?.minReach || cardContent?.maxReach ||
-            cardContent?.targetType === CardFqSystem.TARGET_TYPE_SKELETON ||
-            cardContent?.targetType === CardFqSystem.TARGET_TYPE_ZONE ||
-            cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT ||
-            CardFqSystem.isCombatTargetType(cardContent?.targetType));
+        return TargetingPredicates.cardTargetsOthers(cardContent);
     }
 
     /**

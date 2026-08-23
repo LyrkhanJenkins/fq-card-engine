@@ -1,5 +1,6 @@
 import Geometry from "./geometry.js";
 import Constants from "../../constants.js";
+import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 
 /**
  * Prédicats purs de ciblage, extraits de `ResourceHandler.checkIfCanCardCanReachTargets`
@@ -76,5 +77,58 @@ export default class TargetingPredicates {
             }
         });
         return outOfReach;
+    }
+
+    /**
+     * Indique si la carte vise autrui plutôt que son lanceur : vrai si elle a une portée
+     * (`minReach`/`maxReach`), cible des squelettes, une zone, les tokens adjacents ou
+     * des combattants. Sans portée, le sort est considéré comme se ciblant lui-même.
+     * Source de vérité unique du ciblage (effets, dégâts/soins, message de chat, log).
+     *
+     * @param {object} cardContent - Le contenu (choix) de la carte.
+     *
+     * @returns {boolean} True si la carte vise la/les cible(s), false si elle vise le lanceur.
+     */
+    static cardTargetsOthers(cardContent) {
+        return Boolean(cardContent?.minReach || cardContent?.maxReach ||
+            cardContent?.targetType === CardFqSystem.TARGET_TYPE_SKELETON ||
+            cardContent?.targetType === CardFqSystem.TARGET_TYPE_ZONE ||
+            cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT ||
+            CardFqSystem.isCombatTargetType(cardContent?.targetType));
+    }
+
+    /**
+     * Résout les tokens réellement affectés par un contenu de carte : les cibles
+     * désignées sur la scène si la carte vise autrui, sinon le token du lanceur
+     * lui-même (un sort sans portée s'applique à son lanceur, quelles que soient
+     * les cibles que le joueur a sélectionnées sur la scène).
+     *
+     * @param {object} cardContent  - Le contenu (choix) de la carte.
+     * @param {object} [casterActor=Constants.actorCurrent] - L'acteur lanceur.
+     *
+     * @returns {object[]} Les tokens affectés (vide si le lanceur n'est pas sur la scène).
+     */
+    static resolveTargets(cardContent, casterActor = Constants.actorCurrent) {
+        if (TargetingPredicates.cardTargetsOthers(cardContent)) {
+            return Constants.myTargets(cardContent?.targetType);
+        }
+        // `Constants.myTargets` rend des placeables : on aligne la forme du token du
+        // lanceur (document de scène) pour que les appelants n'aient qu'un seul cas.
+        const casterToken = Constants.actorToken(casterActor?.id)?.object;
+        return casterToken ? [casterToken] : [];
+    }
+
+    /**
+     * Les ids d'acteur réellement affectés par un contenu de carte — forme attendue
+     * par le log de combat, cohérente avec {@link TargetingPredicates.resolveTargets}.
+     *
+     * @param {object} cardContent  - Le contenu (choix) de la carte.
+     * @param {object} [casterActor=Constants.actorCurrent] - L'acteur lanceur.
+     *
+     * @returns {string[]} Les ids d'acteur affectés.
+     */
+    static resolveTargetActorIds(cardContent, casterActor = Constants.actorCurrent) {
+        return TargetingPredicates.resolveTargets(cardContent, casterActor)
+            .map(t => t?.document?.actorId ?? t?.actorId).filter(Boolean);
     }
 }

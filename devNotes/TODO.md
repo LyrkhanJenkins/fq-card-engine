@@ -6,6 +6,7 @@
 - No spellbook après montée jusqu'au niveau 4
 - Frappe arcanique cassé?
 - Bug avec le squelette géant
+- Ne pas publier gratuitement tous les decks? toutes les fonctionnalités?
 
 ### Questionnement
 - Reactif jouable a son tour?
@@ -20,8 +21,8 @@
 #### 3.0.0
 - Refaire une passe sur l'afficahge de la description (dépassemeent, faire du paddin plus revoir les font size?)
 - Problème avec les dé de vie et la constitution de la sorcière
-  - PV n'ont pas changé quand on a fait take average
-
+  - PV n'ont pas changé quand on a fait take average, les pv sont override (ptetre que dans les mondes générés)
+- Macro pour faire fin du tour?
 - A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Relire et faire un point sur la caracterisation avant tout

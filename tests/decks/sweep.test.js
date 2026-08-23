@@ -150,7 +150,14 @@ function sweepWorldOverridesFor(choice) {
                         y: worldFixture.myToken.y,
                         width: worldFixture.myToken.width,
                         height: worldFixture.myToken.height,
-                        object: {id: "sweep-my-object-token", name: worldFixture.character.name}
+                        // Le placeable du lanceur porte acteur et document : c'est la
+                        // forme rendue par la résolution « sans portée = sur soi ».
+                        object: {
+                            id: "sweep-my-object-token",
+                            name: worldFixture.character.name,
+                            actor: {_id: worldFixture.character.id, id: worldFixture.character.id},
+                            document: {name: worldFixture.character.name, actorId: worldFixture.character.id}
+                        }
                     },
                     {
                         id: worldFixture.target.tokenId,

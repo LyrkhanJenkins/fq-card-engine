@@ -27,7 +27,7 @@ function makeDamageCard(damage) {
         _id: "named-bonus-card",
         name: "FQCARDTITLE.NamedBonusTracer",
         face: 0,
-        system: {fq: {choices: [{damage, bonusCrit: "0", bonusEva: "0"}]}}
+        system: {fq: {choices: [{damage, minReach: "1", maxReach: "1", bonusCrit: "0", bonusEva: "0"}]}}
     };
 }
 

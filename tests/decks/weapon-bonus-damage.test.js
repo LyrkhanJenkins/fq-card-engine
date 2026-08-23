@@ -45,7 +45,7 @@ function makeCard(damage) {
         _id: "wpn-bonus-card",
         name: "FQCARDTITLE.WpnBonusTracer",
         face: 0,
-        system: {fq: {choices: [{damage, bonusCrit: "0", bonusEva: "0"}]}}
+        system: {fq: {choices: [{damage, minReach: "1", maxReach: "1", bonusCrit: "0", bonusEva: "0"}]}}
     };
 }
 

@@ -231,10 +231,17 @@ export function mountWorld(overrides = {}) {
     };
 
     const myToken = {
+        id: fixture.myToken.tokenId,
+        name: character.name,
         actorId: character.id,
+        actor: character,
         x: fixture.myToken.x, y: fixture.myToken.y,
         width: fixture.myToken.width, height: fixture.myToken.height
     };
+    // Placeable du token du lanceur : les cibles de `game.user.targets` sont des
+    // placeables, et la résolution « sort sans portée = sur soi » rend le token du
+    // lanceur sous la même forme (document + placeable), d'où ce miroir.
+    myToken.object = {id: myToken.id, actor: character, document: myToken};
     const targetToken = {
         actorId: fixture.target.actorId,
         x: fixture.target.x, y: fixture.target.y,

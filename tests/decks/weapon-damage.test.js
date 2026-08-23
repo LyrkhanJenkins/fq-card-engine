@@ -47,7 +47,7 @@ describe("@wpnR — dégâts de l'arme à distance (bout en bout)", () => {
             _id: "wpn-card",
             name: "FQCARDTITLE.WpnTracer",
             face: 0,
-            system: {fq: {choices: [{damage: "@wpnR", bonusCrit: "0", bonusEva: "0"}]}}
+            system: {fq: {choices: [{damage: "@wpnR", minReach: "1", maxReach: "1", bonusCrit: "0", bonusEva: "0"}]}}
         };
 
         const result = await playChoice(card, 0, {

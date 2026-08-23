@@ -28,26 +28,26 @@ describe("Damage", () => {
     });
 
     it("should build damage dice launcher with bonus", async () => {
-        const result = await Damage.buildDamageDiceLauncher(actor, "1d8", 1, -9999);
+        const result = await Damage.buildDamageDiceLauncher(actor, {damage: "1d8", bonusCrit: 1, bonusEva: -9999, minReach: 1, maxReach: 1});
         expect(result).toBeDefined();
         expect(result[0].value).toBeGreaterThan(0);
     });
 
     it("should build heal dice launcher with bonus", async () => {
-        const result = await Damage.buildHealDiceLauncher(actor, "1d8", 1);
+        const result = await Damage.buildHealDiceLauncher(actor, {heal: "1d8", bonusCrit: 1, minReach: 1, maxReach: 1});
         expect(result).toBeDefined();
         expect(result[0].value).toBeGreaterThan(0);
     });
 
     it("should add bonuses to heal", async () => {
-        const result = await Damage.addCriticalToHeal(actor, 10, 1);
+        const result = await Damage.addCriticalToHeal(actor, 10, {bonusCrit: 1, minReach: 1, maxReach: 1});
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
         expect(result[0].value >= 10).toBe(true);
     });
 
     it("should add bonuses to damage", async () => {
-        const result = await Damage.addCriticalEvasionToDamage(actor, 10, 1, -999);
+        const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: 1, bonusEva: -999, minReach: 1, maxReach: 1});
         expect(result).toBeDefined();
         expect(result.length).toBe(1);
         expect(result[0].value >= 10).toBe(true);
@@ -98,7 +98,7 @@ describe("Damage", () => {
                 actor: {_id: actor._id, system: {fq: {attributes: {evasion: 3}}}},
                 document: {name: "Self"}
             }]);
-            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0, minReach: 1, maxReach: 1});
             expect(result).toEqual([]);
         });
 
@@ -108,7 +108,7 @@ describe("Damage", () => {
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 15}}}},
                 document: {name: "Target1"}
             }]);
-            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0, minReach: 1, maxReach: 1});
             expect(result).toEqual([expect.objectContaining({value: 0, critical: false, evasion: true})]);
         });
 
@@ -118,7 +118,7 @@ describe("Damage", () => {
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 1}}}},
                 document: {name: "Target1"}
             }]);
-            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0, minReach: 1, maxReach: 1});
             expect(result).toEqual([expect.objectContaining({value: 10, critical: false, evasion: false})]);
         });
 
@@ -128,7 +128,7 @@ describe("Damage", () => {
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 1}}}},
                 document: {name: "Target1"}
             }]);
-            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: 20, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: 20, bonusEva: 0, minReach: 1, maxReach: 1});
             expect(result).toEqual([expect.objectContaining({value: 20, critical: true, evasion: false})]);
         });
 
@@ -138,7 +138,7 @@ describe("Damage", () => {
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 15}}}},
                 document: {name: "Target1"}
             }]);
-            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: 20, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: 20, bonusEva: 0, minReach: 1, maxReach: 1});
             expect(result).toEqual([expect.objectContaining({value: 10, critical: true, evasion: true})]);
         });
 
@@ -148,7 +148,7 @@ describe("Damage", () => {
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 1}}}},
                 document: {name: "Target1"}
             }]);
-            const result = await Damage.addCriticalEvasionToDamage(actor, -5, {bonusCrit: -999, bonusEva: 0});
+            const result = await Damage.addCriticalEvasionToDamage(actor, -5, {bonusCrit: -999, bonusEva: 0, minReach: 1, maxReach: 1});
             expect(result).toEqual([expect.objectContaining({value: 0})]);
         });
     });
@@ -157,15 +157,36 @@ describe("Damage", () => {
 
     describe("Damage — addCriticalToHeal", () => {
         it("should double the heal amount on critical", async () => {
-            const result = await Damage.addCriticalToHeal(actor, 10, {bonusCrit: 15});
+            const result = await Damage.addCriticalToHeal(actor, 10, {bonusCrit: 15, minReach: 1, maxReach: 1});
             expect(result[0].value).toBe(20);
             expect(result[0].critical).toBe(true);
         });
 
         it("should bound a negative heal to 0", async () => {
-            const result = await Damage.addCriticalToHeal(actor, -5, {bonusCrit: -999});
+            const result = await Damage.addCriticalToHeal(actor, -5, {bonusCrit: -999, minReach: 1, maxReach: 1});
             expect(result[0].value).toBe(0);
             expect(result[0].critical).toBe(false);
+        });
+
+        it("should heal the caster's own token when the card has no reach, whatever is targeted on the scene", async () => {
+            actor.id = "casterActorId";
+            const casterPlaceable = {
+                id: "casterTokenId",
+                actor,
+                document: {name: "Lanceur", actorId: actor.id}
+            };
+            game.canvas.scene.tokens = [{actorId: actor.id, object: casterPlaceable}];
+            game.user.targets = new Set([{
+                id: "token1",
+                actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 1}}}},
+                document: {name: "Cible de la scène"}
+            }]);
+
+            const result = await Damage.addCriticalToHeal(actor, 10, {bonusCrit: -999});
+
+            expect(result).toHaveLength(1);
+            expect(result[0].targetTokenId).toBe("casterTokenId");
+            expect(result[0].key).toContain("Lanceur");
         });
     });
 

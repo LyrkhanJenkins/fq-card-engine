@@ -1,0 +1,27 @@
+{
+  "name": "End Turn",
+  "type": "script",
+  "author": "eLD9iPNHJXGMQX6z",
+  "img": "icons/magic/time/hourglass-tilted-glowing-gold.webp",
+  "scope": "global",
+  "command": "const combat = game.combats.find(c => c.isActive);\nif (!combat?.started) {\n    ui.notifications.warn(game.i18n.localize(\"FQCARDENGINE.MacroErrorMsgEndTurnOutOfCombat\"));\n} else if (!game.user.isGM && combat.combatant?.actor?.id !== game.user.character?.id) {\n    ui.notifications.warn(game.i18n.localize(\"FQCARDENGINE.MacroErrorMsgEndTurnNotYourTurn\"));\n} else {\n    ChatMessage.create({\n        speaker: {user: game.user.character},\n        content: `<h3 style=\"color: darkgreen;\">${game.i18n.format(\"FQCARDENGINE.MacroMsgEndTurn\", {actorName: combat.combatant?.actor?.name ?? \"\"})}</h3>`\n    });\n    await combat.nextTurn();\n}",
+  "folder": null,
+  "flags": {},
+  "_id": "Kd7pQz2ExVnR9wLb",
+  "sort": 700000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "coreVersion": "13.347",
+    "systemId": "dnd5e",
+    "systemVersion": "3.0.4",
+    "createdTime": 1710428586165,
+    "modifiedTime": 1710428586165,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!macros!Kd7pQz2ExVnR9wLb"
+}

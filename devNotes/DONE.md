@@ -20,6 +20,7 @@ Feat :
 - Ciblage de tous les alliés, ciblage de tous les ennemis
 - Gestion des fx pour les zones
 - Macro et hud pour utiliser la première arme à distance équipée
+- Les chat messages mettent plus l'accent sur le résultat final
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

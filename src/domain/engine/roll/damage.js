@@ -11,6 +11,7 @@ import Constants, {
     SUCCESS_COLOR
 } from "../../constants.js";
 import Geometry from "../shared/geometry.js";
+import TargetingPredicates from "../shared/targeting-predicates.js";
 
 /**
  * Utilitaires de calcul et d'application des dégâts et des soins FQ : jets de dés
@@ -118,9 +119,9 @@ export default class Damage {
                 appearance: CRITICAL_DICE_APPEARANCE // dé rouge pour le critique
             }, dsnAnimations) >= critToReach;
         }
-        Constants.myTargets(cardContent.targetType).forEach(target => {
+        TargetingPredicates.resolveTargets(cardContent, actor).forEach(target => {
             healArray.push({
-                key: `Soins totaux sur "${target.document.name}"`,
+                key: `Soins totaux sur "${target.document?.name ?? target.name}"`,
                 value: critical ? heal * 2 : heal,
                 type: "healFQ",
                 critical,
@@ -158,7 +159,7 @@ export default class Damage {
      * @returns {Promise<object[]>} Le tableau des résultats de dégâts par cible.
      */
     static async addCriticalEvasionToDamage(actor, damages, cardContent, dsnAnimations = []) {
-        const myTargets = Constants.myTargets(cardContent.targetType);
+        const myTargets = TargetingPredicates.resolveTargets(cardContent, actor);
         if (damages < 0) {
             damages = 0;
         }
@@ -178,19 +179,19 @@ export default class Damage {
             let evaToReach = 21;
             let evasionScore = 0;
 
-            if (targetActor._id !== actor._id // no evasion is possible if self targeting
+            if (targetActor?._id !== actor?._id // no evasion is possible if self targeting
             ) {
-                if (targetActor.system?.fq?.attributes.evasion + cardContent.bonusEva > 0) { // or no evasion from the target
-                    evaToReach = 21 - targetActor.system?.fq?.attributes.evasion - cardContent.bonusEva;
+                if (targetActor?.system?.fq?.attributes.evasion + cardContent.bonusEva > 0) { // or no evasion from the target
+                    evaToReach = 21 - targetActor?.system?.fq?.attributes.evasion - cardContent.bonusEva;
                     evasionScore = await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
-                        color: EVASION_COLOR, title: `Esquive de "${target.document.name}"`,
+                        color: EVASION_COLOR, title: `Esquive de "${target.document?.name ?? target.name}"`,
                         success: evaToReach,
                         appearance: EVASION_DICE_APPEARANCE // dé bleu pour l'esquive
                     }, dsnAnimations);
                 }
                 if (evasionScore >= evaToReach) {
                     damagesArray.push({
-                        key: `Dégâts totaux sur "${target.document.name}"`,
+                        key: `Dégâts totaux sur "${target.document?.name ?? target.name}"`,
                         value: critical ? damages : 0,
                         critical,
                         evasion: true,
@@ -199,7 +200,7 @@ export default class Damage {
                     });
                 } else {
                     damagesArray.push({
-                        key: `Dégâts totaux sur "${target.document.name}"`,
+                        key: `Dégâts totaux sur "${target.document?.name ?? target.name}"`,
                         value: critical ? damages * 2 : damages,
                         critical,
                         evasion: false,
@@ -273,16 +274,18 @@ export default class Damage {
         // Apparence explicite sur chaque dé : critique/esquive = couleur forcée
         // (options.appearance), sinon couleur du joueur. Évite toute fuite en affichage simultané.
         Damage.applyDiceAppearance(roll, options.appearance);
-        // Add reroll button
-        let message = `<h2 style='color: ${options.color}'>${options.title}`;
+        // Entête discrète : ces jets ne sont que des étapes intermédiaires, le
+        // récapitulatif final (`displayResult`) doit rester le message dominant du chat.
+        let message = `<div class="fq-roll-flavor" style="color: ${options.color}">`
+            + `<span class="fq-roll-flavor-title">${options.title}</span>`;
 
         if (options.success != null && roll.total >= options.success) {
-            message += `: <b style="color: ${SUCCESS_COLOR};">SUCCÈS !</b> `;
+            message += `<span class="fq-roll-outcome" style="color: ${SUCCESS_COLOR};">SUCCÈS !</span>`;
         } else if (options.success != null) {
-            message += `: <i style="color: ${FAIL_COLOR};">échec...</i> `;
+            message += `<span class="fq-roll-outcome" style="color: ${FAIL_COLOR};">échec...</span>`;
         }
 
-        message += `</h2>`;
+        message += `</div>`;
 
         // Send chat message
         const msg = await roll.toMessage({
