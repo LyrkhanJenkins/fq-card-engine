@@ -73,24 +73,6 @@ const DAMAGE_TYPES = Object.keys(DAMAGE_TYPE_EMOJIS);
 const capitalize = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 /**
- * Table emoji → clé i18n de tooltip, dérivée des trois tables sources
- * (caractéristiques, armes, types de dégâts). Consommée par
- * `DisplayCard.wrapEmojiTooltips` et par `expandPills` (liste blanche
- * d'emojis autorisés à produire une pastille) pour envelopper chaque emoji
- * d'un `data-tooltip` Foundry (localisé automatiquement par le TooltipManager
- * pour les emojis simples ; déjà résolu pour les pastilles de source).
- * @type {Object<string, string>}
- */
-export const EMOJI_TOOLTIP_KEYS = {
-    ...Object.fromEntries(Object.entries(ABILITY_EMOJIS)
-        .map(([ability, emoji]) => [emoji, `FQCARDENGINE.TooltipAbility${capitalize(ability)}`])),
-    [WEAPON_EMOJIS["@wpnM"]]: "FQCARDENGINE.TooltipWeaponMelee",
-    [WEAPON_EMOJIS["@wpnR"]]: "FQCARDENGINE.TooltipWeaponRanged",
-    ...Object.fromEntries(Object.entries(DAMAGE_TYPE_EMOJIS)
-        .map(([type, emoji]) => [emoji, `FQCARDENGINE.TooltipDamage${capitalize(type)}`]))
-};
-
-/**
  * Table jeton → clé i18n du libellé de source utilisé dans le tooltip d'une
  * pastille (`FormulaDisplay.collectSourceDetails`) : les 6 caractéristiques
  * puis les 2 jetons d'arme.
@@ -105,6 +87,27 @@ export const SOURCE_LABEL_KEYS = {
     cha: "FQCARDENGINE.SourceAbilityCha",
     "@wpnM": "FQCARDENGINE.SourceWeaponMelee",
     "@wpnR": "FQCARDENGINE.SourceWeaponRanged"
+};
+
+/**
+ * Table emoji → clé i18n de tooltip, dérivée des trois tables sources
+ * (caractéristiques, armes, types de dégâts). Consommée par
+ * `DisplayCard.wrapEmojiTooltips` et par `expandPills` (liste blanche
+ * d'emojis autorisés à produire une pastille) pour envelopper chaque emoji
+ * d'un `data-tooltip` Foundry (localisé automatiquement par le TooltipManager
+ * pour les emojis simples ; déjà résolu pour les pastilles de source).
+ * Les caractéristiques réutilisent `SOURCE_LABEL_KEYS` : un même libellé sert
+ * au survol d'un emoji nu et au tooltip d'une pastille, il n'y a donc qu'UNE
+ * clé i18n par caractéristique à traduire et à maintenir.
+ * @type {Object<string, string>}
+ */
+export const EMOJI_TOOLTIP_KEYS = {
+    ...Object.fromEntries(Object.entries(ABILITY_EMOJIS)
+        .map(([ability, emoji]) => [emoji, SOURCE_LABEL_KEYS[ability]])),
+    [WEAPON_EMOJIS["@wpnM"]]: "FQCARDENGINE.TooltipWeaponMelee",
+    [WEAPON_EMOJIS["@wpnR"]]: "FQCARDENGINE.TooltipWeaponRanged",
+    ...Object.fromEntries(Object.entries(DAMAGE_TYPE_EMOJIS)
+        .map(([type, emoji]) => [emoji, `FQCARDENGINE.TooltipDamage${capitalize(type)}`]))
 };
 
 /**

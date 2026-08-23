@@ -378,7 +378,7 @@ describe("DisplayCard.wrapEmojiTooltips (AFF-04)", () => {
     it("enveloppe chaque emoji connu d'un span data-tooltip avec sa clé i18n", () => {
         expect(DisplayCard.wrapEmojiTooltips("2d6+4 (⚔️💪) [🔪]")).toBe(
             "2d6+4 (<span data-tooltip=\"FQCARDENGINE.TooltipWeaponMelee\">⚔️</span>" +
-            "<span data-tooltip=\"FQCARDENGINE.TooltipAbilityStr\">💪</span>) " +
+            "<span data-tooltip=\"FQCARDENGINE.SourceAbilityStr\">💪</span>) " +
             "[<span data-tooltip=\"FQCARDENGINE.TooltipDamageSlashing\">🔪</span>]"
         );
     });
