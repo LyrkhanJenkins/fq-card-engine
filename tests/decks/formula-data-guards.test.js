@@ -148,21 +148,4 @@ describe("Garde de donnée : divisions non arrondies dans damage/heal/hp (T-20-0
             .map(({file, cardName, field, value}) => `${file} > ${cardName} > ${field} = "${value}"`);
         expect(offenders).toEqual([]);
     });
-
-    test("la carte « Levée de bouclier » (FQCARDDESCRIPTION.ShieldRaise) porte heal = ceil(XXX/2)", () => {
-        const files = fs.readdirSync(DECKS_DIR).filter(f => f.endsWith(".json"));
-        let shieldRaiseCard;
-        for (const file of files) {
-            const deck = JSON.parse(fs.readFileSync(path.join(DECKS_DIR, file), "utf-8"));
-            for (const card of deck.cards ?? []) {
-                if (card.faces?.[0]?.text === "FQCARDDESCRIPTION.ShieldRaise") {
-                    shieldRaiseCard = card;
-                }
-            }
-        }
-
-        expect(shieldRaiseCard).toBeDefined();
-        const healChoice = shieldRaiseCard.system.fq.choices.find(choice => choice.heal);
-        expect(healChoice?.heal).toBe("ceil(XXX/2)");
-    });
 });

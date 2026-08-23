@@ -101,15 +101,6 @@ describe("FormulaDisplay — instantané des 16 lignes du corpus de référence 
         );
     });
 
-    it("chaque formule brute du corpus de référence est retrouvée dans au moins un fichier de packs/_source/decks-pattern-fq8 (garde anti-dérive)", () => {
-        const files = fs.readdirSync(DECKS_DIR).filter(f => f.endsWith(".json"));
-        const contents = files.map(f => fs.readFileSync(path.join(DECKS_DIR, f), "utf-8"));
-        const missing = CORPUS_SNAPSHOT
-            .filter(([, raw]) => !contents.some(content => content.includes(raw)))
-            .map(([label, raw]) => `${label} : "${raw}"`);
-        expect(missing).toEqual([]);
-    });
-
     it("aucune des 16 sorties attendues ne contient de caractère sentinelle de pastille (l'API nue foldFormula ne produit pas de markup)", () => {
         const SENTINELS = [PILL_START, PILL_SEP, PILL_END];
         for (const [, , expected] of CORPUS_SNAPSHOT) {

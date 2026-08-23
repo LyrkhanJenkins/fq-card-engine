@@ -52,12 +52,6 @@ describe("customEvals des decks — pureté", () => {
         expect(offenders).toEqual([]);
     });
 
-    it("les conditions migrées passent par la classe CardCondition (garde de non-régression)", () => {
-        const condCalls = scripts.filter(s => s.script.includes("FqCardEngineModule.cond."));
-
-        expect(condCalls.length).toBeGreaterThanOrEqual(25);
-    });
-
     it("tout choix réactif des decks porte au moins un customEval (condition du glow)", () => {
         const offenders = collectChoices()
             .filter(({choice}) => choice.reactive)

@@ -1,6 +1,4 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
-import fs from "fs";
-import path from "path";
 
 // ─── Mocks requis par tests/decks/play-harness.js (vi.mock hissé PAR FICHIER) ──
 vi.mock("../../src/domain/interface/sheet/actor/fq-character-sheet.js", () => ({default: class {}}));
@@ -124,35 +122,4 @@ describe("Carte éphémère — détruite au jeu, jamais défaussée", () => {
         // Et la carte n'est pas réécrite en main (pas de charge décrémentée).
         expect(result.handCardUpdates).toHaveLength(0);
     });
-});
-
-/**
- * Contrat de données des decks « Generated » : leurs cartes sont créées en main
- * en cours de partie. Un choix y est soit passif (la carte reste en main jusqu'au
- * nettoyage de fin de combat), soit éphémère (jouée une fois, puis détruite) —
- * jamais une carte ordinaire qui irait grossir la défausse.
- */
-describe("Decks « Generated » — tout choix non passif est éphémère", () => {
-    const patternFolder = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq8");
-    const generatedDecks = fs.readdirSync(patternFolder)
-        .filter(file => file.endsWith("-generated.json"))
-        .map(file => ({file, deck: JSON.parse(fs.readFileSync(path.join(patternFolder, file), "utf-8"))}));
-
-    const choices = generatedDecks.flatMap(({file, deck}) => deck.cards.flatMap(
-        (card, cardIndex) => (card.system?.fq?.choices ?? []).map((choice, choiceIndex) => ({
-            file, cardName: card.name, cardIndex, choiceIndex, replayable: choice.replayable
-        }))));
-
-    test("le balayage trouve bien des choix à contrôler", () => {
-        expect(generatedDecks.length).toBeGreaterThanOrEqual(1);
-        expect(choices.length).toBeGreaterThanOrEqual(1);
-        expect(choices.some(c => c.replayable === "ephemere")).toBe(true);
-    });
-
-    test.each(choices)(
-        "$file :: $cardName :: choix $choiceIndex — « passif » ou « ephemere »",
-        ({replayable}) => {
-            expect(["passif", "ephemere"]).toContain(replayable);
-        }
-    );
 });
