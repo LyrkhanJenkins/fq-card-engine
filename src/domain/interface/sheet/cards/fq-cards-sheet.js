@@ -91,6 +91,23 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
     }
 
     /**
+     * Trie les cartes affichées par niveau croissant, puis par nom localisé.
+     * Les cartes FQ n'ont ni enseigne ni valeur : le tri « standard » de Foundry
+     * (enseigne puis valeur) les laisserait toutes à égalité.
+     *
+     * @override
+     * @returns {Card[]} Les cartes du paquet, triées par niveau puis par nom.
+     */
+    _prepareCards() {
+        const level = card => {
+            const value = Number(card.system?.fq?.level);
+            return Number.isFinite(value) ? value : 0;
+        };
+        return this.document.cards.contents.sort((a, b) =>
+            level(a) - level(b) || game.i18n.localize(a.name).localeCompare(game.i18n.localize(b.name)));
+    }
+
+    /**
      * Action handler pour la suppression d'une carte, sans dialog de confirmation native.
      * @this {FqCardsSheet}
      * @param {PointerEvent} event

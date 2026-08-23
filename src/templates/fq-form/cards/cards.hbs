@@ -1,9 +1,9 @@
 <section class="tab cards{{#if tab.active}} active{{/if}}" data-group="{{tab.group}}" data-tab="{{tab.id}}">
     <header class="cards-header flexrow">
-        <a class="control sort-mode" data-action="toggleSort" data-tooltip="CARDS.ACTIONS.ToggleSortMode">
+        <span class="sort-mode" data-tooltip="FQCARDENGINE.SortedByLevel">
             <span>({{cards.length}})</span>
-            <i class="fa-solid fa-fw {{sortModeIcon}}"></i>
-        </a>
+            <i class="fa-solid fa-fw fa-arrow-up-1-9"></i>
+        </span>
         <strong class="name">{{localize "DOCUMENT.FIELDS.name.label"}}</strong>
         <span class="drawn">{{localize "FQCARDENGINE.CardLevel"}}</span>
         <span class="drawn">{{localize "FQCARDENGINE.MaxSameCardShort"}}</span>

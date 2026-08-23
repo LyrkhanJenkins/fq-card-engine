@@ -23,6 +23,7 @@ Feat :
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur
+- Carte triée par niveau puis par nom dans les decks , le bouton cassé est supprimé
 
 Chore :
 - Support de la version 14.366, 14.367
