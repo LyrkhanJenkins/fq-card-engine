@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import {forceDie, installDeterministicRoll, pushDie, resetDiceControl} from "./deterministic-roll.js";
 import {defaultFdFor} from "./fd-table.js";
-import ZoneTargeting from "../../src/domain/interface/shared/zone-targeting.js";
+import ZoneTargeting from "../../src/domain/interface/targeting/zone-targeting.js";
 
 /**
  * Socle du driver de test exhaustif (07-02) : monte un `game` Foundry cohérent

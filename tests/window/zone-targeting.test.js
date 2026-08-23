@@ -14,7 +14,7 @@ globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {mountWorld} = await import("../decks/play-harness.js");
 const {installDeterministicRoll, resetDiceControl} = await import("../decks/deterministic-roll.js");
-const ZoneTargeting = (await import("../../src/domain/interface/shared/zone-targeting.js")).default;
+const ZoneTargeting = (await import("../../src/domain/interface/targeting/zone-targeting.js")).default;
 const {makeChoice} = await import("../factories.js");
 
 /**

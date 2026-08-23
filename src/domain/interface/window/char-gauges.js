@@ -1,5 +1,5 @@
 import Constants from "../../constants.js";
-import DisplayCard from "../shared/display-card.js";
+import DisplayCard from "../card-svg/display-card.js";
 
 /**
  * Jauges du personnage dans le HUD (PV / action / mana / zèle) et bascule de leur

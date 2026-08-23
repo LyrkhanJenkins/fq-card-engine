@@ -14,7 +14,7 @@ globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {mountWorld} = await import("../decks/play-harness.js");
 const {installDeterministicRoll, resetDiceControl} = await import("../decks/deterministic-roll.js");
-const AdjacentTargeting = (await import("../../src/domain/interface/shared/adjacent-targeting.js")).default;
+const AdjacentTargeting = (await import("../../src/domain/interface/targeting/adjacent-targeting.js")).default;
 const {makeChoice} = await import("../factories.js");
 
 /**

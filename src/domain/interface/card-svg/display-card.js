@@ -2,6 +2,8 @@ import Constants from "../../constants.js";
 import RollService from "../../engine/roll/roll-service.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import FormulaDisplay, {ABILITY_EMOJIS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, FORMULA_FIELDS} from "./formula-display.js";
+import {WEAPON_TOKENS} from "../../engine/roll/weapon-damage.js";
+import {expandPills, makePill, PILL_SOURCE, sanitizePillInput, stripPills} from "./formula-pill.js";
 
 /**
  * Utilitaires de présentation d'une carte : extraction du titre, de la
@@ -39,18 +41,23 @@ export default class DisplayCard {
 
     /**
      * Retourne la taille de police adaptée à la longueur de la description, pour
-     * que le texte tienne dans la carte SVG.
+     * que le texte tienne dans la carte SVG. La mesure porte sur le texte
+     * VISIBLE (`stripPills`), pas sur le markup de pastille : sinon ajouter
+     * une pastille ferait artificiellement basculer toute description vers la
+     * plus petite police (critère de sortie 5, Phase 20).
      *
-     * @param {string} description - Le texte de description de la carte.
+     * @param {string} description - Le texte de description de la carte (peut contenir des marqueurs de pastille).
      *
      * @returns {number} La taille de police (px) à appliquer.
      */
     static getDescriptionSizeForCardSvg(description) {
+        // Protège contre une valeur non-chaîne, comme aujourd'hui.
+        const visible = typeof description === "string" ? stripPills(description) : (description ?? "").toString();
         let descriptionSize = {1: 40, 80: 36, 110: 34, 145: 30, 200: 26, 290: 22, 340: 20, 440: 18, 9999: 16};
         return descriptionSize[Object.keys(descriptionSize)
             .map(Number)
             .sort((a, b) => a - b)
-            .find(limit => description.length <= limit)];
+            .find(limit => visible.length <= limit)];
     }
 
     /**
@@ -114,10 +121,11 @@ export default class DisplayCard {
      *
      * @param {Card} c - La carte dont on extrait la description.
      * @param {number|null} [faceIndex] - Index de face à présenter (par défaut la face courante `c.face`). Permet de forcer la face avant lors d'une révélation.
+     * @param {{xValue: *, yValue: *}} [options] - Valeurs `X`/`Y` de la dialog de jeu, transmises à `FormulaDisplay.forDisplay` (symboliques si absentes).
      *
-     * @returns {string} La description formatée, prête à l'affichage.
+     * @returns {string} La description formatée, prête à l'affichage (peut contenir des marqueurs de pastille).
      */
-    static getDescriptionFromCard(c, faceIndex = c.face) {
+    static getDescriptionFromCard(c, faceIndex = c.face, options = {}) {
         let description = "";
         if (faceIndex != null) {
             if (!c.faces) {
@@ -129,13 +137,19 @@ export default class DisplayCard {
         if (faceIndex && !description) {
             description = c.data.faces[c.data.face].text;
         }
+        // Un seul acteur pour toute la description : les formules repliées et
+        // les jetons écrits dans la prose doivent parler du même personnage.
+        const actor = options.actor ?? Constants.actorCurrent;
         const flat = Object.fromEntries(
-            c.system.fq?.choices.flatMap((choice, i) =>
+            c.system?.fq?.choices?.flatMap((choice, i) =>
                 Object.entries(choice).map(([k, v]) =>
-                    [`${i}_${k}`, FORMULA_FIELDS.includes(k) ? FormulaDisplay.forDisplay(v) : v])
-            )
+                    [`${i}_${k}`, FORMULA_FIELDS.includes(k)
+                        ? FormulaDisplay.forDisplay(v, {...options, actor})
+                        : v])
+            ) ?? []
         );
-        return DisplayCard.transformForDescription(game.i18n.format(description, flat));
+        const sanitizedDescription = sanitizePillInput(description);
+        return DisplayCard.transformForDescription(game.i18n.format(sanitizedDescription, flat), actor);
     }
 
     /**
@@ -188,12 +202,25 @@ export default class DisplayCard {
      *
      * @returns {string} La chaîne transformée, prête à l'affichage.
      */
-    static transformForDescription(val) {
-        const abilities = Constants.actorAbi;
+    static transformForDescription(val, actor = Constants.actorCurrent) {
         if (typeof val === "string") {
             let result = val.replaceAll("XXX", "X").replaceAll("YYY", "Y");
-            for (const [ability, emoji] of Object.entries(ABILITY_EMOJIS)) {
-                result = result.replace(new RegExp(`@${ability}`, "g"), `${abilities?.[ability]?.mod}(${emoji})`);
+            for (const token of Object.keys(WEAPON_TOKENS)) {
+                if (result.includes(token)) {
+                    const {emoji, tooltip} = FormulaDisplay.weaponSourceDetail(token, actor);
+                    result = result.replaceAll(token, makePill(PILL_SOURCE, emoji, tooltip));
+                }
+            }
+            for (const ability of Object.keys(ABILITY_EMOJIS)) {
+                const token = `@${ability}`;
+                if (!result.includes(token)) {
+                    continue;
+                }
+                const {emoji, mod, tooltip} = FormulaDisplay.abilitySourceDetail(ability, actor);
+                const replacement = mod === null
+                    ? makePill(PILL_SOURCE, emoji, tooltip)
+                    : `${mod} ${makePill(PILL_SOURCE, emoji, tooltip)}`;
+                result = result.replaceAll(token, replacement);
             }
             for (const [type, emoji] of Object.entries(DAMAGE_TYPE_EMOJIS)) {
                 result = result.replace(new RegExp(`\\[${type}]`, "g"), `[${emoji}]`);
@@ -206,27 +233,36 @@ export default class DisplayCard {
     /**
      * Enveloppe chaque emoji connu (caractéristiques, armes, types de dégâts)
      * d'un `<span data-tooltip="…">` pour le tooltip natif Foundry, localisé
-     * automatiquement par le TooltipManager. Le texte est d'abord échappé HTML
-     * (la description devient du markup via le helper `fqEmojiTooltips` de
-     * `card-svg.hbs`) — les emojis ne sont pas affectés par l'échappement.
+     * automatiquement par le TooltipManager, ET développe les marqueurs de
+     * pastille produits par `FormulaDisplay.forDisplay` en `<span
+     * class="fq-formula-pill …">`. Le texte est d'abord échappé HTML EN
+     * ENTIER (la description devient du markup via le helper `fqEmojiTooltips`
+     * de `card-svg.hbs`) — ORDRE NON NÉGOCIABLE : échapper d'abord, produire
+     * le markup ensuite. C'est cet ordre qui garantit qu'un nom d'arme ou une
+     * donnée de carte contenue dans le tooltip d'un marqueur ressort échappée
+     * (jamais de balise injectable) : `expandPills` lit le tooltip DÉJÀ
+     * échappé et le place tel quel dans l'attribut `data-tooltip`.
      *
      * @param {*} text - La description transformée (renvoyée telle quelle si non-string).
      *
-     * @returns {*} Le HTML avec les emojis porteurs de tooltip, ou `text` inchangé.
+     * @returns {*} Le HTML avec les emojis et pastilles porteurs de tooltip, ou `text` inchangé.
      */
     static wrapEmojiTooltips(text) {
         if (typeof text !== "string") {
             return text;
         }
-        let escaped = text
+        const escaped = text
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;");
-        for (const [emoji, key] of Object.entries(EMOJI_TOOLTIP_KEYS)) {
-            escaped = escaped.replaceAll(emoji, `<span data-tooltip="${key}">${emoji}</span>`);
-        }
-        return escaped;
+        return expandPills(escaped, Object.keys(EMOJI_TOOLTIP_KEYS), chunk => {
+            let result = chunk;
+            for (const [emoji, key] of Object.entries(EMOJI_TOOLTIP_KEYS)) {
+                result = result.replaceAll(emoji, `<span data-tooltip="${key}">${emoji}</span>`);
+            }
+            return result;
+        });
     }
 
     /**

@@ -1,7 +1,7 @@
 import Constants from "../../constants.js";
 import CardGenerated from "../../engine/shared/card-generated.js";
 import TradingCards, {DECK_TYPE, PILE_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
-import DisplayCard from "../shared/display-card.js";
+import DisplayCard from "../card-svg/display-card.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
 import {createWarning} from "../../../core/utils/chat.utils.js";
 

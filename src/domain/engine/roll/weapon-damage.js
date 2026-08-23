@@ -144,7 +144,7 @@ export default class WeaponDamage {
      * Déclenche l'usage de la première arme équipée d'un acteur du type demandé
      * (`@wpnM` mêlée / `@wpnR` distance), après validation que c'est bien son tour
      * de combat. Avertit si aucune arme du type n'est équipée. Logique partagée
-     * entre les boutons du HUD de token (`shared/token-hud.js`) et les macros de
+     * entre les boutons du HUD de token (`token-hud.js`) et les macros de
      * combat (`FqCardEngineModule.rollCurrentCombattantWeaponDamage`).
      *
      * @param {object} actor       - L'acteur qui porte les armes.

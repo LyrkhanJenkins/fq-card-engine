@@ -24,7 +24,7 @@ const {mountWorld, ensureEngineLoaded} = await import("../decks/play-harness.js"
 const {installDeterministicRoll, resetDiceControl} = await import("../decks/deterministic-roll.js");
 const PlayCard = (await import("../../src/domain/engine/play-card.js")).default;
 const Constants = (await import("../../src/domain/constants.js")).default;
-const ZoneTargeting = (await import("../../src/domain/interface/shared/zone-targeting.js")).default;
+const ZoneTargeting = (await import("../../src/domain/interface/targeting/zone-targeting.js")).default;
 const {makeCard, makeChoice} = await import("../factories.js");
 
 await ensureEngineLoaded();

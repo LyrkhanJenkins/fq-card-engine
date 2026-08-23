@@ -1,5 +1,5 @@
 import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
-import DisplayCard from "../shared/display-card.js";
+import DisplayCard from "../card-svg/display-card.js";
 import CardCondition from "../../engine/shared/card-condition.js";
 
 const GENERATED_GLOW_DURATION_MS = 24000;

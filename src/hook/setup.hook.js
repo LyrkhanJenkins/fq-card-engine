@@ -5,7 +5,7 @@ import FqNpcSheet from "../domain/interface/sheet/actor/fq-npc-sheet.js";
 import FqItemSheet from "../domain/interface/sheet/items/fq-item-sheet.js";
 import FqCardsSheet from "../domain/interface/sheet/cards/fq-cards-sheet.js";
 import FqCardSheet from "../domain/interface/sheet/cards/fq-card-sheet.js";
-import DisplayCard from "../domain/interface/shared/display-card.js";
+import DisplayCard from "../domain/interface/card-svg/display-card.js";
 
 Hooks.on("setup", function () {
     // Helper de tooltips sur les emojis des cartes : la description devient du

@@ -1,5 +1,5 @@
 import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../../trading/trading-cards.js";
-import DisplayCard from "../../shared/display-card.js";
+import DisplayCard from "../../card-svg/display-card.js";
 
 /**
  * Feuille de configuration d'un jeu de cartes (deck / spellbook) FQ.

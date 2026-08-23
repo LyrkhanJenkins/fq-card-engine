@@ -297,3 +297,34 @@
     border-radius: 3%;
     overflow: hidden;
 }
+
+/* Pastilles de formule (Phase 20) : sources de modification (arme,
+   caractéristique) et type de dégâts, sorties du texte de description au
+   profit d'un tooltip chiffré. Une seule teinte neutre pour les deux
+   variants -- pas de coloration par type de dégâts (D-11). */
+.fq-card-description-box {
+    overflow: hidden;
+}
+
+.fq-card-description {
+    line-height: 1.15;
+}
+
+.fq-formula-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1px;
+    padding: 0 2px;
+    border-radius: 4px;
+    vertical-align: middle;
+    line-height: 1;
+    background: rgba(var(--fq-ink-rgb), 0.97);
+    border: 0.5px solid var(--fq-gold-dark);
+}
+
+.fq-formula-pill--src,
+.fq-formula-pill--type {
+    background: rgba(var(--fq-ink-rgb), 0.97);
+    border: 0.5px solid var(--fq-gold-dark);
+}

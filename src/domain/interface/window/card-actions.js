@@ -1,9 +1,9 @@
 import Constants from "../../constants.js";
-import DisplayCard from "../shared/display-card.js";
-import TargetingView from "../shared/targeting-view.js";
-import ZoneTargeting from "../shared/zone-targeting.js";
-import AdjacentTargeting from "../shared/adjacent-targeting.js";
-import CombatTargeting from "../shared/combat-targeting.js";
+import DisplayCard from "../card-svg/display-card.js";
+import TargetingView from "../targeting/targeting-view.js";
+import ZoneTargeting from "../targeting/zone-targeting.js";
+import AdjacentTargeting from "../targeting/adjacent-targeting.js";
+import CombatTargeting from "../targeting/combat-targeting.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
 import Minion from "../../engine/shared/minion.js";
 import PlayCard from "../../engine/play-card.js";
@@ -253,6 +253,16 @@ export default {
                 if (targetingBar) updateBar(view);
             };
 
+            const refreshDescription = () => {
+                const box = root.querySelector(".fq-card-description-box");
+                const span = box?.querySelector(".fq-card-description");
+                if (!box || !span) return;
+                const {fd} = this.getCardContent(root, cardContents, discards);
+                const description = DisplayCard.getDescriptionFromCard(card, card.face, {xValue: fd.XXX, yValue: fd.YYY});
+                span.innerHTML = DisplayCard.wrapEmojiTooltips(description);
+                box.style.fontSize = `${DisplayCard.getDescriptionSizeForCardSvg(description)}px`;
+            };
+
             // Sortie du mode ciblage : revient à l'outil « select », restaure la dialog
             // (jamais fermée → état préservé) et rafraîchit le panneau avec les cibles finales.
             const exitTargeting = async () => {
@@ -317,7 +327,10 @@ export default {
             };
             acquireIfAutomatic();
             root.querySelectorAll("input[name=\"XXX\"], input[name=\"YYY\"]")
-                .forEach(el => el.addEventListener("change", () => acquireIfAutomatic()));
+                .forEach(el => el.addEventListener("change", () => {
+                    acquireIfAutomatic();
+                    refreshDescription();
+                }));
 
             // Boutons « 🎯 Cibler » / « ⭕ Poser la zone » : listeners DÉLÉGUÉS sur
             // `root` (survivent au re-rendu du panneau).
@@ -339,6 +352,7 @@ export default {
                 ZoneTargeting.clearPlacement();
                 acquireIfAutomatic();
                 renderPanel();
+                refreshDescription();
             });
             // Nettoyage obligatoire à la fermeture de CETTE dialog : retirer le hook
             // targetToken (pas de fuite), enlever la barre et revenir à l'outil « select »

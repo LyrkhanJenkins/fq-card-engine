@@ -1,5 +1,5 @@
 import Constants from "../domain/constants.js";
-import TokenHud from "../domain/interface/shared/token-hud.js";
+import TokenHud from "../domain/interface/token-hud.js";
 
 Hooks.on("renderTokenHUD", (hud, html, data) => {
     // Les contrôles natifs du HUD ne sont retirés aux joueurs que lorsque la

@@ -1,6 +1,6 @@
-import Constants from "../../constants.js";
-import WeaponDamage from "../../engine/roll/weapon-damage.js";
-import {socket} from "../../../hook/integration/socketlib.hook.js";
+import Constants from "../constants.js";
+import WeaponDamage from "../engine/roll/weapon-damage.js";
+import {socket} from "../../hook/integration/socketlib.hook.js";
 
 /**
  * Gestion des boutons personnalisés ajoutés au HUD des tokens (dégâts, sacrifice

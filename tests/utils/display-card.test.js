@@ -1,8 +1,12 @@
 import {beforeEach, describe, expect, it, vi} from "vitest";
 import fs from "fs";
 import path from "path";
-import DisplayCard from "../../src/domain/interface/shared/display-card.js";
-import {ABILITY_EMOJIS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, WEAPON_EMOJIS} from "../../src/domain/interface/shared/formula-display.js";
+import DisplayCard from "../../src/domain/interface/card-svg/display-card.js";
+import FormulaDisplay, {
+    ABILITY_EMOJIS, CAP_LABEL_KEYS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, SOURCE_LABEL_KEYS, WEAPON_EMOJIS
+} from "../../src/domain/interface/card-svg/formula-display.js";
+import {expandPills, makePill, PILL_SOURCE, PILL_TYPE, sanitizePillInput, stripPills} from "../../src/domain/interface/card-svg/formula-pill.js";
+import {actorWith, makeReferenceActor, NEUTRAL_ABILITIES, REFERENCE_ABILITIES} from "./formula-fixtures.js";
 
 describe("DisplayCard.simplifyExpression", () => {
 
@@ -109,11 +113,43 @@ describe("DisplayCard.getNumberForBubbleCardSvg", () => {
 });
 
 describe("DisplayCard.getDescriptionSizeForCardSvg / getTitleSizeForCardSvg", () => {
-    it("choisit la taille de police en franchissant les seuils de longueur de description", () => {
+    it("choisit la taille de police en franchissant les seuils de longueur de description (aucun marqueur, table historique inchangée)", () => {
         expect(DisplayCard.getDescriptionSizeForCardSvg("a".repeat(1))).toBe(40);
         expect(DisplayCard.getDescriptionSizeForCardSvg("a".repeat(80))).toBe(36);
         expect(DisplayCard.getDescriptionSizeForCardSvg("a".repeat(81))).toBe(34);
         expect(DisplayCard.getDescriptionSizeForCardSvg("a".repeat(500))).toBe(16);
+    });
+
+    it("mesure le texte VISIBLE : la taille pour une description à pastilles est celle de son texte visible (stripPills), pas celle du markup brut", () => {
+        const withPills = "a".repeat(80)
+            + makePill(PILL_SOURCE, "⚔️", "FQCARDENGINE.SourceWeaponMelee — Épée longue (1d8 + 3)")
+            + makePill(PILL_SOURCE, "💪", "FQCARDENGINE.SourceAbilityStr (+3)")
+            + makePill(PILL_TYPE, "🔪", "FQCARDENGINE.TooltipDamageSlashing");
+        // Le markup brut (avec les trois pastilles) est bien plus long que le
+        // texte visible qu'il représente une fois développé.
+        expect(withPills.length).toBeGreaterThan(stripPills(withPills).length);
+        expect(DisplayCard.getDescriptionSizeForCardSvg(withPills))
+            .toBe(DisplayCard.getDescriptionSizeForCardSvg(stripPills(withPills)));
+    });
+
+    it("un seuil de longueur VISIBLE franchi change bien la taille, même si le markup ajoute des centaines de caractères invisibles", () => {
+        // Un tooltip très long (300 caractères) gonfle la longueur BRUTE du
+        // marqueur très au-delà de 80/81, sans rien ajouter au texte visible
+        // (le marqueur se réduit toujours à son seul emoji sous stripPills).
+        const pill = makePill(PILL_TYPE, "🔪", "x".repeat(300));
+        const visibleLen = "🔪".length;
+        const under = "a".repeat(80 - visibleLen) + pill;
+        const over = "a".repeat(81 - visibleLen) + pill;
+        expect(under.length).toBeGreaterThan(300);
+        expect(DisplayCard.getDescriptionSizeForCardSvg(under)).toBe(36);
+        expect(DisplayCard.getDescriptionSizeForCardSvg(over)).toBe(34);
+    });
+
+    it("une description sans aucun marqueur traverse stripPills sans être altérée (identité)", () => {
+        const plain = "Inflige 1d6 dégâts, sans aucune pastille.";
+        expect(stripPills(plain)).toBe(plain);
+        expect(DisplayCard.getDescriptionSizeForCardSvg(plain))
+            .toBe(DisplayCard.getDescriptionSizeForCardSvg(stripPills(plain)));
     });
 
     it("choisit la taille de police en franchissant les seuils de longueur de titre", () => {
@@ -169,7 +205,7 @@ describe("DisplayCard.getDescriptionFromCard", () => {
         game.user.character.system.abilities = {str: {mod: 2}};
         const card = {face: 1, faces: {1: {text: "Desc @str"}}, system: {fq: {choices: []}}};
         const result = DisplayCard.getDescriptionFromCard(card);
-        expect(result).toBe("Desc 2(💪){}");
+        expect(stripPills(result)).toBe("Desc 2 💪{}");
     });
 
     it("retombe sur data.faces[data.face].text quand faces est absent", () => {
@@ -192,6 +228,57 @@ describe("DisplayCard.getDescriptionFromCard", () => {
         expect(game.i18n.format).toHaveBeenCalledWith("Text", {
             "0_action": "1d4", "0_mana": "", "1_damage": "2d6"
         });
+    });
+
+    it("assainit le texte de description AVANT game.i18n.format : un marqueur forgé dans la traduction ne survit pas (T-20-02)", () => {
+        const sentinel = String.fromCharCode(1) + "type" + String.fromCharCode(31)
+            + "🔪" + String.fromCharCode(31) + "FORGE" + String.fromCharCode(2);
+        const forged = `Text${sentinel}`;
+        const card = {face: 0, faces: {0: {text: forged}}, system: {fq: {choices: []}}};
+        const result = DisplayCard.getDescriptionFromCard(card);
+        const [calledTemplate] = game.i18n.format.mock.calls.at(-1);
+        expect(calledTemplate).not.toContain(String.fromCharCode(1));
+        expect(calledTemplate).toBe("Texttype🔪FORGE");
+        expect(result).not.toContain("<span");
+    });
+
+    it("passe damage/heal/hp par FormulaDisplay.forDisplay avec l'acteur courant : la valeur transmise porte des marqueurs de pastille", () => {
+        game.user.character = {
+            items: [],
+            system: {abilities: {str: {mod: 2}, dex: {mod: 0}, con: {mod: 0}, int: {mod: 0}, wis: {mod: 0}, cha: {mod: 0}}}
+        };
+        const card = {
+            face: 0,
+            faces: {0: {text: "{0_damage}"}},
+            system: {fq: {choices: [{damage: "1d6+@str[fire]"}]}}
+        };
+        DisplayCard.getDescriptionFromCard(card);
+        const [, calledArgs] = game.i18n.format.mock.calls.at(-1);
+        expect(stripPills(calledArgs["0_damage"])).toBe("1d6+2 💪🔥");
+    });
+
+    it("propage xValue/yValue (options) jusqu'à FormulaDisplay.forDisplay : XXX devient numérique quand la valeur est fournie", () => {
+        game.user.character = {items: [], system: {abilities: {}}};
+        const card = {
+            face: 0,
+            faces: {0: {text: "{0_damage}"}},
+            system: {fq: {choices: [{damage: "XXXd6"}]}}
+        };
+        DisplayCard.getDescriptionFromCard(card, card.face, {xValue: 3});
+        const [, calledArgs] = game.i18n.format.mock.calls.at(-1);
+        expect(stripPills(calledArgs["0_damage"])).toBe("3d6");
+    });
+
+    it("sans options (les 3 autres sites d'appel : main, compendium, voile), XXX reste symbolique", () => {
+        game.user.character = {items: [], system: {abilities: {}}};
+        const card = {
+            face: 0,
+            faces: {0: {text: "{0_damage}"}},
+            system: {fq: {choices: [{damage: "XXXd6"}]}}
+        };
+        DisplayCard.getDescriptionFromCard(card);
+        const [, calledArgs] = game.i18n.format.mock.calls.at(-1);
+        expect(stripPills(calledArgs["0_damage"])).toBe("Xd6");
     });
 });
 
@@ -240,7 +327,12 @@ describe("DisplayCard.transformForDescription", () => {
             int: {mod: 3}, wis: {mod: -1}, cha: {mod: 0}, str: {mod: 2}, dex: {mod: 1}, con: {mod: 4}
         };
         const result = DisplayCard.transformForDescription("@int @wis @cha @str @dex @con");
-        expect(result).toBe("3(🧠) -1(🦉) 0(✨️) 2(💪) 1(🎯) 4(❤️)");
+        // Même langage visuel que les formules repliées : la valeur, puis une
+        // pastille de source à tooltip (et non plus le format inline mod(emoji)).
+        expect(stripPills(result)).toBe("3 🧠 -1 🦉 0 ✨️ 2 💪 1 🎯 4 ❤️");
+        expect(result).toContain(makePill(PILL_SOURCE, "🧠", "FQCARDENGINE.SourceAbilityInt (+3)"));
+        expect(result).toContain(makePill(PILL_SOURCE, "🦉", "FQCARDENGINE.SourceAbilityWis (-1)"));
+        expect(result).toContain(makePill(PILL_SOURCE, "✨️", "FQCARDENGINE.SourceAbilityCha (+0)"));
     });
 
     it("substitue les tokens de type de dégâts par leur symbole", () => {
@@ -265,6 +357,20 @@ describe("DisplayCard.transformForDescription", () => {
         for (const [type, emoji] of Object.entries(DAMAGE_TYPE_EMOJIS)) {
             expect(DisplayCard.transformForDescription(`[${type}]`)).toBe(`[${emoji}]`);
         }
+    });
+
+    it("D-15 : sans personnage assigné, rend le jeton symbolique porteur de l'emoji, sans valeur numérique inventée (bug undefined(🧠) corrigé)", () => {
+        game.user.character.system.abilities = {};
+        const unresolved = DisplayCard.transformForDescription("@int");
+        expect(stripPills(unresolved)).toBe("🧠");
+        expect(unresolved).toBe(makePill(PILL_SOURCE, "🧠", "FQCARDENGINE.SourceAbilityInt"));
+    });
+
+    it("D-15 : avec un personnage assigné, le comportement reste inchangé (non-régression)", () => {
+        game.user.character.system.abilities = {int: {mod: 3}};
+        const resolved = DisplayCard.transformForDescription("@int");
+        expect(stripPills(resolved)).toBe("3 🧠");
+        expect(resolved).toBe(`3 ${makePill(PILL_SOURCE, "🧠", "FQCARDENGINE.SourceAbilityInt (+3)")}`);
     });
 });
 
@@ -301,6 +407,131 @@ describe("DisplayCard.wrapEmojiTooltips (AFF-04)", () => {
             expect(fr[key], `clé fr manquante : ${key}`).toBeTruthy();
             expect(en[key], `clé en manquante : ${key}`).toBeTruthy();
         }
+    });
+
+    it("chaque clé de SOURCE_LABEL_KEYS, plus SourceWeaponNone et SourceAbilityUnknown, existe dans lang/fr.json ET lang/en.json", () => {
+        const fr = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../lang/fr.json"), "utf-8"));
+        const en = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../lang/en.json"), "utf-8"));
+        const keys = [
+            ...Object.values(SOURCE_LABEL_KEYS),
+            "FQCARDENGINE.SourceWeaponNone",
+            "FQCARDENGINE.SourceAbilityUnknown"
+        ];
+        for (const key of keys) {
+            expect(fr[key], `clé fr manquante : ${key}`).toBeTruthy();
+            expect(en[key], `clé en manquante : ${key}`).toBeTruthy();
+        }
+    });
+
+    it("chaque clé de CAP_LABEL_KEYS (plafonds min/max, D-06) existe dans lang/fr.json ET lang/en.json", () => {
+        const fr = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../lang/fr.json"), "utf-8"));
+        const en = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../lang/en.json"), "utf-8"));
+        for (const key of Object.values(CAP_LABEL_KEYS)) {
+            expect(fr[key], `clé fr manquante : ${key}`).toBeTruthy();
+            expect(en[key], `clé en manquante : ${key}`).toBeTruthy();
+        }
+    });
+
+    it("développe un marqueur de pastille (échappé) en <span class=\"fq-formula-pill …\">, après échappement HTML", () => {
+        const pill = makePill(PILL_SOURCE, "⚔️", "FQCARDENGINE.SourceWeaponMelee — Épée <bâtarde> (1d8 + 3)");
+        const wrapped = DisplayCard.wrapEmojiTooltips(`1d8+3 ${pill}`);
+        expect(wrapped).toBe(
+            "1d8+3 <span class=\"fq-formula-pill fq-formula-pill--src\" " +
+            "data-tooltip=\"FQCARDENGINE.SourceWeaponMelee — Épée &lt;bâtarde&gt; (1d8 + 3)\">⚔️</span>"
+        );
+    });
+
+    it("expandPills : un texte sans marqueur (juste le mot \"src\") ne produit jamais de balise (ce n'est pas un marqueur)", () => {
+        const html = expandPills(`a${PILL_SOURCE}b`, ["a"], c => c);
+        expect(html).not.toContain("fq-formula-pill");
+        expect(html).toBe("asrcb");
+    });
+});
+
+describe("DisplayCard — pastilles : contrat de rendu (D-11, Task 3 plan 20-05)", () => {
+    it("les 13 types de dégâts (DAMAGE_TYPE_EMOJIS) produisent tous EXACTEMENT la même classe CSS de pastille — aucune coloration par élément", () => {
+        expect(Object.keys(DAMAGE_TYPE_EMOJIS).length).toBe(13);
+        const classes = new Set();
+        for (const emoji of Object.values(DAMAGE_TYPE_EMOJIS)) {
+            const wrapped = DisplayCard.wrapEmojiTooltips(makePill(PILL_TYPE, emoji, EMOJI_TOOLTIP_KEYS[emoji]));
+            const match = wrapped.match(/class="([^"]+)"/);
+            expect(match, `pas de pastille produite pour ${emoji}`).not.toBeNull();
+            classes.add(match[1]);
+        }
+        expect([...classes]).toEqual(["fq-formula-pill fq-formula-pill--type"]);
+    });
+
+    it("le tooltip de la pastille d'arme nomme l'arme équipée ET sa formule de dégâts chiffrée (acteur de référence, 20-CONTEXT.md)", () => {
+        const actor = makeReferenceActor();
+        game.user.character = {items: actor.items, system: {abilities: {...REFERENCE_ABILITIES}}};
+        const card = {
+            face: 0,
+            faces: {0: {text: "{0_damage}"}},
+            system: {fq: {choices: [{damage: "(@wpnM)[slashing]"}]}}
+        };
+        DisplayCard.getDescriptionFromCard(card);
+        const [, calledArgs] = game.i18n.format.mock.calls.at(-1);
+        const wrapped = DisplayCard.wrapEmojiTooltips(calledArgs["0_damage"]);
+        expect(wrapped).toContain(
+            "data-tooltip=\"FQCARDENGINE.SourceWeaponMelee — Épée longue (1d8 + 3)\""
+        );
+    });
+
+    it("le tooltip de la pastille de caractéristique nomme la caractéristique ET porte une contribution SIGNÉE", () => {
+        const actor = makeReferenceActor();
+        game.user.character = {items: actor.items, system: {abilities: {...REFERENCE_ABILITIES}}};
+        const card = {
+            face: 0,
+            faces: {0: {text: "{0_damage}"}},
+            system: {fq: {choices: [{damage: "(@int)[fire]"}]}}
+        };
+        DisplayCard.getDescriptionFromCard(card);
+        const [, calledArgs] = game.i18n.format.mock.calls.at(-1);
+        const wrapped = DisplayCard.wrapEmojiTooltips(calledArgs["0_damage"]);
+        expect(wrapped).toMatch(/data-tooltip="FQCARDENGINE\.SourceAbilityInt \(\+4\)"/);
+    });
+
+    it("la taille de police d'une description complète à pastilles (arme + caractéristique + type) reste identique à celle de son texte visible (critère de sortie 5)", () => {
+        const withPills = "Inflige "
+            + makePill(PILL_SOURCE, "⚔️", "FQCARDENGINE.SourceWeaponMelee — Épée longue (1d8 + 3)")
+            + makePill(PILL_SOURCE, "💪", "FQCARDENGINE.SourceAbilityStr (+3)")
+            + makePill(PILL_TYPE, "🔪", "FQCARDENGINE.TooltipDamageSlashing")
+            + " points de dégâts.";
+        expect(DisplayCard.getDescriptionSizeForCardSvg(withPills))
+            .toBe(DisplayCard.getDescriptionSizeForCardSvg(stripPills(withPills)));
+    });
+
+    it("la sortie de wrapEmojiTooltips sur une description complète (arme, caractéristique, type) a ses balises <span> équilibrées (T-20-16)", () => {
+        const actor = makeReferenceActor();
+        game.user.character = {items: actor.items, system: {abilities: {...REFERENCE_ABILITIES}}};
+        const folded = FormulaDisplay.forDisplay("(@wpnM + @int)[slashing]", actor);
+        const wrapped = DisplayCard.wrapEmojiTooltips(folded);
+        const openCount = (wrapped.match(/<span /g) ?? []).length;
+        const closeCount = (wrapped.match(/<\/span>/g) ?? []).length;
+        expect(openCount).toBeGreaterThan(0);
+        expect(openCount).toBe(closeCount);
+    });
+});
+
+describe("DisplayCard — périmètres exclus : non-régression (D-12, D-13, Task 3 plan 20-05)", () => {
+    it("une formule à bonus nommé (@bonus.serenityRune) produit EXACTEMENT le même nombre de pastilles que sans ce jeton (D-12)", () => {
+        game.user.character = {
+            items: [],
+            system: {abilities: {...NEUTRAL_ABILITIES}, fq: {bonus: {cards: {serenityRune: 2}}}}
+        };
+        const countPills = s => (s.match(/class="fq-formula-pill/g) ?? []).length;
+        const withoutBonus = DisplayCard.wrapEmojiTooltips(FormulaDisplay.forDisplay("1d6+@str[fire]", actorWith()));
+        const withBonus = DisplayCard.wrapEmojiTooltips(
+            FormulaDisplay.forDisplay("1d6+@str+@bonus.serenityRune[fire]", actorWith())
+        );
+        expect(countPills(withBonus)).toBe(countPills(withoutBonus));
+    });
+
+    it("DisplayCard.getNumberForBubbleCardSvg et DisplayCard.simplifyExpression conservent leur comportement historique (D-13, bulles rondes hors périmètre)", () => {
+        expect(DisplayCard.simplifyExpression("5 + 3 + 4*X")).toBe("8+4X");
+        expect(DisplayCard.simplifyExpression("1+5")).toBe("6");
+        expect(DisplayCard.getNumberForBubbleCardSvg("")).toBe("0");
+        expect(DisplayCard.getNumberForBubbleCardSvg("999999").toString()).toBe("∞");
     });
 });
 
