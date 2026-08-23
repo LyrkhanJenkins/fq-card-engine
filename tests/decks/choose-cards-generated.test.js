@@ -191,13 +191,14 @@ describe("chooseCardsList à référence unique — copie d'une carte de compend
 });
 
 /**
- * Horodatage des passifs générés : la version « après première utilisation » d'un
- * passif remplace une carte dont l'effet vient d'être appliqué, elle ne doit donc
- * pas être rejouable avant le round suivant. Le marquage est porté par la donnée
- * de la carte générée (`replayable: "passif"` + `hasBeenPlayed`), la copie ne
- * fait que compléter le round courant ; toute autre carte reste intacte.
+ * Horodatage des choix générés marqués joués : la copie arrive en main épuisée
+ * pour le round de sa création et n'est jouable qu'à partir du round suivant —
+ * qu'il s'agisse de la version « après première utilisation » d'un passif ou
+ * d'une carte éphémère volontairement différée. Le marquage est porté par la
+ * donnée de la carte générée (`hasBeenPlayed`), la copie ne fait que compléter le
+ * round courant ; toute autre carte reste intacte.
  */
-describe("chooseCardsList — passifs générés marqués joués au round courant", () => {
+describe("chooseCardsList — choix générés marqués joués au round courant", () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
@@ -224,7 +225,7 @@ describe("chooseCardsList — passifs générés marqués joués au round couran
 
         expect(result.threw).toBe(false);
         const [, [data]] = result.generatedCards[0];
-        expect(data.system.fq.choices[0].passivePlayedRound).toBe("3");
+        expect(data.system.fq.choices[0].playedRound).toBe("3");
     });
 
     test("un choix passif non déclaré joué n'est pas horodaté", async () => {
@@ -235,21 +236,21 @@ describe("chooseCardsList — passifs générés marqués joués au round couran
 
         expect(result.threw).toBe(false);
         const [, [data]] = result.generatedCards[0];
-        expect(data.system.fq.choices[0].passivePlayedRound).toBeUndefined();
+        expect(data.system.fq.choices[0].playedRound).toBeUndefined();
     });
 
-    test("un choix non passif déclaré joué n'est pas horodaté", async () => {
-        const packs = makePacks({cardData: makeCompendiumCard({replayable: "", hasBeenPlayed: true})});
+    test("un choix éphémère déclaré joué est horodaté au round courant", async () => {
+        const packs = makePacks({cardData: makeCompendiumCard({replayable: "ephemere", hasBeenPlayed: true})});
         const card = makeGeneratorCard("decks-pattern-fq8.Elementalist Base deck.FQCARDTITLE.GeneratedCopy");
 
         const result = await playChoice(card, 0, {world: {packs, combat: combatAtRound(3)}});
 
         expect(result.threw).toBe(false);
         const [, [data]] = result.generatedCards[0];
-        expect(data.system.fq.choices[0].passivePlayedRound).toBeUndefined();
+        expect(data.system.fq.choices[0].playedRound).toBe("3");
     });
 
-    test("hors combat, le passif généré est horodaté à vide (aucun round à comparer)", async () => {
+    test("hors combat, le choix généré est horodaté à vide (aucun round à comparer)", async () => {
         const packs = makePacks({cardData: makeCompendiumCard({replayable: "passif", hasBeenPlayed: true})});
         const card = makeGeneratorCard("decks-pattern-fq8.Elementalist Base deck.FQCARDTITLE.GeneratedCopy");
 
@@ -257,7 +258,7 @@ describe("chooseCardsList — passifs générés marqués joués au round couran
 
         expect(result.threw).toBe(false);
         const [, [data]] = result.generatedCards[0];
-        expect(data.system.fq.choices[0].passivePlayedRound).toBe("");
+        expect(data.system.fq.choices[0].playedRound).toBe("");
     });
 });
 

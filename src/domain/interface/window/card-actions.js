@@ -180,7 +180,7 @@ export default {
             minions: firstChoice.minions?.length,
             hasBeenPlayed: firstChoice.hasBeenPlayed,
             isFQBase: card.system?.fq?.isBase,
-            passiveHasBeenPlayedOnRound: firstChoice.passivePlayedRound && firstChoice.passivePlayedRound?.toString() === game.combat?.round?.toString(),
+            isPlayedThisRound: CardFqSystem.isPlayedThisRound(firstChoice),
         });
 
         let buttons = {

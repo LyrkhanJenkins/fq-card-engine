@@ -762,8 +762,8 @@ export default class CardEffect {
         }
 
         if (game.combat != null) {
-            if (cardContent?.replayable === "passif" && cardContent?.hasBeenPlayed && cardContent?.passivePlayedRound === game.combat?.round.toString()) {
-                createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPassiveSpellAlreadyUsed"), {actor: Constants.actorCurrent});
+            if (CardFqSystem.isPlayedThisRound(cardContent)) {
+                createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgCardAlreadyPlayedThisTurn"), {actor: Constants.actorCurrent});
                 return false;
             }
             // S'agit t-il d'un sort réactive et peut on la jouer?

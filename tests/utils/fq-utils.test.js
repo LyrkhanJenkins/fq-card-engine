@@ -23,7 +23,8 @@ vi.mock("../../src/domain/engine/shared/resource-handler.js", () => ({
     default: {
         consumeResources: vi.fn(),
         createUserWarningMessage: vi.fn(),
-        checkResources: vi.fn()
+        checkResources: vi.fn(),
+        validateUseSpellInTurn: vi.fn(() => true)
     }
 }));
 
@@ -242,9 +243,8 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
 
     describe("checkIfCanUseCard — eval custom", () => {
         // ISOLE la branche eval : sans ceci, `game.combat` non-null (défaut de
-        // tests/setup.js) fait passer la ligne 469 de fq-utils.js, qui appelle
-        // ResourceHandler.validateUseSpellInTurn — absent du mock de
-        // consumption-utils.js — ce qui lèverait une erreur non désirée.
+        // tests/setup.js) ferait aussi traverser les contrôles de combat
+        // (épuisement, sort réactif, tour du joueur), hors sujet ici.
         beforeEach(() => {
             game.combat = null;
             ResourceHandler.checkResources.mockReturnValue(true);
@@ -715,16 +715,49 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             ResourceHandler.checkResources.mockReturnValue(true);
         });
 
-        it("passif déjà rejoué ce round : renvoie false et publie WarningMsgPassiveSpellAlreadyUsed", () => {
+        it("passif déjà rejoué ce round : renvoie false et publie WarningMsgCardAlreadyPlayedThisTurn", () => {
             game.combat = {round: 3};
-            const cardContent = makeChoice({replayable: "passif", hasBeenPlayed: true, passivePlayedRound: "3"});
+            const cardContent = makeChoice({replayable: "passif", hasBeenPlayed: true, playedRound: "3"});
 
             const result = CardEffect.checkIfCanUseCard(cardContent, makeCard());
 
             expect(result).toBe(false);
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
-                content: expect.stringContaining("FQCARDENGINE.WarningMsgPassiveSpellAlreadyUsed")
+                content: expect.stringContaining("FQCARDENGINE.WarningMsgCardAlreadyPlayedThisTurn")
             }));
+        });
+
+        // Le blocage ne dépend plus du seul `replayable: "passif"` : une carte
+        // éphémère générée déjà marquée jouée arrive en main épuisée pour le round
+        // de sa création, et redevient jouable au round suivant.
+        it("choix éphémère déjà joué ce round : renvoie false", () => {
+            game.combat = {round: 3};
+            const cardContent = makeChoice({replayable: "ephemere", hasBeenPlayed: true, playedRound: "3"});
+
+            const result = CardEffect.checkIfCanUseCard(cardContent, makeCard());
+
+            expect(result).toBe(false);
+        });
+
+        it("choix éphémère joué à un round antérieur : redevient jouable", () => {
+            game.combat = {round: 4};
+            const cardContent = makeChoice({replayable: "ephemere", hasBeenPlayed: true, playedRound: "3"});
+
+            const result = CardEffect.checkIfCanUseCard(cardContent, makeCard());
+
+            expect(result).toBe(true);
+        });
+
+        // Garde-fou : un `replayable` NUMÉRIQUE porte des charges. La carte est
+        // marquée jouée à chaque usage mais doit rester rejouable dans le tour où
+        // elle vient de l'être, tant qu'il lui reste des charges.
+        it("carte à charges déjà jouée ce round : reste jouable", () => {
+            game.combat = {round: 3};
+            const cardContent = makeChoice({replayable: "2", hasBeenPlayed: true, playedRound: "3"});
+
+            const result = CardEffect.checkIfCanUseCard(cardContent, makeCard());
+
+            expect(result).toBe(true);
         });
 
         it("carte réactive jouée hors du tour de l'acteur : renvoie false et publie WarningMsgPlayReactiveCard", () => {

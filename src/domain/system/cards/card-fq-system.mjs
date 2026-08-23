@@ -67,6 +67,30 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static hasEphemeralChoice(card) {
         return (card?.system?.fq?.choices ?? []).some(choice => CardFqSystem.isEphemeralChoice(choice));
     }
+
+    /**
+     * Indique si un choix a déjà été joué pendant le round de combat courant et
+     * ne peut donc pas l'être à nouveau. Le verdict combine le marquage
+     * `hasBeenPlayed` et l'horodatage `playedRound`, posés au jeu d'un choix
+     * passif comme à la génération d'une copie déjà marquée jouée (qui arrive
+     * alors en main épuisée pour le round de sa création).
+     *
+     * Un `replayable` numérique porte des CHARGES : la carte reste rejouable
+     * autant de fois que ses charges le permettent, y compris plusieurs fois dans
+     * le même tour. Seul un `replayable` vide ou non numérique (`passif`,
+     * `ephemere`) bloque.
+     *
+     * @param {object} [choice] - Le choix (contenu) d'une carte.
+     *
+     * @returns {boolean} True si le choix ne peut pas être rejoué avant le round suivant.
+     */
+    static isPlayedThisRound(choice) {
+        const replayable = choice?.replayable ?? "";
+        if (replayable !== "" && Number.isFinite(Number(replayable))) {
+            return false;
+        }
+        return !!choice?.hasBeenPlayed && !!game.combat && choice?.playedRound === game.combat.round?.toString();
+    }
     // Formes de zone posables sur le canvas (types de RegionShapeData Foundry v14).
     static ZONE_SHAPE_CHOICE = {
         circle: "FQCARDENGINE.ZoneShapeCircle",
@@ -235,7 +259,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                 onTarget: new BooleanField({required: true, label: "FQCARDENGINE.CardVisualOnTarget"}),
             }),
 
-            passivePlayedRound: new StringField({required: false}),
+            playedRound: new StringField({required: false}),
             hasBeenPlayed: new BooleanField({required: false}),
         });
     }

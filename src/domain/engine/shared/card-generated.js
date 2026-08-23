@@ -43,23 +43,25 @@ export default class CardGenerated {
             ...data.back,
             img: data.back?.img || compendiumCard.source?.img || compendiumCard.parent?.img || null
         };
-        CardGenerated.stampGeneratedPassives(data.system?.fq?.choices);
+        CardGenerated.stampPlayedRound(data.system?.fq?.choices);
         const moduleName = globalThis.FqCardEngineModule?.moduleName;
         data.flags = {...data.flags, [moduleName]: {...data.flags?.[moduleName], generated: true, generatedAt: Date.now()}};
         return data;
     }
 
     /**
-     * Horodate au round courant les choix passifs d'une carte générée
+     * Horodate au round courant les choix d'une carte générée déjà marqués joués
+     * (`hasBeenPlayed`) : la copie arrive en main épuisée pour le round de sa
+     * création et n'est jouable qu'à partir du round suivant.
      *
      * @param {object[]} [choices] - Les choix de la carte générée, modifiés sur place.
      *
      * @returns {void}
      */
-    static stampGeneratedPassives(choices) {
+    static stampPlayedRound(choices) {
         for (const choice of choices ?? []) {
-            if (choice?.replayable === "passif" && choice?.hasBeenPlayed) {
-                choice.passivePlayedRound = game.combat?.round?.toString() ?? "";
+            if (choice?.hasBeenPlayed) {
+                choice.playedRound = game.combat?.round?.toString() ?? "";
             }
         }
     }

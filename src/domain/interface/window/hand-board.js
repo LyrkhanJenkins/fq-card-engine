@@ -1,6 +1,7 @@
 import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
 import DisplayCard from "../card-svg/display-card.js";
 import CardCondition from "../../engine/shared/card-condition.js";
+import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 
 const GENERATED_GLOW_DURATION_MS = 24000;
 
@@ -139,7 +140,7 @@ export default class HandBoard {
             titleSize: DisplayCard.getTitleSizeForCardSvg(name),
             ...DisplayCard.buildBubbleData(cardContent, c),
             hasBeenPlayed: cardContent?.hasBeenPlayed,
-            passiveHasBeenPlayedOnRound: cardContent?.passivePlayedRound && cardContent?.passivePlayedRound?.toString() === game.combat?.round?.toString(),
+            isPlayedThisRound: CardFqSystem.isPlayedThisRound(cardContent),
             isFQBase: c.system?.fq?.isBase,
             isGenerated: Date.now() - (c.flags?.[FqCardEngineModule.moduleName]?.generatedAt ?? 0) < GENERATED_GLOW_DURATION_MS,
             // Le verdict s'évalue avec le personnage de l'utilisateur LOCAL : pas de

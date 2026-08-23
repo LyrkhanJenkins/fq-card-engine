@@ -93,7 +93,7 @@ export default class PlayCard {
         if (!ephemeral && !!cardContent && !!cardContent?.replayable) {
             if (cardContent?.replayable === CardFqSystem.REPLAYABLE_PASSIVE) {
                 CardEffect.rewriteCardContent(card, initCardContents, {
-                    hasBeenPlayed: true, passivePlayedRound: game.combat?.round.toString()
+                    hasBeenPlayed: true, playedRound: game.combat?.round.toString()
                 });
                 ChatMessage.create({
                     speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),

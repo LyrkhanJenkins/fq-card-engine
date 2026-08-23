@@ -106,7 +106,7 @@
         {{!-- Carte --}}
         <div class="fq-play-card-wrap">
             <div class="fq-play-card-img{{#if back}} fq-play-card-img--back{{/if}}{{#if isFQBase}} fq-card-is-base{{/if}}{{#if
-                    passiveHasBeenPlayedOnRound}} has-been-played-on-round {{else}}{{#if hasBeenPlayed}} has-been-played{{/if}}{{/if}}">
+                    isPlayedThisRound}} has-been-played-on-round {{else}}{{#if hasBeenPlayed}} has-been-played{{/if}}{{/if}}">
 
                 {{#if back}}
                     <div class="fq-card-face" style="background-image: url('{{ img }}')"></div>
@@ -133,7 +133,7 @@
             {{#if isFQBase}}
                 <span class="fq-play-badge fq-play-badge--base">Base</span>
             {{/if}}
-            {{#if passiveHasBeenPlayedOnRound}}
+            {{#if isPlayedThisRound}}
                 <span class="fq-play-badge fq-play-badge--exhausted">Épuisée ce tour</span>
             {{else}}
                 {{#if hasBeenPlayed}}
@@ -158,7 +158,7 @@
 
             {{!-- Statut --}}
             {{#if hasBeenPlayed}}
-                {{#if passiveHasBeenPlayedOnRound}}
+                {{#if isPlayedThisRound}}
                     <div class="fq-play-status fq-play-status--warn">
                         {{localize "FQCARDENGINE.InfoMsgSpellNotUsableThisTurn"}}
                     </div>
