@@ -499,14 +499,15 @@
       "loyalty": {},
       "hp": {
         "value": 27,
-        "max": 27,
+        "max": null,
         "temp": null,
         "tempmax": 0,
         "bonuses": {
-          "overall": "",
+          "overall": "15",
           "level": ""
         },
-        "min": 0
+        "min": 0,
+        "dt": null
       },
       "death": {
         "roll": {
@@ -1959,7 +1960,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.3.3",
     "createdTime": 1756555031936,
-    "modifiedTime": 1787484104201,
+    "modifiedTime": 1787835536342,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "_key": "!actors!gO3QaKtcQd3XwvYx"

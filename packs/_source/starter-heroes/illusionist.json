@@ -1138,11 +1138,11 @@
     }
   },
   "_stats": {
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "5.1.2",
+    "systemVersion": "5.3.3",
     "createdTime": 1709393283251,
-    "modifiedTime": 1756554925037,
+    "modifiedTime": 1787835493903,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.rQuVifFJLCKiURDP",
     "duplicateSource": null,
@@ -1211,9 +1211,14 @@
       "hp": {
         "value": 23,
         "min": 0,
-        "max": 23,
+        "max": null,
         "temp": null,
-        "tempmax": null
+        "tempmax": null,
+        "bonuses": {
+          "overall": "18",
+          "level": ""
+        },
+        "dt": null
       },
       "init": {
         "value": 0,
@@ -1719,12 +1724,9 @@
       "src": "modules/fq-card-engine/images/classes/illusionist_token.png",
       "anchorX": 0.5,
       "anchorY": 0.5,
-      "offsetX": 0,
-      "offsetY": 0,
       "fit": "contain",
       "scaleX": 1,
       "scaleY": 1,
-      "rotation": 0,
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },

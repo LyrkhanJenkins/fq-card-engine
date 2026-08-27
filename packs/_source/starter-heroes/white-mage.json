@@ -1134,11 +1134,11 @@
   "sort": 0,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "5.1.2",
+    "systemVersion": "5.3.3",
     "createdTime": 1709393283253,
-    "modifiedTime": 1756555018230,
+    "modifiedTime": 1787835645279,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": "Actor.tnE1cbB7yEjjCvBD",
     "duplicateSource": null,
@@ -1205,11 +1205,16 @@
         "formula": ""
       },
       "hp": {
-        "value": 19,
+        "value": 21,
         "min": 0,
-        "max": 19,
+        "max": null,
         "temp": null,
-        "tempmax": null
+        "tempmax": null,
+        "bonuses": {
+          "overall": "12",
+          "level": ""
+        },
+        "dt": null
       },
       "init": {
         "value": 0,
@@ -1678,12 +1683,9 @@
       "src": "modules/fq-card-engine/images/classes/white-mage_token.png",
       "anchorX": 0.5,
       "anchorY": 0.5,
-      "offsetX": 0,
-      "offsetY": 0,
       "fit": "contain",
       "scaleX": 1,
       "scaleY": 1,
-      "rotation": 0,
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },
