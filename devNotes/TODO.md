@@ -42,6 +42,7 @@
     - Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts
       suivant le zèle qu'a la cible plutôt que la chargé Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
     - Refaire un rééquilibrage des cartes après réécriture
+    - Faire un inventaire des types de dégâts
     - Gérer les cartes incolores
     - Déplacer les cibles automatiquement (Example: Tir supersonique, Frappe avec salto arrière...)
 - Est ce qu'on redivise pas en plusieurs modules : FX, Dégâts... avant de release?
