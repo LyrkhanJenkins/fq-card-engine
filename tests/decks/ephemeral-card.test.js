@@ -13,15 +13,17 @@ globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {playChoice} = await import("./play-harness.js");
 const {default: CardEffect} = await import("../../src/domain/engine/shared/card-effect.js");
+const {default: PlayCard} = await import("../../src/domain/engine/play-card.js");
 
 /**
  * Cartes éphémères (`replayable: "ephemere"`), jouées via le VRAI
  * `playValidatedCard`. Une carte éphémère ne rejoint jamais la pile de défausse :
- * au terme de l'application de ses effets, la copie de la main ET l'exemplaire
- * resté dans le deck (même id, marqué « pioché » par Foundry) sont supprimés —
- * ni le rappel de la défausse ni le remélange ne peuvent la ramener. Une carte
- * générée en cours de partie n'a pas d'exemplaire de deck : seule la copie de la
- * main disparaît.
+ * dès la validation du jeu — avant l'application des effets, pour disparaître de
+ * la main sans attendre dialogs et animations — la copie de la main ET
+ * l'exemplaire resté dans le deck (même id, marqué « pioché » par Foundry) sont
+ * supprimés — ni le rappel de la défausse ni le remélange ne peuvent la ramener.
+ * Une carte générée en cours de partie n'a pas d'exemplaire de deck : seule la
+ * copie de la main disparaît.
  */
 
 const EPHEMERAL_CARD_ID = "ephemeral-card";
@@ -66,9 +68,18 @@ describe("Carte éphémère — détruite au jeu, jamais défaussée", () => {
         expect(result.deckDestroyCalls).toEqual([["Card", [EPHEMERAL_CARD_ID]]]);
     });
 
-    test("les effets de la carte sont appliqués avant sa destruction", async () => {
+    test("la carte est détruite AVANT l'application de ses effets, qui s'appliquent malgré tout", async () => {
+        const destroySpy = vi.spyOn(PlayCard, "destroyPlayedCard");
+        const effectSpy = vi.spyOn(CardEffect, "applyCardEffect");
+
         const result = await playChoice(makeCard(), 0);
 
+        expect(result.threw).toBe(false);
+        // La destruction précède les effets : la carte quitte la main immédiatement,
+        // sans attendre dialogs, dés ou animations.
+        expect(destroySpy.mock.invocationCallOrder[0]).toBeLessThan(effectSpy.mock.invocationCallOrder[0]);
+        // Les effets lisent encore le document supprimé (id/parent/source) : les
+        // dégâts sont bien appliqués.
         expect(result.hpCalls).toEqual([
             {targetTokenId: "world-target-token", value: 3, type: "damageFQ"}
         ]);

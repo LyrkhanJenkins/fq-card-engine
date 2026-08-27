@@ -62,7 +62,7 @@ export default class PlayCard {
      * que la carte peut être utilisée, gère la logique de rejouabilité (passive ou à
      * charges), transfère la carte vers la défausse le cas échéant, puis applique
      * les effets de la carte. Un choix éphémère ne passe jamais par la défausse :
-     * la carte est détruite après application des effets
+     * la carte est détruite dès la validation, avant l'application des effets
      * (cf. {@link PlayCard.destroyPlayedCard}).
      *
      * @param {Cards}    to               - La pile de défausse cible.
@@ -151,16 +151,18 @@ export default class PlayCard {
             });
         }
 
-        // Destruction APRÈS les effets : ceux-ci lisent encore la carte et sa main
-        // (récupération de défausse, réécriture du contenu, génération de cartes).
-
-        try {
-            await CardEffect.applyCardEffect(cardContent, card, fd, to);
-        } finally {
-            if (ephemeral && leavesHand) {
-                await PlayCard.destroyPlayedCard(card, currentCards);
-            }
+        // Destruction AVANT les effets : la carte disparaît de la main (et du deck)
+        // dès la validation, sans attendre la fin des effets (dialogs, dés,
+        // animations). Le document supprimé reste lisible en mémoire et les effets
+        // n'en consomment que `id`, `parent` et `source` — jamais `card.update()`,
+        // le traitement rejouable (seul écrivain) étant exclusif de l'éphémère.
+        // Supprimer l'exemplaire du deck en amont ferme aussi la fenêtre où un
+        // rappel déclenché par un effet `draw` l'aurait remis en circulation.
+        if (ephemeral && leavesHand) {
+            await PlayCard.destroyPlayedCard(card, currentCards);
         }
+
+        await CardEffect.applyCardEffect(cardContent, card, fd, to);
 
         return result;
     }
