@@ -56,19 +56,30 @@ describe("render-token", () => {
     });
 
     describe("renderTokenHUD", () => {
-        it("vide les contrôles natifs pour un joueur quand la limitation des droits est active", () => {
+        it("ne conserve que le ciblage et l'action de mouvement pour un joueur quand la limitation des droits est active", () => {
             const hook = getHook("renderTokenHUD");
             const {container, colLeft, colRight} = buildHudHtml();
-            colLeft.innerHTML = "<span>existing-left</span>";
-            colRight.innerHTML = "<span>existing-right</span>";
+            // DOM calqué sur le template natif v14 (templates/hud/token-hud.hbs).
+            colLeft.innerHTML = "<div class='attribute elevation'></div><button data-action='sort'></button>";
+            colRight.innerHTML =
+                "<button data-action='togglePalette' data-palette='effects'></button>" +
+                "<div class='palette status-effects' data-palette='effects'></div>" +
+                "<button data-action='togglePalette' data-palette='movementActions'></button>" +
+                "<div class='palette palette-list' data-palette='movementActions'></div>" +
+                "<button data-action='target'></button>" +
+                "<button data-action='combat'></button>";
             game.user.isGM = false;
             game.user.character = undefined;
             CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
 
             hook({object: {}}, container, {});
 
-            expect(colLeft.innerHTML).toBe("");
-            expect(colRight.innerHTML).toBe("");
+            expect(colLeft.children.length).toBe(0);
+            expect(colRight.querySelector("[data-action='target']")).not.toBeNull();
+            // Bouton d'ouverture + palette de l'action de mouvement conservés.
+            expect(colRight.querySelectorAll("[data-palette='movementActions']").length).toBe(2);
+            expect(colRight.querySelector("[data-palette='effects']")).toBeNull();
+            expect(colRight.querySelector("[data-action='combat']")).toBeNull();
         });
 
         it("laisse les contrôles natifs au joueur quand la limitation des droits est désactivée", () => {

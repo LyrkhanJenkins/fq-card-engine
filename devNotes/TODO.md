@@ -19,7 +19,6 @@
 
 ### Versions prévues
 #### 3.0.0
-- Revoir avec limitation des droits du joueurs, laisser certains boutons du token hud comme le choix du mouvmeent
 - Revoir les portées avec les virgules (tests avec token plus petit que 1 case)
 - Refaire une passe sur l'afficahge de la description (dépassemeent, faire du paddin plus revoir les font size?)
 - Problème avec les dé de vie et la constitution de la sorcière
