@@ -173,6 +173,12 @@
                                 value=choice.destroyFromDiscard
                                 name=(concat "system.fq.choices." i ".destroyFromDiscard") rootId=../rootId}}
                 </div>
+                <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.DuplicateFromHand"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.duplicateFromHand
+                                value=choice.duplicateFromHand
+                                name=(concat "system.fq.choices." i ".duplicateFromHand") rootId=../rootId}}
+                </div>
             </fieldset>
             <fieldset>
                 <legend>🎴 <label>{{localize "FQCARDENGINE.CardGenerationLegend"}} </label></legend>

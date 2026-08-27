@@ -301,10 +301,17 @@ export function mountWorld(overrides = {}) {
  * @param {string[]} [options.drawnCards=[]] - Cartes déjà piochées côté source.
  * @param {boolean} [options.fromDeck=true] - False pour une carte générée en cours
  *        de partie : aucun deck d'origine, donc aucun exemplaire à détruire côté deck.
+ * @param {object[]} [options.handCards] - Les autres cartes de la main (`parent.cards`),
+ *        consommées par la duplication en main (`duplicateFromHand`). Par défaut,
+ *        une main d'UNE carte duplicable : elle satisfait la garde de lançabilité
+ *        de tout choix `duplicateFromHand` (en mode `*`, l'unique éligible est
+ *        auto-choisie SANS DialogV2 — non mocké par défaut), au même titre que la
+ *        défausse abondante de resources-targeting pour `retrieveFromDiscard` ;
+ *        les autres choix ignorent la main. Passer `[]` pour une main vide.
  *
  * @returns {object} La carte enrobée (espions `update`/`flip`/`parent.draw`).
  */
-export function wrapCard(rawCard, {sourceSize = 40, drawnCards = [], fromDeck = true} = {}) {
+export function wrapCard(rawCard, {sourceSize = 40, drawnCards = [], fromDeck = true, handCards = [makeHandCard()]} = {}) {
     return {
         _id: rawCard._id,
         id: rawCard._id,
@@ -329,6 +336,7 @@ export function wrapCard(rawCard, {sourceSize = 40, drawnCards = [], fromDeck = 
         update: vi.fn().mockResolvedValue(null),
         flip: vi.fn().mockResolvedValue(null),
         parent: {
+            cards: handCards,
             draw: vi.fn().mockResolvedValue([]),
             // Comme Foundry, la création renvoie les documents créés : c'est eux
             // que joue l'option « jouer aussitôt » des cartes générées.
@@ -350,6 +358,36 @@ export function wrapCard(rawCard, {sourceSize = 40, drawnCards = [], fromDeck = 
             availableCards: Array.from({length: Math.max(0, sourceSize - drawnCards.length)},
                 (_, i) => ({id: `harness-deck-card-${i}`}))
         }
+    };
+}
+
+/**
+ * Construit une carte de main minimale et duplicable (elle porte le `toObject`
+ * qu'exige la fabrique de copies générées de `duplicateFromHand`).
+ *
+ * @param {string} [id="harness-hand-card"] - L'id de la carte.
+ * @param {string} [name="FQCARDTITLE.HarnessHandCard"] - Le nom (clé i18n) de la carte.
+ * @param {object} [choice] - L'unique choix de la carte.
+ *
+ * @returns {object} La carte de main.
+ */
+export function makeHandCard(id = "harness-hand-card", name = "FQCARDTITLE.HarnessHandCard", choice = {damage: "1d4"}) {
+    const data = {
+        _id: id,
+        name,
+        face: 0,
+        faces: [{img: `images/${id}.png`}],
+        back: {img: `images/back-${id}.png`},
+        drawn: true,
+        system: {fq: {choices: [choice]}},
+        flags: {}
+    };
+    return {
+        id,
+        name,
+        face: 0,
+        faces: data.faces,
+        toObject: () => JSON.parse(JSON.stringify(data))
     };
 }
 

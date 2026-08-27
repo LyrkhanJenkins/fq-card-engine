@@ -15,6 +15,7 @@ import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
 import CardSelection from "../../interface/window/card-selection.js";
 import CardCondition from "./card-condition.js";
+import CardGenerated from "./card-generated.js";
 
 import TradingCards from "../../trading/trading-cards.js";
 import CombatTurn from "../combat-turn.js";
@@ -82,6 +83,9 @@ export default class CardEffect {
             if (cardContent.destroyFromDiscard?.trim()) {
                 await CardEffect.destroyCardFromDiscard(cardContent.destroyFromDiscard, to, card);
             }
+            if (cardContent.duplicateFromHand?.trim()) {
+                await CardEffect.duplicateCardFromHand(cardContent, card);
+            }
             if (CardSelection.hasCardSelection(cardContent)) {
                 await CardSelection.playCardSelection(cardContent, card.parent);
             }
@@ -141,8 +145,11 @@ export default class CardEffect {
      * elle vient d'arriver (ou arrive) dans la pile et ne peut pas se récupérer
      * elle-même.
      *
+     * La résolution est indépendante de la pile fournie : la duplication en main
+     * (`duplicateFromHand`) l'applique à la main plutôt qu'à la défausse.
+     *
      * @param {string}  spec                   - La spécification (`*` ou liste de noms séparés par des virgules).
-     * @param {Cards}   pile                   - La pile de défausse.
+     * @param {Cards}   pile                   - La pile inspectée (défausse, ou main pour la duplication).
      * @param {string}  excludeCardId          - L'id de la carte jouée, à exclure.
      * @param {object}  [options]              - Les options de résolution.
      * @param {boolean} [options.generatedOnly] - True pour ne retenir que les copies générées.
@@ -316,6 +323,74 @@ export default class CardEffect {
             }
         }
         return retrieved;
+    }
+
+    /**
+     * Publie l'avertissement d'indisponibilité d'une duplication en main : les
+     * noms manquants (mode liste, localisés) si la résolution en rapporte, sinon
+     * l'avertissement générique de main sans carte duplicable.
+     *
+     * @param {{cards: Card[], missing: string[]}} duplication - La résolution (cf. {@link CardEffect.resolveDiscardRetrieval}).
+     *
+     * @returns {void}
+     */
+    static warnDuplicationUnavailable(duplication) {
+        const message = duplication.missing.length
+            ? game.i18n.format("FQCARDENGINE.WarningMsgMissingDuplicableCards",
+                {names: duplication.missing.map(name => game.i18n.localize(name)).join(", ")})
+            : game.i18n.localize("FQCARDENGINE.WarningMsgNoDuplicableCard");
+        ResourceHandler.createUserWarningMessage(message, Constants.actorCurrent);
+    }
+
+    /**
+     * Duplique une ou plusieurs cartes de la main (`duplicateFromHand`) : la
+     * résolution est celle des piles (cf.
+     * {@link CardEffect.resolveDiscardRetrieval}, appliquée à la main, la carte
+     * jouée étant exclue) — `*` → le joueur choisit UNE carte via une dialog
+     * (choix automatique s'il n'y en a qu'une éligible) ; liste de noms → toutes
+     * les cartes listées, sans dialog. Contrairement à la récupération, les
+     * originaux ne bougent pas : chaque carte choisie est COPIÉE en copie générée
+     * (cf. {@link CardGenerated.buildGeneratedCardData}) créée dans la main —
+     * sans deck d'origine, détruite au nettoyage de combat, et arrivant épuisée
+     * uniquement si l'original porte déjà un choix marqué joué. Si le choix
+     * demande le jeu immédiat (`chooseCardsPlayNow`), les copies sont jouées dans
+     * la foulée, comme celles de l'encart 🃏.
+     *
+     * @param {object} cardContent - Le contenu (choix) de la carte jouée.
+     * @param {Card}   playedCard  - La carte jouée (exclue, et dont le parent est la main).
+     *
+     * @returns {Promise<Card[]|null>} Les copies créées, ou null si aucune duplication.
+     */
+    static async duplicateCardFromHand(cardContent, playedCard) {
+        const hand = playedCard.parent;
+        const duplication = CardEffect.resolveDiscardRetrieval(cardContent.duplicateFromHand, hand, playedCard.id);
+        if (duplication.missing.length || !duplication.cards.length) {
+            // Garde de lançabilité déjà passée en amont : ce repli ne devrait servir
+            // que si la main a changé entre la validation et l'application des effets.
+            CardEffect.warnDuplicationUnavailable(duplication);
+            return null;
+        }
+        let toDuplicate = duplication.cards;
+        if (duplication.choose) {
+            const chosenId = toDuplicate.length === 1
+                ? toDuplicate[0].id
+                : await CardEffect.chooseDiscardCardDialog(toDuplicate, "FQCARDENGINE.DuplicateCardTitle");
+            if (!chosenId) {
+                return null;
+            }
+            toDuplicate = [toDuplicate.find(c => c.id === chosenId)];
+        }
+        const data = toDuplicate.map(chosen => CardGenerated.buildGeneratedCardData(chosen));
+        const created = await hand.createEmbeddedDocuments("Card", data);
+        ChatMessage.create({
+            speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
+            content: `<div style='font-style: italic'>${game.i18n.format("FQCARDENGINE.InfoMsgCardsAddedToHand",
+                {names: toDuplicate.map(c => game.i18n.localize(c.name)).join(", ")})}</div>`
+        });
+        if (cardContent.chooseCardsPlayNow && created?.length) {
+            await CardSelection.playGeneratedCards(created, hand);
+        }
+        return created;
     }
 
     /**
@@ -795,6 +870,14 @@ export default class CardEffect {
                 {generatedOnly: true});
             if (destruction.missing.length || !destruction.cards.length) {
                 CardEffect.warnDestructionUnavailable(destruction);
+                return false;
+            }
+        }
+
+        if (cardContent?.duplicateFromHand?.trim()) {
+            const duplication = CardEffect.resolveDiscardRetrieval(cardContent.duplicateFromHand, card.parent, card.id);
+            if (duplication.missing.length || !duplication.cards.length) {
+                CardEffect.warnDuplicationUnavailable(duplication);
                 return false;
             }
         }

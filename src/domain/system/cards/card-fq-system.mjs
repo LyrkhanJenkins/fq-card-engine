@@ -239,6 +239,8 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             replayable: new StringField({required: true, label: "FQCARDENGINE.Replayable"}),
             retrieveFromDiscard: new StringField({required: true, label: "FQCARDENGINE.RetrieveFromDiscard"}),
             destroyFromDiscard: new StringField({required: true, label: "FQCARDENGINE.DestroyFromDiscard"}),
+            // `*` = le joueur choisit une carte de sa main, liste de noms = toutes
+            duplicateFromHand: new StringField({required: true, label: "FQCARDENGINE.DuplicateFromHand"}),
 
             // Custom actions
             customEvals: new ArrayField(new SchemaField({
