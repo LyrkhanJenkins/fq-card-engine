@@ -81,7 +81,9 @@ export async function loadClassCatalog(repoRoot = process.cwd()) {
             heroActorId: heroData._id,
             heroUuid: `Compendium.${MODULE_ID}.${HEROES_PACK}.Actor.${heroData._id}`,
             hitDieFaces: parseHitDieFaces(classData.system.hd?.denomination),
-            baseHitPoints: heroData.system.attributes?.hp?.max ?? null,
+            // Les starters posent leurs PV de niveau 1 dans `hp.value` ; `hp.max`
+            // reste null pour laisser l'override de max s'appliquer en jeu.
+            baseHitPoints: heroData.system.attributes?.hp?.max ?? heroData.system.attributes?.hp?.value ?? null,
             baseAbilities,
             advancement: {
                 itemChoices: advancement.filter(a => a.type === "ItemChoice"),
