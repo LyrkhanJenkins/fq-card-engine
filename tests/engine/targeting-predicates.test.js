@@ -84,4 +84,18 @@ describe("TargetingPredicates.findOutOfReachTargets", () => {
         expect(typeof out[0].dist).toBe("number");
         expect(out[0].dist).toBe(1);
     });
+
+    test("token 0.5×0.5 adjacent -> à portée d'un corps à corps (1..1)", () => {
+        // Petit token centré dans la case adjacente (0,5) : posé en (1.25, 6.25).
+        // Sans arrondi à la case, la distance vaudrait 1.5 et le corps à corps échouerait.
+        const small = {document: {x: 1.25, y: 6.25, width: 0.5, height: 0.5}, name: "Petit"};
+        expect(TargetingPredicates.findOutOfReachTargets(caster, [small], 1, 1)).toEqual([]);
+    });
+
+    test("token 0.5×0.5 dans la case du lanceur -> bloqué par la portée minimale de 1", () => {
+        const small = {document: {x: 6.25, y: 6.25, width: 0.5, height: 0.5}, name: "Petit"};
+        const out = TargetingPredicates.findOutOfReachTargets(caster, [small], 1, 1);
+        expect(out).toHaveLength(1);
+        expect(out[0].dist).toBe(0);
+    });
 });

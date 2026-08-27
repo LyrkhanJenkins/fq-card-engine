@@ -38,6 +38,13 @@ export default class Geometry {
      * Retourne les coordonnées (px) du coin supérieur-gauche de chaque case
      * occupée par un token de dimensions `w`×`h` cases.
      *
+     * Un token plus petit qu'une case (0.5×0.5…) n'est pas aligné sur la grille :
+     * Foundry le positionne au demi-carreau, donc ses coordonnées tombent au
+     * milieu d'une case. On ramène chaque axe sur la case qui contient le centre
+     * du token, afin que les distances mesurées restent des nombres entiers de
+     * cases — sans quoi une cible adjacente serait mesurée à 0.5 ou 1.5 case et
+     * échouerait aux bornes `minReach`/`maxReach` des cartes.
+     *
      * @param {number} x - Position X (px) du token (coin haut-gauche).
      * @param {number} y - Position Y (px) du token (coin haut-gauche).
      * @param {number} w - Largeur du token en cases.
@@ -47,10 +54,15 @@ export default class Geometry {
      */
     static getAllSquaresOccupiedByToken(x, y, w, h) {
         const squareSize = game.canvas?.scene?.dimensions?.size ?? 0;
+        const snapToSquare = (v, size) => squareSize
+            ? Math.floor((v + (Math.min(size, 1) * squareSize) / 2) / squareSize) * squareSize
+            : v;
+        const gx = snapToSquare(x, w);
+        const gy = snapToSquare(y, h);
         let result = [];
         for (let i = 0; i < w; i++) {
             for (let j = 0; j < h; j++) {
-                result.push({x: x + (squareSize * i), y: y + (squareSize * j)});
+                result.push({x: gx + (squareSize * i), y: gy + (squareSize * j)});
             }
         }
         return result;

@@ -59,6 +59,25 @@ describe("Geometry", () => {
         expect(result).toEqual(1);
     });
 
+    test("getAllSquaresOccupiedByToken - un token 0.5×0.5 est ramené sur la case qui contient son centre", () => {
+        // Token 0.5×0.5 centré dans la case (5,5) : Foundry le pose en (6.25, 6.25)
+        expect(Geometry.getAllSquaresOccupiedByToken(6.25, 6.25, 0.5, 0.5)).toEqual([{x: 5, y: 5}]);
+        // Même case quand le petit token occupe le demi-carreau droit/bas (7.5, 7.5)
+        expect(Geometry.getAllSquaresOccupiedByToken(7.5, 7.5, 0.5, 0.5)).toEqual([{x: 5, y: 5}]);
+    });
+
+    test("getMinDistanceBetweenTwoToken - un token 0.5×0.5 adjacent est à exactement 1 case", () => {
+        // Lanceur 1×1 en (0,5) ; petit token 0.5×0.5 en (6.25,6.25), soit la case
+        // adjacente (5,5). Sans arrondi à la case, la mesure donnerait 1.5.
+        expect(Geometry.getMinDistanceBetweenTwoToken(0, 5, 6.25, 6.25, 1, 0.5, 1, 0.5)).toEqual(1);
+    });
+
+    test("getMinDistanceBetweenTwoToken - un token 0.5×0.5 dans la même case est à 0", () => {
+        // Lanceur 1×1 en (5,5) ; petit token dans la même case → distance nulle,
+        // donc toujours bloqué par une portée minimale de 1 (comportement voulu).
+        expect(Geometry.getMinDistanceBetweenTwoToken(5, 5, 6.25, 6.25, 1, 0.5, 1, 0.5)).toEqual(0);
+    });
+
     test("locationIsOccupied - false quand la case adjacente est libre", () => {
         // myToken en (5,5) ; 'up' → case cible (5,0) : aucun token présent → false
         expect(Geometry.locationIsOccupied("up")).toEqual(false);

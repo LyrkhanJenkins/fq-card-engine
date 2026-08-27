@@ -22,11 +22,13 @@ Feat :
 - Macro et hud pour utiliser la première arme à distance équipée
 - Les chat messages mettent plus l'accent sur le résultat final
 - Implémentation des Attaques d'Opportunités (AO) avec la première arme équipée et dégâts automatique
+- Macro pour faire fin du tour
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur
 - Carte triée par niveau puis par nom dans les decks , le bouton cassé est supprimé
 - Limitation des droits des joueurs n'enlève plus le ciblage et le choix du mouvement sur les tokens
+- Les coordonnées d'un token dans le moteur sont simplifié à la case qui contient le centre du token
 
 Chore :
 - Support de la version 14.366, 14.367
