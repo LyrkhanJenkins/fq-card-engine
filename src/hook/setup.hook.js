@@ -117,11 +117,22 @@ Hooks.on("setup", function () {
                     }
                 }
             }
+            if (!card) {
+                // La carte n'existe plus (éphémère détruite, copie générée supprimée) :
+                // on la reconstruit en document temporaire depuis la copie stockée dans
+                // les flags du message au moment du jeu.
+                const messageId = el.closest("[data-message-id]")?.dataset.messageId;
+                const cardData = game.messages.get(messageId)
+                    ?.getFlag(FqCardEngineModule.moduleName, "card");
+                if (cardData) {
+                    card = new Card.implementation(cardData);
+                }
+            }
             if (card) {
                 DisplayCard.showCardOverlay(card);
                 return;
             }
-            // Repli : la carte n'est plus retrouvable (remélangée/supprimée) → image simple.
+            // Repli : message antérieur au stockage de la copie → image simple.
             const src = el.dataset.img;
             if (src) {
                 new ImagePopout(src, {title: el.getAttribute("title"), shareable: true}).render(true);

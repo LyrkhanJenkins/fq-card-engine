@@ -57,6 +57,7 @@ global.ChatMessage = {
     create: vi.fn().mockResolvedValue({id: "1234", content: "Mocked message"}),
     getSpeaker: vi.fn().mockResolvedValue({alias: "Test Character"}),
 };
+global.FqCardEngineModule = {moduleName: "fq-card-engine"};
 
 describe("PlayCard", () => {
     beforeEach(() => {
@@ -319,6 +320,51 @@ describe("PlayCard", () => {
             await PlayCard.renderChatMessage({}, {}, card, "FQCARDENGINE.CardPlayed");
 
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.any(Object));
+        });
+
+        test("stocke la copie profonde de la carte dans les flags du message (réaffichage après destruction d'une éphémère)", async () => {
+            ChatMessage.create.mockClear();
+            const cardData = {
+                _id: "mockCardId", name: "mockCardName", face: 0,
+                faces: [{img: "face0.png", text: "Text"}],
+                system: {fq: {choices: [{replayable: "ephemere"}]}}
+            };
+            const card = {
+                ...cardData, back: {img: "mockBackImg"}, origin: {name: "mockDeckName"},
+                toObject: () => foundry.utils.deepClone(cardData)
+            };
+
+            await PlayCard.renderChatMessage({}, {}, card, "FQCARDENGINE.CardPlayed");
+
+            const messageData = ChatMessage.create.mock.calls.at(-1)[0];
+            expect(messageData.flags["fq-card-engine"].card).toEqual(cardData);
+        });
+
+        test("force la copie face cachée quand la carte est défaussée face cachée", async () => {
+            ChatMessage.create.mockClear();
+            const card = {
+                _id: "mockCardId", name: "mockCardName", face: null,
+                back: {img: "mockBackImg"}, origin: {name: "mockDeckName"},
+                toObject: () => ({_id: "mockCardId", face: 0})
+            };
+
+            await PlayCard.renderChatMessage({}, {down: true}, card, "FQCARDENGINE.CardDiscard");
+
+            const messageData = ChatMessage.create.mock.calls.at(-1)[0];
+            expect(messageData.flags["fq-card-engine"].card.face).toBeNull();
+        });
+
+        test("n'ajoute pas de flags quand la carte n'expose pas toObject (hors document Foundry)", async () => {
+            ChatMessage.create.mockClear();
+            const card = {
+                face: null, back: {img: "mockBackImg"},
+                origin: {name: "mockDeckName"}, name: "mockCardName", _id: "mockCardId"
+            };
+
+            await PlayCard.renderChatMessage({}, {}, card, "FQCARDENGINE.CardPlayed");
+
+            const messageData = ChatMessage.create.mock.calls.at(-1)[0];
+            expect(messageData.flags).toBeUndefined();
         });
     });
 });

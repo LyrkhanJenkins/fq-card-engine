@@ -80,6 +80,16 @@ export default class PlayCard {
             return;
         }
 
+        // AVANT le traitement passif/charges : la copie de la carte prise dans les
+        // flags du message (cf. renderChatMessage) doit figer la carte telle qu'elle
+        // était en main — rewriteCardContent (hasBeenPlayed, décrément de charge)
+        // n'est pas attendu et rendrait la copie non déterministe. Le message carte
+        // passe par une microtâche (renderTemplate.then) : il s'affiche toujours
+        // après les messages de statut synchrones ci-dessous, comme avant.
+        PlayCard.renderChatMessage(to, fd, card, "FQCARDENGINE.CardPlayed", {
+            cardContent, hasVariables, hasSeveralChoices: (initCardContents?.length ?? 0) > 1
+        });
+
         // Éphémère et rejouable partagent le champ `replayable` et s'excluent : le
         // traitement « charges/passif » ci-dessous est donc court-circuité.
         const ephemeral = CardFqSystem.isEphemeralChoice(cardContent);
@@ -121,10 +131,6 @@ export default class PlayCard {
                 }
             }
         }
-
-        PlayCard.renderChatMessage(to, fd, card, "FQCARDENGINE.CardPlayed", {
-            cardContent, hasVariables, hasSeveralChoices: (initCardContents?.length ?? 0) > 1
-        });
 
         let result = null;
 
@@ -225,6 +231,16 @@ export default class PlayCard {
             }
 
             let cardID = card._id ? card._id : card.data._id;
+
+            // Copie profonde de la carte dans les flags du message : au clic, si la
+            // carte n'existe plus (éphémère détruite, copie générée supprimée), le
+            // voile carte SVG est reconstruit depuis cette copie au lieu de retomber
+            // sur l'image simple.
+            const cardCopy = card.toObject?.();
+            if (cardCopy && fd.down) {
+                cardCopy.face = null;
+            }
+
             let renderData = {
                 id: cardID,
                 back: (card.face == null || fd.down),
@@ -243,6 +259,9 @@ export default class PlayCard {
                         scene: game.scenes?.active?.id, actor: game.userId, token: null, alias: null,
                     }, content: content,
                 };
+                if (cardCopy) {
+                    messageData.flags = {[FqCardEngineModule.moduleName]: {card: cardCopy}};
+                }
                 ChatMessage.create(messageData);
 
             });
