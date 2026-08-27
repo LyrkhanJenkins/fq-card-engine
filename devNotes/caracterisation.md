@@ -165,7 +165,8 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 **Rôle** : bruiser mobile à tempo, duelliste corps à corps, avec appoints tank (taunt Uppercut, Interruption) et soins (Vive-Esquive, Méditation Zen, Paume Curative).
 
 **Mécaniques signature** :
-- **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume Curative). Poing Rouge est la seule carte du jeu qui monte `zeal.max` (+5, permanent).
+- **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume Curative).
+    - Poing Rouge est la seule carte du jeu qui monte `zeal.max` (+5, permanent).
 - **Flux de cartes** : Souffle de Ki (zèle → X cartes **et** 2X actions), Maître Du Chi (carte de base passive bidirectionnelle : défausse ↔ zèle ↔ pioche), Armes Secrètes (monétise la défausse en dégâts inesquivables).
 - **Rejouable conditionnel scripté** (unique au Moine) : Coup Droit/Gauche rejouables 2× seulement si assez de PA déjà dépensés ce tour — récompense l'**ordonnancement** des cartes.
 - **Défense réactive** : 4 réactives (Bouclier Zélé sur sort subi, Vive-Esquive sur dégâts, Armes Secrètes, Interruption qui divise par 2 les PA adverses) + Dissimulation (intouchable 1 tour au prix de dégâts nuls, puis fenêtre offensive).
@@ -225,20 +226,22 @@ Le seul a pouvoir augmenter son zèle max
 
 **Identité dnd5e** : d10, FOR + DEX. DEX domine (tirs, finishers), FOR sur les gros coups de mêlée (`2*@str`).
 
-**Stats FQ** : action + critique + esquive + main. **Sans mana** (1 item résiduel dans le pool secondaire ; 2 cartes coûtent tout de même 1 mana). Le zèle est sa jauge d'escalade.
+**Stats FQ** : zèle+ action + critique + main. 
 
 **Rôle** : DPS martial polyvalent sur deux rails parallèles — mêlée (`@wpnM`) et distance (`@wpnR`) — chacun avec sa version rapide (−3), standard (−6, +1 zèle), lourde (−11/−12, +1 zèle) et son finisher niv. 7 (−13, −2 zèle : Ouragan de lames mono / Pluie d'acier en zone).
 
 **Mécaniques signature** :
-- **Jetons d'arme** : 11 cartes sur 17 substituent les dégâts de la première arme équipée du bon type ; **sans l'arme, la carte est injouable**. L'archétype repose sur le changement d'arme en cours de combat. (Attention : une seule arme à distance existe pour l'instant dans `items-fq8`, l'Arc de trappeur.)
-- **Zèle générateur/dépensier** : les attaques standard et lourdes génèrent, les deux finishers consomment 2.
-- **Moteur couteaux de lancer** : Ceinture de couteaux (−2 action) fabrique une carte *Couteau de lancer* **gratuite** (jusqu'à ×24), boostée en permanence et cumulativement par Affûtage des couteaux (`@bonus.knife`).
 - **Buffs d'arme fenêtrés** : Huile d'affûtage (mêlée), Prise équilibrée (distance), Maîtrise des armes (les deux, 3 rounds) — tour de setup puis burst.
-- **Riposte** : unique réactive, contre-attaque gratuite au contact (`attackerWithinReach(1)`).
-- Deck volontairement simple : aucun X, aucun minion, aucune pioche/défausse — la complexité vient de la gestion d'inventaire.
+- **Carte qui s'améliore en carte coutant de plus en plus cher jusqu'a faire de gros dégâts**
+- **Carte qui duplique une autre carte en main**
+- **Moteur couteaux de lancer** : Ceinture de couteaux (−2 action) fabrique une carte *Couteau de lancer* **gratuite** (jusqu'à ×24), boostée en permanence et cumulativement par Affûtage des couteaux (`@bonus.knife`).
 
-**Boucle de jeu** : équiper la bonne arme → buffer la fenêtre → alterner frappes rapides et lourdes selon les PA → finisher au zèle ; couteaux gratuits quand les actions manquent.
+- ** Soutien?
 
+**Boucle de jeu** : Réunir les bonnes cartes pour faire de gros dégâts corps à corps OU distance OU build les couteaux de lancer OU ...
+
+**Faiblesses** :
+- Pas de heal personnel
 ---
 
 # Guerrier Runique
