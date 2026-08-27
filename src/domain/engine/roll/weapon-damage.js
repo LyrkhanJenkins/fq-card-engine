@@ -141,6 +141,46 @@ export default class WeaponDamage {
     }
 
     /**
+     * Portée de mêlée de l'acteur, telle que dnd5e la déclare sur l'arme équipée.
+     * Renvoie la valeur BRUTE avec son unité, sans conversion : la traduction en
+     * cases (géométrie du moteur) appartient à `ReachProfile.reachToCases`. Cette
+     * classe reste ainsi dans le domaine dnd5e, et le pipeline de cartes qui en
+     * dépend n'embarque rien de la détection de réaction.
+     *
+     * L'arme retenue est la PREMIÈRE arme de mêlée équipée — la même que celle
+     * dont `getEquippedWeaponDamageFormula` tire les dégâts. Portée et dégâts
+     * décrivent donc toujours la même arme.
+     *
+     * Restreinte à la mêlée (`@wpnM`) volontairement, et sans paramètre de
+     * catégories : dnd5e peuple `range.reach` à 5 sur TOUTES les armes, y compris
+     * les armes à distance (une fronde déclare `{value: 30, long: 120, reach: 5}`).
+     * Accepter des catégories à distance rendrait donc une portée de mêlée
+     * fantaisiste sans le moindre signe.
+     *
+     * La portée de l'activité ne l'emporte que si elle est explicitement marquée
+     * `override` ; par défaut (`override: false`) elle hérite de celle de l'item,
+     * qui est la source à lire.
+     *
+     * @param {object} actor - L'acteur porteur.
+     *
+     * @returns {{reach: number, units: (string|null)}} La portée et son unité, ou `{reach: 0, units: null}` si aucune arme de mêlée équipée ou portée inexploitable.
+     */
+    static getEquippedMeleeReach(actor) {
+        const none = {reach: 0, units: null};
+        const weapon = WeaponDamage.getEquippedWeapon(actor, WEAPON_TOKENS["@wpnM"].categories);
+        if (!weapon) {
+            return none;
+        }
+        const activityRange = WeaponDamage.getAttackActivity(weapon)?.range;
+        const range = activityRange?.override === true ? activityRange : weapon.system?.range;
+        const reach = Number(range?.reach);
+        if (!Number.isFinite(reach) || reach <= 0) {
+            return none;
+        }
+        return {reach, units: range?.units ?? null};
+    }
+
+    /**
      * Déclenche l'usage de la première arme équipée d'un acteur du type demandé
      * (`@wpnM` mêlée / `@wpnR` distance), après validation que c'est bien son tour
      * de combat. Avertit si aucune arme du type n'est équipée. Logique partagée
@@ -150,16 +190,35 @@ export default class WeaponDamage {
      * @param {object} actor       - L'acteur qui porte les armes.
      * @param {string} weaponToken - Le jeton d'arme (clé de `WEAPON_TOKENS`).
      *
-     * @returns {void}
+     * @returns {(Promise|void)} La promesse d'usage de l'arme, ou rien si aucun usage n'a été déclenché.
      */
     static useFirstEquippedWeapon(actor, weaponToken) {
         if (!ResourceHandler.validateUseSpellInTurn(actor)) {
             return;
         }
+        return WeaponDamage.triggerFirstEquippedWeapon(actor, weaponToken);
+    }
+
+    /**
+     * Déclenche l'usage de la première arme équipée d'un acteur du type demandé,
+     * SANS validation de tour. Avertit si aucune arme du type n'est équipée.
+     *
+     * Séparée de `useFirstEquippedWeapon` parce que la validation « à son tour »
+     * est une précondition des appelants déclenchés par un clic de joueur (HUD,
+     * macros), pas une propriété de l'usage de l'arme. Les usages pilotés par le
+     * moteur qui se produisent légitimement hors tour — l'attaque d'opportunité —
+     * passent directement ici, sans drapeau de contournement à faire circuler.
+     *
+     * @param {object} actor       - L'acteur qui porte les armes.
+     * @param {string} weaponToken - Le jeton d'arme (clé de `WEAPON_TOKENS`).
+     *
+     * @returns {(Promise|void)} La promesse d'usage de l'arme, ou rien si aucune arme du type n'est équipée.
+     */
+    static triggerFirstEquippedWeapon(actor, weaponToken) {
         const {categories, hudWarningKey} = WEAPON_TOKENS[weaponToken];
         const arme = WeaponDamage.getEquippedWeapon(actor, categories);
         if (!arme) return ui.notifications.warn(game.i18n.localize(hudWarningKey));
-        arme.use();
+        return arme.use();
     }
 
     /**

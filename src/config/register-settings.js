@@ -1,3 +1,5 @@
+import {OPPORTUNITY_ATTACK_SETTING} from "../domain/engine/reaction/opportunity-attack.js";
+
 /**
  * Enregistrement des réglages du module (`game.settings.register`).
  *
@@ -99,6 +101,18 @@ export function registerSettings() {
         scope: "world",     // "world" = sync to db, "client" = local storage
         config: true,       // false if you dont want it to show in module config
         type: Boolean,       // Number, Boolean, String,
+        default: false,
+        filePicker: false,  // set true with a String `type` to use a file picker input
+    });
+    game.settings.register(FqCardEngineModule.moduleName, OPPORTUNITY_ATTACK_SETTING, {
+        name: game.i18n.localize("FQCARDENGINE.OpportunityAttackSetting"),
+        hint: game.i18n.localize("FQCARDENGINE.OpportunityAttackSettingHint"),
+        scope: "world",     // "world" = sync to db, "client" = local storage
+        config: true,       // false if you dont want it to show in module config
+        type: Boolean,       // Number, Boolean, String,
+        // Désactivée par défaut : la fonctionnalité change les règles de combat
+        // d'un monde existant, elle doit être un choix explicite du MJ. Les mondes
+        // UAT l'activent via `FORCED_SETTINGS` (`tests/script/build-uat-base.mjs`).
         default: false,
         filePicker: false,  // set true with a String `type` to use a file picker input
     });

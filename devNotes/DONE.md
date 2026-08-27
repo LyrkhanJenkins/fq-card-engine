@@ -21,6 +21,7 @@ Feat :
 - Gestion des fx pour les zones
 - Macro et hud pour utiliser la première arme à distance équipée
 - Les chat messages mettent plus l'accent sur le résultat final
+- Implémentation des Attaques d'Opportunités (AO) avec la première arme équipée et dégâts automatique
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

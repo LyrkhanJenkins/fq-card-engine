@@ -19,6 +19,8 @@
 
 ### Versions prévues
 #### 3.0.0
+- Revoir avec limitation des droits du joueurs, laisser certains boutons du token hud comme le choix du mouvmeent
+- Revoir les portées avec les virgules (tests avec token plus petit que 1 case)
 - Refaire une passe sur l'afficahge de la description (dépassemeent, faire du paddin plus revoir les font size?)
 - Problème avec les dé de vie et la constitution de la sorcière
   - PV n'ont pas changé quand on a fait take average, les pv sont override (ptetre que dans les mondes générés)
@@ -47,7 +49,7 @@
     - Refaire un rééquilibrage des cartes après réécriture
     - Gérer les cartes incolores
     - Déplacer les cibles automatiquement (Example: Tir supersonique, Frappe avec salto arrière...)
-
+- Est ce qu'on redivise pas en plusieurs modules : FX, Dégâts... avant de release?
 
 Refonte des Cartes : 
 

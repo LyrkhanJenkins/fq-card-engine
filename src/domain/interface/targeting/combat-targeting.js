@@ -56,7 +56,7 @@ export default class CombatTargeting {
 
         const covered = [...(game.canvas?.scene?.tokens ?? [])]
             .filter(token => token.actorId && combatantTokenIds.includes(token.id))
-            .filter(token => wantAllies === (token.disposition === casterToken.disposition))
+            .filter(token => wantAllies === TargetingPredicates.areAllies(token, casterToken))
             .filter(token => {
                 const dist = Geometry.getMinDistanceBetweenTwoToken(
                     casterToken.x, casterToken.y, token.x, token.y,

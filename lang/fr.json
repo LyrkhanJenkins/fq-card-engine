@@ -38,6 +38,8 @@
   "FQCARDENGINE.BetterChatMessagesSettingHint": "Les messages de chat affichent les images et descriptions des cartes",
   "FQCARDENGINE.BypassWeaponAttackRollSetting": "Ignorer le jet d'attaque des armes",
   "FQCARDENGINE.BypassWeaponAttackRollSettingHint": "Le jet d'attaque des armes est remplacé par le jet de dégâts, comme si l'attaque réussissait toujours (pas de classe d'armure)",
+  "FQCARDENGINE.OpportunityAttackSetting": "Attaques d'opportunité",
+  "FQCARDENGINE.OpportunityAttackSettingHint": "En combat, sortir de la portée de mêlée d'un ennemi déclenche automatiquement une attaque de sa part avec son arme de mêlée équipée. Une réaction par round, sans coût en points d'action.",
   "FQCARDENGINE.FaceUpModeSetting": "Mode face visible",
   "FQCARDENGINE.FaceUpModeSettingHint": "D\u00e9sactive la possibilit\u00e9 de retourner les cartes quand le module est actif",
   "FQCARDENGINE.ChooseForGMTitle": "Assigner utilisateur ou main",

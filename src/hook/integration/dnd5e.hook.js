@@ -4,6 +4,7 @@ import {socket} from "./socketlib.hook.js";
 import Constants from "../../domain/constants.js";
 import Fx from "../../domain/engine/shared/fx.js";
 import TargetingPredicates from "../../domain/engine/shared/targeting-predicates.js";
+import OpportunityAttack from "../../domain/engine/reaction/opportunity-attack.js";
 
 /**
  * Indique si la logique FQ ne doit PAS s'appliquer à une activité dnd5e donnée :
@@ -40,6 +41,30 @@ Hooks.on("dnd5e.longRest", (actor, _config) => {
 Hooks.on("dnd5e.preUseActivity", (activity, usageConfig, dialogConfig, messageConfig) => {
     // Filter Activities
     if (notApplyFQOnActivity(activity)) {
+        return true;
+    }
+
+    // Attaque d'opportunité. Trois choses se jouent ici, et ce hook est le seul
+    // endroit où elles peuvent se jouer : il est SYNCHRONE et précède tous les jets.
+    // D'où sa position AVANT toute autre garde — chacune bloquerait l'attaque.
+    //
+    // 1. Mémoriser la cible SUR l'activité. Elle ne peut pas passer par un marqueur
+    //    global : avec `BypassWeaponAttackRoll`, `preRollAttackV2` lance
+    //    `activity.rollDamage()` sans l'attendre, donc `dnd5e.rollDamageV2` se
+    //    produit après que `activity.use()` a rendu la main et que le marqueur a
+    //    été levé. La cible serait perdue et aucun dégât ne serait appliqué.
+    // 2. Ne RIEN faire payer. Une attaque d'opportunité est gratuite. Les points
+    //    d'action sont une ressource par TOUR (remise au max par
+    //    `CombatTurn.resetAction`) : hors de son tour, un réactant les a déjà
+    //    dépensés, et `checkResources` refuserait systématiquement l'attaque avec
+    //    « pas assez de points d'action ». La consommation est symétriquement
+    //    sautée dans `dnd5e.rollDamageV2`.
+    // 3. Court-circuiter la validation de portée : `moveToken` étant post-déplacement,
+    //    le fuyard est déjà sorti et l'attaque se bloquerait elle-même.
+    //
+    // Le contournement reste limité au réactant en cours (`OpportunityAttack.pending`) :
+    // l'usage concurrent d'une carte n'en bénéficie pas.
+    if (OpportunityAttack.rememberTargetFor(activity)) {
         return true;
     }
 
@@ -94,6 +119,12 @@ Hooks.on("dnd5e.preRollDamageV2", (config, dialog, _message) => {
 });
 
 Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
+    // Attaque d'opportunité : la cible est celle désignée par la détection, pas
+    // celle sélectionnée par l'utilisateur. Elle a été mémorisée SUR l'activité par
+    // `preUseActivity` ; on la consomme ici, sans dépendre du moment où ce handler
+    // s'exécute — il peut être très postérieur à `activity.use()` (jet de dégâts
+    // détaché par `preRollAttackV2`, handlers de hook non attendus par Foundry).
+    const opportunityTarget = OpportunityAttack.consumeTargetFor(subject);
     const item = subject.item;
     const squareDistance = game.system.grid.distance;
     const minReach = Math.trunc((subject.range.value ? squareDistance : subject.range.reach) ?? 0) / squareDistance;
@@ -102,11 +133,19 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     if (!subject.item) {
         return;
     }
-    if (["heal", "damage", "attack"].includes(subject.type)) {
+    // Une attaque d'opportunité est gratuite : symétrique du saut de
+    // `checkResources` dans `preUseActivity`. Sans ce garde-fou, elle serait
+    // vérifiée nulle part et payée quand même.
+    if (!opportunityTarget && ["heal", "damage", "attack"].includes(subject.type)) {
         ResourceHandler.consumeResources(item.system?.fq, subject.actor);
     }
     let resultArray = [];
     let cardContent = {heal: 0, damage: 0, minReach, maxReach, bonusCrit: 0, bonusEva: 0};
+    if (opportunityTarget) {
+        // Impose la cible à toute l'aval : critique/esquive, application des PV et
+        // log de combat passent tous par `TargetingPredicates.resolveTargets`.
+        cardContent.forcedTargets = [opportunityTarget];
+    }
     // Collecteur local des animations Dice So Nice de ce jet, passé aux méthodes de jet
     // pour un affichage simultané des dés (voir Damage.rollWithSuccessValueResultAsync).
     const dsnAnimations = [];

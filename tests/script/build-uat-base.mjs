@@ -40,7 +40,11 @@ const FORCED_SETTINGS = [
     // CONST.GRID_DIAGONALS.RECTILINEAR : une diagonale coûte deux cases, la seule règle
     // pour laquelle les portées des cartes sont conçues (voir README). Réglage de portée
     // monde côté core : une scène ne peut pas la surcharger.
-    {module: "core", key: "gridDiagonals", value: 3, id: "fqUatSetting0005"}
+    {module: "core", key: "gridDiagonals", value: 3, id: "fqUatSetting0005"},
+    // Attaques d'opportunité : éteintes à l'installation, parce qu'elles changent les
+    // règles de combat d'un monde existant et doivent rester un choix explicite du MJ.
+    // Un monde UAT sert précisément à les exercer.
+    {module: MODULE_ID, key: "OpportunityAttack", value: true, id: "fqUatSetting0006"}
 ];
 
 // Horodatage figé pour que le template one-shot reste reproductible à l'octet

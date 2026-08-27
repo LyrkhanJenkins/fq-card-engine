@@ -38,6 +38,8 @@
   "FQCARDENGINE.BetterChatMessagesSettingHint": "Messages in Chat are displayed with card images and descriptions",
   "FQCARDENGINE.BypassWeaponAttackRollSetting": "Bypass Weapon Attack Roll",
   "FQCARDENGINE.BypassWeaponAttackRollSettingHint": "Weapon attack rolls are replaced by the damage roll, as if the attack always hits (no armor class)",
+  "FQCARDENGINE.OpportunityAttackSetting": "Opportunity attacks",
+  "FQCARDENGINE.OpportunityAttackSettingHint": "In combat, leaving an enemy's melee reach triggers an automatic attack from that enemy with its equipped melee weapon. One reaction per round, at no action point cost.",
   "FQCARDENGINE.FaceUpModeSetting": "Face Up Mode",
   "FQCARDENGINE.FaceUpModeSettingHint": "Disables the ability to flip and shows the face when using the module",
   "FQCARDENGINE.ChooseForGMTitle": "Assign User or Hand",

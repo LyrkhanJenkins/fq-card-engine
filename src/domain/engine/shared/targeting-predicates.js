@@ -23,6 +23,41 @@ export default class TargetingPredicates {
     });
 
     /**
+     * Deux tokens sont-ils du même camp ?
+     *
+     * Modèle de camp du moteur, jusqu'ici implicite dans le ciblage « Combat » :
+     * disposition identique = allié, disposition différente = ennemi. Les
+     * dispositions Foundry décrivent le rapport au camp des joueurs et non une
+     * relation entre deux tokens ; ce prédicat en fait une relation, et il est la
+     * source de vérité unique de la notion de camp — ciblage des cartes comme
+     * attaque d'opportunité.
+     *
+     * Deux tokens sans disposition exploitable sont considérés alliés : la
+     * conséquence est l'absence d'effet hostile, pas un effet hostile de trop.
+     *
+     * @param {object} a - Le premier TokenDocument.
+     * @param {object} b - Le second TokenDocument.
+     *
+     * @returns {boolean} `true` si les deux tokens sont du même camp.
+     */
+    static areAllies(a, b) {
+        return a?.disposition === b?.disposition;
+    }
+
+    /**
+     * Deux tokens appartiennent-ils à des camps opposés ? Strict complément de
+     * {@link TargetingPredicates.areAllies}.
+     *
+     * @param {object} a - Le premier TokenDocument.
+     * @param {object} b - Le second TokenDocument.
+     *
+     * @returns {boolean} `true` si les deux tokens sont dans des camps opposés.
+     */
+    static areEnemies(a, b) {
+        return !TargetingPredicates.areAllies(a, b);
+    }
+
+    /**
      * Évalue le nombre de cibles sélectionnées par rapport au nombre autorisé,
      * selon exactement la logique et l'ordre du moteur.
      *
@@ -103,12 +138,24 @@ export default class TargetingPredicates {
      * lui-même (un sort sans portée s'applique à son lanceur, quelles que soient
      * les cibles que le joueur a sélectionnées sur la scène).
      *
+     * `cardContent.forcedTargets` court-circuite toute la résolution : les cibles
+     * sont imposées par l'appelant au lieu d'être lues dans la sélection de
+     * l'utilisateur. Nécessaire pour les effets que le MOTEUR déclenche et dont la
+     * cible n'a rien à voir avec ce que l'utilisateur a sélectionné — l'attaque
+     * d'opportunité, dont la cible est désignée par la détection. Passer par la
+     * sélection y serait de toute façon impossible : les handlers de hook dnd5e
+     * asynchrones ne sont pas attendus par Foundry, donc la sélection peut changer
+     * avant que la résolution n'y arrive.
+     *
      * @param {object} cardContent  - Le contenu (choix) de la carte.
      * @param {object} [casterActor=Constants.actorCurrent] - L'acteur lanceur.
      *
      * @returns {object[]} Les tokens affectés (vide si le lanceur n'est pas sur la scène).
      */
     static resolveTargets(cardContent, casterActor = Constants.actorCurrent) {
+        if (Array.isArray(cardContent?.forcedTargets)) {
+            return cardContent.forcedTargets;
+        }
         if (TargetingPredicates.cardTargetsOthers(cardContent)) {
             return Constants.myTargets(cardContent?.targetType);
         }

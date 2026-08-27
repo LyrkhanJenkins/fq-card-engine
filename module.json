@@ -35,6 +35,7 @@
     "src/hook/integration/sequencer.hook.js",
     "src/hook/integration/dnd5e.hook.js",
     "src/hook/combat.hook.js",
+    "src/hook/reaction.hook.js",
     "src/hook/trading-cards.hook.js",
     "src/hook/render-token.hook.js",
     "src/hook/item.hook.js"
