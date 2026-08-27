@@ -626,8 +626,8 @@
         "max": 8
       },
       "mana": {
-        "value": 2,
-        "max": 2
+        "value": 3,
+        "max": 3
       },
       "zeal": {
         "value": 0,
