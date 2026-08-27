@@ -243,30 +243,27 @@ Le seul a pouvoir augmenter son zèle max
 
 # Guerrier Runique
 
-**Identité dnd5e** : d10, FOR + INT — frontliner qui frappe au corps à corps (`@wpnM`) mais scale sur l'Intelligence (dégâts des runes rouges).
+**Identité dnd5e** : d10, FOR + INT (3eme: CON) — Frontliner qui frappe au corps à corps (`@wpnM`).
 
-**Stats FQ** : action + main + pioche (le mieux doté en pioche du jeu).
+**Stats FQ Prioritaire** : pioche, main, mana, génère et utilise beaucoup de zèle et d'action.
 
-**Rôle** : moteur / late-game carry. Départ délibérément faible (deck de base de 7 cartes), montée en puissance par deck-building en cours de combat.
+**Rôle** : moteur / late-game carry. Départ délibérément faible (deck de base max 6 cartes), 
+montée en puissance par deck-building en cours de combat.
 
 **Mécaniques signature** :
+- **Seul les frappes runiques pour généré des runes consomme de la mana**
 - **Gravure = deck-building en combat** : les cartes de gravure proposent N runes d'une couleur au choix
 - **Identité des trois couleurs** : 
-  - **Rouge** = dégâts (scaling `@int`, du 1d6+@int à `3d8+2*@int`, une zone) ; 
-    - Ulti : Immortel avec 1 pv, dégâts augmentés par les runes rouges. coutant 8 de zèle OU fait gagner 1 de zèle?
-  - **Jaune** = survie (esquive temporaire, soins `@con`, l'unique réactive Rune d'égide) ;
-    - Ulti : coutant 25 d'action OU pioche une rune jaune aléatoire?
-  - **Bleu** = économie (PA immédiats, `action.max` temporaire, pioche).
-    - Ulti : Regagne x points de vie par tour, x étant le nombre de rune bleu joué. coutant 6 de mana...? OU
-- **Cascade inter-couleurs** : Rune de sang (rouge) → génère une bleue ; Rune de rempart (bleue) → une jaune ; Rune de débordement (jaune) → une rouge. Le deck s'auto-alimente sans repayer de gravure.
-- **Écho runique** : récupère n'importe quelle carte de la défausse **en main** (`retrieveFromDiscard: "*"`) — le raccourci qui transforme une rune fraîchement gravée en effet immédiat.
-- **Zèle de burst** : généré par Frappe runique / Rune de lame / Rune de givre / Gravure parfaite, dépensé par Tempête (−1) et Annihilation (−2).
-
-**Boucle de jeu** : graver tôt (investir tours et mana) → gonfler main et PA → enchaîner les runes jaunes (carburant) pour rejouer les rouges dans le même tour ; les bleues font tenir la phase de montée.
+  - **Rouge** = dégâts ET critique ; abilité améliorants : Force
+    - Ulti : Immortel avec 1 pv, dégâts augmentés par les runes rouges. coutant 8 de zèle
+  - **Jaune** = actions ET déplacement ; abilité améliorants : Intelligence
+    - Ulti : coutant 35 d'action, réduit par le nombre de rune jaune joué.
+  - **Bleu** = tank: soins personnels et esquive + regain de mana ; abilité améliorants : Constitution
+    - Ulti : Regagne x points de vie par tour, x étant le nombre de runes bleues joué. coutant 6 de mana
 
 **Faiblesses** :
-- Aucune pioche hormis des pioche en défaussant sur 3 runes jaunes
 - Pas de sort de dégâts à distance
-- Pas de sort multi-cible
+- Pas de sort multi-cible (très peu d'exception)
 - Pas de réactif
+- Aucune pioche hormis des pioche en défaussant sur 3 runes jaunes
 ---
