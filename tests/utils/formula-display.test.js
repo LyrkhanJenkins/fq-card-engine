@@ -39,7 +39,8 @@ describe("FormulaDisplay — la frappe runique de bout en bout (tracer principal
      * Prouve la chaîne complète sur la formule la plus complexe du corpus :
      * substitution → arbre à repli local → nœud opaque (division) → pastilles
      * → échappement HTML → expansion. `(ceil((@wpnM + @int)/2))[slashing]`
-     * doit s'afficher `(1d8+7)÷2` accompagnée de ses pastilles ⚔️ 🧠 🔪.
+     * doit s'afficher `(1d8+4)÷2` accompagnée de ses pastilles ⚔️ 🧠 🔪
+     * (arme `1d8`, mod exclu ; 🧠+4).
      */
     let actor;
 
@@ -48,8 +49,8 @@ describe("FormulaDisplay — la frappe runique de bout en bout (tracer principal
         game.user.character = {items: [], system: {abilities: {...REFERENCE_ABILITIES}}};
     });
 
-    it("foldFormula replie la frappe runique en formule nue (1d8+7)÷2", () => {
-        expect(FormulaDisplay.foldFormula("(ceil((@wpnM + @int)/2))[slashing]", {actor})).toBe("(1d8+7)÷2");
+    it("foldFormula replie la frappe runique en formule nue (1d8+4)÷2", () => {
+        expect(FormulaDisplay.foldFormula("(ceil((@wpnM + @int)/2))[slashing]", {actor})).toBe("(1d8+4)÷2");
     });
 
     it("foldFormula : ceil purement numérique disparaît, division évaluée (2 + ceil(@str/3))[bludgeoning] -> 3", () => {
@@ -82,7 +83,7 @@ describe("FormulaDisplay — la frappe runique de bout en bout (tracer principal
         const html = DisplayCard.wrapEmojiTooltips(
             FormulaDisplay.forDisplay("(ceil((@wpnM + @int)/2))[slashing]", {actor})
         );
-        expect(html).toContain("FQCARDENGINE.SourceWeaponMelee — Épée longue (1d8 + 3)");
+        expect(html).toContain("FQCARDENGINE.SourceWeaponMelee — Épée longue (1d8)");
     });
 
     it("forDisplay + wrapEmojiTooltips : exactement une pastille de type, portant l'emoji 🔪", () => {
@@ -98,7 +99,7 @@ describe("FormulaDisplay — la frappe runique de bout en bout (tracer principal
         const visible = stripPills(result);
         // eslint-disable-next-line no-control-regex
         expect(visible).not.toMatch(/[]/);
-        expect(visible).toBe("(1d8+7)÷2 ⚔️🧠🔪");
+        expect(visible).toBe("(1d8+4)÷2 ⚔️🧠🔪");
     });
 
     it("getDescriptionSizeForCardSvg renvoie la même taille avec ou sans les pastilles de cette formule", () => {
@@ -107,7 +108,7 @@ describe("FormulaDisplay — la frappe runique de bout en bout (tracer principal
             .toBe(DisplayCard.getDescriptionSizeForCardSvg(stripPills(result)));
     });
 
-    it("le même chemin, joué via le vrai DisplayCard.getDescriptionFromCard, produit (1d8+7)÷2 dans le SVG final", () => {
+    it("le même chemin, joué via le vrai DisplayCard.getDescriptionFromCard, produit (1d8+4)÷2 dans le SVG final", () => {
         game.user.character = {items: [], system: {abilities: {...REFERENCE_ABILITIES}}};
         // getDescriptionFromCard résout l'arme équipée via Constants.actorCurrent
         // (le personnage courant), pas via un acteur passé explicitement : on
@@ -126,7 +127,7 @@ describe("FormulaDisplay — la frappe runique de bout en bout (tracer principal
         // produit ses marqueurs de pastille, plutôt que le texte final agrégé.
         const [, calledArgs] = game.i18n.format.mock.calls.at(-1);
         const rawWithMarkers = calledArgs["0_damage"];
-        expect(rawWithMarkers).toContain("(1d8+7)÷2");
+        expect(rawWithMarkers).toContain("(1d8+4)÷2");
         const html = DisplayCard.wrapEmojiTooltips(rawWithMarkers);
         expect(html).toContain("fq-formula-pill--type");
     });
@@ -152,7 +153,7 @@ describe("FormulaDisplay — dés : taille calculée, taille symbolique, nombre 
 
     it.each([
         ["taille calculée + dé d'arme : deux dés numériques, taille décroissante",
-            "(@wpnM + 1d(2*@str))[slashing]", "1d8+1d6+3"],
+            "(@wpnM + 1d(2*@str))[slashing]", "1d8+1d6"],
         ["taille calculée seule", "@int+1d(2*@wis)[fire]", "1d6+4"],
         ["taille calculée seule (autre caractéristique)", "@con+1d(2*@wis)", "1d6+1"],
         ["compte symbolique + taille calculée", "2*XXX+1d(3*@dex)", "1d6+2X"],
@@ -207,8 +208,8 @@ describe("FormulaDisplay — fonctions : arrondis transparents et plafonds (Task
         expect(FormulaDisplay.foldFormula("(1+ ceil(@str/2) + 1d4)[bludgeoning]", {actor})).toBe("1d4+3");
     });
 
-    it("ceil enveloppant un dé : seule la division opaque subsiste, (1d8+7)÷2", () => {
-        expect(FormulaDisplay.foldFormula("(ceil((@wpnM + @int)/2))[slashing]", {actor})).toBe("(1d8+7)÷2");
+    it("ceil enveloppant un dé : seule la division opaque subsiste, (1d8+4)÷2", () => {
+        expect(FormulaDisplay.foldFormula("(ceil((@wpnM + @int)/2))[slashing]", {actor})).toBe("(1d8+4)÷2");
     });
 
     it("ceil enveloppant un numérateur à un seul terme : pas de parenthèses, X÷2", () => {
@@ -345,19 +346,19 @@ describe("FormulaDisplay.substituteWeaponTokens", () => {
     it("substitue @wpnM par la formule d'arme sans ajouter de parenthèses", () => {
         const activity = makeActivity([{parts: ["1d8", "@mod"], data: {mod: 3}}]);
         const actor = actorWith(makeWeapon("martialM", activity));
-        expect(FormulaDisplay.substituteWeaponTokens("(@wpnM + 1d4)", actor)).toBe("(1d8 + 3 + 1d4)");
+        expect(FormulaDisplay.substituteWeaponTokens("(@wpnM + 1d4)", actor)).toBe("(1d8 + 1d4)");
     });
 
     it("laisse la chaîne inchangée quand aucun jeton d'arme n'est présent", () => {
         expect(FormulaDisplay.substituteWeaponTokens("1d6+2", actorWith())).toBe("1d6+2");
     });
 
-    it("une formule d'arme portant @abilities.<abr>.mod est entièrement résolue puis repliée (substitution avant repli)", () => {
+    it("une formule d'arme portant @abilities.<abr>.mod est dépouillée de ses modificateurs puis repliée (substitution avant repli)", () => {
         const activity = makeActivity([{parts: ["1d8", "@mod", "@abilities.str.mod"], data: {mod: 3, abilities: {str: {mod: 3}}}}]);
         const actor = actorWith(makeWeapon("martialM", activity));
-        expect(FormulaDisplay.substituteWeaponTokens("(@wpnM + 1d4)", actor)).toBe("(1d8 + 3 + 3 + 1d4)");
-        expect(FormulaDisplay.foldFormula("(@wpnM + 1d4)[slashing]", {actor})).toBe("1d8+1d4+6");
-        expect(stripPills(FormulaDisplay.forDisplay("(@wpnM + 1d4)[slashing]", actor))).toBe("1d8+1d4+6 ⚔️🔪");
+        expect(FormulaDisplay.substituteWeaponTokens("(@wpnM + 1d4)", actor)).toBe("(1d8 + 1d4)");
+        expect(FormulaDisplay.foldFormula("(@wpnM + 1d4)[slashing]", {actor})).toBe("1d8+1d4");
+        expect(stripPills(FormulaDisplay.forDisplay("(@wpnM + 1d4)[slashing]", actor))).toBe("1d8+1d4 ⚔️🔪");
     });
 });
 
@@ -380,7 +381,7 @@ describe("FormulaDisplay.collectSourceDetails", () => {
         const activity = makeActivity([{parts: ["1d8", "@mod"], data: {mod: 3}}]);
         const actor = actorWith(makeWeapon("martialM", activity, "Épée longue"));
         expect(FormulaDisplay.collectSourceDetails("@wpnM", actor)).toEqual([
-            {emoji: "⚔️", tooltip: "FQCARDENGINE.SourceWeaponMelee — Épée longue (1d8 + 3)"}
+            {emoji: "⚔️", tooltip: "FQCARDENGINE.SourceWeaponMelee — Épée longue (1d8)"}
         ]);
     });
 
@@ -449,7 +450,7 @@ describe("FormulaDisplay.forDisplay — contrat « ne lève jamais »", () => {
         const result = FormulaDisplay.forDisplay("(@wpnM + 1d(2*@str))[slashing]", actor);
         expect(result).not.toContain("@wpnM");
         expect(result).not.toContain("@str");
-        expect(stripPills(result)).toBe("1d8+1d2💪+3 ⚔️🔪");
+        expect(stripPills(result)).toBe("1d8+1d2💪 ⚔️🔪");
     });
 });
 
@@ -667,8 +668,8 @@ describe("FormulaDisplay.foldSegment — garde-fous de fidélité", () => {
 describe("FormulaDisplay.foldFormula — assemblage multi-segments (nu, API de vérification du corpus)", () => {
     /**
      * Acteur canonique du plan 13-02/13-03 : str=+2, dex=+1, con=0, int=+3,
-     * wis=+1, cha=+1 ; arme de mêlée martialM `1d8 + 3`, arme à distance
-     * simpleR `1d6 + 2`.
+     * wis=+1, cha=+1 ; arme de mêlée martialM `1d8`, arme à distance
+     * simpleR `1d6` (le `@mod` des activités est exclu des jetons d'arme).
      */
     const CANONICAL_ABILITIES = {
         str: {mod: 2}, dex: {mod: 1}, con: {mod: 0}, int: {mod: 3}, wis: {mod: 1}, cha: {mod: 1}
@@ -691,13 +692,13 @@ describe("FormulaDisplay.foldFormula — assemblage multi-segments (nu, API de v
     });
 
     it.each([
-        ["un seul groupe de type", "(@wpnR + (2 * @cha) + 1d6 - XXX)[bludgeoning]", "2d6+4-X"],
-        ["arme de mêlée + caractéristique", "(@wpnM + @str)[slashing]", "1d8+5"],
-        ["arme de mêlée seule", "(@wpnM)[slashing]", "1d8+3"],
+        ["un seul groupe de type", "(@wpnR + (2 * @cha) + 1d6 - XXX)[bludgeoning]", "2d6+2-X"],
+        ["arme de mêlée + caractéristique", "(@wpnM + @str)[slashing]", "1d8+2"],
+        ["arme de mêlée seule", "(@wpnM)[slashing]", "1d8"],
         ["plusieurs groupes de type", "(1+@int+1d4)[thunder]+(1+@wis+1d4)[cold]", "1d4+4+1d4+2"],
         ["groupe sans jeton de modification", "(2*@int)[thunder]+2d8[fire]", "6+2d8"],
         ["un même jeton dans deux groupes", "(@str+1d4)[slashing]+(@str+1d6)[fire]", "1d4+2+1d6+2"],
-        ["l'arme reste dans le groupe où son jeton est écrit", "(@wpnM+@str)[slashing]+(1+@wpnR)[piercing]", "1d8+5+1d6+3"],
+        ["l'arme reste dans le groupe où son jeton est écrit", "(@wpnM+@str)[slashing]+(1+@wpnR)[piercing]", "1d8+2+1d6+1"],
         ["aucune parenthèse superflue sans source", "1+1d4[piercing]", "1d4+1"],
         ["formule purement constante avec un type", "2*@int[poison]", "6"],
         ["aucun jeton de type", "(2*@wis)+1d8", "1d8+2"],
@@ -864,9 +865,10 @@ describe("FormulaDisplay.foldSegment vs DisplayCard.simplifyExpression — justi
 describe("FormulaDisplay — instantané du corpus (foldFormula, nu)", () => {
     /**
      * Acteur canonique du plan 13-02/13-03 : str=+2, dex=+1, con=0, int=+3,
-     * wis=+1, cha=+1 ; arme de mêlée martialM `1d8 + 3`, arme à distance
-     * simpleR `1d6 + 2`. Chaque paire ci-dessous provient d'une valeur
-     * `damage`/`heal`/`hp` réelle de `packs/_source/decks-pattern-fq8/`.
+     * wis=+1, cha=+1 ; arme de mêlée martialM `1d8`, arme à distance
+     * simpleR `1d6` (mod exclu des jetons d'arme). Chaque paire ci-dessous
+     * provient d'une valeur `damage`/`heal`/`hp` réelle de
+     * `packs/_source/decks-pattern-fq8/`.
      */
     const CANONICAL_ABILITIES = {
         str: {mod: 2}, dex: {mod: 1}, con: {mod: 0}, int: {mod: 3}, wis: {mod: 1}, cha: {mod: 1}
@@ -884,9 +886,9 @@ describe("FormulaDisplay — instantané du corpus (foldFormula, nu)", () => {
     describe("formules repliables (foldFormula)", () => {
         it.each([
             ["arme de mêlée + caractéristique + dé (exemple canonique utilisateur)",
-                "(@wpnM + @str + 1d4)[slashing]", "1d8+1d4+5"],
-            ["arme de mêlée seule", "(@wpnM)[slashing]", "1d8+3"],
-            ["arme à distance + caractéristique + dés multiples", "(@wpnR + @dex + 2d3)[force]", "1d6+2d3+3"],
+                "(@wpnM + @str + 1d4)[slashing]", "1d8+1d4+2"],
+            ["arme de mêlée seule", "(@wpnM)[slashing]", "1d8"],
+            ["arme à distance + caractéristique + dés multiples", "(@wpnR + @dex + 2d3)[force]", "1d6+2d3+1"],
             ["multi-groupes de type, un groupe d'emojis par groupe de dégâts",
                 "(1+@int+1d4)[thunder]+(1+@wis+1d4)[cold]", "1d4+4+1d4+2"],
             ["multi-groupes de type, second groupe sans source de modification",
@@ -905,7 +907,7 @@ describe("FormulaDisplay — instantané du corpus (foldFormula, nu)", () => {
             // repliables » historique de ce describe a disparu.
             ["dé à taille variable (nombre de dés en variable, D-08)", "@dex+@wis+@int+XXXd6[force]", "Xd6+5"],
             ["jeton d'arme présent et dé à taille calculée dans le reste (D-07)",
-                "(@wpnM + 1d(2*@str))[slashing]", "1d8+1d4+3"],
+                "(@wpnM + 1d(2*@str))[slashing]", "1d8+1d4"],
         ])("%s : foldFormula(%j) === %j", (_label, input, expected) => {
             expect(FormulaDisplay.foldFormula(input, {actor})).toBe(expected);
         });

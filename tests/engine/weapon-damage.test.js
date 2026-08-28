@@ -5,8 +5,10 @@ import ResourceHandler from "../../src/domain/engine/shared/resource-handler.js"
 /**
  * Phase 12/13 — Helper `WeaponDamage` (appels directs, sans harnais). Couvre la
  * sélection par catégorie (`system.type.value`) et l'assemblage de la formule
- * complète via l'activité d'attaque : arme du bon type, bonus magique intégré,
- * sélection du bon type quand plusieurs armes sont équipées, et les trois voies
+ * via l'activité d'attaque : arme du bon type, bonus magique intégré,
+ * modificateur de caractéristique EXCLU (`@mod`/`@abilities.<abr>.mod` — choix
+ * de design : les cartes ne portent que le dé de l'arme et les bonus), sélection
+ * du bon type quand plusieurs armes sont équipées, et les trois voies
  * « aucune formule → 0 » (aucune arme du type, aucune activité, `getDamageConfig`
  * en échec). `activity.use` ne doit jamais être appelée.
  */
@@ -61,29 +63,29 @@ function actorWith(...items) {
 }
 
 describe("WeaponDamage.getEquippedWeaponDamageFormula", () => {
-    test("arme à distance (martialR) : parts [1d8, @mod], mod=3 → '1d8 + 3'", () => {
+    test("arme à distance (martialR) : parts [1d8, @mod] → '1d8' (le mod est exclu)", () => {
         const activity = makeActivity([{parts: ["1d8", "@mod"], data: {mod: 3}}]);
         const actor = actorWith(makeWeapon("martialR", activity));
-        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, RANGED)).toBe("1d8 + 3");
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, RANGED)).toBe("1d8");
         expect(activity.use).not.toHaveBeenCalled();
     });
 
-    test("bonus magique intégré aux parts : [1d8, @mod, 1], mod=2 → '1d8 + 2 + 1'", () => {
+    test("bonus magique conservé : [1d8, @mod, 1] → '1d8 + 1' (seul le mod disparaît)", () => {
         const activity = makeActivity([{parts: ["1d8", "@mod", "1"], data: {mod: 2}}]);
         const actor = actorWith(makeWeapon("simpleM", activity));
-        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("1d8 + 2 + 1");
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("1d8 + 1");
         expect(activity.use).not.toHaveBeenCalled();
     });
 
-    test("jeton @abilities.<abr>.mod dans les parts : résolu en valeur concrète via le rollData", () => {
+    test("jeton @abilities.<abr>.mod dans les parts : exclu comme @mod", () => {
         const activity = makeActivity([{parts: ["1d8", "@mod", "@abilities.str.mod"], data: {mod: 3, abilities: {str: {mod: 3}, dex: {mod: 1}}}}]);
         const actor = actorWith(makeWeapon("martialM", activity));
-        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("1d8 + 3 + 3");
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("1d8");
         expect(activity.use).not.toHaveBeenCalled();
     });
 
-    test("jeton @abilities.<abr>.mod sans rollData correspondant → 0 (jamais de jeton résiduel)", () => {
-        const activity = makeActivity([{parts: ["1d6", "@abilities.cha.mod"], data: {mod: 2}}]);
+    test("jeton de mod imbriqué dans une part composée : neutralisé à 0 (jamais de jeton résiduel)", () => {
+        const activity = makeActivity([{parts: ["1d6 + @mod", "@abilities.cha.mod"], data: {mod: 2}}]);
         const actor = actorWith(makeWeapon("simpleR", activity));
         expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, RANGED)).toBe("1d6 + 0");
     });
@@ -92,14 +94,14 @@ describe("WeaponDamage.getEquippedWeaponDamageFormula", () => {
         const melee = makeWeapon("martialM", makeActivity([{parts: ["1d10", "@mod"], data: {mod: 4}}]));
         const ranged = makeWeapon("simpleR", makeActivity([{parts: ["1d6", "@mod"], data: {mod: 2}}]));
         const actor = actorWith(melee, ranged);
-        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, RANGED)).toBe("1d6 + 2");
-        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("1d10 + 4");
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, RANGED)).toBe("1d6");
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("1d10");
     });
 
     test("arme naturelle (natural) : traitée comme une arme de mêlée", () => {
         const activity = makeActivity([{parts: ["2d6", "@mod"], data: {mod: 4}}]);
         const actor = actorWith(makeWeapon("natural", activity));
-        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("2d6 + 4");
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("2d6");
         expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, RANGED)).toBe("0");
     });
 
@@ -121,7 +123,7 @@ describe("WeaponDamage.getEquippedWeaponDamageFormula", () => {
     test("arme avec seulement une activité 'damage' : la formule est extraite", () => {
         const damageActivity = {type: "damage", use: vi.fn(), getDamageConfig: vi.fn(() => ({rolls: [{parts: ["2d6", "@mod"], data: {mod: 2}}]}))};
         const actor = actorWith(makeWeaponWithActivities("martialM", {damage: damageActivity}));
-        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("2d6 + 2");
+        expect(WeaponDamage.getEquippedWeaponDamageFormula(actor, MELEE)).toBe("2d6");
         expect(damageActivity.use).not.toHaveBeenCalled();
     });
 

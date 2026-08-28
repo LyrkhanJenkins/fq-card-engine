@@ -37,12 +37,12 @@ const SPELLS_NPC_DIR = path.join(process.cwd(), "packs", "_source", "spells-npc"
  * `20-CONTEXT.md`, RECOPIÉES telles quelles (même carte, même formule brute,
  * même sortie attendue). Acteur de référence : `REFERENCE_ABILITIES`
  * (💪+3 🎯+2 ❤️+1 🧠+4 🦉+3 ✨️+2), arme de mêlée équipée `REFERENCE_WEAPON_FORMULA`
- * (`1d8 + 3`, « Épée longue »).
+ * (`1d8`, « Épée longue » — le `@mod` de l'arme est exclu des jetons d'arme).
  * @type {Array<[string, string, string]>}
  */
 export const CORPUS_SNAPSHOT = [
-    ["Frappe héroïque / Tourbillon de lames", "(@wpnM + 1d(2*@str))[slashing]", "1d8+1d6+3"],
-    ["Frappe runique rouge / bleue / jaune", "(ceil((@wpnM + @int)/2))[slashing]", "(1d8+7)÷2"],
+    ["Frappe héroïque / Tourbillon de lames", "(@wpnM + 1d(2*@str))[slashing]", "1d8+1d6"],
+    ["Frappe runique rouge / bleue / jaune", "(ceil((@wpnM + @int)/2))[slashing]", "(1d8+4)÷2"],
     ["Magie élémentaire (4 choix)", "@int+1d(2*@wis)[fire]", "1d6+4"],
     ["Coup du gauche", "(1+ ceil(@str/2) + 1d4)[bludgeoning]", "1d4+3"],
     ["Coup du droit", "(2 + ceil(@str/3))[bludgeoning]", "3"],
@@ -95,7 +95,7 @@ describe("FormulaDisplay — instantané des 16 lignes du corpus de référence 
         expect(FormulaDisplay.foldFormula(raw, {actor})).toBe(TEST_MOCK_EXPECTED_OVERRIDES[label] ?? expected);
     });
 
-    it("l'arme de mêlée de référence produit bien REFERENCE_WEAPON_FORMULA (1d8 + 3, « Épée longue »)", () => {
+    it("l'arme de mêlée de référence produit bien REFERENCE_WEAPON_FORMULA (1d8, « Épée longue »)", () => {
         expect(FormulaDisplay.foldFormula("@wpnM", {actor})).toBe(
             FormulaDisplay.foldFormula(REFERENCE_WEAPON_FORMULA, {actor})
         );

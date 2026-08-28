@@ -16,9 +16,9 @@ const {playChoice} = await import("./play-harness.js");
 /**
  * Phase 12/13 — Additivité de bout en bout : `@wpnR + 1d6` traverse le pipeline de
  * dégâts FQ EXISTANT inchangé, bonus de dégâts acteur inclus. La formule d'arme
- * (`1d8 + 3`) est concaténée à `1d6`, puis le pipeline enveloppe du bonus acteur :
- * `(1d8 + 3 + 1d6) +2`. Dés pilotés d8 = 5, d6 = 2, d20 critique et d20 esquive =
- * 19 (seuils = 20 → ni critique ni esquive).
+ * (`1d8`, mod exclu) est concaténée à `1d6`, puis le pipeline enveloppe du bonus
+ * acteur : `(1d8 + 1d6) +2`. Dés pilotés d8 = 5, d6 = 2, d20 critique et d20
+ * esquive = 19 (seuils = 20 → ni critique ni esquive).
  */
 function makeRangedWeapon() {
     const attackActivity = {
@@ -48,7 +48,7 @@ describe("@wpnR additif à travers le pipeline de dégâts FQ", () => {
         vi.clearAllMocks();
     });
 
-    test("avec bonus de dégâts acteur '2' : (5+3+2)+2 = 12", async () => {
+    test("avec bonus de dégâts acteur '2' : (5+2)+2 = 9", async () => {
         const result = await playChoice(wpnCard, 0, {
             world: {character: {items: [makeRangedWeapon()], system: {fq: {bonus: {damage: "2"}}}}},
             dice: [{faces: 8, value: 5}, {faces: 6, value: 2}, {faces: 20, value: 19}, {faces: 20, value: 19}]
@@ -57,10 +57,10 @@ describe("@wpnR additif à travers le pipeline de dégâts FQ", () => {
         expect(result.threw).toBe(false);
         expect(result.hpCalls).toHaveLength(1);
         expect(result.hpCalls[0].type).toBe("damageFQ");
-        expect(result.hpCalls[0].value).toBe(12);
+        expect(result.hpCalls[0].value).toBe(9);
     });
 
-    test("sans bonus de dégâts acteur : 5+3+2 = 10", async () => {
+    test("sans bonus de dégâts acteur : 5+2 = 7", async () => {
         const result = await playChoice(wpnCard, 0, {
             world: {character: {items: [makeRangedWeapon()]}},
             dice: [{faces: 8, value: 5}, {faces: 6, value: 2}, {faces: 20, value: 19}, {faces: 20, value: 19}]
@@ -69,6 +69,6 @@ describe("@wpnR additif à travers le pipeline de dégâts FQ", () => {
         expect(result.threw).toBe(false);
         expect(result.hpCalls).toHaveLength(1);
         expect(result.hpCalls[0].type).toBe("damageFQ");
-        expect(result.hpCalls[0].value).toBe(10);
+        expect(result.hpCalls[0].value).toBe(7);
     });
 });

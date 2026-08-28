@@ -17,8 +17,9 @@ const {playChoice} = await import("./play-harness.js");
  * Phase 12/13 Tracer : le jeton `@wpnR` injecte les dégâts de l'arme à distance
  * équipée dans la formule de dégâts d'une carte, jouée via le VRAI
  * `playValidatedCard`. Arme `martialR` dont l'activité produit `1d8 + @mod`
- * (mod = 3). Dés pilotés : d8 = 5, d20 critique et d20 esquive = 19 (seuils = 21 −
- * critical(1) − 0 = 20 → ni critique ni esquive). Attendu : 5 + 3 = 8 dégâts.
+ * (mod = 3) — le mod est EXCLU des jetons d'arme, la carte n'inflige que le dé.
+ * Dés pilotés : d8 = 5, d20 critique et d20 esquive = 19 (seuils = 21 −
+ * critical(1) − 0 = 20 → ni critique ni esquive). Attendu : 5 dégâts.
  */
 function makeRangedWeapon() {
     const attackActivity = {
@@ -58,7 +59,7 @@ describe("@wpnR — dégâts de l'arme à distance (bout en bout)", () => {
         expect(result.threw).toBe(false);
         expect(result.hpCalls).toHaveLength(1);
         expect(result.hpCalls[0].type).toBe("damageFQ");
-        expect(result.hpCalls[0].value).toBe(8);
+        expect(result.hpCalls[0].value).toBe(5);
         expect(weapon.system.activities.getByType("attack")[0].use).not.toHaveBeenCalled();
     });
 });

@@ -11,7 +11,8 @@ import RollService from "../../src/domain/engine/roll/roll-service.js";
  */
 
 /**
- * Item arme équipé d'une catégorie donnée produisant `1d8 + @mod` (mod = 3).
+ * Item arme équipé d'une catégorie donnée dont l'activité produit `1d8 + @mod`
+ * (mod = 3) — la substitution rend `1d8`, le mod étant exclu des jetons d'arme.
  *
  * @param {string} typeValue - La catégorie dnd5e (`system.type.value`).
  *
@@ -57,22 +58,22 @@ describe("Jetons d'arme — invariant caractéristiques", () => {
 });
 
 describe("WeaponDamage.substituteInDamage", () => {
-    test("@wpnR additif : '@wpnR + 1d6' → '1d8 + 3 + 1d6'", () => {
+    test("@wpnR additif : '@wpnR + 1d6' → '1d8 + 1d6' (sans le mod)", () => {
         const cardContent = {damage: "@wpnR + 1d6"};
         WeaponDamage.substituteInDamage(cardContent, {items: [makeWeapon("martialR")]});
-        expect(cardContent.damage).toBe("1d8 + 3 + 1d6");
+        expect(cardContent.damage).toBe("1d8 + 1d6");
     });
 
     test("@wpnM résout la formule de l'arme de mêlée équipée", () => {
         const cardContent = {damage: "@wpnM"};
         WeaponDamage.substituteInDamage(cardContent, {items: [makeWeapon("simpleM")]});
-        expect(cardContent.damage).toBe("1d8 + 3");
+        expect(cardContent.damage).toBe("1d8");
     });
 
     test("l'acteur vient du paramètre (aucun acteur global requis)", () => {
         const cardContent = {damage: "@wpnR"};
         WeaponDamage.substituteInDamage(cardContent, {items: [makeWeapon("simpleR")]});
-        expect(cardContent.damage).toBe("1d8 + 3");
+        expect(cardContent.damage).toBe("1d8");
     });
 
     test("no-op si damage n'est pas une chaîne ou ne contient aucun jeton d'arme", () => {

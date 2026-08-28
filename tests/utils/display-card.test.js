@@ -473,7 +473,7 @@ describe("DisplayCard — pastilles : contrat de rendu (D-11, Task 3 plan 20-05)
         const [, calledArgs] = game.i18n.format.mock.calls.at(-1);
         const wrapped = DisplayCard.wrapEmojiTooltips(calledArgs["0_damage"]);
         expect(wrapped).toContain(
-            "data-tooltip=\"FQCARDENGINE.SourceWeaponMelee — Épée longue (1d8 + 3)\""
+            "data-tooltip=\"FQCARDENGINE.SourceWeaponMelee — Épée longue (1d8)\""
         );
     });
 

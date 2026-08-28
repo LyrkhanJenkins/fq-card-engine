@@ -234,9 +234,9 @@ Le seul a pouvoir augmenter son zèle max
 - **Buffs d'arme fenêtrés** : Huile d'affûtage (mêlée), Prise équilibrée (distance), Maîtrise des armes (les deux, 3 rounds) — tour de setup puis burst.
 - **Carte qui s'améliore en carte coutant de plus en plus cher jusqu'a faire de gros dégâts**
 - **Carte qui duplique une autre carte en main**
+- **Tous les buffs/malus dure 1 tour**
 - **Moteur couteaux de lancer** : Ceinture de couteaux (−2 action) fabrique une carte *Couteau de lancer* **gratuite** (jusqu'à ×24), boostée en permanence et cumulativement par Affûtage des couteaux (`@bonus.knife`).
-
-- ** Soutien?
+- **Soutien** : Buff des dégâts des armes des autres (+ fort pour les faibles jets) + Réduit l'esquive a 0? **
 
 **Boucle de jeu** : Réunir les bonnes cartes pour faire de gros dégâts corps à corps OU distance OU build les couteaux de lancer OU ...
 

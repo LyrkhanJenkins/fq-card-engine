@@ -81,11 +81,11 @@ export const REFERENCE_ABILITIES = {
 /**
  * La formule de dégâts de l'arme de mêlée de référence (« Épée longue »),
  * produite par `WeaponDamage.getEquippedWeaponDamageFormula` pour l'acteur de
- * `makeReferenceActor` : `1d8` (dé) + `3` (`@mod` résolu), jointes par
- * `" + "` — sémantique de `WeaponDamage.getEquippedWeaponDamageFormula`.
+ * `makeReferenceActor` : `1d8` seul — le terme `@mod` de l'activité est EXCLU
+ * des jetons d'arme (sémantique de `getEquippedWeaponDamageFormula`).
  * @type {string}
  */
-export const REFERENCE_WEAPON_FORMULA = "1d8 + 3";
+export const REFERENCE_WEAPON_FORMULA = "1d8";
 
 /**
  * Acteur de référence de `20-CONTEXT.md` : porte une arme de mêlée équipée

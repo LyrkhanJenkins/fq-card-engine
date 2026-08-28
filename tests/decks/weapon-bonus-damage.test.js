@@ -21,8 +21,9 @@ const {playChoice} = await import("./play-harness.js");
  * `WeaponDamage.getActorWeaponDamageBonus` qui les ajoute, selon la catégorie
  * de l'arme (mêlée → mwak, distance → rwak). Les activités de type « attack »
  * en sont exclues (dnd5e les gère déjà) pour ne pas doubler le bonus.
- * Arme à 1d8 + @mod (mod = 3) ; dés pilotés : d8 = 5, d20 critique et d20
- * esquive = 19 (seuils 20 → ni critique ni esquive).
+ * Arme à 1d8 + @mod (mod = 3, EXCLU des jetons d'arme : seule 1d8 traverse) ;
+ * dés pilotés : d8 = 5, d20 critique et d20 esquive = 19 (seuils 20 → ni
+ * critique ni esquive).
  */
 function makeWeapon({category, activityType}) {
     const activity = {
@@ -69,8 +70,8 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
 
         expect(result.threw).toBe(false);
         expect(result.hpCalls).toHaveLength(1);
-        // 1d8(5) + mod(3) + bonus mwak(2) = 10
-        expect(result.hpCalls[0].value).toBe(10);
+        // 1d8(5) + bonus mwak(2) = 7
+        expect(result.hpCalls[0].value).toBe(7);
     });
 
     test("le bonus rwak ne s'applique pas à une arme de mêlée", async () => {
@@ -86,7 +87,7 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
 
         expect(result.threw).toBe(false);
         expect(result.hpCalls).toHaveLength(1);
-        expect(result.hpCalls[0].value).toBe(8);
+        expect(result.hpCalls[0].value).toBe(5);
     });
 
     test("le bonus rwak s'ajoute aux dégâts d'une carte @wpnR (arme simpleR)", async () => {
@@ -102,7 +103,7 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
 
         expect(result.threw).toBe(false);
         expect(result.hpCalls).toHaveLength(1);
-        expect(result.hpCalls[0].value).toBe(10);
+        expect(result.hpCalls[0].value).toBe(7);
     });
 
     test("le bonus mwak s'applique à une arme naturelle (carte @wpnM)", async () => {
@@ -118,8 +119,8 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
 
         expect(result.threw).toBe(false);
         expect(result.hpCalls).toHaveLength(1);
-        // 1d8(5) + mod(3) + bonus mwak(2) = 10
-        expect(result.hpCalls[0].value).toBe(10);
+        // 1d8(5) + bonus mwak(2) = 7
+        expect(result.hpCalls[0].value).toBe(7);
     });
 
     test("une activité d'attaque n'ajoute pas le bonus une seconde fois (dnd5e le gère)", async () => {
@@ -136,7 +137,7 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
         expect(result.threw).toBe(false);
         expect(result.hpCalls).toHaveLength(1);
         // Le mock d'activité d'attaque ne pousse pas le bonus lui-même : la
-        // formule reste 1d8(5) + mod(3) — aucune injection côté module.
-        expect(result.hpCalls[0].value).toBe(8);
+        // formule reste 1d8(5) — aucune injection côté module.
+        expect(result.hpCalls[0].value).toBe(5);
     });
 });

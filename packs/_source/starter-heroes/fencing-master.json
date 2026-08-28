@@ -645,7 +645,7 @@
         "dot": 0
       },
       "cards": {
-        "hand": 2,
+        "hand": 1,
         "pick": 1,
         "currentDrop": 0
       },
@@ -836,6 +836,15 @@
                 },
                 {
                   "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.9cACcsdbSdfp5sjq"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0yBINX3UH0BmEstg"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.1lb8TZ3uQoyVmENi"
+                },
+                {
+                  "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2K2aJ2fuoABOtFKg"
                 },
                 {
                   "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.kxqmlP2SSyqufLbl"
@@ -2070,7 +2079,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.3.3",
     "createdTime": 1756555031936,
-    "modifiedTime": 1787835452994,
+    "modifiedTime": 1787893925133,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "_key": "!actors!uJSNPmJQdrXlqAyK"

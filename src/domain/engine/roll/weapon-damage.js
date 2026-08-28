@@ -41,12 +41,15 @@ export default class WeaponDamage {
     }
 
     /**
-     * Formule de dégâts complète (dé + `@mod` résolu en valeur concrète + bonus
-     * magique) de la première arme équipée d'une des `categories`, telle que dnd5e
-     * la calcule via l'activité d'attaque, à une main. Les jetons `@mod` et
-     * `@abilities.<abr>.mod` sont résolus ici en valeurs concrètes car le pipeline
-     * de dégâts FQ ne dispose pas du `rollData` de l'arme — un jeton laissé
-     * littéral s'évaluerait à 0 au jet et ferait échouer le repli d'affichage.
+     * Formule de dégâts de la première arme équipée d'une des `categories`, telle
+     * que dnd5e la calcule via l'activité d'attaque, à une main, SANS le
+     * modificateur de caractéristique : les jetons de dégâts des cartes (`@wpnR`/
+     * `@wpnM`) ne portent que le dé de l'arme, son bonus magique et les bonus
+     * d'acteur — choix de design, les modificateurs (For/Dex) n'entrent pas dans
+     * les dégâts des cartes. Les termes `@mod` et `@abilities.<abr>.mod` isolés
+     * sont retirés de la formule ; ceux imbriqués dans une expression composée
+     * sont neutralisés à `0`, car un jeton laissé littéral s'évaluerait
+     * silencieusement à 0 au jet et ferait échouer le repli d'affichage.
      * Renvoie `"0"` si aucune arme / activité, ou si `getDamageConfig` échoue ;
      * ne lève jamais et n'appelle jamais `activity.use()`.
      *
@@ -70,13 +73,13 @@ export default class WeaponDamage {
         } catch {
             return "0";
         }
+        const abilityModTerm = /^@(?:mod|abilities\.\w+\.mod)$/;
         let formula = (config?.rolls ?? [])
-            .map(roll => {
-                const data = roll?.data ?? {};
-                return roll?.parts?.join(" + ")
-                    .replaceAll("@mod", String(data.mod ?? 0))
-                    .replace(/@abilities\.(\w+)\.mod/g, (_, abr) => String(data.abilities?.[abr]?.mod ?? 0));
-            })
+            .map(roll => (roll?.parts ?? [])
+                .filter(part => !abilityModTerm.test(String(part).trim()))
+                .join(" + ")
+                .replaceAll("@mod", "0")
+                .replace(/@abilities\.\w+\.mod/g, "0"))
             .filter(part => part)
             .join(" + ");
         if (!formula) {
