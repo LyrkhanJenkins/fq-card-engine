@@ -19,7 +19,6 @@
 
 ### Versions prévues
 #### 3.0.0
-- Refaire une passe sur l'afficahge de la description (dépassemeent, faire du paddin plus revoir les font size?)
 - A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Relire et faire un point sur la caracterisation avant tout

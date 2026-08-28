@@ -221,6 +221,7 @@ export default {
         Hooks.once("renderDialog", (app, _html) => {
             const root = app.element instanceof HTMLElement ? app.element : app.element[0];
             openPlayDialog = app;
+            DisplayCard.fitDescriptionSize(root);
 
             // ── Panneau de ciblage actif + mode ciblage ──
             // Câblé AVANT le garde de navigation ci-dessous pour ne pas dépendre de la
@@ -261,6 +262,7 @@ export default {
                 const description = DisplayCard.getDescriptionFromCard(card, card.face, {xValue: fd.XXX, yValue: fd.YYY});
                 span.innerHTML = DisplayCard.wrapEmojiTooltips(description);
                 box.style.fontSize = `${DisplayCard.getDescriptionSizeForCardSvg(description)}px`;
+                DisplayCard.fitDescriptionSize(box);
             };
 
             // Sortie du mode ciblage : revient à l'outil « select », restaure la dialog

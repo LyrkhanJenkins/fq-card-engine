@@ -584,3 +584,107 @@ describe("DisplayCard.buildBubbleData — bulle de rejouabilité", () => {
         });
     });
 });
+
+describe("DisplayCard.fitDescriptionSize (passe de correction post-rendu du débordement de description)", () => {
+
+    /**
+     * Construit une boîte de description avec des métriques de layout simulées
+     * (jsdom ne fait pas de mise en page) : la hauteur du span est une fonction
+     * de la taille de police courante, comme dans un vrai rendu.
+     *
+     * @param {object} [opts] Les métriques simulées.
+     * @returns {{box: HTMLElement, span: HTMLElement}} La boîte et son span.
+     */
+    function makeMeasuredBox({
+        fontSize = 40,
+        boxHeight = 266,
+        boxWidth = 462,
+        spanHeightFor = () => 0,
+        spanWidthFor = () => 0,
+    } = {}) {
+        const box = document.createElement("div");
+        box.className = "fq-card-description-box";
+        if (fontSize !== null) {
+            box.style.fontSize = `${fontSize}px`;
+        }
+        const span = document.createElement("span");
+        span.className = "fq-card-description";
+        span.textContent = "Description mesurée";
+        box.appendChild(span);
+        Object.defineProperty(box, "clientHeight", {get: () => boxHeight});
+        Object.defineProperty(box, "clientWidth", {get: () => boxWidth});
+        Object.defineProperty(span, "offsetHeight", {get: () => spanHeightFor(parseFloat(box.style.fontSize))});
+        Object.defineProperty(span, "offsetWidth", {get: () => spanWidthFor(parseFloat(box.style.fontSize))});
+        return {box, span};
+    }
+
+    it("ne touche pas la taille quand le texte tient déjà dans la boîte", () => {
+        const {box} = makeMeasuredBox({fontSize: 40, spanHeightFor: () => 200});
+
+        DisplayCard.fitDescriptionSize(box);
+
+        expect(box.style.fontSize).toBe("40px");
+    });
+
+    it("réduit la taille juste assez pour que le texte tienne en hauteur", () => {
+        // Hauteur simulée proportionnelle à la police : déborde à 40px (320 > 266),
+        // tient à partir de 33px (264 <= 266).
+        const {box} = makeMeasuredBox({fontSize: 40, spanHeightFor: size => size * 8});
+
+        DisplayCard.fitDescriptionSize(box);
+
+        expect(box.style.fontSize).toBe("33px");
+    });
+
+    it("réduit aussi sur un débordement horizontal (mot insécable trop large)", () => {
+        const {box} = makeMeasuredBox({fontSize: 20, spanWidthFor: size => size * 25});
+
+        DisplayCard.fitDescriptionSize(box);
+
+        expect(box.style.fontSize).toBe("18px");
+    });
+
+    it("ne descend jamais sous le plancher minSize, même si le texte déborde toujours", () => {
+        const {box} = makeMeasuredBox({fontSize: 40, spanHeightFor: () => 10000});
+
+        DisplayCard.fitDescriptionSize(box);
+
+        expect(box.style.fontSize).toBe("10px");
+    });
+
+    it("accepte un conteneur parent et traite toutes les boîtes qu'il contient", () => {
+        const root = document.createElement("div");
+        const fits = makeMeasuredBox({fontSize: 30, spanHeightFor: () => 100});
+        const overflows = makeMeasuredBox({fontSize: 40, spanHeightFor: size => size * 8});
+        root.append(fits.box, overflows.box);
+
+        DisplayCard.fitDescriptionSize(root);
+
+        expect(fits.box.style.fontSize).toBe("30px");
+        expect(overflows.box.style.fontSize).toBe("33px");
+    });
+
+    it("no-op quand la boîte n'est pas affichée (clientHeight nul, cas jsdom/display:none)", () => {
+        const box = document.createElement("div");
+        box.className = "fq-card-description-box";
+        box.style.fontSize = "40px";
+        const span = document.createElement("span");
+        span.className = "fq-card-description";
+        box.appendChild(span);
+
+        expect(() => DisplayCard.fitDescriptionSize(box)).not.toThrow();
+        expect(box.style.fontSize).toBe("40px");
+    });
+
+    it("no-op sans font-size inline (rien à corriger sans point de départ de la table)", () => {
+        const {box} = makeMeasuredBox({fontSize: null, spanHeightFor: () => 10000});
+
+        expect(() => DisplayCard.fitDescriptionSize(box)).not.toThrow();
+        expect(box.style.fontSize).toBe("");
+    });
+
+    it("no-op sur une racine sans DOM (garde défensive)", () => {
+        expect(() => DisplayCard.fitDescriptionSize(null)).not.toThrow();
+        expect(() => DisplayCard.fitDescriptionSize(undefined)).not.toThrow();
+    });
+});

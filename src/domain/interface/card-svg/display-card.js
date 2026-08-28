@@ -61,6 +61,54 @@ export default class DisplayCard {
     }
 
     /**
+     * Passe de correction APRÈS rendu : réduit la taille de police d'une
+     * description tant que son texte déborde réellement de sa boîte.
+     * `getDescriptionSizeForCardSvg` (table empirique sur la longueur) reste le
+     * point de départ, mais la longueur ne capture ni les métriques de la
+     * police effectivement rendue (fallback si Lucida Calligraphy est absente),
+     * ni les emojis/pastilles, ni les retours à la ligne : sur certains écrans
+     * le texte peut donc dépasser d'une ligne. Ici on mesure le rendu réel
+     * (hauteur/largeur du span vs sa boîte, en pixels de layout — le
+     * `foreignObject` est mis en page à taille fixe puis mis à l'échelle avec
+     * le SVG, la mesure est donc indépendante de la taille d'affichage).
+     * Ne fait jamais grossir : seule la table décide de la taille maximale.
+     * Boîte non affichée (jsdom, `display:none`) : aucune mesure possible, no-op.
+     *
+     * @param {ParentNode|Element} root - L'élément contenant une ou plusieurs `.fq-card-description-box` (peut être la boîte elle-même).
+     * @param {{minSize?: number}} [options] - `minSize` : plancher de taille de police (px).
+     *
+     * @returns {void}
+     */
+    static fitDescriptionSize(root, {minSize = 10} = {}) {
+        if (!root?.querySelectorAll) {
+            return;
+        }
+        const boxes = root.matches?.(".fq-card-description-box")
+            ? [root]
+            : [...root.querySelectorAll(".fq-card-description-box")];
+        for (const box of boxes) {
+            const span = box.querySelector(".fq-card-description");
+            if (!span || !box.clientHeight) {
+                continue;
+            }
+            let size = parseFloat(box.style.fontSize);
+            if (!Number.isFinite(size)) {
+                continue;
+            }
+            while (size > minSize
+                && (span.offsetHeight > box.clientHeight || span.offsetWidth > box.clientWidth)) {
+                size -= 1;
+                box.style.fontSize = `${size}px`;
+            }
+        }
+        // La police de la carte peut finir de charger après ce premier passage,
+        // ce qui change les métriques : re-mesure une fois les fontes prêtes.
+        if (document.fonts?.status === "loading") {
+            document.fonts.ready.then(() => DisplayCard.fitDescriptionSize(root, {minSize}));
+        }
+    }
+
+    /**
      * Retourne la taille de police adaptée à la longueur du titre, pour que le
      * titre tienne dans la carte SVG.
      *
@@ -519,5 +567,6 @@ export default class DisplayCard {
 
         overlay.addEventListener("click", () => overlay.remove());
         document.body.appendChild(overlay);
+        DisplayCard.fitDescriptionSize(wrap);
     }
 }

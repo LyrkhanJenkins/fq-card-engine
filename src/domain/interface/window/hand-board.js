@@ -193,6 +193,7 @@ export default class HandBoard {
                         content.addClass("fq-card-engine-hand-first-card");
                     }
                     $("#fq-card-engine-card-container-" + t.id).append(content);
+                    DisplayCard.fitDescriptionSize(content[0]);
                     FqCardEngineModule.updateSize();
                     if (i == length - 1) {
                         if (resolve) {
@@ -684,6 +685,7 @@ export default class HandBoard {
         elements.forEach(el => stage.appendChild(el));
 
         document.body.appendChild(overlay);
+        DisplayCard.fitDescriptionSize(overlay);
         // Force un reflow avant de déclencher l'entrée (sinon la transition est ignorée).
         void overlay.offsetWidth;
         overlay.classList.add("fq-draw-reveal-in");

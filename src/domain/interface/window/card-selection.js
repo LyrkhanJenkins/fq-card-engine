@@ -335,6 +335,7 @@ export default class CardSelection {
         elements.forEach(el => stage.appendChild(el));
 
         document.body.appendChild(overlay);
+        DisplayCard.fitDescriptionSize(overlay);
         // Force un reflow avant de déclencher l'entrée (sinon la transition est ignorée).
         void overlay.offsetWidth;
         overlay.classList.add("fq-card-selection-in");
