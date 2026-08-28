@@ -1071,31 +1071,13 @@
                       "self": false,
                       "data": [
                         {
-                          "name": "Poison @wis",
-                          "img": "icons/skills/melee/strike-scythe-fire-green.webp",
-                          "changes": [
-                            {
-                              "key": "system.fq.bonus.dot",
-                              "value": "@wis",
-                              "type": "add",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "2",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "poison"
                         }
                       ],
                       "messages": [
                         {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Poison @wis\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
-                          "arg": "{\"effectName\": \"Poison @wis\", \"turn\":\"2\"}"
+                          "key": "FQCARDENGINE.CardMsgPoisonEffect",
+                          "arg": ""
                         }
                       ]
                     }
@@ -2062,11 +2044,11 @@
               "xmax": "",
               "ymin": "",
               "ymax": "",
-              "xvalue": "fq.attributes.critical",
+              "xvalue": "",
               "yvalue": "",
               "applyEffectsFormulas": [
                 {
-                  "title": "Poison XXX/3",
+                  "title": "Poison",
                   "formula": "1",
                   "effects": [
                     {
@@ -2074,31 +2056,13 @@
                       "self": false,
                       "data": [
                         {
-                          "name": "Poison XXX/3",
-                          "img": "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
-                          "changes": [
-                            {
-                              "key": "system.fq.bonus.dot",
-                              "value": "+ceil(XXX/3)",
-                              "type": "add",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "3",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "poison"
                         }
                       ],
                       "messages": [
                         {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Poison XXX/3\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
-                          "arg": "{\"effectName\": \"Poison XXX/3\", \"turn\":\"3\"}"
+                          "key": "FQCARDENGINE.CardMsgPoisonEffect",
+                          "arg": ""
                         }
                       ]
                     }

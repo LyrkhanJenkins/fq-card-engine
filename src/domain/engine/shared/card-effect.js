@@ -20,6 +20,7 @@ import CardGenerated from "./card-generated.js";
 import TradingCards from "../../trading/trading-cards.js";
 import CombatTurn from "../combat-turn.js";
 import TargetingPredicates from "./targeting-predicates.js";
+import StatusEffects from "../../system/effects/status-effects.js";
 
 /**
  * Résolution et application des effets d'une carte : variables et bonus (X/Y,
@@ -551,16 +552,23 @@ export default class CardEffect {
 
     /**
      * Construit les données d'effets actifs à partir d'un effet de carte :
-     * numérise les valeurs, renseigne le nom et la durée, importe les macros
-     * référencées et évalue les formules des changements (sauf bonus de
-     * dégâts/soin conservés tels quels).
+     * expanse d'abord chaque donnée portant une clé `status` en ses données
+     * canoniques du registre (cf. {@link StatusEffects.expand} — un statut peut
+     * poser PLUSIEURS effets, l'acide en empile trois), puis numérise les
+     * valeurs, renseigne le nom et la durée, importe les macros référencées et
+     * évalue les formules des changements (sauf bonus de dégâts/soin conservés
+     * tels quels).
      *
      * @param {object}   currentEffect       - L'effet source.
      *
      * @returns {Promise<object[]>} Les données d'effets actifs prêtes à être créées.
      */
     static async createEffectsFromData(currentEffect) {
-        return Promise.all(currentEffect.data.map(async effect => {
+        const effectDataList = currentEffect.data.flatMap(effectData =>
+            StatusEffects.expand(effectData.status) ?? [effectData]);
+        return Promise.all(effectDataList.map(async effect => {
+            // Champ de référence du registre, pas un champ ActiveEffect.
+            delete effect.status;
             // Les données d'effet sont déjà alignées sur le schéma v14 des ActiveEffect
             // (`name`, `img`, `showIcon`, `changes`, `duration`) : aucun renommage ici.
             // `expireOnDamage` est un concept FQ (pas un champ ActiveEffect) : on le porte
@@ -586,7 +594,9 @@ export default class CardEffect {
                     await Fx.importMacroFromCompendium(effect.changes[changeKey].value);
                 }
                 let value = effect.changes[changeKey].value;
-                if (!["system.fq.bonus.damage", "system.fq.bonus.heal"].includes(effect.changes[changeKey].key)) {
+                // macro.execute : une commande de macro n'est jamais un nombre — un nom
+                // sans argument (ex. FQPoisonSpread) serait numérisé en 0 sans cette garde.
+                if (!["system.fq.bonus.damage", "system.fq.bonus.heal", "macro.execute"].includes(effect.changes[changeKey].key)) {
                     try {
                         value = Number(RollService.rollResultSync(effect.changes[changeKey].value));
                     } catch (e) {

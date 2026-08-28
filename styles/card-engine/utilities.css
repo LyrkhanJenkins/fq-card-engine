@@ -23,6 +23,15 @@
     display: flex;
 }
 
+.fq-form-attributes fieldset[data-add-data-effect] [data-status-details],
+.fq-form-attributes fieldset[data-add-data-effect] div[data-add-data-effect] {
+    display: contents;
+}
+
+.fq-form-attributes fieldset[data-add-data-effect]:has(select[name$=".status"] option:checked:not([value=""])) [data-status-details] {
+    display: none;
+}
+
 .effect-legend {
     display: flex;
     flex-direction: row;

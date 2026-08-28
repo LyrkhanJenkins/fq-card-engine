@@ -1,0 +1,31 @@
+{
+  "name": "FQPoisonSpread",
+  "type": "script",
+  "author": "ynIo5hURbsdbG4cp",
+  "img": "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
+  "scope": "global",
+  "command": "// Propagation du poison (statut normalisé `poison` du registre FQ) : DAE\n// ré-exécute cette macro à chaque FIN de tour de l'acteur affecté\n// (flags.dae.macroRepeat = \"endEveryTurn\", args[0] === \"each\"). Chaque effet\n// Poison se duplique UNE seule fois — la copie, vierge, se dupliquera au tour\n// suivant : dégâts 1, 2, 3, 4… par tour (cumul quadratique).\nif (args[0] !== \"each\") return;\nconst lastArg = args[args.length - 1];\nif (lastArg?.turn !== \"endTurn\") return;\nconst moduleName = \"fq-card-engine\";\nconst effectActor = await fromUuid(lastArg.actorUuid);\nconst effect = effectActor?.effects?.get(lastArg.effectId);\nif (!effect || effect.getFlag(moduleName, \"hasReplicated\")) return;\nawait effect.setFlag(moduleName, \"hasReplicated\", true);\nconst copy = effect.toObject();\ndelete copy._id;\nfoundry.utils.setProperty(copy, \"flags.\" + moduleName + \".hasReplicated\", false);\nawait effectActor.createEmbeddedDocuments(\"ActiveEffect\", [copy]);",
+  "folder": null,
+  "flags": {
+    "advanced-macros": {
+      "runForSpecificUser": ""
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "dnd5e",
+    "systemVersion": "5.1.2",
+    "createdTime": 1756368000000,
+    "modifiedTime": 1756368000000,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "ownership": {
+    "default": 0
+  },
+  "_id": "fqpoisonspread00",
+  "sort": 400000,
+  "_key": "!macros!fqpoisonspread00"
+}

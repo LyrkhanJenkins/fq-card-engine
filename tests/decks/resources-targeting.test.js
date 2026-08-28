@@ -25,6 +25,7 @@ globalThis.Macro = class {
 };
 
 const {mountWorld, playChoice} = await import("./play-harness.js");
+const {makeCard, makeChoice} = await import("../factories.js");
 const {DeterministicRoll, resetDiceControl} = await import("./deterministic-roll.js");
 const RollService = (await import("../../src/domain/engine/roll/roll-service.js")).default;
 const FormError = (await import("../../src/core/error/form-error.model.js")).default;
@@ -245,6 +246,34 @@ for (const entry of rawReachCandidates) {
     if (!(await reachAllowsFixtureDistance(entry.choice))) {
         outOfRangeCandidates.push(entry);
     }
+}
+
+// Repli synthétique : le corpus n'a AUCUNE obligation de contenir une carte
+// simple hors de portée de la fixture — c'est de l'équilibrage, réglable
+// librement (la dernière, ThrowingKnife, est passée à portée 1 au commit
+// « Cartes du Maître d'Armes 2eme passe »). Le garde-fou de portée
+// (FormError OutOfReach), lui, doit rester exercé en toutes circonstances :
+// quand le glob ne découvre plus de candidat, on en fabrique un via les
+// factories (minReach 2 > distance de fixture 1). Si une carte hors-portée
+// réapparaît un jour dans le corpus, le repli s'efface de lui-même.
+if (outOfRangeCandidates.length === 0) {
+    const syntheticChoice = makeChoice({minReach: "2", maxReach: "4", damage: "1"});
+    outOfRangeCandidates.push({
+        deckFile: "(repli synthétique)",
+        cardName: "FQCARDTITLE.SyntheticOutOfReach",
+        card: makeCard({
+            name: "FQCARDTITLE.SyntheticOutOfReach",
+            faces: [{name: "", img: "", text: ""}],
+            system: {
+                fq: {
+                    maxSameCard: 1, class: "neutral", level: 1, isBase: false,
+                    choices: [syntheticChoice]
+                }
+            }
+        }),
+        choiceIndex: 0,
+        choice: syntheticChoice
+    });
 }
 
 const noNbTargetsReachCandidates = reachCandidatesInRange.filter(entry => !isFilled(entry.choice.nbTargets));

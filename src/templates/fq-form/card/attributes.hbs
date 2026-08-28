@@ -289,110 +289,122 @@
                                             </button>
                                         </legend>
                                         <div class="form-fields">
-                                            <label>{{localize "FQCARDENGINE.EffectLabel"}}</label>
-                                            <span class="fq-w-3xl">
-                                                {{formInput
-                                                        ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.name
-                                                        value=dat.name
-                                                        name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".name")
-                                                        rootId=../../../../rootId
-                                                }}
-                                            </span>
-                                            <label>{{localize "FQCARDENGINE.EffectIcon"}}</label>
+                                            <label>{{localize "FQCARDENGINE.EffectStatus"}}</label>
                                             {{formInput
-                                                    ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.img
-                                                    value=dat.img
-                                                    name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".img")
+                                                    ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.status
+                                                    value=dat.status
+                                                    name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".status")
+                                                    localize=true
                                                     rootId=../../../../rootId
                                             }}
                                         </div>
-                                        {{#each dat.changes as |change changeIndex|}}
-                                            <div class="form-fields" data-add-data-effect-change>
-                                                <button type="button"
-                                                        data-action="removeChangeData"
-                                                        data-index="{{i}}" data-formula-index="{{formulaIndex}}"
-                                                        data-effect-index="{{effectIndex}}"
-                                                        data-data-index="{{dataIndex}}"
-                                                        data-change-index="{{changeIndex}}">❌
-                                                </button>
-                                                <label>{{localize "FQCARDENGINE.EffectChangeKey"}}</label>
+                                        <span data-status-details>
+                                            <div class="form-fields">
+                                                <label>{{localize "FQCARDENGINE.EffectLabel"}}</label>
+                                                <span class="fq-w-3xl">
+                                                    {{formInput
+                                                            ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.name
+                                                            value=dat.name
+                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".name")
+                                                            rootId=../../../../rootId
+                                                    }}
+                                                </span>
+                                                <label>{{localize "FQCARDENGINE.EffectIcon"}}</label>
                                                 {{formInput
-                                                        ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.key
-                                                        value=change.key
-                                                        name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".key")
-                                                        rootId=../../../../../rootId
+                                                        ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.img
+                                                        value=dat.img
+                                                        name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".img")
+                                                        rootId=../../../../rootId
                                                 }}
-                                                <label>{{localize "FQCARDENGINE.EffectChangeValue"}}</label>
-                                                <div class="fq-w-m">
-                                                    {{formInput
-                                                            ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.value
-                                                            value=change.value
-                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".value")
-                                                            rootId=../../../../../rootId
-                                                    }}
-                                                </div>
-                                                <label>{{localize "FQCARDENGINE.EffectChangeType"}}</label>
-                                                <div class="fq-w-l">
-                                                    {{formInput
-                                                            ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.type
-                                                            value=change.type
-                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".type")
-                                                            rootId=../../../../../rootId
-                                                    }}
-                                                </div>
-                                                <label>{{localize "FQCARDENGINE.EffectChangePriority"}}</label>
-                                                <div class="fq-w-s">
-                                                    {{formInput
-                                                            ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.priority
-                                                            value=change.priority
-                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".priority")
-                                                            rootId=../../../../../rootId
-                                                    }}
-                                                </div>
                                             </div>
-                                        {{/each}}
-                                        <button type="button" data-action="addChangeData" data-index="{{i}}"
-                                                data-formula-index="{{formulaIndex}}"
-                                                data-effect-index="{{effectIndex}}"
-                                                data-data-index="{{dataIndex}}">➕ {{localize
-                                                "FQCARDENGINE.AddChangeData"}}</button>
-                                        <div data-add-data-effect>
+                                            {{#each dat.changes as |change changeIndex|}}
+                                                <div class="form-fields" data-add-data-effect-change>
+                                                    <button type="button"
+                                                            data-action="removeChangeData"
+                                                            data-index="{{i}}" data-formula-index="{{formulaIndex}}"
+                                                            data-effect-index="{{effectIndex}}"
+                                                            data-data-index="{{dataIndex}}"
+                                                            data-change-index="{{changeIndex}}">❌
+                                                    </button>
+                                                    <label>{{localize "FQCARDENGINE.EffectChangeKey"}}</label>
+                                                    {{formInput
+                                                            ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.key
+                                                            value=change.key
+                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".key")
+                                                            rootId=../../../../../rootId
+                                                    }}
+                                                    <label>{{localize "FQCARDENGINE.EffectChangeValue"}}</label>
+                                                    <div class="fq-w-m">
+                                                        {{formInput
+                                                                ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.value
+                                                                value=change.value
+                                                                name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".value")
+                                                                rootId=../../../../../rootId
+                                                        }}
+                                                    </div>
+                                                    <label>{{localize "FQCARDENGINE.EffectChangeType"}}</label>
+                                                    <div class="fq-w-l">
+                                                        {{formInput
+                                                                ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.type
+                                                                value=change.type
+                                                                name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".type")
+                                                                rootId=../../../../../rootId
+                                                        }}
+                                                    </div>
+                                                    <label>{{localize "FQCARDENGINE.EffectChangePriority"}}</label>
+                                                    <div class="fq-w-s">
+                                                        {{formInput
+                                                                ../../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.changes.element.fields.priority
+                                                                value=change.priority
+                                                                name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".changes." changeIndex ".priority")
+                                                                rootId=../../../../../rootId
+                                                        }}
+                                                    </div>
+                                                </div>
+                                            {{/each}}
+                                            <button type="button" data-action="addChangeData" data-index="{{i}}"
+                                                    data-formula-index="{{formulaIndex}}"
+                                                    data-effect-index="{{effectIndex}}"
+                                                    data-data-index="{{dataIndex}}">➕ {{localize
+                                                    "FQCARDENGINE.AddChangeData"}}</button>
+                                            <div data-add-data-effect>
 
-                                            <div class="form-fields">
-                                                <label>{{localize "FQCARDENGINE.EffectDurationValue"}}</label>
-                                                {{formInput
-                                                        ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.duration.fields.value
-                                                        value=dat.duration.value
-                                                        name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".duration.value")
-                                                        rootId=../../../../rootId
-                                                }}
-                                                <label>{{localize "FQCARDENGINE.EffectDurationUnits"}}</label>
-                                                {{formInput
-                                                        ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.duration.fields.units
-                                                        value=dat.duration.units
-                                                        name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".duration.units")
-                                                        localize=true
-                                                        rootId=../../../../rootId
-                                                }}
-                                                <label>{{localize "FQCARDENGINE.EffectExpireOnDamage"}}</label>
-                                                {{formInput
-                                                        ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.expireOnDamage
-                                                        value=dat.expireOnDamage
-                                                        name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".expireOnDamage")
-                                                        rootId=../../../../rootId
-                                                }}
+                                                <div class="form-fields">
+                                                    <label>{{localize "FQCARDENGINE.EffectDurationValue"}}</label>
+                                                    {{formInput
+                                                            ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.duration.fields.value
+                                                            value=dat.duration.value
+                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".duration.value")
+                                                            rootId=../../../../rootId
+                                                    }}
+                                                    <label>{{localize "FQCARDENGINE.EffectDurationUnits"}}</label>
+                                                    {{formInput
+                                                            ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.duration.fields.units
+                                                            value=dat.duration.units
+                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".duration.units")
+                                                            localize=true
+                                                            rootId=../../../../rootId
+                                                    }}
+                                                    <label>{{localize "FQCARDENGINE.EffectExpireOnDamage"}}</label>
+                                                    {{formInput
+                                                            ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.expireOnDamage
+                                                            value=dat.expireOnDamage
+                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".expireOnDamage")
+                                                            rootId=../../../../rootId
+                                                    }}
+                                                </div>
+                                                <div class="form-fields">
+                                                    <label>{{localize "FQCARDENGINE.EffectShowIcon"}}</label>
+                                                    {{formInput
+                                                            ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.showIcon
+                                                            value=dat.showIcon
+                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".showIcon")
+                                                            localize=true
+                                                            rootId=../../../../rootId
+                                                    }}
+                                                </div>
                                             </div>
-                                            <div class="form-fields">
-                                                <label>{{localize "FQCARDENGINE.EffectShowIcon"}}</label>
-                                                {{formInput
-                                                        ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.showIcon
-                                                        value=dat.showIcon
-                                                        name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".showIcon")
-                                                        localize=true
-                                                        rootId=../../../../rootId
-                                                }}
-                                            </div>
-                                        </div>
+                                        </span>
                                     </fieldset>
                                 {{/each}}
                                 {{#each effect.messages as |effectMessage effectMessageIndex|}}

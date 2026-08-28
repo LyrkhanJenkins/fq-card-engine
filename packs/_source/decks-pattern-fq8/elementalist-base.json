@@ -67,27 +67,7 @@
                       "self": false,
                       "data": [
                         {
-                          "name": "Earth Effect",
-                          "img": "icons/magic/earth/barrier-stone-explosion-debris.webp",
-                          "changes": [
-                            {
-                              "key": "system.fq.attributes.evasion",
-                              "value": "-1",
-                              "type": "add",
-                              "priority": null
-                            },
-                            {
-                              "key": "macro.execute",
-                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.wood",
-                              "type": "custom",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "4",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "earth"
                         }
                       ],
                       "messages": [
@@ -197,27 +177,7 @@
                       "self": false,
                       "data": [
                         {
-                          "name": "Air Effect",
-                          "img": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
-                          "changes": [
-                            {
-                              "key": "system.attributes.movement.walk",
-                              "value": "-5",
-                              "type": "add",
-                              "priority": null
-                            },
-                            {
-                              "key": "macro.execute",
-                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.metal",
-                              "type": "custom",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "2",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "air"
                         }
                       ],
                       "messages": [
@@ -423,27 +383,7 @@
                       "self": false,
                       "data": [
                         {
-                          "name": "Frost",
-                          "img": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
-                          "changes": [
-                            {
-                              "key": "system.fq.action.max",
-                              "value": "-1",
-                              "type": "add",
-                              "priority": null
-                            },
-                            {
-                              "key": "macro.execute",
-                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.cold",
-                              "type": "custom",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "3",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "frost"
                         }
                       ],
                       "messages": [
@@ -556,27 +496,7 @@
                       "self": false,
                       "data": [
                         {
-                          "name": "Burn",
-                          "img": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
-                          "changes": [
-                            {
-                              "key": "system.fq.bonus.dot",
-                              "value": "1",
-                              "type": "add",
-                              "priority": null
-                            },
-                            {
-                              "key": "macro.execute",
-                              "value": "PersistAura jb2a.fire_ring",
-                              "type": "custom",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "3",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "burn"
                         }
                       ],
                       "messages": [
@@ -2048,27 +1968,7 @@
                       "self": false,
                       "data": [
                         {
-                          "name": "Burn",
-                          "img": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
-                          "changes": [
-                            {
-                              "key": "system.fq.bonus.dot",
-                              "value": "1",
-                              "type": "add",
-                              "priority": null
-                            },
-                            {
-                              "key": "macro.execute",
-                              "value": "PersistAura jb2a.fire_ring",
-                              "type": "custom",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "3",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "burn"
                         }
                       ],
                       "messages": [
@@ -2126,27 +2026,7 @@
                       "self": false,
                       "data": [
                         {
-                          "name": "Frost",
-                          "img": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
-                          "changes": [
-                            {
-                              "key": "system.fq.action.max",
-                              "value": "-1",
-                              "type": "add",
-                              "priority": null
-                            },
-                            {
-                              "key": "macro.execute",
-                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.cold",
-                              "type": "custom",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "3",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "frost"
                         }
                       ],
                       "messages": [
@@ -2208,27 +2088,7 @@
                       "self": false,
                       "data": [
                         {
-                          "name": "Air Effect",
-                          "img": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
-                          "changes": [
-                            {
-                              "key": "system.attributes.movement.walk",
-                              "value": "-5",
-                              "type": "add",
-                              "priority": null
-                            },
-                            {
-                              "key": "macro.execute",
-                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.metal",
-                              "type": "custom",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "2",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "air"
                         }
                       ],
                       "messages": [
@@ -2286,27 +2146,7 @@
                       "self": false,
                       "data": [
                         {
-                          "name": "Earth Effect",
-                          "img": "icons/magic/earth/barrier-stone-explosion-debris.webp",
-                          "changes": [
-                            {
-                              "key": "system.fq.attributes.evasion",
-                              "value": "-1",
-                              "type": "add",
-                              "priority": null
-                            },
-                            {
-                              "key": "macro.execute",
-                              "value": "PersistAura jb2a.aura_themed.01.orbit.loop.wood",
-                              "type": "custom",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "4",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "earth"
                         }
                       ],
                       "messages": [

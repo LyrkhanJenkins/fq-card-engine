@@ -1,3 +1,5 @@
+import StatusEffects from "../effects/status-effects.js";
+
 const {SchemaField, StringField, NumberField, BooleanField, ArrayField, FilePathField} = foundry.data.fields;
 
 /**
@@ -283,6 +285,14 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                 self: new BooleanField({required: true, label: "FQCARDENGINE.SelfApplyEffect"}),
                 // Le données de l'effets
                 data: new ArrayField(new SchemaField({
+                    status: new StringField({
+                        required: true,
+                        blank: true,
+                        initial: "",
+                        choices: StatusEffects.STATUS_CHOICES,
+                        localize: true,
+                        label: "FQCARDENGINE.EffectStatus"
+                    }),
                     name: new StringField({required: true, label: "FQCARDENGINE.EffectLabel"}),
                     img: new FilePathField({
                         categories: ["IMAGE"],
