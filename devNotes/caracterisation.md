@@ -67,12 +67,18 @@ Distribution : pool **primaire** (classe principale) = 3 choix aux niv. 2‑4 pu
 Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et Guerrier Runique ; **esquive** absente du pool primaire de l'Élémentaliste et du Trapper.
 
 ---
+# TODO Générique
+- Supprimer les cartes neutre pour le moment et faire des mécaniques différentes pour récupérer action mana ou pioche?
+OU - Assumer jusqu'au bout des cartes neutres
+- TODO Virus à partir de poison?
+- TODO Poison (dégâts et duplication)
+- TODO Malédiction sans dégâts
 
 # Élémentaliste
 
 > « Allie des effets de feu, de givre, d'air et de terre pour infliger d'importants dégâts. Fragile mais possède les plus gros dégâts bruts du jeu. »
 
-**Identité dnd5e** : d4 (le plus fragile), INT + SAG (les deux requises). Deux cartes hors-thème récompensent DEX (Assassin du néant) et CHA (Plastron magique).
+**Identité dnd5e** : d4 , INT + SAG (les deux requises). Deux cartes hors-thème récompensent DEX (Assassin du néant) et CHA (Plastron magique).
 
 **Stats FQ** : mana écrasant (12/22 du pool primaire), puis points d'action. **Aucune esquive en primaire** : la survie n'est pas une option de build, c'est la portée qui protège.
 
@@ -87,6 +93,8 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Boucle de jeu** : tours 1‑2 amorçage (poser les éléments, accumuler zèle) → tours 3+ détonation (combos verrouillés par prérequis).
 
+**Faiblesse**:
+- Le moins de point de vie (d4)
 ---
 
 # Gardien
@@ -109,11 +117,13 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Boucle de jeu** : frapper pour générer du zèle, payer en PV ce que le mana ne couvre pas, encaisser/réagir hors tour, basculer protecteur (Rempart Magique, Intervention, Essor Vital) en fin de combat.
 
+**Faiblesse**:
+- Le moins de point de mana
 ---
 
 # Mage Blanc
 
-> « Le meilleur soigneur et protecteur, mais ses malédictions peuvent infliger d'importants dégâts sur la durée. »
+> « Le meilleur soigneur et protecteur, mais ses malédictions peuvent infliger d'importants dégâts également. »
 
 **Identité dnd5e** : d6, CON + SAG (les deux requises) ; INT s'ajoute en pratique (dégâts radiants, boucliers réactifs) — classe structurellement étalée sur 3 caracs.
 
@@ -130,11 +140,12 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Boucle de jeu** : maudire tôt → laisser tourner les DoT en soignant/réagissant → détoner ; alimenter le tout par conversion de ressources.
 
+**Faiblesse**:
 ---
 
 # Trapper
 
-> « Classe à distance spécialisée dans les attaques critiques, accompagnée de son familier, qui peut poser des pièges redoutables. »
+> « Classe à distance spécialisée dans les attaques critiques, accompagnée de son familier, ou qui peut poser des pièges redoutables. »
 
 **Identité dnd5e** : d8, DEX + SAG. CHA est le levier du build « maître des bêtes » (stats des minions), INT reste marginal.
 
@@ -152,6 +163,9 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Boucle de jeu** : préparer le tir (buffs de critique, embuscade), sécuriser la zone (pièges), déléguer le contact aux bêtes, décharger à longue portée.
 
+**Faiblesse**:
+- Pas d'esquive
+- Pas d'attaque corps à corps
 ---
 
 # Moine
@@ -160,7 +174,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Identité dnd5e** : d8, FOR + DEX. CON alimente les soins et coûts, SAG/CHA les plafonds de X.
 
-**Stats FQ** : **esquive la mieux dotée du jeu** (6 paliers primaires), zèle et déplacement bien fournis. **Jamais de critique** — il joue le volume, pas le burst.
+**Stats FQ** : **esquive la mieux dotée du jeu**, zèle et déplacement bien fournis. **Jamais de critique** — il joue le volume, pas le burst.
 
 **Rôle** : bruiser mobile à tempo, duelliste corps à corps, avec appoints tank (taunt Uppercut, Interruption) et soins (Vive-Esquive, Méditation Zen, Paume Curative).
 
@@ -170,11 +184,13 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - **Flux de cartes** : Souffle de Ki (zèle → X cartes **et** 2X actions), Maître Du Chi (carte de base passive bidirectionnelle : défausse ↔ zèle ↔ pioche), Armes Secrètes (monétise la défausse en dégâts inesquivables).
 - **Rejouable conditionnel scripté** (unique au Moine) : Coup Droit/Gauche rejouables 2× seulement si assez de PA déjà dépensés ce tour — récompense l'**ordonnancement** des cartes.
 - **Défense réactive** : 4 réactives (Bouclier Zélé sur sort subi, Vive-Esquive sur dégâts, Armes Secrètes, Interruption qui divise par 2 les PA adverses) + Dissimulation (intouchable 1 tour au prix de dégâts nuls, puis fenêtre offensive).
-
-**Boucle de jeu** : enchaîner les petites frappes → zèle → convertir en cartes/actions/burst ; l'ordre de jeu dans le tour est la compétence clé.
-
+- **Déplacement améliorable**: Dégâts et déplacement (déplacement éclair) (le seul avec le Gardien ? ENlever le gardien?)
 Le seul a faire plus de dégâts avec toutes les cartes en main
 Le seul a pouvoir augmenter son zèle max
+**Boucle de jeu** : enchaîner les petites frappes → zèle → convertir en cartes/actions/burst ; l'ordre de jeu dans le tour est la compétence clé.
+
+**Faiblesses** :
+- Aucun Critique
 ---
 
 # Sorcière
@@ -196,19 +212,24 @@ Le seul a pouvoir augmenter son zèle max
 
 **Boucle de jeu** : invoquer en attaquant → sacrifier → recycler en mana/PV/actions/zèle → réinvoquer plus gros. Aucune défense personnelle : l'armée est le rempart.
 
+**Faiblesse**:
+- Vite à cours de mana?
+- Peu de point de vie
 ---
 
 # Illusionniste
 
-> « Un combattant rapide d'armes diverses qui ne cesse d'augmenter sa portée au cours du combat. »
+> « Un combattant et soutien/healeur qui ne cesse d'augmenter sa portée au cours du combat. »
 
 **Identité dnd5e** : d6, DEX + CHA. Classe la plus multi-carac du jeu : SAG (potions, mana), FOR/`@wpnM` (frappes), INT (orbe), CON (Peste Noire).
 
 **Stats FQ** : action + mana + main. La **portée n'est achetable nulle part** — c'est précisément sa mécanique : elle se construit en combat.
 
-**Rôle** : contrôleur de portée / soutien hybride (presque un barde-apothicaire), AoE géométriques exigeantes en positionnement. Fragile, survit par l'esquive et le kiting.
+**Rôle** : Contrôleur de portée / Soutien hybride (presque un barde-apothicaire)/ Healeur, Possède des sorts matchant avec toutes les autres classes?
 
 **Mécaniques signature** :
+- **Cartes de manipulation d'espace**: peut bouger des cibles autre que lui
+- **Cartes de manipulation temporaire**: Soins des derniers dégâts subit, soins HOT?
 - **La portée comme ressource cumulative** (`fq.bonus.range`) : gains fiables (Allonge magique, Fouet Enchanté, Salto Arrière), aléatoires (Rapière Enchantée 1d2), massifs temporaires (Potion d'allonge +@wis). Puis **8 cartes la dépensent ou la scalent** : dégâts (Frappe Illusoire, Volée de shuriken, Prise En Traître), nombre de cibles (Attaque Latérale `2*(1+X)`, Diagonale `4*(1+X/2)`), DoT (Nuage de dague), portée min (Attaque En Cercle), conversion (Illusion De Caractéristiques : portée → critique/soins/mana).
 - **Trois `xvalue` distincts** : bonus de portée, distance réelle à la cible (Orbe Grandissante `XXXd6`, Passage éthéré), nombre de cibles (Succion De Mana).
 - **Ciblage géométrique** : `targetsAlignedWithSelf`, `targetsDiagonalWithSelf`, cône, couronne adjacente — les AoE exigent du placement.
@@ -218,13 +239,20 @@ Le seul a pouvoir augmenter son zèle max
 
 **Boucle de jeu** : empiler la portée avec des cartes bon marché qui rendent du zèle → encaisser les payoffs multicibles → soutenir l'équipe en continu.
 
+**Problème de caractérisation**
+- Soutien un peu trop similaire au maitre d'arme
+- Attaque latérale et en cercle à déplacer vers le maître d'arme
+- Bien différencier les soins des autres soigneurs: Moine ( corps à corps) et Mage Blanc (soins directs et bouclier)
+
+**Faiblesse**:
+- Moins de dégâts?
 ---
 
 # Maître d'Armes
 
 > « Expert de tout l'arsenal : ses cartes frappent avec l'arme du moment, au corps à corps comme à distance. »
 
-**Identité dnd5e** : d10, FOR + DEX. DEX domine (tirs, finishers), FOR sur les gros coups de mêlée (`2*@str`).
+**Identité dnd5e** : d10, FOR + DEX (3eme: CHA). DEX domine (tirs, finishers), FOR sur les gros coups de mêlée (`2*@str`).
 
 **Stats FQ** : zèle+ action + critique + main. 
 
@@ -233,18 +261,21 @@ Le seul a pouvoir augmenter son zèle max
 **Mécaniques signature** :
 - **Buffs d'arme fenêtrés** : Huile d'affûtage (mêlée), Prise équilibrée (distance), Maîtrise des armes (les deux, 3 rounds) — tour de setup puis burst.
 - **Carte qui s'améliore en carte coutant de plus en plus cher jusqu'a faire de gros dégâts**
-- **Carte qui duplique une autre carte en main**
+- **Carte qui duplique une autre carte en main (Le seul a pouvoir faire ça)**
 - **Tous les buffs/malus dure 1 tour**
 - **Moteur couteaux de lancer** : Ceinture de couteaux (−2 action) fabrique une carte *Couteau de lancer* **gratuite** (jusqu'à ×24), boostée en permanence et cumulativement par Affûtage des couteaux (`@bonus.knife`).
-- **Soutien** : Buff des dégâts des armes des autres (+ fort pour les faibles jets) + Réduit l'esquive a 0? **
+- **Soutien (Charisme)** : Buff des dégâts des armes des autres (+ fort pour les faibles jets) + Réduit l'esquive a 0? **
 
 **Boucle de jeu** : Réunir les bonnes cartes pour faire de gros dégâts corps à corps OU distance OU build les couteaux de lancer OU ...
 
 **Faiblesses** :
 - Pas de heal personnel
+- Pas d'amélioration personnel d'esquive par les cartes
 ---
 
 # Guerrier Runique
+
+> « DeckBuilder: entre en combat avec très peu de cartes ; ses runes en génèrent de nouvelles au fil de l'affrontement, rendant son deck de plus en plus puissant. »
 
 **Identité dnd5e** : d10, FOR + INT (3eme: CON) — Frontliner qui frappe au corps à corps (`@wpnM`).
 
