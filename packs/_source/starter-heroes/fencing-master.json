@@ -59,7 +59,7 @@
         }
       },
       "con": {
-        "value": 12,
+        "value": 8,
         "proficient": 0,
         "max": null,
         "bonuses": {
@@ -82,7 +82,7 @@
         }
       },
       "int": {
-        "value": 10,
+        "value": 8,
         "proficient": 0,
         "max": null,
         "bonuses": {
@@ -128,7 +128,7 @@
         }
       },
       "cha": {
-        "value": 6,
+        "value": 12,
         "proficient": 0,
         "max": null,
         "bonuses": {
@@ -498,7 +498,7 @@
       },
       "loyalty": {},
       "hp": {
-        "value": 28,
+        "value": 26,
         "max": null,
         "temp": null,
         "tempmax": 0,
@@ -2079,7 +2079,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.3.3",
     "createdTime": 1756555031936,
-    "modifiedTime": 1787893925133,
+    "modifiedTime": 1787897985482,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "_key": "!actors!uJSNPmJQdrXlqAyK"
