@@ -330,6 +330,43 @@ describe("CardCondition — effets actifs", () => {
         mountScene({tokens: [clean], targets: [clean]});
         expect(CardCondition.targetsHaveEffect()).toBe(false);
     });
+
+    it("selfEffectCount : compte les effets du lanceur, filtrés par nom si une liste est fournie", () => {
+        mountScene({character: {id: "me", effects: [{name: "Curse"}, {name: "Curse"}, {name: "Burn"}]}});
+        expect(CardCondition.selfEffectCount(["Curse"])).toBe(2);
+        expect(CardCondition.selfEffectCount()).toBe(3);
+        expect(CardCondition.selfEffectCount(["Frost"])).toBe(0);
+
+        mountScene({character: {id: "me", effects: []}});
+        expect(CardCondition.selfEffectCount(["Curse"])).toBe(0);
+    });
+});
+
+describe("CardCondition — seuil de PV des cibles (exécution)", () => {
+
+    /** Cible avec des PV restants explicites (le prédicat lit system.attributes.hp.value). */
+    function targetWithHp(id, hp) {
+        return {id, actor: {id, system: {attributes: {hp: {value: hp}}}}};
+    }
+
+    it("targetsHpBelow : vrai si CHAQUE cible mourrait au seuil donné (strictement supérieur aux PV)", () => {
+        mountScene({targets: [targetWithHp("a", 5)]});
+        expect(CardCondition.targetsHpBelow(6)).toBe(true);
+        // Égalité : 5 dégâts sur 5 PV restants ne satisfont pas « supérieur aux PV ».
+        expect(CardCondition.targetsHpBelow(5)).toBe(false);
+
+        mountScene({targets: [targetWithHp("a", 5), targetWithHp("b", 10)]});
+        expect(CardCondition.targetsHpBelow(6)).toBe(false);
+        expect(CardCondition.targetsHpBelow(11)).toBe(true);
+    });
+
+    it("targetsHpBelow : faux sans cible sélectionnée ou sans PV lisibles", () => {
+        mountScene({targets: []});
+        expect(CardCondition.targetsHpBelow(999)).toBe(false);
+
+        mountScene({targets: [{id: "x", actor: {id: "x"}}]});
+        expect(CardCondition.targetsHpBelow(999)).toBe(false);
+    });
 });
 
 describe("CardCondition — état du personnage", () => {

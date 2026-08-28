@@ -502,6 +502,40 @@ export default class CardCondition {
     }
 
     /**
+     * Compte les effets actifs portés par le personnage de l'utilisateur — parmi
+     * les noms donnés si une liste est fournie, tous sinon. Sert aux cartes dont
+     * la puissance dépend d'un empilement d'effets sur le lanceur (ex : les
+     * malédictions accumulées du Mage Blanc), typiquement via un
+     * `xvalue`/`customEvals` `SCRIPT:FqCardEngineModule.cond.selfEffectCount(["Curse"])`.
+     *
+     * @param {string[]} [names] - Les noms d'effets comptés (vide = tous).
+     *
+     * @returns {number} Le nombre d'effets correspondants (0 sans acteur).
+     */
+    static selfEffectCount(names = []) {
+        const effects = [...(Constants.actorCurrent?.effects ?? [])];
+        return effects.filter(e => !names.length || names.includes(e.name)).length;
+    }
+
+    /**
+     * Indique si TOUTES les cibles sélectionnées ont des points de vie restants
+     * strictement inférieurs au seuil — le prédicat des cartes d'exécution
+     * (« inflige N dégâts si et seulement si cela achève la cible »). Faux sans
+     * cible sélectionnée ou si une cible n'expose pas ses points de vie.
+     *
+     * @param {number} threshold - Le seuil de dégâts à comparer aux PV restants.
+     *
+     * @returns {boolean} True si chaque cible mourrait à `threshold` dégâts.
+     */
+    static targetsHpBelow(threshold) {
+        const targets = Constants.currentTargets;
+        return targets.length > 0 && targets.every(t => {
+            const hp = t.actor?.system?.attributes?.hp?.value;
+            return Number.isFinite(hp) && hp < threshold;
+        });
+    }
+
+    /**
      * Indique si au moins une cible sélectionnée porte `minCount` effets actifs
      * ou plus parmi les noms donnés (liste vide = n'importe quel effet).
      *

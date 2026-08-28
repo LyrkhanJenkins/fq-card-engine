@@ -2394,6 +2394,168 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!6b9vSzD4cZQZSYIu.PAa1ZbJPO95KZHBg"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.ViralMutation"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ViralMutation",
+      "description": "",
+      "_id": "trViralMutation1",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "level": 6,
+          "isBase": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "3",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Poison 1/3",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "Poison",
+                      "data": [],
+                      "messages": []
+                    }
+                  ]
+                },
+                {
+                  "title": "Poison 2/3",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "Poison",
+                      "data": [],
+                      "messages": []
+                    }
+                  ]
+                },
+                {
+                  "title": "Poison 3/3",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "Poison",
+                      "data": [],
+                      "messages": []
+                    }
+                  ]
+                },
+                {
+                  "title": "Virus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "virus"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Virus\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgPermanentEffect",
+                          "arg": "{\"effectName\":\"Virus\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.aura_themed.01.orbit.loop.nature",
+                "onTarget": true
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Poison\"], 3)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.WarningMsgNotEnoughPoisons",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 16,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430831,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1"
     }
   ],
   "width": null,

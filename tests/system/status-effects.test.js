@@ -92,6 +92,17 @@ describe("StatusEffects — registre des statuts normalisés", () => {
         expect(curse.name).toBe("Curse");
     });
 
+    test("virus : override des PV max par les PV restants (résolu par DAE), aucun dégât, durée illimitée", () => {
+        const [virus] = StatusEffects.expand("virus");
+        expect(virus.name).toBe("Virus");
+        expect(virus.duration.value).toBe("");
+        expect(virus.changes.some(c => c.key === "system.fq.bonus.dot")).toBe(false);
+        // La valeur reste une référence @ : c'est DAE qui la résout dynamiquement
+        // sur l'acteur porteur — les PV max suivent les PV restants.
+        const override = virus.changes.find(c => c.key === "system.attributes.hp.max");
+        expect(override).toEqual(expect.objectContaining({value: "@attributes.hp.value", type: "override"}));
+    });
+
     test("les noms canoniques référencés par les scripts de combo des cartes existantes sont préservés", () => {
         // targetsHaveEffect(["Burn"|"Frost"|"Curse"|"Earth Effect"|"Air Effect"]) :
         // renommer un de ces effets casserait les combos Élémentaliste/Mage Blanc.

@@ -21,6 +21,7 @@
  * Ce module ne doit importer AUCUN autre module du moteur (il est consommé à la
  * fois par le schéma de carte et par le pipeline de jeu).
  */
+
 export default class StatusEffects {
 
     /**
@@ -43,6 +44,7 @@ export default class StatusEffects {
         burn: "FQCARDENGINE.StatusBurn",
         frost: "FQCARDENGINE.StatusFrost",
         curse: "FQCARDENGINE.StatusCurse",
+        virus: "FQCARDENGINE.StatusVirus",
         earth: "FQCARDENGINE.StatusEarth",
         air: "FQCARDENGINE.StatusAir"
     };
@@ -131,6 +133,24 @@ export default class StatusEffects {
             img: "icons/magic/death/skull-energy-light-purple.webp",
             changes: [
                 {key: "macro.execute", value: "PersistAura jb2a.condition.curse.01", type: "custom", priority: null}
+            ],
+            duration: {value: "", units: "rounds"},
+            expireOnDamage: false,
+            showIcon: 1
+        }],
+        // Virus : la cible ne peut plus se soigner — ses PV max sont rabattus
+        // (override) sur ses PV restants, jusqu'à la fin du combat. La valeur
+        // `@attributes.hp.value` reste littérale à la création (la numérisation
+        // du pipeline échoue dessus et la conserve telle quelle) : c'est DAE qui
+        // la résout dynamiquement sur l'ACTEUR PORTEUR à chaque préparation de
+        // données — les PV max suivent donc les PV restants, et la suppression
+        // de l'effet restaure les PV max d'elle-même.
+        virus: [{
+            name: "Virus",
+            img: "icons/svg/biohazard.svg",
+            changes: [
+                {key: "system.attributes.hp.max", value: "@attributes.hp.value", type: "override", priority: 20},
+                {key: "macro.execute", value: "PersistAura jb2a.aura_themed.01.orbit.loop.nature", type: "custom", priority: null}
             ],
             duration: {value: "", units: "rounds"},
             expireOnDamage: false,

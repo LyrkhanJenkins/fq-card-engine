@@ -24,7 +24,7 @@ Feat :
 - Les chat messages mettent plus l'accent sur le résultat final
 - Implémentation des Attaques d'Opportunités (AO) avec la première arme équipée et dégâts automatique
 - Macro pour faire fin du tour
-- Effets Rationalisé (Terre, Air, Feu, Malédiction, Poison...etc)
+- Effets Rationalisé (Terre, Air, Feu, Malédiction, Poison...etc) + Conditions dnd5e
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

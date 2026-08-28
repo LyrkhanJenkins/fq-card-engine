@@ -132,7 +132,8 @@ OU - Assumer jusqu'au bout des cartes neutres
 **Rôle** : soigneur-protecteur **réactif** doublé d'un contrôleur DoT — sa valeur se mesure pendant les tours adverses.
 
 **Mécaniques signature** :
-- **Malédiction (`Curse`)** : trois poseurs (Malédiction — qui *rapporte* +1 mana +1 zèle —, Malédiction Instantanée réactive, Ange et Démon permanent) et trois détonateurs verrouillés par `targetsHaveEffect(["Curse"])` (Explosion d'Arcanes mono/zone, Châtiments). Le pendant positif `Bless` (DoT négatif = régénération) arrive au niveau 7.
+- **Malédiction (`Curse`)** : Pose plusieurs stacks sur des cibles, permets d'utiliser d'autre sort efficaces avec bc de stack. Tue une cible ayant suffisament de malédiction 
+- Le pendant positif `Bless` (DoT négatif = régénération) arrive au niveau 7.
 - **Suite de boucliers réactifs** : 5 cartes `reactive` (Bouclier de Mana, Divin, Vengeur, Empathique, Malédiction Instantanée) avec `replayable` indexé sur `@wis` — la sagesse fixe le nombre de réactions. Trois modèles de mitigation distincts : PV temporaires, soin réactif répété, invulnérabilité + restauration (Bouclier Divin).
 - **Transmutation de ressources** : Sang Bleu (2 PV → 1 mana), Le Bien Et Le Mal (transfert de PV à portée quasi illimitée), Soins d'Urgence (défausse → soin), Infusion de Mana (génère une source de mana passive permanente).
 - **Cartes génératives** : Infusion de Mana et Frappe de Lumière (AoE ennemis qui débloque un soin de groupe gratuit).

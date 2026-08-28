@@ -110,6 +110,51 @@ describe("statuts normalisés — pipeline réel via playChoice", () => {
         expect(effect.changes.some(c => c.key === "system.fq.bonus.dot")).toBe(false);
     });
 
+    test("status virus : la référence @attributes.hp.value de l'override survit au pipeline (résolution DAE)", async () => {
+        const result = await playChoice(cardWithEffectData([{status: "virus"}]), 0);
+
+        expect(result.threw).toBe(false);
+        expect(result.effectsCreated).toHaveLength(1);
+        const effect = result.effectsCreated[0].effect;
+        expect(effect.name).toBe("Virus");
+        expect(effect.duration).toBeUndefined();
+        expect(effect.origin).toBe(OriginFQEffectLabel);
+        // La numérisation du pipeline doit échouer proprement sur la référence @
+        // et la conserver LITTÉRALE : c'est le contrat avec DAE.
+        const override = effect.changes.find(c => c.key === "system.attributes.hp.max");
+        expect(override.value).toBe("@attributes.hp.value");
+        expect(override.type).toBe("override");
+    });
+
+    test("entrées de statut dupliquées : chaque entrée pose son propre effet (empilement de malédictions)", async () => {
+        const result = await playChoice(cardWithEffectData([
+            {status: "curse"}, {status: "curse"}, {status: "curse"}
+        ]), 0);
+
+        expect(result.threw).toBe(false);
+        expect(result.effectsCreated).toHaveLength(3);
+        expect(new Set(result.effectsCreated.map(call => call.effect.name))).toEqual(new Set(["Curse"]));
+    });
+
+    test("blob personnalisé avec statuses : le marqueur de condition à durée limitée survit au pipeline", async () => {
+        const result = await playChoice(cardWithEffectData([{
+            status: "",
+            name: "Restrained",
+            img: "systems/dnd5e/icons/svg/statuses/restrained.svg",
+            statuses: ["restrained"],
+            changes: [],
+            duration: {value: "1", units: "rounds"},
+            expireOnDamage: false,
+            showIcon: 2
+        }]), 0);
+
+        expect(result.threw).toBe(false);
+        expect(result.effectsCreated).toHaveLength(1);
+        const effect = result.effectsCreated[0].effect;
+        expect(effect.statuses).toEqual(["restrained"]);
+        expect(effect.duration).toEqual({value: 1, units: "rounds"});
+    });
+
     test("blob personnalisé (sans statut) : comportement historique inchangé", async () => {
         const result = await playChoice(cardWithEffectData([{
             status: "",

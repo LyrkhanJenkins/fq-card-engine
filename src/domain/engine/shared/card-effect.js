@@ -594,9 +594,14 @@ export default class CardEffect {
                     await Fx.importMacroFromCompendium(effect.changes[changeKey].value);
                 }
                 let value = effect.changes[changeKey].value;
-                // macro.execute : une commande de macro n'est jamais un nombre — un nom
-                // sans argument (ex. FQPoisonSpread) serait numérisé en 0 sans cette garde.
-                if (!["system.fq.bonus.damage", "system.fq.bonus.heal", "macro.execute"].includes(effect.changes[changeKey].key)) {
+                // Pas de numérisation pour : macro.execute (une commande de macro n'est
+                // jamais un nombre — un nom sans argument serait numérisé en 0) et les
+                // valeurs portant encore une référence @ (les @caractéristiques du
+                // lanceur ont déjà été substituées en amont : un @ restant est une
+                // référence DYNAMIQUE résolue par DAE sur l'acteur porteur, ex. le
+                // `@attributes.hp.value` du statut virus — la numériser la détruirait).
+                if (!["system.fq.bonus.damage", "system.fq.bonus.heal", "macro.execute"].includes(effect.changes[changeKey].key)
+                    && !String(effect.changes[changeKey].value).includes("@")) {
                     try {
                         value = Number(RollService.rollResultSync(effect.changes[changeKey].value));
                     } catch (e) {
