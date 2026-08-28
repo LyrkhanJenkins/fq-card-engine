@@ -14,13 +14,15 @@ import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {PILE_TYPE} from "../../trading/trading-cards.js";
 
 // Correspondance verdict de ciblage (`ResourceHandler.TARGETING_VERDICT`) → clé du
-// message d'erreur du formulaire de jeu. `ok` n'y figure pas (aucune erreur levée).
+// message d'erreur du formulaire de jeu. `OK` n'y figure pas (aucune erreur levée).
+// Construite depuis les constantes de verdict : une désynchronisation des valeurs
+// serait silencieuse (aucune erreur levée = carte jouée sans garde).
 const TARGETING_FORM_ERROR = {
-    none: "FQCARDENGINE.DialogPlayFormErrorNoTarget",
-    multipleNotAllowed: "FQCARDENGINE.DialogPlayFormErrorNoMultipleTarget",
-    tooMany: "FQCARDENGINE.DialogPlayFormErrorTooManyTargets",
-    noCasterToken: "FQCARDENGINE.DialogPlayFormErrorNoTokenOnScene",
-    outOfReach: "FQCARDENGINE.DialogPlayFormErrorOutOfReach",
+    [ResourceHandler.TARGETING_VERDICT.NO_TARGET]: "FQCARDENGINE.DialogPlayFormErrorNoTarget",
+    [ResourceHandler.TARGETING_VERDICT.MULTIPLE_NOT_ALLOWED]: "FQCARDENGINE.DialogPlayFormErrorNoMultipleTarget",
+    [ResourceHandler.TARGETING_VERDICT.TOO_MANY]: "FQCARDENGINE.DialogPlayFormErrorTooManyTargets",
+    [ResourceHandler.TARGETING_VERDICT.NO_CASTER_TOKEN]: "FQCARDENGINE.DialogPlayFormErrorNoTokenOnScene",
+    [ResourceHandler.TARGETING_VERDICT.OUT_OF_REACH]: "FQCARDENGINE.DialogPlayFormErrorOutOfReach",
 };
 
 // Dialogue « Jouer la carte » actuellement ouvert. Une seule instance doit
@@ -524,7 +526,7 @@ export default {
         if (discards.length > 1) {
             to = game.cards.get(fd.to);
         }
-        const cardContent = cardContents.length === 1 ? cardContents[0] : cardContents.filter(cc => cc.name === fd.nameContent)[0];
+        const cardContent = cardContents.length === 1 ? cardContents[0] : cardContents.find(cc => cc.name === fd.nameContent);
         return {to, fd, cardContent};
     },
     //Shows the card image

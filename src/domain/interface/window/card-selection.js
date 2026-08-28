@@ -3,10 +3,10 @@ import CardGenerated from "../../engine/shared/card-generated.js";
 import TradingCards, {DECK_TYPE, PILE_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
 import DisplayCard from "../card-svg/display-card.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
-import {createWarning} from "../../../core/utils/chat.utils.js";
+import {createInfo, createWarning} from "../../../core/utils/chat.utils.js";
 
 /** Les destinations acceptées par {@link CardSelection.chooseCards}. */
-export const SELECTION_DESTINATIONS = ["discard", "deck"];
+const SELECTION_DESTINATIONS = ["discard", "deck"];
 
 /**
  * Sélection de cartes proposées : à partir d'une liste de références de
@@ -28,16 +28,20 @@ export default class CardSelection {
      * @returns {Promise<{cards: Card[], missing: string[]}>} Les cartes résolues et les références manquantes.
      */
     static async resolveCardPool(references) {
+        // Résolutions indépendantes en lecture seule : en parallèle, l'ordre
+        // des résultats restant celui des références.
+        const resolved = await Promise.all(
+            (references ?? []).map(reference => CardGenerated.resolveCompendiumCard(reference))
+        );
         const cards = [];
         const missing = [];
-        for (const reference of references ?? []) {
-            const card = await CardGenerated.resolveCompendiumCard(reference);
+        resolved.forEach((card, i) => {
             if (card) {
                 cards.push(card);
             } else {
-                missing.push(reference);
+                missing.push((references ?? [])[i]);
             }
-        }
+        });
         return {cards, missing};
     }
 
@@ -489,11 +493,8 @@ export default class CardSelection {
         }
         const data = chosen.map(card => CardGenerated.buildGeneratedCardData(card));
         const created = await hand.createEmbeddedDocuments("Card", data);
-        ChatMessage.create({
-            speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-            content: `<div style='font-style: italic'>${game.i18n.format("FQCARDENGINE.InfoMsgCardsAddedToHand",
-                {names: chosen.map(card => game.i18n.localize(card.name)).join(", ")})}</div>`
-        });
+        createInfo(game.i18n.format("FQCARDENGINE.InfoMsgCardsAddedToHand",
+            {names: chosen.map(card => game.i18n.localize(card.name)).join(", ")}), {actor: Constants.actorCurrent});
         return created;
     }
 

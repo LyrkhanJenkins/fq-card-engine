@@ -38,7 +38,7 @@ export const PILL_TYPE = "type";
  * @type {RegExp}
  */
 // eslint-disable-next-line no-control-regex
-export const PILL_PATTERN = /([^]*)([^]*)([^]*)/g;
+const PILL_PATTERN = /([^]*)([^]*)([^]*)/g;
 
 /**
  * Retire de `text` les trois caractères de contrôle du protocole de pastille.

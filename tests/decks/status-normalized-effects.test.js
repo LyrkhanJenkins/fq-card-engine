@@ -12,14 +12,9 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
-// Le change `macro.execute` du statut poison déclenche l'import de la macro de
-// compendium (`Fx.importMacroFromCompendium` -> `Macro.create`) : stub du global
-// Foundry, comme dans sweep.test.js (isolation par fichier Vitest).
-globalThis.Macro = class {
-    static create = vi.fn(async () => ({}));
-};
-
 const {playChoice} = await import("./play-harness.js");
+const {installMacroStub} = await import("./corpus-helpers.js");
+installMacroStub();
 const {makeCard, makeChoice} = await import("../factories.js");
 const {OriginFQEffectLabel} = await import("../../src/domain/constants.js");
 

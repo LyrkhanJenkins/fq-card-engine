@@ -243,15 +243,17 @@ export default class TradingCards {
 
         // Retire du deck uniquement les cartes concernées par la baisse de niveau
         if (cardsToRemove.length) {
-            const removeInDeck = deck.cards.filter(c => cardsToRemove.find(rc => rc.name === c.name));
+            const removeNames = new Set(cardsToRemove.map(rc => rc.name));
+            const removeInDeck = deck.cards.filter(c => removeNames.has(c.name));
             await TradingCards.deleteCardsForDeck(deck, removeInDeck);
         }
 
         // Ajoute au deck uniquement les nouvelles cartes gagnées, si pas déjà présentes
         if (cardsToAdd.length) {
+            const deckNames = new Set(deck.cards.map(c => c.name));
             let newCards = [];
             cardsToAdd.forEach(card => {
-                if (!deck.cards.find(cardInDeck => cardInDeck.name === card.name)) {
+                if (!deckNames.has(card.name)) {
                     for (let i = 0; i < (Math.ceil((card?.system?.fq?.maxSameCard ?? 1) / 2)); i++) {
                         newCards.push({...card});
                     }
@@ -342,19 +344,19 @@ export default class TradingCards {
      * const hand = Deck.getFirstDeck(game.user.id, HAND_TYPE);
      */
     static getFirstDeck(userId, typeFq, warning = true) {
-        let deck = game.cards.filter(cards => cards.ownership[userId] === 3 && cards.system.fq.type === typeFq && cards.system.fq.owner === userId);
-        if (!deck?.length && warning) {
-            if (typeFq === HAND_TYPE) {
-                ui.notifications.warn("FQCARDENGINE.WarningHandMissingForPlayer", {localize: true});
-            } else if (typeFq === DECK_TYPE) {
-                ui.notifications.warn("FQCARDENGINE.WarningDeckMissingForPlayer", {localize: true});
-            } else if (typeFq === PILE_TYPE) {
-                ui.notifications.warn("FQCARDENGINE.WarningPileMissingForPlayer", {localize: true});
-            } else if (typeFq === SPELLBOOK_TYPE) {
-                ui.notifications.warn("FQCARDENGINE.WarningSpellBookMissingForPlayer", {localize: true});
+        const deck = game.cards.find(cards => cards.ownership[userId] === 3 && cards.system.fq.type === typeFq && cards.system.fq.owner === userId);
+        if (!deck && warning) {
+            const warningKey = {
+                [HAND_TYPE]: "FQCARDENGINE.WarningHandMissingForPlayer",
+                [DECK_TYPE]: "FQCARDENGINE.WarningDeckMissingForPlayer",
+                [PILE_TYPE]: "FQCARDENGINE.WarningPileMissingForPlayer",
+                [SPELLBOOK_TYPE]: "FQCARDENGINE.WarningSpellBookMissingForPlayer"
+            }[typeFq];
+            if (warningKey) {
+                ui.notifications.warn(warningKey, {localize: true});
             }
         }
-        return deck[0];
+        return deck;
     }
 
 

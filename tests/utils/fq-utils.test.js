@@ -49,7 +49,8 @@ vi.mock("../../src/domain/engine/shared/fx.js", () => ({
 vi.mock("../../src/domain/engine/shared/geometry.js", () => ({
     default: {
         locationIsOccupied: vi.fn(),
-        getMinDistanceBetweenTwoToken: vi.fn()
+        getMinDistanceBetweenTwoToken: vi.fn(),
+        distanceBetweenTokens: vi.fn()
     }
 }));
 describe("CardEffect / RollService / Minion / ObjectUtils", () => {
@@ -814,15 +815,15 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(await CardEffect.getXYValue("nbTargets", [{}, {}])).toBe(2);
         });
 
-        it("reach avec une seule cible : délègue à Geometry.getMinDistanceBetweenTwoToken", async () => {
-            Geometry.getMinDistanceBetweenTwoToken.mockReturnValue(4);
+        it("reach avec une seule cible : délègue à Geometry.distanceBetweenTokens", async () => {
+            Geometry.distanceBetweenTokens.mockReturnValue(4);
             const target = {document: {x: 0, y: 5, width: 1, height: 1}};
 
             const result = await CardEffect.getXYValue("reach", [target]);
 
             expect(result).toBe(4);
-            expect(Geometry.getMinDistanceBetweenTwoToken).toHaveBeenCalledWith(
-                5, 5, 0, 5, undefined, 1, undefined, 1
+            expect(Geometry.distanceBetweenTokens).toHaveBeenCalledWith(
+                expect.objectContaining({x: 5, y: 5}), target
             );
         });
 

@@ -136,7 +136,7 @@ export const CAP_LABEL_KEYS = {
  * variable symbolique, pas seulement icône d'affichage.
  * @type {Object<string, string>}
  */
-export const UNKNOWN_ABILITY_VARS = {...ABILITY_EMOJIS};
+const UNKNOWN_ABILITY_VARS = {...ABILITY_EMOJIS};
 
 const DAMAGE_TYPE_PATTERN = new RegExp(`\\[(${DAMAGE_TYPES.join("|")})]`, "g");
 
@@ -840,7 +840,7 @@ export default class FormulaDisplay {
      *
      * @returns {{const: number, dice: Object<number, number>, symDice: Array<{render: string}>, vars: Object<string, number>, atoms: Array<{coeff: number, render: string}>}} Un modèle plié portant le dé dans `dice` (numérique) ou `symDice` (symbolique).
      */
-    static foldDie(countNode, sizeNode, expr) {
+    static foldDie(countNode, sizeNode, _expr) {
         const countIsNum = FormulaDisplay.isPureNumber(countNode);
         const sizeIsNum = FormulaDisplay.isPureNumber(sizeNode);
         const emptyModel = () => ({const: 0, dice: {}, symDice: [], vars: {}, atoms: []});
@@ -886,7 +886,7 @@ export default class FormulaDisplay {
      *
      * @returns {{const: number, dice: Object<number, number>, symDice: Array<{render: string}>, vars: Object<string, number>, atoms: Array<{coeff: number, render: string}>}} Un modèle plié : constante (numérique) ou atome (plafond français).
      */
-    static foldCap(kind, left, right, expr) {
+    static foldCap(kind, left, right, _expr) {
         const leftIsNum = FormulaDisplay.isPureNumber(left);
         const rightIsNum = FormulaDisplay.isPureNumber(right);
         const emptyModel = () => ({const: 0, dice: {}, symDice: [], vars: {}, atoms: []});
@@ -1207,14 +1207,16 @@ export default class FormulaDisplay {
         const segments = [];
         let lastIndex = 0;
         let match;
-        DAMAGE_TYPE_PATTERN.lastIndex = 0;
-        while ((match = DAMAGE_TYPE_PATTERN.exec(str)) !== null) {
+        // Instance locale : une regex `g` partagée au niveau module exposerait
+        // son `lastIndex` mutable à toute utilisation concurrente.
+        const pattern = new RegExp(DAMAGE_TYPE_PATTERN.source, "g");
+        while ((match = pattern.exec(str)) !== null) {
             let expr = str.slice(lastIndex, match.index);
             if (expr.startsWith("+")) {
                 expr = expr.slice(1);
             }
             segments.push({expr, type: match[0]});
-            lastIndex = DAMAGE_TYPE_PATTERN.lastIndex;
+            lastIndex = pattern.lastIndex;
         }
         const remainder = str.slice(lastIndex);
         if (remainder) {

@@ -9,7 +9,7 @@ import Constants, {
     OTHER_ROLL_COLOR
 } from "../../constants.js";
 import Fx from "./fx.js";
-import {createWarning} from "../../../core/utils/chat.utils.js";
+import {createInfo, createWarning} from "../../../core/utils/chat.utils.js";
 import {ERROR_COLOR} from "../../../core/constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
@@ -56,7 +56,7 @@ export default class CardEffect {
             // Injection des dégâts de l'arme équipée (@wpnR/@wpnM)
             WeaponDamage.substituteInDamage(cardContent, Constants.actorCurrent);
             if (cardContent.executeEval) {
-                cardContent.executeEval = cardContent.executeEval?.replaceAll("&gt;", ">").replaceAll("&lt;", "<")
+                cardContent.executeEval = cardContent.executeEval.replaceAll("&gt;", ">").replaceAll("&lt;", "<")
                     .replaceAll("&amp;", "&");
                 // Exécuté AVANT les jets : le script peut ajuster le contenu de la carte
                 // (ex : Bouclier Divin calcule son soin depuis les derniers dégâts subis).
@@ -127,10 +127,7 @@ export default class CardEffect {
             await socket.executeAsGM("logCardPlayed", resultArray, cardContent, Constants.actorCurrent?.id,
                 TargetingPredicates.resolveTargetActorIds(cardContent));
         } else {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-                content: `<div style='font-style: italic'>${game.i18n.localize("FQCARDENGINE.InfoMsgNoAddedEffect")}</div>`
-            });
+            createInfo(game.i18n.localize("FQCARDENGINE.InfoMsgNoAddedEffect"), {actor: Constants.actorCurrent});
         }
     }
 
@@ -195,37 +192,102 @@ export default class CardEffect {
     }
 
     /**
-     * Publie l'avertissement d'indisponibilité d'une récupération en défausse :
-     * les noms manquants (mode liste, localisés) si la résolution en rapporte,
-     * sinon l'avertissement générique de pile sans carte récupérable.
+     * Descripteurs des trois opérations de pile (récupération, destruction,
+     * duplication) : clés i18n de la dialog de choix et des avertissements, et
+     * restriction aux copies générées. Toute la plomberie commune (résolution,
+     * garde, choix) est pilotée par cette table.
+     */
+    static #DISCARD_OPS = Object.freeze({
+        retrieve: Object.freeze({
+            titleKey: "FQCARDENGINE.RetrieveCardTitle",
+            missingKey: "FQCARDENGINE.WarningMsgMissingRetrievableCards",
+            emptyKey: "FQCARDENGINE.WarningMsgNoRetrievableCard",
+            generatedOnly: false
+        }),
+        destroy: Object.freeze({
+            titleKey: "FQCARDENGINE.DestroyCardTitle",
+            missingKey: "FQCARDENGINE.WarningMsgMissingDestroyableCards",
+            emptyKey: "FQCARDENGINE.WarningMsgNoDestroyableCard",
+            generatedOnly: true
+        }),
+        duplicate: Object.freeze({
+            titleKey: "FQCARDENGINE.DuplicateCardTitle",
+            missingKey: "FQCARDENGINE.WarningMsgMissingDuplicableCards",
+            emptyKey: "FQCARDENGINE.WarningMsgNoDuplicableCard",
+            generatedOnly: false
+        }),
+    });
+
+    /**
+     * Publie l'avertissement d'indisponibilité d'une opération de pile : les
+     * noms manquants (mode liste, localisés) si la résolution en rapporte, sinon
+     * l'avertissement générique de l'opération.
      *
-     * @param {{cards: Card[], missing: string[]}} retrieval - La résolution (cf. {@link CardEffect.resolveDiscardRetrieval}).
+     * @param {{cards: Card[], missing: string[]}} resolution - La résolution (cf. {@link CardEffect.resolveDiscardRetrieval}).
+     * @param {{missingKey: string, emptyKey: string}} keys   - Les clés i18n de l'opération.
      *
      * @returns {void}
      */
-    static warnRetrievalUnavailable(retrieval) {
-        const message = retrieval.missing.length
-            ? game.i18n.format("FQCARDENGINE.WarningMsgMissingRetrievableCards",
-                {names: retrieval.missing.map(name => game.i18n.localize(name)).join(", ")})
-            : game.i18n.localize("FQCARDENGINE.WarningMsgNoRetrievableCard");
+    static #warnUnavailable(resolution, {missingKey, emptyKey}) {
+        const message = resolution.missing.length
+            ? game.i18n.format(missingKey,
+                {names: resolution.missing.map(name => game.i18n.localize(name)).join(", ")})
+            : game.i18n.localize(emptyKey);
         ResourceHandler.createUserWarningMessage(message, Constants.actorCurrent);
     }
 
     /**
-     * Publie l'avertissement d'indisponibilité d'une destruction en défausse :
-     * les noms manquants (mode liste, localisés) si la résolution en rapporte,
-     * sinon l'avertissement générique de pile sans carte générée à détruire.
+     * Plomberie commune des trois opérations de pile : résout la spécification,
+     * publie l'avertissement et abandonne si la résolution est incomplète, puis
+     * en mode CHOIX fait choisir UNE carte (dialog, automatique s'il n'y en a
+     * qu'une éligible).
      *
-     * @param {{cards: Card[], missing: string[]}} destruction - La résolution (cf. {@link CardEffect.resolveDiscardRetrieval}).
+     * @param {string} op            - L'opération (`retrieve`, `destroy` ou `duplicate`).
+     * @param {string} spec          - La spécification (`*` ou liste de noms séparés par des virgules).
+     * @param {Cards}  pile          - La pile inspectée (défausse, ou main pour la duplication).
+     * @param {string} excludeCardId - L'id de la carte jouée, à exclure.
      *
-     * @returns {void}
+     * @returns {Promise<Card[]|null>} Les cartes retenues, ou null si l'opération est abandonnée.
      */
-    static warnDestructionUnavailable(destruction) {
-        const message = destruction.missing.length
-            ? game.i18n.format("FQCARDENGINE.WarningMsgMissingDestroyableCards",
-                {names: destruction.missing.map(name => game.i18n.localize(name)).join(", ")})
-            : game.i18n.localize("FQCARDENGINE.WarningMsgNoDestroyableCard");
-        ResourceHandler.createUserWarningMessage(message, Constants.actorCurrent);
+    static async #resolveAndPick(op, spec, pile, excludeCardId) {
+        const desc = CardEffect.#DISCARD_OPS[op];
+        const resolution = CardEffect.resolveDiscardRetrieval(spec, pile, excludeCardId, {generatedOnly: desc.generatedOnly});
+        if (resolution.missing.length || !resolution.cards.length) {
+            // Garde de lançabilité déjà passée en amont : ce repli ne devrait servir
+            // que si la pile a changé entre la validation et l'application des effets.
+            CardEffect.#warnUnavailable(resolution, desc);
+            return null;
+        }
+        let cards = resolution.cards;
+        if (resolution.choose) {
+            const chosenId = cards.length === 1 ? cards[0].id : await CardEffect.chooseDiscardCardDialog(cards, desc.titleKey);
+            if (!chosenId) {
+                return null;
+            }
+            cards = [cards.find(c => c.id === chosenId)];
+        }
+        return cards;
+    }
+
+    /**
+     * Garde de lançabilité d'une opération de pile : résout la spécification et
+     * publie l'avertissement d'indisponibilité le cas échéant.
+     *
+     * @param {string} op            - L'opération (`retrieve`, `destroy` ou `duplicate`).
+     * @param {string} spec          - La spécification (`*` ou liste de noms séparés par des virgules).
+     * @param {Cards}  pile          - La pile inspectée (défausse, ou main pour la duplication).
+     * @param {string} excludeCardId - L'id de la carte jouée, à exclure.
+     *
+     * @returns {boolean} True si l'opération est réalisable.
+     */
+    static #checkDiscardOp(op, spec, pile, excludeCardId) {
+        const desc = CardEffect.#DISCARD_OPS[op];
+        const resolution = CardEffect.resolveDiscardRetrieval(spec, pile, excludeCardId, {generatedOnly: desc.generatedOnly});
+        if (resolution.missing.length || !resolution.cards.length) {
+            CardEffect.#warnUnavailable(resolution, desc);
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -255,7 +317,7 @@ export default class CardEffect {
                 content: `<div class="fq-retrieve-grid">${options}</div>`,
                 ok: {callback: (event, button) => button.form.elements.cardId.value}
             });
-        } catch (e) {
+        } catch {
             // Dialog fermée/annulée sans choix : aucune carte récupérée.
             return undefined;
         }
@@ -280,20 +342,9 @@ export default class CardEffect {
      * @returns {Promise<Card[]|null>} Les cartes déplacées, ou null si aucune récupération.
      */
     static async retrieveCardFromDiscard(spec, pile, playedCard) {
-        const retrieval = CardEffect.resolveDiscardRetrieval(spec, pile, playedCard.id);
-        if (retrieval.missing.length || !retrieval.cards.length) {
-            // Garde de lançabilité déjà passée en amont : ce repli ne devrait servir
-            // que si la pile a changé entre la validation et l'application des effets.
-            CardEffect.warnRetrievalUnavailable(retrieval);
+        const toRetrieve = await CardEffect.#resolveAndPick("retrieve", spec, pile, playedCard.id);
+        if (!toRetrieve) {
             return null;
-        }
-        let toRetrieve = retrieval.cards;
-        if (retrieval.choose) {
-            const chosenId = toRetrieve.length === 1 ? toRetrieve[0].id : await CardEffect.chooseDiscardCardDialog(toRetrieve);
-            if (!chosenId) {
-                return null;
-            }
-            toRetrieve = [toRetrieve.find(c => c.id === chosenId)];
         }
         const moduleName = FqCardEngineModule.moduleName;
         const retrieved = [];
@@ -327,23 +378,6 @@ export default class CardEffect {
     }
 
     /**
-     * Publie l'avertissement d'indisponibilité d'une duplication en main : les
-     * noms manquants (mode liste, localisés) si la résolution en rapporte, sinon
-     * l'avertissement générique de main sans carte duplicable.
-     *
-     * @param {{cards: Card[], missing: string[]}} duplication - La résolution (cf. {@link CardEffect.resolveDiscardRetrieval}).
-     *
-     * @returns {void}
-     */
-    static warnDuplicationUnavailable(duplication) {
-        const message = duplication.missing.length
-            ? game.i18n.format("FQCARDENGINE.WarningMsgMissingDuplicableCards",
-                {names: duplication.missing.map(name => game.i18n.localize(name)).join(", ")})
-            : game.i18n.localize("FQCARDENGINE.WarningMsgNoDuplicableCard");
-        ResourceHandler.createUserWarningMessage(message, Constants.actorCurrent);
-    }
-
-    /**
      * Duplique une ou plusieurs cartes de la main (`duplicateFromHand`) : la
      * résolution est celle des piles (cf.
      * {@link CardEffect.resolveDiscardRetrieval}, appliquée à la main, la carte
@@ -364,30 +398,14 @@ export default class CardEffect {
      */
     static async duplicateCardFromHand(cardContent, playedCard) {
         const hand = playedCard.parent;
-        const duplication = CardEffect.resolveDiscardRetrieval(cardContent.duplicateFromHand, hand, playedCard.id);
-        if (duplication.missing.length || !duplication.cards.length) {
-            // Garde de lançabilité déjà passée en amont : ce repli ne devrait servir
-            // que si la main a changé entre la validation et l'application des effets.
-            CardEffect.warnDuplicationUnavailable(duplication);
+        const toDuplicate = await CardEffect.#resolveAndPick("duplicate", cardContent.duplicateFromHand, hand, playedCard.id);
+        if (!toDuplicate) {
             return null;
-        }
-        let toDuplicate = duplication.cards;
-        if (duplication.choose) {
-            const chosenId = toDuplicate.length === 1
-                ? toDuplicate[0].id
-                : await CardEffect.chooseDiscardCardDialog(toDuplicate, "FQCARDENGINE.DuplicateCardTitle");
-            if (!chosenId) {
-                return null;
-            }
-            toDuplicate = [toDuplicate.find(c => c.id === chosenId)];
         }
         const data = toDuplicate.map(chosen => CardGenerated.buildGeneratedCardData(chosen));
         const created = await hand.createEmbeddedDocuments("Card", data);
-        ChatMessage.create({
-            speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-            content: `<div style='font-style: italic'>${game.i18n.format("FQCARDENGINE.InfoMsgCardsAddedToHand",
-                {names: toDuplicate.map(c => game.i18n.localize(c.name)).join(", ")})}</div>`
-        });
+        createInfo(game.i18n.format("FQCARDENGINE.InfoMsgCardsAddedToHand",
+            {names: toDuplicate.map(c => game.i18n.localize(c.name)).join(", ")}), {actor: Constants.actorCurrent});
         if (cardContent.chooseCardsPlayNow && created?.length) {
             await CardSelection.playGeneratedCards(created, hand);
         }
@@ -412,29 +430,13 @@ export default class CardEffect {
      * @returns {Promise<Card[]|null>} Les cartes détruites, ou null si aucune destruction.
      */
     static async destroyCardFromDiscard(spec, pile, playedCard) {
-        const destruction = CardEffect.resolveDiscardRetrieval(spec, pile, playedCard.id, {generatedOnly: true});
-        if (destruction.missing.length || !destruction.cards.length) {
-            // Garde de lançabilité déjà passée en amont : ce repli ne devrait servir
-            // que si la pile a changé entre la validation et l'application des effets.
-            CardEffect.warnDestructionUnavailable(destruction);
+        const toDestroy = await CardEffect.#resolveAndPick("destroy", spec, pile, playedCard.id);
+        if (!toDestroy) {
             return null;
         }
-        let toDestroy = destruction.cards;
-        if (destruction.choose) {
-            const chosenId = toDestroy.length === 1
-                ? toDestroy[0].id
-                : await CardEffect.chooseDiscardCardDialog(toDestroy, "FQCARDENGINE.DestroyCardTitle");
-            if (!chosenId) {
-                return null;
-            }
-            toDestroy = [toDestroy.find(c => c.id === chosenId)];
-        }
         await pile.deleteEmbeddedDocuments("Card", toDestroy.map(c => c.id));
-        ChatMessage.create({
-            speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-            content: `<div style='font-style: italic'>${game.i18n.format("FQCARDENGINE.InfoMsgCardsDestroyed",
-                {names: toDestroy.map(c => game.i18n.localize(c.name)).join(", ")})}</div>`
-        });
+        createInfo(game.i18n.format("FQCARDENGINE.InfoMsgCardsDestroyed",
+            {names: toDestroy.map(c => game.i18n.localize(c.name)).join(", ")}), {actor: Constants.actorCurrent});
         return toDestroy;
     }
 
@@ -520,7 +522,7 @@ export default class CardEffect {
                 content: `<select name="effect">${options}</select>`,
                 ok: {callback: (event, button) => button.form.elements.effect.value}
             });
-        } catch (e) {
+        } catch {
             // Dialog fermée/annulée sans choix : aucun effet retiré.
             return undefined;
         }
@@ -545,7 +547,7 @@ export default class CardEffect {
         try {
             const value = Number(RollService.rollResultSync(raw));
             return Number.isFinite(value) ? value : 0;
-        } catch (e) {
+        } catch {
             return 0;
         }
     }
@@ -589,26 +591,26 @@ export default class CardEffect {
                 }
                 effect.origin = OriginFQEffectLabel;
             }
-            for (let changeKey in effect.changes) {
-                if (effect.changes[changeKey].key === "macro.execute") {
-                    await Fx.importMacroFromCompendium(effect.changes[changeKey].value);
+            for (const change of effect.changes ?? []) {
+                if (change.key === "macro.execute") {
+                    await Fx.importMacroFromCompendium(change.value);
                 }
-                let value = effect.changes[changeKey].value;
+                let value = change.value;
                 // Pas de numérisation pour : macro.execute (une commande de macro n'est
                 // jamais un nombre — un nom sans argument serait numérisé en 0) et les
                 // valeurs portant encore une référence @ (les @caractéristiques du
                 // lanceur ont déjà été substituées en amont : un @ restant est une
                 // référence DYNAMIQUE résolue par DAE sur l'acteur porteur, ex. le
                 // `@attributes.hp.value` du statut virus — la numériser la détruirait).
-                if (!["system.fq.bonus.damage", "system.fq.bonus.heal", "macro.execute"].includes(effect.changes[changeKey].key)
-                    && !String(effect.changes[changeKey].value).includes("@")) {
+                if (!["system.fq.bonus.damage", "system.fq.bonus.heal", "macro.execute"].includes(change.key)
+                    && !String(change.value).includes("@")) {
                     try {
-                        value = Number(RollService.rollResultSync(effect.changes[changeKey].value));
-                    } catch (e) {
-                        value = effect.changes[changeKey].value;
+                        value = Number(RollService.rollResultSync(change.value));
+                    } catch {
+                        value = change.value;
                     }
                 }
-                effect.changes[changeKey].value = value;
+                change.value = value;
             }
             return effect;
         }));
@@ -686,8 +688,8 @@ export default class CardEffect {
         let effects = null;
         let message = `<h2 style='color: ${OTHER_ROLL_COLOR}'>${game.i18n.format("FQCARDENGINE.CardMsgApplyEffectsFormulas",
             {applyEffectsFormulasTitle: applyEffectsFormulas.title})}`;
-        if (applyEffectsFormulas.effects && applyEffectsFormulas.effects.map(effect => effect.result).includes(total)) {
-            currentEffectData = applyEffectsFormulas.effects.find(effect => effect.result === total);
+        currentEffectData = applyEffectsFormulas.effects?.find(effect => effect.result === total) ?? null;
+        if (currentEffectData) {
             message += `: <b>${game.i18n.format("FQCARDENGINE.CardMsgApplyEffectsFormulasSuccess")}</b> `;
             effectMessages = CardEffect.translateMessages(currentEffectData.messages);
             effects = await CardEffect.createEffectsFromData(currentEffectData);
@@ -715,13 +717,13 @@ export default class CardEffect {
         const targets = toTargets ? Constants.myTargets(cardContent.targetType) : [];
 
         if (effects) {
-            for (const effectsKey in effects) {
+            for (const effectData of effects) {
                 if (toTargets) {
                     for (const target of targets) {
-                        await socket.executeAsGM("addEffectForTarget", effects[effectsKey], target.id);
+                        await socket.executeAsGM("addEffectForTarget", effectData, target.id);
                     }
                 } else {
-                    ActiveEffect.implementation.create(effects[effectsKey], {parent: Constants.actorCurrent});
+                    await ActiveEffect.implementation.create(effectData, {parent: Constants.actorCurrent});
                 }
             }
         }
@@ -768,47 +770,13 @@ export default class CardEffect {
         // TARGETING
         if (cardContent?.minReach || cardContent?.maxReach) {
             cardContent.minReach = RollService.rollDiceSync(cardContent.minReach);
-            cardContent.maxReach = RollService.rollDiceSync(cardContent.maxReach) + Number(Constants.actorFQ.bonus.range);
+            cardContent.maxReach = RollService.rollDiceSync(cardContent.maxReach) + Constants.rangeBonus;
         }
-        if (cardContent?.nbTargets) {
-            cardContent.nbTargets = RollService.rollDiceSync(cardContent.nbTargets);
-        }
-
-        // COST HP
-        if (cardContent?.hp) {
-            cardContent.hp = RollService.rollDiceSync(cardContent.hp);
-        }
-
-        // COST ACTION
-        if (cardContent?.action) {
-            cardContent.action = RollService.rollDiceSync(cardContent.action);
-        }
-
-        // COST MANA
-        if (cardContent?.mana) {
-            cardContent.mana = RollService.rollDiceSync(cardContent.mana);
-        }
-
-        // COST ZEAL
-        if (cardContent?.zeal) {
-            cardContent.zeal = RollService.rollDiceSync(cardContent.zeal);
-        }
-
-        // COST DRAW
-        if (cardContent?.draw) {
-            cardContent.draw = RollService.rollDiceSync(cardContent.draw);
-        }
-        // COST DROP
-        if (cardContent?.drop) {
-            cardContent.drop = RollService.rollDiceSync(cardContent.drop);
-        }
-
-        // BONUSES
-        if (cardContent.bonusCrit) {
-            cardContent.bonusCrit = RollService.rollDiceSync(cardContent.bonusCrit);
-        }
-        if (cardContent.bonusEva) {
-            cardContent.bonusEva = RollService.rollDiceSync(cardContent.bonusEva);
+        // CIBLES, COÛTS (hp/action/mana/zeal/draw/drop) ET BONUS (crit/esquive)
+        for (const field of ["nbTargets", "hp", "action", "mana", "zeal", "draw", "drop", "bonusCrit", "bonusEva"]) {
+            if (cardContent?.[field]) {
+                cardContent[field] = RollService.rollDiceSync(cardContent[field]);
+            }
         }
     }
 
@@ -872,29 +840,19 @@ export default class CardEffect {
             }
         }
 
-        if (cardContent?.retrieveFromDiscard?.trim()) {
-            const retrieval = CardEffect.resolveDiscardRetrieval(cardContent.retrieveFromDiscard, to, card.id);
-            if (retrieval.missing.length || !retrieval.cards.length) {
-                CardEffect.warnRetrievalUnavailable(retrieval);
-                return false;
-            }
+        if (cardContent?.retrieveFromDiscard?.trim()
+            && !CardEffect.#checkDiscardOp("retrieve", cardContent.retrieveFromDiscard, to, card.id)) {
+            return false;
         }
 
-        if (cardContent?.destroyFromDiscard?.trim()) {
-            const destruction = CardEffect.resolveDiscardRetrieval(cardContent.destroyFromDiscard, to, card.id,
-                {generatedOnly: true});
-            if (destruction.missing.length || !destruction.cards.length) {
-                CardEffect.warnDestructionUnavailable(destruction);
-                return false;
-            }
+        if (cardContent?.destroyFromDiscard?.trim()
+            && !CardEffect.#checkDiscardOp("destroy", cardContent.destroyFromDiscard, to, card.id)) {
+            return false;
         }
 
-        if (cardContent?.duplicateFromHand?.trim()) {
-            const duplication = CardEffect.resolveDiscardRetrieval(cardContent.duplicateFromHand, card.parent, card.id);
-            if (duplication.missing.length || !duplication.cards.length) {
-                CardEffect.warnDuplicationUnavailable(duplication);
-                return false;
-            }
+        if (cardContent?.duplicateFromHand?.trim()
+            && !CardEffect.#checkDiscardOp("duplicate", cardContent.duplicateFromHand, card.parent, card.id)) {
+            return false;
         }
 
         // ARME : une carte exigeant un type d'arme (@wpnR/@wpnM) est injouable sans
@@ -920,13 +878,25 @@ export default class CardEffect {
      * @returns {void}
      */
     static recalculatedWithWYValue(cardContent, XXX, YYY) {
-        const keys = Object.keys(cardContent);
-        keys.forEach(k => {
-            if (cardContent[k] && typeof cardContent[k] === "object") CardEffect.recalculatedWithWYValue(cardContent[k], XXX, YYY);
-            else if (typeof cardContent[k] === "string") {
-                cardContent[k] = cardContent[k].replaceAll("XXX", XXX).replaceAll("YYY", YYY);
+        CardEffect.#walkStringValues(cardContent, s => s.replaceAll("XXX", XXX).replaceAll("YYY", YYY));
+    }
+
+    /**
+     * Applique `fn` à toutes les valeurs chaînes d'un objet, récursivement.
+     * Mute l'objet sur place.
+     *
+     * @param {object}                   obj - L'objet à parcourir.
+     * @param {function(string): string} fn  - La transformation appliquée à chaque chaîne.
+     *
+     * @returns {void}
+     */
+    static #walkStringValues(obj, fn) {
+        for (const k of Object.keys(obj)) {
+            if (obj[k] && typeof obj[k] === "object") CardEffect.#walkStringValues(obj[k], fn);
+            else if (typeof obj[k] === "string") {
+                obj[k] = fn(obj[k]);
             }
-        });
+        }
     }
 
     /**
@@ -939,13 +909,7 @@ export default class CardEffect {
      * @returns {void}
      */
     static replaceCardContentAbilitiesBonus(cardContent) {
-        const keys = Object.keys(cardContent);
-        keys.forEach(k => {
-            if (cardContent[k] && typeof cardContent[k] === "object") CardEffect.replaceCardContentAbilitiesBonus(cardContent[k]);
-            else if (typeof cardContent[k] === "string") {
-                cardContent[k] = RollService.replaceAbilitiesBonus(cardContent[k]);
-            }
-        });
+        CardEffect.#walkStringValues(cardContent, s => RollService.replaceAbilitiesBonus(s));
     }
 
     /**
@@ -1009,8 +973,10 @@ export default class CardEffect {
         if (hasVariables) {
             CardEffect.recalculatedWithWYValue(cardContent, XXX ? XXX : 0, YYY ? YYY : 0);
         } else if (cardContent && (cardContent.xvalue || cardContent.yvalue)) {
-            CardEffect.recalculatedWithWYValue(cardContent, CardEffect.getXYValue(cardContent.xvalue, Constants.myTargets(cardContent.targetType)),
-                CardEffect.getXYValue(cardContent.yvalue, Constants.myTargets(cardContent.targetType)));
+            // Une seule résolution des cibles : xvalue et yvalue voient le MÊME ensemble.
+            const targets = Constants.myTargets(cardContent.targetType);
+            CardEffect.recalculatedWithWYValue(cardContent, CardEffect.getXYValue(cardContent.xvalue, targets),
+                CardEffect.getXYValue(cardContent.yvalue, targets));
         }
     }
 
@@ -1029,9 +995,7 @@ export default class CardEffect {
             return myTargets.length ? myTargets.length : 0;
         } else if (myTargets.length === 1 && value === "reach") {
             const myToken = Constants.myToken;
-            const target = myTargets[0].document;
-            return Geometry.getMinDistanceBetweenTwoToken(myToken.x, myToken.y, target.x, target.y,
-                myToken.width, target.width, myToken.height, target.height);
+            return Geometry.distanceBetweenTokens(myToken, myTargets[0]);
         } else if (value.startsWith("SCRIPT:")) {
             // Le script peut référencer un contexte absent (ex. game.combat null
             // hors combat) : on protège l'évaluation et on retombe à 0 plutôt

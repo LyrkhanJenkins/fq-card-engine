@@ -149,21 +149,10 @@ export default class Constants {
     static myTargets(targetType = CardFqSystem.TARGET_TYPE_DEFAULT) {
         if (targetType === CardFqSystem.TARGET_TYPE_SKELETON) {
             // Récupère tous les squelettes de la scene active qui sont en combat
-            return [...game.canvas?.scene?.tokens ?? []].map(t => t.object).filter(t => t?.name?.includes("Skeleton") && [...game.combat?.combatants ?? []].map(c => c.tokenId).includes(t.id));
+            const combatantIds = Constants.combatantTokenIds;
+            return [...game.canvas?.scene?.tokens ?? []].map(t => t.object).filter(t => t?.name?.includes("Skeleton") && combatantIds.includes(t.id));
         }
         return Constants.currentTargets;
-    }
-
-    /**
-     * Les ids d'acteur des cibles courantes, forme attendue par le log de combat.
-     * Tolère les tokens dont le placeable n'est pas monté sur le canvas.
-     *
-     * @param {string} [targetType] - Le type de ciblage FQ.
-     *
-     * @returns {string[]} Les ids d'acteur ciblés.
-     */
-    static myTargetActorIds(targetType) {
-        return Constants.myTargets(targetType).map(t => t?.document?.actorId ?? t?.actorId).filter(Boolean);
     }
 
     /**
@@ -174,6 +163,37 @@ export default class Constants {
      */
     static get currentTargets() {
         return [...(game.user?.targets ?? [])];
+    }
+
+    /**
+     * Le bonus de portée du personnage courant — LA règle métier « le bonus de
+     * portée s'ajoute à la portée maximale », partagée par tous les ciblages.
+     *
+     * @returns {number} Le bonus de portée (0 si absent).
+     */
+    static get rangeBonus() {
+        return Number(Constants.actorFQ.bonus.range);
+    }
+
+    /**
+     * Les ids de token des combattants du combat courant.
+     *
+     * @returns {string[]} Les ids de token (tableau vide hors combat).
+     */
+    static get combatantTokenIds() {
+        return [...(game.combat?.combatants ?? [])].map(c => c.tokenId);
+    }
+
+    /**
+     * L'id d'acteur porté par un token, qu'il soit donné sous forme de placeable
+     * ou de document.
+     *
+     * @param {object} [token] - Le token (placeable ou document).
+     *
+     * @returns {string|undefined} L'id de l'acteur, ou undefined.
+     */
+    static tokenActorId(token) {
+        return token?.actor?.id ?? token?.document?.actorId ?? token?.actorId;
     }
 
     /**

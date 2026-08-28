@@ -35,6 +35,22 @@ export default class Geometry {
     }
 
     /**
+     * Calcule la distance minimale (en cases) entre deux tokens donnés sous
+     * forme de placeable ou de document (le document est utilisé s'il existe).
+     *
+     * @param {object} a - Le premier token (placeable ou document).
+     * @param {object} b - Le second token (placeable ou document).
+     *
+     * @returns {number} La plus petite distance (en cases) entre les deux tokens.
+     */
+    static distanceBetweenTokens(a, b) {
+        const da = a?.document ?? a;
+        const db = b?.document ?? b;
+        return Geometry.getMinDistanceBetweenTwoToken(da.x, da.y, db.x, db.y,
+            da.width, db.width, da.height, db.height);
+    }
+
+    /**
      * Retourne les coordonnées (px) du coin supérieur-gauche de chaque case
      * occupée par un token de dimensions `w`×`h` cases.
      *

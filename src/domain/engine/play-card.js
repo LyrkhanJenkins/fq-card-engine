@@ -1,8 +1,8 @@
-import Constants from "../constants.js";
+import Constants, {SUCCESS_COLOR} from "../constants.js";
 import CardEffect from "./shared/card-effect.js";
 import RollService from "./roll/roll-service.js";
 import CardFqSystem from "../system/cards/card-fq-system.mjs";
-import {createWarning} from "../../core/utils/chat.utils.js";
+import {createStatus, createWarning} from "../../core/utils/chat.utils.js";
 import TargetingPredicates from "./shared/targeting-predicates.js";
 
 /**
@@ -94,10 +94,8 @@ export default class PlayCard {
         // traitement « charges/passif » ci-dessous est donc court-circuité.
         const ephemeral = CardFqSystem.isEphemeralChoice(cardContent);
         if (ephemeral) {
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-                content: `<div style='color: darkred;font-style: italic;font-weight: 700'>${game.i18n.localize("FQCARDENGINE.InfoMsgEphemeralSpell")}</div>`
-            });
+            createStatus(game.i18n.localize("FQCARDENGINE.InfoMsgEphemeralSpell"),
+                {actor: Constants.actorCurrent, color: "darkred"});
         }
 
         // Check pour savoir si la carte est rejouable et si on va la passer à la défausse.
@@ -106,10 +104,8 @@ export default class PlayCard {
                 CardEffect.rewriteCardContent(card, initCardContents, {
                     hasBeenPlayed: true, playedRound: game.combat?.round.toString()
                 });
-                ChatMessage.create({
-                    speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-                    content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.localize("FQCARDENGINE.InfoMsgPassiveSpell")}</div>`
-                });
+                createStatus(game.i18n.localize("FQCARDENGINE.InfoMsgPassiveSpell"),
+                    {actor: Constants.actorCurrent, color: SUCCESS_COLOR});
             } else if (cardContent?.replayable) {
                 cardContent.replayable = RollService.rollResultSync(cardContent.replayable);
                 if (Number(cardContent?.replayable) > 1) {
@@ -118,16 +114,12 @@ export default class PlayCard {
                     });
                 }
                 if (Number(cardContent.replayable) > 100) {
-                    ChatMessage.create({
-                        speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-                        content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.format("FQCARDENGINE.InfoMsgReplayableSpell")}</div>`
-                    });
+                    createStatus(game.i18n.format("FQCARDENGINE.InfoMsgReplayableSpell"),
+                        {actor: Constants.actorCurrent, color: SUCCESS_COLOR});
                 } else {
-                    ChatMessage.create({
-                        speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-                        content: `<div style='color: green;font-style: italic;font-weight: 700'>${game.i18n.format("FQCARDENGINE.InfoMsgRemainingCharge",
-                            {remainingCharge: Number(cardContent.replayable) - 1})}</div>`
-                    });
+                    createStatus(game.i18n.format("FQCARDENGINE.InfoMsgRemainingCharge",
+                        {remainingCharge: Number(cardContent.replayable) - 1}),
+                    {actor: Constants.actorCurrent, color: SUCCESS_COLOR});
                 }
             }
         }
@@ -228,11 +220,7 @@ export default class PlayCard {
                     img = card.faces[card.face].img;
                 }
             }
-            if (card.face && !img) {
-                img = card.data.faces[card.data.face].img;
-            }
-
-            let cardID = card._id ? card._id : card.data._id;
+            let cardID = card._id;
 
             // Copie profonde de la carte dans les flags du message : au clic, si la
             // carte n'existe plus (éphémère détruite, copie générée supprimée), le
@@ -301,7 +289,7 @@ export default class PlayCard {
                 name: target.document?.name ?? target.name ?? "",
                 img: target.document?.texture?.src
             }));
-        } catch (e) {
+        } catch {
             // Certains types de cible (ex. squelettes) supposent un contexte de scène
             // complet absent hors jeu : on retombe sur une liste vide plutôt que
             // d'interrompre la publication du message.

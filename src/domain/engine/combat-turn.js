@@ -56,8 +56,21 @@ export default class CombatTurn {
      * @returns {void}
      */
     static resetAction(combatants) {
+        CombatTurn.#resetAttribute(combatants, "system.fq.action.value", actor => actor.system.fq.action?.max);
+    }
+
+    /**
+     * Applique la même mise à jour d'attribut à l'acteur de chaque combattant.
+     *
+     * @param {object[]}                 combatants - Les combattants du combat.
+     * @param {string}                   path       - Le chemin de l'attribut à mettre à jour.
+     * @param {function(object): *}      valueFn    - La valeur à poser, calculée depuis l'acteur.
+     *
+     * @returns {void}
+     */
+    static #resetAttribute(combatants, path, valueFn) {
         combatants.forEach(combatant => {
-            combatant.actor.update({"system.fq.action.value": combatant.actor.system.fq.action?.max});
+            combatant.actor.update({[path]: valueFn(combatant.actor)});
         });
     }
 
@@ -69,9 +82,7 @@ export default class CombatTurn {
      * @returns {void}
      */
     static resetZeal(combatants) {
-        combatants.forEach(combatant => {
-            combatant.actor.update({"system.fq.zeal.value": combatant.actor.system.fq.zeal?.init});
-        });
+        CombatTurn.#resetAttribute(combatants, "system.fq.zeal.value", actor => actor.system.fq.zeal?.init);
     }
 
     /**
@@ -82,9 +93,7 @@ export default class CombatTurn {
      * @returns {void}
      */
     static resetCurrentDropCard(combatants) {
-        combatants.forEach(combatant => {
-            combatant.actor.update({"system.fq.cards.currentDrop": 0});
-        });
+        CombatTurn.#resetAttribute(combatants, "system.fq.cards.currentDrop", () => 0);
     }
 
     /**
@@ -95,9 +104,7 @@ export default class CombatTurn {
      * @returns {void}
      */
     static resetSacrificedSkeleton(combatants) {
-        combatants.forEach(combatant => {
-            combatant.actor.update({"system.fq.special.sacrificedSkeleton": 0});
-        });
+        CombatTurn.#resetAttribute(combatants, "system.fq.special.sacrificedSkeleton", () => 0);
     }
 
     /**

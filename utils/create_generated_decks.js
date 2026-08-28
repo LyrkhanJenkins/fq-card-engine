@@ -22,9 +22,12 @@ function writeGeneratedDecks(name, tableau, cards, targetFolder) {
         newCards._key = `!cards!${deckId}`;
         newCards.cards = [];
 
+        const missing = [];
         for (const mot of tableau) {
+            let found = false;
             for (const card of donneesJson.cards) {
                 if (card.name === mot) {
+                    found = true;
                     const newCard = structuredClone(card);
                     const cardId = randomId();
                     newCard._id = cardId;
@@ -32,6 +35,13 @@ function writeGeneratedDecks(name, tableau, cards, targetFolder) {
                     newCards.cards.push(newCard);
                 }
             }
+            if (!found) missing.push(mot);
+        }
+        if (missing.length) {
+            console.warn(`⚠️  ${name} : ${missing.length} carte(s) introuvable(s) dans ${cards} : ${[...new Set(missing)].join(", ")}`);
+        }
+        if (!newCards.cards.length) {
+            console.warn(`⚠️  ${name} : deck généré VIDE (0 carte sur ${tableau.length} demandées)`);
         }
 
         return JSON.stringify(newCards);
@@ -164,7 +174,7 @@ listesCards["Witch Lvl5"] = listesCards["Witch Lvl4"].concat([
     "FQCARDTITLE.AgilityInflux",
     "FQCARDTITLE.BoneShield",
     "FQCARDTITLE.DrawII",
-    "FQCARDTITLE.Green-ShadowBolt"
+    "FQCARDTITLE.GreenShadowBolt"
 ]);
 
 // GUARDIAN

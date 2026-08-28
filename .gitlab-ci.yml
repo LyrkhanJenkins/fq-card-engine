@@ -26,9 +26,6 @@ test:
     - npm install
     - npm test
     - echo "Tests complete."
-  artifacts:
-    reports:
-      junit: test-results.xml
 
 lint:
   stage: lint
@@ -48,7 +45,7 @@ release:
   script:
     - apk update
     - apk add zip
-    - rm -rf node-modules .git tests examples utils doc .babelrc .gitignore .gitlab-ci.yml package.json package-lock.json
+    - rm -rf node_modules .git tests examples utils doc .babelrc .gitignore .gitlab-ci.yml package.json package-lock.json
     - echo "Releasing the tag..."
     - zip -r $RELEASE_DIR.zip * # Création de l'archive ZIP
     - ls -lrt

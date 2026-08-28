@@ -1,9 +1,5 @@
 import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../domain/trading/trading-cards.js";
 
-Hooks.on("dealCards", (_origin, _destinations, _context) => {
-    // Nothing
-});
-
 Hooks.on("passCards", (from, to, action) => {
     if (from.system.fq.type === "SPELLBOOK" && to.system.fq.type !== "DECK") {
         ui.notifications.warn(game.i18n.localize("FQCARDENGINE.WarningOnlyCopyCardFromSpellBookToDeck"));
@@ -20,10 +16,6 @@ Hooks.on("passCards", (from, to, action) => {
         return false;
     }
     return true;
-});
-
-Hooks.on("returnCards", (_origin, _returned, _context) => {
-    // Nothing
 });
 
 Hooks.on("preCreateCard", (card, data, _options, _userId) => {

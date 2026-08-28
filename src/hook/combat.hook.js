@@ -1,7 +1,6 @@
 import {OriginFQEffectLabel} from "../domain/constants.js";
 import TradingCards, {DECK_TYPE, HAND_TYPE} from "../domain/trading/trading-cards.js";
 import CombatTurn from "../domain/engine/combat-turn.js";
-import {socket} from "./integration/socketlib.hook.js";
 
 Hooks.on("deleteCombat", async function (combat, _delta) {
     if (CombatTurn.isLocalUserFirstActiveGM()) {
@@ -30,7 +29,7 @@ Hooks.on("createCombat", function (_data, _delta) {
     CombatTurn.resetCards();
 });
 
-Hooks.on("userConnected", function (user, connected) {
+Hooks.on("userConnected", function (_user, _connected) {
     CombatTurn.drawBaseCards();
 });
 

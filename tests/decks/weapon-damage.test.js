@@ -11,7 +11,7 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
-const {playChoice} = await import("./play-harness.js");
+const {playChoice, makeEquippedWeapon} = await import("./play-harness.js");
 
 /**
  * Phase 12/13 Tracer : le jeton `@wpnR` injecte les dégâts de l'arme à distance
@@ -22,19 +22,7 @@ const {playChoice} = await import("./play-harness.js");
  * critical(1) − 0 = 20 → ni critique ni esquive). Attendu : 5 dégâts.
  */
 function makeRangedWeapon() {
-    const attackActivity = {
-        type: "attack",
-        use: vi.fn(),
-        getDamageConfig: vi.fn(() => ({rolls: [{parts: ["1d8", "@mod"], data: {mod: 3}}]}))
-    };
-    return {
-        type: "weapon",
-        system: {
-            equipped: true,
-            type: {value: "martialR"},
-            activities: {getByType: t => (t === "attack" ? [attackActivity] : [])}
-        }
-    };
+    return makeEquippedWeapon("martialR", undefined, {parts: ["1d8", "@mod"], data: {mod: 3}});
 }
 
 describe("@wpnR — dégâts de l'arme à distance (bout en bout)", () => {

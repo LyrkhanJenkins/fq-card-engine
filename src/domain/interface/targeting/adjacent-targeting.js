@@ -40,14 +40,12 @@ export default class AdjacentTargeting {
             return {status: AdjacentTargeting.ACQUISITION.NO_CASTER_TOKEN, count: 0};
         }
         const min = minReach || 0;
-        const max = (maxReach || 1) + Number(Constants.actorFQ.bonus.range);
+        const max = (maxReach || 1) + Constants.rangeBonus;
 
         const covered = [...(game.canvas?.scene?.tokens ?? [])]
             .filter(token => token !== casterToken && token.actorId && token.actorId !== Constants.actorCurrent?.id)
             .filter(token => {
-                const dist = Geometry.getMinDistanceBetweenTwoToken(
-                    casterToken.x, casterToken.y, token.x, token.y,
-                    casterToken.width, token.width, casterToken.height, token.height);
+                const dist = Geometry.distanceBetweenTokens(casterToken, token);
                 return dist >= min && dist <= max;
             });
 

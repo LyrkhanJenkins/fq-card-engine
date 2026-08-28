@@ -1,6 +1,4 @@
-import CardEffect from "../../engine/shared/card-effect.js";
 import ZoneTargeting from "./zone-targeting.js";
-import ObjectUtils from "../../../core/utils/object.utils.js";
 import TargetingPredicates from "../../engine/shared/targeting-predicates.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import Constants from "../../constants.js";
@@ -31,9 +29,7 @@ export default class TargetingView {
             return {manual: false, required: 0, count: 0, minReach: undefined, maxReach: undefined, targets: []};
         }
 
-        const cc = ObjectUtils.deepCopy(cardContent);
-        CardEffect.replaceCardContentAbilitiesBonus(cc);
-        CardEffect.recalculatedWithWYValue(cc, fd?.XXX ?? 0, fd?.YYY ?? 0);
+        const cc = ZoneTargeting.resolveCardContent(cardContent, fd);
 
         const required = (cc.nbTargets ? RollService.rollResultSync(cc.nbTargets) : cc.nbTargets) || 1;
 
@@ -41,7 +37,7 @@ export default class TargetingView {
         const {minReach, maxReach} = (cc.minReach || cc.maxReach)
             ? {
                 minReach: RollService.rollResultSync(cc.minReach),
-                maxReach: RollService.rollResultSync(cc.maxReach) + Number(Constants.actorFQ.bonus.range)
+                maxReach: RollService.rollResultSync(cc.maxReach) + Constants.rangeBonus
             }
             : {minReach: cc.minReach, maxReach: cc.maxReach};
 

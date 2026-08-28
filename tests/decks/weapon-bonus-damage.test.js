@@ -11,7 +11,7 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
-const {playChoice} = await import("./play-harness.js");
+const {playChoice, makeEquippedWeapon} = await import("./play-harness.js");
 
 /**
  * Bonus d'arme de l'acteur (`system.bonuses.mwak/rwak.damage`) sur les cartes
@@ -26,19 +26,7 @@ const {playChoice} = await import("./play-harness.js");
  * critique ni esquive).
  */
 function makeWeapon({category, activityType}) {
-    const activity = {
-        type: activityType,
-        use: vi.fn(),
-        getDamageConfig: vi.fn(() => ({rolls: [{parts: ["1d8", "@mod"], data: {mod: 3}}]}))
-    };
-    return {
-        type: "weapon",
-        system: {
-            equipped: true,
-            type: {value: category},
-            activities: {getByType: t => (t === activityType ? [activity] : [])}
-        }
-    };
+    return makeEquippedWeapon(category, undefined, {parts: ["1d8", "@mod"], data: {mod: 3}, activityType});
 }
 
 function makeCard(damage) {

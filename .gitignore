@@ -1,7 +1,6 @@
 # Build Artifacts
 packs/*
 !packs/_source/
-packs/_source/decks-fq8
 packs/_source/decks-fq8-generated
 # Assets
 assets/*
@@ -25,3 +24,9 @@ node_modules/
 .planning/
 
 /images/cards/draft/
+
+# Débris LevelDB des mondes de test (régénérés à chaque ouverture)
+tests/script/*/data/**/lost/
+tests/script/*/data/**/LOG
+tests/script/*/data/**/LOG.old
+tests/script/*/data/**/LOCK

@@ -263,7 +263,7 @@ export default class ZoneTargeting {
         }
         const minReach = cardContent.minReach ? RollService.rollResultSync(cardContent.minReach) : 0;
         const maxReach = (cardContent.maxReach ? RollService.rollResultSync(cardContent.maxReach) : 0)
-            + Number(Constants.actorFQ.bonus.range);
+            + Constants.rangeBonus;
 
         const gridSize = game.canvas?.scene?.dimensions?.size ?? 1;
         const origin = region.shapes?.[0] ?? {x: 0, y: 0};

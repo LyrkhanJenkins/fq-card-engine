@@ -71,13 +71,7 @@
     transform: rotate(180deg);
 }
 
-/* Masque l'ancien show-buttons (les "...") */
-/* TODO [css-mort] : aucune référence dans le code source — supprimer après tests. */
-.fq-card-engine-show-buttons {
-    display: none !important;
-}
-
-/* Move handle */
+/*/* Move handle */
 .fq-move-handle,
 .fq-card-engine-move-handle {
     display: flex;

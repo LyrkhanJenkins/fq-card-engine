@@ -14,21 +14,12 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
-// `Macro` est un global Foundry natif jamais exercé par le smoke test du socle (07-02) :
-// `Fx.importMacroFromCompendium` (déclenché par tout effet `macro.execute`) appelle
-// `Macro.create(...)` dès que le compendium mocké ne trouve pas la macro. Sans ce stub,
-// tout choix comportant un `macro.execute` lève `ReferenceError: Macro is not defined` —
-// un trou générique du bac à sable de test (pas un bug métier), comblé comme dans
-// sweep.test.js.
-globalThis.Macro = class {
-    static create = vi.fn(async () => ({}));
-};
-
-const {mountWorld, playChoice, getSocketSpy, makeEquippedWeapon} = await import("./play-harness.js");
+const {playChoice, getSocketSpy, makeEquippedWeapon} = await import("./play-harness.js");
 const {DeterministicRoll, resetDiceControl} = await import("./deterministic-roll.js");
-const RollService = (await import("../../src/domain/engine/roll/roll-service.js")).default;
 
 const FormError = (await import("../../src/core/error/form-error.model.js")).default;
+const {DECKS_DIR, isFilled, resolveFormula, reachAllowsFixtureDistance, installMacroStub} = await import("./corpus-helpers.js");
+installMacroStub();
 
 /**
  * Phase 07 Plan 04 — Task 3 : bornes X/Y (min/max/hors) [EXHA-03] et
@@ -40,40 +31,6 @@ const FormError = (await import("../../src/core/error/form-error.model.js")).def
  * xvalue==="fq.cards.currentDrop", coût zèle littéralement "+XXX"/"-XXX",
  * présence de draw/minions/applyEffectsFormulas/customEvals/replayable...).
  */
-
-const DECKS_DIR = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq8");
-const worldFixture = JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), "tests", "decks", "world-fixture.json"), "utf-8")
-);
-
-function isFilled(value) {
-    return value !== undefined && value !== null && value !== "";
-}
-
-function fixtureDistance() {
-    const dx = Math.abs(worldFixture.myToken.x - worldFixture.target.x);
-    const dy = Math.abs(worldFixture.myToken.y - worldFixture.target.y);
-    return (dx + dy) / worldFixture.gridSize;
-}
-
-async function resolveFormula(formula) {
-    mountWorld();
-    const substituted = RollService.replaceAbilitiesBonus(String(formula ?? "0"));
-    resetDiceControl();
-    const roll = await new DeterministicRoll(substituted).evaluate();
-    resetDiceControl();
-    return roll.total;
-}
-
-async function reachAllowsFixtureDistance(choice) {
-    if (!isFilled(choice.minReach) && !isFilled(choice.maxReach)) {
-        return true;
-    }
-    const dist = fixtureDistance();
-    const min = isFilled(choice.minReach) ? await resolveFormula(choice.minReach) : 0;
-    const max = isFilled(choice.maxReach) ? await resolveFormula(choice.maxReach) : Infinity;
-    return min <= dist && dist <= max;
-}
 
 function isPlainObject(value) {
     return value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Set);

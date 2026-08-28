@@ -12,6 +12,7 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {playChoice} = await import("./play-harness.js");
+const {mockDialogPrompt} = await import("./corpus-helpers.js");
 
 /**
  * Destruction définitive de cartes de la défausse (`destroyFromDiscard`), jouée
@@ -54,19 +55,6 @@ function pileCard(id, name, generated = true) {
         id, name, face: 0, origin: null, faces: [{img: `images/${id}.png`}],
         flags: generated ? {"fq-card-engine": {generated: true}} : {}
     };
-}
-
-/**
- * Installe l'espion `DialogV2.prompt` (absent du socle tests/setup.js) et le renvoie.
- *
- * @param {Promise<string|undefined>} resolution - La promesse renvoyée par le prompt.
- *
- * @returns {import("vitest").Mock} L'espion prompt installé.
- */
-function mockDialogPrompt(resolution) {
-    const prompt = vi.fn(() => resolution);
-    globalThis.foundry.applications.api = {DialogV2: {prompt}};
-    return prompt;
 }
 
 describe("destroyFromDiscard — destruction définitive de cartes générées de la défausse", () => {

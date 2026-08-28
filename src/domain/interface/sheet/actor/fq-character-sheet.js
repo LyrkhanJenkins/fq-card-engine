@@ -29,9 +29,25 @@ export default class FqCharacterSheet extends dnd5e.applications.actor.Character
      * @returns {Promise<object>} Le contexte enrichi des données FQ.
      */
     async _prepareSidebarContext(_context, options) {
-        let context = await super._prepareSidebarContext(_context, options);
+        const context = await super._prepareSidebarContext(_context, options);
+        return FqCharacterSheet.enrichFqContext(this, context, _context, options);
+    }
+
+    /**
+     * Enrichissement FQ commun aux parties de feuille (personnage et PNJ) :
+     * pourcentages des jauges FQ puis drapeau `canModifyFQ` calculé depuis les
+     * effets actifs de la feuille.
+     *
+     * @param {object} sheet       - La feuille en cours de rendu (expose `_prepareEffectsContext`).
+     * @param {object} context     - Le contexte de la partie, déjà préparé par la classe parente.
+     * @param {object} baseContext - Le contexte de base transmis par Foundry.
+     * @param {object} options     - Les options de rendu Foundry.
+     *
+     * @returns {Promise<object>} Le contexte enrichi des données FQ.
+     */
+    static async enrichFqContext(sheet, context, baseContext, options) {
         context = FqCharacterSheet.calculPercentageFqAttributes(context);
-        const contextEffects = await super._prepareEffectsContext(_context, options);
+        const contextEffects = await sheet._prepareEffectsContext(baseContext, options);
         context.canModifyFQ = FqCharacterSheet.getCanModifyFQ(context.editable, contextEffects.effects);
         return context;
     }

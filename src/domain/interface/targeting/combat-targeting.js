@@ -46,21 +46,19 @@ export default class CombatTargeting {
         if (!casterToken) {
             return {status: CombatTargeting.ACQUISITION.NO_CASTER_TOKEN, count: 0};
         }
-        const combatantTokenIds = [...(game.combat?.combatants ?? [])].map(c => c.tokenId);
+        const combatantTokenIds = Constants.combatantTokenIds;
         if (!combatantTokenIds.length) {
             return {status: CombatTargeting.ACQUISITION.NO_COMBAT, count: 0};
         }
         const wantAllies = targetType === CardFqSystem.TARGET_TYPE_COMBAT_ALLIES;
         const min = minReach || 0;
-        const max = (maxReach || Infinity) + Number(Constants.actorFQ.bonus.range);
+        const max = (maxReach || Infinity) + Constants.rangeBonus;
 
         const covered = [...(game.canvas?.scene?.tokens ?? [])]
             .filter(token => token.actorId && combatantTokenIds.includes(token.id))
             .filter(token => wantAllies === TargetingPredicates.areAllies(token, casterToken))
             .filter(token => {
-                const dist = Geometry.getMinDistanceBetweenTwoToken(
-                    casterToken.x, casterToken.y, token.x, token.y,
-                    casterToken.width, token.width, casterToken.height, token.height);
+                const dist = Geometry.distanceBetweenTokens(casterToken, token);
                 return dist >= min && dist <= max;
             });
 

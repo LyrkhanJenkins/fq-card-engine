@@ -33,11 +33,8 @@ export default class FqNpcSheet extends dnd5e.applications.actor.NPCActorSheet {
      * @returns {Promise<object>} Le contexte enrichi des données FQ.
      */
     async _prepareHeaderContext(_context, options) {
-        let context = await super._prepareHeaderContext(_context, options);
-        context = FqCharacterSheet.calculPercentageFqAttributes(context);
-        const contextEffects = await super._prepareEffectsContext(_context, options);
-        context.canModifyFQ = FqCharacterSheet.getCanModifyFQ(context.editable, contextEffects.effects);
-        return context;
+        const context = await super._prepareHeaderContext(_context, options);
+        return FqCharacterSheet.enrichFqContext(this, context, _context, options);
     }
 
     /**
@@ -51,10 +48,7 @@ export default class FqNpcSheet extends dnd5e.applications.actor.NPCActorSheet {
      * @returns {Promise<object>} Le contexte enrichi des données FQ.
      */
     async _prepareSidebarContext(_context, options) {
-        let context = await super._prepareSidebarContext(_context, options);
-        context = FqCharacterSheet.calculPercentageFqAttributes(context);
-        const contextEffects = await super._prepareEffectsContext(_context, options);
-        context.canModifyFQ = FqCharacterSheet.getCanModifyFQ(context.editable, contextEffects.effects);
-        return context;
+        const context = await super._prepareSidebarContext(_context, options);
+        return FqCharacterSheet.enrichFqContext(this, context, _context, options);
     }
 }

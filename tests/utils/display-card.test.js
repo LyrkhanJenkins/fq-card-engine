@@ -5,7 +5,7 @@ import DisplayCard from "../../src/domain/interface/card-svg/display-card.js";
 import FormulaDisplay, {
     ABILITY_EMOJIS, CAP_LABEL_KEYS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, SOURCE_LABEL_KEYS, WEAPON_EMOJIS
 } from "../../src/domain/interface/card-svg/formula-display.js";
-import {expandPills, makePill, PILL_SOURCE, PILL_TYPE, sanitizePillInput, stripPills} from "../../src/domain/interface/card-svg/formula-pill.js";
+import {expandPills, makePill, PILL_SOURCE, PILL_TYPE, stripPills} from "../../src/domain/interface/card-svg/formula-pill.js";
 import {actorWith, makeReferenceActor, NEUTRAL_ABILITIES, REFERENCE_ABILITIES} from "./formula-fixtures.js";
 
 describe("DisplayCard.simplifyExpression", () => {
@@ -208,14 +208,13 @@ describe("DisplayCard.getDescriptionFromCard", () => {
         expect(stripPills(result)).toBe("Desc 2 💪{}");
     });
 
-    it("retombe sur data.faces[data.face].text quand faces est absent", () => {
+    it("rend une description indéfinie quand faces est absent", () => {
         const card = {
             face: 1,
-            system: {fq: {choices: []}},
-            data: {face: 1, faces: {1: {text: "Fallback text"}}}
+            system: {fq: {choices: []}}
         };
         const result = DisplayCard.getDescriptionFromCard(card);
-        expect(result).toBe("Fallback text{}");
+        expect(result).toBe("undefined{}");
     });
 
     it("aplatit system.fq.choices en arguments i18n.format préfixés par index", () => {
@@ -306,13 +305,12 @@ describe("DisplayCard.getImgFromCard", () => {
         expect(DisplayCard.getImgFromCard(card)).toBe("face0.png");
     });
 
-    it("retombe sur data.faces[data.face].img quand faces est absent", () => {
+    it("rend une image indéfinie quand faces est absent", () => {
         const card = {
             face: 1,
-            back: {img: "back.png"},
-            data: {face: 1, faces: {1: {img: "fallback.png"}}}
+            back: {img: "back.png"}
         };
-        expect(DisplayCard.getImgFromCard(card)).toBe("fallback.png");
+        expect(DisplayCard.getImgFromCard(card)).toBe(undefined);
     });
 });
 

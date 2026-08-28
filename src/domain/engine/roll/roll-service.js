@@ -1,5 +1,8 @@
 import Constants from "../../constants.js";
 
+/** Les six caractéristiques dnd5e, source unique des jetons `@<abi>` du module. */
+export const ABILITIES = Object.freeze(["str", "dex", "con", "int", "wis", "cha"]);
+
 /**
  * Service de jets de dés et de substitution des bonus de caractéristiques dans
  * les formules (@str, @dex…).
@@ -98,13 +101,10 @@ export default class RollService {
         const abilities = Constants.actorAbi;
         const mod = (ability) => Number(abilities?.[ability]?.mod ?? 0).toString();
 
-        return RollService.replaceNamedBonus(str)
-            .replaceAll("@str", mod("str"))
-            .replaceAll("@dex", mod("dex"))
-            .replaceAll("@con", mod("con"))
-            .replaceAll("@int", mod("int"))
-            .replaceAll("@wis", mod("wis"))
-            .replaceAll("@cha", mod("cha"));
+        return ABILITIES.reduce(
+            (result, ability) => result.replaceAll(`@${ability}`, mod(ability)),
+            RollService.replaceNamedBonus(str)
+        );
     }
 
     /**
@@ -135,11 +135,6 @@ export default class RollService {
      */
     static hasAbilitiesBonus(str) {
         if (typeof str !== "string") return false;
-        return (str.includes("@str") && Constants.actorAbi.str.mod > 0) ||
-         (str.includes("@dex") && Constants.actorAbi.dex.mod > 0) ||
-         (str.includes("@con") && Constants.actorAbi.con.mod > 0) ||
-         (str.includes("@int") && Constants.actorAbi.int.mod > 0) ||
-         (str.includes("@wis") && Constants.actorAbi.wis.mod > 0) ||
-         (str.includes("@cha") && Constants.actorAbi.cha.mod > 0);
+        return ABILITIES.some(ability => str.includes(`@${ability}`) && Constants.actorAbi[ability].mod > 0);
     }
 }

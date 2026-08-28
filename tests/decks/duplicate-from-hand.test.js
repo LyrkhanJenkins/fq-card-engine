@@ -12,6 +12,7 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {playChoice, makeHandCard} = await import("./play-harness.js");
+const {mockDialogPrompt} = await import("./corpus-helpers.js");
 const {default: CardSelection} = await import("../../src/domain/interface/window/card-selection.js");
 
 /**
@@ -48,19 +49,6 @@ function makeDuplicatorCard(spec, extra = {}) {
 
 // Carte de main duplicable : le fabricant du harnais (avec `toObject`).
 const handCard = makeHandCard;
-
-/**
- * Installe l'espion `DialogV2.prompt` (absent du socle tests/setup.js) et le renvoie.
- *
- * @param {Promise<string|undefined>} resolution - La promesse renvoyée par le prompt.
- *
- * @returns {import("vitest").Mock} L'espion prompt installé.
- */
-function mockDialogPrompt(resolution) {
-    const prompt = vi.fn(() => resolution);
-    globalThis.foundry.applications.api = {DialogV2: {prompt}};
-    return prompt;
-}
 
 describe("duplicateFromHand — duplication d'une carte de la main en copie générée", () => {
     beforeEach(() => {

@@ -15,9 +15,8 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {mountWorld, playChoice} = await import("./play-harness.js");
-const {DeterministicRoll, resetDiceControl} = await import("./deterministic-roll.js");
-const RollService = (await import("../../src/domain/engine/roll/roll-service.js")).default;
 const Damage = (await import("../../src/domain/engine/roll/damage.js")).default;
+const {DECKS_DIR, worldFixture, isFilled, resolveFormula, reachAllowsFixtureDistance} = await import("./corpus-helpers.js");
 
 /**
  * Phase 07 Plan 04 — Task 1 (tracer) : dégâts/soins chiffrés par cible via de
@@ -30,70 +29,6 @@ const Damage = (await import("../../src/domain/engine/roll/damage.js")).default;
  * défaut, portée compatible avec la géométrie de la fixture). Une carte future
  * partageant ces propriétés est couverte automatiquement au prochain run.
  */
-
-const DECKS_DIR = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq8");
-const worldFixture = JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), "tests", "decks", "world-fixture.json"), "utf-8")
-);
-
-function isFilled(value) {
-    return value !== undefined && value !== null && value !== "";
-}
-
-/**
- * Distance (en cases) entre le token du personnage et le token cible de la
- * fixture, calculée depuis la géométrie déclarée dans world-fixture.json
- * (jamais un nombre magique en dur).
- *
- * @returns {number} La distance de la fixture, en cases.
- */
-function fixtureDistance() {
-    const dx = Math.abs(worldFixture.myToken.x - worldFixture.target.x);
-    const dy = Math.abs(worldFixture.myToken.y - worldFixture.target.y);
-    return (dx + dy) / worldFixture.gridSize;
-}
-
-/**
- * Résout une formule de carte (arithmétique + dés) EXACTEMENT comme le
- * pipeline réel : substitution des @-caractéristiques par les mods de la
- * fixture (même fonction que `play-card.js`), puis évaluation via le même
- * évaluateur générique de dés que celui installé en `globalThis.Roll`
- * (`DeterministicRoll`, socle 07-02). Les dés non pilotés retombent sur le
- * défaut stable documenté (1), identique au comportement du pipeline quand
- * `opts.dice` n'en fournit pas.
- *
- * @param {string|number} formula - La formule brute du choix (ex. `choice.damage`).
- *
- * @returns {Promise<number>} Le total résolu.
- */
-async function resolveFormula(formula) {
-    mountWorld();
-    const substituted = RollService.replaceAbilitiesBonus(String(formula ?? "0"));
-    resetDiceControl();
-    const roll = await new DeterministicRoll(substituted).evaluate();
-    resetDiceControl();
-    return roll.total;
-}
-
-/**
- * Indique si la portée déclarée par un choix (le cas échéant) inclut la
- * distance fixe de la fixture (voir `fixtureDistance`). Absence totale de
- * portée = compatible par construction (le contrôle de portée n'est jamais
- * déclenché).
- *
- * @param {object} choice - Le choix (contenu) de la carte.
- *
- * @returns {Promise<boolean>} True si la fixture par défaut satisfait la portée.
- */
-async function reachAllowsFixtureDistance(choice) {
-    if (!isFilled(choice.minReach) && !isFilled(choice.maxReach)) {
-        return true;
-    }
-    const dist = fixtureDistance();
-    const min = isFilled(choice.minReach) ? await resolveFormula(choice.minReach) : 0;
-    const max = isFilled(choice.maxReach) ? await resolveFormula(choice.maxReach) : Infinity;
-    return min <= dist && dist <= max;
-}
 
 /**
  * Un choix est « axe simple » (dégâts/soins) s'il ne comporte aucun

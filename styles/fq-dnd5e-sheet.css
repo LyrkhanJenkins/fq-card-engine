@@ -101,13 +101,6 @@
     color: var(--fq8-color-evasion)
 }
 
-.walk-square-value {
-    margin-left: auto;
-    margin-right: 5px;
-    font-size: 14px;
-    font-weight: bold;
-}
-
 .pills-group.crit-area .pill .value input {
     width: 18px;
     height: 18px;
@@ -162,17 +155,6 @@
     flex: 2;
     font-weight: bold;
     line-height: 20px;
-}
-
-form .form-group .form-minions {
-    display: flex;
-    flex-direction: column;
-}
-
-form .form-group .minion-checkbox {
-    margin: auto;
-    display: flex;
-    align-items: center;
 }
 
 /* Pour la bibliothèque */

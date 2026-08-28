@@ -109,16 +109,9 @@ export default class Damage {
         if (heal < 0) {
             heal = 0;
         }
-        let critical = false;
         let healArray = [];
-        if (actor?.system?.fq.attributes.critical + cardContent.bonusCrit > 0) {
-            const critToReach = 21 - actor?.system?.fq.attributes.critical - cardContent.bonusCrit;
-            critical = await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
-                color: CRITICAL_HEAL_COLOR, title: "Critique des soins",
-                success: critToReach,
-                appearance: CRITICAL_DICE_APPEARANCE // dé rouge pour le critique
-            }, dsnAnimations) >= critToReach;
-        }
+        const critical = await Damage.#rollCritical(actor, cardContent,
+            {color: CRITICAL_HEAL_COLOR, title: "Critique des soins"}, dsnAnimations);
         TargetingPredicates.resolveTargets(cardContent, actor).forEach(target => {
             healArray.push({
                 key: `Soins totaux sur "${target.document?.name ?? target.name}"`,
@@ -163,16 +156,9 @@ export default class Damage {
         if (damages < 0) {
             damages = 0;
         }
-        let critical = false;
         let damagesArray = [];
-        if (actor?.system?.fq.attributes.critical + cardContent.bonusCrit > 0) {
-            const critToReach = 21 - actor?.system?.fq.attributes.critical - cardContent.bonusCrit;
-            critical = await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
-                color: CRITICAL_COLOR, title: "Critique",
-                success: critToReach,
-                appearance: CRITICAL_DICE_APPEARANCE // dé rouge pour le critique
-            }, dsnAnimations) >= critToReach;
-        }
+        const critical = await Damage.#rollCritical(actor, cardContent,
+            {color: CRITICAL_COLOR, title: "Critique"}, dsnAnimations);
         for (let i = 0; i < myTargets.length; i++) {
             const target = myTargets[i];
             const targetActor = target.actor;
@@ -189,28 +175,42 @@ export default class Damage {
                         appearance: EVASION_DICE_APPEARANCE // dé bleu pour l'esquive
                     }, dsnAnimations);
                 }
-                if (evasionScore >= evaToReach) {
-                    damagesArray.push({
-                        key: `Dégâts totaux sur "${target.document?.name ?? target.name}"`,
-                        value: critical ? damages : 0,
-                        critical,
-                        evasion: true,
-                        type: "damageFQ",
-                        targetTokenId: target.id
-                    });
-                } else {
-                    damagesArray.push({
-                        key: `Dégâts totaux sur "${target.document?.name ?? target.name}"`,
-                        value: critical ? damages * 2 : damages,
-                        critical,
-                        evasion: false,
-                        type: "damageFQ",
-                        targetTokenId: target.id
-                    });
-                }
+                const evaded = evasionScore >= evaToReach;
+                damagesArray.push({
+                    key: `Dégâts totaux sur "${target.document?.name ?? target.name}"`,
+                    // Le critique passe outre l'esquive (sans doubler) ; sinon esquive = 0.
+                    value: evaded ? (critical ? damages : 0) : (critical ? damages * 2 : damages),
+                    critical,
+                    evasion: evaded,
+                    type: "damageFQ",
+                    targetTokenId: target.id
+                });
             }
         }
         return damagesArray;
+    }
+
+    /**
+     * Jette le critique du lanceur (1d20 contre `21 - critique - bonusCrit`)
+     * avec l'apparence de dé critique. Aucun jet si le score total est nul.
+     *
+     * @param {object} actor       - L'acteur lanceur.
+     * @param {object} cardContent - Le contenu (choix) de la carte (`bonusCrit`).
+     * @param {{color: string, title: string}} display - Couleur et titre du jet.
+     * @param {Promise[]} dsnAnimations - Collecteur des promesses d'animations Dice So Nice.
+     *
+     * @returns {Promise<boolean>} True si le jet atteint le seuil de critique.
+     */
+    static async #rollCritical(actor, cardContent, {color, title}, dsnAnimations) {
+        if (!(actor?.system?.fq.attributes.critical + cardContent.bonusCrit > 0)) {
+            return false;
+        }
+        const critToReach = 21 - actor?.system?.fq.attributes.critical - cardContent.bonusCrit;
+        return await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
+            color, title,
+            success: critToReach,
+            appearance: CRITICAL_DICE_APPEARANCE // dé rouge pour le critique
+        }, dsnAnimations) >= critToReach;
     }
 
     /**

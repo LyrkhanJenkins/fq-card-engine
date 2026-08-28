@@ -14,20 +14,9 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
-// `Macro` est un global Foundry natif jamais exercé par le smoke test du socle
-// (07-02) : `Fx.importMacroFromCompendium` (déclenché par tout effet
-// `macro.execute`, ex. PersistAura) appelle `Macro.create(...)` dès que le
-// compendium mocké (`game.packs.get(...).getDocuments()` -> `[]`) ne trouve pas
-// la macro. Sans ce stub, TOUT choix comportant un `macro.execute` lève
-// `ReferenceError: Macro is not defined` — un trou générique du bac à sable de
-// test (pas un bug métier), comblé ici une fois pour toutes les cartes,
-// exactement comme `globalThis.socketlib` ci-dessus (isolation par fichier
-// Vitest : ne fuit jamais vers les autres suites, cf. harness.smoke.test.js).
-globalThis.Macro = class {
-    static create = vi.fn(async () => ({}));
-};
-
 const {playChoice, makeEquippedWeapon} = await import("./play-harness.js");
+const {installMacroStub} = await import("./corpus-helpers.js");
+installMacroStub();
 const FormError = (await import("../../src/core/error/form-error.model.js")).default;
 
 const DECKS_DIR = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq8");

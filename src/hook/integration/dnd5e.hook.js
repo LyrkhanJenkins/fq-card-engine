@@ -38,7 +38,7 @@ Hooks.on("dnd5e.longRest", (actor, _config) => {
 });
 
 
-Hooks.on("dnd5e.preUseActivity", (activity, usageConfig, dialogConfig, messageConfig) => {
+Hooks.on("dnd5e.preUseActivity", (activity, _usageConfig, _dialogConfig, _messageConfig) => {
     // Filter Activities
     if (notApplyFQOnActivity(activity)) {
         return true;

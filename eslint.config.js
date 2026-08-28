@@ -17,8 +17,8 @@ module.exports = [
             "no-unused-vars": [
                 "error",
                 {
-                    argsIgnorePattern: "^_*", varsIgnorePattern: "^_*",
-                    caughtErrorsIgnorePattern: "^_*"
+                    argsIgnorePattern: "^_", varsIgnorePattern: "^_",
+                    caughtErrorsIgnorePattern: "^_"
                 },
             ],
             "no-prototype-builtins": "off",

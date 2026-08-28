@@ -5,6 +5,24 @@ import FormulaDisplay, {ABILITY_EMOJIS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, 
 import {WEAPON_TOKENS} from "../../engine/roll/weapon-damage.js";
 import {expandPills, makePill, PILL_SOURCE, sanitizePillInput, stripPills} from "./formula-pill.js";
 
+/** Seuils (longueur max → taille de police en px), triés par longueur croissante. */
+const DESCRIPTION_SIZE_STEPS = [[1, 40], [80, 36], [110, 34], [145, 30], [200, 26], [290, 22], [340, 20], [440, 18], [9999, 16]];
+const TITLE_SIZE_STEPS = [[1, 34], [20, 32], [25, 28], [30, 24], [9999, 20]];
+const BUBBLE_SIZE_STEPS = [[2, 36], [3, 30], [4, 25], [5, 21], [6, 18], [9999, 15]];
+const REACH_SIZE_STEPS = [[6, 28], [8, 23], [10, 19], [12, 16], [9999, 13]];
+
+/**
+ * Retourne la taille associée au premier seuil de longueur atteint.
+ *
+ * @param {Array<[number, number]>} steps - Paires [longueur max, taille px] triées.
+ * @param {number} length - La longueur du texte à dimensionner.
+ *
+ * @returns {number} La taille de police (px) à appliquer.
+ */
+function sizeForLength(steps, length) {
+    return steps.find(([limit]) => length <= limit)?.[1] ?? steps[steps.length - 1][1];
+}
+
 /**
  * Utilitaires de présentation d'une carte : extraction du titre, de la
  * description et de l'image, dimensionnement du texte pour le rendu SVG,
@@ -31,7 +49,7 @@ export default class DisplayCard {
         let result = RollService.replaceAbilitiesBonus(str);
         try {
             return RollService.rollResultSync(result);
-        } catch (error) {
+        } catch {
             // Dans le cas ou il y a des variables
             result = result.replaceAll("XXX", "X").replaceAll("YYY", "Y");
             result = DisplayCard.simplifyExpression(result);
@@ -53,11 +71,7 @@ export default class DisplayCard {
     static getDescriptionSizeForCardSvg(description) {
         // Protège contre une valeur non-chaîne, comme aujourd'hui.
         const visible = typeof description === "string" ? stripPills(description) : (description ?? "").toString();
-        let descriptionSize = {1: 40, 80: 36, 110: 34, 145: 30, 200: 26, 290: 22, 340: 20, 440: 18, 9999: 16};
-        return descriptionSize[Object.keys(descriptionSize)
-            .map(Number)
-            .sort((a, b) => a - b)
-            .find(limit => visible.length <= limit)];
+        return sizeForLength(DESCRIPTION_SIZE_STEPS, visible.length);
     }
 
     /**
@@ -117,12 +131,7 @@ export default class DisplayCard {
      * @returns {number} La taille de police (px) à appliquer.
      */
     static getTitleSizeForCardSvg(title) {
-        let titleSize = {1: 34, 20: 32, 25: 28, 30: 24, 9999: 20};
-
-        return titleSize[Object.keys(titleSize)
-            .map(Number)
-            .sort((a, b) => a - b)
-            .find(limit => title.length <= limit)];
+        return sizeForLength(TITLE_SIZE_STEPS, title.length);
     }
 
     /**
@@ -135,12 +144,7 @@ export default class DisplayCard {
      * @returns {number} La taille de police (px) à appliquer.
      */
     static getBubbleSizeForCardSvg(value) {
-        let bubbleSize = {2: 36, 3: 30, 4: 25, 5: 21, 6: 18, 9999: 15};
-        const length = (value ?? "").toString().length;
-        return bubbleSize[Object.keys(bubbleSize)
-            .map(Number)
-            .sort((a, b) => a - b)
-            .find(limit => length <= limit)];
+        return sizeForLength(BUBBLE_SIZE_STEPS, (value ?? "").toString().length);
     }
 
     /**
@@ -154,12 +158,7 @@ export default class DisplayCard {
      * @returns {number} La taille de police (px) à appliquer.
      */
     static getReachSizeForCardSvg(minReach, maxReach) {
-        let reachSize = {6: 28, 8: 23, 10: 19, 12: 16, 9999: 13};
-        const length = `${minReach ?? ""} | ${maxReach ?? ""}`.length;
-        return reachSize[Object.keys(reachSize)
-            .map(Number)
-            .sort((a, b) => a - b)
-            .find(limit => length <= limit)];
+        return sizeForLength(REACH_SIZE_STEPS, `${minReach ?? ""} | ${maxReach ?? ""}`.length);
     }
 
     /**
@@ -181,9 +180,6 @@ export default class DisplayCard {
             } else {
                 description = c.faces[faceIndex].text;
             }
-        }
-        if (faceIndex && !description) {
-            description = c.data.faces[c.data.face].text;
         }
         // Un seul acteur pour toute la description : les formules repliées et
         // les jetons écrits dans la prose doivent parler du même personnage.
@@ -232,9 +228,6 @@ export default class DisplayCard {
                 img = c.faces[faceIndex].img;
             }
         }
-        if (faceIndex && !img) {
-            img = c.data.faces[c.data.face].img;
-        }
         return img;
     }
 
@@ -271,7 +264,7 @@ export default class DisplayCard {
                 result = result.replaceAll(token, replacement);
             }
             for (const [type, emoji] of Object.entries(DAMAGE_TYPE_EMOJIS)) {
-                result = result.replace(new RegExp(`\\[${type}]`, "g"), `[${emoji}]`);
+                result = result.replaceAll(`[${type}]`, `[${emoji}]`);
             }
             return result;
         }

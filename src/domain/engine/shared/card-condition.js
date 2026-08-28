@@ -36,6 +36,7 @@ export default class CardCondition {
      *          script concerné, ses messages d'erreur bruts (clé i18n + arg,
      *          non traduits) et, le cas échéant, l'exception levée.
      */
+    // eslint-disable-next-line no-unused-vars -- `card` et `to` doivent rester en portée pour l'eval() des scripts.
     static evaluate(cardContent, card, to) {
         const failures = [];
         const customEvals = Array.isArray(cardContent?.customEvals) ? cardContent.customEvals : [];
@@ -181,9 +182,7 @@ export default class CardCondition {
         if (!attackerToken || !myToken) {
             return false;
         }
-        const dist = Geometry.getMinDistanceBetweenTwoToken(
-            myToken.x, myToken.y, attackerToken.x, attackerToken.y,
-            myToken.width, attackerToken.width, myToken.height, attackerToken.height);
+        const dist = Geometry.distanceBetweenTokens(myToken, attackerToken);
         return dist <= maxCases;
     }
 
@@ -285,7 +284,7 @@ export default class CardCondition {
         if (!cardContent || cardContent.nbTargets || !cardContent.minReach || !cardContent.damage) {
             return false;
         }
-        const targetIds = Constants.currentTargets.map(t => t.actor?.id ?? t.document?.actorId);
+        const targetIds = Constants.currentTargets.map(t => Constants.tokenActorId(t));
         return !targetIds.includes(last.targetsId?.[0]);
     }
 
@@ -303,7 +302,7 @@ export default class CardCondition {
         }
         const logs = CardCondition.#logsThisRound();
         return targets.every(t => {
-            const actorId = t.actor?.id ?? t.document?.actorId;
+            const actorId = Constants.tokenActorId(t);
             return logs.filter(l => l.actorId === actorId)
                 .some(l => Object.values(l.resultArray ?? {}).some(r => r.type === "damageFQ" && r.value > 0));
         });

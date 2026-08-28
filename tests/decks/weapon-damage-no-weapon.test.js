@@ -13,7 +13,7 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
-const {playChoice} = await import("./play-harness.js");
+const {playChoice, makeEquippedWeapon} = await import("./play-harness.js");
 
 /**
  * Phase 13 — Garde-fou de lançabilité : une carte portant `@wpnR`/`@wpnM` sans
@@ -23,19 +23,7 @@ const {playChoice} = await import("./play-harness.js");
  * `hpCalls`, un message d'avertissement en chat.
  */
 function makeMeleeWeapon() {
-    const attackActivity = {
-        type: "attack",
-        use: vi.fn(),
-        getDamageConfig: vi.fn(() => ({rolls: [{parts: ["1d8", "@mod"], data: {mod: 3}}]}))
-    };
-    return {
-        type: "weapon",
-        system: {
-            equipped: true,
-            type: {value: "martialM"},
-            activities: {getByType: t => (t === "attack" ? [attackActivity] : [])}
-        }
-    };
+    return makeEquippedWeapon("martialM", undefined, {parts: ["1d8", "@mod"], data: {mod: 3}});
 }
 
 const rangedCard = {

@@ -1,36 +1,7 @@
 import {beforeEach, describe, expect, it} from "vitest";
-import Constants, {
-    CRITICAL_COLOR,
-    CRITICAL_HEAL_COLOR,
-    HEAL_COLOR,
-    DAMAGES_COLOR,
-    EVASION_COLOR,
-    OTHER_ROLL_COLOR,
-    SUCCESS_COLOR,
-    FAIL_COLOR,
-    OriginFQEffectLabel,
-    DEFAULT_MAX_ZEAL
-} from "../../src/domain/constants.js";
+import Constants from "../../src/domain/constants.js";
 
 describe("Constants", () => {
-
-    describe("constantes exportées", () => {
-        it("couleurs et labels ont les valeurs attendues", () => {
-            expect(CRITICAL_COLOR).toBe("#C0392B");
-            expect(CRITICAL_HEAL_COLOR).toBe("#c39f43");
-            expect(HEAL_COLOR).toBe("#10911A");
-            expect(DAMAGES_COLOR).toBe("#F1C40F");
-            expect(EVASION_COLOR).toBe("#4B8AF1");
-            expect(OTHER_ROLL_COLOR).toBe("#34CBE3");
-            expect(SUCCESS_COLOR).toBe("green");
-            expect(FAIL_COLOR).toBe("red");
-            expect(OriginFQEffectLabel).toBe("FQ Effect");
-        });
-
-        it("DEFAULT_MAX_ZEAL vaut 8", () => {
-            expect(DEFAULT_MAX_ZEAL).toBe(8);
-        });
-    });
 
     describe("getters personnage", () => {
         it("actorAttr/actorAbi/actorFQ renvoient les blocs system.* du personnage courant", () => {

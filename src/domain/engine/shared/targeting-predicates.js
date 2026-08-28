@@ -106,7 +106,7 @@ export default class TargetingPredicates {
     static findOutOfReachTargets(casterToken, targets, minReach, maxReach) {
         const outOfReach = [];
         targets.forEach(target => {
-            const dist = Geometry.getMinDistanceBetweenTwoToken(casterToken.x, casterToken.y, target.document.x, target.document.y, casterToken.width, target.document.width, casterToken.height, target.document.height);
+            const dist = Geometry.distanceBetweenTokens(casterToken, target);
             if (minReach > dist || maxReach < dist) {
                 outOfReach.push({target, dist});
             }
@@ -176,6 +176,6 @@ export default class TargetingPredicates {
      */
     static resolveTargetActorIds(cardContent, casterActor = Constants.actorCurrent) {
         return TargetingPredicates.resolveTargets(cardContent, casterActor)
-            .map(t => t?.document?.actorId ?? t?.actorId).filter(Boolean);
+            .map(t => Constants.tokenActorId(t)).filter(Boolean);
     }
 }

@@ -30,7 +30,7 @@ export default class TokenHud {
 
         bouton.dataset.tooltip = game.i18n.localize("FQCARDENGINE.SacrifySkeletonButton");
         bouton.innerHTML = `<img src="icons/magic/death/skeleton-skull-soul-blue.webp" width="36" height="36"/>`;
-        bouton.addEventListener("click", ev => {
+        bouton.addEventListener("click", () => {
             if (game.modules.get("sequencer")?.active) {
                 new Sequence()
                     .effect()

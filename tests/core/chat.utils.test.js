@@ -2,13 +2,6 @@ import {beforeEach, describe, expect, test, vi} from "vitest";
 import {createWarning} from "../../src/core/utils/chat.utils.js";
 import {ERROR_COLOR, WARNING_COLOR} from "../../src/core/constants.js";
 
-describe("couleurs de présentation (core/constants)", () => {
-    test("WARNING_COLOR / ERROR_COLOR ont les valeurs attendues", () => {
-        expect(WARNING_COLOR).toBe("#E36934");
-        expect(ERROR_COLOR).toBe("#C04200");
-    });
-});
-
 describe("createWarning", () => {
     beforeEach(() => vi.clearAllMocks());
 

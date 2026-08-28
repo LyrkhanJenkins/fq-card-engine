@@ -111,30 +111,29 @@ export async function getSocketSpy() {
  *
  * @returns {object} L'arme consommable par `mountWorld` via `character.items`.
  */
-export function makeEquippedWeapon(category, damage = "2") {
-    const attackActivity = {
-        type: "attack",
+export function makeEquippedWeapon(category, damage = "2", {parts, data = {}, activityType = "attack"} = {}) {
+    const activity = {
+        type: activityType,
         use: vi.fn(),
-        getDamageConfig: vi.fn(() => ({rolls: [{parts: [damage], data: {}}]}))
+        getDamageConfig: vi.fn(() => ({rolls: [{parts: parts ?? [damage], data}]}))
     };
     return {
         type: "weapon",
         system: {
             equipped: true,
             type: {value: category},
-            activities: {getByType: type => (type === "attack" ? [attackActivity] : [])}
+            activities: {getByType: type => (type === activityType ? [activity] : [])}
         }
     };
 }
 
 /**
  * Réinstalle le `Roll` déterministe et vide les files de dés pilotés. Appelée
- * automatiquement par `playChoice` ; exposée séparément pour les fichiers de
- * test qui veulent contrôler ce cycle depuis leur propre `beforeEach`.
+ * automatiquement par `playChoice`.
  *
  * @returns {void}
  */
-export function resetHarness() {
+function resetHarness() {
     installDeterministicRoll();
     resetDiceControl();
 }

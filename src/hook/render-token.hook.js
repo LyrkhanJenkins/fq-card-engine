@@ -1,7 +1,7 @@
 import Constants from "../domain/constants.js";
 import TokenHud from "../domain/interface/token-hud.js";
 
-Hooks.on("renderTokenHUD", (hud, html, data) => {
+Hooks.on("renderTokenHUD", (hud, html, _data) => {
     // Les contrôles natifs du HUD ne sont retirés aux joueurs que lorsque la
     // limitation de leurs droits est activée. On leur conserve toutefois le
     // ciblage et le choix de l'action de mouvement (bouton + palette,

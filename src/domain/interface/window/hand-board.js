@@ -74,13 +74,13 @@ export default class HandBoard {
         });
 
         this._hookIds.deleteCard = Hooks.on("deleteCard", function (target) {
-            if (!!target && !!target.parent && (!!t.currentCards && (target.parent._id ? target.parent._id : target.parent.data._id) == (t.currentCards._id ? t.currentCards._id : t.currentCards.data._id))) {
+            if (!!target && !!target.parent && (!!t.currentCards && target.parent._id == t.currentCards._id)) {
                 t.update();
             }
         });
 
         this._hookIds.createCard = Hooks.on("createCard", function (target, options, userId) {
-            if (!!target && !!target.parent && (!!t.currentCards && (target.parent._id ? target.parent._id : target.parent.data._id) == (t.currentCards._id ? t.currentCards._id : t.currentCards.data._id))) {
+            if (!!target && !!target.parent && (!!t.currentCards && target.parent._id == t.currentCards._id)) {
                 t.update();
                 // Révélation cosmétique : uniquement pour le joueur qui pioche
                 // (`userId` local) et uniquement pour les cartes réellement piochées
@@ -134,7 +134,7 @@ export default class HandBoard {
         const cardContent = c.system.fq?.choices?.length ? c.system.fq?.choices[0] : {};
         const description = DisplayCard.getDescriptionFromCard(c, faceIndex);
         return {
-            id: c._id ? c._id : c.data._id,
+            id: c._id,
             description: description,
             descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
             titleSize: DisplayCard.getTitleSizeForCardSvg(name),
@@ -147,7 +147,7 @@ export default class HandBoard {
             // glow sur les barres qui affichent la main d'un autre joueur (vue MJ).
             isReactiveReady: (!this.currentUser || this.currentUser.id === game.user?.id)
                 && CardCondition.isReactiveReady(cardContent, c),
-            cardsid: this.currentCards._id ? this.currentCards._id : this.currentCards.data._id,
+            cardsid: this.currentCards._id,
             uuid: c.uuid,
             back: forceFace ? false : (c.face == null),
             img: img,
@@ -169,20 +169,25 @@ export default class HandBoard {
         let t = this;
         let length = 0;
         if (typeof this.currentCards !== "undefined") {
-            $("#fq-card-engine-card-container-" + t.id).empty();
-            length = this.currentCards.cards.contents.length;
+            const container = $("#fq-card-engine-card-container-" + t.id);
+            container.empty();
+            const sorted = [...this.currentCards.cards.contents].sort(FqCardEngineModule.cardSort);
+            length = sorted.length;
             if (CONFIG.FqCardEngine.options.faceUpMode) {
                 // Check to make sure all the cards are flipped over to their face
-                $(this.currentCards.cards.contents.sort(FqCardEngineModule.cardSort)).each(function (i, c) {
+                for (const c of sorted) {
                     if (c.face == null) {
                         c.flip();
                     }
-                });
+                }
             }
-            $(this.currentCards.cards.contents.sort(FqCardEngineModule.cardSort)).each(function (i, c) {
-                let renderData = t.buildCardRenderData(c);
-                foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/card.hbs", renderData).then(content => {
-                    content = $(content);
+            // Rendus en parallèle puis append groupé : garantit l'ordre des cartes
+            // et une seule passe de mesure/mise en page pour toute la main.
+            Promise.all(sorted.map(c => foundry.applications.handlebars.renderTemplate(
+                "modules/fq-card-engine/src/templates/board/card.hbs", t.buildCardRenderData(c)
+            ))).then(contents => {
+                contents.forEach((raw, i) => {
+                    const content = $(raw);
                     content.click(function (e) {
                         t.cardClicked(e);
                     });
@@ -192,16 +197,14 @@ export default class HandBoard {
                     if (i === 0) {
                         content.addClass("fq-card-engine-hand-first-card");
                     }
-                    $("#fq-card-engine-card-container-" + t.id).append(content);
-                    DisplayCard.fitDescriptionSize(content[0]);
-                    FqCardEngineModule.updateSize();
-                    if (i == length - 1) {
-                        if (resolve) {
-                            //Return for the promise
-                            resolve();
-                        }
-                    }
+                    container.append(content);
                 });
+                DisplayCard.fitDescriptionSize(container[0]);
+                FqCardEngineModule.updateSize();
+                if (resolve) {
+                    //Return for the promise
+                    resolve();
+                }
             });
         }
 
@@ -226,6 +229,9 @@ export default class HandBoard {
      */
     update() {
         let t = this;
+        if (t._removed) {
+            return;
+        }
         if (t.currentCards) {
             if (!t.updating) {
                 t.updating = true;
@@ -299,9 +305,9 @@ export default class HandBoard {
                 this.currentUser.unsetFlag(FqCardEngineModule.moduleName, "CardsID-" + this.playerBarCount);
             }
         } else {
-            this.storeCardsID(this.currentCards._id ? this.currentCards._id : this.currentCards.data._id);
+            this.storeCardsID(this.currentCards._id);
             if (game.user.isGM && this.currentUser != undefined) {
-                this.currentUser.setFlag(FqCardEngineModule.moduleName, "CardsID-" + this.playerBarCount, this.currentCards._id ? this.currentCards._id : this.currentCards.data._id);
+                this.currentUser.setFlag(FqCardEngineModule.moduleName, "CardsID-" + this.playerBarCount, this.currentCards._id);
             }
         }
         this.update();
@@ -322,7 +328,7 @@ export default class HandBoard {
      */
     setUserOption(choice) {
         this.currentUser = choice;
-        this.storeUserID(this.currentUser._id ? this.currentUser._id : this.currentUser.data._id);
+        this.storeUserID(this.currentUser._id);
         this.update();
         if (game.user.isGM) {
             //check to see if user has a hand selected already
@@ -803,11 +809,11 @@ export default class HandBoard {
         let count = 0;
         if (this.currentUser) {
             let list = FqCardEngineModule.handMiniBarList;
-            let userId = this.currentUser._id ? this.currentUser._id : this.currentUser.data._id;
+            let userId = this.currentUser._id;
             for (let i = 0; i < list.length && i < this.id; i++) {
                 let bar = list[i];
                 if (bar.currentUser) {
-                    let barUserId = bar.currentUser._id ? bar.currentUser._id : bar.currentUser.data._id;
+                    let barUserId = bar.currentUser._id;
                     if (barUserId === userId) {
                         count++;
                     }
@@ -830,7 +836,7 @@ export default class HandBoard {
             if (!panel) return;
 
             if (this.currentUser) {
-                const color = this.currentUser.color ?? this.currentUser.data?.color ?? "";
+                const color = this.currentUser.color ?? "";
                 panel.style.setProperty("--fq-player-color", color);
                 sidebar?.style.setProperty("--fq-player-color", color);
             } else {
@@ -965,6 +971,14 @@ export default class HandBoard {
             Hooks.off(hook, id);
         }
         this._hookIds = {};
+        // Neutralise les déclencheurs différés encore en vol : ils opéreraient
+        // sinon sur le DOM d'une barre déjà retirée.
+        if (this._drawRevealTimer) {
+            clearTimeout(this._drawRevealTimer);
+            this._drawRevealTimer = null;
+        }
+        this._drawRevealBuffer = [];
+        this._removed = true;
         if (this.html) {
             this.html.remove();
         }
