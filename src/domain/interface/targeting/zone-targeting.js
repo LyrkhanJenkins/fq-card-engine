@@ -125,16 +125,15 @@ export default class ZoneTargeting {
      */
     static buildShapeData(cardContent) {
         const gridSize = game.canvas?.scene?.dimensions?.size ?? 0;
-        const resolve = (value) => (value ? RollService.rollResultSync(value) : 0);
-        const toPx = (value, fallback) => (resolve(value) || fallback) * gridSize;
+        const toPx = (value, fallback) => (RollService.resolveOrZero(value) || fallback) * gridSize;
         const shape = cardContent?.zoneShape || "circle";
         const sizePx = toPx(cardContent?.zoneSize, 1);
 
         if (shape === "cone") {
-            return {type: "cone", x: 0, y: 0, radius: sizePx, angle: resolve(cardContent?.zoneAngle) || 90};
+            return {type: "cone", x: 0, y: 0, radius: sizePx, angle: RollService.resolveOrZero(cardContent?.zoneAngle) || 90};
         }
         if (shape === "rectangle") {
-            return {type: "rectangle", x: 0, y: 0, width: sizePx, height: toPx(cardContent?.zoneWidth, resolve(cardContent?.zoneSize) || 1)};
+            return {type: "rectangle", x: 0, y: 0, width: sizePx, height: toPx(cardContent?.zoneWidth, RollService.resolveOrZero(cardContent?.zoneSize) || 1)};
         }
         if (shape === "line") {
             return {type: "line", x: 0, y: 0, length: sizePx, width: toPx(cardContent?.zoneWidth, 1)};
@@ -261,9 +260,8 @@ export default class ZoneTargeting {
         if (!cardContent?.minReach && !cardContent?.maxReach) {
             return null;
         }
-        const minReach = cardContent.minReach ? RollService.rollResultSync(cardContent.minReach) : 0;
-        const maxReach = (cardContent.maxReach ? RollService.rollResultSync(cardContent.maxReach) : 0)
-            + Constants.rangeBonus;
+        const minReach = RollService.resolveOrZero(cardContent.minReach);
+        const maxReach = RollService.resolveOrZero(cardContent.maxReach) + Constants.rangeBonus;
 
         const gridSize = game.canvas?.scene?.dimensions?.size ?? 1;
         const origin = region.shapes?.[0] ?? {x: 0, y: 0};

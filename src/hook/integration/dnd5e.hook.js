@@ -21,6 +21,25 @@ const notApplyFQOnActivity = (activity) => {
     }
 };
 
+/**
+ * Portées d'une activité dnd5e converties dans l'unité du moteur (les cases) :
+ * une portée exprimée en distance (`range.value`) part de la case adjacente,
+ * une allonge de mêlée (`range.reach`) part de 0. Lecture unique partagée par
+ * le garde de ciblage (`preUseActivity`) et la résolution des dégâts
+ * (`rollDamageV2`), qui doivent voir exactement la même portée.
+ *
+ * @param {object} range - Le bloc `range` de l'activité (`value`, `reach`).
+ *
+ * @returns {{minReach: number, maxReach: number}} Les portées en cases.
+ */
+const activityReachInCases = (range) => {
+    const squareDistance = game.system.grid.distance;
+    return {
+        minReach: Math.trunc((range.value ? squareDistance : range.reach) ?? 0) / squareDistance,
+        maxReach: Math.trunc((range.value ?? range.reach) ?? 0) / squareDistance
+    };
+};
+
 Hooks.on("dnd5e.shortRest", (actor, _config) => {
     actor.update({"system.fq.action.value": actor.system.fq.action.max});
     actor.update({"system.fq.zeal.value": actor.system.fq.zeal.init});
@@ -71,9 +90,7 @@ Hooks.on("dnd5e.preUseActivity", (activity, _usageConfig, _dialogConfig, _messag
     if (!ResourceHandler.checkResources(activity.item.system?.fq, activity.actor)) {
         return false;
     }
-    const squareDistance = game.system.grid.distance;
-    const minRange = Math.trunc((activity.range.value ? squareDistance : activity.range.reach) ?? 0) / squareDistance;
-    const maxRange = Math.trunc((activity.range.value ?? activity.range.reach) ?? 0) / squareDistance;
+    const {minReach: minRange, maxReach: maxRange} = activityReachInCases(activity.range);
     const itemNbTargets = ResourceHandler.determineNbTargets(activity.target);
     // Use on yourself
     if (!Constants.myTargets()?.length && minRange === 0) {
@@ -126,9 +143,7 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     // détaché par `preRollAttackV2`, handlers de hook non attendus par Foundry).
     const opportunityTarget = OpportunityAttack.consumeTargetFor(subject);
     const item = subject.item;
-    const squareDistance = game.system.grid.distance;
-    const minReach = Math.trunc((subject.range.value ? squareDistance : subject.range.reach) ?? 0) / squareDistance;
-    const maxReach = Math.trunc((subject.range.value ?? subject.range.reach) ?? 0) / squareDistance;
+    const {minReach, maxReach} = activityReachInCases(subject.range);
     const token = Constants.actorToken(subject.actor.id);
     if (!subject.item) {
         return;

@@ -77,7 +77,7 @@ export default class CombatTargeting {
      */
     static acquireTargets(cardContent, fd = {}) {
         const cc = ZoneTargeting.resolveCardContent(cardContent, fd);
-        const resolve = (value) => (value ? RollService.rollResultSync(value) : 0);
-        return CombatTargeting.acquireCombatants(cc.targetType, resolve(cc.minReach), resolve(cc.maxReach));
+        return CombatTargeting.acquireCombatants(cc.targetType,
+            RollService.resolveOrZero(cc.minReach), RollService.resolveOrZero(cc.maxReach));
     }
 }

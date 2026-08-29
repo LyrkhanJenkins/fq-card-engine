@@ -46,13 +46,7 @@ export default class PlayCard {
         });
         this.renderChatMessage(to, fd, card, "FQCARDENGINE.CardDiscard");
 
-        return currentCards.pass(to, [card.id], {
-            action: "pass",
-            chatNotification: !CONFIG.FqCardEngine.options.hideMessages,
-            updateData: fd.down ? {face: null} : {}
-        }).catch(err => {
-            return ui.notifications.error(err.message);
-        });
+        return PlayCard.transferToPile(currentCards, to, card, fd);
     }
 
     /**
@@ -134,13 +128,7 @@ export default class PlayCard {
             (!cardContent.replayable || (cardContent.replayable !== CardFqSystem.REPLAYABLE_PASSIVE && cardContent.replayable <= 1)) &&
             leavesHand
         ) {
-            result = currentCards.pass(to, [card.id], {
-                action: "pass",
-                chatNotification: !CONFIG.FqCardEngine.options.hideMessages,
-                updateData: fd.down ? {face: null} : {}
-            }).catch(err => {
-                return ui.notifications.error(err.message);
-            });
+            result = PlayCard.transferToPile(currentCards, to, card, fd);
         }
 
         // Destruction AVANT les effets : la carte disparaît de la main (et du deck)
@@ -157,6 +145,29 @@ export default class PlayCard {
         await CardEffect.applyCardEffect(cardContent, card, fd, to);
 
         return result;
+    }
+
+    /**
+     * Transfère la carte de la main vers la pile de défausse cible, face cachée
+     * si le formulaire le demande — le geste commun à la défausse volontaire et
+     * au jeu d'une carte non rejouable. Une erreur de transfert est notifiée à
+     * l'utilisateur sans interrompre le flux appelant.
+     *
+     * @param {Cards}  currentCards - La main courante contenant la carte.
+     * @param {Cards}  to           - La pile de défausse cible.
+     * @param {Card}   card         - La carte transférée.
+     * @param {object} fd           - Les données du formulaire (`down` pour face cachée).
+     *
+     * @returns {Promise<*>} La promesse du transfert.
+     */
+    static transferToPile(currentCards, to, card, fd) {
+        return currentCards.pass(to, [card.id], {
+            action: "pass",
+            chatNotification: !CONFIG.FqCardEngine.options.hideMessages,
+            updateData: fd.down ? {face: null} : {}
+        }).catch(err => {
+            return ui.notifications.error(err.message);
+        });
     }
 
     /**
@@ -286,7 +297,7 @@ export default class PlayCard {
             // Un sort sans portée s'applique à son lanceur : le message montre alors
             // le token du lanceur, pas les cibles restées sélectionnées sur la scène.
             targets = TargetingPredicates.resolveTargets(cardContent).map(target => ({
-                name: target.document?.name ?? target.name ?? "",
+                name: Constants.tokenName(target) ?? "",
                 img: target.document?.texture?.src
             }));
         } catch {

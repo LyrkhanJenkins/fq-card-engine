@@ -95,10 +95,9 @@ export default class Minion {
      * @returns {number} Le nombre d'emplacements valides sélectionnés (0 à 4).
      */
     static getNbValideMinionLocationSelected(fd) {
-        return (fd.minionUp && !Geometry.locationIsOccupied("up") ? 1 : 0) +
-            (fd.minionDown && !Geometry.locationIsOccupied("down") ? 1 : 0) +
-            (fd.minionLeft && !Geometry.locationIsOccupied("left") ? 1 : 0) +
-            (fd.minionRight && !Geometry.locationIsOccupied("right") ? 1 : 0);
+        return Minion.LOCATION_FIELDS
+            .filter(([field, location]) => fd[field] && !Geometry.locationIsOccupied(location))
+            .length;
     }
 
     /**
@@ -110,11 +109,22 @@ export default class Minion {
      * @returns {number} Le nombre d'emplacements sélectionnés (0 à 4).
      */
     static getNbMinionLocationSelected(fd) {
-        return (fd.minionUp ? 1 : 0) +
-            (fd.minionDown ? 1 : 0) +
-            (fd.minionLeft ? 1 : 0) +
-            (fd.minionRight ? 1 : 0);
+        return Minion.LOCATION_FIELDS.filter(([field]) => fd[field]).length;
     }
+
+    /**
+     * Les quatre emplacements d'apparition d'un sbire, appariant le champ du
+     * formulaire de jeu à la direction consommée par `Geometry`. Source unique
+     * des deux comptages ci-dessus ; l'ordre EST celui dans lequel l'occupation
+     * des cases est interrogée.
+     * @type {ReadonlyArray<[string, string]>}
+     */
+    static LOCATION_FIELDS = Object.freeze([
+        ["minionUp", "up"],
+        ["minionDown", "down"],
+        ["minionLeft", "left"],
+        ["minionRight", "right"],
+    ]);
 
 
     /**

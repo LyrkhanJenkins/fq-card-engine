@@ -31,48 +31,87 @@ export default class ResourceHandler {
             return true;
         }
 
-        // COST HP
-        if (resources?.hp) {
-            if (actor.system?.attributes.hp.value + resources?.hp < 0) {
-                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughHp"), actor);
-                return false;
+        for (const {field, current, warningKey, applies} of ResourceHandler.#COSTS) {
+            if (!resources?.[field] || (applies && !applies())) {
+                continue;
             }
-        }
-
-        // COST ACTION
-        if (resources?.action) {
-            if (actor.system?.fq.action.value + resources?.action < 0) {
-                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughAction"), actor);
-                return false;
-            }
-        }
-
-        // COST MANA
-        if (resources?.mana) {
-            if (actor.system?.fq.mana.value + resources?.mana < 0) {
-                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughMana"), actor);
-                return false;
-            }
-        }
-
-        // COST ZEAL
-        if (resources?.zeal) {
-            if (actor.system?.fq.zeal.value + resources?.zeal < 0) {
-                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughZeal"), actor);
-                return false;
-            }
-        }
-
-        // COST DROP
-        if (resources?.drop && Constants.isActorInCombat) {
-            if (actor.system?.fq.cards.currentDrop + resources?.drop < 0) {
-                ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDrop"), actor);
+            if (current(actor) + resources[field] < 0) {
+                ResourceHandler.createUserWarningMessage(game.i18n.localize(warningKey), actor);
                 return false;
             }
         }
 
         return true;
     }
+
+    /**
+     * Descripteurs des coûts vérifiés par {@link ResourceHandler.checkResources} :
+     * champ du contenu de carte, réserve courante de l'acteur, clé i18n de
+     * l'avertissement, et condition d'application éventuelle (la défausse n'est
+     * contrôlée qu'en combat). L'ordre de la table EST l'ordre de vérification :
+     * seul le premier coût insuffisant est signalé.
+     */
+    static #COSTS = Object.freeze([
+        {
+            field: "hp",
+            current: actor => actor.system?.attributes.hp.value,
+            warningKey: "FQCARDENGINE.WarningMsgNotEnoughHp"
+        },
+        {
+            field: "action",
+            current: actor => actor.system?.fq.action.value,
+            warningKey: "FQCARDENGINE.WarningMsgNotEnoughAction"
+        },
+        {
+            field: "mana",
+            current: actor => actor.system?.fq.mana.value,
+            warningKey: "FQCARDENGINE.WarningMsgNotEnoughMana"
+        },
+        {
+            field: "zeal",
+            current: actor => actor.system?.fq.zeal.value,
+            warningKey: "FQCARDENGINE.WarningMsgNotEnoughZeal"
+        },
+        {
+            field: "drop",
+            current: actor => actor.system?.fq.cards.currentDrop,
+            warningKey: "FQCARDENGINE.WarningMsgNotEnoughDrop",
+            applies: () => Constants.isActorInCombat
+        },
+    ]);
+
+    /**
+     * Descripteurs des réserves modifiées par {@link ResourceHandler.consumeResources} :
+     * champ du contenu de carte, chemin de mise à jour, réserve courante et
+     * plafond de l'acteur. Un descripteur sans `max` décrit une réserve sans
+     * plafond (l'action, seule à pouvoir dépasser son maximum). L'ordre de la
+     * table EST l'ordre des mises à jour appliquées à l'acteur.
+     */
+    static #POOLS = Object.freeze([
+        {
+            field: "hp",
+            path: "system.attributes.hp.value",
+            current: actor => actor.system?.attributes.hp.value,
+            max: actor => actor.system?.attributes.hp.max
+        },
+        {
+            field: "action",
+            path: "system.fq.action.value",
+            current: actor => actor.system?.fq.action.value
+        },
+        {
+            field: "mana",
+            path: "system.fq.mana.value",
+            current: actor => actor.system?.fq.mana.value,
+            max: actor => actor.system?.fq.mana.max
+        },
+        {
+            field: "zeal",
+            path: "system.fq.zeal.value",
+            current: actor => actor.system?.fq.zeal.value,
+            max: actor => actor.system?.fq.zeal.max
+        },
+    ]);
 
     /**
      * Applique la consommation (ou le gain) de ressources sur l'acteur. Les
@@ -91,26 +130,14 @@ export default class ResourceHandler {
             return;
         }
 
-        if (resources?.hp) {
-            actor.update({
-                "system.attributes.hp.value": (actor.system?.attributes.hp.value + resources.hp) > actor.system?.attributes.hp.max ? actor.system?.attributes.hp.max : actor.system?.attributes.hp.value + resources.hp
-            });
-        }
-        if (resources?.action) {
-            // L'action est la seule ressource qui peut monter au-dessus de son max
-            actor.update({
-                "system.fq.action.value": actor.system?.fq.action.value + resources.action
-            });
-        }
-        if (resources?.mana) {
-            actor.update({
-                "system.fq.mana.value": (actor.system?.fq.mana.value + resources.mana) > actor.system?.fq.mana.max ? actor.system?.fq.mana.max : actor.system?.fq.mana.value + resources.mana
-            });
-        }
-        if (resources?.zeal) {
-            actor.update({
-                "system.fq.zeal.value": (actor.system?.fq.zeal.value + resources.zeal) > actor.system?.fq.zeal.max ? actor.system?.fq.zeal.max : actor.system?.fq.zeal.value + resources.zeal
-            });
+        for (const {field, path, current, max} of ResourceHandler.#POOLS) {
+            if (!resources?.[field]) {
+                continue;
+            }
+            const total = current(actor) + resources[field];
+            // Seule l'action n'a pas de plafond : elle peut monter au-dessus de son max.
+            const cap = max?.(actor);
+            actor.update({[path]: total > cap ? cap : total});
         }
         if (resources?.drop) {
             // Ne peux pas descendre en dessous de 0

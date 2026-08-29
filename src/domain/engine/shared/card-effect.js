@@ -832,7 +832,7 @@ export default class CardEffect {
         if (cardContent?.draw) {
             // La défausse compte : elle sera remélangée dans le deck au moment du
             // tirage. Seul un deck ET une défausse trop courts rendent la carte injouable.
-            const available = (card.source?.cards?.size ?? 0) - (card.source?.drawnCards?.length ?? 0);
+            const available = TradingCards.countAvailableCards(card.source);
             const recallable = card.source ? TradingCards.countRecallableCards(card.source) : 0;
             if ((available + recallable) < cardContent.draw) {
                 ResourceHandler.createUserWarningMessage(game.i18n.localize("FQCARDENGINE.WarningMsgNotEnoughDraw"), Constants.actorCurrent);

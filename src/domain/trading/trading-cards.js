@@ -1,4 +1,5 @@
 import Constants from "../constants.js";
+import {sampleItems} from "../../core/utils/random.utils.js";
 
 export const DECK_TYPE = "DECK";
 export const HAND_TYPE = "HAND";
@@ -362,6 +363,20 @@ export default class TradingCards {
 
 
     /**
+     * Nombre de cartes encore piochables dans un deck : ses cartes moins celles
+     * déjà tirées. Définition unique de « ce que la pioche peut encore fournir »,
+     * partagée par le garde de lançabilité d'une carte qui fait piocher et par le
+     * prédicat de condition `deckHasCards`.
+     *
+     * @param {Cards} [deck] - Le deck inspecté.
+     *
+     * @returns {number} Le nombre de cartes disponibles (0 sans deck).
+     */
+    static countAvailableCards(deck) {
+        return (deck?.cards?.size ?? 0) - (deck?.drawnCards?.length ?? 0);
+    }
+
+    /**
      * Liste, pile par pile, les cartes qu'un rappel ramènerait dans le deck :
      * les cartes du deck qui y sont défaussées, et les cartes GÉNÉRÉES présentes
      * dans la pile du même propriétaire (elles n'ont pas d'originale dans le
@@ -488,12 +503,6 @@ export default class TradingCards {
      * @returns {string[]} Les ids tirés (moins si le vivier est plus petit).
      */
     static sampleCardIds(cards, count) {
-        const pool = cards.map(c => c.id);
-        const n = Math.max(0, Math.min(count, pool.length));
-        for (let i = 0; i < n; i++) {
-            const j = i + Math.floor(Math.random() * (pool.length - i));
-            [pool[i], pool[j]] = [pool[j], pool[i]];
-        }
-        return pool.slice(0, n);
+        return sampleItems(cards.map(c => c.id), count);
     }
 }

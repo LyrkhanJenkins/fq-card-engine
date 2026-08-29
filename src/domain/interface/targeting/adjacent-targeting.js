@@ -64,7 +64,7 @@ export default class AdjacentTargeting {
      */
     static acquireTargets(cardContent, fd = {}) {
         const cc = ZoneTargeting.resolveCardContent(cardContent, fd);
-        const resolve = (value) => (value ? RollService.rollResultSync(value) : 0);
-        return AdjacentTargeting.acquireWithin(resolve(cc.minReach), resolve(cc.maxReach));
+        return AdjacentTargeting.acquireWithin(
+            RollService.resolveOrZero(cc.minReach), RollService.resolveOrZero(cc.maxReach));
     }
 }

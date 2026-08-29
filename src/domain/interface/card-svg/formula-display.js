@@ -185,6 +185,18 @@ const MAX_SYMBOLIC_DIE_SIZE_TERMS = 1;
 const SYMBOLIC_DIE_COUNT_IDENTIFIERS = ["X", "Y", "XXX", "YYY"];
 
 /**
+ * Modèle plié vierge `{const, dice, symDice, vars, atoms}` : la forme unique
+ * que produisent et consomment toutes les étapes du repli (parseur, `foldDie`,
+ * `foldCap`, `renderFolded`). Une fabrique plutôt qu'une constante partagée :
+ * chaque nœud reçoit ses propres conteneurs, que les combinaisons mutent.
+ *
+ * @returns {{const: number, dice: Object<number, number>, symDice: Array<{render: string}>, vars: Object<string, number>, atoms: Array<{coeff: number, render: string}>}} Un modèle plié neutre.
+ */
+function emptyModel() {
+    return {const: 0, dice: {}, symDice: [], vars: {}, atoms: []};
+}
+
+/**
  * Repli d'affichage des formules de dégâts/soin d'une carte, moteur d'ARBRE à
  * repli LOCAL (D-04) : un nœud non repliable (division, `ceil`/`trunc` sur du
  * non-numérique) reste OPAQUE — rendu en `atome` — mais ses propres enfants
@@ -515,7 +527,7 @@ export default class FormulaDisplay {
         };
 
         function numberValue(n) {
-            return {const: n, dice: {}, symDice: [], vars: {}, atoms: []};
+            return {...emptyModel(), const: n};
         }
 
         // wrap() n'ajoute des parenthèses que si le rendu de l'enfant compte
@@ -589,7 +601,7 @@ export default class FormulaDisplay {
                     // directement leur coefficient plutôt que de les
                     // ré-envelopper ("@int*(min(5,XXX))" -> "4×X (max 5)").
                     return {
-                        const: 0, dice: {}, symDice: [], vars: {},
+                        ...emptyModel(),
                         atoms: otherSide.atoms.map(atom => ({coeff: atom.coeff * scalar, render: atom.render}))
                     };
                 }
@@ -601,7 +613,7 @@ export default class FormulaDisplay {
                 // il devient un ATOME opaque de coefficient `scalar`,
                 // exactement comme la division (D-05) : "2*(1d8+3)" ->
                 // "2×(1d8+3)".
-                return {const: 0, dice: {}, symDice: [], vars: {}, atoms: [{coeff: scalar, render: wrap(otherSide)}]};
+                return {...emptyModel(), atoms: [{coeff: scalar, render: wrap(otherSide)}]};
             }
 
             // Ni l'un ni l'autre n'est un scalaire pur (produit de deux dés,
@@ -610,7 +622,7 @@ export default class FormulaDisplay {
             // "{wrap(a)}×{wrap(b)}" (D-04, repli LOCAL). Aucune formule des
             // packs n'atteint plus jamais le filet de sécurité global pour ce
             // motif (balayage du corpus, plan 20-05).
-            return {const: 0, dice: {}, symDice: [], vars: {}, atoms: [{coeff: 1, render: `${wrap(a)}×${wrap(b)}`}]};
+            return {...emptyModel(), atoms: [{coeff: 1, render: `${wrap(a)}×${wrap(b)}`}]};
         }
 
         function divide(a, b) {
@@ -620,7 +632,7 @@ export default class FormulaDisplay {
             // Division opaque (D-05) : ni évaluable, ni simplifiable — seule
             // elle subsiste comme atome, mais ses DEUX opérandes ont été
             // pliés localement avant d'arriver ici (repli LOCAL, D-04).
-            return {const: 0, dice: {}, symDice: [], vars: {}, atoms: [{coeff: 1, render: `${wrap(a)}÷${wrap(b)}`}]};
+            return {...emptyModel(), atoms: [{coeff: 1, render: `${wrap(a)}÷${wrap(b)}`}]};
         }
 
         function applyRoundingFunc(name, value) {
@@ -707,26 +719,26 @@ export default class FormulaDisplay {
                 const [countStr, sizeStr] = tok.split("d");
                 const count = countStr ? parseInt(countStr, 10) : 1;
                 const size = parseInt(sizeStr, 10);
-                return {const: 0, dice: {[size]: count}, symDice: [], vars: {}, atoms: []};
+                return {...emptyModel(), dice: {[size]: count}};
             }
             if (isNumToken(tok)) {
                 return numberValue(parseFloat(tok));
             }
             if (tok === "X" || tok === "Y") {
-                return {const: 0, dice: {}, symDice: [], vars: {[tok]: 1}, atoms: []};
+                return {...emptyModel(), vars: {[tok]: 1}};
             }
             if (tok === "XXX" || tok === "YYY") {
                 // Robustesse : la substitution XXX→X/YYY→Y (par valeur ou
                 // symbolique) a lieu avant le repli (foldSegments) ; ce cas ne
                 // devrait plus survenir ici.
-                return {const: 0, dice: {}, symDice: [], vars: {[tok === "XXX" ? "X" : "Y"]: 1}, atoms: []};
+                return {...emptyModel(), vars: {[tok === "XXX" ? "X" : "Y"]: 1}};
             }
             if (Object.values(UNKNOWN_ABILITY_VARS).includes(tok)) {
                 // Caractéristique non résolue (D-15) : variable symbolique
                 // dont le nom de rendu est l'emoji de la caractéristique — se
                 // combine et se multiplie par un scalaire exactement comme
                 // X/Y (voir FormulaDisplay.substituteAbilityTokens).
-                return {const: 0, dice: {}, symDice: [], vars: {[tok]: 1}, atoms: []};
+                return {...emptyModel(), vars: {[tok]: 1}};
             }
             if (Object.prototype.hasOwnProperty.call(ROUND_FUNCS, tok)) {
                 if (peek() !== "(") {
@@ -843,7 +855,6 @@ export default class FormulaDisplay {
     static foldDie(countNode, sizeNode, _expr) {
         const countIsNum = FormulaDisplay.isPureNumber(countNode);
         const sizeIsNum = FormulaDisplay.isPureNumber(sizeNode);
-        const emptyModel = () => ({const: 0, dice: {}, symDice: [], vars: {}, atoms: []});
 
         if (countIsNum && sizeIsNum) {
             const model = emptyModel();
@@ -889,7 +900,6 @@ export default class FormulaDisplay {
     static foldCap(kind, left, right, _expr) {
         const leftIsNum = FormulaDisplay.isPureNumber(left);
         const rightIsNum = FormulaDisplay.isPureNumber(right);
-        const emptyModel = () => ({const: 0, dice: {}, symDice: [], vars: {}, atoms: []});
 
         if (leftIsNum && rightIsNum) {
             const model = emptyModel();

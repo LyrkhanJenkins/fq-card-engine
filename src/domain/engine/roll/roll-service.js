@@ -22,6 +22,19 @@ export default class RollService {
     }
 
     /**
+     * Évalue une valeur de champ de carte en restant synchrone, une valeur vide
+     * (chaîne vide, `null`, `undefined`, `0`) valant 0 sans jet — la lecture
+     * commune des champs optionnels de portée, de taille de zone et d'angle.
+     *
+     * @param {string|number} [value] - La valeur brute du champ.
+     *
+     * @returns {number} Le total du jet, ou 0 si le champ est vide.
+     */
+    static resolveOrZero(value) {
+        return value ? RollService.rollResultSync(value) : 0;
+    }
+
+    /**
      * Évalue une formule pouvant contenir des DÉS, en restant synchrone.
      *
      * Foundry refuse d'évaluer un dé en synchrone (un dé peut être fourni par une

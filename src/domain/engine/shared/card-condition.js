@@ -1,6 +1,7 @@
 import Constants from "../../constants.js";
 import Geometry from "./geometry.js";
 import TargetingPredicates from "./targeting-predicates.js";
+import TradingCards from "../../trading/trading-cards.js";
 
 /**
  * Conditions personnalisées des cartes : le moteur d'évaluation pur des
@@ -654,7 +655,7 @@ export default class CardCondition {
      * @returns {boolean} True si la pioche peut fournir `n` cartes.
      */
     static deckHasCards(card, n = 1) {
-        return ((card?.source?.cards?.size ?? 0) - (card?.source?.drawnCards?.length ?? 0)) >= n;
+        return TradingCards.countAvailableCards(card?.source) >= n;
     }
 
     /**

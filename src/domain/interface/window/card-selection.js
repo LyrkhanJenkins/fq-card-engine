@@ -4,6 +4,7 @@ import TradingCards, {DECK_TYPE, PILE_TYPE, SPELLBOOK_TYPE} from "../../trading/
 import DisplayCard from "../card-svg/display-card.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
 import {createInfo, createWarning} from "../../../core/utils/chat.utils.js";
+import {sampleItems} from "../../../core/utils/random.utils.js";
 
 /** Les destinations acceptées par {@link CardSelection.chooseCards}. */
 const SELECTION_DESTINATIONS = ["discard", "deck"];
@@ -151,13 +152,7 @@ export default class CardSelection {
      * @returns {*[]} Les éléments tirés.
      */
     static sampleDistinct(items, count) {
-        const pool = [...items];
-        const n = count > 0 ? Math.min(count, pool.length) : pool.length;
-        for (let i = 0; i < n; i++) {
-            const j = i + Math.floor(Math.random() * (pool.length - i));
-            [pool[i], pool[j]] = [pool[j], pool[i]];
-        }
-        return pool.slice(0, n);
+        return sampleItems(items, count > 0 ? count : items.length);
     }
 
     /**

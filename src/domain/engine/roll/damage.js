@@ -114,7 +114,7 @@ export default class Damage {
             {color: CRITICAL_HEAL_COLOR, title: "Critique des soins"}, dsnAnimations);
         TargetingPredicates.resolveTargets(cardContent, actor).forEach(target => {
             healArray.push({
-                key: `Soins totaux sur "${target.document?.name ?? target.name}"`,
+                key: `Soins totaux sur "${Constants.tokenName(target)}"`,
                 value: critical ? heal * 2 : heal,
                 type: "healFQ",
                 critical,
@@ -170,14 +170,14 @@ export default class Damage {
                 if (targetActor?.system?.fq?.attributes.evasion + cardContent.bonusEva > 0) { // or no evasion from the target
                     evaToReach = 21 - targetActor?.system?.fq?.attributes.evasion - cardContent.bonusEva;
                     evasionScore = await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
-                        color: EVASION_COLOR, title: `Esquive de "${target.document?.name ?? target.name}"`,
+                        color: EVASION_COLOR, title: `Esquive de "${Constants.tokenName(target)}"`,
                         success: evaToReach,
                         appearance: EVASION_DICE_APPEARANCE // dé bleu pour l'esquive
                     }, dsnAnimations);
                 }
                 const evaded = evasionScore >= evaToReach;
                 damagesArray.push({
-                    key: `Dégâts totaux sur "${target.document?.name ?? target.name}"`,
+                    key: `Dégâts totaux sur "${Constants.tokenName(target)}"`,
                     // Le critique passe outre l'esquive (sans doubler) ; sinon esquive = 0.
                     value: evaded ? (critical ? damages : 0) : (critical ? damages * 2 : damages),
                     critical,

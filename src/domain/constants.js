@@ -197,6 +197,18 @@ export default class Constants {
     }
 
     /**
+     * Le nom affichable d'un token, qu'il soit donné sous forme de placeable
+     * (dont le nom vit sur le document) ou de document.
+     *
+     * @param {object} [token] - Le token (placeable ou document).
+     *
+     * @returns {string|undefined} Le nom du token, ou undefined.
+     */
+    static tokenName(token) {
+        return token?.document?.name ?? token?.name;
+    }
+
+    /**
      * L'id du personnage de l'utilisateur courant.
      *
      * @returns {string|undefined} L'id de l'acteur, ou undefined si aucun personnage.
