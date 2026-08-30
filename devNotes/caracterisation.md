@@ -324,7 +324,7 @@ Le seul a pouvoir augmenter son zèle max
 - **Tous les buffs/malus dure 1 tour**
 - **Moteur couteaux de lancer** : Ceinture de couteaux (−2 action) fabrique une carte *Couteau de lancer* **gratuite** (jusqu'à ×24), boostée en permanence et cumulativement par Affûtage des couteaux (`@bonus.knife`).
 - **Soutien (Charisme)** : Buff des dégâts des armes des autres (+ fort pour les faibles jets) + Réduit l'esquive a 0? **
-
+- Le seul a avoir des sort faisant des dégâts d'armes touchants plusieurs cibles (A vérifier illusionniste, guerrier runique et gardien?)
 **Boucle de jeu** : Réunir les bonnes cartes pour faire de gros dégâts corps à corps OU distance OU build les couteaux de lancer OU ...
 
 **Faiblesses** :

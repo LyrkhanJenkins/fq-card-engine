@@ -2411,7 +2411,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 6,
+          "level": 11,
           "isBase": false,
           "class": "trapper",
           "choices": [
@@ -2542,20 +2542,20 @@
       "sort": 16,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "lastModifiedBy": "GkukoBpykcafjbri",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430831,
+        "modifiedTime": 1788096374766,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1",
+      "cards": []
     }
   ],
   "width": null,
