@@ -63,27 +63,7 @@ Hooks.on("dnd5e.preUseActivity", (activity, _usageConfig, _dialogConfig, _messag
         return true;
     }
 
-    // Attaque d'opportunité. Trois choses se jouent ici, et ce hook est le seul
-    // endroit où elles peuvent se jouer : il est SYNCHRONE et précède tous les jets.
-    // D'où sa position AVANT toute autre garde — chacune bloquerait l'attaque.
-    //
-    // 1. Mémoriser la cible SUR l'activité. Elle ne peut pas passer par un marqueur
-    //    global : avec `BypassWeaponAttackRoll`, `preRollAttackV2` lance
-    //    `activity.rollDamage()` sans l'attendre, donc `dnd5e.rollDamageV2` se
-    //    produit après que `activity.use()` a rendu la main et que le marqueur a
-    //    été levé. La cible serait perdue et aucun dégât ne serait appliqué.
-    // 2. Ne RIEN faire payer. Une attaque d'opportunité est gratuite. Les points
-    //    d'action sont une ressource par TOUR (remise au max par
-    //    `CombatTurn.resetAction`) : hors de son tour, un réactant les a déjà
-    //    dépensés, et `checkResources` refuserait systématiquement l'attaque avec
-    //    « pas assez de points d'action ». La consommation est symétriquement
-    //    sautée dans `dnd5e.rollDamageV2`.
-    // 3. Court-circuiter la validation de portée : `moveToken` étant post-déplacement,
-    //    le fuyard est déjà sorti et l'attaque se bloquerait elle-même.
-    //
-    // Le contournement reste limité au réactant en cours (`OpportunityAttack.pending`) :
-    // l'usage concurrent d'une carte n'en bénéficie pas.
-    if (OpportunityAttack.rememberTargetFor(activity)) {
+    if (OpportunityAttack.rememberContextFor(activity)) {
         return true;
     }
 
@@ -107,10 +87,6 @@ Hooks.on("dnd5e.preUseActivity", (activity, _usageConfig, _dialogConfig, _messag
 });
 
 Hooks.on("dnd5e.preRollAttackV2", (config, _dialog, _message) => {
-    // Réglage "BypassWeaponAttackRoll" (monde, défaut false) : le jet d'attaque des
-    // armes est court-circuité et remplacé par un jet de dégâts normal lancé
-    // directement (sans modale de configuration ni critique), comme si l'attaque
-    // réussissait toujours (pas de classe d'armure).
     if (!game.settings.get(FqCardEngineModule.moduleName, "BypassWeaponAttackRoll")) {
         return true;
     }
@@ -123,8 +99,6 @@ Hooks.on("dnd5e.preRollAttackV2", (config, _dialog, _message) => {
 });
 
 Hooks.on("dnd5e.preRollDamageV2", (config, dialog, _message) => {
-    // Réglage "BypassWeaponAttackRoll" : supprime aussi la modale de configuration
-    // des dégâts des armes.
     if (!game.settings.get(FqCardEngineModule.moduleName, "BypassWeaponAttackRoll")) {
         return true;
     }
@@ -136,39 +110,27 @@ Hooks.on("dnd5e.preRollDamageV2", (config, dialog, _message) => {
 });
 
 Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
-    // Attaque d'opportunité : la cible est celle désignée par la détection, pas
-    // celle sélectionnée par l'utilisateur. Elle a été mémorisée SUR l'activité par
-    // `preUseActivity` ; on la consomme ici, sans dépendre du moment où ce handler
-    // s'exécute — il peut être très postérieur à `activity.use()` (jet de dégâts
-    // détaché par `preRollAttackV2`, handlers de hook non attendus par Foundry).
-    const opportunityTarget = OpportunityAttack.consumeTargetFor(subject);
+    const opportunity = OpportunityAttack.consumeContextFor(subject);
+    const opportunityTarget = opportunity?.target ?? null;
     const item = subject.item;
     const {minReach, maxReach} = activityReachInCases(subject.range);
-    const token = Constants.actorToken(subject.actor.id);
+
+    const token = opportunity?.source ?? Constants.actorToken(subject.actor.id);
     if (!subject.item) {
         return;
     }
-    // Une attaque d'opportunité est gratuite : symétrique du saut de
-    // `checkResources` dans `preUseActivity`. Sans ce garde-fou, elle serait
-    // vérifiée nulle part et payée quand même.
+
     if (!opportunityTarget && ["heal", "damage", "attack"].includes(subject.type)) {
         ResourceHandler.consumeResources(item.system?.fq, subject.actor);
     }
     let resultArray = [];
     let cardContent = {heal: 0, damage: 0, minReach, maxReach, bonusCrit: 0, bonusEva: 0};
     if (opportunityTarget) {
-        // Impose la cible à toute l'aval : critique/esquive, application des PV et
-        // log de combat passent tous par `TargetingPredicates.resolveTargets`.
         cardContent.forcedTargets = [opportunityTarget];
     }
-    // Collecteur local des animations Dice So Nice de ce jet, passé aux méthodes de jet
-    // pour un affichage simultané des dés (voir Damage.rollWithSuccessValueResultAsync).
     const dsnAnimations = [];
     for (let roll of rolls) {
         if (item.actor) {
-            // Type d'effet (issu du dé) pour les FX, capté au moment du jet mais joué
-            // seulement après l'attente des dés (voir plus bas) ; playFx distingue les
-            // types traités (heal/damage/attack) des autres, qui ne déclenchent pas de FX.
             let fxType;
             let playFx = false;
             if (subject.type === "heal") {
@@ -198,10 +160,6 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
                 fxType = roll.options.type;
                 playFx = true;
             }
-
-            // Attente unique de toutes les animations Dice So Nice du jet (dégâts/soin
-            // + critique + esquives partis simultanément) avant de jouer les FX puis
-            // d'infliger les PV — même ordre que lors du jeu d'une carte.
             await Promise.all(dsnAnimations);
 
             if (token && playFx) {

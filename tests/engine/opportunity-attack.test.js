@@ -45,14 +45,20 @@ function makeToken({id, cx = 0, cy = 0, disposition = HOSTILE, items = [melee(5)
 const at = (cx, cy) => ({x: cx * SIZE, y: cy * SIZE});
 const movementOf = (origin, ...waypoints) => ({origin, passed: {waypoints}});
 
-/** Monte le monde : MJ désigné actif, combat démarré, tokens sur la scène. */
-function mockWorld(tokens, {userId = GM_ID, activeGM = GM_ID, combat = {id: "c1", round: 1}, enabled = true} = {}) {
+/**
+ * Monte le monde : MJ désigné actif, combat démarré, tokens sur la scène.
+ *
+ * Par défaut, TOUS les tokens de la scène sont des combattants — le cas normal
+ * d'une rencontre. `combatantIds` permet d'en sortir un du tracker.
+ */
+function mockWorld(tokens, {userId = GM_ID, activeGM = GM_ID, combat = {id: "c1", round: 1}, enabled = true,
+    combatantIds = tokens.map(t => t.id)} = {}) {
     globalThis.FqCardEngineModule = {moduleName: MODULE};
     globalThis.game = {
         userId,
         users: {activeGM: activeGM ? {id: activeGM} : null},
         user: {targets: new Set()},
-        combat,
+        combat: combat ? {combatants: combatantIds.map(tokenId => ({tokenId})), ...combat} : combat,
         settings: {get: (scope, key) => (scope === MODULE && key === "OpportunityAttack" ? enabled : undefined)},
         canvas: {scene: {dimensions: {size: SIZE}, grid: {distance: 5, units: "ft"}, tokens}},
     };
@@ -158,6 +164,14 @@ describe("OpportunityAttack.findProvokers", () => {
         expect(OpportunityAttack.findProvokers(flee(), mover, game.combat)).toEqual([]);
     });
 
+    test("un ennemi hors du combat ne réagit pas", () => {
+        const observer = makeToken({id: "obs", cx: 0, disposition: HOSTILE});
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY});
+        mockWorld([observer, mover], {combatantIds: ["mover"]});
+
+        expect(OpportunityAttack.findProvokers(flee(), mover, game.combat)).toEqual([]);
+    });
+
     test("le décor (token sans acteur) ne provoque pas", () => {
         const decor = makeToken({id: "decor", cx: 0, disposition: HOSTILE});
         decor.actorId = null;
@@ -215,7 +229,7 @@ describe("OpportunityAttack.resolve", () => {
 
         await OpportunityAttack.resolve(mover, [{observer, reach: 1}], game.combat);
 
-        expect(seen).toEqual({actorId: "actor-obs", targetTokenId: "mover"});
+        expect(seen).toEqual({actorId: "actor-obs", sourceTokenId: "obs", targetTokenId: "mover"});
         expect(OpportunityAttack.pending).toBeNull();
     });
 
@@ -301,6 +315,12 @@ describe("OpportunityAttack.onMoveToken", () => {
         expect(trigger).not.toHaveBeenCalled();
     });
 
+    test("un mobile hors du combat ne provoque rien", async () => {
+        const {mover, movement} = scene({combatantIds: ["obs"]});
+        await OpportunityAttack.onMoveToken(mover, movement);
+        expect(trigger).not.toHaveBeenCalled();
+    });
+
     test("un token de décor qui se déplace ne provoque rien", async () => {
         const {mover, movement} = scene();
         mover.actorId = null;
@@ -317,6 +337,41 @@ describe("Règle de camp mutualisée", () => {
         expect(TargetingPredicates.areEnemies({disposition: FRIENDLY}, {disposition: HOSTILE})).toBe(true);
         expect(TargetingPredicates.areEnemies({disposition: HOSTILE}, {disposition: HOSTILE})).toBe(false);
         expect(TargetingPredicates.areAllies({disposition: FRIENDLY}, {disposition: FRIENDLY})).toBe(true);
+    });
+});
+
+describe("OpportunityAttack.contextFor", () => {
+    afterEach(() => {
+        OpportunityAttack.pending = null;
+        delete globalThis.game;
+        delete globalThis.FqCardEngineModule;
+    });
+
+    test("rend le token réactant qui a frappé, pas le premier token de son acteur", () => {
+        // Une horde : deux jetons, un seul acteur. Chercher par acteur rendrait
+        // toujours le premier — et les FX partiraient du mauvais squelette.
+        const premier = makeToken({id: "sque1", cx: 5, disposition: HOSTILE});
+        const frappeur = makeToken({id: "sque2", cx: 0, disposition: HOSTILE});
+        frappeur.actorId = premier.actorId;
+        frappeur.actor = premier.actor;
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY});
+        mockWorld([premier, frappeur, mover]);
+        OpportunityAttack.pending = {
+            actorId: premier.actorId, sourceTokenId: "sque2", targetTokenId: "mover"};
+
+        const context = OpportunityAttack.contextFor({actor: {id: premier.actorId}});
+        expect(context.source).toBe(frappeur);
+        expect(context.target).toBe(mover);
+    });
+
+    test("rend une source nulle si le token réactant a disparu de la scène", () => {
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY});
+        mockWorld([mover]);
+        OpportunityAttack.pending = {
+            actorId: "actor-obs", sourceTokenId: "disparu", targetTokenId: "mover"};
+
+        expect(OpportunityAttack.contextFor({actor: {id: "actor-obs"}}))
+            .toEqual({source: null, target: mover});
     });
 });
 
@@ -378,7 +433,7 @@ describe("TargetingPredicates.resolveTargets — cibles imposées", () => {
     });
 });
 
-describe("OpportunityAttack — la cible voyage avec l'activité", () => {
+describe("OpportunityAttack — le contexte voyage avec l'activité", () => {
     afterEach(() => {
         OpportunityAttack.pending = null;
         delete globalThis.game;
@@ -390,40 +445,42 @@ describe("OpportunityAttack — la cible voyage avec l'activité", () => {
         const observer = makeToken({id: "obs", cx: 0, disposition: HOSTILE});
         const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY});
         mockWorld([observer, mover]);
-        OpportunityAttack.pending = {actorId: "actor-obs", targetTokenId: "mover"};
-        return {mover, activity: {actor: {id: "actor-obs"}}};
+        OpportunityAttack.pending = {
+            actorId: "actor-obs", sourceTokenId: "obs", targetTokenId: "mover"};
+        return {observer, mover, activity: {actor: {id: "actor-obs"}}};
     }
 
-    test("la cible reste consommable APRÈS la levée du marqueur", () => {
-        const {mover, activity} = pendingScene();
+    test("le contexte reste consommable APRÈS la levée du marqueur", () => {
+        const {observer, mover, activity} = pendingScene();
 
         // `preUseActivity`, synchrone, mémorise pendant que le marqueur est posé.
-        expect(OpportunityAttack.rememberTargetFor(activity)).toBe(mover);
+        expect(OpportunityAttack.rememberContextFor(activity)).toEqual({source: observer, target: mover});
 
         // `activity.use()` a rendu la main, `strike` a levé le marqueur — c'est ce
         // qui se produit quand `preRollAttackV2` détache le jet de dégâts.
         OpportunityAttack.pending = null;
         expect(OpportunityAttack.forcedTargetFor(activity)).toBeNull();
 
-        // Le jet de dégâts, arrivé plus tard, retrouve quand même sa cible.
-        expect(OpportunityAttack.consumeTargetFor(activity)).toBe(mover);
+        // Le jet de dégâts, arrivé plus tard, retrouve quand même sa cible et son
+        // token source — celui qui portera les FX.
+        expect(OpportunityAttack.consumeContextFor(activity)).toEqual({source: observer, target: mover});
     });
 
-    test("la cible n'est consommable qu'une fois", () => {
+    test("le contexte n'est consommable qu'une fois", () => {
         const {mover, activity} = pendingScene();
-        OpportunityAttack.rememberTargetFor(activity);
+        OpportunityAttack.rememberContextFor(activity);
 
-        expect(OpportunityAttack.consumeTargetFor(activity)).toBe(mover);
-        expect(OpportunityAttack.consumeTargetFor(activity)).toBeNull();
+        expect(OpportunityAttack.consumeContextFor(activity).target).toBe(mover);
+        expect(OpportunityAttack.consumeContextFor(activity)).toBeNull();
     });
 
     test("une activité hors attaque d'opportunité ne mémorise ni ne consomme rien", () => {
         pendingScene();
         const autre = {actor: {id: "actor-autre"}};
 
-        expect(OpportunityAttack.rememberTargetFor(autre)).toBeNull();
-        expect(OpportunityAttack.consumeTargetFor(autre)).toBeNull();
-        expect(OpportunityAttack.consumeTargetFor(undefined)).toBeNull();
+        expect(OpportunityAttack.rememberContextFor(autre)).toBeNull();
+        expect(OpportunityAttack.consumeContextFor(autre)).toBeNull();
+        expect(OpportunityAttack.consumeContextFor(undefined)).toBeNull();
     });
 
     test("deux réactants successifs gardent chacun sa cible", () => {
@@ -435,14 +492,14 @@ describe("OpportunityAttack — la cible voyage avec l'activité", () => {
         const actA = {actor: {id: "actor-a"}};
         const actB = {actor: {id: "actor-b"}};
 
-        OpportunityAttack.pending = {actorId: "actor-a", targetTokenId: "mover"};
-        OpportunityAttack.rememberTargetFor(actA);
-        OpportunityAttack.pending = {actorId: "actor-b", targetTokenId: "mover"};
-        OpportunityAttack.rememberTargetFor(actB);
+        OpportunityAttack.pending = {actorId: "actor-a", sourceTokenId: "a", targetTokenId: "mover"};
+        OpportunityAttack.rememberContextFor(actA);
+        OpportunityAttack.pending = {actorId: "actor-b", sourceTokenId: "b", targetTokenId: "mover"};
+        OpportunityAttack.rememberContextFor(actB);
         OpportunityAttack.pending = null;
 
-        expect(OpportunityAttack.consumeTargetFor(actA)).toBe(mover);
-        expect(OpportunityAttack.consumeTargetFor(actB)).toBe(mover);
+        expect(OpportunityAttack.consumeContextFor(actA)).toEqual({source: a, target: mover});
+        expect(OpportunityAttack.consumeContextFor(actB)).toEqual({source: b, target: mover});
     });
 });
 

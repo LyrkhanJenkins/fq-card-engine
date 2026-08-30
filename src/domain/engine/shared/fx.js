@@ -1,4 +1,4 @@
-import Constants from "../../constants.js";
+import TargetingPredicates from "./targeting-predicates.js";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
 
 /**
@@ -36,6 +36,12 @@ export default class Fx {
      * Point d'entrée de la restitution audiovisuelle d'un effet de carte : joue
      * les effets Sequencer (si le module est actif) et le son associé.
      *
+     * Les cibles visuelles sont résolues par `TargetingPredicates.resolveTargets`,
+     * la même résolution que celle des dégâts et du log : les FX portent donc
+     * toujours sur les tokens réellement touchés, y compris quand l'appelant les
+     * impose (`forcedTargets` de l'attaque d'opportunité) au lieu de les lire dans
+     * la sélection de l'utilisateur.
+     *
      * @param {object}   cardContent - Le contenu (choix) de la carte jouée.
      * @param {object[]} resultArray - Les résultats de l'effet (dégâts, critiques, esquives…).
      * @param {object}   myToken     - Le token source (le lanceur).
@@ -44,7 +50,7 @@ export default class Fx {
      * @returns {Promise<void>}
      */
     static async handleSpecialEffect(cardContent, resultArray, myToken, typeEffect) {
-        const targets = Constants.myTargets(cardContent.targetType);
+        const targets = TargetingPredicates.resolveTargets(cardContent, myToken?.actor);
         const soundPath = await Fx.getSoundEffectPath(cardContent.damage, cardContent.heal, cardContent.sound, typeEffect);
 
         if (game.modules.get("sequencer")?.active) {

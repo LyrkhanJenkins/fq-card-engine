@@ -150,6 +150,27 @@ describe("Fx", () => {
             expect(instances.some(seq => seq.play.mock.calls.length > 0)).toBe(true);
         });
 
+        it("forcedTargets -> les FX portent sur la cible imposée, pas sur la sélection", async () => {
+            // Le cas de l'attaque d'opportunité : la cible vient du moteur, alors que
+            // l'utilisateur a une tout autre cible sélectionnée. Les FX doivent suivre
+            // la première, comme les dégâts et le log.
+            game.modules.set("sequencer", {active: true});
+            globalThis.Sequence = vi.fn().mockImplementation(function () {
+                return makeChainableSequence();
+            });
+            const imposee = {id: "cible-imposee"};
+            const selectionnee = [...game.user.targets][0];
+
+            const cardContent = {damage: "1d6", maxReach: 1, targetType: "Default", forcedTargets: [imposee]};
+
+            await Fx.handleSpecialEffect(cardContent, [], {actorId: "userCharacterId"}, "fire");
+
+            const atLocationArgs = globalThis.Sequence.mock.results
+                .flatMap(r => r.value.atLocation.mock.calls.map(c => c[0]));
+            expect(atLocationArgs).toContain(imposee);
+            expect(atLocationArgs).not.toContain(selectionnee);
+        });
+
         it("sans portée (maxReach falsy) -> construit la séquence sur le lanceur (branche soi)", async () => {
             game.modules.set("sequencer", {active: true});
             globalThis.Sequence = vi.fn().mockImplementation(function () {

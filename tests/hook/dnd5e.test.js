@@ -4,6 +4,7 @@ import ResourceHandler from "../../src/domain/engine/shared/resource-handler.js"
 import Constants from "../../src/domain/constants.js";
 import Damage from "../../src/domain/engine/roll/damage.js";
 import Fx from "../../src/domain/engine/shared/fx.js";
+import OpportunityAttack from "../../src/domain/engine/reaction/opportunity-attack.js";
 
 vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     socket: {
@@ -249,6 +250,37 @@ describe("integration/dnd5e", () => {
             await hook([roll], {subject});
 
             expect(ResourceHandler.consumeResources).toHaveBeenCalledWith(fq, actor);
+        });
+
+        it("attaque d'opportunité : FX joués depuis le token réactant, vers la cible imposée", async () => {
+            // Deux jetons pour un même acteur (une horde) : la recherche par acteur
+            // rendrait `token-1`, alors que c'est `token-2` qui a réagi.
+            const reactant = {actorId: "actor-1", id: "token-2"};
+            const fuyard = {actorId: "actor-2", id: "token-fuyard"};
+            game.canvas = {scene: {tokens: [{actorId: "actor-1", id: "token-1"}, reactant, fuyard]}};
+
+            const hook = getHook("dnd5e.rollDamageV2");
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
+            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
+
+            const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
+            const item = {actor, system: {fq: {action: -1}}};
+            const subject = {item, actor, type: "attack", range: {value: 0, reach: 5}};
+
+            // Ce que fait `strike` puis `preUseActivity`, dans cet ordre.
+            OpportunityAttack.pending = {
+                actorId: "actor-1", sourceTokenId: "token-2", targetTokenId: "token-fuyard"};
+            OpportunityAttack.rememberContextFor(subject);
+            OpportunityAttack.pending = null;
+
+            await hook([{formula: "2d6", total: 7, options: {type: "slashing"}}], {subject});
+
+            expect(Fx.handleSpecialEffect).toHaveBeenCalledWith(
+                expect.objectContaining({forcedTargets: [fuyard]}), expect.any(Array), reactant, "slashing");
+            // Une attaque d'opportunité est gratuite.
+            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
         });
 
         it("joue les FX seulement après la fin des animations de dés (Dice So Nice)", async () => {

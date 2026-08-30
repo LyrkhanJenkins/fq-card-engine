@@ -36,7 +36,8 @@ export const OPPORTUNITY_ATTACK_SETTING = "OpportunityAttack";
 export default class OpportunityAttack {
 
     /**
-     * Attaque en cours de résolution, ou `null` : `{actorId, targetTokenId}`.
+     * Attaque en cours de résolution, ou `null` :
+     * `{actorId, sourceTokenId, targetTokenId}`.
      *
      * Durée de vie VOLONTAIREMENT COURTE : ce marqueur ne sert qu'à `preUseActivity`,
      * qui est synchrone et se produit forcément dans la chaîne attendue de
@@ -44,12 +45,17 @@ export default class OpportunityAttack {
      * Portée par l'acteur réactant plutôt que par un simple booléen, afin qu'un
      * usage concurrent d'une carte ne bénéficie pas du contournement de portée.
      *
-     * @type {?{actorId: string, targetTokenId: string}}
+     * Le token réactant est mémorisé en plus de son acteur : plusieurs jetons
+     * peuvent partager le même acteur (une horde de squelettes), et la recherche
+     * par acteur rendrait toujours le premier de la scène — les FX partiraient
+     * alors du mauvais token.
+     *
+     * @type {?{actorId: string, sourceTokenId: string, targetTokenId: string}}
      */
     static pending = null;
 
     /**
-     * Cibles imposées, indexées par ACTIVITÉ dnd5e.
+     * Contextes d'attaque (`{source, target}`) imposés, indexés par ACTIVITÉ dnd5e.
      *
      * Le marqueur `pending` ne peut pas porter la cible jusqu'au jet de dégâts :
      * quand le réglage `BypassWeaponAttackRoll` est actif, `preRollAttackV2`
@@ -60,47 +66,48 @@ export default class OpportunityAttack {
      *
      * La cible voyage donc AVEC l'activité, mémorisée par `preUseActivity` (qui est
      * synchrone et précède tous les jets) et consommée par `rollDamageV2`. Plus
-     * aucune dépendance à un ordre d'exécution.
+     * aucune dépendance à un ordre d'exécution. Le token réactant voyage par le même
+     * chemin, pour la même raison.
      *
      * `WeakMap` : une activité oubliée n'empêche pas sa collecte, aucune fuite
      * possible même si un usage est annulé avant tout jet de dégâts.
      *
      * @type {WeakMap<object, object>}
      */
-    static #targetsByActivity = new WeakMap();
+    static #contextByActivity = new WeakMap();
 
     /**
-     * Mémorise la cible imposée de l'attaque d'opportunité en cours pour une
+     * Mémorise le contexte imposé de l'attaque d'opportunité en cours pour une
      * activité. À appeler depuis `preUseActivity`, tant que `pending` est encore posé.
      *
      * @param {object} activity - L'activité dnd5e en cours d'usage.
      *
-     * @returns {?object} La cible mémorisée, ou `null` si aucune attaque en cours pour cette activité.
+     * @returns {?{source: object, target: object}} Le contexte mémorisé, ou `null` si aucune attaque en cours pour cette activité.
      */
-    static rememberTargetFor(activity) {
-        const target = OpportunityAttack.forcedTargetFor(activity);
-        if (!target) {
+    static rememberContextFor(activity) {
+        const context = OpportunityAttack.contextFor(activity);
+        if (!context) {
             return null;
         }
-        OpportunityAttack.#targetsByActivity.set(activity, target);
-        return target;
+        OpportunityAttack.#contextByActivity.set(activity, context);
+        return context;
     }
 
     /**
-     * Consomme la cible imposée mémorisée pour une activité : la rend et l'oublie,
+     * Consomme le contexte imposé mémorisé pour une activité : le rend et l'oublie,
      * afin qu'un usage ultérieur de la même activité reprenne un ciblage normal.
      *
      * @param {object} activity - L'activité dnd5e dont on résout les dégâts.
      *
-     * @returns {?object} La cible imposée, ou `null` si l'activité n'en porte pas.
+     * @returns {?{source: object, target: object}} Le contexte imposé, ou `null` si l'activité n'en porte pas.
      */
-    static consumeTargetFor(activity) {
-        if (!activity || !OpportunityAttack.#targetsByActivity.has(activity)) {
+    static consumeContextFor(activity) {
+        if (!activity || !OpportunityAttack.#contextByActivity.has(activity)) {
             return null;
         }
-        const target = OpportunityAttack.#targetsByActivity.get(activity);
-        OpportunityAttack.#targetsByActivity.delete(activity);
-        return target;
+        const context = OpportunityAttack.#contextByActivity.get(activity);
+        OpportunityAttack.#contextByActivity.delete(activity);
+        return context;
     }
 
     /**
@@ -116,7 +123,24 @@ export default class OpportunityAttack {
     }
 
     /**
-     * Cible imposée du jet d'attaque d'opportunité en cours, ou `null`.
+     * Le token de la scène active portant cet identifiant, ou `null`.
+     *
+     * Rend le placeable quand il est monté sur le canvas, comme le fait
+     * `Constants.myTargets`, avec repli sur le document de scène.
+     *
+     * @param {?string} tokenId - L'identifiant du token cherché.
+     *
+     * @returns {?object} Le token, ou `null`.
+     */
+    static sceneToken(tokenId) {
+        const token = [...(game.canvas?.scene?.tokens ?? [])].find(t => t.id === tokenId);
+        return token?.object ?? token ?? null;
+    }
+
+    /**
+     * Contexte imposé du jet d'attaque d'opportunité en cours (`{source, target}`),
+     * ou `null` : `source` est le token réactant, `target` le fuyard désigné par la
+     * détection.
      *
      * À lire SYNCHRONEMENT en tête d'un handler de hook dnd5e : Foundry n'attend
      * pas les handlers asynchrones, donc `pending` peut être levé avant que le
@@ -124,20 +148,31 @@ export default class OpportunityAttack {
      * passer par la sélection de l'utilisateur — elle serait restaurée trop tôt,
      * et la résolution ne trouverait plus personne à blesser.
      *
-     * Rend le placeable quand il est monté sur le canvas, comme le fait
-     * `Constants.myTargets`, avec repli sur le document de scène.
+     * @param {object} activity - L'activité dnd5e en cours d'usage.
+     *
+     * @returns {?{source: object, target: object}} Le contexte, ou `null`.
+     */
+    static contextFor(activity) {
+        if (!OpportunityAttack.isPendingFor(activity)) {
+            return null;
+        }
+        const target = OpportunityAttack.sceneToken(OpportunityAttack.pending?.targetTokenId);
+        if (!target) {
+            return null;
+        }
+        return {source: OpportunityAttack.sceneToken(OpportunityAttack.pending?.sourceTokenId), target};
+    }
+
+    /**
+     * Cible imposée du jet d'attaque d'opportunité en cours, ou `null` — la seule
+     * part du contexte dont le ciblage a besoin.
      *
      * @param {object} activity - L'activité dnd5e en cours d'usage.
      *
      * @returns {?object} Le token cible, ou `null`.
      */
     static forcedTargetFor(activity) {
-        if (!OpportunityAttack.isPendingFor(activity)) {
-            return null;
-        }
-        const targetTokenId = OpportunityAttack.pending?.targetTokenId;
-        const token = [...(game.canvas?.scene?.tokens ?? [])].find(t => t.id === targetTokenId);
-        return token?.object ?? token ?? null;
+        return OpportunityAttack.contextFor(activity)?.target ?? null;
     }
 
     /**
@@ -159,9 +194,10 @@ export default class OpportunityAttack {
      * Tokens provoqués par un déplacement.
      *
      * Le préfiltre ne retient que des critères structurels et bon marché : ni le
-     * mobile lui-même, ni le décor (token sans acteur), ni un réactant ayant déjà
-     * consommé sa réaction ce round. Hostilité et portée sont ensuite appliquées
-     * par `ReachRules.provokers`, à qui elles sont injectées.
+     * mobile lui-même, ni le décor (token sans acteur), ni un token absent du
+     * combat, ni un réactant ayant déjà consommé sa réaction ce round. Hostilité
+     * et portée sont ensuite appliquées par `ReachRules.provokers`, à qui elles
+     * sont injectées.
      *
      * @param {object} movement - Le mouvement livré par le hook `moveToken`.
      * @param {object} mover    - Le TokenDocument qui se déplace.
@@ -173,6 +209,7 @@ export default class OpportunityAttack {
         const observers = [...(game.canvas?.scene?.tokens ?? [])].filter(token =>
             token.id !== mover?.id
             && token.actorId
+            && OpportunityAttack.isCombatant(token, combat)
             && ReactionBudget.isAvailable(token, combat));
         const profiles = ReachProfile.buildDistanceProfiles(movement, mover, observers);
         return ReachRules.provokers(
@@ -202,7 +239,8 @@ export default class OpportunityAttack {
      * @returns {Promise<void>}
      */
     static async strike(observer, mover) {
-        OpportunityAttack.pending = {actorId: observer.actorId, targetTokenId: mover.id};
+        OpportunityAttack.pending = {
+            actorId: observer.actorId, sourceTokenId: observer.id, targetTokenId: mover.id};
         try {
             await WeaponDamage.triggerFirstEquippedWeapon(observer.actor, "@wpnM");
         } finally {
@@ -230,6 +268,23 @@ export default class OpportunityAttack {
             }
             await OpportunityAttack.strike(observer, mover);
         }
+    }
+
+    /**
+     * Ce token participe-t-il au combat donné ?
+     *
+     * La scène porte bien plus de tokens que le combat n'a de combattants : PNJ
+     * décoratifs, monstres d'une autre rencontre, montures. Aucun d'eux n'a de
+     * réaction à dépenser — la réaction se compte par round, et un token hors du
+     * tracker n'a pas de round. Sans ce filtre, c'est toute la scène qui réagit.
+     *
+     * @param {object}  token    - Le TokenDocument à tester.
+     * @param {?object} [combat] - Le combat de référence.
+     *
+     * @returns {boolean} `true` si le token est un combattant du combat.
+     */
+    static isCombatant(token, combat) {
+        return Boolean(token?.id) && [...(combat?.combatants ?? [])].some(c => c.tokenId === token.id);
     }
 
     /**
@@ -279,6 +334,12 @@ export default class OpportunityAttack {
         }
         // Le décor ne provoque pas.
         if (!mover?.actorId) {
+            return;
+        }
+        // Un mobile hors du tracker non plus : l'attaque d'opportunité se joue
+        // entre combattants. Sans cette garde, déplacer un PNJ de décor au milieu
+        // d'une mêlée déclencherait toute la table.
+        if (!OpportunityAttack.isCombatant(mover, combat)) {
             return;
         }
         const provoked = OpportunityAttack.findProvokers(movement, mover, combat);
