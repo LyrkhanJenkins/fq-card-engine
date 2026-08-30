@@ -2,7 +2,6 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-- Bug d'affichage de soin (carte de base) du mage blanc -> A voir après fix formules
 - No spellbook après montée jusqu'au niveau 4
 - Frappe arcanique cassé?
 - Bug avec le squelette géant
@@ -15,7 +14,6 @@
   - Trop de pick pour le runic warrior? Pioche à 1 pour commencer? (Ou assumer et réduire le cout en action des sorts)
     - Bug de pioche (Runic-Warrior n'a pas assez de carte à piocher dans son deck)
   - La rune de célérité est ptetre trop forte
-  - Squelette trop faible?
 
 ### Versions prévues
 #### 3.0.0

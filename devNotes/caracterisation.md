@@ -67,12 +67,15 @@ Distribution : pool **primaire** (classe principale) = 3 choix aux niv. 2‑4 pu
 Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et Guerrier Runique ; **esquive** absente du pool primaire de l'Élémentaliste et du Trapper.
 
 ---
-# TODO Générique
+**Questionnement et TODO Générique :** 
 - Supprimer les cartes neutre pour le moment et faire des mécaniques différentes pour récupérer action mana ou pioche?
 OU - Assumer jusqu'au bout des cartes neutres
+  - Neutre? Dash -> défaussez 2 cartes, 10 actions -> double le déplacement
 - TODO Virus à partir de poison?
 - TODO Poison (dégâts et duplication)
 - TODO Malédiction sans dégâts
+- Plusieurs attaques d'opportunités?
+- L'esquive fait demi-dégâts?
 
 # Élémentaliste
 
@@ -85,6 +88,10 @@ OU - Assumer jusqu'au bout des cartes neutres
 **Rôle** : DPS magique « glass cannon », mono-cible burst avec pivot AoE (Météore, Onde glacée, Choc de feu), contrôle/debuff en sous-produit.
 
 **Mécaniques signature** :
+- Feu : plus de dégâts sur la durée, plus de cumul avec xvalue : Dégâts de durée sur 5 6 tours
+- Givre : Réduire l'esquive, Augmenter fortement l'esquive : Dégâts en 2 tours, 3 tours
+- Terre : Réduire le déplacement, Bloquer, Réduire la portée : Gros dégâts monocible
+- Air : Réduire le critique, Augmenter fortement le critique : Dégâts multicibles
 - **Les 4 effets élémentaires** : Brûlure (DoT), Givre (−PA max de la cible), Air (−déplacement, jusqu'à immobilisation), Terre (−esquive / −critique). Posés en proc (`1d2`, `1d3`…) par les cartes de niveau 1 et par la carte de base *Magie Des Éléments* (4 choix, passive, coût = 1 défausse).
 - **Payoff à étages** : 9 cartes sur 23 exigent des effets actifs via `targetsHaveEffect` — 1 effet (Givrefeu, Météore, Brouillard…), 2 effets différents (Assassin du néant), 4 effets (Missiles Magiques +, le finisher).
 - **X à risque/récompense** : plus X monte, plus les dégâts montent mais plus la chance d'appliquer l'effet baisse (`1d(4−X)`).
@@ -95,6 +102,10 @@ OU - Assumer jusqu'au bout des cartes neutres
 
 **Faiblesse**:
 - Le moins de point de vie (d4)
+
+**Questionnement et TODO :**
+- Cartes qui génére des boules de feu, de givre ...etc au bout de tant de tour?.
+- Changement de boule de feu en trait de feu pour coller a dnd5e, la boule de feu fait de gros dégâts de zone
 ---
 
 # Gardien
@@ -119,6 +130,15 @@ OU - Assumer jusqu'au bout des cartes neutres
 
 **Faiblesse**:
 - Le moins de point de mana
+
+**Questionnement et TODO :**
+- Ange Gardien : Générer un bouclier qui regagne des points de vie chaque tour (Tisse-mort de slay the spire?)
+  Sort pour l'améliorer, ou pour taunt ou pour toucher plusieurs cibles
+  - Berzerk : Sort qui enlève des points de vie + Sort qui font plus de dégâts si moins de vie ou qui fait piocher en
+    enlevant des points de vie
+  - Rage : Sort pour monter le zèle, sort qui fait plus de dégâts plus on a de zèle pas dépenser,
+    sort qui fait gagner du zèle max: Remplacer par exemple la lame chargée par ça
+  - Transfert de pv vers des alliés
 ---
 
 # Mage Blanc
@@ -142,6 +162,18 @@ OU - Assumer jusqu'au bout des cartes neutres
 **Boucle de jeu** : maudire tôt → laisser tourner les DoT en soignant/réagissant → détoner ; alimenter le tout par conversion de ressources.
 
 **Faiblesse**:
+
+**Questionnement et TODO :**
+- Soins: De plus gros soins avec le zèle
+- Mana : De plus gros bouclier avec du mana ou plus de malédiction (ou dégâts?)
+- Malédiction: Stack plein de malediction qui n'ont plus de durée, et les releases plus il ya de stack plus ça fait mal
+- Des cartes qui ont beaucoup de charges couplé avec des cartes a petit coût (Refonte malédiction?)
+- Suppression des bouclier temporaire -> Gardien, plutôt des soins?
+- Rituel lumineux : Chercher dans votre deck une carte de soins ou de bouclier et mettez la dans votre main (5 points
+d’actions ou 1 point de zèle, 1 fois par tour)
+- Rituel sombre : Chercher dans votre cimetière une carte de soins ou de bouclier et mettez la dans votre main (5 points
+d’actions ou 1 point de zèle, 1 fois par tour)
+
 ---
 
 # Trapper
@@ -167,6 +199,9 @@ OU - Assumer jusqu'au bout des cartes neutres
 **Faiblesse**:
 - Pas d'esquive
 - Pas d'attaque corps à corps
+
+**Questionnement et TODO :**
+- Bêtes : sorts qui permettent de générer des bêtes plus puissantes, transferez des caractéristiques X 2 ou 3 sur une bête?
 ---
 
 # Moine
@@ -192,6 +227,12 @@ Le seul a pouvoir augmenter son zèle max
 
 **Faiblesses** :
 - Aucun Critique
+
+**Questionnement et TODO :**
+- Permettre de piochez plus de cartes, et faire plus de dégâts avec le nombre de carte dans la main, utilisez des xvalue préfini
+- Combo avec plein de zèle, utilisez le zèle, chargez vite le zèle
+- Deuxième tank : augmente l'esquive , combo d'esquive ou de réactif, ne peut plus gagner de zèle si en mode esquive?
+
 ---
 
 # Sorcière
@@ -216,6 +257,13 @@ Le seul a pouvoir augmenter son zèle max
 **Faiblesse**:
 - Vite à cours de mana?
 - Peu de point de vie
+
+**Questionnement et TODO :**
+- Squelette trop faible?
+- Armée des morts: plus on a de squelette, plus on peut faire des choses
+  - Roi Squelette : Construire un super squelette: Essayer de merger le plus de squelette pour en faire un puissant, permetre de garder
+    le score de sacrifice après
+  - Nécromancie: Aller chercher des cartes spécifiques dans la défausse, jouer des cartes depuis la défausse
 ---
 
 # Illusionniste
@@ -247,6 +295,16 @@ Le seul a pouvoir augmenter son zèle max
 
 **Faiblesse**:
 - Moins de dégâts?
+
+**Questionnement et TODO :**
+- Maitre du temps : Change les dés, permet de revenir à son point d'origine ou dans le temps
+- Aura ou Buff qui affecte tous les alliées ou tous les ennemis (utile avec la portée)
+- Si vous faites un critique, vous pouvez augmenter votre bonus de portée de 1. ?
+- Si vous faites une esquive, vous pouvez augmenter votre bonus de portée de 1. ?
+- Sort d’assistances : (2 de portée) (Coût : 1 point de zèle ou 1 carte défaussée)
+  o Peut agripper quelqu’un pour le ramener sur une case adjacente, lui rend 1d4 points de vie.
+  o Peut pousser quelqu’un de X cases dans un sens (X étant le bonus de portée), lui rend 1d4 points de vie.
+  o Peut se téléporter vers une case adjacente d’un allié (2 de portée), lui rend 1d4 point de vie.
 ---
 
 # Maître d'Armes
@@ -272,6 +330,10 @@ Le seul a pouvoir augmenter son zèle max
 **Faiblesses** :
 - Pas de heal personnel
 - Pas d'amélioration personnel d'esquive par les cartes
+
+**Questionnement et TODO :**
+- Combos: si réussi certaines actions -> redonnes tous les points d'actions pour jouer d'autre carte ou réduit le coup
+  de carte à 0
 ---
 
 # Guerrier Runique
@@ -301,4 +363,6 @@ montée en puissance par deck-building en cours de combat.
 - Pas de sort multi-cible (très peu d'exception)
 - Pas de réactif
 - Aucune pioche hormis des pioche en défaussant sur 3 runes jaunes
+
+**Questionnement et TODO :**
 ---
