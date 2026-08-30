@@ -347,7 +347,6 @@ listesCards["Illusionist Lvl2"] = listesCards["Illusionist Lvl1"].concat([
     "FQCARDTITLE.EnchantedRapier",
     "FQCARDTITLE.MirrorImages",
     "FQCARDTITLE.SungInspiration",
-    "FQCARDTITLE.SideAttack",
     "FQCARDTITLE.DrawII"
 ]);
 
@@ -364,7 +363,6 @@ listesCards["Illusionist Lvl4"] = listesCards["Illusionist Lvl3"].concat([
     "FQCARDTITLE.MagicReach",
     "FQCARDTITLE.MagicReach",
     "FQCARDTITLE.ApothecaryI",
-    "FQCARDTITLE.DiagonalAttack",
     "FQCARDTITLE.BlackPlague",
     "FQCARDTITLE.CommunicatingVessels",
     "FQCARDTITLE.FeveredDance",
@@ -377,7 +375,6 @@ listesCards["Illusionist Lvl5"] = listesCards["Illusionist Lvl4"].concat([
     "FQCARDTITLE.ShurikenVolley",
     "FQCARDTITLE.ApothecaryII",
     "FQCARDTITLE.BackflipStrike",
-    "FQCARDTITLE.CircleAttack",
     "FQCARDTITLE.IllusoryStrike",
     "FQCARDTITLE.Backstab"
 ]);
@@ -471,6 +468,7 @@ listesCards["Fencing-Master Lvl2"] = listesCards["Fencing-Master Lvl1"].concat([
     "FQCARDTITLE.MasterStrike",
     "FQCARDTITLE.SharpeningOil",
     "FQCARDTITLE.BalancedGrip",
+    "FQCARDTITLE.SideAttack",
     "FQCARDTITLE.TurnBoosterV"
 ]);
 
@@ -488,6 +486,7 @@ listesCards["Fencing-Master Lvl4"] = listesCards["Fencing-Master Lvl3"].concat([
     "FQCARDTITLE.CrushingBlow",
     "FQCARDTITLE.SharpeningOil",
     "FQCARDTITLE.TurnBoosterV",
+    "FQCARDTITLE.DiagonalAttack",
     "FQCARDTITLE.KnifeVolley"
 ]);
 
@@ -497,6 +496,7 @@ listesCards["Fencing-Master Lvl5"] = listesCards["Fencing-Master Lvl4"].concat([
     "FQCARDTITLE.HeavyShot",
     "FQCARDTITLE.CrushingBlow",
     "FQCARDTITLE.KnifeSharpening",
+    "FQCARDTITLE.CircleAttack",
     "FQCARDTITLE.PoisonCoating"
 ]);
 

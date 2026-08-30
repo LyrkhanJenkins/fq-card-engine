@@ -15,8 +15,18 @@
     - Bug de pioche (Runic-Warrior n'a pas assez de carte à piocher dans son deck)
   - La rune de célérité est ptetre trop forte
 
+- « Un point de zèle au début de chaque tour » n'a pas de déclencheur de tour côté données — seul le DOT est appelé au tour,
+et il ne touche que les PV ; un flags.dae.macroRepeat n'est pas exprimable depuis une carte (le schéma d'effet n'a pas de champ flags).
+Je l'ai donc rendu comme carte passive gratuite, rejouable une fois par round : le joueur clique une fois par tour. Si tu veux le vrai automatisme, 
+- il faudra une entrée dans le registre StatusEffects — donc du moteur.
+  Le 1d6 de Magie Des Arcanes / Magie Blanche est tiré via Math.ceil(Math.random()*6) dans executeEval et annoncé dans le chat,
+- pas via un Roll Foundry : ce Foundry refuse d'évaluer un dé en synchrone (cf. RollService.rollDiceSync), 
+- et applyEffectsFormulas — le seul endroit qui roule proprement — ne sait poser que des effets actifs, 
+- jamais du zèle ni une carte générée. Conséquence : pas d'animation Dice So Nice sur ce dé.
+
 ### Versions prévues
 #### 3.0.0
+- Perdre des points de vie quand on repioche.
 - A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Relire et faire un point sur la caracterisation avant tout

@@ -67,6 +67,9 @@ Distribution : pool **primaire** (classe principale) = 3 choix aux niv. 2‑4 pu
 Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et Guerrier Runique ; **esquive** absente du pool primaire de l'Élémentaliste et du Trapper.
 
 ---
+### Règles générales sur les cartes
+- Les dégâts de zone ne font pas beaucoup moins de dégâts que les sorts monocibles (ne divise pas les dégâts entre les cibles)
+
 **Questionnement et TODO Générique :** 
 - Supprimer les cartes neutre pour le moment et faire des mécaniques différentes pour récupérer action mana ou pioche?
 OU - Assumer jusqu'au bout des cartes neutres
@@ -173,6 +176,7 @@ OU - Assumer jusqu'au bout des cartes neutres
 d’actions ou 1 point de zèle, 1 fois par tour)
 - Rituel sombre : Chercher dans votre cimetière une carte de soins ou de bouclier et mettez la dans votre main (5 points
 d’actions ou 1 point de zèle, 1 fois par tour)
+- Aura ou Buff qui affecte tous les alliées ou tous les ennemis (utile avec la portée)?
 
 ---
 
@@ -298,7 +302,6 @@ Le seul a pouvoir augmenter son zèle max
 
 **Questionnement et TODO :**
 - Maitre du temps : Change les dés, permet de revenir à son point d'origine ou dans le temps
-- Aura ou Buff qui affecte tous les alliées ou tous les ennemis (utile avec la portée)
 - Si vous faites un critique, vous pouvez augmenter votre bonus de portée de 1. ?
 - Si vous faites une esquive, vous pouvez augmenter votre bonus de portée de 1. ?
 - Sort d’assistances : (2 de portée) (Coût : 1 point de zèle ou 1 carte défaussée)
