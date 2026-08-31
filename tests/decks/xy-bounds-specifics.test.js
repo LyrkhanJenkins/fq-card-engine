@@ -297,9 +297,27 @@ describe("Mécanique : ressource zèle littéralement dérivée de XXX (cartes<-
 // Mécanique : pioche (draw) — nombre exact piloté, rejet propre si insuffisante
 // ═══════════════════════════════════════════════════════════════════════
 
+/**
+ * Indique si le nombre de cartes piochées dépend d'une variable X/Y CALCULÉE
+ * (`xvalue`/`yvalue`) plutôt que des seules données de la carte ou d'une saisie
+ * du joueur : la source (taille de main, cartes jouées du round…) n'existe pas
+ * hors du monde de jeu, XXX y vaut 0 et la garde n'aurait aucun nombre exact à
+ * vérifier. Une pioche littérale reste exercée même si la carte porte par
+ * ailleurs un `xvalue` pour un autre champ.
+ *
+ * @param {object} choice - Le choix (contenu) de la carte.
+ *
+ * @returns {boolean} True si `draw` est piloté par une valeur X/Y calculée.
+ */
+function drawsFromComputedXY(choice) {
+    return /XXX|YYY/.test(String(choice.draw ?? ""))
+        && (isFilled(choice.xvalue) || isFilled(choice.yvalue));
+}
+
 const drawCandidates = rawEntries.filter(entry => isFilled(entry.choice.draw)
     && !(entry.choice.customEvals && entry.choice.customEvals.length)
-    && !isFilled(entry.choice.xmin) && !isFilled(entry.choice.xmax));
+    && !isFilled(entry.choice.xmin) && !isFilled(entry.choice.xmax)
+    && !drawsFromComputedXY(entry.choice));
 
 describe("Mécanique : pioche (draw) pilotée par la source de la carte", () => {
     beforeEach(() => {
