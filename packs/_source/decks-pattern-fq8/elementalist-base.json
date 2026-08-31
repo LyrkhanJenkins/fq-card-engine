@@ -47,7 +47,7 @@
               "minReach": "1",
               "maxReach": "7",
               "nbTargets": "",
-              "damage": "(1d@wis+(2*XXX))[force]",
+              "damage": "(1d@int+(3*XXX))[force]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -157,7 +157,7 @@
               "minReach": "2",
               "maxReach": "6",
               "nbTargets": "",
-              "damage": "(2+@int+1d6)[thunder]",
+              "damage": "(2+@wis+1d6)[thunder]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -173,7 +173,7 @@
                   "formula": "1d2",
                   "effects": [
                     {
-                      "result": "2",
+                      "result": "1",
                       "self": false,
                       "data": [
                         {
@@ -182,8 +182,35 @@
                       ],
                       "messages": [
                         {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Air Effect\"}"
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"1\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"2\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -363,7 +390,7 @@
               "minReach": "3",
               "maxReach": "9",
               "nbTargets": "",
-              "damage": "(1+@wis+1d3)[cold]",
+              "damage": "(1+@int+1d3)[cold]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -436,7 +463,7 @@
     },
     {
       "_id": "VTHKHIaML2gmihrI",
-      "name": "FQCARDTITLE.Fireball",
+      "name": "FQCARDTITLE.FireBolt",
       "description": "",
       "type": "base",
       "suit": "",
@@ -450,7 +477,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/elementalist/fireball.PNG",
-          "text": "FQCARDDESCRIPTION.Fireball"
+          "text": "FQCARDDESCRIPTION.FireBolt"
         }
       ],
       "face": 0,
@@ -466,7 +493,7 @@
           "class": "elementalist",
           "choices": [
             {
-              "action": "-8",
+              "action": "-6",
               "mana": "-2",
               "zeal": "1",
               "reactive": false,
@@ -476,7 +503,7 @@
               "minReach": "1",
               "maxReach": "6",
               "nbTargets": "",
-              "damage": "(4+@int+1d8)[fire]",
+              "damage": "(@wis+1d4)[fire]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -489,10 +516,10 @@
               "applyEffectsFormulas": [
                 {
                   "title": "Burn",
-                  "formula": "1d2",
+                  "formula": "1d3",
                   "effects": [
                     {
-                      "result": "2",
+                      "result": "1",
                       "self": false,
                       "data": [
                         {
@@ -502,7 +529,48 @@
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgDamageEffect",
-                          "arg": "{ \"effectName\": \"Burn\", \"damage\": \"3\",\"turn\": \"3\" }"
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"1\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"2\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "3",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"3\",\"turn\":\"3\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -818,13 +886,13 @@
                           "changes": [
                             {
                               "key": "system.fq.attributes.critical",
-                              "value": "-@int",
+                              "value": "-@wis",
                               "type": "add",
                               "priority": null
                             },
                             {
                               "key": "system.fq.attributes.evasion",
-                              "value": "-@wis",
+                              "value": "-@int",
                               "type": "add",
                               "priority": null
                             },
@@ -845,7 +913,7 @@
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgFogEffect",
-                          "arg": "{\"critical\":\"@int\",\"evasion\":\"@wis\"}"
+                          "arg": "{\"critical\":\"@wis\",\"evasion\":\"@int\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -940,7 +1008,7 @@
               "minReach": "1",
               "maxReach": "8",
               "nbTargets": "",
-              "damage": "(@int+1d10)[fire]+(4+@wis+1d4)[cold]",
+              "damage": "(1d4)[fire]+(4+@int+1d6)[cold]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -964,7 +1032,33 @@
               "replayable": "",
               "sound": "",
               "name": "",
-              "applyEffectsFormulas": [],
+              "applyEffectsFormulas": [
+                {
+                  "title": "Burn",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"2\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
               "messages": [],
               "minions": [],
               "targetType": "Default",
@@ -1131,7 +1225,7 @@
               "minReach": "3",
               "maxReach": "10",
               "nbTargets": "",
-              "damage": "(2+@wis+1d4)[force]+(1+@int+1d4)[fire]",
+              "damage": "(3+@int+1d6)[force]+(1d4)[fire]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -1155,7 +1249,33 @@
               "replayable": "",
               "sound": "",
               "name": "",
-              "applyEffectsFormulas": [],
+              "applyEffectsFormulas": [
+                {
+                  "title": "Burn",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"2\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
               "messages": [],
               "minions": [],
               "targetType": "Zone",
@@ -1626,7 +1746,7 @@
               "minReach": "1",
               "maxReach": "1",
               "nbTargets": "",
-              "damage": "(1+@int+1d4)[thunder]+(1+@wis+1d4)[cold]",
+              "damage": "(1+@wis+1d4)[thunder]+(1+@int+1d4)[cold]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -1724,7 +1844,7 @@
               "minReach": "4",
               "maxReach": "8",
               "nbTargets": "2",
-              "damage": "(2*@int)[thunder]+2d8[fire]",
+              "damage": "(2*@wis)[thunder]+1d6[fire]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -1748,7 +1868,36 @@
               "replayable": "",
               "sound": "",
               "name": "",
-              "applyEffectsFormulas": [],
+              "applyEffectsFormulas": [
+                {
+                  "title": "Burn",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"3\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
               "messages": [],
               "minions": [],
               "targetType": "Default",
@@ -1948,7 +2097,7 @@
               "minReach": "1",
               "maxReach": "4",
               "nbTargets": "",
-              "damage": "@int+1d(2*@wis)[fire]",
+              "damage": "1d@wis[fire]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -1964,7 +2113,7 @@
                   "formula": "1d3",
                   "effects": [
                     {
-                      "result": "3",
+                      "result": "1",
                       "self": false,
                       "data": [
                         {
@@ -1974,7 +2123,48 @@
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgDamageEffect",
-                          "arg": "{ \"effectName\": \"Burn\", \"damage\": \"3\",\"turn\": \"3\" }"
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"1\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"2\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "3",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"3\",\"turn\":\"3\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -2006,7 +2196,7 @@
               "minReach": "1",
               "maxReach": "4",
               "nbTargets": "",
-              "damage": "@int+1d(2*@wis)[cold]",
+              "damage": "@int+1d(2*@int)[cold]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -2068,7 +2258,7 @@
               "minReach": "1",
               "maxReach": "4",
               "nbTargets": "",
-              "damage": "@int+1d(2*@wis)[thunder]",
+              "damage": "@wis+1d(2*@wis)[thunder]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -2081,10 +2271,10 @@
               "applyEffectsFormulas": [
                 {
                   "title": "Air Effect",
-                  "formula": "1d3",
+                  "formula": "1d2",
                   "effects": [
                     {
-                      "result": "3",
+                      "result": "1",
                       "self": false,
                       "data": [
                         {
@@ -2093,8 +2283,35 @@
                       ],
                       "messages": [
                         {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Air Effect\"}"
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"1\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"2\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -2126,7 +2343,7 @@
               "minReach": "1",
               "maxReach": "4",
               "nbTargets": "",
-              "damage": "@int+1d(2*@wis)[force]",
+              "damage": "(2*@int)+1d(2*@int)[force]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -2232,9 +2449,9 @@
               "drop": "",
               "targetType": "Default",
               "minReach": "1",
-              "maxReach": "4+@int",
+              "maxReach": "4+@wis",
               "nbTargets": "",
-              "damage": "(2*@int+1d8)[thunder]",
+              "damage": "(2*@wis+1d8)[thunder]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -2249,6 +2466,75 @@
                   "title": "Air Effect",
                   "formula": "1d4",
                   "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "air"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"1\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"2\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "3",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"3\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
                     {
                       "result": "4",
                       "self": false,
@@ -2367,7 +2653,7 @@
               "minReach": "",
               "maxReach": "",
               "nbTargets": "",
-              "damage": "(XXX*@wis +XXXd6)[bludgeoning]",
+              "damage": "(XXX*@int +XXXd8)[bludgeoning]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -2392,7 +2678,7 @@
                           "changes": [
                             {
                               "key": "system.fq.attributes.critical",
-                              "value": "1+@wis",
+                              "value": "1+@int",
                               "type": "add",
                               "priority": null
                             },
@@ -2404,7 +2690,7 @@
                             }
                           ],
                           "duration": {
-                            "value": "2*@wis",
+                            "value": "2*@int",
                             "units": "rounds"
                           },
                           "expireOnDamage": false
@@ -2485,7 +2771,7 @@
           "class": "elementalist",
           "choices": [
             {
-              "action": "-2",
+              "action": "-3",
               "mana": "",
               "zeal": "",
               "reactive": false,
@@ -2496,7 +2782,7 @@
               "minReach": "1",
               "maxReach": "5",
               "nbTargets": "",
-              "damage": "@int+1d4[fire]",
+              "damage": "1d@wis[fire]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -2509,40 +2795,61 @@
               "applyEffectsFormulas": [
                 {
                   "title": "Burn",
-                  "formula": "1d8",
+                  "formula": "1d3",
                   "effects": [
                     {
-                      "result": "8",
+                      "result": "1",
                       "self": false,
                       "data": [
                         {
-                          "name": "Burn",
-                          "img": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
-                          "changes": [
-                            {
-                              "key": "system.fq.bonus.dot",
-                              "value": "3",
-                              "type": "add",
-                              "priority": null
-                            },
-                            {
-                              "key": "macro.execute",
-                              "value": "PersistAura jb2a.fire_ring",
-                              "type": "custom",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "3",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
+                          "status": "burn"
                         }
                       ],
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgDamageEffect",
-                          "arg": "{ \"effectName\": \"Burn\", \"damage\": \"9\",\"turn\": \"3\" }"
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"1\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"2\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "3",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"3\",\"turn\":\"3\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -2625,7 +2932,7 @@
               "minReach": "2",
               "maxReach": "9",
               "nbTargets": "",
-              "damage": "(3*@wis+1d12)[cold]",
+              "damage": "(3*@int+1d12)[cold]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -2821,6 +3128,747 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!mRziAmAOW06QjB3b.wXVcNbJUneiuE1SV"
+    },
+    {
+      "_id": "FQelemFireball01",
+      "name": "FQCARDTITLE.Fireball",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Fireball"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2300000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "-12",
+              "mana": "-3",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Zone",
+              "minReach": "2",
+              "maxReach": "10",
+              "nbTargets": "",
+              "damage": "(2*@wis+2d8)[fire]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Burn",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"3\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.fireball.explosion.orange",
+                "onTarget": true
+              },
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false,
+              "zoneShape": "circle",
+              "zoneSize": "2"
+            }
+          ],
+          "level": 11,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786109690791,
+        "modifiedTime": 1786109690797,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemFireball01"
+    },
+    {
+      "_id": "FQelemBlaze00001",
+      "name": "FQCARDTITLE.Blaze",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Blaze"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2400000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "-(4+XXX)",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "(1d4)[fire]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "0",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Burn",
+                  "formula": "1d(5-XXX)",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"4\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"3\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "3",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"2\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "4",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"1\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "5",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"1\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.fire_bolt.orange",
+                "onTarget": false
+              },
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 11,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786109690791,
+        "modifiedTime": 1786109690797,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemBlaze00001"
+    },
+    {
+      "_id": "FQelemColossus01",
+      "name": "FQCARDTITLE.StoneColossus",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.StoneColossus"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2500000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "-8",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "-(3*XXX)",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "4",
+              "nbTargets": "",
+              "damage": "(XXX*@int+XXXd10)[bludgeoning]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Earth Effect",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "earth"
+                        },
+                        {
+                          "status": "earth"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Earth Effect\",\"count\":\"2\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Earth Effect\",\"turn\":\"4\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.falling_rocks.top.1x1.grey",
+                "onTarget": true
+              },
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 11,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786109690791,
+        "modifiedTime": 1786109690797,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemColossus01"
+    },
+    {
+      "_id": "FQelemCyclone001",
+      "name": "FQCARDTITLE.Cyclone",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Cyclone"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2600000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "-7",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-XXX",
+              "targetType": "Default",
+              "minReach": "2",
+              "maxReach": "8",
+              "nbTargets": "",
+              "damage": "(@wis+1d6)[thunder]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Air Effect",
+                  "formula": "1d(1+XXX)",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "air"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"1\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "2",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"2\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "3",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"3\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    },
+                    {
+                      "result": "4",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"4\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.whirlwind.bluegrey",
+                "onTarget": true
+              },
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 11,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786109690791,
+        "modifiedTime": 1786109690797,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCyclone001"
+    },
+    {
+      "_id": "FQelemAbsZero001",
+      "name": "FQCARDTITLE.AbsoluteZero",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.AbsoluteZero"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2700000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "-10",
+              "mana": "-XXX",
+              "zeal": "-XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "9",
+              "nbTargets": "XXX",
+              "damage": "(2*@int+1d12)[cold]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Frost",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "frost"
+                        },
+                        {
+                          "status": "frost"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Frost\",\"count\":\"2\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Frost\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.spell_projectile.ice_shard.blue",
+                "onTarget": true
+              },
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 11,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786109690791,
+        "modifiedTime": 1786109690797,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemAbsZero001"
     }
   ],
   "width": null,

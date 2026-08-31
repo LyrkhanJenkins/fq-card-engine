@@ -79,6 +79,7 @@ OU - Assumer jusqu'au bout des cartes neutres
 - TODO Malédiction sans dégâts
 - Plusieurs attaques d'opportunités?
 - L'esquive fait demi-dégâts?
+- Utiliser l'IA pour rééquilibrer les dégâts, les couts, le nombre de cartes
 
 # Élémentaliste
 
