@@ -1,0 +1,306 @@
+{
+  "name": "Elementalist Generated (Hist)",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG",
+  "cards": [
+    {
+      "_id": "HIST000000000015",
+      "name": "FQCARDTITLE.Incantation",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/elementalist/incantation.PNG",
+          "text": "FQCARDDESCRIPTION.Incantation"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1800000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "elementalist",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-(XXX)",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "0+@int",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Incantation",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "name": "Incantation +XXX",
+                          "img": "icons/magic/symbols/runes-carved-stone-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.action.max",
+                              "value": "XXX",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgIncantationEffect",
+                          "arg": "{\"action\":\"XXX\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": true,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786109690791,
+        "modifiedTime": 1786109690798,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000172.HIST000000000015"
+    },
+    {
+      "_id": "HIST000000000020",
+      "name": "FQCARDTITLE.DamagePropagation",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/elementalist/damage_propagation.PNG",
+          "text": "FQCARDDESCRIPTION.DamagePropagation"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2200000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "elementalist",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "9",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Damage Propagation",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "name": "Damage Propagation",
+                          "img": "icons/magic/sonic/explosion-impact-shock-wave.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "@wis",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "macro.tokenMagic",
+                              "value": "shockwave",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamagePropagationEffect",
+                          "arg": "{\"damage\":\"@wis\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": true,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.lastPlayedDamageCardOnOtherTarget()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgDamagePropagation",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786109690791,
+        "modifiedTime": 1786109690799,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000172.HIST000000000020"
+    }
+  ],
+  "width": null,
+  "height": null,
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1786109690791,
+    "modifiedTime": 1786109690791,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "system": {
+    "fq": {
+      "type": "",
+      "owner": "",
+      "classLevels": {}
+    }
+  },
+  "ownership": {
+    "default": 0
+  },
+  "_id": "HIST000000000172",
+  "sort": 0,
+  "_key": "!cards!HIST000000000172"
+}

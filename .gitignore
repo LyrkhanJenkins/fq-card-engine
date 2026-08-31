@@ -19,8 +19,9 @@ node_modules/
 # Temporary
 /coverage/
 
-# GSD Planning
+# Claude
 .planning/
+.claude/
 
 /images/cards/draft/
 

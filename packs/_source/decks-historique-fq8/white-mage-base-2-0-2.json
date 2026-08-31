@@ -1,0 +1,2602 @@
+{
+  "name": "White-Mage Base (2.0.2)",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_white-mage.PNG",
+  "cards": [
+    {
+      "_id": "HIST000000000125",
+      "name": "FQCARDTITLE.LightEnergy",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/light_energy.PNG",
+          "text": "FQCARDDESCRIPTION.LightEnergy"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 6,
+          "class": "white-mage",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.Damage",
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "0.5",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "(1+@int+1d4)[radiant]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "2",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.Heal",
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "0.5",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "@int+1d3",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "2",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435188,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000125"
+    },
+    {
+      "_id": "HIST000000000126",
+      "name": "FQCARDTITLE.Curse",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/curse.PNG",
+          "text": "FQCARDDESCRIPTION.Curse"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 8,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "white-mage",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "8",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Curse",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Curse",
+                          "img": "icons/magic/death/skull-energy-light-purple.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "@wis",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Curse\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Curse\",\"turn\": \"3\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435188,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000126"
+    },
+    {
+      "_id": "HIST000000000127",
+      "name": "FQCARDTITLE.MagicShield",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/magic_shield.PNG",
+          "text": "FQCARDDESCRIPTION.MagicShield"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 5,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 4,
+          "class": "white-mage",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "0",
+              "maxReach": "7",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "2*@wis",
+              "bonusCrit": "-9999",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Magic Shield",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Magic Shield",
+                          "img": "icons/magic/defensive/shield-barrier-glowing-triangle-orange.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.hp.tempmax",
+                              "value": "+(2*@wis)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Magic Shield\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Magic Shield\",\"turn\": \"3\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435188,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000127"
+    },
+    {
+      "_id": "HIST000000000128",
+      "name": "FQCARDTITLE.Exorcism",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/exorcism.PNG",
+          "text": "FQCARDDESCRIPTION.Exorcism"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 13,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "white-mage",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "9",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [],
+              "customEvals": [
+                {
+                  "script": "game.user.targets.size !== 1 || !!game.actors.get([...game.user.targets][0].document.actorId).effects?.size",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNeedEffect",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Exorcisme",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [],
+                      "messages": [],
+                      "removeEffectName": "@choose"
+                    }
+                  ]
+                }
+              ],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435189,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000128"
+    },
+    {
+      "_id": "HIST000000000129",
+      "name": "FQCARDTITLE.InstantCurse",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/instant_curse.PNG",
+          "text": "FQCARDDESCRIPTION.InstantCurse"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "bdNGlIw0zGdMUgR9",
+      "rotation": 0,
+      "sort": 10,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "white-mage",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "8",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Curse",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Curse",
+                          "img": "icons/magic/death/skull-energy-light-purple.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "@cha",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Curse\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Curse\",\"turn\": \"3\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435189,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000129"
+    },
+    {
+      "_id": "HIST000000000130",
+      "name": "FQCARDTITLE.ArcaneExplosion",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/arcane_explosion.PNG",
+          "text": "FQCARDDESCRIPTION.ArcaneExplosion"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 9,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "white-mage",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.SoloTarget",
+              "action": "-(3*XXX)",
+              "mana": "",
+              "zeal": "-XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "((3*XXX)+1d(2*@wis))[force]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "!game.user.targets.size || game.user.targets.size > 5 || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Curse').length).length",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissing1Effect",
+                      "arg": "{\"effectName\":\"Curse\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            },
+            {
+              "name": "FQCARDCHOICE.MultiTargets",
+              "action": "-(3*XXX)",
+              "mana": "",
+              "zeal": "-XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "7",
+              "nbTargets": "5",
+              "damage": "((2*XXX)+1d(@wis))[force]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "!game.user.targets.size || game.user.targets.size === 1 || game.user.targets.size > 5 || [...game.user.targets].filter(pt => [...game.user.targets].filter(t => (Math.abs(t.x - pt.x) === game.canvas?.scene?.dimensions?.size && t.y === pt.y) || (Math.abs(t.y - pt.y) === game.canvas?.scene?.dimensions?.size && t.x === pt.x)).length === [...game.user.targets].length - 1).length >= 1",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgTargetAdjacents",
+                      "arg": ""
+                    }
+                  ]
+                },
+                {
+                  "script": "!game.user.targets.size || game.user.targets.size > 5 || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Curse').length).length",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissing1Effect",
+                      "arg": "{\"effectName\":\"Curse\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435189,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000130"
+    },
+    {
+      "_id": "HIST000000000131",
+      "name": "FQCARDTITLE.DrawIII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.PNG",
+          "text": "FQCARDDESCRIPTION.DrawIII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "3",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgDrawCard",
+                  "arg": "{\"draw\": \"3\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435189,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000131"
+    },
+    {
+      "_id": "HIST000000000132",
+      "name": "FQCARDTITLE.TurnBoosterV",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_v.PNG",
+          "text": "FQCARDDESCRIPTION.TurnBoosterV"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "5",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgActionRecover",
+                  "arg": "{\"action\": \"5\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435189,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000132"
+    },
+    {
+      "_id": "HIST000000000133",
+      "name": "FQCARDTITLE.ManaRecoveryIII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.PNG",
+          "text": "FQCARDDESCRIPTION.ManaRecoveryIII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 16,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "3",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgManaRecover",
+                  "arg": "{\"mana\": \"3\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435189,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000133"
+    },
+    {
+      "_id": "HIST000000000134",
+      "name": "FQCARDTITLE.Epiphany",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/epiphany.PNG",
+          "text": "FQCARDDESCRIPTION.Epiphany"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 14,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "white-mage",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-4",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Healing Bonus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Healing Bonus",
+                          "img": "icons/magic/holy/saint-glass-portrait-halo.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.heal",
+                              "value": "trunc(@con/3)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "0",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgHealBonus",
+                          "arg": "{\"heal\": \"@con/3 (truncate)\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435190,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000134"
+    },
+    {
+      "_id": "HIST000000000135",
+      "name": "FQCARDTITLE.EmergencyHealing",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/emergency_healing.PNG",
+          "text": "FQCARDDESCRIPTION.EmergencyHealing"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 11,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "white-mage",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "8",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "@int*(min(5,XXX))",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.cards.currentDrop",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435190,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000135"
+    },
+    {
+      "_id": "HIST000000000136",
+      "name": "FQCARDTITLE.ManaInfusion",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/mana_infusion.PNG",
+          "text": "FQCARDDESCRIPTION.ManaInfusion"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "white-mage",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-8 + @wis",
+              "mana": "0",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "chooseCardsList": "fq-card-engine.decks-historique-fq8.White-Mage Generated (Hist).FQCARDTITLE.ManaInfusion"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435190,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000136"
+    },
+    {
+      "_id": "HIST000000000138",
+      "name": "FQCARDTITLE.ManaShield",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/mana_shield.PNG",
+          "text": "FQCARDDESCRIPTION.ManaShield"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 15,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "white-mage",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": true,
+              "hp": "@con",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgHealthPointRecover",
+                  "arg": "{\"hp\": \"@con\"}"
+                }
+              ],
+              "replayable": "@wis",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435190,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000138"
+    },
+    {
+      "_id": "HIST000000000139",
+      "name": "FQCARDTITLE.DivineShield",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/divine_shield.PNG",
+          "text": "FQCARDDESCRIPTION.DivineShield"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 7,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "white-mage",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "-1",
+              "zeal": "-2",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "0",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Divine Shield",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Divine Shield",
+                          "img": "icons/magic/defensive/shield-barrier-deflect-gold.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.hp.value",
+                              "value": "999999",
+                              "type": "override",
+                              "priority": null
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.shield.01.loop",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Divine Shield\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Divine Shield\",\"turn\": \"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435190,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000139"
+    },
+    {
+      "_id": "HIST000000000140",
+      "name": "FQCARDTITLE.LightStrike",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/light_strike.PNG",
+          "text": "FQCARDDESCRIPTION.LightStrike"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 4,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "white-mage",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "-2",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "8",
+              "nbTargets": "999999",
+              "damage": "2*@int[radiant]",
+              "heal": "",
+              "bonusCrit": "-9999",
+              "bonusEva": "-9999",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgLightStrike",
+                  "arg": ""
+                }
+              ],
+              "replayable": "2",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "chooseCardsList": "fq-card-engine.decks-historique-fq8.White-Mage Generated (Hist).FQCARDTITLE.LightStrike"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435190,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000140"
+    },
+    {
+      "_id": "HIST000000000142",
+      "name": "FQCARDTITLE.VengefulShield",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/vengeful_shield.PNG",
+          "text": "FQCARDDESCRIPTION.VengefulShield"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 12,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "white-mage",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "@int",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "@wis + 1",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435190,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000142"
+    },
+    {
+      "_id": "HIST000000000143",
+      "name": "FQCARDTITLE.EmpatheticShield",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/empathetic_shield.PNG",
+          "text": "FQCARDDESCRIPTION.EmpatheticShield"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "bdNGlIw0zGdMUgR9",
+      "rotation": 0,
+      "sort": 16,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "white-mage",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "@int",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "@wis",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435191,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000143"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/heal.PNG",
+          "text": "FQCARDDESCRIPTION.Heal"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Heal",
+      "description": "",
+      "_id": "HIST000000000144",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "white-mage",
+          "level": 2,
+          "isInnate": true,
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-1",
+              "targetType": "Default",
+              "minReach": "0",
+              "maxReach": "4",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "@con+1d(2*@wis)",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435191,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000144"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/solar_strike.PNG",
+          "text": "FQCARDDESCRIPTION.SolarStrike"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.SolarStrike",
+      "description": "",
+      "_id": "HIST000000000145",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "white-mage",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-9",
+              "mana": "-3",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "7",
+              "nbTargets": "",
+              "damage": "3*@int+1d10[radiant]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Solar Strike",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Solar Strike",
+                          "img": "icons/magic/light/beam-strike-orange-gold.webp",
+                          "changes": [
+                            {
+                              "key": "system.abilities.con.value",
+                              "value": "10",
+                              "type": "override",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.abilities.wis.value",
+                              "value": "10",
+                              "type": "override",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Solar Strike\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Solar Strike\",\"turn\": \"3\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435191,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000145"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/good_and_evil.PNG",
+          "text": "FQCARDDESCRIPTION.GoodAndEvil"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.GoodAndEvil",
+      "description": "",
+      "_id": "HIST000000000146",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "white-mage",
+          "level": 5,
+          "isInnate": true,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.Good",
+              "action": "",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "-@con",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "999999",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "@con",
+              "bonusCrit": "-999999",
+              "bonusEva": "-999999",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "99999999",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            },
+            {
+              "name": "FQCARDCHOICE.Evil",
+              "action": "",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "@int",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "9999",
+              "nbTargets": "",
+              "damage": "@int",
+              "heal": "",
+              "bonusCrit": "-999999",
+              "bonusEva": "-999999",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "99999999",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435191,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000146"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/chastisement.PNG",
+          "text": "FQCARDDESCRIPTION.Chastisement"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Chastisement",
+      "description": "",
+      "_id": "HIST000000000147",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "white-mage",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "-3",
+              "zeal": "+1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "9999",
+              "nbTargets": "",
+              "damage": "2*@wis+1d8[necrotic]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "!game.user.targets.size || game.user.targets.size !== 1 || game.actors.filter(a1 => [...game.user.targets].map(t => t.document.actorId).includes(a1.id)).filter(a => a.effects.filter(e => e.name === 'Curse').length).length",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissing1Effect",
+                      "arg": "{\"effectName\":\"Curse\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435191,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000147"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/blue_blood.PNG",
+          "text": "FQCARDDESCRIPTION.BlueBlood"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.BlueBlood",
+      "description": "",
+      "_id": "HIST000000000148",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 4,
+          "class": "white-mage",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "+XXX",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "-2*XXX",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "@con",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435192,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000148"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/white-mage/angel_and_demon_effect.PNG",
+          "text": "FQCARDDESCRIPTION.AngelAndDemonEffect"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.AngelAndDemonEffect",
+      "description": "",
+      "_id": "HIST000000000149",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "white-mage",
+          "level": 7,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.Demon",
+              "action": "-16",
+              "mana": "-4",
+              "zeal": "-4",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "7",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Curse",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Curse",
+                          "img": "icons/magic/unholy/beams-impact-pink.webp",
+                          "showIcon": 2,
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "+4+@wis",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Curse\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            },
+            {
+              "name": "FQCARDCHOICE.Angel",
+              "action": "-16",
+              "mana": "-4",
+              "zeal": "-4",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "0",
+              "maxReach": "7",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Bless",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Bless",
+                          "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+                          "showIcon": 2,
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "-3+@con",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Bless\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435192,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000124.HIST000000000149"
+    }
+  ],
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1786004435185,
+    "modifiedTime": 1786004435245,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "system": {
+    "fq": {
+      "type": "",
+      "owner": "",
+      "classLevels": {}
+    }
+  },
+  "width": null,
+  "height": null,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "HIST000000000124",
+  "sort": 200000,
+  "_key": "!cards!HIST000000000124"
+}

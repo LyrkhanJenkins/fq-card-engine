@@ -153,6 +153,18 @@
       "flags": {}
     },
     {
+      "name": "decks-historique-fq8",
+      "label": "Decks Historique FQ8",
+      "path": "packs/decks-historique-fq8",
+      "type": "Cards",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
       "name": "classes-fq8",
       "label": "Classes (FQ8)",
       "path": "packs/classes-fq8",
@@ -272,7 +284,8 @@
           "sorting": "m",
           "color": "#317d0e",
           "packs": [
-            "decks-pattern-fq8"
+            "decks-pattern-fq8",
+            "decks-historique-fq8"
           ],
           "folders": []
         },

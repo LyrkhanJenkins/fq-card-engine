@@ -1,0 +1,2790 @@
+{
+  "name": "Guardian Base (2.0.2)",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_guardian.PNG",
+  "system": {
+    "fq": {
+      "type": "",
+      "owner": "",
+      "classLevels": {}
+    }
+  },
+  "cards": [
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/charge.PNG",
+          "text": "FQCARDDESCRIPTION.Charge"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Charge",
+      "description": "",
+      "_id": "HIST000000000028",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "guardian",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "9",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Charge Bonus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Charge Bonus",
+                          "img": "icons/skills/movement/arrow-upward-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "+@dex+1d4",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.attributes.critical",
+                              "value": "+@str",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "Charge",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSelfApplyEffect",
+                          "arg": "{\"effectName\":\"Charge Bonus\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418442,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000028"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/armor_reinforcement.PNG",
+          "text": "FQCARDDESCRIPTION.ArmorReinforcement"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ArmorReinforcement",
+      "description": "",
+      "_id": "HIST000000000029",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "guardian",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "HOT +@con",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "HOT +@con",
+                          "img": "icons/magic/life/cross-explosion-burst-green.webp",
+                          "showIcon": 2,
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "-@con",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSelfApplyEffect",
+                          "arg": "{\"effectName\":\"Armor Reinforcement\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418442,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000029"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/blade_charging.PNG",
+          "text": "FQCARDDESCRIPTION.BladeCharging"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.BladeCharging",
+      "description": "",
+      "_id": "HIST000000000030",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "guardian",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.LoadBlade",
+              "action": "-(XXX)",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "12",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgCardCharging",
+                  "arg": "{\"action\": \"XXX\", \"spell\": \"Blade Charging\"}"
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "((game.user.character.flags.fq?.bladeCharging ? game.user.character.flags.fq.bladeCharging : 0) + Number(XXX)) <= 12",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.WarningSpellOverloaded",
+                      "arg": "{\"spell\": \"Blade Charging\"}"
+                    }
+                  ]
+                },
+                {
+                  "script": "const charging = (game.user.character.flags.fq?.bladeCharging ? game.user.character.flags.fq.bladeCharging : 0) + Number(XXX);\nif (charging <= 12) {\ngame.user.character.update({\"flags.fq\": { ...game.user.character.flags.fq, ...{ bladeCharging: charging } }});\n}\n\nChatMessage.create({\n                speaker: ChatMessage.getSpeaker({actor: game.user.character}),\n                content: `<span font-style: italic'>\n                    ${game.i18n.localize(\"FQCARDENGINE.CardMsgLoadScore\")} ${charging > 12 ? game.user.character.flags.fq.bladeCharging : charging}</span>`\n            });",
+                  "errorMessages": []
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.ApplyEffect",
+              "action": "0",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "-999",
+              "xmax": "999",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Damage X2",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Damage X2",
+                          "img": "icons/skills/melee/blade-tips-double-blue.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "* 2",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSelfApplyEffect",
+                          "arg": "{\"effectName\":\"Damage X2\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "if (game.user.character.flags.fq?.bladeCharging  == 12 ) {\nsetTimeout( () => game.user.character.update({\"flags.fq\": { ...game.user.character.flags.fq, ...{ bladeCharging: 0} }}), 5000);\ngame.user.character.flags.fq?.bladeCharging  == 12\n} else {\ngame.user.character.flags.fq?.bladeCharging  == 12\n}",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.WarningSpellNotLoaded",
+                      "arg": "{\"spell\": \"Blade Charging\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418443,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000030"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/blade_whirlwind.PNG",
+          "text": "FQCARDDESCRIPTION.BladeWhirlwind"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.BladeWhirlwind",
+      "description": "",
+      "_id": "HIST000000000031",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "guardian",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.LoadBlade",
+              "action": "-(XXX)",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "8",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgCardCharging",
+                  "arg": "{\"action\": \"XXX\", \"spell\": \"Blade Whirlwind\"}"
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "((game.user.character.flags.fq?.bladeWhirlwind ? game.user.character.flags.fq.bladeWhirlwind : 0) + Number(XXX)) <= 8",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.WarningSpellOverloaded",
+                      "arg": "{\"spell\": \"Blade Whirlwind\"}"
+                    }
+                  ]
+                },
+                {
+                  "script": "const charging = (game.user.character.flags.fq?.bladeWhirlwind ? game.user.character.flags.fq.bladeWhirlwind : 0) + Number(XXX);\nif (charging <= 8) {\ngame.user.character.update({\"flags.fq\": { ...game.user.character.flags.fq, ...{ bladeWhirlwind: charging } }});\n}\n\nChatMessage.create({\n                speaker: ChatMessage.getSpeaker({actor: game.user.character}),\n                content: `<span font-style: italic'>\n                    ${game.i18n.localize(\"FQCARDENGINE.CardMsgLoadScore\")} ${charging > 12 ? game.user.character.flags.fq.bladeWhirlwind : charging}</span>`\n            });",
+                  "errorMessages": []
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.ApplyEffectManaCost",
+              "action": "0",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "4",
+              "damage": "(3+ 1d(2*@str))[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "-999",
+              "xmax": "999",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "if (game.user.character.flags.fq?.bladeWhirlwind == 8) {\nsetTimeout( () => game.user.character.update({\"flags.fq\": { ...game.user.character.flags.fq, ...{ bladeWhirlwind: 0} }}), 5000);\ngame.user.character.flags.fq?.bladeWhirlwind == 8\n} else {\ngame.user.character.flags.fq?.bladeWhirlwind == 8\n}",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.WarningSpellNotLoaded",
+                      "arg": "{\"spell\": \"Blade Whirlwind\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.ApplyEffectHpCost",
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "-5",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "4",
+              "damage": "(3+ 1d(2*@str))[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "-999",
+              "xmax": "999",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "if (game.user.character.flags.fq?.bladeWhirlwind == 8) {\nsetTimeout( () => game.user.character.update({\"flags.fq\": { ...game.user.character.flags.fq, ...{ bladeWhirlwind: 0} }}), 5000);\ngame.user.character.flags.fq?.bladeWhirlwind == 8\n} else {\ngame.user.character.flags.fq?.bladeWhirlwind == 8\n}",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.WarningSpellNotLoaded",
+                      "arg": "{\"spell\": \"Blade Whirlwind\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418443,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000031"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.PNG",
+          "text": "FQCARDDESCRIPTION.DrawII"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.DrawII",
+      "description": "",
+      "_id": "HIST000000000032",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-2",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "2",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418443,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000032"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/hemorrhage.PNG",
+          "text": "FQCARDDESCRIPTION.Hemorrhage"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Hemorrhage",
+      "description": "",
+      "_id": "HIST000000000033",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 4,
+          "class": "guardian",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-8",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(2+1d3)[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Bleeding",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Bleeding @str",
+                          "img": "icons/skills/wounds/blood-drip-droplet-red.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "@str",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Bleeding\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Bleeding\",\"turn\":\"2\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418443,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000033"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/heroic_strike.PNG",
+          "text": "FQCARDDESCRIPTION.HeroicStrike"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.HeroicStrike",
+      "description": "",
+      "_id": "HIST000000000034",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 6,
+          "class": "guardian",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "-1 Mana",
+              "action": "-7",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(3+1d(2*@str))[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            },
+            {
+              "name": "- (6-@con) HP",
+              "action": "-7",
+              "mana": "0",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "- (6-@con)",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(3+1d(2*@str))[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418444,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000034"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_i.PNG",
+          "text": "FQCARDDESCRIPTION.ManaRecoveryI"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ManaRecoveryI",
+      "description": "",
+      "_id": "HIST000000000035",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-1",
+              "mana": "+1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418444,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000035"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/mana_surge.PNG",
+          "text": "FQCARDDESCRIPTION.ManaSurge"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ManaSurge",
+      "description": "",
+      "_id": "HIST000000000036",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "guardian",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-1",
+              "mana": "+(XXX)",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:-2*(game.combat.flags.fq.logs.filter(l => l.actorId === game.user.character.id).at(-1)?.cardContent?.mana)",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgManaRecover",
+                  "arg": "{\"mana\":\"XXX\"}"
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "!!(game.combat.flags.fq.logs.filter(l => l.actorId === game.user.character.id).at(-1)?.cardContent?.mana) && (game.combat.flags.fq.logs.filter(l => l.actorId === game.user.character.id).at(-1)?.cardContent?.mana < 0)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.WarningSpellNotCostingMana",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418444,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000036"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/powerful_strike.PNG",
+          "text": "FQCARDDESCRIPTION.PowerfulStrike"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.PowerfulStrike",
+      "description": "",
+      "_id": "HIST000000000037",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "guardian",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-8",
+              "mana": "-1",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "((2*@str) + 1d10)[bludgeoning]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418445,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000037"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/rage_surge.PNG",
+          "text": "FQCARDDESCRIPTION.RageSurge"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.RageSurge",
+      "description": "",
+      "_id": "HIST000000000038",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "guardian",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "+1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "-(3+@con)",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Rage Surge",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Damage +@con",
+                          "img": "icons/skills/wounds/injury-face-impact-orange.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "+@con",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSelfApplyEffect",
+                          "arg": "{\"effectName\":\"Damage +@con\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Damage +@con\",\"turn\":\"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418445,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000038"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/sharpening.PNG",
+          "text": "FQCARDDESCRIPTION.Sharpening"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Sharpening",
+      "description": "",
+      "_id": "HIST000000000039",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "guardian",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-(2*XXX)",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "@cha",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Sharpening",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Critical + (2*XXX)",
+                          "img": "icons/weapons/swords/swords-sharp-worn.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.critical",
+                              "value": "2*@cha",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSelfApplyEffect",
+                          "arg": "{\"effectName\":\"Sharpening\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Sharpening\",\"turn\":\"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418445,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000039"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/shield_bash.PNG",
+          "text": "FQCARDDESCRIPTION.ShieldBash"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ShieldBash",
+      "description": "",
+      "_id": "HIST000000000040",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "guardian",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "(@cha+1d3)[bludgeoning]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Charge Bonus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Charge Bonus",
+                          "img": "icons/skills/movement/arrow-upward-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "macro.execute",
+                              "value": "Charge",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSelfApplyEffect",
+                          "arg": "{\"effectName\":\"Charge Bonus\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418445,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000040"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/taunting_strike.PNG",
+          "text": "FQCARDDESCRIPTION.TauntingStrike"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.TauntingStrike",
+      "description": "",
+      "_id": "HIST000000000041",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 4,
+          "class": "guardian",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "-1 mana",
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(2*@cha + 1d(@str))[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgTaunting",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            },
+            {
+              "name": "- 4 HP",
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "-4",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(2*@cha + 1d(@str))[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgTaunting",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418445,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000041"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
+          "text": "FQCARDDESCRIPTION.TurnBoosterIV"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.TurnBoosterIV",
+      "description": "",
+      "_id": "HIST000000000042",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "4",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418445,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000042"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/ultimate_rage.PNG",
+          "text": "FQCARDDESCRIPTION.UltimateRage"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.UltimateRage",
+      "description": "",
+      "_id": "HIST000000000043",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "guardian",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "-1",
+              "zeal": "-(XXX)",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "@con",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Ultimate Rage XXX",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Ultimate Rage XXX",
+                          "img": "icons/magic/death/projectile-skull-fire-orange.webp",
+                          "showIcon": 2,
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "+(2*XXX)",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "XXX",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgUltimateRage",
+                          "arg": "{\"bonus\": \"XXX\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418446,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000043"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/stance_shift.PNG",
+          "text": "FQCARDDESCRIPTION.StanceShift"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.StanceShift",
+      "description": "",
+      "_id": "HIST000000000044",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "guardian",
+          "level": 3,
+          "isInnate": true,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.DefensiveStance",
+              "action": "-3",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Defensive Stance",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Defensive Stance",
+                          "img": "icons/skills/melee/shield-block-gray-orange.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.critical",
+                              "value": "+@str",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "-@str",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSelfApplyEffect",
+                          "arg": "{\"effectName\":\"Defensive Stance\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Defensive Stance\",\"turn\":\"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "99999999",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            },
+            {
+              "name": "FQCARDCHOICE.OffensiveStance",
+              "action": "-3",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Offensive Stance",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Offensive Stance",
+                          "img": "icons/skills/melee/strike-sword-dagger-runes-gold.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.critical",
+                              "value": "-@con",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "+@con",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSelfApplyEffect",
+                          "arg": "{\"effectName\":\"Offensive Stance\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Offensive Stance\",\"turn\":\"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "99999999",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418446,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000044"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/intervention.PNG",
+          "text": "FQCARDDESCRIPTION.Intervention"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Intervention",
+      "description": "",
+      "_id": "HIST000000000045",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "guardian",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": true,
+              "hp": "",
+              "draw": "+1",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "5+@con",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "XXX",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:FqCardEngineModule.cst.lastDamageThisTurn(FqCardEngineModule.cst.myTargets[0])",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Intervention",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Intervention",
+                          "img": "icons/skills/movement/arrow-upward-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "macro.execute",
+                              "value": "Charge",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Intervention\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "!!FqCardEngineModule.cst.lastDamageThisTurn(FqCardEngineModule.cst.myTargets[0])",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.TargetNoDamageThisTurn",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418446,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000045"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/shield_raise.PNG",
+          "text": "FQCARDDESCRIPTION.ShieldRaise"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ShieldRaise",
+      "description": "",
+      "_id": "HIST000000000046",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "guardian",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "-1",
+              "zeal": "-XXX",
+              "reactive": true,
+              "hp": "",
+              "draw": "+1",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "XXX/2",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:FqCardEngineModule.cst.lastDamageThisTurn()",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "!!FqCardEngineModule.cst.lastDamageThisTurn()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.TargetNoDamageThisTurn",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418446,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000046"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/berzerker_stance.PNG",
+          "text": "FQCARDDESCRIPTION.BerzerkerStance"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.BerzerkerStance",
+      "description": "",
+      "_id": "HIST000000000047",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "guardian",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "-XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "1",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "9999",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Berzerker Stance",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Berzerker Stance",
+                          "img": "icons/skills/melee/weapons-crossed-daggers-orange.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "+XXX",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "-XXX",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "+XXX",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "@str",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Berzerker Stance\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418446,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000047"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/magic_barrier.PNG",
+          "text": "FQCARDDESCRIPTION.MagicBarrier"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.MagicBarrier",
+      "description": "",
+      "_id": "HIST000000000048",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "guardian",
+          "level": 7,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-4*XXX",
+              "mana": "-1",
+              "zeal": "-XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "8",
+              "nbTargets": "999",
+              "damage": "",
+              "heal": "(3*XXX)",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "1+@con",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Magic Barrier",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Magic Barrier",
+                          "img": "icons/magic/defensive/shield-barrier-blue.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.hp.tempmax",
+                              "value": "+(3*XXX)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "0",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Magic Barrier\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418446,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000048"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/guardian/vital_surge.PNG",
+          "text": "FQCARDDESCRIPTION.VitalSurge"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.VitalSurge",
+      "description": "",
+      "_id": "HIST000000000049",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "guardian",
+          "level": 7,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-16",
+              "mana": "",
+              "zeal": "+2",
+              "reactive": false,
+              "hp": "(4*@con)+1d12",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgHealSelf",
+                  "arg": "{\"heal\": \"(4*@con)+1d12\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.healing_generic.400px.green",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418447,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000027.HIST000000000049"
+    }
+  ],
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1786004418439,
+    "modifiedTime": 1786004435248,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "width": null,
+  "height": null,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "HIST000000000027",
+  "sort": 600000,
+  "_key": "!cards!HIST000000000027"
+}

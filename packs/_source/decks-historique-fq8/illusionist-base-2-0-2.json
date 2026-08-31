@@ -1,0 +1,3934 @@
+{
+  "name": "Illusionist Base (2.0.2)",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_illusionist.PNG",
+  "cards": [
+    {
+      "_id": "HIST000000000051",
+      "name": "FQCARDTITLE.MagicReach",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/magic_reach.PNG",
+          "text": "FQCARDDESCRIPTION.MagicReach"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 14,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "illusionist",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-2",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Reach Bonus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "data": [
+                        {
+                          "name": "Reach Bonus +1",
+                          "img": "icons/skills/targeting/crosshair-bars-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.range",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "0",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgReachBonus",
+                          "arg": "{\"reach\": \"1\"}"
+                        }
+                      ],
+                      "self": false
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422601,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000051"
+    },
+    {
+      "_id": "HIST000000000052",
+      "name": "FQCARDTITLE.EnchantedWhip",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/enchanted_whip.PNG",
+          "text": "FQCARDDESCRIPTION.EnchantedWhip"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "illusionist",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(@dex+@wis+1d8)[force]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Reach Bonus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "data": [
+                        {
+                          "name": "Reach Bonus +1",
+                          "img": "icons/skills/targeting/crosshair-bars-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.range",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "0",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgReachBonus",
+                          "arg": "{\"reach\": \"1\"}"
+                        }
+                      ],
+                      "self": true
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422601,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000052"
+    },
+    {
+      "_id": "HIST000000000053",
+      "name": "FQCARDTITLE.BackflipStrike",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/backflip_strike.PNG",
+          "text": "FQCARDDESCRIPTION.BackflipStrike"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 15,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "illusionist",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(@str + 1d10)[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Reach Bonus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Reach Bonus +1",
+                          "img": "icons/skills/targeting/crosshair-bars-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.range",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "0",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgReachBonus",
+                          "arg": "{\"reach\": \"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Recoil",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Recule de @dex case",
+                          "img": "icons/skills/movement/feet-winged-boots-glowing-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.movement.walk",
+                              "value": "5*@dex",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgMovementBonus",
+                          "arg": "{\"movement\": \"@dex\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgRecoilEffect",
+                  "arg": "{\"recoil\": \"@dex\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422601,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000053"
+    },
+    {
+      "_id": "HIST000000000054",
+      "name": "FQCARDTITLE.IllusoryStrike",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/illusory_strike.PNG",
+          "text": "FQCARDDESCRIPTION.IllusoryStrike"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 9,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "illusionist",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(@str+XXX+1d6)[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.bonus.range",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422601,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000054"
+    },
+    {
+      "_id": "HIST000000000055",
+      "name": "FQCARDTITLE.SungInspiration",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/sung_inspiration.PNG",
+          "text": "FQCARDDESCRIPTION.SungInspiration"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 12,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "illusionist",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-2",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "1",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "9999",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Sung Inspiration",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Critical +1",
+                          "img": "icons/skills/targeting/crosshair-mark-rough-pink.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.critical",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "0",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSongEffect",
+                          "arg": "{\"critical\": \"1\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Critical +1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "@cha",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.music_notations.crotchet.blue",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422602,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000055"
+    },
+    {
+      "_id": "HIST000000000056",
+      "name": "FQCARDTITLE.PoisonedShuriken",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/poisoned_shuriken.PNG",
+          "text": "FQCARDDESCRIPTION.PoisonedShuriken"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "illusionist",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "3",
+              "nbTargets": "",
+              "damage": "1d8[poison]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Poison",
+                  "formula": "1d4",
+                  "effects": [
+                    {
+                      "result": "4",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Poison",
+                          "img": "icons/skills/melee/strike-scythe-fire-green.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "max(0,@cha)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "4",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\": \"Poison\",\"damage\": \"@cha\",\"turn\": \"4\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422602,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000056"
+    },
+    {
+      "_id": "HIST000000000057",
+      "name": "FQCARDTITLE.CommunicatingVessels",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/communicating_vessels.PNG",
+          "text": "FQCARDDESCRIPTION.CommunicatingVessels"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 4,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "illusionist",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "1 mana -> 4 actions",
+              "action": "4",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "max(1,1+@wis)",
+              "sound": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            },
+            {
+              "name": "4 actions -> 1 mana",
+              "action": "-4",
+              "mana": "1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "max(1,1+@wis)",
+              "sound": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422602,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000057"
+    },
+    {
+      "_id": "HIST000000000058",
+      "name": "FQCARDTITLE.MirrorImages",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/mirror_images.PNG",
+          "text": "FQCARDDESCRIPTION.MirrorImages"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 19,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "illusionist",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "-2",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Mirror Images",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Mirror Images",
+                          "img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "@dex",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "0",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": true
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgMirrorImagesEffect",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422603,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000058"
+    },
+    {
+      "_id": "HIST000000000059",
+      "name": "FQCARDTITLE.SideAttack",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/side_attack.PNG",
+          "text": "FQCARDDESCRIPTION.SideAttack"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 7,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-4",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "2*(1+XXX)",
+              "damage": "(@str+1d8)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.bonus.range",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "!game.user.targets.size || ([...game.user.targets].filter(t =>(t.x === game.canvas?.scene?.tokens?.find(t => t.actor?.id === game.user?.character?.id).x)).length === [...game.user.targets].length) || ([...game.user.targets].filter(t =>(t.y === game.canvas?.scene?.tokens?.find(t => t.actor?.id === game.user?.character?.id).y)).length === [...game.user.targets].length)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgSameLine",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422603,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000059"
+    },
+    {
+      "_id": "HIST000000000060",
+      "name": "FQCARDTITLE.DrawII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.PNG",
+          "text": "FQCARDDESCRIPTION.DrawII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": -100000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-2",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "2",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgDrawCard",
+                  "arg": "{\"draw\": \"2\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422604,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000060"
+    },
+    {
+      "_id": "HIST000000000061",
+      "name": "FQCARDTITLE.DrawIII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.PNG",
+          "text": "FQCARDDESCRIPTION.DrawIII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 18,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "width": null,
+      "height": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "3",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgDrawCard",
+                  "arg": "{\"draw\": \"3\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422604,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000061"
+    },
+    {
+      "_id": "HIST000000000062",
+      "name": "FQCARDTITLE.Shuriken",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/shuriken.PNG",
+          "text": "FQCARDDESCRIPTION.Shuriken"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 10,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "illusionist",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "3",
+              "nbTargets": "",
+              "damage": "1d6[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Bleeding",
+                  "formula": "1d3",
+                  "effects": [
+                    {
+                      "result": "3",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Bleeding",
+                          "img": "icons/skills/melee/blood-slash-foam-red.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "max(0,@cha)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\": \"Bleeding\",\"damage\":\"@cha\",\"turn\": \"2\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422604,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000062"
+    },
+    {
+      "_id": "HIST000000000063",
+      "name": "FQCARDTITLE.EtherealPlanePassage",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/ethereal_plane_passage.PNG",
+          "text": "FQCARDDESCRIPTION.EtherealPlanePassage"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 16,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "-1",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "4",
+              "nbTargets": "",
+              "damage": "XXX[force]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "reach",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgEtheralTransferEffect",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422605,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000063"
+    },
+    {
+      "_id": "HIST000000000064",
+      "name": "FQCARDTITLE.DaggerCloud",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/dagger_cloud.PNG",
+          "text": "FQCARDDESCRIPTION.DaggerCloud"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 17,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-8",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "2",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.bonus.range",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Dagger Cloud",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Dagger Cloud",
+                          "img": "icons/skills/melee/swords-triple-orange.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "XXX + 1d8",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "@cha",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Dagger Cloud\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422605,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000064"
+    },
+    {
+      "_id": "HIST000000000065",
+      "name": "FQCARDTITLE.ShurikenVolley",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/shuriken_volley.PNG",
+          "text": "FQCARDDESCRIPTION.ShurikenVolley"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 21,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "2",
+              "nbTargets": "@dex",
+              "damage": "(XXX+1d10)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.bonus.range",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422606,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000065"
+    },
+    {
+      "_id": "HIST000000000066",
+      "name": "FQCARDTITLE.ApothecaryI",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/apothecary_i.PNG",
+          "text": "FQCARDDESCRIPTION.ApothecaryI"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.LifePotion",
+              "action": "-3",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "@wis+1d4",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "-> Life Potion",
+                  "arg": ""
+                },
+                {
+                  "key": "FQCARDENGINE.CardMsgHealthPointRecover",
+                  "arg": "{\"hp\": \"@wis+1d4\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.ReachPotion",
+              "action": "-3",
+              "mana": "",
+              "zeal": "+1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Reach Bonus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Reach Bonus +@wis",
+                          "img": "icons/skills/targeting/crosshair-bars-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.range",
+                              "value": "@wis",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgReachBonus",
+                          "arg": "{\"reach\": \"@wis\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "-> Reach Potion",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.SpeedPotion",
+              "action": "-3",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Speed",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Speed + 1 + @wis",
+                          "img": "icons/skills/movement/feet-winged-boots-glowing-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.movement.walk",
+                              "value": "5+(5*@wis)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgMovementBonus",
+                          "arg": "{\"movement\":\"1+@wis\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "-> Speed Potion",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.EarthStrengthPotion",
+              "action": "-3",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Earth Effect",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Earth Effect",
+                          "img": "icons/magic/earth/barrier-stone-explosion-debris.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "-@wis",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Earth Effect\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "-> Earth Strength Potion",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.WindPotion",
+              "action": "-3",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Air Effect",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Air Effect",
+                          "img": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.movement.walk",
+                              "value": "-(5*@wis)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Air Effect\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "-> Wind Potion",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422606,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000066"
+    },
+    {
+      "_id": "HIST000000000067",
+      "name": "FQCARDTITLE.CircleAttack",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/circle_attack.PNG",
+          "text": "FQCARDDESCRIPTION.CircleAttack"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 11,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "4-XXX",
+              "maxReach": "5",
+              "nbTargets": "99999",
+              "damage": "(@str+1d6)[slashing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.bonus.range",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422607,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000067"
+    },
+    {
+      "_id": "HIST000000000068",
+      "name": "FQCARDTITLE.Backstab",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/backstab.PNG",
+          "text": "FQCARDDESCRIPTION.Backstab"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 5,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.bonus.range",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Damage Bonus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Damage Bonus",
+                          "img": "icons/skills/melee/maneuver-daggers-paired-orange.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "+XXX + 1d@dex",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageBonus",
+                          "arg": "{\"damage\": \"XXX\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Damage Bonus\",\"turn\": \"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422608,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000068"
+    },
+    {
+      "_id": "HIST000000000069",
+      "name": "FQCARDTITLE.BlackPlague",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/black_plague.PNG",
+          "text": "FQCARDDESCRIPTION.BlackPlague"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 13,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-9",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "2",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "([...game.user.targets]).forEach( target => game.actors.get(target.document.actorId).createEmbeddedDocuments(\"ActiveEffect\", game.actors.get(target.document.actorId).effects.filter(t => t.flags.isFQEffects)))",
+                  "errorMessages": []
+                }
+              ],
+              "replayable": "@con + 1",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422609,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000069"
+    },
+    {
+      "_id": "HIST000000000070",
+      "name": "FQCARDTITLE.DiagonalAttack",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/diagonal_attack.PNG",
+          "text": "FQCARDDESCRIPTION.DiagonalAttack"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "T6PMpPpuWngnosq0",
+      "rotation": 0,
+      "sort": 22,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-6",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "2",
+              "nbTargets": "4*(1+trunc(XXX/2))",
+              "damage": "(@str+1d12)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.bonus.range",
+              "yvalue": "",
+              "customEvals": [
+                {
+                  "script": "!game.user.targets.size || ([...game.user.targets].filter(t => Math.abs(t.document.x - game.canvas?.scene?.tokens?.find(t => t.actor?.id === game.user?.character?.id).x) === Math.abs(t.y - game.canvas?.scene?.tokens?.find(t => t.actor?.id === game.user?.character?.id).y)).length === [...game.user.targets].length)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgDiagonalAttack",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422609,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000070"
+    },
+    {
+      "_id": "HIST000000000071",
+      "name": "FQCARDTITLE.FeveredDance",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/fevered_dance.PNG",
+          "text": "FQCARDDESCRIPTION.FeveredDance"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "T6PMpPpuWngnosq0",
+      "rotation": 0,
+      "sort": 6,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "illusionist",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-2",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "1",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "9999",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Fevered Dance",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "data": [
+                        {
+                          "name": "Evasion +1",
+                          "img": "icons/magic/air/air-pressure-shield-blue.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "0",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDanceEffect",
+                          "arg": "{\"evasion\": \"1\"}"
+                        }
+                      ],
+                      "self": false
+                    }
+                  ]
+                }
+              ],
+              "replayable": "@cha",
+              "sound": "",
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422610,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000071"
+    },
+    {
+      "_id": "HIST000000000072",
+      "name": "FQCARDTITLE.ApothecaryII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/apothecary_ii.PNG",
+          "text": "FQCARDDESCRIPTION.ApothecaryII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "T6PMpPpuWngnosq0",
+      "rotation": 0,
+      "sort": 8,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.LifePotion",
+              "action": "-3",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "@wis+1d4",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "-> Life Potion",
+                  "arg": ""
+                },
+                {
+                  "key": "FQCARDENGINE.CardMsgHealthPointRecover",
+                  "arg": "{\"hp\": \"@wis+1d4\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.ReachPotion",
+              "action": "-3",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Reach Bonus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Reach Bonus +@wis",
+                          "img": "icons/skills/targeting/crosshair-bars-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.range",
+                              "value": "@wis",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgReachBonus",
+                          "arg": "{\"reach\": \"@wis\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "-> Reach Potion",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.SpeedPotion",
+              "action": "-3",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Speed",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Speed + 1 + @wis",
+                          "img": "icons/skills/movement/feet-winged-boots-glowing-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.movement.walk",
+                              "value": "5+(5*@wis)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgMovementBonus",
+                          "arg": "{\"movement\": \"1+@wis\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "-> Speed Potion",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.FirePotion",
+              "action": "-3",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Burn",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Burn",
+                          "img": "icons/magic/fire/explosion-embers-evade-silhouette.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "@wis",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Burn\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "-> Fire Potion",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            },
+            {
+              "name": "FQCARDCHOICE.FrostPotion",
+              "action": "-3",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Frost",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Frost",
+                          "img": "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.action.max",
+                              "value": "-@wis",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.action.value",
+                              "value": "-@wis",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "3",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Frost\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "-> Frost Potion",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422611,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000072"
+    },
+    {
+      "_id": "HIST000000000073",
+      "name": "FQCARDTITLE.ManaDrain",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "value": null,
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/Illusionist/mana_drain.PNG",
+          "text": "FQCARDDESCRIPTION.ManaDrain"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": "T6PMpPpuWngnosq0",
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-7 + @wis",
+              "mana": "XXX",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "9999",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "nbTargets",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgManaRecover",
+                  "arg": "{\"mana\": \"XXX\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422611,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000073"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/illusionist/stat_illusion.PNG",
+          "text": "FQCARDDESCRIPTION.StatIllusion"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.StatIllusion",
+      "description": "",
+      "_id": "HIST000000000074",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 6,
+          "isInnate": true,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.Critical",
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.bonus.range",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Stat Illusion critical",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Stat Illusion critical +XXX",
+                          "img": "icons/magic/perception/orb-eye-scrying.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.range",
+                              "value": "-XXX",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.attributes.critical",
+                              "value": "+XXX",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Stat Illusion critical\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Stat Illusion critical\", \"turn\": \"2\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            },
+            {
+              "name": "FQCARDCHOICE.Heal",
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "+XXX",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.bonus.range",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Stat Illusion Heal",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Stat Illusion Heal +XXX",
+                          "img": "icons/magic/perception/orb-eye-scrying.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.range",
+                              "value": "-XXX",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Stat Illusion critical\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Stat Illusion critical\", \"turn\": \"2\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgHealSelf",
+                          "arg": "{\"heal\": \"XXX\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            },
+            {
+              "name": "FQCARDCHOICE.Mana",
+              "action": "",
+              "mana": "+XXX",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.bonus.range",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Stat Illusion Mana",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Stat Illusion Mana +XXX",
+                          "img": "icons/magic/perception/orb-eye-scrying.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.range",
+                              "value": "-XXX",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Stat Illusion critical\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Stat Illusion critical\", \"turn\": \"2\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgManaRecover",
+                          "arg": "{\"mana\": \"XXX\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422611,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000074"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/illusionist/immateriality.PNG",
+          "text": "FQCARDDESCRIPTION.Immateriality"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Immateriality",
+      "description": "",
+      "_id": "HIST000000000075",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "illusionist",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-4",
+              "mana": "-1",
+              "zeal": "+1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "0",
+              "maxReach": "2",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Immateriality",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Immateriality",
+                          "img": "icons/magic/control/silhouette-hold-change-blue.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "-99999",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.attributes.hp.value",
+                              "value": "999999",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Immateriality\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.energy_field.01",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422612,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000075"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/illusionist/enchanted_rapier.PNG",
+          "text": "FQCARDDESCRIPTION.EnchantedRapier"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.EnchantedRapier",
+      "description": "",
+      "_id": "HIST000000000076",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 2,
+          "isInnate": true,
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-1",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "3",
+              "nbTargets": "",
+              "damage": "1+1d4[piercing]",
+              "heal": "",
+              "bonusCrit": "@cha+@dex",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Reach Bonus",
+                  "formula": "1d2",
+                  "effects": [
+                    {
+                      "result": "2",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Reach Bonus +1",
+                          "img": "icons/skills/targeting/crosshair-bars-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.range",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "0",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgReachBonus",
+                          "arg": "{\"reach\": \"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.rapier.melee.01.white",
+                "onTarget": true
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422612,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000076"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/illusionist/frenzied_inspiration.PNG",
+          "text": "FQCARDDESCRIPTION.FrenziedInspiration"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.FrenziedInspiration",
+      "description": "",
+      "_id": "HIST000000000077",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "illusionist",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-4",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "0",
+              "maxReach": "3",
+              "nbTargets": "3",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Frenzied Inspiration",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Frenzied Inspiration +@cha",
+                          "img": "icons/tools/instruments/lute-gold-brown.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "+@cha",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Frenzied Inspiration\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\": \"Frenzied Inspiration\", \"turn\":\"2\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.bardic_inspiration.greenorange",
+                "onTarget": true
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422613,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000077"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/illusionist/growing_orb.PNG",
+          "text": "FQCARDDESCRIPTION.GrowingOrb"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.GrowingOrb",
+      "description": "",
+      "_id": "HIST000000000078",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "illusionist",
+          "level": 7,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-14",
+              "mana": "-3",
+              "zeal": "-3",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "2",
+              "nbTargets": "",
+              "damage": "@dex+@wis+@int+XXXd6[force]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "reach",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.overcharged_sphere.01",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004422598,
+        "modifiedTime": 1786004422613,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000050.HIST000000000078"
+    }
+  ],
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1786004422598,
+    "modifiedTime": 1786004435247,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "system": {
+    "fq": {
+      "type": "",
+      "owner": "",
+      "classLevels": {}
+    }
+  },
+  "width": null,
+  "height": null,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "HIST000000000050",
+  "sort": 500000,
+  "_key": "!cards!HIST000000000050"
+}

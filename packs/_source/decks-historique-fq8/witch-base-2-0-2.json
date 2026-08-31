@@ -1,0 +1,2309 @@
+{
+  "name": "Witch Base (2.0.2)",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_witch.PNG",
+  "system": {
+    "fq": {
+      "type": "",
+      "owner": "",
+      "classLevels": {}
+    }
+  },
+  "cards": [
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/necromancy.PNG",
+          "text": "FQCARDDESCRIPTION.Necromancy"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Necromancy",
+      "description": "",
+      "_id": "HIST000000000151",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "witch",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "2",
+              "maxReach": "max(2,2+@cha)",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "minions": [
+                {
+                  "name": "Skeleton lvl 1",
+                  "data": {
+                    "hp": "",
+                    "damageBonus": "",
+                    "movement": ""
+                  }
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 100000,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438941,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000151"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/agility_influx.PNG",
+          "text": "FQCARDDESCRIPTION.AgilityInflux"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.AgilityInflux",
+      "description": "",
+      "_id": "HIST000000000152",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "witch",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-7+@wis",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:game.canvas?.scene?.tokens.filter(t => t.name.includes('Skeleton') && t.isOwner).length",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Agility Influx",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Evasion +XXX",
+                          "img": "icons/magic/control/debuff-energy-hold-blue-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "+XXX",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgEvasionBonus",
+                          "arg": "{\"evasion\": \"XXX\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 200000,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438942,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000152"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.PNG",
+          "text": "FQCARDDESCRIPTION.DrawII"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.DrawII",
+      "description": "",
+      "_id": "HIST000000000153",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "2",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 400000,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438942,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000153"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/giant_skeleton.PNG",
+          "text": "FQCARDDESCRIPTION.GiantSkeleton"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.GiantSkeleton",
+      "description": "",
+      "_id": "HIST000000000154",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "witch",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "-2",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgMinionInvoked",
+                  "arg": "{\"minion\": \"Giant Skeleton\"}"
+                }
+              ],
+              "minions": [
+                {
+                  "name": "Giant Skeleton",
+                  "data": {
+                    "hp": "3+(3*@cha)",
+                    "damageBonus": "@cha+1d6",
+                    "movement": "4"
+                  }
+                }
+              ],
+              "replayable": "",
+              "sound": "specific_spells/summon_dark.mp3",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 500000,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438942,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000154"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/bone_shield.PNG",
+          "text": "FQCARDDESCRIPTION.BoneShield"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.BoneShield",
+      "description": "",
+      "_id": "HIST000000000155",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "witch",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-6",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Skeletons",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Bone Shield",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Bone Shield",
+                          "img": "icons/magic/symbols/mask-metal-silver-white.webp",
+                          "changes": [
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.shield_themed.below.ice.01.blue",
+                              "type": "custom",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.attributes.hp.tempmax",
+                              "value": "ceil(@cha/3)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 300000,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438942,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000155"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/green_shadow_bolt.PNG",
+          "text": "FQCARDDESCRIPTION.GreenShadowBolt"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.GreenShadowBolt",
+      "description": "",
+      "_id": "HIST000000000156",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 9,
+          "class": "witch",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "-1",
+              "zeal": "+1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "2",
+              "maxReach": "8",
+              "nbTargets": "",
+              "damage": "2*@int[poison]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Green-Shadow Bolt Damage Delay",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Green-Shadow Bolt Damage Delay",
+                          "img": "icons/magic/death/projectile-skull-fire-green.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.dot",
+                              "value": "1d6",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "minions": [
+                {
+                  "name": "Skeleton lvl 1",
+                  "data": {
+                    "hp": "",
+                    "damageBonus": "",
+                    "movement": ""
+                  }
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 600000,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "modifiedTime": 1786004438942,
+        "createdTime": 1786004438939,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000156"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/life_influx.PNG",
+          "text": "FQCARDDESCRIPTION.LifeInflux"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.LifeInflux",
+      "description": "",
+      "_id": "HIST000000000157",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "witch",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "2*@wis+(3*XXX)",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.special.sacrificedSkeleton",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438943,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000157"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_ii.PNG",
+          "text": "FQCARDDESCRIPTION.ManaRecoveryII"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ManaRecoveryII",
+      "description": "",
+      "_id": "HIST000000000158",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "level": 1,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-2",
+              "mana": "+2",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438943,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000158"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/mana_influx.PNG",
+          "text": "FQCARDDESCRIPTION.ManaInflux"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ManaInflux",
+      "description": "",
+      "_id": "HIST000000000159",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "witch",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5+@wis",
+              "mana": "+(2*XXX)",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.special.sacrificedSkeleton",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438943,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000159"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/power_influx.PNG",
+          "text": "FQCARDDESCRIPTION.PowerInflux"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.PowerInflux",
+      "description": "",
+      "_id": "HIST000000000160",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "witch",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "+XXX",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:game.canvas?.scene?.tokens.filter(t => t.name.includes('Skeleton') && t.isOwner).length",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438943,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000160"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/shadow_channeling.PNG",
+          "text": "FQCARDDESCRIPTION.ShadowChanneling"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ShadowChanneling",
+      "description": "",
+      "_id": "HIST000000000161",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "witch",
+          "level": 4,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-8+@cha",
+              "mana": "-1",
+              "zeal": "0",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Skeletons",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Shadow Channeling",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Shadow Channeling",
+                          "img": "icons/magic/death/skull-horned-worn-fire-blue.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.hp.value",
+                              "value": "99999999",
+                              "type": "override",
+                              "priority": null
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.shield.01.loop",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438943,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000161"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/shadow_explosion.PNG",
+          "text": "FQCARDDESCRIPTION.ShadowExplosion"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ShadowExplosion",
+      "description": "",
+      "_id": "HIST000000000162",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "witch",
+          "level": 3,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "-1",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "8-@int",
+              "maxReach": "11+@int",
+              "nbTargets": "@int*@int",
+              "damage": "(2*@wis)+1d8",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438943,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000162"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/shadow_form.PNG",
+          "text": "FQCARDDESCRIPTION.ShadowForm"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ShadowForm",
+      "description": "",
+      "_id": "HIST000000000163",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "witch",
+          "level": 5,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "(-6+@cha)",
+              "draw": "",
+              "drop": "",
+              "targetType": "Skeletons",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Shadow Form",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Shadow Form",
+                          "img": "icons/magic/unholy/silhouette-light-fire-blue.webp",
+                          "changes": [
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.shield_themed.above.eldritch_web.01.dark_purple",
+                              "type": "custom",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "+ceil(@cha/3)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Shadow Form",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Shadow Form",
+                          "img": "icons/magic/unholy/silhouette-light-fire-blue.webp",
+                          "changes": [
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.sleep.cloud.02",
+                              "type": "custom",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "+ceil(@cha/3)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438944,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000163"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/square_of_skeletons.PNG",
+          "text": "FQCARDDESCRIPTION.SquareOfSkeletons"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.SquareOfSkeletons",
+      "description": "",
+      "_id": "HIST000000000164",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "witch",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-8+@cha",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgMinionInvoked",
+                  "arg": "{\"minion\": \"Skeleton lvl 1\"}"
+                }
+              ],
+              "minions": [
+                {
+                  "name": "Skeleton lvl 1",
+                  "data": {
+                    "hp": "",
+                    "damageBonus": "",
+                    "movement": ""
+                  }
+                },
+                {
+                  "name": "Skeleton lvl 1",
+                  "data": {
+                    "hp": "",
+                    "damageBonus": "",
+                    "movement": ""
+                  }
+                },
+                {
+                  "name": "Skeleton lvl 1",
+                  "data": {
+                    "hp": "",
+                    "damageBonus": "",
+                    "movement": ""
+                  }
+                },
+                {
+                  "name": "Skeleton lvl 1",
+                  "data": {
+                    "hp": "",
+                    "damageBonus": "",
+                    "movement": ""
+                  }
+                }
+              ],
+              "replayable": "",
+              "sound": "specific_spells/summon_dark.mp3",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438944,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000164"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
+          "text": "FQCARDDESCRIPTION.TurnBoosterIV"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.TurnBoosterIV",
+      "description": "",
+      "_id": "HIST000000000165",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "level": 2,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "+4",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438944,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000165"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/osteology.PNG",
+          "text": "FQCARDDESCRIPTION.Osteology"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Osteology",
+      "description": "",
+      "_id": "HIST000000000166",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "witch",
+          "level": 3,
+          "isInnate": true,
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:Math.min(game.user.character.system.fq.special.sacrificedSkeleton,3)",
+              "yvalue": "fq.special.sacrificedSkeleton",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgMinionInvoked",
+                  "arg": "{\"minion\": \"Skeleton lvl XXX\"}"
+                }
+              ],
+              "minions": [
+                {
+                  "name": "Skeleton lvl XXX",
+                  "data": {
+                    "hp": "",
+                    "damageBonus": "",
+                    "movement": ""
+                  }
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "Math.min(game.user.character.system.fq.special.sacrificedSkeleton,3) > 0 && Math.min(game.user.character.system.fq.special.sacrificedSkeleton,3) <= 3",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.WarningMsgXValueInferiorXMin",
+                      "arg": "{\"xmin\": \"0\"}"
+                    },
+                    {
+                      "key": "FQCARDENGINE.WarningMsgXValueSuperiorXMax",
+                      "arg": "{\"xmax\": \"3\"}"
+                    },
+                    {
+                      "key": "FQCARDENGINE.SacrificedScoreSkeletonMsg",
+                      "arg": "{\"sacrifice\": \"YYY\"}"
+                    }
+                  ]
+                }
+              ],
+              "replayable": "99999999",
+              "sound": "specific_spells/summon_dark.mp3",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438944,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000166"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/shadow_spell.PNG",
+          "text": "FQCARDDESCRIPTION.ShadowSpell"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ShadowSpell",
+      "description": "",
+      "_id": "HIST000000000167",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "witch",
+          "level": 2,
+          "isInnate": true,
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.Damage",
+              "action": "-8",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-1",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "5",
+              "nbTargets": "",
+              "damage": "@wis+1d4[necrotic]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "specific_spells/summon_dark.mp3",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            },
+            {
+              "name": "FQCARDCHOICE.SummonSkeleton",
+              "action": "-8",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-1",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgMinionInvoked",
+                  "arg": "{\"minion\": \"Skeleton lvl 1\"}"
+                }
+              ],
+              "minions": [
+                {
+                  "name": "Skeleton lvl 1",
+                  "data": {
+                    "hp": "",
+                    "damageBonus": "",
+                    "movement": ""
+                  }
+                }
+              ],
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438944,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000167"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/arcane_strike.PNG",
+          "text": "FQCARDDESCRIPTION.ArcaneStrike"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ArcaneStrike",
+      "description": "",
+      "_id": "HIST000000000168",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "witch",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "-2",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "2",
+              "maxReach": "8",
+              "nbTargets": "",
+              "damage": "(@wis+1d@wis)[necrotic]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgMinionInvoked",
+                  "arg": "{\"minion\": \"Skeleton lvl 2\"}"
+                }
+              ],
+              "minions": [
+                {
+                  "name": "Skeleton lvl 2",
+                  "data": {
+                    "hp": "",
+                    "damageBonus": "",
+                    "movement": ""
+                  }
+                }
+              ],
+              "replayable": "",
+              "sound": "specific_spells/summon_dark.mp3",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438944,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000168"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/blood_ritual.PNG",
+          "text": "FQCARDDESCRIPTION.BloodRitual"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.BloodRitual",
+      "description": "",
+      "_id": "HIST000000000169",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "witch",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-12+(2*@cha)",
+              "mana": "",
+              "zeal": "+XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-1",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:game.canvas?.scene?.tokens.filter(t => t.name.includes('Skeleton') && t.isOwner).length",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438944,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000169"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/morbid_shift.PNG",
+          "text": "FQCARDDESCRIPTION.MorbidShift"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.MorbidShift",
+      "description": "",
+      "_id": "HIST000000000170",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 4,
+          "class": "witch",
+          "level": 6,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Skeletons",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.special.sacrificedSkeleton",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Morbid Shift",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Morbid Shift",
+                          "img": "icons/skills/movement/feet-winged-boots-glowing-yellow.webp",
+                          "showIcon": 2,
+                          "changes": [
+                            {
+                              "key": "system.attributes.movement.walk",
+                              "value": "(+@cha*XXX)*5",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "game.user.character.system.fq.special.sacrificedSkeleton > 0",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.SacrifySkeletonButton",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438945,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000170"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/witch/skeleton_sorcerer.PNG",
+          "text": "FQCARDDESCRIPTION.SkeletonSorcerer"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.SkeletonSorcerer",
+      "description": "",
+      "_id": "HIST000000000171",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "witch",
+          "level": 7,
+          "isInnate": false,
+          "choices": [
+            {
+              "action": "-15",
+              "mana": "-4",
+              "zeal": "-4",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgMinionInvoked",
+                  "arg": "{\"minion\": \"Skeleton Sorcerer\"}"
+                }
+              ],
+              "minions": [
+                {
+                  "name": "Skeleton Sorcerer",
+                  "data": {
+                    "hp": "25+3*@cha",
+                    "damageBonus": "2*@int",
+                    "movement": "5*(3+@wis)"
+                  }
+                }
+              ],
+              "replayable": "",
+              "sound": "specific_spells/summon_dark.mp3",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004438939,
+        "modifiedTime": 1786004438945,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!HIST000000000150.HIST000000000171"
+    }
+  ],
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1786004438939,
+    "modifiedTime": 1786004438939,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "width": null,
+  "height": null,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "HIST000000000150",
+  "sort": 0,
+  "_key": "!cards!HIST000000000150"
+}
