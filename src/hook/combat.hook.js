@@ -30,7 +30,7 @@ Hooks.on("createCombat", function (_data, _delta) {
 });
 
 Hooks.on("userConnected", function (_user, _connected) {
-    CombatTurn.drawBaseCards();
+    CombatTurn.drawInnateCards();
 });
 
 /**

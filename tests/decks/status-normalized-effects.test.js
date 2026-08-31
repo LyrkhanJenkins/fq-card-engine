@@ -30,7 +30,7 @@ function cardWithEffectData(data) {
         faces: [{name: "", img: "", text: ""}],
         system: {
             fq: {
-                maxSameCard: 1, class: "neutral", level: 1, isBase: false,
+                maxSameCard: 1, class: "neutral", level: 1, isInnate: false,
                 choices: [makeChoice({
                     minReach: "1",
                     maxReach: "6",

@@ -213,7 +213,7 @@ if (outOfRangeCandidates.length === 0) {
             faces: [{name: "", img: "", text: ""}],
             system: {
                 fq: {
-                    maxSameCard: 1, class: "neutral", level: 1, isBase: false,
+                    maxSameCard: 1, class: "neutral", level: 1, isInnate: false,
                     choices: [syntheticChoice]
                 }
             }

@@ -88,7 +88,7 @@ export function makeCard(overrides = {}) {
                 maxSameCard: 1,
                 class: "neutral",
                 level: 1,
-                isBase: false,
+                isInnate: false,
                 choices: [makeChoice()]
             }
         }

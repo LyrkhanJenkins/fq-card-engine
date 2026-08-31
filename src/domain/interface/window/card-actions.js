@@ -181,7 +181,7 @@ export default {
             severalChoices: cardContents.length > 1,
             minions: firstChoice.minions?.length,
             hasBeenPlayed: firstChoice.hasBeenPlayed,
-            isFQBase: card.system?.fq?.isBase,
+            isFQInnate: card.system?.fq?.isInnate,
             isPlayedThisRound: CardFqSystem.isPlayedThisRound(firstChoice),
         });
 
@@ -198,8 +198,10 @@ export default {
             },
         };
 
-        // Cartes de base et cartes éphémères : aucune défausse volontaire possible.
-        if (!card.system?.fq?.isBase && !CardFqSystem.hasEphemeralChoice(card)) {
+        // Cartes éphémères : aucune défausse volontaire possible, jouer est leur
+        // seule sortie de la main. Les cartes innées se défaussent comme les autres :
+        // la distribution automatique les remettra en main.
+        if (!CardFqSystem.hasEphemeralChoice(card)) {
             buttons = {
                 ...buttons, discard: {
                     icon: `<i class="fas fa-trash"></i>`,
@@ -566,7 +568,7 @@ export default {
     },
 
     /**
-     * Comparateur de tri des cartes : les cartes de base (`isBase`) passent en
+     * Comparateur de tri des cartes : les cartes innées (`isInnate`) passent en
      * premier, puis tri par ordre `sort` croissant.
      *
      * @param {Card} a - La première carte à comparer.
@@ -575,8 +577,8 @@ export default {
      * @returns {number} -1, 0 ou 1 selon l'ordre de tri.
      */
     cardSort(a, b) {
-        if (a.system?.fq?.isBase && !b.system?.fq?.isBase) return -1;
-        if (b.system?.fq?.isBase && !a.system?.fq?.isBase) return 1;
+        if (a.system?.fq?.isInnate && !b.system?.fq?.isInnate) return -1;
+        if (b.system?.fq?.isInnate && !a.system?.fq?.isInnate) return 1;
         if (a.sort < b.sort) return -1;
         if (a.sort > b.sort) return 1;
         return 0;

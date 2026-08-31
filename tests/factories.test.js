@@ -71,7 +71,7 @@ describe("factories", () => {
         it("returns default fq values aligned with CardFqSystem.defineSchema", () => {
             const card = makeCard();
             expect(card.system.fq.class).toBe("neutral");
-            expect(card.system.fq.isBase).toBe(false);
+            expect(card.system.fq.isInnate).toBe(false);
             expect(Array.isArray(card.system.fq.choices)).toBe(true);
             expect(card.system.fq.choices.length).toBeGreaterThanOrEqual(1);
             expect(card).toHaveProperty("id");
@@ -83,8 +83,8 @@ describe("factories", () => {
         });
 
         it("applies a shallow override on the system key", () => {
-            const card = makeCard({system: {fq: {isBase: true, choices: []}}});
-            expect(card.system.fq.isBase).toBe(true);
+            const card = makeCard({system: {fq: {isInnate: true, choices: []}}});
+            expect(card.system.fq.isInnate).toBe(true);
         });
     });
 

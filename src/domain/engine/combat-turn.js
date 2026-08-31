@@ -5,7 +5,7 @@ import {socket} from "../../hook/integration/socketlib.hook.js";
 /**
  * Action FQ déclenchée par les hooks Foundry pendant le changement d'état du combat : réinitialisation des
  * ressources (action, zèle, défausses, squelettes) au fil des rounds, pioche de
- * la main et des cartes de base, gestion de l'épuisement du deck et suppression des
+ * la main et des cartes innées, gestion de l'épuisement du deck et suppression des
  * effets expirés. La plupart des opérations ne s'exécutent que pour le premier
  * MJ actif afin d'éviter les doublons.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
@@ -122,7 +122,7 @@ export default class CombatTurn {
             }
             await CombatTurn.deleteOrphanCards();
             await CombatTurn.deleteGeneratedDeckCards();
-            CombatTurn.drawBaseCards();
+            CombatTurn.drawInnateCards();
         }
     }
 
@@ -170,20 +170,20 @@ export default class CombatTurn {
     }
 
     /**
-     * Distribue à chaque utilisateur, depuis son deck vers sa main, les cartes de
-     * base (`isBase`) non encore piochées. Réservé au premier MJ actif.
+     * Distribue à chaque utilisateur, depuis son deck vers sa main, les cartes
+     * innées (`isInnate`) non encore piochées. Réservé au premier MJ actif.
      *
      * @returns {void}
      */
-    static drawBaseCards() {
+    static drawInnateCards() {
         if (CombatTurn.isLocalUserFirstActiveGM()) {
             game.users.forEach(user => {
                 const deck = TradingCards.getFirstDeck(user?.id, DECK_TYPE, false);
                 const hand = TradingCards.getFirstDeck(user?.id, HAND_TYPE, false);
                 if (user && deck && hand) {
-                    const allBaseCardsNotDrawned = deck.cards.filter(c => c.system?.fq?.isBase && !c.drawn).map(c => c.id);
-                    if (allBaseCardsNotDrawned.length > 0) {
-                        deck.pass(hand, allBaseCardsNotDrawned, {chatNotification: false});
+                    const allInnateCardsNotDrawned = deck.cards.filter(c => c.system?.fq?.isInnate && !c.drawn).map(c => c.id);
+                    if (allInnateCardsNotDrawned.length > 0) {
+                        deck.pass(hand, allInnateCardsNotDrawned, {chatNotification: false});
                     }
                 }
             });

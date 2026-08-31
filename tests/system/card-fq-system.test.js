@@ -43,13 +43,13 @@ beforeAll(async () => {
 
 describe("CardFqSystem.defineSchema", () => {
 
-    it("expose les champs fq de premier niveau (maxSameCard/class/level/isBase/choices)", () => {
+    it("expose les champs fq de premier niveau (maxSameCard/class/level/isInnate/choices)", () => {
         const fq = CardFqSystem.defineSchema().fq;
 
         expect(fq).toHaveProperty("maxSameCard");
         expect(fq).toHaveProperty("class");
         expect(fq).toHaveProperty("level");
-        expect(fq).toHaveProperty("isBase");
+        expect(fq).toHaveProperty("isInnate");
         expect(fq).toHaveProperty("choices");
     });
 

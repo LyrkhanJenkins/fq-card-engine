@@ -151,7 +151,7 @@ describe("playValidatedCard", () => {
 
     test("garde sbires : sélection incomplète des emplacements lève FormError", () => {
         const firstChoiceWithMinions = makeChoice({minions: ["up", "down"]});
-        const card = makeCard({system: {fq: {maxSameCard: 1, class: "neutral", level: 1, isBase: false, choices: [firstChoiceWithMinions]}}});
+        const card = makeCard({system: {fq: {maxSameCard: 1, class: "neutral", level: 1, isInnate: false, choices: [firstChoiceWithMinions]}}});
         const ctx = makeCtx({firstChoice: firstChoiceWithMinions, cardContents: [firstChoiceWithMinions], initCardContents: card.system.fq.choices, card});
         const to = {id: "discard-pile"};
         // Aucun emplacement sélectionné (minionUp/minionDown/minionLeft/minionRight absents) : garde levée.

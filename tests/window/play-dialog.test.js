@@ -60,23 +60,23 @@ function makePlayableChoice(overrides = {}) {
 
 /**
  * Construit une carte jouable par `playDialog`, avec un `system.fq` complet
- * (un seul choix jouable par défaut). `choices` et `isBase` sont transmis à
+ * (un seul choix jouable par défaut). `choices` et `isInnate` sont transmis à
  * `system.fq` ; tout autre champ de premier niveau (id, _id, sort…) est
  * transmis tel quel à `makeCard`.
  *
  * @param {object}   [overrides]          Surcharge de premier niveau.
  * @param {object[]} [overrides.choices]  Les choix de la carte (un choix jouable par défaut).
- * @param {boolean}  [overrides.isBase]   Si la carte est une carte de base (false par défaut).
+ * @param {boolean}  [overrides.isInnate]   Si la carte est une carte innée (false par défaut).
  * @returns {object} Une carte simple, jouable par `playDialog`.
  */
-function makePlayableCard({choices, isBase = false, ...overrides} = {}) {
+function makePlayableCard({choices, isInnate = false, ...overrides} = {}) {
     return makeCard({
         system: {
             fq: {
                 maxSameCard: 1,
                 class: "neutral",
                 level: 1,
-                isBase,
+                isInnate,
                 choices: choices ?? [makePlayableChoice()]
             }
         },
@@ -201,16 +201,16 @@ describe("playDialog", () => {
             }));
         });
 
-        test("carte de base (isBase) : Dialog.wait ne reçoit que le bouton ok, pas de discard", async () => {
-            const baseCard = makePlayableCard({id: "base-1", _id: "base-1", sort: 1, isBase: true});
-            currentCards = makeHand([baseCard]);
+        test("carte innée (isInnate) : Dialog.wait reçoit le bouton discard comme une carte ordinaire", async () => {
+            const innateCard = makePlayableCard({id: "innate-1", _id: "innate-1", sort: 1, isInnate: true});
+            currentCards = makeHand([innateCard]);
             globalThis.game.cards = [currentCards, pile];
 
-            await window.FqCardEngineModule.playDialog(currentCards, baseCard);
+            await window.FqCardEngineModule.playDialog(currentCards, innateCard);
 
             const callArgs = Dialog.wait.mock.calls[0][0];
             expect(callArgs.buttons.ok).toBeDefined();
-            expect(callArgs.buttons.discard).toBeUndefined();
+            expect(callArgs.buttons.discard).toBeDefined();
         });
 
         test("hasVariables est vrai quand un choix contient XXX sans xvalue", async () => {

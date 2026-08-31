@@ -33,8 +33,7 @@ export default class PlayCard {
         }
 
         // Une carte éphémère n'a qu'une sortie de la main : être jouée, ce qui la
-        // détruit. La défausser la rendrait récupérable/rappelable — interdit, au
-        // même titre qu'une carte de base (dont le bouton est déjà masqué).
+        // détruit. La défausser la rendrait récupérable/rappelable — interdit.
         if (CardFqSystem.hasEphemeralChoice(card)) {
             createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgCantDropEphemeralCard"), {actor: Constants.actorCurrent});
             return;

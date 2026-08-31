@@ -64,7 +64,7 @@ function makePlayableCard(overrides = {}) {
                 maxSameCard: 1,
                 class: "neutral",
                 level: 1,
-                isBase: false,
+                isInnate: false,
                 choices: [makeVariableChoice()]
             }
         },
@@ -213,7 +213,7 @@ describe("card-actions.js — refreshDescription (re-rendu vivant de la descript
             id: "card-y", _id: "card-y", sort: 1,
             system: {
                 fq: {
-                    maxSameCard: 1, class: "neutral", level: 1, isBase: false,
+                    maxSameCard: 1, class: "neutral", level: 1, isInnate: false,
                     choices: [makeVariableChoice({damage: "YYYd4"})]
                 }
             }
@@ -299,7 +299,7 @@ describe("card-actions.js — refreshDescription (re-rendu vivant de la descript
             id: "card-novar", _id: "card-novar", sort: 1,
             system: {
                 fq: {
-                    maxSameCard: 1, class: "neutral", level: 1, isBase: false,
+                    maxSameCard: 1, class: "neutral", level: 1, isInnate: false,
                     choices: [makeChoice({replayable: "", damage: "1d6", targetType: "Default"})]
                 }
             }

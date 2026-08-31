@@ -26,7 +26,7 @@ Je l'ai donc rendu comme carte passive gratuite, rejouable une fois par round : 
 
 ### Versions prévues
 #### 3.0.0
-- Perdre des points de vie quand on repioche.
+- Perdre des points de vie quand on repioche. (sauf si les seuls cartes qu'on a sont les frappes runiques?)
 - A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Relire et faire un point sur la caracterisation avant tout

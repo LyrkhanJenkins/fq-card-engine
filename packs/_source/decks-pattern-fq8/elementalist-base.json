@@ -96,7 +96,7 @@
           ],
           "maxSameCard": 4,
           "level": 1,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -207,7 +207,7 @@
           ],
           "maxSameCard": 5,
           "level": 1,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -300,7 +300,7 @@
             }
           ],
           "level": 1,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -415,7 +415,7 @@
             }
           ],
           "level": 1,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -526,7 +526,7 @@
           ],
           "maxSameCard": 5,
           "level": 1,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -619,7 +619,7 @@
           ],
           "maxSameCard": 2,
           "level": 2,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -731,7 +731,7 @@
             }
           ],
           "level": 2,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -878,7 +878,7 @@
             }
           ],
           "level": 2,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -976,7 +976,7 @@
             }
           ],
           "level": 2,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -1069,7 +1069,7 @@
             }
           ],
           "level": 3,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -1169,7 +1169,7 @@
             }
           ],
           "level": 3,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -1267,7 +1267,7 @@
             }
           ],
           "level": 5,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -1393,7 +1393,7 @@
             }
           ],
           "level": 4,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -1564,7 +1564,7 @@
             }
           ],
           "level": 5,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -1662,7 +1662,7 @@
             }
           ],
           "level": 4,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -1760,7 +1760,7 @@
             }
           ],
           "level": 4,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -1896,7 +1896,7 @@
             }
           ],
           "level": 4,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -1932,7 +1932,7 @@
         "fq": {
           "maxSameCard": 1,
           "level": 2,
-          "isBase": true,
+          "isInnate": true,
           "class": "elementalist",
           "choices": [
             {
@@ -2219,7 +2219,7 @@
         "fq": {
           "maxSameCard": 2,
           "level": 6,
-          "isBase": false,
+          "isInnate": false,
           "class": "elementalist",
           "choices": [
             {
@@ -2352,7 +2352,7 @@
         "fq": {
           "maxSameCard": 2,
           "level": 6,
-          "isBase": false,
+          "isInnate": false,
           "class": "elementalist",
           "choices": [
             {
@@ -2481,7 +2481,7 @@
         "fq": {
           "maxSameCard": 2,
           "level": 6,
-          "isBase": false,
+          "isInnate": false,
           "class": "elementalist",
           "choices": [
             {
@@ -2610,7 +2610,7 @@
         "fq": {
           "maxSameCard": 2,
           "level": 6,
-          "isBase": false,
+          "isInnate": false,
           "class": "elementalist",
           "choices": [
             {
@@ -2743,7 +2743,7 @@
         "fq": {
           "maxSameCard": 1,
           "level": 7,
-          "isBase": false,
+          "isInnate": false,
           "class": "elementalist",
           "choices": [
             {

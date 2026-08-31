@@ -79,7 +79,7 @@ beforeEach(() => {
     // CombatTurn.isLocalUserFirstActiveGM() pour exécuter les opérations
     // partagées. setup.js ne fournit ni game.userId ni game.users.activeGM.
     // game.users doit rester itérable (forEach/filter/find, utilisés
-    // respectivement par drawBaseCards/drawHand/combatTurnChange) : on le
+    // respectivement par drawInnateCards/drawHand/combatTurnChange) : on le
     // remplace par un tableau (les méthodes natives suffisent) auquel on
     // attache `.activeGM`, comme le fait la vraie Collection Foundry.
     game.userId = GM_ID;
@@ -218,7 +218,7 @@ describe("hook/combat.hook.js", () => {
         });
     });
 
-    // ─── Tâche 2 : hooks de cycle de vie + garde MJ + drawBaseCards ────────
+    // ─── Tâche 2 : hooks de cycle de vie + garde MJ + drawInnateCards ────────
 
     describe("deleteCombat", () => {
         it("MJ : reset les decks, remet l'exhaustion à 0 et supprime les effets FQ", async () => {
@@ -279,14 +279,14 @@ describe("hook/combat.hook.js", () => {
         });
     });
 
-    describe("userConnected -> CombatTurn.drawBaseCards", () => {
-        it("passe uniquement les cartes de base non piochées de chaque utilisateur, de son deck vers sa main", () => {
+    describe("userConnected -> CombatTurn.drawInnateCards", () => {
+        it("passe uniquement les cartes innées non piochées de chaque utilisateur, de son deck vers sa main", () => {
             game.users = Object.assign([{id: "user-1"}], {activeGM: {id: GM_ID}});
 
-            const baseUndrawn1 = makeCard({id: "base-1", system: {fq: {isBase: true}}, drawn: false});
-            const baseUndrawn2 = makeCard({id: "base-2", system: {fq: {isBase: true}}, drawn: false});
-            const baseDrawn = makeCard({id: "base-3", system: {fq: {isBase: true}}, drawn: true});
-            const nonBase = makeCard({id: "other-1", system: {fq: {isBase: false}}, drawn: false});
+            const baseUndrawn1 = makeCard({id: "base-1", system: {fq: {isInnate: true}}, drawn: false});
+            const baseUndrawn2 = makeCard({id: "base-2", system: {fq: {isInnate: true}}, drawn: false});
+            const baseDrawn = makeCard({id: "base-3", system: {fq: {isInnate: true}}, drawn: true});
+            const nonBase = makeCard({id: "other-1", system: {fq: {isInnate: false}}, drawn: false});
 
             const deck = makeDeck(DECK_TYPE, {cards: [baseUndrawn1, baseUndrawn2, baseDrawn, nonBase]});
             const hand = makeDeck(HAND_TYPE);
@@ -304,7 +304,7 @@ describe("hook/combat.hook.js", () => {
 
         it("garde MJ : activeGM null -> avertit et n'effectue aucune opération partagée", () => {
             game.users = Object.assign([{id: "user-1"}], {activeGM: null});
-            const deck = makeDeck(DECK_TYPE, {cards: [makeCard({id: "base-1", system: {fq: {isBase: true}}, drawn: false})]});
+            const deck = makeDeck(DECK_TYPE, {cards: [makeCard({id: "base-1", system: {fq: {isInnate: true}}, drawn: false})]});
             const hand = makeDeck(HAND_TYPE);
             vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) =>
                 typeFq === DECK_TYPE ? deck : hand);

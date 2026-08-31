@@ -110,7 +110,7 @@
             }
           ],
           "level": 4,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {
@@ -245,7 +245,7 @@
             }
           ],
           "level": 4,
-          "isBase": false
+          "isInnate": false
         }
       },
       "_stats": {

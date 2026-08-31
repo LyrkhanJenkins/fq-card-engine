@@ -455,6 +455,7 @@ listesCards["Runic-Warrior Lvl5"] = listesCards["Runic-Warrior Lvl4"].concat([
 
 // FENCING MASTER
 listesCards["Fencing-Master Lvl1"] = [
+    "FQCARDTITLE.SpearThrow",
     "FQCARDTITLE.MasterStrike",
     "FQCARDTITLE.MasterStrike",
     "FQCARDTITLE.MasterStrike",

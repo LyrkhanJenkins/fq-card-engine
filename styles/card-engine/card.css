@@ -139,7 +139,7 @@
     z-index: 2;
 }
 
-.fq-card-badge--base {
+.fq-card-badge--innate {
     top: 2px;
     left: 2px;
     background: var(--fq-gold-dark);
@@ -152,7 +152,7 @@
 }
 
 /* ── États ── */
-.fq-card-is-base {
+.fq-card-is-innate {
     border-color: rgba(var(--fq-gold-rgb), 0.45);
     filter: saturate(50%) drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85));
 }

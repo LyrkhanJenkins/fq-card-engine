@@ -237,7 +237,7 @@ export default class CardSelection {
             descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
             titleSize: DisplayCard.getTitleSizeForCardSvg(name),
             ...DisplayCard.buildBubbleData(cardContent, c),
-            isFQBase: c.system?.fq?.isBase,
+            isFQInnate: c.system?.fq?.isInnate,
             cardsid: "",
             uuid: c.uuid,
             back: false,

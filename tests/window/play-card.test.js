@@ -149,12 +149,12 @@ describe("PlayCard", () => {
             expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
 
-        test("should apply card effect and pass card if FQBase flag", async () => {
+        test("should apply card effect and pass card if FQInnate flag", async () => {
             const cardContent = {};
             const card = {
                 id: "mockCardId", _id: "mockCardId",
                 back: {img: "mockImg"}, origin: {name: "mockName"},
-                system: {fq: {isBase: true}}
+                system: {fq: {isInnate: true}}
             };
             const currentCards = {pass: vi.fn().mockResolvedValue()};
 

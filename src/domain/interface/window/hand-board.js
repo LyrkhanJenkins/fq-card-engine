@@ -84,9 +84,9 @@ export default class HandBoard {
                 t.update();
                 // Révélation cosmétique : uniquement pour le joueur qui pioche
                 // (`userId` local) et uniquement pour les cartes réellement piochées
-                // (`drawn`), quelle que soit la méthode de pioche. Les cartes de base
-                // (`isBase`), distribuées automatiquement, ne déclenchent pas la révélation.
-                if (userId === game.user.id && target.drawn && !target.system?.fq?.isBase) {
+                // (`drawn`), quelle que soit la méthode de pioche. Les cartes innées
+                // (`isInnate`), distribuées automatiquement, ne déclenchent pas la révélation.
+                if (userId === game.user.id && target.drawn && !target.system?.fq?.isInnate) {
                     t.bufferDrawReveal(target);
                 }
             }
@@ -141,7 +141,7 @@ export default class HandBoard {
             ...DisplayCard.buildBubbleData(cardContent, c),
             hasBeenPlayed: cardContent?.hasBeenPlayed,
             isPlayedThisRound: CardFqSystem.isPlayedThisRound(cardContent),
-            isFQBase: c.system?.fq?.isBase,
+            isFQInnate: c.system?.fq?.isInnate,
             isGenerated: Date.now() - (c.flags?.[FqCardEngineModule.moduleName]?.generatedAt ?? 0) < GENERATED_GLOW_DURATION_MS,
             // Le verdict s'évalue avec le personnage de l'utilisateur LOCAL : pas de
             // glow sur les barres qui affichent la main d'un autre joueur (vue MJ).

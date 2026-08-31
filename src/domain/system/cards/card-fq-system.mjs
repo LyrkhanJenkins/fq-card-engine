@@ -130,7 +130,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
 
     /**
      * Définit le schéma de données FQ d'une carte : nombre max d'exemplaires,
-     * classe, niveau, indicateur de carte de base, et la liste des choix jouables.
+     * classe, niveau, indicateur de carte innée, et la liste des choix jouables.
      *
      * @inheritdoc
      * @returns {object} Le schéma de données FQ de la carte.
@@ -145,7 +145,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                     initial: () => this.NEUTRAL_CLASS
                 }),
                 level: new NumberField({required: true, label: "FQCARDENGINE.CardLevel"}),
-                isBase: new BooleanField({required: true, label: "FQCARDENGINE.CardFQBase"}),
+                isInnate: new BooleanField({required: true, label: "FQCARDENGINE.CardFQInnate"}),
                 choices: new ArrayField(this.getChoiceSchema())
             })
         };

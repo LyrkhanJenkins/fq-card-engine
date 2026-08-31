@@ -105,7 +105,7 @@
 
         {{!-- Carte --}}
         <div class="fq-play-card-wrap">
-            <div class="fq-play-card-img{{#if back}} fq-play-card-img--back{{/if}}{{#if isFQBase}} fq-card-is-base{{/if}}{{#if
+            <div class="fq-play-card-img{{#if back}} fq-play-card-img--back{{/if}}{{#if isFQInnate}} fq-card-is-innate{{/if}}{{#if
                     isPlayedThisRound}} has-been-played-on-round {{else}}{{#if hasBeenPlayed}} has-been-played{{/if}}{{/if}}">
 
                 {{#if back}}
@@ -130,8 +130,8 @@
                     }}
                 {{/if}}
             </div>
-            {{#if isFQBase}}
-                <span class="fq-play-badge fq-play-badge--base">Base</span>
+            {{#if isFQInnate}}
+                <span class="fq-play-badge fq-play-badge--innate">Innée</span>
             {{/if}}
             {{#if isPlayedThisRound}}
                 <span class="fq-play-badge fq-play-badge--exhausted">Épuisée ce tour</span>

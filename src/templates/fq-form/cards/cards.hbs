@@ -7,7 +7,7 @@
         <strong class="name">{{localize "DOCUMENT.FIELDS.name.label"}}</strong>
         <span class="drawn">{{localize "FQCARDENGINE.CardLevel"}}</span>
         <span class="drawn">{{localize "FQCARDENGINE.MaxSameCardShort"}}</span>
-        <span class="drawn">{{localize "FQCARDENGINE.CardFQBaseShort"}}</span>
+        <span class="drawn">{{localize "FQCARDENGINE.CardFQInnateShort"}}</span>
         <span class="drawn">{{localize "CARD.FIELDS.drawn.label"}}</span>
         {{#if @root.user.isGM }}
             <span class="faces">{{localize "CARD.FIELDS.face.label"}}</span>
@@ -37,7 +37,7 @@
                 <div class="drawn">{{card.system.fq.level}}</div>
                 <div class="drawn">{{card.system.fq.maxSameCard}}</div>
                 <div class="drawn">
-                    <input type="checkbox" class="card-value" {{checked card.system.fq.isBase}} disabled>
+                    <input type="checkbox" class="card-value" {{checked card.system.fq.isInnate}} disabled>
                 </div>
                 <div class="drawn">
                     <input type="checkbox" class="value" {{checked card.drawn}} disabled>
