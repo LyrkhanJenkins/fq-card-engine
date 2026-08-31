@@ -416,6 +416,23 @@ describe("CardCondition — état du personnage", () => {
         expect(CardCondition.missingHp({system: {attributes: {hp: {value: 1, max: 2}}}})).toBe(true);
         expect(CardCondition.missingHp(undefined)).toBe(false);
     });
+
+    it("hasEquippedShield : un bouclier équipé, et rien d’autre, satisfait la condition", () => {
+        const shield = {type: "equipment", system: {equipped: true, type: {value: "shield"}}};
+        const armor = {type: "equipment", system: {equipped: true, type: {value: "heavy"}}};
+        const stowedShield = {type: "equipment", system: {equipped: false, type: {value: "shield"}}};
+        const shieldWeapon = {type: "weapon", system: {equipped: true, type: {value: "shield"}}};
+
+        mountScene({character: {id: "me", items: [armor, shield]}});
+        expect(CardCondition.hasEquippedShield()).toBe(true);
+
+        mountScene({character: {id: "me", items: [armor, stowedShield, shieldWeapon]}});
+        expect(CardCondition.hasEquippedShield()).toBe(false);
+
+        expect(CardCondition.hasEquippedShield({items: [shield]})).toBe(true);
+        expect(CardCondition.hasEquippedShield({items: []})).toBe(false);
+        expect(CardCondition.hasEquippedShield(undefined)).toBe(false);
+    });
 });
 
 describe("CardCondition.isReactiveReady — verdict du glow des réactifs", () => {

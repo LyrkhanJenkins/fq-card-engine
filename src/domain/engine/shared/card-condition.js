@@ -641,6 +641,21 @@ export default class CardCondition {
         return hp != null && hp.value < hp.max;
     }
 
+    /**
+     * Indique si un acteur porte un bouclier équipé (équipement dnd5e dont
+     * `system.type.value` vaut `shield`) — le prérequis des cartes qui frappent
+     * ou parent AVEC le bouclier, pendant du garde-fou d’arme des jetons
+     * `@wpnM`/`@wpnR` (cf. `WeaponDamage.getEquippedWeapon`).
+     *
+     * @param {object} [actor] - L’acteur ; à défaut, le personnage de l’utilisateur.
+     *
+     * @returns {boolean} True si un bouclier équipé est porté.
+     */
+    static hasEquippedShield(actor = Constants.actorCurrent) {
+        const equipped = actor?.items?.filter(i => i.type === "equipment" && i.system?.equipped) ?? [];
+        return equipped.some(i => i.system?.type?.value === "shield");
+    }
+
     /* ------------------------------------------------------------------ */
     /* Prédicats sur la pioche et la main                                  */
     /* ------------------------------------------------------------------ */
