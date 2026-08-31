@@ -1,8 +1,7 @@
 {
   "scripts": {
-    "build": "npm run build:generateDecks && npm run build:db",
+    "build": "npm run build:db",
     "build:db": "node ./utils/packs.mjs package pack",
-    "build:generateDecks": "node utils/create_generated_decks.js",
     "build:json": "node ./utils/packs.mjs package unpack",
     "test": "vitest run",
     "test:watch": "vitest",

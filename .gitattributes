@@ -1,7 +1,7 @@
 # Fins de ligne : dépôt ET copie de travail en LF.
 #
 # Les outils qui réécrivent des fichiers entiers écrivent toujours en \n
-# (utils/packs.mjs pour build:json / build:db, utils/create_generated_decks.js).
+# (utils/packs.mjs pour build:json / build:db).
 # Sans cette règle, core.autocrlf restitue du CRLF au checkout et la moindre
 # extraction rejoue une différence de fins de ligne sur tout le fichier.
 * text=auto eol=lf

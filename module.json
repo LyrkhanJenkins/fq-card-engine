@@ -153,18 +153,6 @@
       "flags": {}
     },
     {
-      "name": "decks-fq8-generated",
-      "label": "Decks FQ8 (Generated)",
-      "path": "packs/decks-fq8-generated",
-      "type": "Cards",
-      "system": "dnd5e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      },
-      "flags": {}
-    },
-    {
       "name": "classes-fq8",
       "label": "Classes (FQ8)",
       "path": "packs/classes-fq8",
@@ -284,8 +272,7 @@
           "sorting": "m",
           "color": "#317d0e",
           "packs": [
-            "decks-pattern-fq8",
-            "decks-fq8-generated"
+            "decks-pattern-fq8"
           ],
           "folders": []
         },

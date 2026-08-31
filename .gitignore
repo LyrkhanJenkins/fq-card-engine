@@ -1,7 +1,6 @@
 # Build Artifacts
 packs/*
 !packs/_source/
-packs/_source/decks-fq8-generated
 # Assets
 assets/*
 !assets/.gitkeep
