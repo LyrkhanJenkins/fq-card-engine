@@ -279,8 +279,9 @@ export default class CombatTurn {
      * deck : tant qu'il reste assez de cartes disponibles, c'est une pioche
      * normale ; sinon la défausse est d'abord ramenée dans le deck
      * (cf. {@link TradingCards.recallCardsFromPiles}, alerte de remélange à tous
-     * les clients) et le tirage se complète avec les cartes recyclées. Source
-     * unique de la pioche pour le
+     * les clients), le tirage se complète avec les cartes recyclées et le
+     * personnage paie la fatigue du remélange
+     * (cf. {@link CombatTurn.applyDeckFatigue}). Source unique de la pioche pour le
      * début de tour ET pour les cartes qui font piocher : une carte ne doit jamais
      * échouer faute de cartes alors que la défausse est pleine.
      *
@@ -305,7 +306,8 @@ export default class CombatTurn {
         const remainingIds = deck.availableCards.map(c => c.id);
         const recalled = await TradingCards.recallCardsFromPiles(deck);
         if (recalled > 0) {
-            socket.executeForEveryone("deckShuffledAlert", user.id, actor.name);
+            const fatigue = await CombatTurn.applyDeckFatigue(actor);
+            socket.executeForEveryone("deckShuffledAlert", user.id, actor.name, fatigue);
         }
         const recycled = deck.availableCards.filter(c => !remainingIds.includes(c.id));
         const missing = count - remainingIds.length;
@@ -314,5 +316,36 @@ export default class CombatTurn {
             await CombatTurn.passCards(user, hand, deck, drawIds);
         }
         return drawIds.length;
+    }
+
+    /**
+     * Applique la fatigue due au remélange de la défausse : le personnage gagne un
+     * rang d'épuisement, puis subit des dégâts égaux à son niveau AUGMENTÉS DU CARRÉ
+     * de ce nouveau rang. Le terme quadratique fait que le coût croît bien plus vite
+     * que le nombre de remélanges — un deck assez fourni pour ne s'épuiser qu'une ou
+     * deux fois par combat s'en tire à peu de frais, alors qu'un deck assez court
+     * pour tourner en boucle devient intenable ; le terme de niveau maintient la
+     * morsure à mesure que les points de vie grimpent. L'épuisement accumulé est
+     * remis à zéro à la suppression du combat (hook `deleteCombat`).
+     *
+     * @param {object} actor - Le personnage qui a dû remélanger sa défausse.
+     *
+     * @returns {Promise<{level: number, damage: number}|null>} Le bilan à afficher
+     *          au joueur (rang d'épuisement atteint et points de vie perdus), ou
+     *          null si l'acteur n'expose pas d'attributs.
+     */
+    static async applyDeckFatigue(actor) {
+        const attributes = actor?.system?.attributes;
+        if (!attributes) {
+            return null;
+        }
+        const fatigue = (Number(attributes.exhaustion) || 0) + 1;
+        const characterLevel = Number(actor.system?.details?.level) || 1;
+        const damage = characterLevel + (fatigue * fatigue);
+        await actor.update({
+            "system.attributes.exhaustion": fatigue,
+            "system.attributes.hp.value": (Number(attributes.hp?.value) || 0) - damage
+        });
+        return {level: fatigue, damage};
     }
 }

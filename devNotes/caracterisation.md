@@ -353,6 +353,7 @@ montée en puissance par deck-building en cours de combat.
 **Mécaniques signature** :
 - **Seul les frappes runiques pour généré des runes consomme de la mana**
 - **Gravure = deck-building en combat** : les cartes de gravure proposent N runes d'une couleur au choix
+- Seul classe a pouvoir diminuer la fatigue (augmenter et provoquant des dégâts quand on repioche)
 - **Identité des trois couleurs** : 
   - **Rouge** = dégâts ET critique ; abilité améliorants : Force
     - Ulti : Immortel avec 1 pv, dégâts augmentés par les runes rouges. coutant 8 de zèle

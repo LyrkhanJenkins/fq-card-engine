@@ -41,15 +41,15 @@
     left: 0;
     right: 0;
     padding: 0.3em 4vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15em;
     text-align: center;
     pointer-events: none;
-    font-size: clamp(1.8rem, 5vw, 3.6rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: rgba(var(--fq-cream-rgb), 0.98);
-    text-shadow: 0 0 22px var(--fq-gold-glow),
-                 0 2px 10px rgba(var(--fq-black-rgb), 0.9);
     background: linear-gradient(90deg,
         rgba(var(--fq-gold-rgb), 0) 0%,
         rgba(var(--fq-gold-rgb), 0.22) 18%,
@@ -61,9 +61,47 @@
     opacity: 0;
 }
 
+/* Le titre doré : la ligne « défausse mélangée dans le deck ». */
+.fq-draw-reveal-banner-title {
+    font-size: clamp(1.8rem, 5vw, 3.6rem);
+    color: rgba(var(--fq-cream-rgb), 0.98);
+    text-shadow: 0 0 22px var(--fq-gold-glow),
+                 0 2px 10px rgba(var(--fq-black-rgb), 0.9);
+}
+
+/* Le prix du remélange : rang de fatigue et points de vie perdus, en rouge sous
+   le titre. Plus petit que lui, mais assez vif pour être lu au premier coup d'œil. */
+.fq-draw-reveal-banner-fatigue {
+    font-size: clamp(1.1rem, 3vw, 2.1rem);
+    letter-spacing: 0.08em;
+    color: rgba(var(--fq-danger-d-rgb), 1);
+    text-shadow: 0 0 18px rgba(var(--fq-danger-b-rgb), 0.85),
+                 0 2px 8px rgba(var(--fq-black-rgb), 0.95);
+}
+
 .fq-draw-reveal-overlay.fq-draw-reveal-in .fq-draw-reveal-banner {
-    animation: fq-draw-reveal-banner-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1.2) forwards,
-               fq-draw-reveal-banner-pulse 1.6s ease-in-out 0.55s infinite;
+    animation: fq-draw-reveal-banner-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1.2) forwards;
+}
+
+.fq-draw-reveal-overlay.fq-draw-reveal-in .fq-draw-reveal-banner-title {
+    animation: fq-draw-reveal-banner-pulse 1.6s ease-in-out 0.55s infinite;
+}
+
+/* Le halo pulsé reste sur le titre ; le bilan de fatigue bat en rouge, en écho. */
+.fq-draw-reveal-overlay.fq-draw-reveal-in .fq-draw-reveal-banner-fatigue {
+    animation: fq-draw-reveal-fatigue-pulse 1.6s ease-in-out 0.55s infinite;
+}
+
+@keyframes fq-draw-reveal-fatigue-pulse {
+    0%, 100% {
+        text-shadow: 0 0 18px rgba(var(--fq-danger-b-rgb), 0.85),
+                     0 2px 8px rgba(var(--fq-black-rgb), 0.95);
+    }
+    50% {
+        text-shadow: 0 0 28px rgba(var(--fq-danger-b-rgb), 1),
+                     0 0 52px rgba(var(--fq-danger-mid-rgb), 0.9),
+                     0 2px 8px rgba(var(--fq-black-rgb), 0.95);
+    }
 }
 
 @keyframes fq-draw-reveal-banner-in {

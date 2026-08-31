@@ -26,6 +26,7 @@ Feat :
 - Macro pour faire fin du tour
 - Effets Rationalisé (Terre, Air, Feu, Malédiction, Poison...etc) + Conditions dnd5e
 - Les cartes de base deviennent "innés" et peuvent être supprimer
+- La fatigue fais des dégâts à chaque fois que l'on repioche sa défausse dans son deck. -> le guerrier runique a une carte pour se proteger de la fatigue
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

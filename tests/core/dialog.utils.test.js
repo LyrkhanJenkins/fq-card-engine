@@ -76,10 +76,22 @@ describe("core/utils/dialog.utils.js", () => {
         it("joueur concerné : pas de dialogue, pose le drapeau pour la bannière de révélation", async () => {
             vi.setSystemTime(1700000000000);
 
-            await showDeckShuffledAlert("local-user", "Lyrkhan");
+            await showDeckShuffledAlert("local-user", "Lyrkhan", {level: 2, damage: 4});
 
             expect(instances).toHaveLength(0);
-            expect(FqCardEngineModule.pendingShuffleReveal).toBe(1700000000000);
+            expect(FqCardEngineModule.pendingShuffleReveal).toEqual({
+                at: 1700000000000,
+                fatigue: {level: 2, damage: 4}
+            });
+        });
+
+        it("autre client : le bilan de fatigue est accolé au message d'alerte", async () => {
+            game.i18n.format = vi.fn(key => key);
+            game.i18n.localize = vi.fn(key => key);
+
+            await showDeckShuffledAlert("other-user", "Lyrkhan", {level: 2, damage: 4});
+
+            expect(instances[0].config.content).toContain("FQCARDENGINE.InfoMsgDeckFatigue");
         });
     });
 });

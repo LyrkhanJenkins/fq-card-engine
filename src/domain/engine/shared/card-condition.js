@@ -618,6 +618,19 @@ export default class CardCondition {
     }
 
     /**
+     * Indique si un acteur porte au moins `n` rangs d'épuisement — le prérequis
+     * des cartes qui soignent la fatigue, qui ne doivent pas se jouer à vide.
+     *
+     * @param {number} [n]     - Le minimum requis (défaut 1).
+     * @param {object} [actor] - L'acteur ; à défaut, le personnage de l'utilisateur.
+     *
+     * @returns {boolean} True si l'épuisement de l'acteur atteint `n`.
+     */
+    static hasExhaustion(n = 1, actor = Constants.actorCurrent) {
+        return (Number(actor?.system?.attributes?.exhaustion) || 0) >= n;
+    }
+
+    /**
      * Indique si le personnage s'est défaussé d'au moins `n` cartes pendant le
      * tour courant (compteur `fq.cards.currentDrop`, remis à zéro à chaque tour).
      *
@@ -671,6 +684,24 @@ export default class CardCondition {
      */
     static deckHasCards(card, n = 1) {
         return TradingCards.countAvailableCards(card?.source) >= n;
+    }
+
+    /**
+     * Indique si le deck d'origine d'une carte compte au moins `n` cartes, TOUTES
+     * cartes confondues : celles qui restent à piocher, celles déjà tirées (elles
+     * demeurent dans le deck marquées `drawn` le temps du combat) et les cartes
+     * générées qu'un remélange y a recyclées. Mesure donc la taille réelle du deck
+     * constitué, et non ce qu'il reste à en tirer
+     * (cf. {@link CardCondition.deckHasCards}) : le garde-fou des cartes qu'un deck
+     * trop court ne doit pas pouvoir exploiter en boucle.
+     *
+     * @param {Card}   card - La carte (sa `source` désigne le deck d'origine).
+     * @param {number} [n]  - La taille minimale requise (défaut 1).
+     *
+     * @returns {boolean} True si le deck atteint `n` cartes.
+     */
+    static deckSizeAtLeast(card, n = 1) {
+        return (card?.source?.cards?.size ?? 0) >= n;
     }
 
     /**

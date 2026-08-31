@@ -528,12 +528,14 @@ describe("hook/combat.hook.js", () => {
             expect(sampleSpy).toHaveBeenCalledWith([{id: "p1"}, {id: "p2"}, {id: "p3"}], 2);
             expect(socket.executeAsUser).toHaveBeenCalledTimes(1);
             expect(socket.executeAsUser).toHaveBeenCalledWith("passCards", "player-user", "hand-1", "deck-1", ["r1", "p2", "p1"]);
-            // L'épuisement n'est plus infligé quand le deck se vide : la règle a été
-            // retirée de `drawWithRecall`, la pioche se contente de remélanger.
-            expect(combatant.actor.update.mock.calls.flat()
-                .some(update => "system.attributes.exhaustion" in update)).toBe(false);
+            // Remélanger coûte un rang d'épuisement et son carré en points de vie.
+            expect(combatant.actor.update).toHaveBeenCalledWith({
+                "system.attributes.exhaustion": 1,
+                "system.attributes.hp.value": 8
+            });
             // L'alerte « deck mélangé » est diffusée à tous, plus de message de chat
-            expect(socket.executeForEveryone).toHaveBeenCalledWith("deckShuffledAlert", "player-user", "player-actor");
+            expect(socket.executeForEveryone).toHaveBeenCalledWith("deckShuffledAlert", "player-user",
+                "player-actor", {level: 1, damage: 2});
             expect(ChatMessage.create).not.toHaveBeenCalled();
         });
 
@@ -571,11 +573,13 @@ describe("hook/combat.hook.js", () => {
             expect(recallSpy).toHaveBeenCalledWith(deck);
             expect(socket.executeAsUser).toHaveBeenCalledTimes(1);
             expect(socket.executeAsUser).toHaveBeenCalledWith("passCards", "player-user", "hand-1", "deck-1", ["p1"]);
-            // L'épuisement n'est plus infligé quand le deck se vide : la règle a été
-            // retirée de `drawWithRecall`, la pioche se contente de remélanger.
-            expect(combatant.actor.update.mock.calls.flat()
-                .some(update => "system.attributes.exhaustion" in update)).toBe(false);
-            expect(socket.executeForEveryone).toHaveBeenCalledWith("deckShuffledAlert", "player-user", "player-actor");
+            // Remélanger coûte un rang d'épuisement et son carré en points de vie.
+            expect(combatant.actor.update).toHaveBeenCalledWith({
+                "system.attributes.exhaustion": 1,
+                "system.attributes.hp.value": 8
+            });
+            expect(socket.executeForEveryone).toHaveBeenCalledWith("deckShuffledAlert", "player-user",
+                "player-actor", {level: 1, damage: 2});
         });
 
         it("tour d'un joueur, deck vide et rien à recycler : aucune pioche, aucun épuisement", async () => {
@@ -607,8 +611,7 @@ describe("hook/combat.hook.js", () => {
 
             expect(recallSpy).toHaveBeenCalledWith(deck);
             expect(socket.executeAsUser).not.toHaveBeenCalled();
-            // L'épuisement n'est plus infligé quand le deck se vide : la règle a été
-            // retirée de `drawWithRecall`, la pioche se contente de remélanger.
+            // Aucun remélange n'a eu lieu (défausses vides) : pas de fatigue à payer.
             expect(combatant.actor.update.mock.calls.flat()
                 .some(update => "system.attributes.exhaustion" in update)).toBe(false);
             // Rien recyclé : pas d'alerte « deck mélangé »

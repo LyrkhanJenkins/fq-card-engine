@@ -417,6 +417,19 @@ describe("CardCondition — état du personnage", () => {
         expect(CardCondition.missingHp(undefined)).toBe(false);
     });
 
+    it("hasExhaustion : rangs d'épuisement portés par le personnage", () => {
+        mountScene({character: {id: "me", system: {attributes: {exhaustion: 2}}}});
+        expect(CardCondition.hasExhaustion()).toBe(true);
+        expect(CardCondition.hasExhaustion(2)).toBe(true);
+        expect(CardCondition.hasExhaustion(3)).toBe(false);
+
+        mountScene({character: {id: "me", system: {attributes: {exhaustion: 0}}}});
+        expect(CardCondition.hasExhaustion()).toBe(false);
+
+        mountScene({character: {id: "me"}});
+        expect(CardCondition.hasExhaustion()).toBe(false);
+    });
+
     it("hasEquippedShield : un bouclier équipé, et rien d’autre, satisfait la condition", () => {
         const shield = {type: "equipment", system: {equipped: true, type: {value: "shield"}}};
         const armor = {type: "equipment", system: {equipped: true, type: {value: "heavy"}}};
@@ -494,6 +507,16 @@ describe("CardCondition — pioche et main", () => {
         expect(CardCondition.deckHasCards(card, 7)).toBe(true);
         expect(CardCondition.deckHasCards(card, 8)).toBe(false);
         expect(CardCondition.deckHasCards(undefined)).toBe(false);
+    });
+
+    it("deckSizeAtLeast : taille du deck constitué, cartes déjà tirées comprises", () => {
+        // `deckHasCards` ne verrait ici que 7 cartes piochables ; la taille du deck,
+        // elle, en compte 10 — les 3 déjà tirées y restent le temps du combat.
+        const card = {source: {cards: {size: 10}, drawnCards: [1, 2, 3]}};
+        expect(CardCondition.deckSizeAtLeast(card, 10)).toBe(true);
+        expect(CardCondition.deckSizeAtLeast(card, 11)).toBe(false);
+        expect(CardCondition.deckHasCards(card, 10)).toBe(false);
+        expect(CardCondition.deckSizeAtLeast(undefined, 1)).toBe(false);
     });
 
     it("handHasOtherCards : autres cartes dans la main (la carte exclue)", () => {

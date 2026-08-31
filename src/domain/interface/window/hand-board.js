@@ -2,6 +2,7 @@ import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-car
 import DisplayCard from "../card-svg/display-card.js";
 import CardCondition from "../../engine/shared/card-condition.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
+import {formatFatigue} from "../../../core/utils/dialog.utils.js";
 
 const GENERATED_GLOW_DURATION_MS = 24000;
 
@@ -659,12 +660,24 @@ export default class HandBoard {
         stage.className = "fq-draw-reveal-stage";
         overlay.appendChild(stage);
 
-        const shuffledAt = FqCardEngineModule.pendingShuffleReveal;
+        // Bannière de remélange : le titre doré, et sous lui le bilan de fatigue en
+        // rouge quand le remélange a coûté un rang d'épuisement et des points de vie.
+        const shuffleReveal = FqCardEngineModule.pendingShuffleReveal;
         FqCardEngineModule.pendingShuffleReveal = null;
-        if (shuffledAt && (Date.now() - shuffledAt) < 10000) {
+        if (shuffleReveal && (Date.now() - shuffleReveal.at) < 10000) {
             const banner = document.createElement("div");
             banner.className = "fq-draw-reveal-banner";
-            banner.textContent = game.i18n.localize("FQCARDENGINE.InfoMsgDeckShuffledSelf");
+            const title = document.createElement("span");
+            title.className = "fq-draw-reveal-banner-title";
+            title.textContent = game.i18n.localize("FQCARDENGINE.InfoMsgDeckShuffledSelf");
+            banner.appendChild(title);
+            const fatigueText = formatFatigue(shuffleReveal.fatigue);
+            if (fatigueText) {
+                const fatigueLine = document.createElement("span");
+                fatigueLine.className = "fq-draw-reveal-banner-fatigue";
+                fatigueLine.textContent = fatigueText;
+                banner.appendChild(fatigueLine);
+            }
             overlay.appendChild(banner);
         }
 

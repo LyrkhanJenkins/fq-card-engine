@@ -22,7 +22,7 @@ const {socket} = await import("../../src/hook/integration/socketlib.hook.js");
 const makeUser = (active = true) => ({id: "user-1", active});
 const makeActor = () => ({
     name: "Perso",
-    system: {attributes: {exhaustion: 0, hp: {value: 10, max: 10}}},
+    system: {attributes: {exhaustion: 0, hp: {value: 30, max: 30}}, details: {level: 3}},
     update: vi.fn()
 });
 
@@ -58,7 +58,8 @@ describe("CombatTurn.drawWithRecall — remélange de la défausse quand le deck
         const drawn = await CombatTurn.drawWithRecall(makeUser(), makeActor(), {id: "hand-1"}, deck, 2);
 
         expect(order).toEqual(["recall", "draw"]);
-        expect(socket.executeForEveryone).toHaveBeenCalledWith("deckShuffledAlert", "user-1", "Perso");
+        expect(socket.executeForEveryone).toHaveBeenCalledWith("deckShuffledAlert", "user-1", "Perso",
+            {level: 1, damage: 4});
         // Une seule pioche groupée : la carte restante puis les recyclées tirées au hasard.
         expect(socket.executeAsUser).toHaveBeenCalledWith("passCards", "user-1", "hand-1", "deck-1", ["reste", "p2"]);
         expect(drawn).toBe(2);
@@ -76,9 +77,36 @@ describe("CombatTurn.drawWithRecall — remélange de la défausse quand le deck
         expect(drawn).toBe(1);
     });
 
-    it("aucun rang d'épuisement n'est infligé quand le deck se vide", async () => {
+    it("remélange : un rang d'épuisement de plus, et des dégâts au carré de ce rang", async () => {
         vi.spyOn(TradingCards, "recallCardsFromPiles").mockResolvedValue(3);
         vi.spyOn(TradingCards, "sampleCardIds").mockReturnValue(["p1"]);
+        const actor = makeActor();
+
+        await CombatTurn.drawWithRecall(makeUser(), actor, {id: "hand-1"}, {id: "deck-1", availableCards: []}, 2);
+
+        expect(actor.update).toHaveBeenCalledWith({
+            "system.attributes.exhaustion": 1,
+            "system.attributes.hp.value": 26
+        });
+    });
+
+    it("le coût enfle au carré : au niveau 3, un troisième remélange coûte 12 PV, pas 4", async () => {
+        vi.spyOn(TradingCards, "recallCardsFromPiles").mockResolvedValue(3);
+        vi.spyOn(TradingCards, "sampleCardIds").mockReturnValue(["p1"]);
+        const actor = makeActor();
+        actor.system.attributes.exhaustion = 2;
+
+        await CombatTurn.drawWithRecall(makeUser(), actor, {id: "hand-1"}, {id: "deck-1", availableCards: []}, 2);
+
+        expect(actor.update).toHaveBeenCalledWith({
+            "system.attributes.exhaustion": 3,
+            "system.attributes.hp.value": 18
+        });
+    });
+
+    it("rien à recycler : aucune fatigue, le deck s'épuise sans être remélangé", async () => {
+        vi.spyOn(TradingCards, "recallCardsFromPiles").mockResolvedValue(0);
+        vi.spyOn(TradingCards, "sampleCardIds").mockReturnValue([]);
         const actor = makeActor();
 
         await CombatTurn.drawWithRecall(makeUser(), actor, {id: "hand-1"}, {id: "deck-1", availableCards: []}, 2);
