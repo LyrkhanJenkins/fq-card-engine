@@ -1,5 +1,6 @@
 import DisplayCard from "../card-svg/display-card.js";
-import {buildSpellbookGroups} from "../../engine/shared/spellbook-grid.js";
+import {buildSpellbookGroups, computeCopyState, computeToggleAction} from "../../engine/shared/spellbook-grid.js";
+import TradingCards from "../../trading/trading-cards.js";
 
 /** Icône Font Awesome par état de distribution (aucune pour "none"). */
 const COPY_STATE_ICONS = {
@@ -39,6 +40,9 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             resizable: false,
             positioned: true,
             minimizable: true
+        },
+        actions: {
+            fqToggleCopy: SpellbookWindow.#onToggleCopy
         }
     };
 
@@ -190,8 +194,24 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         this.#preparedGroups = buildSpellbookGroups(this.spellBook.cards.contents, this.deck);
         return {
             isEmpty: this.#preparedGroups.isEmpty,
+            combatLocked: SpellbookWindow.isCombatLocked(),
             groups: this.#preparedGroups.groups.map(({classKey, classLabel, count}) => ({classKey, classLabel, count}))
         };
+    }
+
+    /**
+     * Bascule le modificateur `fq-spellbook-window--combat-locked` sur
+     * l'élément racine de la fenêtre (D2-06) : grille désaturée, curseur
+     * d'interdiction, bannière visible — l'affichage seul, la garde réelle
+     * vit dans `toggleCardCopies` (re-vérifiée à chaque clic, D2-06/D2-07).
+     *
+     * @param {Element} rootElement - L'élément racine de la fenêtre (`this.element`).
+     * @param {boolean} locked      - Vrai si un combat est actif.
+     *
+     * @returns {void}
+     */
+    static applyCombatLock(rootElement, locked) {
+        rootElement.classList.toggle("fq-spellbook-window--combat-locked", locked);
     }
 
     /**
@@ -203,6 +223,8 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      * @returns {Promise<void>}
      */
     async _onRender(_context, _options) {
+        const combatLocked = SpellbookWindow.isCombatLocked();
+        SpellbookWindow.applyCombatLock(this.element, combatLocked);
         if (this.#preparedGroups.isEmpty) {
             return;
         }
@@ -245,8 +267,9 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             }
             el.classList.add("fq-spellbook-card");
             el.setAttribute("draggable", "false");
+            el.dataset.action = "fqToggleCopy";
             SpellbookWindow.applyNameTooltip(el);
-            this.#applyCopyState(el, entries[i].copies);
+            SpellbookWindow.applyCopyState(el, entries[i].copies);
             const level = Number(entries[i].card?.system?.fq?.level) || 0;
             SpellbookWindow.applyLevelBadge(el, level);
             container.appendChild(el);
@@ -258,14 +281,17 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      * (`fq-spellbook-card--{state}`) et le badge `n/N` correspondant, inséré
      * dans `.fq-card-inner` (miroir du badge « Innée » existant). Le badge est
      * construit via `document.createElement`/`textContent`, jamais par
-     * affectation de HTML brut (T-01-02).
+     * affectation de HTML brut (T-01-02). N'ADD/n'APPEND jamais après un
+     * nettoyage : un second appel sur une carte déjà peuplée empile classe
+     * d'état et badge (voir `patchCopyState`, qui nettoie avant de rappeler
+     * cette méthode).
      *
      * @param {Element} cardElement - L'élément racine de la carte rendue.
      * @param {{count: number, max: number, state: string}} copies - L'état de distribution déjà calculé.
      *
      * @returns {void}
      */
-    #applyCopyState(cardElement, copies) {
+    static applyCopyState(cardElement, copies) {
         const {count, max, state} = copies;
         cardElement.classList.add(`fq-spellbook-card--${state}`);
 
@@ -290,6 +316,107 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
                 ? game.i18n.format(COPY_STATE_TOOLTIP_KEYS.partial, {n: count, total: max})
                 : game.i18n.format(COPY_STATE_TOOLTIP_KEYS.full, {total: max});
         inner.appendChild(badge);
+    }
+
+    /**
+     * Nettoie la classe d'état et le badge `n/N` déjà posés sur une carte
+     * rendue avant de rappeler `applyCopyState`, qui ne fait jamais que
+     * ajouter/append (jamais remplacer) : un second appel sans ce nettoyage
+     * préalable empilerait deux badges et deux classes d'état.
+     *
+     * @param {Element} cardElement - L'élément racine de la carte déjà rendue.
+     * @param {{count: number, max: number, state: string}} copies - Le nouvel état de distribution.
+     *
+     * @returns {void}
+     */
+    static patchCopyState(cardElement, copies) {
+        cardElement.classList.remove(
+            "fq-spellbook-card--none", "fq-spellbook-card--partial", "fq-spellbook-card--full"
+        );
+        cardElement.querySelector(".fq-spellbook-card-badge")?.remove();
+        SpellbookWindow.applyCopyState(cardElement, copies);
+    }
+
+    /**
+     * Prédicat unique de combat actif du module (D2-06/D2-07) : dérivé de
+     * `game.combat`, jamais d'exception pour le MJ. Doit être re-vérifié à
+     * chaque clic, pas seulement au rendu — la fenêtre est une photo de
+     * l'instant T (D-05/D-07 de la phase 1) et un combat peut démarrer après
+     * son ouverture.
+     *
+     * @returns {boolean} Vrai si un combat est actif.
+     */
+    static isCombatLocked() {
+        return !!game.combat;
+    }
+
+    /**
+     * Cœur testable du geste de bascule au clic (COPY-01..05, BOOK-04) :
+     * verrou anti double-clic (D2-09), garde de combat re-vérifiée à chaque
+     * clic (D2-06/D2-07), décision pure via `computeToggleAction`, mutation
+     * groupée du deck (D2-11/D2-12), puis patch chirurgical du badge — jamais
+     * de re-fetch ni d'abonnement à un hook Foundry (D2-10, Pitfall 3 : la
+     * collection locale du deck est déjà à jour au retour de la promesse).
+     * Aucune boîte de confirmation, dans aucun des deux sens (D2-05).
+     *
+     * @param {Element} cardElement - L'élément racine de la carte cliquée.
+     * @param {Card}    card        - La carte du grimoire concernée.
+     * @param {Cards}   deck        - Le deck du joueur, cible de la mutation.
+     *
+     * @returns {Promise<void>}
+     */
+    static async toggleCardCopies(cardElement, card, deck) {
+        if (cardElement.dataset.busy === "true") {
+            return;
+        }
+        if (SpellbookWindow.isCombatLocked()) {
+            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.SpellBookCombatLockedBanner"));
+            return;
+        }
+
+        const {action, count} = computeToggleAction(computeCopyState(card, deck));
+        if (count <= 0) {
+            return;
+        }
+
+        cardElement.dataset.busy = "true";
+        cardElement.classList.add("fq-spellbook-card--busy");
+        try {
+            if (action === "create") {
+                await TradingCards.createCardsForDeck(deck, Array(count).fill(card));
+            } else {
+                const matches = deck.cards.filter(c => c.name === card.name);
+                await TradingCards.deleteCardsForDeck(deck, matches);
+            }
+            SpellbookWindow.patchCopyState(cardElement, computeCopyState(card, deck));
+        } catch (err) {
+            ui.notifications.error(err.message);
+        } finally {
+            cardElement.dataset.busy = "false";
+            cardElement.classList.remove("fq-spellbook-card--busy");
+        }
+    }
+
+    /**
+     * Action handler `ApplicationV2` du clic sur une carte du grimoire :
+     * résout la carte cliquée depuis le grimoire courant (jamais un
+     * identifiant DOM falsifié ne peut résoudre une carte hors du grimoire),
+     * puis délègue à `toggleCardCopies` avec le deck tenu par l'instance
+     * depuis l'ouverture, jamais un identifiant lu dans le DOM.
+     *
+     * @this {SpellbookWindow}
+     * @param {PointerEvent} event  - L'événement de clic déclencheur.
+     * @param {HTMLElement}  target - L'élément portant `data-action="fqToggleCopy"`.
+     *
+     * @returns {Promise<void>}
+     */
+    static async #onToggleCopy(event, target) {
+        const cardId = target.closest("[data-card-id]")?.dataset.cardId;
+        const card = this.spellBook.cards.get(cardId);
+        if (!card) {
+            return;
+        }
+        await SpellbookWindow.toggleCardCopies(target, card, this.deck);
     }
 
     /**

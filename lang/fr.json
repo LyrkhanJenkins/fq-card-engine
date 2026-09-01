@@ -159,6 +159,7 @@
   "FQCARDENGINE.SpellBookLevelTooltip": "Niveau {level}",
   "FQCARDENGINE.SpellBookEmptyTitle": "Aucune carte débloquée",
   "FQCARDENGINE.SpellBookEmptyBody": "Ce personnage n'a débloqué aucune carte de classe pour l'instant. Une montée de niveau en ajoutera ici.",
+  "FQCARDENGINE.SpellBookCombatLockedBanner": "Distribution verrouillée : un combat est en cours. Vous pouvez consulter votre grimoire ; la composition du deck reprend une fois le combat terminé.",
   "FQCARDENGINE.ClassNeutral": "Neutre",
   "FQCARDENGINE.ClassElementalist": "Élémentaliste",
   "FQCARDENGINE.ClassFencingMaster": "Maître d'Armes",

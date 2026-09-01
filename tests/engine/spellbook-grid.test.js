@@ -1,6 +1,7 @@
 import {describe, expect, it, vi} from "vitest";
 import {
-    buildSpellbookGroups, computeCopyState, groupCardsByClass, localizeClassKey, sortCardsByLevelThenName
+    buildSpellbookGroups, computeCopyState, computeToggleAction, groupCardsByClass, localizeClassKey,
+    sortCardsByLevelThenName
 } from "../../src/domain/engine/shared/spellbook-grid.js";
 
 /**
@@ -128,6 +129,37 @@ describe("computeCopyState", () => {
         const deck = makeDeck([{name: "FQCARDTITLE.Card"}, {name: "FQCARDTITLE.OtherCard"}]);
 
         expect(computeCopyState(card, deck).count).toBe(1);
+    });
+});
+
+describe("computeToggleAction", () => {
+    it("carte non distribuée (0/3) : crée les 3 exemplaires attendus (COPY-01)", () => {
+        expect(computeToggleAction({count: 0, max: 3, state: "none"})).toEqual({action: "create", count: 3});
+    });
+
+    it("carte partielle (1/3) : crée les 2 exemplaires manquants (COPY-03)", () => {
+        expect(computeToggleAction({count: 1, max: 3, state: "partial"})).toEqual({action: "create", count: 2});
+    });
+
+    it("carte complète (3/3) : retire les 3 exemplaires (COPY-02)", () => {
+        expect(computeToggleAction({count: 3, max: 3, state: "full"})).toEqual({action: "remove", count: 3});
+    });
+
+    it("carte sans maxSameCard renseigné (0/1, COPY-05) : crée l'exemplaire unique", () => {
+        expect(computeToggleAction({count: 0, max: 1, state: "none"})).toEqual({action: "create", count: 1});
+    });
+
+    it("COPY-04 : pour toute combinaison count/max, une création ne dépasse jamais max et ne renvoie jamais un compte négatif", () => {
+        for (let max = 1; max <= 5; max++) {
+            for (let count = 0; count <= max; count++) {
+                const state = count === 0 ? "none" : count >= max ? "full" : "partial";
+                const result = computeToggleAction({count, max, state});
+                expect(result.count).toBeGreaterThanOrEqual(0);
+                if (result.action === "create") {
+                    expect(count + result.count).toBe(max);
+                }
+            }
+        }
     });
 });
 

@@ -19,9 +19,19 @@
     padding: 16px;
 }
 
+/* Racine unique du PART (mixin Handlebars d'ApplicationV2) : colonne flex
+   portant la bannière de verrouillage combat, puis la grille scrollable. */
+.fq-spellbook-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
 .fq-spellbook-grid {
     overflow-y: auto;
-    height: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .fq-spellbook-cards {
@@ -30,18 +40,98 @@
     gap: 16px;
 }
 
-/* Carte du grimoire : jamais de chevauchement, curseur neutre — un clic ne
-   fait rien en phase 1 (D-16). */
+/* Carte du grimoire : jamais de chevauchement. Curseur cliquable — un clic
+   distribue, complète ou retire les exemplaires de la carte (phase 2,
+   BOOK-04). Neutralisé par les états --busy et --combat-locked. */
 .fq-spellbook-card.fq-card,
 .fq-spellbook-card.fq-card-engine-card {
     margin-left: 0 !important;
-    cursor: default;
+    cursor: pointer;
 }
 
 /* Neutralise le survol générique de la main (translateY(-28px) scale(1.25))
    qui promettrait une interactivité absente ici. */
 .fq-spellbook-window .fq-spellbook-card:hover .fq-card-inner {
     transform: translateY(-2px) !important;
+}
+
+/* Affordance de clic (UI-SPEC §1) : signal indépendant du transform ci-dessus,
+   pour ne jamais entrer en conflit avec les filtres des trois états de
+   distribution. */
+.fq-spellbook-window .fq-spellbook-card:hover .fq-card-inner {
+    outline: 1px solid rgba(var(--fq-gold-rgb), 0.5);
+    outline-offset: 2px;
+    transition: outline-color 0.15s ease;
+}
+
+/* ============================================================
+   ÉTAT EN-VOL — verrou anti double-clic (D2-09, UI-SPEC §2). Filet visuel
+   uniquement : le verrou réel est le dataset.busy vérifié dans le handler JS.
+   ============================================================ */
+.fq-spellbook-window .fq-spellbook-card--busy.fq-card,
+.fq-spellbook-window .fq-spellbook-card--busy.fq-card-engine-card {
+    cursor: progress;
+    pointer-events: none;
+}
+
+/* Le variant :hover double la règle de base : sans lui, les règles de survol
+   (spécificité supérieure) garderaient la main le temps que pointer-events
+   s'applique — même piège que le bloc --combat-locked résout plus bas. */
+.fq-spellbook-window .fq-spellbook-card--busy .fq-card-inner,
+.fq-spellbook-window .fq-spellbook-card--busy:hover .fq-card-inner {
+    opacity: 0.7;
+    transition: opacity 0.12s ease;
+    transform: none !important;
+    outline: none;
+}
+
+/* ============================================================
+   GRILLE INERTE PENDANT UN COMBAT (D2-06, D2-07, UI-SPEC §3) — badges et
+   anneaux d'état restent parfaitement visibles, seule l'image de carte se
+   désature.
+   ============================================================ */
+.fq-spellbook-window--combat-locked .fq-spellbook-card {
+    cursor: not-allowed;
+}
+
+.fq-spellbook-window--combat-locked .fq-spellbook-card:hover .fq-card-inner {
+    transform: none !important;
+    outline: none;
+}
+
+.fq-spellbook-window--combat-locked .fq-spellbook-card .fq-card-inner {
+    filter: saturate(0.75) drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85));
+}
+
+.fq-spellbook-window--combat-locked .fq-spellbook-card--partial .fq-card-inner {
+    filter: saturate(0.75) drop-shadow(0 0 6px rgba(var(--fq-gold-rgb), 0.55));
+}
+
+.fq-spellbook-window--combat-locked .fq-spellbook-card--full .fq-card-inner {
+    filter: saturate(0.75) drop-shadow(0 0 6px rgba(var(--fq-success-hi-rgb), 0.5));
+}
+
+/* ============================================================
+   BANNIÈRE DE VERROUILLAGE COMBAT — hors zone scrollable, toujours visible
+   sans défiler.
+   ============================================================ */
+.fq-spellbook-combat-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    margin-bottom: 16px;
+    background: rgba(var(--fq-warning-rgb), 0.16);
+    border: 1px solid rgba(var(--fq-warning-rgb), 0.55);
+    border-radius: 4px;
+    color: rgba(var(--fq-cream-rgb), 0.95);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.fq-spellbook-combat-banner i {
+    color: rgba(var(--fq-warning-rgb), 1);
+    flex-shrink: 0;
 }
 
 /* ============================================================
@@ -100,15 +190,23 @@
     border: 1px solid var(--fq-gold-dark);
 }
 
+/* Carte non distribuée : légèrement grisée et délavée, pour que le regard
+   aille d'abord aux cartes déjà dans le deck. Le drop-shadow de base
+   (card.css) est redéclaré car filter remplace, il ne cumule pas. */
+.fq-spellbook-card--none .fq-card-inner {
+    filter: saturate(0.5) brightness(0.75) drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85));
+    opacity: 0.9;
+}
+
 /* Anneaux statiques : jamais d'animation ni d'images-clés — la distribution
    est un état stable, à ne pas confondre avec les glows pulsés existants
    (fq-card--generated, fq-card--reactive-ready). */
 .fq-spellbook-card--partial .fq-card-inner {
-    filter: drop-shadow(0 0 6px rgba(var(--fq-gold-rgb), 0.55));
+    filter: drop-shadow(0 0 8px rgba(var(--fq-gold-rgb), 0.75));
 }
 
 .fq-spellbook-card--full .fq-card-inner {
-    filter: drop-shadow(0 0 6px rgba(var(--fq-success-hi-rgb), 0.5));
+    filter: drop-shadow(0 0 4px rgba(var(--fq-success-hi-rgb), 1)) drop-shadow(0 0 10px rgba(var(--fq-success-hi-rgb), 0.7));
 }
 
 @media (prefers-reduced-motion: reduce) {

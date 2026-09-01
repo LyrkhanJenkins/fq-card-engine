@@ -50,6 +50,26 @@ export function computeCopyState(card, deck) {
 }
 
 /**
+ * Détermine l'action de bascule à partir de l'état de distribution déjà
+ * calculé par `computeCopyState` : aucune → crée les exemplaires manquants
+ * (`max - count`, qui vaut `max` quand `count` est 0, COPY-01) ; partielle →
+ * même calcul (COPY-03, COPY-04, ne dépasse jamais) ; pleine → retire tout
+ * (COPY-02). Ne lit jamais directement le deck ou la carte : reçoit l'état
+ * déjà annoté, pour rester composable avec `computeCopyState` sans
+ * dépendance circulaire.
+ *
+ * @param {{count: number, max: number, state: "none"|"partial"|"full"}} copies - L'état de distribution.
+ *
+ * @returns {{action: "create"|"remove", count: number}} L'action à effectuer et le nombre d'exemplaires concernés.
+ */
+export function computeToggleAction(copies) {
+    if (copies.state === "full") {
+        return {action: "remove", count: copies.count};
+    }
+    return {action: "create", count: copies.max - copies.count};
+}
+
+/**
  * Groupe des cartes déjà triées par leur classe FQ (`system.fq.class`), avec
  * repli sur `CardFqSystem.NEUTRAL_CLASS` quand la valeur est absente. L'ordre
  * interne de chaque groupe est celui d'entrée — jamais retrié ici (D-14 :
