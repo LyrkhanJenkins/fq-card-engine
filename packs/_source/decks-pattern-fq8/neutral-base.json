@@ -2,7 +2,7 @@
   "name": "Neutral Base",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cards/texture/neutral.png",
+  "img": "modules/fq-card-engine/images/cards/back_neutral.png",
   "system": {
     "fq": {
       "type": "",
@@ -89,20 +89,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430828,
+        "modifiedTime": 1788280797729,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cqd8EUF2UiCp50Q3"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cqd8EUF2UiCp50Q3",
+      "cards": []
     },
     {
       "_id": "cr3aAPUkov25LMOY",
@@ -194,8 +194,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cr3aAPUkov25LMOY"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cr3aAPUkov25LMOY",
+      "cards": []
     },
     {
       "faces": [
@@ -280,8 +280,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.VHloVz6yx7n42QiR"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.VHloVz6yx7n42QiR",
+      "cards": []
     },
     {
       "_id": "qB1Pxiy7tDXmB34R",
@@ -373,8 +373,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.qB1Pxiy7tDXmB34R"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.qB1Pxiy7tDXmB34R",
+      "cards": []
     },
     {
       "_id": "c4ziF2usM3lTpLkx",
@@ -466,8 +466,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.c4ziF2usM3lTpLkx"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.c4ziF2usM3lTpLkx",
+      "cards": []
     },
     {
       "_id": "SU0jUmTib8tJ4CFv",
@@ -559,8 +559,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.SU0jUmTib8tJ4CFv"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.SU0jUmTib8tJ4CFv",
+      "cards": []
     },
     {
       "_id": "PpyIs63PW9KpgvKs",
@@ -652,8 +652,8 @@
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.PpyIs63PW9KpgvKs"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.PpyIs63PW9KpgvKs",
+      "cards": []
     }
   ],
   "rotation": 0,
@@ -661,11 +661,11 @@
   "folder": null,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.365",
+    "coreVersion": "14.367",
     "systemId": "dnd5e",
     "systemVersion": "5.3.3",
     "createdTime": 1788253416471,
-    "modifiedTime": 1788253416471,
+    "modifiedTime": 1788280766291,
     "lastModifiedBy": "dnd5ebuilder0000",
     "compendiumSource": null,
     "duplicateSource": null,
