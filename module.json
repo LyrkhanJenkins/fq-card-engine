@@ -51,6 +51,7 @@
     "styles/card-engine/dialog-play.css",
     "styles/card-engine/draw-reveal.css",
     "styles/card-engine/card-selection.css",
+    "styles/card-engine/spellbook-window.css",
     "styles/fq-dnd5e-sheet.css"
   ],
   "socket": true,

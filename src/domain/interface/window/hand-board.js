@@ -3,6 +3,7 @@ import DisplayCard from "../card-svg/display-card.js";
 import CardCondition from "../../engine/shared/card-condition.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {formatFatigue} from "../../../core/utils/dialog.utils.js";
+import SpellbookWindow from "./spellbook-window.js";
 
 const GENERATED_GLOW_DURATION_MS = 24000;
 
@@ -571,8 +572,12 @@ export default class HandBoard {
     }
 
     /**
-     * Ouvre les feuilles du deck et du grimoire (spellbook) de l'utilisateur
-     * associé à la barre (ou de l'utilisateur courant), positionnées côte à côte.
+     * Ouvre la fenêtre du grimoire (spellbook) de l'utilisateur associé à la
+     * barre (ou de l'utilisateur courant) — et elle seule (D-02, CLEAN-02) :
+     * la feuille du deck ne s'ouvre plus automatiquement. Les avertissements
+     * de deck/grimoire manquant restent portés par `getFirstDeck`. Si le
+     * grimoire est résolu mais pas le deck, rien ne s'ouvre : l'avertissement
+     * a déjà été publié.
      *
      * @returns {Promise<void>}
      */
@@ -580,21 +585,8 @@ export default class HandBoard {
         const userId = this.currentUser?._id ?? this.currentUser?.data?._id ?? game.userId;
         const deck = TradingCards.getFirstDeck(userId, DECK_TYPE);
         const spellBook = TradingCards.getFirstDeck(userId, SPELLBOOK_TYPE);
-        if (deck) {
-            deck.sheet.render(true, {
-                position: {
-                    left: 110,
-                    top: 100
-                }
-            });
-        }
-        if (spellBook) {
-            spellBook.sheet.render(true, {
-                position: {
-                    left: 110 + (deck ? deck.sheet.position.width : 0),
-                    top: 100
-                }
-            });
+        if (spellBook && deck) {
+            SpellbookWindow.open(spellBook, deck);
         }
     }
 

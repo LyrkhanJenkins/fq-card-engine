@@ -1,0 +1,185 @@
+/* ============================================================
+   FQ CARD ENGINE — Fenêtre du grimoire (ApplicationV2, lecture seule)
+   Grille de vraies cartes card-svg, groupées par classe, avec badge de
+   compte d'exemplaires. Voir styles/card-engine/card-selection.css pour le
+   même piège de variables de carte hors #fq-card-engine-container.
+   ============================================================ */
+
+.fq-spellbook-window {
+    /* La fenêtre est montée hors de #fq-card-engine-container : on redéclare
+       les tailles de carte (portées par le container), sinon leur
+       calc(undefined) → 0 et les cartes sont invisibles. */
+    --fq-card-w: 94px;
+    --fq-card-h: 130px;
+    --fq-scale: 1.3;
+}
+
+.fq-spellbook-window .window-content {
+    background: rgba(var(--fq-ink-rgb), 0.97);
+    padding: 16px;
+}
+
+.fq-spellbook-grid {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.fq-spellbook-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+/* Carte du grimoire : jamais de chevauchement, curseur neutre — un clic ne
+   fait rien en phase 1 (D-16). */
+.fq-spellbook-card.fq-card,
+.fq-spellbook-card.fq-card-engine-card {
+    margin-left: 0 !important;
+    cursor: default;
+}
+
+/* Neutralise le survol générique de la main (translateY(-28px) scale(1.25))
+   qui promettrait une interactivité absente ici. */
+.fq-spellbook-window .fq-spellbook-card:hover .fq-card-inner {
+    transform: translateY(-2px) !important;
+}
+
+/* ============================================================
+   BADGE DE COMPTE D'EXEMPLAIRES (n/N) — coin supérieur droit, miroir
+   du badge « Innée » (coin supérieur gauche, styles/card-engine/card.css).
+   Trois états statiques (jamais d'animation) : icône + couleur + anneau,
+   jamais la couleur seule (BOOK-02, BOOK-03).
+   ============================================================ */
+.fq-spellbook-card-badge {
+    bottom: 2px;
+    right: 2px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    letter-spacing: 0.04em;
+    gap: 4px;
+}
+
+.fq-spellbook-card-badge--none {
+    color: rgba(var(--fq-cream-rgb), 0.85);
+    background: rgba(var(--fq-ink-rgb), 0.9);
+    border: 1px solid var(--fq-border-subtle);
+}
+
+.fq-spellbook-card-badge--partial {
+    color: var(--fq-gold-bright);
+    background: rgba(var(--fq-ink-rgb), 0.92);
+    border: 1px solid var(--fq-gold-dark);
+}
+
+.fq-spellbook-card-badge--full {
+    color: rgba(var(--fq-success-hi-rgb), 1);
+    background: rgba(var(--fq-ink-rgb), 0.92);
+    border: 1px solid rgba(var(--fq-success-hi-rgb), 0.7);
+}
+
+/* ============================================================
+   PASTILLE DE NIVEAU — coin supérieur droit, immédiatement à gauche du
+   badge n/N. Apparence neutre (mêmes couleurs que .fq-spellbook-card-badge--
+   none) quel que soit l'état de distribution, pour ne se confondre ni avec
+   les trois états de distribution ni avec le badge « Innée ».
+   ============================================================ */
+.fq-spellbook-card-level {
+    bottom: 2px;
+    left: 2px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Palatino Linotype', Georgia, serif;
+    letter-spacing: 0.04em;
+    color: var(--fq-gold-bright);
+    background: rgba(var(--fq-ink-rgb), 0.92);
+    border: 1px solid var(--fq-gold-dark);
+}
+
+/* Anneaux statiques : jamais d'animation ni d'images-clés — la distribution
+   est un état stable, à ne pas confondre avec les glows pulsés existants
+   (fq-card--generated, fq-card--reactive-ready). */
+.fq-spellbook-card--partial .fq-card-inner {
+    filter: drop-shadow(0 0 6px rgba(var(--fq-gold-rgb), 0.55));
+}
+
+.fq-spellbook-card--full .fq-card-inner {
+    filter: drop-shadow(0 0 6px rgba(var(--fq-success-hi-rgb), 0.5));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fq-spellbook-card,
+    .fq-spellbook-card .fq-card-inner {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================================
+   EN-TÊTE DE GROUPE DE CLASSE (D-13, D-15) — la classe se lit UNIQUEMENT
+   ici, jamais sur un marqueur ajouté à chaque carte (le SVG de carte
+   l'affiche déjà via card-svg.hbs).
+   ============================================================ */
+.fq-spellbook-group {
+    margin-bottom: 24px;
+}
+
+.fq-spellbook-group-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(var(--fq-panel-c-rgb), 0.85);
+    border-bottom: 2px solid var(--fq-border);
+}
+
+.fq-spellbook-group-title {
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fq-gold-light);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fq-spellbook-group-count {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(var(--fq-cream-rgb), 0.6);
+}
+
+.fq-spellbook-group .fq-spellbook-cards {
+    padding: 16px;
+}
+
+/* ============================================================
+   ÉTAT VIDE — grimoire sans carte débloquée.
+   ============================================================ */
+.fq-spellbook-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    margin: 32px;
+    color: rgba(var(--fq-cream-rgb), 0.9);
+}
+
+.fq-spellbook-empty-title {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.fq-spellbook-empty-body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+}

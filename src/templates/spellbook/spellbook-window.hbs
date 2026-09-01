@@ -1,0 +1,18 @@
+<div class="fq-spellbook-grid">
+    {{#if isEmpty}}
+        <div class="fq-spellbook-empty">
+            <p class="fq-spellbook-empty-title">{{localize "FQCARDENGINE.SpellBookEmptyTitle"}}</p>
+            <p class="fq-spellbook-empty-body">{{localize "FQCARDENGINE.SpellBookEmptyBody"}}</p>
+        </div>
+    {{else}}
+        {{#each groups}}
+            <div class="fq-spellbook-group">
+                <div class="fq-spellbook-group-header" data-tooltip="{{localize "FQCARDENGINE.SortedByLevel"}}">
+                    <span class="fq-spellbook-group-title">{{classLabel}}</span>
+                    <span class="fq-spellbook-group-count">({{count}})</span>
+                </div>
+                <div class="fq-spellbook-cards" data-spellbook-cards="{{classKey}}"></div>
+            </div>
+        {{/each}}
+    {{/if}}
+</div>

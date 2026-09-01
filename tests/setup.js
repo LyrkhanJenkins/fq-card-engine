@@ -30,6 +30,17 @@ globalThis.foundry = {
     applications: {
         handlebars: {
             renderTemplate : async (template, data) => `<div>${template} - ${JSON.stringify(data)}</div>`
+        },
+        // Mock minimal : permet aux classes qui étendent ApplicationV2 (ex.
+        // SpellbookWindow) d'être IMPORTÉES sans crash. Le chrome réel
+        // (rendu, drag, dimensionnement) reste hors Vitest — validé en UAT
+        // Foundry, comme les autres sheets du module (aucun mock DOM complet
+        // de l'API applicative n'est fourni ici, volontairement).
+        api: {
+            ApplicationV2: class {
+            },
+            HandlebarsApplicationMixin: (Base) => class extends Base {
+            }
         }
     },
     utils: {
