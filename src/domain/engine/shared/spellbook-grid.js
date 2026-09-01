@@ -94,6 +94,80 @@ export function computeIncrementAction(copies) {
 }
 
 /**
+ * Détermine si une carte du grimoire satisfait la combinaison de filtres
+ * actifs (D3-06, ET logique) : classe, niveau, recherche par nom localisé.
+ * Un critère valant la chaîne vide est toujours satisfait — c'est ainsi que
+ * « toutes les classes », « tous les niveaux » et un champ de recherche vide
+ * restent neutres. La classe se compare par égalité stricte, le niveau en
+ * convertissant celui de la carte en chaîne (le critère vient d'un contrôle
+ * de formulaire), la recherche est une sous-chaîne insensible à la casse sur
+ * le nom, sans normalisation des accents ni recherche approchée (UI-SPEC §2).
+ * Reçoit des métadonnées déjà extraites, jamais l'instance `Card` ni le deck,
+ * pour rester composable côté DOM sans re-résoudre une carte par identifiant
+ * (D3-07 : purement local à l'affichage). N'entre jamais dans un comparateur
+ * de tri, comme `computeCopyState` (D-14).
+ *
+ * @param {{classKey: string, level: number|string, name: string}} cardMeta - Les métadonnées déjà extraites de la carte.
+ * @param {{classKey: string, level: string, search: string}} filters - L'état de filtre courant (chaînes vides = inactif).
+ *
+ * @returns {boolean} Vrai si la carte doit rester visible.
+ */
+export function matchesSpellbookFilters(cardMeta, filters) {
+    if (filters.classKey && cardMeta.classKey !== filters.classKey) {
+        return false;
+    }
+    if (filters.level && String(cardMeta.level) !== filters.level) {
+        return false;
+    }
+    if (filters.search && !cardMeta.name.toLowerCase().includes(filters.search.toLowerCase())) {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Liste les niveaux distincts présents parmi les cartes du grimoire, triés
+ * par ordre croissant (UI-SPEC §2 — l'option « tous les niveaux » n'est PAS
+ * produite ici, c'est le gabarit qui l'ajoute en première position). Le repli
+ * sur un niveau absent, nul ou non numérique est exactement celui de
+ * `sortCardsByLevelThenName` — un niveau non fini vaut zéro — pour que le
+ * menu déroulant et le tri de la grille ne puissent jamais diverger.
+ *
+ * @param {Card[]} cards - Les cartes débloquées du grimoire.
+ *
+ * @returns {number[]} Les niveaux distincts, triés par ordre croissant.
+ */
+export function buildLevelOptions(cards) {
+    const level = card => {
+        const value = Number(card.system?.fq?.level);
+        return Number.isFinite(value) ? value : 0;
+    };
+    return [...new Set(cards.map(level))].sort((a, b) => a - b);
+}
+
+/**
+ * Calcule le nombre total d'exemplaires réellement présents dans le deck du
+ * joueur (D3-09), indépendamment des filtres actifs sur la grille (D3-11) :
+ * toutes les cartes du deck, sans filtre sur l'état de pioche ni sur les
+ * cartes marquées comme générées — exactement la même discipline que
+ * `computeCopyState`. C'est cette symétrie qui garantit que la somme des
+ * badges `n/N` de toutes les cartes du grimoire correspond à ce total ; toute
+ * divergence entre les deux serait une incohérence, pas une subtilité.
+ *
+ * `Cards#cards` est une `Collection` Foundry, qui hérite de `Map` et expose
+ * donc `size` et non `length` : lire `length` directement renverrait
+ * `undefined` en jeu. Le repli sur `length` couvre les collections simulées
+ * sous forme de tableau.
+ *
+ * @param {Cards} [deck] - Le deck du joueur (absent = zéro exemplaire).
+ *
+ * @returns {number} Le nombre total d'exemplaires du deck.
+ */
+export function computeDeckSize(deck) {
+    return deck?.cards?.size ?? deck?.cards?.length ?? 0;
+}
+
+/**
  * Groupe des cartes déjà triées par leur classe FQ (`system.fq.class`), avec
  * repli sur `CardFqSystem.NEUTRAL_CLASS` quand la valeur est absente. L'ordre
  * interne de chaque groupe est celui d'entrée — jamais retrié ici (D-14 :

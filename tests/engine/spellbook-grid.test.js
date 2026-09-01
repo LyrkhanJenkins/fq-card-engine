@@ -1,7 +1,7 @@
 import {describe, expect, it, vi} from "vitest";
 import {
-    buildSpellbookGroups, computeCopyState, computeIncrementAction, computeToggleAction, groupCardsByClass,
-    localizeClassKey, sortCardsByLevelThenName
+    buildLevelOptions, buildSpellbookGroups, computeCopyState, computeDeckSize, computeIncrementAction,
+    computeToggleAction, groupCardsByClass, localizeClassKey, matchesSpellbookFilters, sortCardsByLevelThenName
 } from "../../src/domain/engine/shared/spellbook-grid.js";
 
 /**
@@ -279,5 +279,98 @@ describe("buildSpellbookGroups", () => {
         const fullDeck = makeDeck([{name: "FQCARDTITLE.High"}, {name: "FQCARDTITLE.Low"}]);
 
         expect(namesFor(emptyDeck)).toEqual(namesFor(fullDeck));
+    });
+});
+
+describe("matchesSpellbookFilters", () => {
+    it("critères tous vides : vraie pour n'importe quelle carte", () => {
+        const meta = {classKey: "monk", level: 2, name: "Boule de feu"};
+
+        expect(matchesSpellbookFilters(meta, {classKey: "", level: "", search: ""})).toBe(true);
+    });
+
+    it("critère de classe différent : renvoie faux", () => {
+        const meta = {classKey: "monk", level: 2, name: "Boule de feu"};
+
+        expect(matchesSpellbookFilters(meta, {classKey: "trapper", level: "", search: ""})).toBe(false);
+    });
+
+    it("critère de niveau égal : renvoie vrai, niveau carte numérique, critère chaîne", () => {
+        const meta = {classKey: "monk", level: 2, name: "Boule de feu"};
+
+        expect(matchesSpellbookFilters(meta, {classKey: "", level: "2", search: ""})).toBe(true);
+    });
+
+    it("critère de recherche en majuscules retrouve un nom en minuscules, et réciproquement", () => {
+        const meta = {classKey: "monk", level: 2, name: "boule de feu"};
+
+        expect(matchesSpellbookFilters(meta, {classKey: "", level: "", search: "BOULE"})).toBe(true);
+        expect(matchesSpellbookFilters({...meta, name: "BOULE DE FEU"}, {classKey: "", level: "", search: "boule"})).toBe(true);
+    });
+
+    it("critère de recherche correspondant à une sous-chaîne au milieu du nom : renvoie vrai", () => {
+        const meta = {classKey: "monk", level: 2, name: "Boule de feu ardent"};
+
+        expect(matchesSpellbookFilters(meta, {classKey: "", level: "", search: "de feu"})).toBe(true);
+    });
+
+    it("combine en ET : deux critères sur trois satisfaits renvoie faux", () => {
+        const meta = {classKey: "monk", level: 2, name: "Boule de feu"};
+
+        expect(matchesSpellbookFilters(meta, {classKey: "monk", level: "2", search: "éclair"})).toBe(false);
+    });
+});
+
+describe("buildLevelOptions", () => {
+    it("trie les niveaux distincts par ordre croissant", () => {
+        const cards = [makeCard({level: 3}), makeCard({level: 1}), makeCard({level: 2})];
+
+        expect(buildLevelOptions(cards)).toEqual([1, 2, 3]);
+    });
+
+    it("un même niveau partagé par plusieurs cartes n'apparaît qu'une fois", () => {
+        const cards = [makeCard({level: 1}), makeCard({level: 1}), makeCard({level: 2})];
+
+        expect(buildLevelOptions(cards)).toEqual([1, 2]);
+    });
+
+    it("un niveau absent, null ou non numérique compte comme zéro, une seule entrée pour les trois", () => {
+        const cards = [makeCard({}), makeCard({level: null}), makeCard({level: "abc"})];
+
+        expect(buildLevelOptions(cards)).toEqual([0]);
+    });
+
+    it("un tableau vide renvoie un tableau vide", () => {
+        expect(buildLevelOptions([])).toEqual([]);
+    });
+});
+
+describe("computeDeckSize", () => {
+    it("un deck de cinq cartes renvoie cinq, quels que soient noms et états de pioche", () => {
+        const deck = makeDeck([
+            {name: "A", drawn: true}, {name: "A", drawn: false}, {name: "B"}, {name: "B"}, {name: "C"}
+        ]);
+
+        expect(computeDeckSize(deck)).toBe(5);
+    });
+
+    it("un deck vide renvoie zéro", () => {
+        expect(computeDeckSize(makeDeck([]))).toBe(0);
+    });
+
+    it("sans deck : renvoie zéro", () => {
+        expect(computeDeckSize(undefined)).toBe(0);
+    });
+
+    it("compte les exemplaires, pas les cartes distinctes : trois exemplaires du même nom comptent pour trois", () => {
+        const deck = makeDeck([{name: "A"}, {name: "A"}, {name: "A"}]);
+
+        expect(computeDeckSize(deck)).toBe(3);
+    });
+
+    it("collection Foundry (héritée de Map, donc size et non length) : compte quand même", () => {
+        const collection = new Map([["a", {name: "A"}], ["b", {name: "A"}], ["c", {name: "B"}]]);
+
+        expect(computeDeckSize({cards: collection})).toBe(3);
     });
 });

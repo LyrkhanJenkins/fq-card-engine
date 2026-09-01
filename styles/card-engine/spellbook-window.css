@@ -28,10 +28,214 @@
     min-height: 0;
 }
 
+/* ============================================================
+   BARRE D'OUTILS — filtres classe/niveau/recherche + indicateur de taille de
+   deck, hors zone scrollable, toujours visible sans défiler (UI-SPEC §2).
+   Outil de navigation neutre : pas de fond ni de bordure propre, contrairement
+   à la bannière de combat.
+   ============================================================ */
+.fq-spellbook-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    margin-bottom: 16px;
+}
+
+.fq-spellbook-filter {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.fq-spellbook-filter select,
+.fq-spellbook-filter input[type="search"] {
+    background: rgba(var(--fq-ink-rgb), 0.9);
+    color: rgba(var(--fq-cream-rgb), 0.9);
+    border: 1px solid var(--fq-border-subtle);
+    border-radius: 3px;
+    padding: 4px 8px;
+    font-size: 16px;
+}
+
+.fq-spellbook-filter select {
+    min-width: 120px;
+}
+
+.fq-spellbook-filter input[type="search"] {
+    width: 160px;
+}
+
+.fq-spellbook-filters-reset {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    color: rgba(var(--fq-cream-rgb), 0.9);
+}
+
+.fq-spellbook-toolbar--filtered .fq-spellbook-filters-reset {
+    display: inline-flex;
+}
+
+/* ============================================================
+   INDICATEUR DE TAILLE DE DECK — extrémité droite de la barre d'outils
+   (D3-09..D3-11, UI-SPEC §4). Seule nouvelle utilisation de l'or de la
+   phase, réservée au chiffre.
+   ============================================================ */
+.fq-spellbook-deck-size {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    font-size: 16px;
+    color: rgba(var(--fq-cream-rgb), 0.85);
+}
+
+.fq-spellbook-deck-size i {
+    color: rgba(var(--fq-cream-rgb), 0.7);
+}
+
+.fq-spellbook-deck-size-count {
+    font-weight: 700;
+    color: var(--fq-gold-bright);
+}
+
+/* ============================================================
+   RANGÉE GRILLE/PANNEAU — remplace le rôle que jouait .fq-spellbook-grid
+   seule en phase 1/2 (UI-SPEC §1). Porte désormais la flexibilité déplacée
+   depuis .fq-spellbook-grid : seule modification non strictement additive de
+   cette phase, explicitement autorisée par l'UI-SPEC.
+   ============================================================ */
+.fq-spellbook-content {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
 .fq-spellbook-grid {
     overflow-y: auto;
     flex: 1 1 auto;
     min-height: 0;
+    min-width: 260px;
+}
+
+/* ============================================================
+   PANNEAU D'APERÇU — colonne fixe à droite de la grille, alimentée par le
+   survol prolongé (D3-01..D3-04, UI-SPEC §3). Ne rétrécit ni ne se masque
+   jamais, quelle que soit la largeur de fenêtre.
+   ============================================================ */
+.fq-spellbook-preview {
+    /* 30 % de la largeur de la fenêtre, borné entre 400 et 500px : le panneau
+       profite d'un grand écran sans jamais étouffer la grille, et garde une
+       largeur lisible sur une petite fenêtre. */
+    flex: 0 0 clamp(400px, 30%, 500px);
+    background: rgba(var(--fq-panel-c-rgb), 0.85);
+    border-left: 1px solid var(--fq-border);
+    border-radius: 4px;
+    padding: 16px;
+}
+
+/* La carte est centrée verticalement dans le panneau ; le centrage cède la
+   place au défilement dès que la carte dépasse la hauteur disponible
+   (`justify-content: center` seul rendrait le haut inatteignable). */
+.fq-spellbook-preview-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: safe center;
+    overflow-y: auto;
+    height: 100%;
+    /* La carte remplit la largeur du panneau, qui varie lui-même avec la
+       fenêtre : on redéfinit les dimensions de carte en unités de conteneur
+       (`cqw` = 1 % de la largeur de ce bloc) plutôt qu'un facteur d'échelle
+       fixe, que la largeur du panneau ne pourrait pas piloter. Le rapport
+       130/94 est celui des variables de carte du module. */
+    container-type: inline-size;
+    --fq-scale: 1;
+    --fq-card-w: 100cqw;
+    --fq-card-h: calc(100cqw * 1.3829);
+}
+
+/* La carte de la main se chevauche par une marge négative proportionnelle à sa
+   largeur ; dans le panneau elle est seule et doit rester alignée. */
+.fq-spellbook-preview-content .fq-spellbook-preview-card {
+    margin-left: 0;
+}
+
+.fq-spellbook-preview-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    gap: 8px;
+}
+
+.fq-spellbook-preview-empty i {
+    color: rgba(var(--fq-cream-rgb), 0.5);
+}
+
+.fq-spellbook-preview-empty span {
+    font-size: 16px;
+    color: rgba(var(--fq-cream-rgb), 0.6);
+}
+
+/* Fragment de carte du panneau : se lit, ne se clique pas — aucune affordance
+   de clic héritée de .fq-spellbook-card (D3-04, UI-SPEC §3). */
+.fq-spellbook-preview-card.fq-card,
+.fq-spellbook-preview-card.fq-card-engine-card {
+    cursor: default;
+}
+
+.fq-spellbook-window .fq-spellbook-preview-card:hover .fq-card-inner {
+    transform: none !important;
+    outline: none !important;
+}
+
+/* ============================================================
+   ÉTAT « AUCUN RÉSULTAT » — distinct de l'état « grimoire vide » de la
+   phase 1 (D3-08, UI-SPEC §5) : mêmes rôles typographiques, copie et action
+   différentes.
+   ============================================================ */
+.fq-spellbook-no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    margin: 32px;
+    color: rgba(var(--fq-cream-rgb), 0.9);
+}
+
+.fq-spellbook-no-results[hidden] {
+    display: none;
+}
+
+.fq-spellbook-no-results-title {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.fq-spellbook-no-results-body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* ============================================================
+   MASQUAGE DE FILTRE — le filtrage n'est jamais qu'une question de
+   visibilité (D3-05, D3-07) : aucune autre classe n'est touchée.
+   ============================================================ */
+.fq-spellbook-window .fq-spellbook-card--filtered-out {
+    display: none;
+}
+
+.fq-spellbook-window .fq-spellbook-group--empty {
+    display: none;
 }
 
 .fq-spellbook-cards {

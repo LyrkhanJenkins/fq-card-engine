@@ -37,7 +37,13 @@ globalThis.foundry = {
         // Foundry, comme les autres sheets du module (aucun mock DOM complet
         // de l'API applicative n'est fourni ici, volontairement).
         api: {
+            // _onClose no-op : sans lui, `super._onClose(options)` (chaîne
+            // réelle des sous-classes comme SpellbookWindow) échoue dans les
+            // tests qui exercent le cycle de fermeture — en Foundry réel,
+            // ApplicationV2#_onClose existe et ne lève jamais.
             ApplicationV2: class {
+                _onClose() {
+                }
             },
             HandlebarsApplicationMixin: (Base) => class extends Base {
             }

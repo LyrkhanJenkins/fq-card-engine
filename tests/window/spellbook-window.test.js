@@ -1,12 +1,28 @@
-import {describe, expect, test, vi} from "vitest";
+import {afterEach, beforeEach, describe, expect, test, vi} from "vitest";
+import DisplayCard from "../../src/domain/interface/card-svg/display-card.js";
 
 const {default: SpellbookWindow} = await import("../../src/domain/interface/window/spellbook-window.js");
+
+// `$(html)[0]` (jQuery) n'est fourni par aucune dépendance npm de ce projet :
+// en Foundry réel, jQuery est un global du client. Mock minimal suffisant
+// pour extraire le premier élément racine d'un fragment HTML rendu — les
+// méthodes testées ici (`renderPreviewCard`, `#renderCardsInto` via `_onRender`)
+// s'en servent exactement de cette façon.
+if (!globalThis.$) {
+    globalThis.$ = html => {
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = typeof html === "string" ? html.trim() : "";
+        return [...wrapper.children];
+    };
+}
 
 /**
  * Fabrique une carte factice du grimoire, suffisante pour
  * `computeCopyState`/`computeToggleAction` : un nom et un `maxSameCard`
  * arbitraires, jamais une carte réelle de compendium (aucun test ne
- * verrouille une valeur d'équilibrage).
+ * verrouille une valeur d'équilibrage). Porte aussi `back`/`faces`/`face` —
+ * squelette minimal exigé par `DisplayCard.getImgFromCard`/`getDescriptionFromCard`,
+ * traversés par `buildCardRenderData` (tâche 4, `renderPreviewCard`/`_onRender`).
  *
  * @param {object} [options]              - Options de fabrication.
  * @param {string} [options.name]         - Le nom de la carte.
@@ -16,7 +32,12 @@ const {default: SpellbookWindow} = await import("../../src/domain/interface/wind
  * @returns {object} La carte factice.
  */
 function makeFakeCard({name = "Boule de feu", maxSameCard = 3, id = "sourceCardId"} = {}) {
-    return {id, _id: id, name, system: {fq: {maxSameCard}}};
+    return {
+        id, _id: id, name, face: 0,
+        back: {img: ""},
+        faces: [{img: "", text: ""}],
+        system: {fq: {maxSameCard}}
+    };
 }
 
 /**
@@ -472,6 +493,373 @@ function makeSpellbookGrid({cardId = "card1"} = {}) {
     return {grid, header, cardsContainer, card};
 }
 
+/**
+ * Fabrique une grille réaliste et filtrable, réplique de la structure posée
+ * par `#renderCardsInto` à partir de la tâche 1 : plusieurs `.fq-spellbook-group`
+ * portant chacun un en-tête avec son compte, un conteneur de cartes et des
+ * cartes portant les trois attributs de données lus par `applyFilters`, plus
+ * le bloc « aucun résultat » masqué.
+ *
+ * @param {{classKey: string, cards: {name: string, level: number}[]}[]} [groups] - Les groupes à fabriquer.
+ *
+ * @returns {Element} L'élément `.fq-spellbook-grid` fabriqué.
+ */
+function makeFilterableGrid(groups = [
+    {classKey: "monk", cards: [{name: "Boule de feu", level: 1}, {name: "Eclair", level: 2}]},
+    {classKey: "trapper", cards: [{name: "Piege a loup", level: 1}]}
+]) {
+    const grid = document.createElement("div");
+    grid.className = "fq-spellbook-grid";
+    for (const group of groups) {
+        const groupElement = document.createElement("div");
+        groupElement.className = "fq-spellbook-group";
+        const header = document.createElement("div");
+        header.className = "fq-spellbook-group-header";
+        const count = document.createElement("span");
+        count.className = "fq-spellbook-group-count";
+        count.textContent = `(${group.cards.length})`;
+        header.appendChild(count);
+        groupElement.appendChild(header);
+        const cardsContainer = document.createElement("div");
+        cardsContainer.className = "fq-spellbook-cards";
+        cardsContainer.dataset.spellbookCards = group.classKey;
+        for (const card of group.cards) {
+            const cardElement = document.createElement("div");
+            cardElement.className = "fq-spellbook-card";
+            cardElement.dataset.cardClass = group.classKey;
+            cardElement.dataset.cardLevel = String(card.level);
+            cardElement.dataset.cardName = card.name;
+            cardsContainer.appendChild(cardElement);
+        }
+        groupElement.appendChild(cardsContainer);
+        grid.appendChild(groupElement);
+    }
+    const noResults = document.createElement("div");
+    noResults.className = "fq-spellbook-no-results";
+    noResults.hidden = true;
+    grid.appendChild(noResults);
+    return grid;
+}
+
+/**
+ * Fabrique une barre d'outils portant tout ou partie des trois contrôles de
+ * filtre nommés, avec quelques options arbitraires pour les deux menus
+ * déroulants — jamais de donnée d'équilibrage réelle.
+ *
+ * @param {{withClassSelect?: boolean, withLevelSelect?: boolean, withSearch?: boolean}} [options] - Quels contrôles fabriquer.
+ *
+ * @returns {Element} L'élément `.fq-spellbook-toolbar` fabriqué.
+ */
+function makeFilterToolbar({withClassSelect = true, withLevelSelect = true, withSearch = true} = {}) {
+    const toolbar = document.createElement("div");
+    toolbar.className = "fq-spellbook-toolbar";
+    if (withClassSelect) {
+        const select = document.createElement("select");
+        select.name = "classKey";
+        for (const value of ["", "monk", "trapper"]) {
+            const option = document.createElement("option");
+            option.value = value;
+            select.appendChild(option);
+        }
+        toolbar.appendChild(select);
+    }
+    if (withLevelSelect) {
+        const select = document.createElement("select");
+        select.name = "level";
+        for (const value of ["", "1", "2"]) {
+            const option = document.createElement("option");
+            option.value = value;
+            select.appendChild(option);
+        }
+        toolbar.appendChild(select);
+    }
+    if (withSearch) {
+        const input = document.createElement("input");
+        input.type = "search";
+        input.name = "search";
+        toolbar.appendChild(input);
+    }
+    return toolbar;
+}
+
+describe("SpellbookWindow.readFilters — lecture de l'état de filtre courant (D3-06)", () => {
+    test("barre d'outils ne portant que le champ de recherche : renvoie les trois clés, les deux absentes valant la chaîne vide", () => {
+        const toolbar = makeFilterToolbar({withClassSelect: false, withLevelSelect: false});
+        toolbar.querySelector("[name=\"search\"]").value = "boule";
+
+        expect(SpellbookWindow.readFilters(toolbar)).toEqual({classKey: "", level: "", search: "boule"});
+    });
+
+    test("barre d'outils portant les trois contrôles : renvoie les trois valeurs sélectionnées", () => {
+        const toolbar = makeFilterToolbar();
+        toolbar.querySelector("[name=\"classKey\"]").value = "monk";
+        toolbar.querySelector("[name=\"level\"]").value = "2";
+        toolbar.querySelector("[name=\"search\"]").value = "boule";
+
+        expect(SpellbookWindow.readFilters(toolbar)).toEqual({classKey: "monk", level: "2", search: "boule"});
+    });
+});
+
+describe("SpellbookWindow.applyFilters — masquage DOM pur (D3-05, D3-07, D3-08)", () => {
+    test("critères vides : ne masque aucune carte, rétablit les comptes d'en-tête à leur forme non filtrée", () => {
+        const grid = makeFilterableGrid();
+
+        SpellbookWindow.applyFilters(grid, {classKey: "", level: "", search: ""});
+
+        expect(grid.querySelectorAll(".fq-spellbook-card--filtered-out").length).toBe(0);
+        const counts = [...grid.querySelectorAll(".fq-spellbook-group-count")].map(el => el.textContent);
+        expect(counts).toEqual(["(2)", "(1)"]);
+    });
+
+    test("critère de recherche : masque les cartes non retenues, laisse les autres visibles", () => {
+        const grid = makeFilterableGrid();
+
+        SpellbookWindow.applyFilters(grid, {classKey: "", level: "", search: "boule"});
+
+        const cards = [...grid.querySelectorAll(".fq-spellbook-card")];
+        const visible = cards.filter(c => !c.classList.contains("fq-spellbook-card--filtered-out"));
+        expect(visible).toHaveLength(1);
+        expect(visible[0].dataset.cardName).toBe("Boule de feu");
+    });
+
+    test("réécrit le compte d'en-tête en « visibles/total » dès qu'un critère est actif", () => {
+        const grid = makeFilterableGrid();
+
+        SpellbookWindow.applyFilters(grid, {classKey: "", level: "", search: "boule"});
+
+        const counts = [...grid.querySelectorAll(".fq-spellbook-group-count")].map(el => el.textContent);
+        expect(counts).toEqual(["(1/2)", "(0/1)"]);
+    });
+
+    test("marque comme vide un groupe dont plus aucune carte n'est visible, en-tête compris", () => {
+        const grid = makeFilterableGrid();
+
+        SpellbookWindow.applyFilters(grid, {classKey: "", level: "", search: "boule"});
+
+        const groups = [...grid.querySelectorAll(".fq-spellbook-group")];
+        expect(groups[0].classList.contains("fq-spellbook-group--empty")).toBe(false);
+        expect(groups[1].classList.contains("fq-spellbook-group--empty")).toBe(true);
+    });
+
+    test("révèle le bloc « aucun résultat » quand plus rien n'est visible, le remasque dès qu'une carte l'est de nouveau", () => {
+        const grid = makeFilterableGrid();
+
+        SpellbookWindow.applyFilters(grid, {classKey: "", level: "", search: "introuvable"});
+        expect(grid.querySelector(".fq-spellbook-no-results").hidden).toBe(false);
+
+        SpellbookWindow.applyFilters(grid, {classKey: "", level: "", search: ""});
+        expect(grid.querySelector(".fq-spellbook-no-results").hidden).toBe(true);
+    });
+
+    test("ne touche jamais aux classes d'état de distribution ni aux badges déjà posés", () => {
+        const grid = makeFilterableGrid();
+        const card = grid.querySelector(".fq-spellbook-card");
+        card.classList.add("fq-spellbook-card--partial");
+        const badge = document.createElement("span");
+        badge.className = "fq-spellbook-card-badge";
+        card.appendChild(badge);
+
+        SpellbookWindow.applyFilters(grid, {classKey: "", level: "", search: "introuvable"});
+
+        expect(card.classList.contains("fq-spellbook-card--partial")).toBe(true);
+        expect(card.querySelector(".fq-spellbook-card-badge")).not.toBeNull();
+    });
+
+    test("critère de classe seul : ne laisse visibles que les cartes de cette classe, marque les autres groupes vides", () => {
+        const grid = makeFilterableGrid();
+
+        SpellbookWindow.applyFilters(grid, {classKey: "trapper", level: "", search: ""});
+
+        const groups = [...grid.querySelectorAll(".fq-spellbook-group")];
+        expect(groups[0].classList.contains("fq-spellbook-group--empty")).toBe(true);
+        expect(groups[1].classList.contains("fq-spellbook-group--empty")).toBe(false);
+    });
+
+    test("critère de niveau seul : ne laisse visibles que les cartes de ce niveau, à travers plusieurs groupes", () => {
+        const grid = makeFilterableGrid();
+
+        SpellbookWindow.applyFilters(grid, {classKey: "", level: "1", search: ""});
+
+        const visibleNames = [...grid.querySelectorAll(".fq-spellbook-card")]
+            .filter(c => !c.classList.contains("fq-spellbook-card--filtered-out"))
+            .map(c => c.dataset.cardName);
+        expect(visibleNames.sort()).toEqual(["Boule de feu", "Piege a loup"]);
+    });
+
+    test("classe et niveau combinés : ne laisse visible que l'intersection des deux", () => {
+        const grid = makeFilterableGrid();
+
+        SpellbookWindow.applyFilters(grid, {classKey: "monk", level: "1", search: ""});
+
+        const visibleNames = [...grid.querySelectorAll(".fq-spellbook-card")]
+            .filter(c => !c.classList.contains("fq-spellbook-card--filtered-out"))
+            .map(c => c.dataset.cardName);
+        expect(visibleNames).toEqual(["Boule de feu"]);
+    });
+
+    test("les trois critères combinés : ne laisse visible que la carte satisfaisant les trois, révèle l'état aucun résultat si aucune", () => {
+        const grid = makeFilterableGrid();
+
+        SpellbookWindow.applyFilters(grid, {classKey: "monk", level: "1", search: "boule"});
+        expect(grid.querySelector(".fq-spellbook-no-results").hidden).toBe(true);
+
+        SpellbookWindow.applyFilters(grid, {classKey: "monk", level: "1", search: "eclair"});
+        expect(grid.querySelector(".fq-spellbook-no-results").hidden).toBe(false);
+    });
+});
+
+describe("SpellbookWindow.refreshFilters — point unique de mise à jour du filtrage", () => {
+    test("pose la classe d'état filtré quand au moins un critère est actif, la retire quand aucun ne l'est", () => {
+        const toolbar = makeFilterToolbar();
+        const grid = makeFilterableGrid();
+        toolbar.querySelector("[name=\"search\"]").value = "boule";
+
+        SpellbookWindow.refreshFilters(toolbar, grid);
+        expect(toolbar.classList.contains("fq-spellbook-toolbar--filtered")).toBe(true);
+
+        toolbar.querySelector("[name=\"search\"]").value = "";
+        SpellbookWindow.refreshFilters(toolbar, grid);
+        expect(toolbar.classList.contains("fq-spellbook-toolbar--filtered")).toBe(false);
+    });
+});
+
+describe("SpellbookWindow.resetFilterControls — remise à zéro des contrôles nommés", () => {
+    test("barre d'outils ne portant que le champ de recherche : remet le champ à la chaîne vide", () => {
+        const toolbar = makeFilterToolbar({withClassSelect: false, withLevelSelect: false});
+        toolbar.querySelector("[name=\"search\"]").value = "boule";
+
+        SpellbookWindow.resetFilterControls(toolbar);
+
+        expect(toolbar.querySelector("[name=\"search\"]").value).toBe("");
+    });
+
+    test("barre d'outils complète : remet les deux menus déroulants ET le champ de recherche en un seul appel", () => {
+        const toolbar = makeFilterToolbar();
+        toolbar.querySelector("[name=\"classKey\"]").value = "monk";
+        toolbar.querySelector("[name=\"level\"]").value = "2";
+        toolbar.querySelector("[name=\"search\"]").value = "boule";
+
+        SpellbookWindow.resetFilterControls(toolbar);
+
+        expect(SpellbookWindow.readFilters(toolbar)).toEqual({classKey: "", level: "", search: ""});
+    });
+});
+
+describe("SpellbookWindow.bindFilterControls — écouteurs manuels change/input (RESEARCH, actions ne gère que click)", () => {
+    test("saisie dans le champ de recherche : déclenche le rappel avec les critères courants, masque les cartes non retenues", () => {
+        const toolbar = makeFilterToolbar();
+        const grid = makeFilterableGrid();
+        const onFiltersChanged = vi.fn();
+        SpellbookWindow.bindFilterControls(toolbar, grid, onFiltersChanged);
+
+        const input = toolbar.querySelector("[name=\"search\"]");
+        input.value = "boule";
+        input.dispatchEvent(new Event("input", {bubbles: true}));
+
+        expect(onFiltersChanged).toHaveBeenCalledWith({classKey: "", level: "", search: "boule"});
+        expect(grid.querySelectorAll(".fq-spellbook-card--filtered-out").length).toBeGreaterThan(0);
+    });
+
+    test("le rappel n'est jamais invoqué au moment de la liaison elle-même", () => {
+        const toolbar = makeFilterToolbar();
+        const grid = makeFilterableGrid();
+        const onFiltersChanged = vi.fn();
+
+        SpellbookWindow.bindFilterControls(toolbar, grid, onFiltersChanged);
+
+        expect(onFiltersChanged).not.toHaveBeenCalled();
+    });
+
+    test("changement du menu déroulant de classe : déclenche le rappel, masque les cartes des autres classes", () => {
+        const toolbar = makeFilterToolbar();
+        const grid = makeFilterableGrid();
+        const onFiltersChanged = vi.fn();
+        SpellbookWindow.bindFilterControls(toolbar, grid, onFiltersChanged);
+
+        const select = toolbar.querySelector("[name=\"classKey\"]");
+        select.value = "monk";
+        select.dispatchEvent(new Event("change", {bubbles: true}));
+
+        expect(onFiltersChanged).toHaveBeenCalledWith({classKey: "monk", level: "", search: ""});
+        const trapperCard = grid.querySelector("[data-card-class=\"trapper\"]");
+        expect(trapperCard.classList.contains("fq-spellbook-card--filtered-out")).toBe(true);
+    });
+
+    test("changement du menu déroulant de niveau : déclenche le rappel, masque les cartes des autres niveaux", () => {
+        const toolbar = makeFilterToolbar();
+        const grid = makeFilterableGrid();
+        const onFiltersChanged = vi.fn();
+        SpellbookWindow.bindFilterControls(toolbar, grid, onFiltersChanged);
+
+        const select = toolbar.querySelector("[name=\"level\"]");
+        select.value = "2";
+        select.dispatchEvent(new Event("change", {bubbles: true}));
+
+        expect(onFiltersChanged).toHaveBeenCalledWith({classKey: "", level: "2", search: ""});
+        const level1Card = grid.querySelector("[data-card-level=\"1\"]");
+        expect(level1Card.classList.contains("fq-spellbook-card--filtered-out")).toBe(true);
+    });
+});
+
+/**
+ * Fabrique une racine minimale portant `.fq-spellbook-deck-size`, réplique de
+ * l'extrémité droite de la barre d'outils.
+ *
+ * @returns {{root: Element, counter: Element}} La racine et l'indicateur fabriqués.
+ */
+function makeDeckSizeRoot() {
+    const root = document.createElement("div");
+    const toolbar = document.createElement("div");
+    toolbar.className = "fq-spellbook-toolbar";
+    const counter = document.createElement("span");
+    counter.className = "fq-spellbook-deck-size";
+    toolbar.appendChild(counter);
+    root.appendChild(toolbar);
+    return {root, counter};
+}
+
+describe("SpellbookWindow.applyDeckSize — indicateur de taille de deck (D3-09, D3-10)", () => {
+    test("écrit le total dans le nœud de compte et le reste du libellé autour de lui", () => {
+        vi.spyOn(game.i18n, "localize").mockImplementation(key =>
+            (key === "FQCARDENGINE.SpellBookDeckSize" ? "Deck : {count} carte(s)" : key));
+        const {root, counter} = makeDeckSizeRoot();
+
+        SpellbookWindow.applyDeckSize(root, 7);
+
+        expect(counter.querySelector(".fq-spellbook-deck-size-count").textContent).toBe("7");
+        expect(counter.textContent).toBe("Deck : 7 carte(s)");
+    });
+
+    test("appelée deux fois de suite ne laisse qu'un seul libellé dans l'indicateur", () => {
+        const {root, counter} = makeDeckSizeRoot();
+
+        SpellbookWindow.applyDeckSize(root, 3);
+        SpellbookWindow.applyDeckSize(root, 5);
+
+        expect(counter.querySelectorAll(".fq-spellbook-deck-size-label").length).toBe(1);
+        expect(counter.querySelector(".fq-spellbook-deck-size-count").textContent).toBe("5");
+    });
+
+    test("racine sans indicateur : aucune erreur", () => {
+        const root = document.createElement("div");
+
+        expect(() => SpellbookWindow.applyDeckSize(root, 3)).not.toThrow();
+    });
+
+    test("racine nulle : aucune erreur", () => {
+        expect(() => SpellbookWindow.applyDeckSize(null, 3)).not.toThrow();
+        expect(() => SpellbookWindow.applyDeckSize(undefined, 3)).not.toThrow();
+    });
+
+    test("chaîne localisée sans marqueur {count} (localisation simulée des tests) : le compte reste présent dans son propre nœud", () => {
+        const {root, counter} = makeDeckSizeRoot();
+
+        SpellbookWindow.applyDeckSize(root, 4);
+
+        expect(counter.querySelector(".fq-spellbook-deck-size-count").textContent).toBe("4");
+    });
+});
+
 describe("SpellbookWindow.addOneCopy — geste additif au clic droit (COPY-07, D21-01..D21-06)", () => {
     test("hors combat, carte à 0/3 : création groupée d'UN seul exemplaire, badge 1/3, classe partielle", async () => {
         game.combat = null;
@@ -783,5 +1171,335 @@ describe("SpellbookWindow.applyCombatLock — modificateur de fenêtre pendant u
         SpellbookWindow.applyCombatLock(root, true);
 
         expect(root.className.split(" ").filter(c => c === "fq-spellbook-window--combat-locked")).toHaveLength(1);
+    });
+});
+
+/**
+ * Monte l'élément de carte fabriqué dans une racine réaliste
+ * `.fq-spellbook-body > .fq-spellbook-toolbar > .fq-spellbook-deck-size`,
+ * pour tester `patchDeckSize` sans toucher aux tests existants qui laissent
+ * la carte détachée (RESEARCH, Pitfall 4).
+ *
+ * @param {Element} cardElement - L'élément de carte déjà fabriqué.
+ *
+ * @returns {{body: Element, counter: Element}} La racine et l'indicateur montés.
+ */
+function mountCardInDeckSizeRoot(cardElement) {
+    const body = document.createElement("div");
+    body.className = "fq-spellbook-body";
+    const toolbar = document.createElement("div");
+    toolbar.className = "fq-spellbook-toolbar";
+    const counter = document.createElement("span");
+    counter.className = "fq-spellbook-deck-size";
+    toolbar.appendChild(counter);
+    const content = document.createElement("div");
+    content.className = "fq-spellbook-content";
+    const grid = document.createElement("div");
+    grid.className = "fq-spellbook-grid";
+    grid.appendChild(cardElement);
+    content.appendChild(grid);
+    body.append(toolbar, content);
+    return {body, counter};
+}
+
+describe("SpellbookWindow.toggleCardCopies / addOneCopy — patch de l'indicateur de taille de deck (D3-10, D3-11)", () => {
+    test("après une bascule réussie, le total affiché correspond au nombre de cartes du deck, sans rouvrir la fenêtre", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const {counter} = mountCardInDeckSizeRoot(el);
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([]);
+
+        await SpellbookWindow.toggleCardCopies(el, card, deck);
+
+        expect(counter.querySelector(".fq-spellbook-deck-size-count").textContent).toBe("3");
+    });
+
+    test("après un clic droit réussi, le total affiché a augmenté d'exactement un", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const {counter} = mountCardInDeckSizeRoot(el);
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([{id: "other", name: "Autre carte"}]);
+
+        await SpellbookWindow.addOneCopy(el, card, deck);
+
+        expect(counter.querySelector(".fq-spellbook-deck-size-count").textContent).toBe("2");
+    });
+
+    test("après une bascule de retrait sur une carte complète, le total affiché a diminué du nombre d'exemplaires retirés", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const {counter} = mountCardInDeckSizeRoot(el);
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([
+            {id: "c1", name: "Boule de feu"}, {id: "c2", name: "Boule de feu"}, {id: "c3", name: "Boule de feu"}
+        ]);
+
+        await SpellbookWindow.toggleCardCopies(el, card, deck);
+
+        expect(counter.querySelector(".fq-spellbook-deck-size-count").textContent).toBe("0");
+    });
+
+    test("une bascule sur un élément de carte détaché de toute racine de fenêtre n'échoue pas et ne modifie rien d'autre que le badge de la carte", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([]);
+
+        await expect(SpellbookWindow.toggleCardCopies(el, card, deck)).resolves.toBeUndefined();
+        expect(el.querySelector(".fq-spellbook-card-badge").textContent).toContain("3/3");
+    });
+
+    test("le total ne dépend pas des filtres actifs : avec des cartes masquées par un filtre, le total reste celui du deck entier", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const {counter} = mountCardInDeckSizeRoot(el);
+        el.classList.add("fq-spellbook-card--filtered-out");
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([]);
+
+        await SpellbookWindow.toggleCardCopies(el, card, deck);
+
+        expect(counter.querySelector(".fq-spellbook-deck-size-count").textContent).toBe("3");
+        expect(el.classList.contains("fq-spellbook-card--filtered-out")).toBe(true);
+    });
+});
+
+/**
+ * Construit une chaîne HTML minimale mais complète, réplique du gabarit
+ * partagé `board/card.hbs` : un `.fq-card` portant `data-card-id`/`title`, un
+ * `.fq-card-inner` (nécessaire à `applyCopyState`/`applyLevelBadge`) et un
+ * `.fq-card-tooltip` frère.
+ *
+ * @param {{name?: string, id?: string}} [options] - Le nom et l'identifiant à porter.
+ *
+ * @returns {string} Le fragment HTML fabriqué.
+ */
+function makeRenderedCardHtml({name = "Boule de feu", id = "card1"} = {}) {
+    return `<div class="fq-card fq-card-engine-card" data-card-id="${id}" title="${name}" draggable="true">`
+        + "<div class=\"fq-card-inner\"></div>"
+        + `<span class="fq-card-tooltip">${name}</span>`
+        + "</div>";
+}
+
+describe("SpellbookWindow.renderPreviewCard — fragment du panneau, même chemin de rendu que la grille (D3-04)", () => {
+    let renderTemplateSpy;
+
+    beforeEach(() => {
+        renderTemplateSpy = vi.spyOn(foundry.applications.handlebars, "renderTemplate")
+            .mockResolvedValue(makeRenderedCardHtml());
+        vi.spyOn(SpellbookWindow, "buildCardRenderData");
+        vi.spyOn(DisplayCard, "fitDescriptionSize");
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    function makePreviewElement() {
+        const previewElement = document.createElement("div");
+        previewElement.className = "fq-spellbook-preview-content";
+        const invite = document.createElement("div");
+        invite.className = "fq-spellbook-preview-empty";
+        previewElement.appendChild(invite);
+        return previewElement;
+    }
+
+    test("insère un fragment construit par le chemin de rendu de la grille, remplace intégralement le contenu précédent (invite comprise)", async () => {
+        const previewElement = makePreviewElement();
+        const card = makeFakeCard({name: "Boule de feu"});
+
+        await SpellbookWindow.renderPreviewCard(previewElement, card);
+
+        expect(SpellbookWindow.buildCardRenderData).toHaveBeenCalledWith(card);
+        expect(renderTemplateSpy).toHaveBeenCalled();
+        expect(previewElement.querySelector(".fq-spellbook-preview-empty")).toBeNull();
+        expect(previewElement.querySelector(".fq-spellbook-preview-card")).not.toBeNull();
+    });
+
+    test("le fragment ne porte ni la classe de carte de grille, ni l'attribut d'action, ni le glisser-déposer", async () => {
+        const previewElement = makePreviewElement();
+        const card = makeFakeCard({name: "Boule de feu"});
+
+        await SpellbookWindow.renderPreviewCard(previewElement, card);
+
+        const el = previewElement.querySelector(".fq-spellbook-preview-card");
+        expect(el.classList.contains("fq-spellbook-card")).toBe(false);
+        expect(el.hasAttribute("data-action")).toBe(false);
+        expect(el.hasAttribute("draggable")).toBe(false);
+    });
+
+    test("le fragment ne porte aucun badge : ni exemplaires, ni niveau, ni « Innée » — la carte se lit nue", async () => {
+        const previewElement = makePreviewElement();
+        const card = makeFakeCard({name: "Boule de feu"});
+
+        await SpellbookWindow.renderPreviewCard(previewElement, card);
+
+        const el = previewElement.querySelector(".fq-spellbook-preview-card");
+        expect(el.querySelector(".fq-card-badge")).toBeNull();
+        expect(el.querySelector(".fq-spellbook-card-badge")).toBeNull();
+        expect(el.querySelector(".fq-spellbook-card-level")).toBeNull();
+    });
+
+    test("le fragment ne porte aucune classe d'état de distribution : aucun halo dans le panneau", async () => {
+        const previewElement = makePreviewElement();
+        const card = makeFakeCard({name: "Boule de feu"});
+
+        await SpellbookWindow.renderPreviewCard(previewElement, card);
+
+        const el = previewElement.querySelector(".fq-spellbook-preview-card");
+        expect(el.classList.contains("fq-spellbook-card--none")).toBe(false);
+        expect(el.classList.contains("fq-spellbook-card--partial")).toBe(false);
+        expect(el.classList.contains("fq-spellbook-card--full")).toBe(false);
+    });
+
+    test("l'ajustement de taille de description est appelé sur le fragment APRÈS son insertion dans le panneau", async () => {
+        const previewElement = makePreviewElement();
+        const card = makeFakeCard({name: "Boule de feu"});
+
+        await SpellbookWindow.renderPreviewCard(previewElement, card);
+
+        expect(DisplayCard.fitDescriptionSize).toHaveBeenCalled();
+        const insertedElement = DisplayCard.fitDescriptionSize.mock.calls[0][0];
+        expect(previewElement.contains(insertedElement)).toBe(true);
+    });
+});
+
+describe("SpellbookWindow — panneau d'aperçu au survol prolongé (D3-01, D3-02, RESEARCH Pitfall 1)", () => {
+    let win;
+    let grid;
+    let previewContent;
+    let cardElement;
+    let card;
+    let card2;
+
+    beforeEach(async () => {
+        game.combat = null;
+        vi.useFakeTimers();
+        vi.spyOn(foundry.applications.handlebars, "renderTemplate")
+            .mockImplementation(async () => makeRenderedCardHtml());
+
+        card = makeFakeCard({name: "Boule de feu", maxSameCard: 3, id: "card1"});
+        card2 = makeFakeCard({name: "Eclair", maxSameCard: 2, id: "card2"});
+        const deck = makeFakeDeck([]);
+        const spellBook = {
+            id: "sb1",
+            cards: {
+                contents: [card, card2],
+                get: vi.fn(id => [card, card2].find(c => c.id === id))
+            }
+        };
+        win = new SpellbookWindow(spellBook, deck);
+
+        const root = document.createElement("div");
+        const toolbar = document.createElement("div");
+        toolbar.className = "fq-spellbook-toolbar";
+        grid = document.createElement("div");
+        grid.className = "fq-spellbook-grid";
+        const preview = document.createElement("div");
+        preview.className = "fq-spellbook-preview";
+        previewContent = document.createElement("div");
+        previewContent.className = "fq-spellbook-preview-content";
+        const invite = document.createElement("div");
+        invite.className = "fq-spellbook-preview-empty";
+        previewContent.appendChild(invite);
+        preview.appendChild(previewContent);
+        root.append(toolbar, grid, preview);
+        win.element = root;
+
+        const context = await win._prepareContext({});
+        const classKey = context.groups[0].classKey;
+        const groupElement = document.createElement("div");
+        groupElement.className = "fq-spellbook-group";
+        const cardsContainer = document.createElement("div");
+        cardsContainer.className = "fq-spellbook-cards";
+        cardsContainer.dataset.spellbookCards = classKey;
+        groupElement.appendChild(cardsContainer);
+        grid.appendChild(groupElement);
+
+        await win._onRender({}, {});
+
+        [cardElement] = grid.querySelectorAll(".fq-spellbook-card");
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+        vi.restoreAllMocks();
+    });
+
+    test("juste avant l'expiration du délai de survol : ne remplit pas le panneau", async () => {
+        cardElement.dispatchEvent(new MouseEvent("mouseenter"));
+
+        await vi.advanceTimersByTimeAsync(249);
+
+        expect(previewContent.querySelector(".fq-spellbook-preview-empty")).not.toBeNull();
+        expect(previewContent.querySelector(".fq-spellbook-preview-card")).toBeNull();
+    });
+
+    test("à l'expiration du délai de survol : remplit le panneau avec la carte survolée", async () => {
+        cardElement.dispatchEvent(new MouseEvent("mouseenter"));
+
+        await vi.advanceTimersByTimeAsync(250);
+
+        expect(previewContent.querySelector(".fq-spellbook-preview-empty")).toBeNull();
+        expect(previewContent.querySelector(".fq-spellbook-preview-card")).not.toBeNull();
+    });
+
+    test("une sortie avant l'expiration du délai annule le remplissage : le panneau garde exactement le contenu qu'il avait", async () => {
+        cardElement.dispatchEvent(new MouseEvent("mouseenter"));
+        cardElement.dispatchEvent(new MouseEvent("mouseleave"));
+
+        await vi.advanceTimersByTimeAsync(500);
+
+        expect(previewContent.querySelector(".fq-spellbook-preview-empty")).not.toBeNull();
+        expect(previewContent.querySelector(".fq-spellbook-preview-card")).toBeNull();
+    });
+
+    test("survoler une seconde carte avant l'expiration de la première annule celui de la première : la seconde s'affiche, une seule fois", async () => {
+        const renderSpy = vi.spyOn(SpellbookWindow, "renderPreviewCard").mockResolvedValue(undefined);
+        const [, secondCardElement] = grid.querySelectorAll(".fq-spellbook-card");
+
+        cardElement.dispatchEvent(new MouseEvent("mouseenter"));
+        await vi.advanceTimersByTimeAsync(150);
+        secondCardElement.dispatchEvent(new MouseEvent("mouseenter"));
+        await vi.advanceTimersByTimeAsync(500);
+
+        expect(renderSpy).toHaveBeenCalledTimes(1);
+        expect(renderSpy.mock.calls[0][1]).toBe(card2);
+    });
+
+    test("sortir de la carte APRÈS l'expiration ne vide pas le panneau : le contenu reste affiché", async () => {
+        cardElement.dispatchEvent(new MouseEvent("mouseenter"));
+        await vi.advanceTimersByTimeAsync(500);
+        expect(previewContent.querySelector(".fq-spellbook-preview-card")).not.toBeNull();
+
+        cardElement.dispatchEvent(new MouseEvent("mouseleave"));
+
+        expect(previewContent.querySelector(".fq-spellbook-preview-card")).not.toBeNull();
+    });
+
+    test("une prise de focus remplit le panneau immédiatement, sans attendre le délai", async () => {
+        cardElement.dispatchEvent(new FocusEvent("focusin", {bubbles: true}));
+
+        await vi.advanceTimersByTimeAsync(0);
+
+        expect(previewContent.querySelector(".fq-spellbook-preview-card")).not.toBeNull();
+    });
+
+    test("la fermeture de la fenêtre annule un minuteur de survol en cours : aucun remplissage ne survient après", async () => {
+        cardElement.dispatchEvent(new MouseEvent("mouseenter"));
+
+        win._onClose({});
+        await vi.advanceTimersByTimeAsync(500);
+
+        expect(previewContent.querySelector(".fq-spellbook-preview-card")).toBeNull();
+    });
+
+    test("la fermeture de la fenêtre ne lit jamais l'élément de fenêtre pour nettoyer le minuteur", () => {
+        cardElement.dispatchEvent(new MouseEvent("mouseenter"));
+        win.element = null;
+
+        expect(() => win._onClose({})).not.toThrow();
     });
 });
