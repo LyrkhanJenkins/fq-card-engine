@@ -124,6 +124,10 @@ describe("TradingCards", () => {
 
         expect(deleteSpy).toHaveBeenCalledTimes(0);
         expect(updateSpy).toHaveBeenCalledTimes(1);
+        // Preuve côté émetteur que le signal de fin de rebuild part réellement,
+        // après la résolution du rebuild (D4-07) — complément du côté récepteur
+        // couvert par tests/hook/dnd5e-advancement.test.js.
+        expect(Hooks.callAll).toHaveBeenCalledWith("fq-card-engine.deckRebuilt", "userCharacterId");
 
         vi.useRealTimers();
     });
@@ -600,12 +604,9 @@ describe("TradingCards", () => {
                 expect.anything(),
                 [warriorCards[0], mageCards[0], neutralCards[0]]
             );
-            // Deck de combat (première création : delta depuis le niveau 0) : mêmes
-            // débloquées, en copies.
-            expect(TradingCards.createCardsForDeck).toHaveBeenNthCalledWith(2,
-                expect.anything(),
-                [{...warriorCards[0]}, {...mageCards[0]}, {...neutralCards[0]}]
-            );
+            // Deck de combat : plus aucun peuplement automatique (D4-01/LEVEL-01) —
+            // preuve négative, un seul appel total à createCardsForDeck (le spellbook).
+            expect(TradingCards.createCardsForDeck).toHaveBeenCalledTimes(1);
         });
 
         it("should remove neutral cards from the deck when the global level drops below their level", async () => {

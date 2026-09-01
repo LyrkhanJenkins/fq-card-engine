@@ -5,6 +5,8 @@ import Constants from "../../domain/constants.js";
 import Fx from "../../domain/engine/shared/fx.js";
 import TargetingPredicates from "../../domain/engine/shared/targeting-predicates.js";
 import OpportunityAttack from "../../domain/engine/reaction/opportunity-attack.js";
+import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../domain/trading/trading-cards.js";
+import SpellbookWindow from "../../domain/interface/window/spellbook-window.js";
 
 /**
  * Indique si la logique FQ ne doit PAS s'appliquer à une activité dnd5e donnée :
@@ -174,5 +176,42 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
             await socket.executeAsGM("logCardPlayed", resultArray, cardContent, item.actor.id,
                 TargetingPredicates.resolveTargetActorIds(cardContent, item.actor));
         }
+    }
+});
+
+/**
+ * Identifiants utilisateur en attente d'ouverture automatique du grimoire
+ * (LEVEL-04, D4-04) : un `Set`, jamais un scalaire, pour que deux advancements
+ * entrelacés de deux utilisateurs différents n'effacent jamais l'attente l'un
+ * de l'autre. Armé par le hook système d'avancement de dnd5e ci-dessous — un
+ * hook système local au SEUL client qui a fait tourner l'`AdvancementManager`
+ * jusqu'au bout, contrairement aux hooks de document CRUD (`updateItem`…)
+ * rejoués sur chaque client connecté : c'est ce qui garantit que la fenêtre
+ * ne s'ouvre jamais que chez le déclencheur, sans avoir besoin de comparer un
+ * `userId` de socket. Consommé par le signal explicite de fin de rebuild émis
+ * par `TradingCards.updateDeckWhenChange` une fois celui-ci réellement résolu :
+ * un délai calé sur la durée du debounce serait non déterministe face aux
+ * `await Cards.create`/`deleteDocuments` réseau qu'il enchaîne.
+ *
+ * @type {Set<string>}
+ */
+const pendingSpellbookOpens = new Set();
+
+Hooks.on("dnd5e.advancementManagerComplete", (manager) => {
+    const user = game.users.find(u => u.character?.id === manager.actor?.id);
+    if (!user?.id) return;
+    pendingSpellbookOpens.add(user.id);
+});
+
+Hooks.on("fq-card-engine.deckRebuilt", (userId) => {
+    if (!pendingSpellbookOpens.has(userId)) return;
+    pendingSpellbookOpens.delete(userId);
+
+    // Sans avertissement : une reconstruction interrompue en a déjà émis un,
+    // le joueur en recevrait un second pour la même cause.
+    const spellBook = TradingCards.getFirstDeck(userId, SPELLBOOK_TYPE, false);
+    const deck = TradingCards.getFirstDeck(userId, DECK_TYPE, false);
+    if (spellBook && deck) {
+        SpellbookWindow.open(spellBook, deck);
     }
 });

@@ -91,6 +91,11 @@ export default class TradingCards {
      * est maintenu dans `debouncedUpdateDeckByUser` : seul le dernier événement dans la
      * fenêtre de 300 ms déclenche effectivement le delete + create.
      * Plusieurs utilisateurs sont gérés indépendamment grâce au Map.
+     * Une fois le rebuild réellement résolu, émet un hook custom local (`Hooks.callAll`)
+     * portant l'id de l'utilisateur : c'est l'unique signal fiable de fin de reconstruction
+     * (D4-07), consommé par `src/hook/integration/dnd5e.hook.js` pour ouvrir automatiquement
+     * le grimoire du déclencheur d'un advancement (LEVEL-04) sans jamais l'ouvrir avant que
+     * les nouvelles cartes ne soient réellement en place.
      *
      * @example
      * // Déclaration du Hook au chargement du module
@@ -113,8 +118,18 @@ export default class TradingCards {
         if (!user?.id) return;
 
         if (!TradingCards.debouncedUpdateDeckByUser[user.id]) {
-            TradingCards.debouncedUpdateDeckByUser[user.id] = foundry.utils.debounce((userId) => {
-                TradingCards.updateDeckForUser(userId);
+            TradingCards.debouncedUpdateDeckByUser[user.id] = foundry.utils.debounce(async (userId) => {
+                // Le signal part dans tous les cas, échec compris : les
+                // consommateurs qui attendent la fin de la reconstruction
+                // resteraient sinon armés indéfiniment, sans jamais rien
+                // recevoir ni pouvoir se désarmer.
+                try {
+                    await TradingCards.updateDeckForUser(userId);
+                } catch (err) {
+                    ui.notifications.error(err.message);
+                } finally {
+                    Hooks.callAll("fq-card-engine.deckRebuilt", userId);
+                }
             }, 300);
         }
 
@@ -217,8 +232,9 @@ export default class TradingCards {
         });
         await TradingCards.createCardsForDeck(spellBook, allCards);
 
-        // --- Calcul du delta (cartes gagnées / perdues) par classe ---
-        let cardsToAdd = [];
+        // --- Calcul du delta des cartes perdues par classe (D4-01/D4-02 : le
+        // deck de combat n'est plus jamais peuplé automatiquement, seul le
+        // retrait des cartes devenues indisponibles reste nécessaire) ---
         let cardsToRemove = [];
 
         const allClassNames = new Set([...Object.keys(oldClassLevels), ...Object.keys(newClassLevels)]);
@@ -232,12 +248,7 @@ export default class TradingCards {
             if (!deckCompendium) continue;
             const classeCards = [...deckCompendium.cards];
 
-            if (newLevel > oldLevel) {
-                // Cartes débloquées entre l'ancien niveau (exclu) et le nouveau (inclus)
-                cardsToAdd = cardsToAdd.concat(
-                    classeCards.filter(c => c.system.fq.level > oldLevel && c.system.fq.level <= newLevel)
-                );
-            } else {
+            if (newLevel < oldLevel) {
                 // Classe rétrogradée ou disparue : cartes perdues entre le nouveau niveau (exclu) et l'ancien (inclus)
                 cardsToRemove = cardsToRemove.concat(
                     classeCards.filter(c => c.system.fq.level > newLevel && c.system.fq.level <= oldLevel)
@@ -245,14 +256,10 @@ export default class TradingCards {
             }
         }
 
-        // Delta des cartes neutres : même mécanique que les classes, appliquée au
-        // niveau global (sommes des snapshots de niveaux avant/après).
+        // Delta des cartes perdues neutres : même mécanique que les classes,
+        // appliquée au niveau global (sommes des snapshots de niveaux avant/après).
         const oldGlobalLevel = Object.values(oldClassLevels).reduce((sum, level) => sum + level, 0);
-        if (newGlobalLevel > oldGlobalLevel) {
-            cardsToAdd = cardsToAdd.concat(
-                neutralCards.filter(c => c.system.fq.level > oldGlobalLevel && c.system.fq.level <= newGlobalLevel)
-            );
-        } else if (newGlobalLevel < oldGlobalLevel) {
+        if (newGlobalLevel < oldGlobalLevel) {
             cardsToRemove = cardsToRemove.concat(
                 neutralCards.filter(c => c.system.fq.level > newGlobalLevel && c.system.fq.level <= oldGlobalLevel)
             );
@@ -278,23 +285,6 @@ export default class TradingCards {
             const removeInDeck = deck.cards.filter(c => removeNames.has(c.name));
             await TradingCards.deleteCardsForDeck(deck, removeInDeck);
         }
-
-        // Ajoute au deck uniquement les nouvelles cartes gagnées, si pas déjà présentes
-        if (cardsToAdd.length) {
-            const deckNames = new Set(deck.cards.map(c => c.name));
-            let newCards = [];
-            cardsToAdd.forEach(card => {
-                if (!deckNames.has(card.name)) {
-                    for (let i = 0; i < (Math.ceil((card?.system?.fq?.maxSameCard ?? 1) / 2)); i++) {
-                        newCards.push({...card});
-                    }
-                }
-            });
-            if (newCards.length) {
-                await TradingCards.createCardsForDeck(deck, newCards);
-            }
-        }
-
     }
 
     /**
