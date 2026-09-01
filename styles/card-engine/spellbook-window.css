@@ -281,3 +281,48 @@
     font-weight: 400;
     line-height: 1.5;
 }
+
+/* ============================================================
+   LIGNE D'AIDE DES DEUX GESTES (D21-07, UI-SPEC §1) — dernier enfant de
+   .fq-spellbook-body, hors zone scrollable, toujours visible sans défiler.
+   Discrète : ne doit jamais concurrencer la bannière de combat (tête de
+   fenêtre, orange, plus contrastée).
+   ============================================================ */
+.fq-spellbook-help {
+    flex: 0 0 auto;
+    padding: 6px 16px 0;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(var(--fq-cream-rgb), 0.55);
+}
+
+/* ============================================================
+   SECOUSSE DU BADGE — signal ponctuel « maximum atteint » (D21-02,
+   UI-SPEC §2). Seule animation par images-clés de cette feuille : une
+   itération unique, jamais de pulsation permanente.
+   ============================================================ */
+@keyframes fq-spellbook-badge-shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-3px);
+    }
+    75% {
+        transform: translateX(3px);
+    }
+}
+
+.fq-spellbook-card-badge--shake {
+    animation: fq-spellbook-badge-shake 0.3s ease-in-out 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* Défense en profondeur : la branche JavaScript de signalMaxReached
+       reste la protection réelle (elle produit le signal de remplacement).
+       Le bloc de mouvement réduit existant plus haut ne couvre pas le badge,
+       ses sélecteurs s'arrêtant à la carte et à son enveloppe intérieure. */
+    .fq-spellbook-card-badge--shake {
+        animation: none;
+    }
+}

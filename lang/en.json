@@ -160,6 +160,8 @@
   "FQCARDENGINE.SpellBookEmptyTitle": "No unlocked card",
   "FQCARDENGINE.SpellBookEmptyBody": "This character has not unlocked any class card yet. A level up will add some here.",
   "FQCARDENGINE.SpellBookCombatLockedBanner": "Distribution locked: a combat is in progress. You can still browse your spellbook; deck composition resumes once combat ends.",
+  "FQCARDENGINE.SpellBookHelpLine": "Click: give or take all copies · Right-click: one more copy",
+  "FQCARDENGINE.SpellBookMaxReached": "All copies already distributed ({max}).",
   "FQCARDENGINE.ClassNeutral": "Neutral",
   "FQCARDENGINE.ClassElementalist": "Elementalist",
   "FQCARDENGINE.ClassFencingMaster": "Fencing Master",

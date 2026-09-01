@@ -1,7 +1,7 @@
 import {describe, expect, it, vi} from "vitest";
 import {
-    buildSpellbookGroups, computeCopyState, computeToggleAction, groupCardsByClass, localizeClassKey,
-    sortCardsByLevelThenName
+    buildSpellbookGroups, computeCopyState, computeIncrementAction, computeToggleAction, groupCardsByClass,
+    localizeClassKey, sortCardsByLevelThenName
 } from "../../src/domain/engine/shared/spellbook-grid.js";
 
 /**
@@ -157,6 +157,44 @@ describe("computeToggleAction", () => {
                 expect(result.count).toBeGreaterThanOrEqual(0);
                 if (result.action === "create") {
                     expect(count + result.count).toBe(max);
+                }
+            }
+        }
+    });
+});
+
+describe("computeIncrementAction", () => {
+    it("carte non distribuée (0/3) : crée UN exemplaire (COPY-07)", () => {
+        expect(computeIncrementAction({count: 0, max: 3, state: "none"})).toEqual({action: "create", count: 1});
+    });
+
+    it("carte partielle (2/3) : crée UN exemplaire, jamais les exemplaires manquants au complet", () => {
+        expect(computeIncrementAction({count: 2, max: 3, state: "partial"})).toEqual({action: "create", count: 1});
+    });
+
+    it("carte complète (3/3) : aucune action", () => {
+        expect(computeIncrementAction({count: 3, max: 3, state: "full"})).toEqual({action: "none", count: 0});
+    });
+
+    it("carte sans maxSameCard renseigné (0/1) : crée l'exemplaire unique", () => {
+        expect(computeIncrementAction({count: 0, max: 1, state: "none"})).toEqual({action: "create", count: 1});
+    });
+
+    it("deck déjà en dépassement (4/3) : aucune action, ne peut pas aggraver la situation", () => {
+        expect(computeIncrementAction({count: 4, max: 3, state: "full"})).toEqual({action: "none", count: 0});
+    });
+
+    it("COPY-07 : pour toute combinaison count/max, le compte décidé vaut 1 tant que count < max, 0 dès qu'il l'atteint ou le dépasse", () => {
+        for (let max = 1; max <= 5; max++) {
+            for (let count = 0; count <= max; count++) {
+                const state = count === 0 ? "none" : count >= max ? "full" : "partial";
+                const result = computeIncrementAction({count, max, state});
+                expect(result.count).toBeGreaterThanOrEqual(0);
+                expect(result.count).toBeLessThanOrEqual(1);
+                if (count < max) {
+                    expect(result).toEqual({action: "create", count: 1});
+                } else {
+                    expect(result).toEqual({action: "none", count: 0});
                 }
             }
         }

@@ -436,6 +436,328 @@ describe("SpellbookWindow.toggleCardCopies — geste de bascule au clic (COPY-01
     });
 });
 
+/**
+ * Fabrique une grille minimale du grimoire, réplique de la structure produite
+ * par `spellbook-window.hbs` + `#renderCardsInto` : un `.fq-spellbook-grid`
+ * contenant un `.fq-spellbook-group` avec un en-tête de groupe frère (hors de
+ * la zone des cartes) et un `.fq-spellbook-cards` contenant une seule carte
+ * portant `data-card-id`.
+ *
+ * @param {object}  [options]        - Options de fabrication.
+ * @param {string}  [options.cardId] - L'identifiant de carte porté par l'élément fabriqué.
+ *
+ * @returns {{grid: Element, header: Element, cardsContainer: Element, card: Element}} Les éléments fabriqués.
+ */
+function makeSpellbookGrid({cardId = "card1"} = {}) {
+    const grid = document.createElement("div");
+    grid.className = "fq-spellbook-grid";
+
+    const group = document.createElement("div");
+    group.className = "fq-spellbook-group";
+    grid.appendChild(group);
+
+    const header = document.createElement("div");
+    header.className = "fq-spellbook-group-header";
+    group.appendChild(header);
+
+    const cardsContainer = document.createElement("div");
+    cardsContainer.className = "fq-spellbook-cards";
+    group.appendChild(cardsContainer);
+
+    const card = makeCardElement({name: "Boule de feu"});
+    card.classList.add("fq-spellbook-card");
+    card.dataset.cardId = cardId;
+    cardsContainer.appendChild(card);
+
+    return {grid, header, cardsContainer, card};
+}
+
+describe("SpellbookWindow.addOneCopy — geste additif au clic droit (COPY-07, D21-01..D21-06)", () => {
+    test("hors combat, carte à 0/3 : création groupée d'UN seul exemplaire, badge 1/3, classe partielle", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([]);
+
+        await SpellbookWindow.addOneCopy(el, card, deck);
+
+        expect(deck.createEmbeddedDocuments).toHaveBeenCalledTimes(1);
+        expect(deck.createEmbeddedDocuments.mock.calls[0][1]).toHaveLength(1);
+        expect(el.querySelector(".fq-spellbook-card-badge").textContent).toContain("1/3");
+        expect(el.classList.contains("fq-spellbook-card--partial")).toBe(true);
+    });
+
+    test("hors combat, carte à 2/3 : badge passe à 3/3, classe complète", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([{id: "c1", name: "Boule de feu"}, {id: "c2", name: "Boule de feu"}]);
+
+        await SpellbookWindow.addOneCopy(el, card, deck);
+
+        expect(deck.createEmbeddedDocuments.mock.calls[0][1]).toHaveLength(1);
+        expect(el.querySelector(".fq-spellbook-card-badge").textContent).toContain("3/3");
+        expect(el.classList.contains("fq-spellbook-card--full")).toBe(true);
+    });
+
+    test("combat actif : aucune mutation du deck, notification d'avertissement portant la clé de bannière", async () => {
+        const el = makeCardElement({name: "Boule de feu"});
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([]);
+
+        await SpellbookWindow.addOneCopy(el, card, deck);
+
+        expect(deck.createEmbeddedDocuments).not.toHaveBeenCalled();
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.SpellBookCombatLockedBanner");
+    });
+
+    test("élément déjà verrouillé (dataset.busy) : aucune mutation, aucune notification", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        el.dataset.busy = "true";
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([]);
+
+        await SpellbookWindow.addOneCopy(el, card, deck);
+
+        expect(deck.createEmbeddedDocuments).not.toHaveBeenCalled();
+        expect(ui.notifications.warn).not.toHaveBeenCalled();
+        expect(ui.notifications.error).not.toHaveBeenCalled();
+    });
+
+    test("pendant l'opération, l'élément porte le verrou et la classe --busy ; les deux sont retirés en fin d'opération", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([]);
+        let sawBusyDuringCall = false;
+        deck.createEmbeddedDocuments.mockImplementationOnce(async (type, data) => {
+            sawBusyDuringCall = el.dataset.busy === "true" && el.classList.contains("fq-spellbook-card--busy");
+            return data.map(cardData => {
+                const newCard = {id: `g-${Math.random()}`, name: cardData.name};
+                deck.cards.push(newCard);
+                return newCard;
+            });
+        });
+
+        await SpellbookWindow.addOneCopy(el, card, deck);
+
+        expect(sawBusyDuringCall).toBe(true);
+        expect(el.dataset.busy).toBe("false");
+        expect(el.classList.contains("fq-spellbook-card--busy")).toBe(false);
+    });
+
+    test("promesse de mutation rejetée : notification d'erreur, badge et état inchangés, verrou libéré", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([{id: "c1", name: "Boule de feu"}]);
+        SpellbookWindow.patchCopyState(el, {count: 1, max: 3, state: "partial"});
+        const badgeBefore = el.querySelector(".fq-spellbook-card-badge").textContent;
+        deck.createEmbeddedDocuments.mockRejectedValueOnce(new Error("échec réseau"));
+
+        await SpellbookWindow.addOneCopy(el, card, deck);
+
+        expect(ui.notifications.error).toHaveBeenCalledWith("échec réseau");
+        expect(el.querySelector(".fq-spellbook-card-badge").textContent).toBe(badgeBefore);
+        expect(el.classList.contains("fq-spellbook-card--partial")).toBe(true);
+        expect(el.dataset.busy).toBe("false");
+        expect(el.classList.contains("fq-spellbook-card--busy")).toBe(false);
+    });
+
+    test("hors combat, carte à 3/3 : aucune mutation, aucune notification d'erreur, signal maximum atteint produit", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu", withBadge: true});
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([
+            {id: "c1", name: "Boule de feu"}, {id: "c2", name: "Boule de feu"}, {id: "c3", name: "Boule de feu"}
+        ]);
+        const badge = el.querySelector(".fq-spellbook-card-badge");
+
+        await SpellbookWindow.addOneCopy(el, card, deck);
+
+        expect(deck.createEmbeddedDocuments).not.toHaveBeenCalled();
+        expect(ui.notifications.error).not.toHaveBeenCalled();
+        expect(badge.classList.contains("fq-spellbook-card-badge--shake")).toBe(true);
+    });
+
+    test("hors combat, carte à 3/3 : le badge et l'état affichés ne sont pas altérés par le signal", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([
+            {id: "c1", name: "Boule de feu"}, {id: "c2", name: "Boule de feu"}, {id: "c3", name: "Boule de feu"}
+        ]);
+        SpellbookWindow.patchCopyState(el, {count: 3, max: 3, state: "full"});
+
+        await SpellbookWindow.addOneCopy(el, card, deck);
+
+        expect(el.querySelector(".fq-spellbook-card-badge").textContent).toContain("3/3");
+        expect(el.classList.contains("fq-spellbook-card--full")).toBe(true);
+    });
+
+    test("carte à 3/3 avec un combat actif : la garde de combat l'emporte, avertissement de combat, pas de signal de plafond", async () => {
+        const el = makeCardElement({name: "Boule de feu", withBadge: true});
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([
+            {id: "c1", name: "Boule de feu"}, {id: "c2", name: "Boule de feu"}, {id: "c3", name: "Boule de feu"}
+        ]);
+        const badge = el.querySelector(".fq-spellbook-card-badge");
+
+        await SpellbookWindow.addOneCopy(el, card, deck);
+
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.SpellBookCombatLockedBanner");
+        expect(badge.classList.contains("fq-spellbook-card-badge--shake")).toBe(false);
+        expect(ui.notifications.info).not.toHaveBeenCalled();
+    });
+
+    test("trois appels concurrents sur une carte à 0/3 : une seule mutation au total, compte final de 1", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Boule de feu"});
+        const card = makeFakeCard({name: "Boule de feu", maxSameCard: 3});
+        const deck = makeFakeDeck([]);
+        let resolveCreate;
+        const controlled = new Promise(resolve => {
+            resolveCreate = resolve;
+        });
+        deck.createEmbeddedDocuments.mockImplementationOnce(async (type, data) => {
+            await controlled;
+            return data.map(cardData => {
+                const newCard = {id: `g-${Math.random()}`, name: cardData.name};
+                deck.cards.push(newCard);
+                return newCard;
+            });
+        });
+
+        const firstCall = SpellbookWindow.addOneCopy(el, card, deck);
+        const secondCall = SpellbookWindow.addOneCopy(el, card, deck);
+        const thirdCall = SpellbookWindow.addOneCopy(el, card, deck);
+        resolveCreate();
+        await Promise.all([firstCall, secondCall, thirdCall]);
+
+        expect(deck.createEmbeddedDocuments).toHaveBeenCalledTimes(1);
+        expect(deck.cards.filter(c => c.name === "Boule de feu").length).toBe(1);
+    });
+});
+
+describe("SpellbookWindow.signalMaxReached — signal ponctuel « maximum atteint » (D21-02)", () => {
+    test("carte portant un badge, hors mouvement réduit : le badge porte la classe de secousse, aucune notification", () => {
+        const el = makeCardElement({name: "Boule de feu", withBadge: true});
+        const badge = el.querySelector(".fq-spellbook-card-badge");
+
+        SpellbookWindow.signalMaxReached(el, 3);
+
+        expect(badge.classList.contains("fq-spellbook-card-badge--shake")).toBe(true);
+        expect(ui.notifications.info).not.toHaveBeenCalled();
+    });
+
+    test("appelée deux fois de suite sur le même badge : la classe de secousse n'est portée qu'une fois", () => {
+        const el = makeCardElement({name: "Boule de feu", withBadge: true});
+        const badge = el.querySelector(".fq-spellbook-card-badge");
+
+        SpellbookWindow.signalMaxReached(el, 3);
+        SpellbookWindow.signalMaxReached(el, 3);
+
+        const occurrences = badge.className.split(" ").filter(c => c === "fq-spellbook-card-badge--shake");
+        expect(occurrences).toHaveLength(1);
+    });
+
+    test("sous mouvement réduit : aucune classe de secousse, notification d'information avec le nombre maximal", () => {
+        const originalMatchMedia = window.matchMedia;
+        window.matchMedia = vi.fn(() => ({matches: true}));
+        const el = makeCardElement({name: "Boule de feu", withBadge: true});
+        const badge = el.querySelector(".fq-spellbook-card-badge");
+
+        SpellbookWindow.signalMaxReached(el, 4);
+
+        expect(badge.classList.contains("fq-spellbook-card-badge--shake")).toBe(false);
+        expect(ui.notifications.info).toHaveBeenCalledWith(
+            game.i18n.format("FQCARDENGINE.SpellBookMaxReached", {max: 4})
+        );
+        window.matchMedia = originalMatchMedia;
+    });
+
+    test("carte sans badge : notification d'information émise (un signal au moins toujours produit)", () => {
+        const el = makeCardElement({name: "Boule de feu", withBadge: false});
+
+        expect(() => SpellbookWindow.signalMaxReached(el, 2)).not.toThrow();
+
+        expect(ui.notifications.info).toHaveBeenCalledWith(
+            game.i18n.format("FQCARDENGINE.SpellBookMaxReached", {max: 2})
+        );
+    });
+
+    test("la classe de secousse est retirée du badge à la fin de l'animation (animationend)", () => {
+        const el = makeCardElement({name: "Boule de feu", withBadge: true});
+        const badge = el.querySelector(".fq-spellbook-card-badge");
+
+        SpellbookWindow.signalMaxReached(el, 3);
+        badge.dispatchEvent(new Event("animationend"));
+
+        expect(badge.classList.contains("fq-spellbook-card-badge--shake")).toBe(false);
+    });
+});
+
+describe("SpellbookWindow.bindAddOneCopy — liaison déléguée du menu contextuel sur la grille (D21-04, D21-05)", () => {
+    test("événement de menu contextuel depuis un descendant d'une carte : annulé et déclenche la création", async () => {
+        game.combat = null;
+        const {grid, card} = makeSpellbookGrid({cardId: "card1"});
+        const fakeCard = makeFakeCard({name: "Boule de feu", maxSameCard: 3, id: "card1"});
+        const spellBook = {cards: {get: vi.fn(id => (id === "card1" ? fakeCard : undefined))}};
+        const deck = makeFakeDeck([]);
+        SpellbookWindow.bindAddOneCopy(grid, spellBook, deck);
+        const inner = card.querySelector(".fq-card-inner");
+        const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true});
+
+        inner.dispatchEvent(event);
+
+        expect(event.defaultPrevented).toBe(true);
+        await vi.waitFor(() => expect(deck.createEmbeddedDocuments).toHaveBeenCalledTimes(1));
+    });
+
+    test("événement émis depuis le conteneur de cartes sans passer par une carte : annulé, aucune mutation", () => {
+        game.combat = null;
+        const {grid, cardsContainer} = makeSpellbookGrid({cardId: "card1"});
+        const fakeCard = makeFakeCard({name: "Boule de feu", maxSameCard: 3, id: "card1"});
+        const spellBook = {cards: {get: vi.fn(() => fakeCard)}};
+        const deck = makeFakeDeck([]);
+        SpellbookWindow.bindAddOneCopy(grid, spellBook, deck);
+        const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true});
+
+        cardsContainer.dispatchEvent(event);
+
+        expect(event.defaultPrevented).toBe(true);
+        expect(deck.createEmbeddedDocuments).not.toHaveBeenCalled();
+    });
+
+    test("événement émis depuis un en-tête de groupe, hors de la zone des cartes : PAS annulé", () => {
+        const {grid, header} = makeSpellbookGrid({cardId: "card1"});
+        const spellBook = {cards: {get: vi.fn()}};
+        const deck = makeFakeDeck([]);
+        SpellbookWindow.bindAddOneCopy(grid, spellBook, deck);
+        const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true});
+
+        header.dispatchEvent(event);
+
+        expect(event.defaultPrevented).toBe(false);
+        expect(deck.createEmbeddedDocuments).not.toHaveBeenCalled();
+    });
+
+    test("identifiant de carte inconnu du grimoire : annulé, aucune mutation", () => {
+        game.combat = null;
+        const {grid, card} = makeSpellbookGrid({cardId: "unknown-id"});
+        const spellBook = {cards: {get: vi.fn(() => undefined)}};
+        const deck = makeFakeDeck([]);
+        SpellbookWindow.bindAddOneCopy(grid, spellBook, deck);
+        const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true});
+
+        card.dispatchEvent(event);
+
+        expect(event.defaultPrevented).toBe(true);
+        expect(deck.createEmbeddedDocuments).not.toHaveBeenCalled();
+    });
+});
+
 describe("SpellbookWindow.applyCombatLock — modificateur de fenêtre pendant un combat (D2-06)", () => {
     test("pose la classe fq-spellbook-window--combat-locked quand le verrou est actif", () => {
         const root = document.createElement("div");

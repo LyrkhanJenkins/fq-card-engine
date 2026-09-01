@@ -70,6 +70,30 @@ export function computeToggleAction(copies) {
 }
 
 /**
+ * Détermine l'action du geste additif (clic droit, COPY-07) à partir de
+ * l'état de distribution déjà calculé par `computeCopyState` : tant que le
+ * compte est strictement inférieur au maximum, crée UN exemplaire ; dès qu'il
+ * l'atteint ou le dépasse, ne fait rien. Décider sur `count`/`max` plutôt que
+ * sur `state` rend la fonction robuste à un deck déjà en dépassement (compte
+ * supérieur au maximum sur un vieux deck) : la décision reste `none` et le
+ * geste ne peut jamais aggraver la situation — c'est l'unique garantie de
+ * plafond de ce chemin, le garde-fou de plafond existant du module n'étant
+ * câblé que sur le hook de transfert de l'API `Cards`, jamais sur un appel
+ * direct à la couche document. Ne lit jamais `card` ni `deck` et ne recalcule
+ * jamais l'état, exactement comme `computeToggleAction`.
+ *
+ * @param {{count: number, max: number, state: "none"|"partial"|"full"}} copies - L'état de distribution.
+ *
+ * @returns {{action: "create"|"none", count: number}} L'action à effectuer et le nombre d'exemplaires concernés.
+ */
+export function computeIncrementAction(copies) {
+    if (copies.count >= copies.max) {
+        return {action: "none", count: 0};
+    }
+    return {action: "create", count: 1};
+}
+
+/**
  * Groupe des cartes déjà triées par leur classe FQ (`system.fq.class`), avec
  * repli sur `CardFqSystem.NEUTRAL_CLASS` quand la valeur est absente. L'ordre
  * interne de chaque groupe est celui d'entrée — jamais retrié ici (D-14 :

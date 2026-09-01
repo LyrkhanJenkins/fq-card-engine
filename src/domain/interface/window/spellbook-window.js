@@ -1,5 +1,7 @@
 import DisplayCard from "../card-svg/display-card.js";
-import {buildSpellbookGroups, computeCopyState, computeToggleAction} from "../../engine/shared/spellbook-grid.js";
+import {
+    buildSpellbookGroups, computeCopyState, computeIncrementAction, computeToggleAction
+} from "../../engine/shared/spellbook-grid.js";
 import TradingCards from "../../trading/trading-cards.js";
 
 /** Icône Font Awesome par état de distribution (aucune pour "none"). */
@@ -225,6 +227,10 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
     async _onRender(_context, _options) {
         const combatLocked = SpellbookWindow.isCombatLocked();
         SpellbookWindow.applyCombatLock(this.element, combatLocked);
+        const gridElement = this.element.querySelector(".fq-spellbook-grid");
+        if (gridElement) {
+            SpellbookWindow.bindAddOneCopy(gridElement, this.spellBook, this.deck);
+        }
         if (this.#preparedGroups.isEmpty) {
             return;
         }
@@ -395,6 +401,145 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             cardElement.dataset.busy = "false";
             cardElement.classList.remove("fq-spellbook-card--busy");
         }
+    }
+
+    /**
+     * Cœur testable du geste additif au clic droit (COPY-07, D21-01, D21-03) :
+     * jumelle stricte de `toggleCardCopies`, mêmes gardes dans le même ordre
+     * (verrou anti double-geste PARTAGÉ avec le clic gauche, D21-05 ; garde de
+     * combat re-vérifiée à chaque geste, D21-06) mais décision plafonnée par
+     * `computeIncrementAction` : jamais plus d'UN exemplaire créé par appel,
+     * jamais de retrait. Le compte se lit toujours sur le deck seul, exemplaires
+     * marqués comme piochés compris (BOOK-07) — jamais sur la main ni la
+     * défausse. Quand le maximum est déjà atteint, aucune mutation n'a lieu et
+     * `signalMaxReached` produit le signal « maximum atteint » (D21-02) — la
+     * garde de combat l'emporte toujours sur ce signal, jamais l'inverse.
+     *
+     * @param {Element} cardElement - L'élément racine de la carte visée.
+     * @param {Card}    card        - La carte du grimoire concernée.
+     * @param {Cards}   deck        - Le deck du joueur, cible de la mutation.
+     *
+     * @returns {Promise<void>}
+     */
+    static async addOneCopy(cardElement, card, deck) {
+        if (cardElement.dataset.busy === "true") {
+            return;
+        }
+        if (SpellbookWindow.isCombatLocked()) {
+            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.SpellBookCombatLockedBanner"));
+            return;
+        }
+
+        const copies = computeCopyState(card, deck);
+        const {action, count} = computeIncrementAction(copies);
+        if (action !== "create") {
+            SpellbookWindow.signalMaxReached(cardElement, copies.max);
+            return;
+        }
+
+        cardElement.dataset.busy = "true";
+        cardElement.classList.add("fq-spellbook-card--busy");
+        try {
+            await TradingCards.createCardsForDeck(deck, Array(count).fill(card));
+            SpellbookWindow.patchCopyState(cardElement, computeCopyState(card, deck));
+        } catch (err) {
+            ui.notifications.error(err.message);
+        } finally {
+            cardElement.dataset.busy = "false";
+            cardElement.classList.remove("fq-spellbook-card--busy");
+        }
+    }
+
+    /**
+     * Signale qu'une carte est déjà au maximum d'exemplaires (D21-02) : une
+     * secousse brève et ponctuelle du badge `n/N`, ou une notification quand
+     * le mouvement réduit est demandé, ou quand la carte n'a pas de badge —
+     * un signal au moins est toujours produit. La lecture de `badge.offsetWidth`
+     * force un recalcul de mise en page entre le retrait et la repose de la
+     * classe d'animation : sans cette lecture, le navigateur ne voit aucun
+     * changement d'état entre les deux et un geste répété ne rejoue jamais la
+     * secousse. La classe est retirée à la fin de l'animation (`animationend`,
+     * mode `once`), ce qui rend la secousse rejouable au geste suivant.
+     *
+     * @param {Element} cardElement - L'élément racine de la carte visée.
+     * @param {number}  max         - Le nombre maximal d'exemplaires prévu par la carte.
+     *
+     * @returns {void}
+     */
+    static signalMaxReached(cardElement, max) {
+        const badge = cardElement.querySelector(".fq-spellbook-card-badge");
+        const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+        if (!badge || reducedMotion) {
+            ui.notifications.info(game.i18n.format("FQCARDENGINE.SpellBookMaxReached", {max}));
+            return;
+        }
+
+        badge.classList.remove("fq-spellbook-card-badge--shake");
+        void badge.offsetWidth;
+        badge.classList.add("fq-spellbook-card-badge--shake");
+        // Une secousse interrompue par un geste répété n'émet jamais son
+        // animationend : sans retrait de l'écouteur précédent, chaque geste
+        // en empilerait un de plus sur ce badge tant que la fenêtre vit.
+        if (badge._fqShakeCleanup) {
+            badge.removeEventListener("animationend", badge._fqShakeCleanup);
+        }
+        badge._fqShakeCleanup = () => {
+            badge.classList.remove("fq-spellbook-card-badge--shake");
+            delete badge._fqShakeCleanup;
+        };
+        badge.addEventListener("animationend", badge._fqShakeCleanup, {once: true});
+    }
+
+    /**
+     * Pose UN gestionnaire délégué d'événement `contextmenu` sur la grille du
+     * grimoire, jamais carte par carte (D21-04) : la règle d'état en vol de la
+     * phase 2 neutralise les événements de pointeur sur une carte verrouillée
+     * (`pointer-events: none`), un gestionnaire posé sur la carte elle-même ne
+     * serait donc jamais atteint pendant le verrou et laisserait réapparaître
+     * le menu du navigateur. Posé au niveau de la grille, l'événement est reçu
+     * dans les deux cas : sur une carte active, la remontée trouve la carte et
+     * le geste s'exécute ; sur une carte verrouillée, la cible est le
+     * conteneur de cartes, l'événement est annulé et aucune mutation n'a lieu.
+     * La liaison ne s'accumule pas d'un rendu à l'autre : le gabarit du PART
+     * reconstruit l'élément de grille à chaque rendu, l'ancien gestionnaire
+     * disparaît donc avec l'ancien élément. Le gestionnaire d'action natif de
+     * bascule du clic gauche n'est déclenché que par le bouton principal de la
+     * souris — un clic droit ne peut donc jamais le déclencher, ce qui permet
+     * aux deux gestes de coexister sur le même élément sans se marcher dessus.
+     *
+     * @param {Element} gridElement - L'élément `.fq-spellbook-grid` du rendu courant.
+     * @param {Cards}   spellBook   - Le grimoire courant, pour résoudre l'identifiant de carte.
+     * @param {Cards}   deck        - Le deck du joueur, cible de la mutation.
+     *
+     * @returns {void}
+     */
+    static bindAddOneCopy(gridElement, spellBook, deck) {
+        gridElement.addEventListener("contextmenu", event => {
+            if (!event.target.closest(".fq-spellbook-cards")) {
+                // Hors de la zone des cartes (en-tête de groupe, etc.) : le menu
+                // du navigateur reste disponible partout ailleurs.
+                return;
+            }
+            // Première instruction après le filtre de zone, AVANT toute autre
+            // garde : le menu du navigateur doit disparaître y compris sur une
+            // carte complète, verrouillée ou pendant un combat (D21-04).
+            event.preventDefault();
+
+            const cardElement = event.target.closest(".fq-spellbook-card");
+            if (!cardElement) {
+                return;
+            }
+            const card = spellBook.cards.get(cardElement.dataset.cardId);
+            if (!card) {
+                // Identifiant falsifié dans le DOM : ne résout qu'une carte du
+                // grimoire courant, jamais hors de ce périmètre.
+                return;
+            }
+            // Le gestionnaire d'événement reste synchrone : la promesse de
+            // addOneCopy n'est jamais attendue ici.
+            SpellbookWindow.addOneCopy(cardElement, card, deck);
+        });
     }
 
     /**
