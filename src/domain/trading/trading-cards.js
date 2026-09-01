@@ -6,6 +6,13 @@ export const HAND_TYPE = "HAND";
 export const PILE_TYPE = "PILE";
 export const SPELLBOOK_TYPE = "SPELLBOOK";
 
+/**
+ * Nom du deck de compendium portant les cartes neutres, communes à toutes les
+ * classes FQ : elles se débloquent au niveau global du personnage (somme des
+ * niveaux de ses classes FQ), pas au niveau d'une classe particulière.
+ */
+export const NEUTRAL_PATTERN_DECK_NAME = "Neutral Base";
+
 export default class TradingCards {
 
     /**
@@ -117,6 +124,9 @@ export default class TradingCards {
     /**
      * Met à jour l'ensemble des decks (Deck, Hand, Pile, et éventuellement Spellbook)
      * pour un utilisateur donné, à partir des compendiums FQ.
+     * Les cartes de classe se débloquent au niveau de leur classe ; les cartes du deck
+     * neutre (cf. {@link NEUTRAL_PATTERN_DECK_NAME}) se débloquent au niveau global du
+     * personnage — somme des niveaux de ses classes FQ — dès qu'il en a au moins une.
      *
      * @param {string} currentUserId - L'id Foundry de l'utilisateur cible.
      *
@@ -189,6 +199,13 @@ export default class TradingCards {
             let classeCards = deckCompendium ? [...deckCompendium.cards] : [];
             allCards = allCards.concat(classeCards.filter(c => c.system.fq.level <= level));
         }
+        // Cartes neutres : débloquées au niveau global (somme des niveaux des classes
+        // FQ), indépendamment de la classe. Deck absent du compendium => ignoré,
+        // comme un deck de classe manquant.
+        const neutralDeck = compendium.find(pack => pack.name === NEUTRAL_PATTERN_DECK_NAME);
+        const neutralCards = neutralDeck ? [...neutralDeck.cards] : [];
+        const newGlobalLevel = Object.values(newClassLevels).reduce((sum, level) => sum + level, 0);
+        allCards = allCards.concat(neutralCards.filter(c => c.system.fq.level <= newGlobalLevel));
         let spellBookName = game.i18n.localize("FQCARDENGINE.SpellBookPrefixName") + user.character.name;
         spellBook = await Cards.create({
             ...originDeck,
@@ -226,6 +243,19 @@ export default class TradingCards {
                     classeCards.filter(c => c.system.fq.level > newLevel && c.system.fq.level <= oldLevel)
                 );
             }
+        }
+
+        // Delta des cartes neutres : même mécanique que les classes, appliquée au
+        // niveau global (sommes des snapshots de niveaux avant/après).
+        const oldGlobalLevel = Object.values(oldClassLevels).reduce((sum, level) => sum + level, 0);
+        if (newGlobalLevel > oldGlobalLevel) {
+            cardsToAdd = cardsToAdd.concat(
+                neutralCards.filter(c => c.system.fq.level > oldGlobalLevel && c.system.fq.level <= newGlobalLevel)
+            );
+        } else if (newGlobalLevel < oldGlobalLevel) {
+            cardsToRemove = cardsToRemove.concat(
+                neutralCards.filter(c => c.system.fq.level > newGlobalLevel && c.system.fq.level <= oldGlobalLevel)
+            );
         }
 
         // Create deck if not exist

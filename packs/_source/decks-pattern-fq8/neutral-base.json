@@ -1,0 +1,682 @@
+{
+  "name": "Neutral Base",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/texture/neutral.png",
+  "system": {
+    "fq": {
+      "type": "",
+      "owner": "",
+      "classLevels": {}
+    }
+  },
+  "cards": [
+    {
+      "_id": "cqd8EUF2UiCp50Q3",
+      "name": "FQCARDTITLE.DrawII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.PNG",
+          "text": "FQCARDDESCRIPTION.DrawII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 100000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-2",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "2",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgDrawCard",
+                  "arg": "{\"draw\": \"2\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 2,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430828,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cqd8EUF2UiCp50Q3"
+    },
+    {
+      "_id": "cr3aAPUkov25LMOY",
+      "name": "FQCARDTITLE.DrawIII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.PNG",
+          "text": "FQCARDDESCRIPTION.DrawIII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 200000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "3",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgDrawCard",
+                  "arg": "{ \"draw\": \"3\" }"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "maxSameCard": 2,
+          "level": 3,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786109690791,
+        "modifiedTime": 1786109690796,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cr3aAPUkov25LMOY"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_i.PNG",
+          "text": "FQCARDDESCRIPTION.ManaRecoveryI"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ManaRecoveryI",
+      "description": "",
+      "_id": "VHloVz6yx7n42QiR",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "isInnate": false,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-1",
+              "mana": "+1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.energy_strands.in.green.01",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 3
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 300000,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1786004418444,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.VHloVz6yx7n42QiR"
+    },
+    {
+      "_id": "qB1Pxiy7tDXmB34R",
+      "name": "FQCARDTITLE.ManaRecoveryII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_ii.PNG",
+          "text": "FQCARDDESCRIPTION.ManaRecoveryII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 400000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "2",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgManaRecover",
+                  "arg": "{\"mana\": \"2\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.energy_strands.in.green.01",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 2,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430829,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.qB1Pxiy7tDXmB34R"
+    },
+    {
+      "_id": "c4ziF2usM3lTpLkx",
+      "name": "FQCARDTITLE.ManaRecoveryIII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.PNG",
+          "text": "FQCARDDESCRIPTION.ManaRecoveryIII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 500000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "3",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgManaRecover",
+                  "arg": "{\"mana\": \"3\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "jb2a.energy_strands.in.green.01",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 2,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786109690791,
+        "modifiedTime": 1786109690795,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.c4ziF2usM3lTpLkx"
+    },
+    {
+      "_id": "SU0jUmTib8tJ4CFv",
+      "name": "FQCARDTITLE.TurnBoosterIV",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
+          "text": "FQCARDDESCRIPTION.TurnBoosterIV"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 600000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "4",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgActionRecover",
+                  "arg": "{\"action\": \"4\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 3,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786109690791,
+        "modifiedTime": 1786109690797,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.SU0jUmTib8tJ4CFv"
+    },
+    {
+      "_id": "PpyIs63PW9KpgvKs",
+      "name": "FQCARDTITLE.TurnBoosterV",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_v.PNG",
+          "text": "FQCARDDESCRIPTION.TurnBoosterV"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 700000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "5",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgActionRecover",
+                  "arg": "{\"action\": \"5\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 4,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004435185,
+        "modifiedTime": 1786004435189,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.PpyIs63PW9KpgvKs"
+    }
+  ],
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1788253416471,
+    "modifiedTime": 1788253416471,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "width": null,
+  "height": null,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "mNzWDtA6wOPaLz2e",
+  "sort": 0,
+  "_key": "!cards!mNzWDtA6wOPaLz2e"
+}

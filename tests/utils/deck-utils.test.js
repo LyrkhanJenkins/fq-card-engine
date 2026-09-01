@@ -561,5 +561,86 @@ describe("TradingCards", () => {
                 system: expect.objectContaining({fq: expect.objectContaining({type: "DECK"})})
             }));
         });
+
+        it("should unlock neutral cards at the global level (sum of FQ class levels) in spellbook and deck", async () => {
+            const warrior = {name: "Warrior", system: {isOriginalClass: true, levels: 3}};
+            const mage = {name: "Mage", system: {isOriginalClass: false, levels: 2}};
+            game.users = {
+                ...game.users,
+                get: vi.fn().mockReturnValue({
+                    id: "user1",
+                    character: {id: "char1", name: "CharacterName"},
+                    isGM: false
+                })
+            };
+            vi.spyOn(Constants, "userFQClasses").mockReturnValue([warrior, mage]);
+
+            const warriorCards = [
+                {name: "WarriorCard", system: {fq: {level: 3}}},
+                {name: "WarriorLate", system: {fq: {level: 4}}}
+            ];
+            const mageCards = [{name: "MageCard", system: {fq: {level: 2}}}];
+            const neutralCards = [
+                {name: "NeutralEarly", system: {fq: {level: 4}}},
+                {name: "NeutralLate", system: {fq: {level: 6}}}
+            ];
+            game.packs.get = vi.fn(() => ({
+                getDocuments: vi.fn().mockResolvedValue([
+                    {name: "Warrior Base", system: {someBase: true}, cards: warriorCards},
+                    {name: "Mage Base", system: {someBase: true}, cards: mageCards},
+                    {name: "Neutral Base", system: {someBase: true}, cards: neutralCards}
+                ])
+            }));
+
+            await TradingCards.updateDeckForUser("user1");
+
+            // Spellbook : cartes de classe au niveau de leur classe, cartes neutres
+            // au niveau global 3 + 2 = 5 (NeutralEarly incluse, NeutralLate exclue).
+            expect(TradingCards.createCardsForDeck).toHaveBeenNthCalledWith(1,
+                expect.anything(),
+                [warriorCards[0], mageCards[0], neutralCards[0]]
+            );
+            // Deck de combat (première création : delta depuis le niveau 0) : mêmes
+            // débloquées, en copies.
+            expect(TradingCards.createCardsForDeck).toHaveBeenNthCalledWith(2,
+                expect.anything(),
+                [{...warriorCards[0]}, {...mageCards[0]}, {...neutralCards[0]}]
+            );
+        });
+
+        it("should remove neutral cards from the deck when the global level drops below their level", async () => {
+            const warrior = {name: "Warrior", system: {isOriginalClass: true, levels: 2}};
+            game.users = {
+                ...game.users,
+                get: vi.fn().mockReturnValue({
+                    id: "user1",
+                    character: {id: "char1", name: "CharacterName"},
+                    isGM: false
+                })
+            };
+            vi.spyOn(Constants, "userFQClasses").mockReturnValue([warrior]);
+
+            const neutralCards = [{name: "NeutralGone", system: {fq: {level: 3}}}];
+            game.packs.get = vi.fn(() => ({
+                getDocuments: vi.fn().mockResolvedValue([
+                    {name: "Warrior Base", system: {someBase: true}, cards: []},
+                    {name: "Neutral Base", system: {someBase: true}, cards: neutralCards}
+                ])
+            }));
+
+            const deckCard = {id: "card1", name: "NeutralGone"};
+            const existingSpellbook = {id: "existingSpellbook", system: {fq: {classLevels: {Warrior: 3}}}};
+            const existingDeck = {id: "existingDeck", cards: [deckCard]};
+            TradingCards.getFirstDeck.mockImplementation((userId, typeFq) => {
+                if (typeFq === "SPELLBOOK") return existingSpellbook;
+                if (typeFq === "DECK") return existingDeck;
+                return {id: "other"};
+            });
+
+            await TradingCards.updateDeckForUser("user1");
+
+            // Niveau global 3 -> 2 : la carte neutre de niveau 3 quitte le deck.
+            expect(TradingCards.deleteCardsForDeck).toHaveBeenCalledWith(existingDeck, [deckCard]);
+        });
     });
 });

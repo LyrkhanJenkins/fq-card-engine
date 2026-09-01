@@ -26,6 +26,7 @@ Je l'ai donc rendu comme carte passive gratuite, rejouable une fois par round : 
 
 ### Versions prévues
 #### 3.0.0
+- 2 Cartes neutres à faire : le dash, et une carte inné qui permet de piocher n'improte quel carte dans le deck? (ne défausse pas une carte inné hors combat?)
 - A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)
     - Relire et faire un point sur la caracterisation avant tout
