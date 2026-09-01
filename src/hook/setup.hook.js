@@ -65,9 +65,8 @@ Hooks.on("setup", function () {
     if (game.settings.get(FqCardEngineModule.moduleName, "PlayerLimitCardsRight")) {
         CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
     }
-    const adminRights = CONFIG.FqCardEngine.options.playerLimitCardsRight === false || game.user.isGM;
     foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand-container.hbs", {
-        manualActions: adminRights
+        isGM: game.user.isGM
     }).then(content => {
         content = $(content);
         $("#ui-bottom").append(content);
@@ -75,9 +74,11 @@ Hooks.on("setup", function () {
         FqCardEngineModule.setupPosition();
         let count = game.settings.get(FqCardEngineModule.moduleName, "HandCount");
         count = count ? count : 0;
-        if (count > FqCardEngineModule.handMax) {
-            count = adminRights ? FqCardEngineModule.handMax : 1;
-        }
+        // Clamp inconditionnel (D1-05) : un joueur non-MJ n'a jamais plus d'une
+        // barre au premier chargement, quelle que soit sa valeur mémorisée
+        // (HandCount, scope client, potentiellement > 1 avant cette phase). Le
+        // MJ conserve le multi-barres, plafonné à handMax comme aujourd'hui.
+        count = game.user.isGM ? Math.min(count, FqCardEngineModule.handMax) : 1;
         for (let i = 0; i < count; i++) {
             new HandBoard(i);
         }

@@ -1,4 +1,4 @@
-import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
+import TradingCards, {DECK_TYPE, HAND_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
 import DisplayCard from "../card-svg/display-card.js";
 import CardCondition from "../../engine/shared/card-condition.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
@@ -16,10 +16,33 @@ const GENERATED_GLOW_DURATION_MS = 24000;
  */
 export default class HandBoard {
     /**
+     * Construit les données de gabarit d'une barre pour `hand.hbs` : `id`,
+     * `manualActions` (droits étendus sur les cartes — reprise inchangée de
+     * `playerLimitCardsRight === false || isGM`, conditionne les boutons de
+     * pioche/ouverture de main) et `isGM`, clé DISTINCTE valant strictement
+     * `game.user.isGM`, jamais dérivée du réglage `playerLimitCardsRight`
+     * (BAR-02/D1-04) : c'est elle seule qui conditionne le bouton d'engrenage.
+     *
+     * @param {number} id - L'index/identifiant de la barre.
+     *
+     * @returns {{id: number, manualActions: boolean, isGM: boolean}} Les données de gabarit.
+     */
+    static buildTemplateData(id) {
+        return {
+            id: id,
+            manualActions: CONFIG.FqCardEngine.options.playerLimitCardsRight === false || game.user.isGM,
+            isGM: game.user.isGM
+        };
+    }
+
+    /**
      * Instancie une barre de main : rend son gabarit, branche les gestionnaires
      * d'événements de l'UI, enregistre les hooks de synchronisation des cartes et
-     * des utilisateurs, restaure son état persistant, et s'auto-enregistre dans
-     * `FqCardEngineModule.handMiniBarList`.
+     * des utilisateurs, puis peuple son affichage initial et s'auto-enregistre
+     * dans `FqCardEngineModule.handMiniBarList`. Côté MJ, l'affichage initial
+     * restaure l'état persistant depuis les flags (`restore()`, inchangé). Côté
+     * joueur non-MJ, aucun flag n'est lu ou écrit : `update()` résout directement
+     * sa propre main via `TradingCards.getFirstDeck` (D1-01/D1-03).
      *
      * @param {number} id - L'index/identifiant de la barre.
      */
@@ -39,9 +62,9 @@ export default class HandBoard {
         this._hookIds = {};
         let t = this;
 
-        foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand.hbs", {
-            id: this.id, manualActions: CONFIG.FqCardEngine.options.playerLimitCardsRight === false || game.user.isGM
-        }).then(content => {
+        foundry.applications.handlebars.renderTemplate("modules/fq-card-engine/src/templates/board/hand.hbs",
+            HandBoard.buildTemplateData(this.id)
+        ).then(content => {
             content = $(content);
             content.find(".fq-card-engine-settings-hand").click(function (e) {
                 t.openStackWindow(e);
@@ -60,8 +83,19 @@ export default class HandBoard {
             });
             $("#fq-card-engine-hands-container").prepend(content);
             FqCardEngineModule.setupHorizontalScroll(content[0]);
-            t.restore();
+            // `html` est affecté AVANT le premier peuplement : `update()` refuse
+            // de rendre tant qu'il est absent, ce premier rendu serait donc
+            // silencieusement perdu et la barre resterait vide jusqu'à un
+            // événement sans rapport.
             t.html = content;
+            // MJ : restaure l'état persistant depuis les flags (D1-07, inchangé).
+            // Joueur non-MJ : aucun flag, la résolution paresseuse de update()
+            // (D1-01/D1-02/D1-03) suffit à peupler l'affichage initial.
+            if (game.user.isGM) {
+                t.restore();
+            } else {
+                t.update();
+            }
         });
 
         /**
@@ -94,7 +128,15 @@ export default class HandBoard {
             }
         });
 
+        // Réservé au MJ : `restore()` relit les flags de barre, et un joueur ne
+        // mémorise plus rien (D1-03). Sans ce filtre, la barre d'un joueur
+        // rouvrirait ce chemin de flags dès qu'un flag du module change
+        // n'importe où dans le monde — y compris un flag hérité d'avant cette
+        // phase, qui écraserait sa main résolue.
         this._hookIds.updateUser = Hooks.on("updateUser", function (target, data) {
+            if (!game.user.isGM) {
+                return;
+            }
             //GM informs others not informaed by players
             if (data != undefined && data.flags !== undefined) {
                 if (data.flags[FqCardEngineModule.moduleName] !== undefined) {
@@ -102,6 +144,24 @@ export default class HandBoard {
                 }
             }
         });
+
+        // BAR-03 : signal de fin de (re)construction du deck d'un utilisateur,
+        // déjà émis par TradingCards.updateDeckWhenChange (voir 01-RESEARCH.md,
+        // Pattern 2). Uniquement pour un joueur non-MJ, filtré sur l'utilisateur
+        // LOCAL : sans ce filtre, la reconstruction du deck de n'importe quel
+        // joueur recalculerait la barre de tous les autres clients. La clé de
+        // `_hookIds` DOIT être le nom de hook littéral (accès par crochets) : la
+        // boucle de nettoyage de remove() appelle Hooks.off(hook, id) avec cette
+        // clé comme premier argument, une clé raccourcie casserait le
+        // désenregistrement de ce hook précis.
+        if (!game.user.isGM) {
+            this._hookIds["fq-card-engine.deckRebuilt"] =
+                Hooks.on("fq-card-engine.deckRebuilt", function (userId) {
+                    if (userId === game.user.id) {
+                        t.update();
+                    }
+                });
+        }
 
         // Réévaluation du glow des réactifs (isReactiveReady) : sa jouabilité
         // dépend d'événements sans lien avec les documents cartes — logs de
@@ -221,17 +281,39 @@ export default class HandBoard {
     }
 
     /**
-     * Rafraîchit la barre : rend les cartes puis (re)branche le glisser-déposer et
-     * l'effet d'éventail. Un verrou `updating` évite les rendus concurrents : les
-     * appels reçus pendant un rendu en cours sont coalescés via `pendingUpdate` et
-     * déclenchent une unique relance à la fin du rendu. Sans cartes, met seulement
-     * à jour le titre et la couleur du joueur.
+     * Rafraîchit la barre : pour un joueur non-MJ, résout d'abord sa propre main
+     * via `TradingCards.getFirstDeck` (aucun flag lu ni écrit, D1-01/D1-02/D1-03) —
+     * c'est ce qui permet à la main d'apparaître sans rechargement de page dès
+     * qu'elle existe (BAR-03). Rend ensuite les cartes puis (re)branche le
+     * glisser-déposer et l'effet d'éventail. Un verrou `updating` évite les rendus
+     * concurrents : les appels reçus pendant un rendu en cours sont coalescés via
+     * `pendingUpdate` et déclenchent une unique relance à la fin du rendu. Sans
+     * cartes, met seulement à jour le titre et la couleur du joueur, sans aucun
+     * avertissement (D1-06).
      *
      * @returns {void}
      */
     update() {
         let t = this;
         if (t._removed) {
+            return;
+        }
+        // Résolution paresseuse (D1-01/D1-02/D1-03), uniquement pour un joueur
+        // non-MJ : jamais appliquée à une barre MJ (currentUser géré à la main via
+        // restore()/setUserOption), sans quoi la sélection du MJ serait écrasée
+        // (Pitfall 3 de 01-RESEARCH.md). warning=false : update() est appelé très
+        // fréquemment (glow réactif débouncé, hooks de combat) et republierait
+        // sinon l'avertissement en boucle tant que la main n'existe pas (D1-06).
+        if (!game.user.isGM) {
+            t.currentCards = TradingCards.getFirstDeck(game.user.id, HAND_TYPE, false);
+        }
+        // Le gabarit est rendu de façon asynchrone alors que les hooks sont
+        // posés dès le constructeur : un hook déclenché avant la résolution de
+        // ce rendu trouverait `html` absent. La résolution paresseuse rend ce
+        // cas nettement plus fréquent qu'avant, la main d'un joueur étant
+        // désormais trouvée dès le premier appel. La résolution a lieu AVANT
+        // cette garde : l'état reste à jour même quand le DOM n'est pas prêt.
+        if (!t.html) {
             return;
         }
         if (t.currentCards) {
@@ -388,13 +470,20 @@ export default class HandBoard {
     }
 
     /**
-     * Ouvre le dialogue de configuration de la barre : choisir une main, choisir
-     * un joueur (MJ uniquement) ou réinitialiser. Si seule l'option « main » est
-     * disponible, ouvre directement le dialogue de choix de main.
+     * (MJ) Ouvre le dialogue de configuration de la barre : choisir une main,
+     * choisir un joueur ou réinitialiser. Si seule l'option « main » est
+     * disponible, ouvre directement le dialogue de choix de main. Garde en
+     * profondeur (T-01-01) : un joueur non-MJ n'a plus ce bouton dans son
+     * gabarit (BAR-02/D1-04), mais cette méthode se refuse aussi explicitement
+     * pour tout appelant direct (console, futur code) — défense indépendante du
+     * masquage Handlebars.
      *
      * @returns {Promise<void>}
      */
     async chooseDialog() {
+        if (!game.user.isGM) {
+            return;
+        }
         const buttons = [];
 
         buttons.push({
@@ -544,6 +633,12 @@ export default class HandBoard {
      * @returns {Promise<void>}
      */
     async resetToolbarDialog() {
+        // Même garde en profondeur que `chooseDialog` : ce dialogue est lié au
+        // clic droit du bouton masqué pour un joueur, il ne doit pas rester
+        // atteignable pour autant.
+        if (!game.user.isGM) {
+            return;
+        }
         if (this.currentCards == undefined) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoHandSelected"));
             return;
@@ -886,6 +981,14 @@ export default class HandBoard {
      * @returns {void}
      */
     restore() {
+        // Un joueur ne mémorise plus rien (D1-03) : relire ses flags de barre
+        // écraserait la main que la résolution paresseuse vient de trouver, et
+        // ferait ressurgir un flag hérité d'avant cette phase. Seul le
+        // rafraîchissement est conservé pour lui.
+        if (!game.user.isGM) {
+            this.update();
+            return;
+        }
         this.setCardsID(this.getStoredCardsID());
         this.setUserID(this.getStoredUserID());
         this.update();

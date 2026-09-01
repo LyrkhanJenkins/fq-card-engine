@@ -1,0 +1,194 @@
+import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
+import HandBoard from "../../src/domain/interface/window/hand-board.js";
+import TradingCards from "../../src/domain/trading/trading-cards.js";
+
+/**
+ * Couvre la logique pure de `HandBoard` testable sans DOM/jQuery (voir
+ * `<execution_conventions>` du plan 01-01) : la construction des données de
+ * gabarit (`buildTemplateData`) et la garde en profondeur de `chooseDialog()`.
+ *
+ * `HandBoard` n'est JAMAIS instanciée dans ce fichier (`new HandBoard(...)`
+ * manipule du jQuery réel absent des mocks de `tests/setup.js`) — seules la
+ * méthode statique `buildTemplateData` et `HandBoard.prototype.chooseDialog`
+ * (invoquée via `.call({})`) sont exercées ici.
+ */
+
+let previousPlayerLimitCardsRight;
+
+beforeEach(() => {
+    previousPlayerLimitCardsRight = CONFIG.FqCardEngine.options.playerLimitCardsRight;
+});
+
+afterEach(() => {
+    CONFIG.FqCardEngine.options.playerLimitCardsRight = previousPlayerLimitCardsRight;
+});
+
+describe("buildTemplateData", () => {
+    it("renvoie isGM: true quand l'utilisateur courant est MJ", () => {
+        game.user.isGM = true;
+
+        const data = HandBoard.buildTemplateData(0);
+
+        expect(data.isGM).toBe(true);
+    });
+
+    it("distingue isGM de manualActions pour un joueur sous le réglage par défaut", () => {
+        game.user.isGM = false;
+        CONFIG.FqCardEngine.options.playerLimitCardsRight = false;
+
+        const data = HandBoard.buildTemplateData(0);
+
+        expect(data.isGM).toBe(false);
+        expect(data.manualActions).toBe(true);
+    });
+
+    it("renvoie manualActions: false pour un joueur sous droits restreints", () => {
+        game.user.isGM = false;
+        CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
+
+        const data = HandBoard.buildTemplateData(0);
+
+        expect(data.manualActions).toBe(false);
+    });
+});
+
+describe("chooseDialog", () => {
+    it("court-circuite avant tout accès à DialogV2 pour un joueur non-MJ", async () => {
+        game.user.isGM = false;
+
+        await expect(HandBoard.prototype.chooseDialog.call({})).resolves.toBeUndefined();
+    });
+});
+
+describe("update — résolution paresseuse de la main (BAR-01, BAR-03, D1-06)", () => {
+    let getFirstDeckSpy;
+    let warnSpy;
+
+    beforeEach(() => {
+        getFirstDeckSpy = vi.spyOn(TradingCards, "getFirstDeck");
+        warnSpy = vi.spyOn(ui.notifications, "warn");
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it("résout la main du joueur COURANT, jamais un identifiant de barre ni de flag", () => {
+        game.user.isGM = false;
+        const hand = {id: "hand-a"};
+        getFirstDeckSpy.mockReturnValue(hand);
+        const bar = {id: 3, currentUser: {_id: "un-autre"}};
+
+        HandBoard.prototype.update.call(bar);
+
+        expect(getFirstDeckSpy).toHaveBeenCalledWith(game.user.id, "HAND", false);
+        expect(bar.currentCards).toBe(hand);
+    });
+
+    it("coupe l'avertissement : une main absente reste silencieuse", () => {
+        game.user.isGM = false;
+        getFirstDeckSpy.mockReturnValue(undefined);
+
+        HandBoard.prototype.update.call({id: 0});
+
+        expect(getFirstDeckSpy.mock.calls[0][2]).toBe(false);
+        expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    it("une main créée après coup est prise en compte au rendu suivant, sans rechargement", () => {
+        game.user.isGM = false;
+        const bar = {id: 0};
+
+        getFirstDeckSpy.mockReturnValue(undefined);
+        HandBoard.prototype.update.call(bar);
+        expect(bar.currentCards).toBeUndefined();
+
+        const hand = {id: "hand-cree-apres"};
+        getFirstDeckSpy.mockReturnValue(hand);
+        HandBoard.prototype.update.call(bar);
+
+        expect(bar.currentCards).toBe(hand);
+    });
+
+    it("ne résout jamais pour un MJ : sa sélection manuelle n'est pas écrasée", () => {
+        game.user.isGM = true;
+        const choisie = {id: "main-choisie-par-le-mj"};
+        const bar = {id: 0, currentCards: choisie};
+
+        HandBoard.prototype.update.call(bar);
+
+        expect(getFirstDeckSpy).not.toHaveBeenCalled();
+        expect(bar.currentCards).toBe(choisie);
+    });
+
+    it("une barre retirée ne résout plus rien", () => {
+        game.user.isGM = false;
+        const bar = {id: 0, _removed: true};
+
+        HandBoard.prototype.update.call(bar);
+
+        expect(getFirstDeckSpy).not.toHaveBeenCalled();
+    });
+});
+
+describe("restore — un joueur ne relit jamais ses flags de barre (D1-03)", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it("pour un joueur : rafraîchit sans toucher aux flags mémorisés", () => {
+        game.user.isGM = false;
+        const bar = {
+            setCardsID: vi.fn(),
+            setUserID: vi.fn(),
+            getStoredCardsID: vi.fn(),
+            getStoredUserID: vi.fn(),
+            update: vi.fn()
+        };
+
+        HandBoard.prototype.restore.call(bar);
+
+        expect(bar.getStoredCardsID).not.toHaveBeenCalled();
+        expect(bar.getStoredUserID).not.toHaveBeenCalled();
+        expect(bar.setCardsID).not.toHaveBeenCalled();
+        expect(bar.setUserID).not.toHaveBeenCalled();
+        expect(bar.update).toHaveBeenCalledTimes(1);
+    });
+
+    it("pour le MJ : restaure bien l'état mémorisé (D1-07, chemin inchangé)", () => {
+        game.user.isGM = true;
+        const bar = {
+            setCardsID: vi.fn(),
+            setUserID: vi.fn(),
+            getStoredCardsID: vi.fn(() => "cards-1"),
+            getStoredUserID: vi.fn(() => "user-1"),
+            update: vi.fn()
+        };
+
+        HandBoard.prototype.restore.call(bar);
+
+        expect(bar.setCardsID).toHaveBeenCalledWith("cards-1");
+        expect(bar.setUserID).toHaveBeenCalledWith("user-1");
+        expect(bar.update).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe("update — garde de rendu (WR-02)", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it("sans DOM prêt : résout quand même la main, mais ne rend pas", () => {
+        game.user.isGM = false;
+        const hand = {id: "hand-a"};
+        const spy = vi.spyOn(TradingCards, "getFirstDeck").mockReturnValue(hand);
+        const renderCards = vi.fn();
+        const bar = {id: 0, renderCards};
+
+        HandBoard.prototype.update.call(bar);
+
+        expect(spy).toHaveBeenCalled();
+        expect(bar.currentCards).toBe(hand);
+        expect(renderCards).not.toHaveBeenCalled();
+    });
+});
