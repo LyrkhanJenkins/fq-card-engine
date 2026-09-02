@@ -80,7 +80,7 @@ Card are clickable, a dialog opens, displaying the card and its description.
 You can choose to play the card or discard it to use other cards.
 ![img.png](images/doc/card-play-dialog.png)
 
-For using cards that affects other target than ypu, you must target at least one character
+For using cards that affects other target than you, you must target at least one character
 ![img.png](images/doc/target-ennemy.png)
 
 All actions are displayed on chat.
