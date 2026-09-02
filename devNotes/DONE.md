@@ -4,12 +4,13 @@ Feat :
 - Option pour bypassé les modales d'attaque et de dégâts (pas de classe d'armure)
 - Ajout d'une macro raccourci pour lancer les dégâts de l'arme du combattant courant
 - Quand le deck est vidé, la défausse est repioché
-- Pouvoir récupérer une carte de la défausse dans la main (toutes ou une liste donnée)
 - Simplifier les formules à l'affichage sur les cartes + tooltips
 - Suppression du "JSON Après utilisation" -> Remplacer par les cartes générées
 - Génère des cartes dans la main avec un choix possible proposé au joueur
 - Possibilité de supprimer des cartes générés dans la défausse
 - Possibilité de dupliquer des cartes de la main.
+- Pouvoir récupérer une carte de la défausse dans la main (toutes ou une liste donnée)
+- Pouvoir récupérer une carte du deck dans la main (toutes ou une liste donnée)
 - Cartes éphémères : jouer la carte la détruit définitivement.
 - Creation des classes et token du Guerrier Runique et du Maître d'Armes
 - Premières cartes du Guerrier Runique et du Maître d'Armes (En cours...)

@@ -244,6 +244,9 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             // ou « ephemere » = détruite définitivement au jeu, sans passer par la défausse
             replayable: new StringField({required: true, label: "FQCARDENGINE.Replayable"}),
             retrieveFromDiscard: new StringField({required: true, label: "FQCARDENGINE.RetrieveFromDiscard"}),
+            // Pioche CHOISIE dans le deck de combat : seules les cartes encore dans
+            // la pioche (non `drawn`) sont éligibles
+            retrieveFromDeck: new StringField({required: true, label: "FQCARDENGINE.RetrieveFromDeck"}),
             destroyFromDiscard: new StringField({required: true, label: "FQCARDENGINE.DestroyFromDiscard"}),
             // `*` = le joueur choisit une carte de sa main, liste de noms = toutes
             duplicateFromHand: new StringField({required: true, label: "FQCARDENGINE.DuplicateFromHand"}),

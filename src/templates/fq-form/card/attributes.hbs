@@ -168,6 +168,12 @@
                                 name=(concat "system.fq.choices." i ".retrieveFromDiscard") rootId=../rootId}}
                 </div>
                 <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.RetrieveFromDeck"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.retrieveFromDeck
+                                value=choice.retrieveFromDeck
+                                name=(concat "system.fq.choices." i ".retrieveFromDeck") rootId=../rootId}}
+                </div>
+                <div class="form-fields">
                     <label>{{localize "FQCARDENGINE.DestroyFromDiscard"}}</label>
                     {{formInput ../fields.fq.fields.choices.element.fields.destroyFromDiscard
                                 value=choice.destroyFromDiscard

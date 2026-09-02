@@ -54,6 +54,7 @@ const HARNESS_USER_ID = "harness-user";
 let enginePromise = null;
 let worldFixtureCache = null;
 let lastDiscardPile = null;
+let lastPlayerDeck = null;
 
 /**
  * Importe dynamiquement `src/init-engine.js` (une seule fois par process) pour
@@ -83,6 +84,17 @@ export async function ensureEngineLoaded() {
  */
 export function getDiscardPile() {
     return lastDiscardPile;
+}
+
+/**
+ * Renvoie le deck de combat du dernier monde monté (publié dans `game.cards`),
+ * pendant de {@link getDiscardPile} pour les tests qui doivent l'inspecter
+ * après le montage (ex. espion sur `pass` pour la récupération dans le deck).
+ *
+ * @returns {object|null} Le deck de combat mocké, ou null avant tout montage.
+ */
+export function getPlayerDeck() {
+    return lastPlayerDeck;
 }
 
 /**
@@ -187,15 +199,18 @@ function deepMerge(target, source) {
  * `overrides.targetActor` sont fusionnés en profondeur dans le personnage/la
  * cible ; `overrides.combat` positionne `game.combat` (`null` par défaut, hors
  * combat) ; `overrides.discardPile` est fusionné dans la pile de défausse (ex.
- * `cards` pour peupler la pile, consommé par `retrieveFromDiscard`) ; tout autre
- * champ de premier niveau est fusionné dans `game`.
+ * `cards` pour peupler la pile, consommé par `retrieveFromDiscard`) ;
+ * `overrides.deck` est fusionné dans le deck de combat du joueur, publié dans
+ * `game.cards` (consommé par `retrieveFromDeck`) ; tout autre champ de premier
+ * niveau est fusionné dans `game`.
  *
  * @param {object} [overrides] - Surcharges (voir description).
  *
  * @returns {object} Le `game` monté (aussi assigné à `globalThis.game`).
  */
 export function mountWorld(overrides = {}) {
-    const {character: characterOverrides, targetActor: targetActorOverrides, combat, discardPile: discardPileOverrides, ...gameOverrides} = overrides;
+    const {character: characterOverrides, targetActor: targetActorOverrides, combat, discardPile: discardPileOverrides,
+        deck: deckOverrides, ...gameOverrides} = overrides;
     const fixture = loadWorldFixture();
 
     let character = {
@@ -260,6 +275,19 @@ export function mountWorld(overrides = {}) {
     lastDiscardPile.createEmbeddedDocuments = vi.fn().mockResolvedValue([]);
     lastDiscardPile.deleteEmbeddedDocuments = vi.fn().mockResolvedValue([]);
 
+    // Deck de combat du joueur, publié dans `game.cards` : une carte encore dans
+    // la pioche suffit à satisfaire la garde de lançabilité de tout choix
+    // `retrieveFromDeck` (en mode `*`, l'unique éligible est auto-choisie SANS
+    // DialogV2 — non mocké par défaut), au même titre que la main duplicable par
+    // défaut de `wrapCard` ; les autres choix ignorent le deck.
+    lastPlayerDeck = deepMerge({
+        id: "harness-player-deck",
+        ownership: {[HARNESS_USER_ID]: 3},
+        system: {fq: {type: "DECK", owner: HARNESS_USER_ID}},
+        cards: [makeHandCard("harness-deck-card", "FQCARDTITLE.HarnessDeckCard")]
+    }, deckOverrides ?? {});
+    lastPlayerDeck.pass = vi.fn().mockResolvedValue([]);
+
     const base = {
         canvas: {scene: {dimensions: {size: fixture.gridSize}, tokens: [myToken, targetToken]}},
         scenes: [{active: true, tokens: [myToken, targetToken]}],
@@ -282,7 +310,7 @@ export function mountWorld(overrides = {}) {
             targets: new Set([target])
         },
         combat: combat ?? null,
-        cards: []
+        cards: [lastPlayerDeck]
     };
 
     globalThis.game = deepMerge(base, gameOverrides);
@@ -430,7 +458,8 @@ function applyDiceControl(dice) {
  *
  * @returns {Promise<object>} Le résultat riche : `{threw, error, hpCalls, logCalls,
  *          effectsCreated, effectsRemoved, activeEffectCalls, chatMessages, draws,
- *          generatedCards, handPassCalls, passCalls, retrieveCalls, handDestroyCalls, deckDestroyCalls,
+ *          generatedCards, handPassCalls, passCalls, retrieveCalls, deckRetrieveCalls,
+ *          handDestroyCalls, deckDestroyCalls,
  *          discardPile, updates, card, cardContent}`.
  */
 export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
@@ -515,6 +544,8 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
         handPassCalls: card.parent.pass.mock.calls,
         passCalls: currentCards.pass.mock.calls,
         retrieveCalls: to.pass.mock.calls,
+        // Récupération dans le deck de combat : `Cards#pass` du deck vers la main.
+        deckRetrieveCalls: lastPlayerDeck.pass.mock.calls,
         destroyCalls: to.deleteEmbeddedDocuments.mock.calls,
         // Destruction d'une carte éphémère : copie de la main, puis exemplaire du deck.
         handDestroyCalls: currentCards.deleteEmbeddedDocuments.mock.calls,

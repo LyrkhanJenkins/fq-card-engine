@@ -17,7 +17,7 @@ import CardSelection from "../../interface/window/card-selection.js";
 import CardCondition from "./card-condition.js";
 import CardGenerated from "./card-generated.js";
 
-import TradingCards from "../../trading/trading-cards.js";
+import TradingCards, {DECK_TYPE} from "../../trading/trading-cards.js";
 import CombatTurn from "../combat-turn.js";
 import TargetingPredicates from "./targeting-predicates.js";
 import StatusEffects from "../../system/effects/status-effects.js";
@@ -80,6 +80,9 @@ export default class CardEffect {
             }
             if (cardContent.retrieveFromDiscard?.trim()) {
                 await CardEffect.retrieveCardFromDiscard(cardContent.retrieveFromDiscard, to, card);
+            }
+            if (cardContent.retrieveFromDeck?.trim()) {
+                await CardEffect.retrieveCardFromDeck(cardContent.retrieveFromDeck, card);
             }
             if (cardContent.destroyFromDiscard?.trim()) {
                 await CardEffect.destroyCardFromDiscard(cardContent.destroyFromDiscard, to, card);
@@ -149,21 +152,26 @@ export default class CardEffect {
      * elle-même.
      *
      * La résolution est indépendante de la pile fournie : la duplication en main
-     * (`duplicateFromHand`) l'applique à la main plutôt qu'à la défausse.
+     * (`duplicateFromHand`) l'applique à la main, la récupération dans le deck
+     * (`retrieveFromDeck`) au deck de combat.
      *
      * @param {string}  spec                   - La spécification (`*` ou liste de noms séparés par des virgules).
-     * @param {Cards}   pile                   - La pile inspectée (défausse, ou main pour la duplication).
+     * @param {Cards}   pile                   - La pile inspectée (défausse, main, ou deck de combat).
      * @param {string}  excludeCardId          - L'id de la carte jouée, à exclure.
      * @param {object}  [options]              - Les options de résolution.
      * @param {boolean} [options.generatedOnly] - True pour ne retenir que les copies générées.
+     * @param {boolean} [options.undrawnOnly]   - True pour ne retenir que les cartes non encore piochées.
      *
      * @returns {{choose: boolean, cards: Card[], missing: string[]}} Le mode, les cartes résolues et les noms manquants.
      */
-    static resolveDiscardRetrieval(spec, pile, excludeCardId, {generatedOnly = false} = {}) {
+    static resolveDiscardRetrieval(spec, pile, excludeCardId, {generatedOnly = false, undrawnOnly = false} = {}) {
         const trimmed = spec?.trim() ?? "";
         const available = (pile?.cards ?? [])
             .filter(c => c.id !== excludeCardId)
-            .filter(c => !generatedOnly || CardEffect.isGeneratedCard(c));
+            .filter(c => !generatedOnly || CardEffect.isGeneratedCard(c))
+            // Une carte piochée reste dans le deck, marquée `drawn` : elle est déjà
+            // sortie de la pioche et n'est donc plus récupérable depuis le deck.
+            .filter(c => !undrawnOnly || !c.drawn);
         if (trimmed === "*") {
             return {choose: true, cards: available, missing: []};
         }
@@ -197,10 +205,10 @@ export default class CardEffect {
     }
 
     /**
-     * Descripteurs des trois opérations de pile (récupération, destruction,
-     * duplication) : clés i18n de la dialog de choix et des avertissements, et
-     * restriction aux copies générées. Toute la plomberie commune (résolution,
-     * garde, choix) est pilotée par cette table.
+     * Descripteurs des opérations de pile (récupération en défausse ou dans le
+     * deck, destruction, duplication) : clés i18n de la dialog de choix et des
+     * avertissements, restriction aux copies générées et aux cartes non piochées.
+     * Toute la plomberie commune (résolution, garde, choix) est pilotée par cette table.
      */
     static #DISCARD_OPS = Object.freeze({
         retrieve: Object.freeze({
@@ -208,6 +216,13 @@ export default class CardEffect {
             missingKey: "FQCARDENGINE.WarningMsgMissingRetrievableCards",
             emptyKey: "FQCARDENGINE.WarningMsgNoRetrievableCard",
             generatedOnly: false
+        }),
+        retrieveDeck: Object.freeze({
+            titleKey: "FQCARDENGINE.RetrieveDeckCardTitle",
+            missingKey: "FQCARDENGINE.WarningMsgMissingRetrievableDeckCards",
+            emptyKey: "FQCARDENGINE.WarningMsgNoRetrievableDeckCard",
+            generatedOnly: false,
+            undrawnOnly: true
         }),
         destroy: Object.freeze({
             titleKey: "FQCARDENGINE.DestroyCardTitle",
@@ -242,21 +257,22 @@ export default class CardEffect {
     }
 
     /**
-     * Plomberie commune des trois opérations de pile : résout la spécification,
+     * Plomberie commune des opérations de pile : résout la spécification,
      * publie l'avertissement et abandonne si la résolution est incomplète, puis
      * en mode CHOIX fait choisir UNE carte (dialog, automatique s'il n'y en a
      * qu'une éligible).
      *
-     * @param {string} op            - L'opération (`retrieve`, `destroy` ou `duplicate`).
+     * @param {string} op            - L'opération (`retrieve`, `retrieveDeck`, `destroy` ou `duplicate`).
      * @param {string} spec          - La spécification (`*` ou liste de noms séparés par des virgules).
-     * @param {Cards}  pile          - La pile inspectée (défausse, ou main pour la duplication).
+     * @param {Cards}  pile          - La pile inspectée (défausse, main, ou deck de combat).
      * @param {string} excludeCardId - L'id de la carte jouée, à exclure.
      *
      * @returns {Promise<Card[]|null>} Les cartes retenues, ou null si l'opération est abandonnée.
      */
     static async #resolveAndPick(op, spec, pile, excludeCardId) {
         const desc = CardEffect.#DISCARD_OPS[op];
-        const resolution = CardEffect.resolveDiscardRetrieval(spec, pile, excludeCardId, {generatedOnly: desc.generatedOnly});
+        const resolution = CardEffect.resolveDiscardRetrieval(spec, pile, excludeCardId,
+            {generatedOnly: desc.generatedOnly, undrawnOnly: desc.undrawnOnly});
         if (resolution.missing.length || !resolution.cards.length) {
             // Garde de lançabilité déjà passée en amont : ce repli ne devrait servir
             // que si la pile a changé entre la validation et l'application des effets.
@@ -278,16 +294,17 @@ export default class CardEffect {
      * Garde de lançabilité d'une opération de pile : résout la spécification et
      * publie l'avertissement d'indisponibilité le cas échéant.
      *
-     * @param {string} op            - L'opération (`retrieve`, `destroy` ou `duplicate`).
+     * @param {string} op            - L'opération (`retrieve`, `retrieveDeck`, `destroy` ou `duplicate`).
      * @param {string} spec          - La spécification (`*` ou liste de noms séparés par des virgules).
-     * @param {Cards}  pile          - La pile inspectée (défausse, ou main pour la duplication).
+     * @param {Cards}  pile          - La pile inspectée (défausse, main, ou deck de combat).
      * @param {string} excludeCardId - L'id de la carte jouée, à exclure.
      *
      * @returns {boolean} True si l'opération est réalisable.
      */
     static #checkDiscardOp(op, spec, pile, excludeCardId) {
         const desc = CardEffect.#DISCARD_OPS[op];
-        const resolution = CardEffect.resolveDiscardRetrieval(spec, pile, excludeCardId, {generatedOnly: desc.generatedOnly});
+        const resolution = CardEffect.resolveDiscardRetrieval(spec, pile, excludeCardId,
+            {generatedOnly: desc.generatedOnly, undrawnOnly: desc.undrawnOnly});
         if (resolution.missing.length || !resolution.cards.length) {
             CardEffect.#warnUnavailable(resolution, desc);
             return false;
@@ -415,6 +432,57 @@ export default class CardEffect {
             await CardSelection.playGeneratedCards(created, hand);
         }
         return created;
+    }
+
+    /**
+     * Récupère dans la MAIN une ou plusieurs cartes du DECK de combat du joueur
+     * (`retrieveFromDeck`) : une pioche CHOISIE plutôt que tirée au hasard. La
+     * résolution est celle des piles (cf. {@link CardEffect.resolveDiscardRetrieval},
+     * appliquée au deck) — `*` → le joueur choisit UNE carte via une dialog (choix
+     * automatique s'il n'y en a qu'une éligible) ; liste de noms → toutes les cartes
+     * listées, sans dialog. Seules les cartes ENCORE DANS LA PIOCHE sont éligibles :
+     * une carte déjà piochée reste dans le deck marquée `drawn`, mais elle se trouve
+     * en main ou en défausse. Le transfert emprunte le chemin de pioche normal
+     * (`Cards#pass`) : la carte garde son deck d'origine, et sera défaussée puis
+     * rappelée comme n'importe quelle carte piochée. Elle arrive face visible et
+     * horodatée `generatedAt` pour le halo vert temporaire de la main
+     * (cf. hand-board.js). Sans deck de combat, la récupération est sans effet
+     * (l'avertissement est publié par {@link TradingCards.getFirstDeck}).
+     *
+     * @param {string} spec       - La spécification (`*` ou liste de noms séparés par des virgules).
+     * @param {Card}   playedCard - La carte jouée (exclue, et dont le parent est la main).
+     *
+     * @returns {Promise<Card[]|null>} Les cartes piochées, ou null si aucune récupération.
+     */
+    static async retrieveCardFromDeck(spec, playedCard) {
+        const deck = TradingCards.getFirstDeck(game.user.id, DECK_TYPE);
+        if (!deck) {
+            return null;
+        }
+        const toRetrieve = await CardEffect.#resolveAndPick("retrieveDeck", spec, deck, playedCard.id);
+        if (!toRetrieve) {
+            return null;
+        }
+        const moduleName = FqCardEngineModule.moduleName;
+        const retrieved = [];
+        // Un transfert par carte : `updateData` (face à révéler) est propre à chacune.
+        for (const chosen of toRetrieve) {
+            const passed = await deck.pass(playedCard.parent, [chosen.id], {
+                action: "draw",
+                chatNotification: !CONFIG.FqCardEngine.options.hideMessages,
+                updateData: {
+                    face: chosen.face ?? 0,
+                    flags: {[moduleName]: {generatedAt: Date.now()}}
+                }
+            }).catch(err => {
+                ui.notifications.error(err.message);
+                return null;
+            });
+            if (Array.isArray(passed)) {
+                retrieved.push(...passed);
+            }
+        }
+        return retrieved;
     }
 
     /**
@@ -848,6 +916,13 @@ export default class CardEffect {
         if (cardContent?.retrieveFromDiscard?.trim()
             && !CardEffect.#checkDiscardOp("retrieve", cardContent.retrieveFromDiscard, to, card.id)) {
             return false;
+        }
+
+        if (cardContent?.retrieveFromDeck?.trim()) {
+            const deck = TradingCards.getFirstDeck(game.user.id, DECK_TYPE);
+            if (!deck || !CardEffect.#checkDiscardOp("retrieveDeck", cardContent.retrieveFromDeck, deck, card.id)) {
+                return false;
+            }
         }
 
         if (cardContent?.destroyFromDiscard?.trim()
