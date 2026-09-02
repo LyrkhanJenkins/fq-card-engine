@@ -134,17 +134,8 @@
         "type": "module",
         "reason": "This module restricts the movement of players' tokens.",
         "compatibility": {
-          "minimum": "0.1.0",
-          "verified": "0.1.0"
-        }
-      },
-      {
-        "id": "fq-npc-ai",
-        "type": "module",
-        "reason": "Automatic NPC turn resolution.",
-        "compatibility": {
-          "minimum": "1.0.0",
-          "verified": "1.0.0"
+          "minimum": "3.0.0",
+          "verified": "3.0.0"
         }
       }
     ]
