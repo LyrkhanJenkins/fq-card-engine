@@ -1,4 +1,3 @@
-![img.png](images/doc/banner_FQ.jpg)
 # FQ Card Engine for FoundryVTT
 
 The FQ Card Engine is a combat system for Final Quest 8 combined with DnD5e rules.
@@ -85,6 +84,9 @@ For using cards that affects other target than ypu, you must target at least one
 All actions are displayed on chat.
 After playing a card, automatic roll, effect, damage, heal are applied, also critical and evasion rolls.
 ![img.png](images/doc/chat-roll.png)
+
+The module provides also a special ui for creating your own deck with your Spellbook
+![img.png](images/doc/spellbook.png)
 
 ## Quick Rule Books:
 ### New resources for actors:
