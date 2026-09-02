@@ -2791,6 +2791,168 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trStakeoutTrap01"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.PitTrap"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.PitTrap",
+      "description": "",
+      "_id": "trPitTrap0000001",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "level": 11,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "name": "",
+              "action": "",
+              "mana": "-1",
+              "zeal": "-2",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "(2*@dex+1d8)[bludgeoning]",
+              "heal": "",
+              "bonusCrit": "-99999",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Turn Ended",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "name": "Turn Ended",
+                          "img": "icons/skills/wounds/injury-pain-body-orange.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.action.value",
+                              "value": "0",
+                              "type": "multiply",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Turn Ended\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                },
+                {
+                  "script": "FqCardEngineModule.cond.targetsAreCurrentCombatant()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgTargetNotCurrentCombatant",
+                      "arg": ""
+                    }
+                  ]
+                },
+                {
+                  "script": "FqCardEngineModule.cond.targetsHaveNotMovedThisTurn()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgTargetHasMoved",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.spike_trap.05x05ft.top.holes.normal.01.02",
+                "onTarget": true
+              },
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 21,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "GkukoBpykcafjbri",
+        "createdTime": 1788346961046,
+        "modifiedTime": 1788346961046,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trPitTrap0000001"
     }
   ],
   "width": null,

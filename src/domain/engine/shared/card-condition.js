@@ -325,6 +325,43 @@ export default class CardCondition {
         return targets.every(t => logs.some(l => CardCondition.#damageEntriesOnToken(l, t.id).length));
     }
 
+    /**
+     * Indique si chaque cible sélectionnée est le combattant dont c'est le tour
+     * — la garde des réactifs qui punissent la conduite du tour adverse.
+     *
+     * @returns {boolean} True s'il y a au moins une cible, un combattant courant,
+     *                    et que toutes les cibles sont ce combattant.
+     */
+    static targetsAreCurrentCombatant() {
+        const targets = Constants.currentTargets;
+        const tokenId = game.combat?.combatant?.tokenId;
+        if (!targets.length || !tokenId) {
+            return false;
+        }
+        return targets.every(t => t.id === tokenId);
+    }
+
+    /**
+     * Indique si chaque cible sélectionnée est restée sur sa case depuis le
+     * début de son tour (Piège à Fosse).
+     *
+     * Le registre est celui de Foundry, pas le nôtre : `Combat` vide
+     * l'historique de déplacement de TOUS les combattants au début de chaque
+     * tour (`_clearMovementHistoryOnStartTurn`), si bien qu'un historique vide
+     * signifie exactement « ce jeton n'a pas bougé depuis le début du tour en
+     * cours ». Hors combat, personne ne vide rien : le prédicat est faux.
+     *
+     * @returns {boolean} True s'il y a au moins une cible, un combat en cours,
+     *                    et qu'aucune cible n'a bougé depuis le début du tour.
+     */
+    static targetsHaveNotMovedThisTurn() {
+        const targets = Constants.currentTargets;
+        if (!targets.length || !game.combat) {
+            return false;
+        }
+        return targets.every(t => !(t.document?.movementHistory ?? t.movementHistory ?? []).length);
+    }
+
     /* ------------------------------------------------------------------ */
     /* Prédicats de ciblage et de géométrie                                */
     /* ------------------------------------------------------------------ */

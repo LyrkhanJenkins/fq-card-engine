@@ -527,3 +527,72 @@ describe("CardCondition — pioche et main", () => {
         expect(CardCondition.handHasOtherCards({parent: {cards: {size: 1}}})).toBe(false);
     });
 });
+
+describe("CardCondition — tour et immobilité des cibles", () => {
+
+    /**
+     * Installe une scène de combat où `combatantTokenId` est le combattant dont
+     * c'est le tour, et pose sur le document de chaque cible l'historique de
+     * déplacement fourni (celui que Foundry vide au début de chaque tour).
+     */
+    function mountTurn({targets = [], combatantTokenId, moved = false, round = 2} = {}) {
+        for (const target of targets) {
+            target.document.movementHistory = moved ? [{x: target.x, y: target.y}] : [];
+        }
+        mountScene({tokens: targets, targets, logs: [], round});
+        game.combat = {id: "c1", round, combatant: {tokenId: combatantTokenId}, flags: {fq: {logs: []}}};
+    }
+
+    it("targetsAreCurrentCombatant : vrai quand la cible est le combattant dont c'est le tour", () => {
+        const target = foe();
+        mountTurn({targets: [target], combatantTokenId: target.id});
+
+        expect(CardCondition.targetsAreCurrentCombatant()).toBe(true);
+    });
+
+    it("targetsAreCurrentCombatant : faux pour un autre combattant, sans cible ou hors combat", () => {
+        const target = foe();
+        mountTurn({targets: [target], combatantTokenId: "tokAutre"});
+        expect(CardCondition.targetsAreCurrentCombatant()).toBe(false);
+
+        mountTurn({targets: [], combatantTokenId: target.id});
+        expect(CardCondition.targetsAreCurrentCombatant()).toBe(false);
+
+        mountTurn({targets: [target], combatantTokenId: target.id});
+        game.combat = null;
+        expect(CardCondition.targetsAreCurrentCombatant()).toBe(false);
+    });
+
+    it("targetsHaveNotMovedThisTurn : vrai tant que l'historique de déplacement de la cible est vide", () => {
+        const target = foe();
+        mountTurn({targets: [target], combatantTokenId: target.id});
+
+        expect(CardCondition.targetsHaveNotMovedThisTurn()).toBe(true);
+    });
+
+    it("targetsHaveNotMovedThisTurn : faux dès que la cible a laissé une trace de déplacement", () => {
+        const target = foe();
+        mountTurn({targets: [target], combatantTokenId: target.id, moved: true});
+
+        expect(CardCondition.targetsHaveNotMovedThisTurn()).toBe(false);
+    });
+
+    it("targetsHaveNotMovedThisTurn : faux si une seule des cibles a bougé", () => {
+        const immobile = foe();
+        const mobile = makeToken({id: "tokFoe2", actorId: "foe2", x: 2 * GRID, y: 0});
+        mountTurn({targets: [immobile, mobile], combatantTokenId: immobile.id});
+        mobile.document.movementHistory = [{x: 0, y: 0}];
+
+        expect(CardCondition.targetsHaveNotMovedThisTurn()).toBe(false);
+    });
+
+    it("targetsHaveNotMovedThisTurn : faux sans cible et hors combat (personne ne vide l'historique)", () => {
+        const target = foe();
+        mountTurn({targets: [], combatantTokenId: "tokFoe"});
+        expect(CardCondition.targetsHaveNotMovedThisTurn()).toBe(false);
+
+        mountTurn({targets: [target], combatantTokenId: target.id});
+        game.combat = null;
+        expect(CardCondition.targetsHaveNotMovedThisTurn()).toBe(false);
+    });
+});
