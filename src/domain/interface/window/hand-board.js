@@ -311,6 +311,12 @@ export default class HandBoard {
             t.currentCards = TradingCards.getFirstDeck(game.user.id, HAND_TYPE, false);
         } else if (t.currentUser) {
             t.currentCards = TradingCards.getFirstDeck(t.currentUser.id, HAND_TYPE, false);
+        } else {
+            // MJ sans joueur suivi : remet currentCards à zéro. Sans cette
+            // remise à zéro, une barre dont le joueur suivi a disparu (ou a
+            // été désélectionné) continuerait de rendre la dernière main
+            // résolue, la valeur précédente n'étant jamais effacée.
+            t.currentCards = undefined;
         }
         // Le gabarit est rendu de façon asynchrone alors que les hooks sont
         // posés dès le constructeur : un hook déclenché avant la résolution de
@@ -398,7 +404,8 @@ export default class HandBoard {
     }
 
     /**
-     * Sélectionne l'utilisateur de la barre à partir de son id. Un id falsy vide
+     * Sélectionne l'utilisateur de la barre à partir de son id. Un id falsy, ou
+     * un id que `game.users.get` ne trouve pas (joueur retiré du monde), vide
      * l'utilisateur courant.
      *
      * @param {string} id - L'id de l'utilisateur, ou falsy pour le retirer.
@@ -406,14 +413,7 @@ export default class HandBoard {
      * @returns {void}
      */
     setUserID(id) {
-        if (!id) {
-            this.currentUser = undefined;
-        } else {
-            let user = game.users.get(id);
-            if (user != undefined) {
-                this.currentUser = user;
-            }
-        }
+        this.currentUser = id ? (game.users.get(id) ?? undefined) : undefined;
     }
 
     /**

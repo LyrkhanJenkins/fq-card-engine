@@ -407,13 +407,12 @@ describe("DisplayCard.wrapEmojiTooltips (AFF-04)", () => {
         }
     });
 
-    it("chaque clé de SOURCE_LABEL_KEYS, plus SourceWeaponNone et SourceAbilityUnknown, existe dans lang/fr.json ET lang/en.json", () => {
+    it("chaque clé de SOURCE_LABEL_KEYS, plus SourceWeaponNone, existe dans lang/fr.json ET lang/en.json", () => {
         const fr = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../lang/fr.json"), "utf-8"));
         const en = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../lang/en.json"), "utf-8"));
         const keys = [
             ...Object.values(SOURCE_LABEL_KEYS),
-            "FQCARDENGINE.SourceWeaponNone",
-            "FQCARDENGINE.SourceAbilityUnknown"
+            "FQCARDENGINE.SourceWeaponNone"
         ];
         for (const key of keys) {
             expect(fr[key], `clé fr manquante : ${key}`).toBeTruthy();

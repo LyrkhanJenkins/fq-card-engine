@@ -31,7 +31,11 @@ export default {
         } else if (value > FqCardEngineModule.handMiniBarList.length) {
             let more = value - FqCardEngineModule.handMiniBarList.length;
             for (let i = 0; i < more; i++) {
-                FqCardEngineModule.handMiniBarList.push(new HandBoard(FqCardEngineModule.handMiniBarList.length));
+                // Le constructeur de HandBoard inscrit lui-même la barre dans
+                // handMiniBarList : c'est la seule source d'enregistrement. La
+                // réinscrire ici la compterait deux fois, et le passage suivant
+                // supprimerait la barre qui vient d'être créée.
+                new HandBoard(FqCardEngineModule.handMiniBarList.length);
             }
         } else {//remove some may need additional cleanup
             let less = FqCardEngineModule.handMiniBarList.length - value;

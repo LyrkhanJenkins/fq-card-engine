@@ -92,14 +92,12 @@ Hooks.on("setup", function () {
             let value = game.settings.get(FqCardEngineModule.moduleName, "HandCount") + 1;
             if (value < FqCardEngineModule.handMax + 1) {
                 game.settings.set(FqCardEngineModule.moduleName, "HandCount", value);
-                FqCardEngineModule.updateHandCount(value);
             }
         });
         $(".fq-card-engine-subtract-bar").click(function () {
             let value = game.settings.get(FqCardEngineModule.moduleName, "HandCount") - 1;
             if (value > 0) {
                 game.settings.set(FqCardEngineModule.moduleName, "HandCount", value);
-                FqCardEngineModule.updateHandCount(value);
             }
         });
         // Clic sur la carte d'un message de chat : affiche la carte SVG en grand,

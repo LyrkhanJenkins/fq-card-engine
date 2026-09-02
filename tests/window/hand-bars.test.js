@@ -12,10 +12,15 @@ import HandBoard from "../../src/domain/interface/window/hand-board.js";
 // `HandBoard` construit du jQuery réel dans son constructeur (absent des mocks
 // de tests/setup.js) : on le remplace par une fabrique renvoyant un objet
 // simple portant une méthode `remove`, pour que `updateHandCount` puisse en
-// créer sans jamais toucher au DOM.
+// créer sans jamais toucher au DOM. Le vrai constructeur s'inscrit lui-même
+// dans `handMiniBarList` (source d'enregistrement unique) : le mock reproduit
+// ce comportement, sans quoi un défaut qui compterait les barres deux fois
+// resterait invisible à la suite de tests.
 vi.mock("../../src/domain/interface/window/hand-board.js", () => ({
     default: vi.fn(function () {
-        return {remove: vi.fn()};
+        const instance = {remove: vi.fn()};
+        globalThis.FqCardEngineModule.handMiniBarList.push(instance);
+        return instance;
     })
 }));
 
@@ -83,5 +88,30 @@ describe("updateHandCount", () => {
         HandBars.updateHandCount(15);
 
         expect(FqCardEngineModule.handMiniBarList.length).toBe(FqCardEngineModule.handMax);
+    });
+
+    it("n'enregistre chaque barre créée qu'une seule fois", () => {
+        game.user.isGM = true;
+        FqCardEngineModule.handMiniBarList = [];
+
+        HandBars.updateHandCount(1);
+
+        expect(FqCardEngineModule.handMiniBarList.length).toBe(1);
+        expect(FqCardEngineModule.handMiniBarList[0]).toBe(HandBoard.mock.results[0].value);
+    });
+
+    it("un second appel avec la même valeur ne retire ni n'ajoute aucune barre", () => {
+        game.user.isGM = true;
+        FqCardEngineModule.handMiniBarList = [];
+
+        HandBars.updateHandCount(2);
+        const barres = [...FqCardEngineModule.handMiniBarList];
+
+        HandBars.updateHandCount(2);
+
+        expect(FqCardEngineModule.handMiniBarList.length).toBe(2);
+        for (const barre of barres) {
+            expect(barre.remove).not.toHaveBeenCalled();
+        }
     });
 });

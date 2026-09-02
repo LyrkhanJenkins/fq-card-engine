@@ -111,15 +111,13 @@ describe("update — résolution paresseuse de la main (BAR-01, BAR-03, D1-06)",
         expect(bar.currentCards).toBe(hand);
     });
 
-    it("ne résout jamais pour un MJ : sa sélection manuelle n'est pas écrasée", () => {
+    it("ne résout jamais via l'id du joueur courant pour un MJ, même avec une main déjà affichée", () => {
         game.user.isGM = true;
-        const choisie = {id: "main-choisie-par-le-mj"};
-        const bar = {id: 0, currentCards: choisie};
+        const bar = {id: 0, currentCards: {id: "main-affichee"}};
 
         HandBoard.prototype.update.call(bar);
 
         expect(getFirstDeckSpy).not.toHaveBeenCalled();
-        expect(bar.currentCards).toBe(choisie);
     });
 
     it("une barre retirée ne résout plus rien", () => {
@@ -163,6 +161,41 @@ describe("update — résolution paresseuse de la main côté MJ (BAR-04, D2-02)
 
         expect(getFirstDeckSpy).toHaveBeenCalledWith("user-x", "HAND", false);
         expect(bar.currentCards).toBe(hand);
+    });
+
+    it("sans joueur suivi, sur une main résiduelle : efface l'ancienne main plutôt que de la conserver", () => {
+        game.user.isGM = true;
+        const bar = {id: 0, currentCards: {id: "ancienne-main-du-joueur-disparu"}};
+
+        HandBoard.prototype.update.call(bar);
+
+        expect(getFirstDeckSpy).not.toHaveBeenCalled();
+        expect(bar.currentCards).toBeUndefined();
+    });
+});
+
+describe("setUserID — un joueur suivi introuvable vide l'utilisateur courant", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it("id introuvable : vide currentUser plutôt que de conserver l'ancien joueur suivi", () => {
+        vi.spyOn(game.users, "get").mockReturnValue(undefined);
+        const bar = {currentUser: {id: "joueur-disparu"}};
+
+        HandBoard.prototype.setUserID.call(bar, "id-introuvable");
+
+        expect(bar.currentUser).toBeUndefined();
+    });
+
+    it("id trouvé : currentUser reçoit l'utilisateur renvoyé", () => {
+        const user = {id: "user-trouve"};
+        vi.spyOn(game.users, "get").mockReturnValue(user);
+        const bar = {currentUser: undefined};
+
+        HandBoard.prototype.setUserID.call(bar, "user-trouve");
+
+        expect(bar.currentUser).toBe(user);
     });
 });
 
