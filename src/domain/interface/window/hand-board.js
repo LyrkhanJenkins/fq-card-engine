@@ -73,10 +73,7 @@ export default class HandBoard {
                 t.openDeck(e);
             });
             content.find(".fq-card-engine-settings-choose").click(function (e) {
-                t.chooseDialog(e);
-            });
-            content.find(".fq-card-engine-settings-choose").contextmenu(function (e) {
-                t.resetToolbarDialog(e);
+                t.chooseUserDialog(e);
             });
             content.find(".fq-card-engine-draw").click(function () {
                 t.drawCard();
@@ -145,23 +142,25 @@ export default class HandBoard {
             }
         });
 
-        // BAR-03 : signal de fin de (re)construction du deck d'un utilisateur,
-        // déjà émis par TradingCards.updateDeckWhenChange (voir 01-RESEARCH.md,
-        // Pattern 2). Uniquement pour un joueur non-MJ, filtré sur l'utilisateur
-        // LOCAL : sans ce filtre, la reconstruction du deck de n'importe quel
-        // joueur recalculerait la barre de tous les autres clients. La clé de
-        // `_hookIds` DOIT être le nom de hook littéral (accès par crochets) : la
-        // boucle de nettoyage de remove() appelle Hooks.off(hook, id) avec cette
-        // clé comme premier argument, une clé raccourcie casserait le
+        // BAR-03/D2-14 : signal de fin de (re)construction du deck d'un
+        // utilisateur, déjà émis par TradingCards.updateDeckWhenChange (voir
+        // 01-RESEARCH.md, Pattern 2). Enregistré INCONDITIONNELLEMENT (joueur ET
+        // MJ) : un joueur se rafraîchit sur SA PROPRE reconstruction
+        // (`userId === game.user.id`) ; un MJ se rafraîchit uniquement quand la
+        // main du joueur qu'il suit ACTUELLEMENT (`t.currentUser`, lu à
+        // l'exécution du callback, jamais figé à l'enregistrement) vient d'être
+        // (re)construite. Sans ce filtre, la reconstruction du deck de n'importe
+        // quel joueur recalculerait la barre de tous les autres clients. La clé
+        // de `_hookIds` DOIT être le nom de hook littéral (accès par crochets) :
+        // la boucle de nettoyage de remove() appelle Hooks.off(hook, id) avec
+        // cette clé comme premier argument, une clé raccourcie casserait le
         // désenregistrement de ce hook précis.
-        if (!game.user.isGM) {
-            this._hookIds["fq-card-engine.deckRebuilt"] =
-                Hooks.on("fq-card-engine.deckRebuilt", function (userId) {
-                    if (userId === game.user.id) {
-                        t.update();
-                    }
-                });
-        }
+        this._hookIds["fq-card-engine.deckRebuilt"] =
+            Hooks.on("fq-card-engine.deckRebuilt", function (userId) {
+                if (userId === game.user.id || (game.user.isGM && userId === t.currentUser?.id)) {
+                    t.update();
+                }
+            });
 
         // Réévaluation du glow des réactifs (isReactiveReady) : sa jouabilité
         // dépend d'événements sans lien avec les documents cartes — logs de
@@ -284,11 +283,15 @@ export default class HandBoard {
      * Rafraîchit la barre : pour un joueur non-MJ, résout d'abord sa propre main
      * via `TradingCards.getFirstDeck` (aucun flag lu ni écrit, D1-01/D1-02/D1-03) —
      * c'est ce qui permet à la main d'apparaître sans rechargement de page dès
-     * qu'elle existe (BAR-03). Rend ensuite les cartes puis (re)branche le
-     * glisser-déposer et l'effet d'éventail. Un verrou `updating` évite les rendus
-     * concurrents : les appels reçus pendant un rendu en cours sont coalescés via
-     * `pendingUpdate` et déclenchent une unique relance à la fin du rendu. Sans
-     * cartes, met seulement à jour le titre et la couleur du joueur, sans aucun
+     * qu'elle existe (BAR-03). Pour le MJ, résout de la même façon la main du
+     * joueur suivi (`currentUser`) — le même mécanisme, jamais un second
+     * (BAR-04/D2-02) — sans lire ni écrire aucun flag `CardsID-*` (D2-03) ;
+     * sans joueur suivi, la barre reste silencieusement vide (D2-04). Rend
+     * ensuite les cartes puis (re)branche le glisser-déposer et l'effet
+     * d'éventail. Un verrou `updating` évite les rendus concurrents : les
+     * appels reçus pendant un rendu en cours sont coalescés via `pendingUpdate`
+     * et déclenchent une unique relance à la fin du rendu. Sans cartes, met
+     * seulement à jour le titre et la couleur du joueur, sans aucun
      * avertissement (D1-06).
      *
      * @returns {void}
@@ -298,14 +301,16 @@ export default class HandBoard {
         if (t._removed) {
             return;
         }
-        // Résolution paresseuse (D1-01/D1-02/D1-03), uniquement pour un joueur
-        // non-MJ : jamais appliquée à une barre MJ (currentUser géré à la main via
-        // restore()/setUserOption), sans quoi la sélection du MJ serait écrasée
-        // (Pitfall 3 de 01-RESEARCH.md). warning=false : update() est appelé très
-        // fréquemment (glow réactif débouncé, hooks de combat) et republierait
-        // sinon l'avertissement en boucle tant que la main n'existe pas (D1-06).
+        // Résolution paresseuse (D1-01/D1-02/D1-03 côté joueur, BAR-04/D2-02 côté
+        // MJ) : un seul mécanisme (`TradingCards.getFirstDeck`) pour les deux
+        // rôles, jamais une réimplémentation. warning=false : update() est appelé
+        // très fréquemment (glow réactif débouncé, hooks de combat) et
+        // republierait sinon l'avertissement en boucle tant que la main
+        // n'existe pas (D1-06).
         if (!game.user.isGM) {
             t.currentCards = TradingCards.getFirstDeck(game.user.id, HAND_TYPE, false);
+        } else if (t.currentUser) {
+            t.currentCards = TradingCards.getFirstDeck(t.currentUser.id, HAND_TYPE, false);
         }
         // Le gabarit est rendu de façon asynchrone alors que les hooks sont
         // posés dès le constructeur : un hook déclenché avant la résolution de
@@ -374,37 +379,10 @@ export default class HandBoard {
     }
 
     /**
-     * Définit le jeu de cartes affiché par la barre, persiste (ou retire) son id,
-     * met à jour l'affichage et synchronise les autres clients (ou les mains MJ).
-     *
-     * @param {Cards|null|undefined} choice - Le jeu de cartes à afficher, ou falsy pour réinitialiser.
-     *
-     * @returns {void}
-     */
-    setCardsOption(choice) {
-        this.currentCards = choice;
-        if (!choice) {
-            this.resetCardsID();
-            if (game.user.isGM && this.currentUser != undefined) {
-                this.currentUser.unsetFlag(FqCardEngineModule.moduleName, "CardsID-" + this.playerBarCount);
-            }
-        } else {
-            this.storeCardsID(this.currentCards._id);
-            if (game.user.isGM && this.currentUser != undefined) {
-                this.currentUser.setFlag(FqCardEngineModule.moduleName, "CardsID-" + this.playerBarCount, this.currentCards._id);
-            }
-        }
-        this.update();
-        if (!game.user.isGM) {
-            game.socket.emit(FqCardEngineModule.eventName, {"action": "updatePlayers"});
-        } else {
-            FqCardEngineModule.updatePlayerHandsDelayed();
-        }
-    }
-
-    /**
-     * (MJ) Associe un utilisateur à la barre, persiste son id, met à jour
-     * l'affichage et, si l'utilisateur a déjà une main mémorisée, la sélectionne.
+     * (MJ) Associe un utilisateur à la barre, persiste son id (seul flag encore
+     * écrit par le chemin MJ, D2-03), recalcule l'indice de barre par joueur puis
+     * rafraîchit l'affichage — c'est `update()` qui résout désormais la main du
+     * joueur associé, par le même mécanisme que côté joueur (BAR-04/D2-02).
      *
      * @param {object} choice - L'utilisateur à associer à la barre.
      *
@@ -413,41 +391,10 @@ export default class HandBoard {
     setUserOption(choice) {
         this.currentUser = choice;
         this.storeUserID(this.currentUser._id);
-        this.update();
         if (game.user.isGM) {
-            //check to see if user has a hand selected already
             FqCardEngineModule.updatePlayerBarCounts();
-            let id = this.currentUser.getFlag(FqCardEngineModule.moduleName, "CardsID-" + this.playerBarCount);
-            if (id) {
-                this.storeCardsID(id);
-                this.setCardsID(id);
-            } else {
-                this.resetCardsID();
-            }
-            FqCardEngineModule.updatePlayerHandsDelayed();
         }
-    }
-
-    /**
-     * Sélectionne le jeu de cartes de la barre à partir de son id et rafraîchit
-     * l'affichage. Un id falsy vide la barre.
-     *
-     * @param {string} id - L'id du jeu de cartes, ou falsy pour vider la barre.
-     *
-     * @returns {void}
-     */
-    setCardsID(id) {
-        if (!id) {
-            this.currentCards = undefined;
-        } else {
-            let cards = game.cards.get(id);
-            if (cards != undefined) {
-                this.currentCards = cards;
-                if (this.currentCards != undefined) {
-                    this.update();
-                }
-            }
-        }
+        this.update();
     }
 
     /**
@@ -470,71 +417,20 @@ export default class HandBoard {
     }
 
     /**
-     * (MJ) Ouvre le dialogue de configuration de la barre : choisir une main,
-     * choisir un joueur ou réinitialiser. Si seule l'option « main » est
-     * disponible, ouvre directement le dialogue de choix de main. Garde en
-     * profondeur (T-01-01) : un joueur non-MJ n'a plus ce bouton dans son
-     * gabarit (BAR-02/D1-04), mais cette méthode se refuse aussi explicitement
-     * pour tout appelant direct (console, futur code) — défense indépendante du
-     * masquage Handlebars.
-     *
-     * @returns {Promise<void>}
-     */
-    async chooseDialog() {
-        if (!game.user.isGM) {
-            return;
-        }
-        const buttons = [];
-
-        buttons.push({
-            action: "hand",
-            icon: "fas fa-hand",
-            label: game.i18n.localize("FQCARDENGINE.Hand"),
-            default: true
-        });
-
-        if (game.user.isGM) {
-            buttons.push({
-                action: "player",
-                icon: "fas fa-user",
-                label: game.i18n.localize("FQCARDENGINE.Player"),
-            });
-        }
-
-        if (this.currentCards != undefined || this.currentUser != undefined) {
-            buttons.push({
-                action: "reset",
-                icon: "fas fa-rotate-left",
-                label: game.i18n.localize("FQCARDENGINE.ResetBar"),
-            });
-        }
-
-        if (buttons.length === 1) {
-            this.chooseHandDialog();
-            return;
-        }
-
-        const result = await foundry.applications.api.DialogV2.wait({
-            window: {
-                title: game.i18n.localize("FQCARDENGINE.ChooseForGMTitle"),
-            },
-            content: `<p>${game.i18n.localize("FQCARDENGINE.ChooseForGMQuestion")}</p>`,
-            buttons,
-            rejectClose: false
-        });
-
-        if (result === "hand") this.chooseHandDialog();
-        if (result === "player") this.chooseUserDialog();
-        if (result === "reset") this.reset();
-    }
-
-    /**
      * (MJ) Ouvre un dialogue de sélection d'un utilisateur parmi la liste des
-     * joueurs et l'associe à la barre.
+     * joueurs et l'associe à la barre. Seule action désormais proposée par le
+     * bouton d'engrenage (D2-01). Garde en profondeur (D2-12) : un joueur non-MJ
+     * n'a plus ce bouton dans son gabarit (BAR-02/D1-04), mais cette méthode se
+     * refuse aussi explicitement pour tout appelant direct (console, futur code) —
+     * défense indépendante du masquage Handlebars, reprise du patron établi en
+     * phase 1 (garde en profondeur des dialogues MJ).
      *
      * @returns {Promise<void>}
      */
     async chooseUserDialog() {
+        if (!game.user.isGM) {
+            return;
+        }
         const options = game.users.map(u =>
             `<option value="${u.id}">${u.name}</option>`
         ).join("");
@@ -571,86 +467,6 @@ export default class HandBoard {
             const choice = game.users.get(result);
             this.setUserOption(choice);
         }
-    }
-
-    /**
-     * Ouvre un dialogue de sélection d'une main parmi les jeux de type « hand »
-     * accessibles (observateur ou propriétaire) et l'associe à la barre.
-     *
-     * @returns {Promise<void>}
-     */
-    async chooseHandDialog() {
-        // Construction du select sans jQuery
-        const options = [`<option value="">${game.i18n.localize("FQCARDENGINE.NoHand")}</option>`];
-        game.cards.forEach(c => {
-            if (
-                (c.permission === CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER ||
-                    c.permission === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) &&
-                c.type === "hand"
-            ) {
-                options.push(`<option value="${c.id}">${c.name}</option>`);
-            }
-        });
-
-        const result = await foundry.applications.api.DialogV2.wait({
-            window: {title: game.i18n.localize("FQCARDENGINE.DeckList")},
-            content: `
-            <p>${game.i18n.localize("FQCARDENGINE.ChooseHand")}</p>
-            <div class="fq-card-engine-option-container">
-                <select class="fq-card-engine-hand-selection" name="hand">
-                    ${options.join("")}
-                </select>
-            </div>`,
-            buttons: [
-                {
-                    action: "ok",
-                    icon: "fas fa-check",
-                    label: "OK",
-                    default: true,
-                    callback: (event, button) => {
-                        return button.form.querySelector(".fq-card-engine-hand-selection").value;
-                    }
-                },
-                {
-                    action: "cancel",
-                    icon: "fas fa-times",
-                    label: "Cancel",
-                }
-            ],
-            rejectClose: false
-        });
-
-        if (result && result !== "cancel") {
-            const choice = game.cards.get(result);
-            this.setCardsOption(choice);
-        }
-    }
-
-    /**
-     * Demande confirmation avant de réinitialiser la barre. Avertit si aucune main
-     * n'est sélectionnée.
-     *
-     * @returns {Promise<void>}
-     */
-    async resetToolbarDialog() {
-        // Même garde en profondeur que `chooseDialog` : ce dialogue est lié au
-        // clic droit du bouton masqué pour un joueur, il ne doit pas rester
-        // atteignable pour autant.
-        if (!game.user.isGM) {
-            return;
-        }
-        if (this.currentCards == undefined) {
-            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoHandSelected"));
-            return;
-        }
-        Dialog.confirm({
-            title: game.i18n.localize("FQCARDENGINE.ResetToolbarDialogTitle"),
-            content: "<p>" + game.i18n.localize("FQCARDENGINE.ResetToolbarDialogQuestion") + "</p>",
-            yes: () => this.reset(),
-            no: function () {
-            },//do nothing
-            defaultYes: true
-        });
     }
 
     /**
@@ -975,8 +791,11 @@ export default class HandBoard {
     }
 
     /**
-     * Restaure l'état persistant de la barre (jeu de cartes et utilisateur
-     * mémorisés dans les flags) puis rafraîchit l'affichage.
+     * Restaure l'état persistant de la barre puis rafraîchit l'affichage. Pour un
+     * joueur, seul le rafraîchissement compte (aucun flag mémorisé, D1-03). Pour
+     * le MJ, seul le joueur suivi est restauré depuis `UserID-*` (D2-03) — plus
+     * aucun flag `CardsID-*` n'est lu : c'est `update()`, appelé ensuite, qui
+     * résout la main du joueur suivi (BAR-04/D2-02).
      *
      * @returns {void}
      */
@@ -989,39 +808,8 @@ export default class HandBoard {
             this.update();
             return;
         }
-        this.setCardsID(this.getStoredCardsID());
         this.setUserID(this.getStoredUserID());
         this.update();
-    }
-
-    /**
-     * Persiste l'id du jeu de cartes de la barre dans les flags de l'utilisateur.
-     *
-     * @param {string} id - L'id du jeu de cartes à mémoriser.
-     *
-     * @returns {void}
-     */
-    storeCardsID(id) {
-        game.user.setFlag(FqCardEngineModule.moduleName, "CardsID-" + this.id, id);
-    }
-
-    /**
-     * Retire l'id de jeu de cartes mémorisé et vide le jeu courant de la barre.
-     *
-     * @returns {void}
-     */
-    resetCardsID() {
-        game.user.unsetFlag(FqCardEngineModule.moduleName, "CardsID-" + this.id);
-        this.currentCards = undefined;
-    }
-
-    /**
-     * Retourne l'id du jeu de cartes mémorisé pour cette barre.
-     *
-     * @returns {string|undefined} L'id mémorisé, ou undefined.
-     */
-    getStoredCardsID() {
-        return game.user.getFlag(FqCardEngineModule.moduleName, "CardsID-" + this.id);
     }
 
     /**
@@ -1036,36 +824,12 @@ export default class HandBoard {
     }
 
     /**
-     * Retire l'id d'utilisateur mémorisé et vide l'utilisateur courant de la barre.
-     *
-     * @returns {void}
-     */
-    resetUserID() {
-        game.user.unsetFlag(FqCardEngineModule.moduleName, "UserID-" + this.id);
-        this.currentUser = undefined;
-    }
-
-    /**
      * Retourne l'id de l'utilisateur mémorisé pour cette barre.
      *
      * @returns {string|undefined} L'id mémorisé, ou undefined.
      */
     getStoredUserID() {
         return game.user.getFlag(FqCardEngineModule.moduleName, "UserID-" + this.id);
-    }
-
-    /**
-     * Réinitialise complètement la barre (jeu de cartes et utilisateur) et
-     * synchronise les mains des autres clients (MJ).
-     *
-     * @returns {void}
-     */
-    reset() {
-        this.resetCardsID();
-        this.resetUserID();
-        //updated for GMs
-        game.socket.emit(FqCardEngineModule.eventName, {"action": "updatePlayers"});
-        FqCardEngineModule.updatePlayerHandsDelayed();
     }
 
     /**

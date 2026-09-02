@@ -39,55 +39,6 @@ export default {
                 FqCardEngineModule.handMiniBarList.pop().remove();
             }
         }
-    }, //updates the player hands but with a delay so user flags are correctly set
-    /**
-     * Met à jour les mains des joueurs après un court délai, le temps que les
-     * flags des utilisateurs soient correctement enregistrés.
-     *
-     * @returns {void}
-     */
-    updatePlayerHandsDelayed: function () {
-        setTimeout(function () {
-            FqCardEngineModule.updatePlayerHands();
-        }, 500);
-    }, //updates the player hands that are owned by other players (the DM)
-    /**
-     * (MJ) Synchronise, pour chaque barre, l'id du jeu de cartes de la main du
-     * joueur associé avec le flag du MJ, puis restaure l'affichage si un changement
-     * a eu lieu.
-     *
-     * @returns {void}
-     */
-    updatePlayerHands: function () {
-        if (game.user.isGM) {
-            let u = game.user;
-            let changed = false;
-            for (let i = 0; i <= FqCardEngineModule.handMiniBarList.length; i++) {
-                let toolbar = FqCardEngineModule.handMiniBarList[i];
-                if (!toolbar) {
-                    break;
-                }
-                toolbar.updatePlayerBarCount();
-                let uID = u.getFlag(FqCardEngineModule.moduleName, "UserID-" + toolbar.id);
-                if (uID) {
-                    // Le joueur associé peut avoir été supprimé du monde depuis que la
-                    // barre lui a été associée : sa disparition ne doit pas casser la
-                    // synchronisation des autres barres.
-                    let cardsID = game.users.get(uID)?.getFlag(FqCardEngineModule.moduleName, "CardsID-" + toolbar.playerBarCount);
-                    let userCards = u.getFlag(FqCardEngineModule.moduleName, "CardsID-" + toolbar.id);
-                    // Un joueur qui n'a pas configuré sa propre barre ne renseigne aucun
-                    // id : on laisse alors la barre du MJ telle qu'il l'a choisie, au lieu
-                    // de l'effacer — sans quoi sa sélection manuelle ne tiendrait jamais.
-                    if (cardsID && userCards !== cardsID) {
-                        u.setFlag(FqCardEngineModule.moduleName, "CardsID-" + toolbar.id, cardsID);
-                        changed = true;
-                    }
-                }
-            }
-            if (changed) {
-                FqCardEngineModule.restore();
-            }
-        }
     },
     /**
      * Redessine les cartes de toutes les barres de main.

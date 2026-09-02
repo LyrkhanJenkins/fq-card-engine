@@ -4,13 +4,14 @@ import TradingCards from "../../src/domain/trading/trading-cards.js";
 
 /**
  * Couvre la logique pure de `HandBoard` testable sans DOM/jQuery (voir
- * `<execution_conventions>` du plan 01-01) : la construction des données de
- * gabarit (`buildTemplateData`) et la garde en profondeur de `chooseDialog()`.
+ * `<execution_conventions>` des plans 01-01/02-01) : la construction des
+ * données de gabarit (`buildTemplateData`), la garde en profondeur de
+ * `chooseUserDialog()` (seule action du bouton d'engrenage MJ depuis D2-01),
+ * la résolution paresseuse de `update()` (joueur ET MJ) et `restore()`.
  *
  * `HandBoard` n'est JAMAIS instanciée dans ce fichier (`new HandBoard(...)`
- * manipule du jQuery réel absent des mocks de `tests/setup.js`) — seules la
- * méthode statique `buildTemplateData` et `HandBoard.prototype.chooseDialog`
- * (invoquée via `.call({})`) sont exercées ici.
+ * manipule du jQuery réel absent des mocks de `tests/setup.js`) — seules des
+ * méthodes du prototype invoquées via `.call(objet-simple)` sont exercées ici.
  */
 
 let previousPlayerLimitCardsRight;
@@ -52,11 +53,11 @@ describe("buildTemplateData", () => {
     });
 });
 
-describe("chooseDialog", () => {
-    it("court-circuite avant tout accès à DialogV2 pour un joueur non-MJ", async () => {
+describe("chooseUserDialog", () => {
+    it("court-circuite avant tout accès à DialogV2 quand l'utilisateur courant n'est pas MJ (D2-12)", async () => {
         game.user.isGM = false;
 
-        await expect(HandBoard.prototype.chooseDialog.call({})).resolves.toBeUndefined();
+        await expect(HandBoard.prototype.chooseUserDialog.call({})).resolves.toBeUndefined();
     });
 });
 
@@ -131,6 +132,40 @@ describe("update — résolution paresseuse de la main (BAR-01, BAR-03, D1-06)",
     });
 });
 
+describe("update — résolution paresseuse de la main côté MJ (BAR-04, D2-02)", () => {
+    let getFirstDeckSpy;
+
+    beforeEach(() => {
+        getFirstDeckSpy = vi.spyOn(TradingCards, "getFirstDeck");
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it("sans joueur suivi : ne résout rien, la barre reste silencieusement vide (D2-04)", () => {
+        game.user.isGM = true;
+        const bar = {id: 0};
+
+        HandBoard.prototype.update.call(bar);
+
+        expect(getFirstDeckSpy).not.toHaveBeenCalled();
+        expect(bar.currentCards).toBeUndefined();
+    });
+
+    it("avec un joueur suivi : résout sa main via l'id du joueur suivi, jamais celui du MJ", () => {
+        game.user.isGM = true;
+        const hand = {id: "hand-du-joueur-suivi"};
+        getFirstDeckSpy.mockReturnValue(hand);
+        const bar = {id: 0, currentUser: {id: "user-x"}};
+
+        HandBoard.prototype.update.call(bar);
+
+        expect(getFirstDeckSpy).toHaveBeenCalledWith("user-x", "HAND", false);
+        expect(bar.currentCards).toBe(hand);
+    });
+});
+
 describe("restore — un joueur ne relit jamais ses flags de barre (D1-03)", () => {
     afterEach(() => {
         vi.restoreAllMocks();
@@ -139,35 +174,28 @@ describe("restore — un joueur ne relit jamais ses flags de barre (D1-03)", () 
     it("pour un joueur : rafraîchit sans toucher aux flags mémorisés", () => {
         game.user.isGM = false;
         const bar = {
-            setCardsID: vi.fn(),
             setUserID: vi.fn(),
-            getStoredCardsID: vi.fn(),
             getStoredUserID: vi.fn(),
             update: vi.fn()
         };
 
         HandBoard.prototype.restore.call(bar);
 
-        expect(bar.getStoredCardsID).not.toHaveBeenCalled();
         expect(bar.getStoredUserID).not.toHaveBeenCalled();
-        expect(bar.setCardsID).not.toHaveBeenCalled();
         expect(bar.setUserID).not.toHaveBeenCalled();
         expect(bar.update).toHaveBeenCalledTimes(1);
     });
 
-    it("pour le MJ : restaure bien l'état mémorisé (D1-07, chemin inchangé)", () => {
+    it("pour le MJ : restaure le joueur suivi depuis UserID-*, sans plus jamais lire CardsID-* (D2-03)", () => {
         game.user.isGM = true;
         const bar = {
-            setCardsID: vi.fn(),
             setUserID: vi.fn(),
-            getStoredCardsID: vi.fn(() => "cards-1"),
             getStoredUserID: vi.fn(() => "user-1"),
             update: vi.fn()
         };
 
         HandBoard.prototype.restore.call(bar);
 
-        expect(bar.setCardsID).toHaveBeenCalledWith("cards-1");
         expect(bar.setUserID).toHaveBeenCalledWith("user-1");
         expect(bar.update).toHaveBeenCalledTimes(1);
     });

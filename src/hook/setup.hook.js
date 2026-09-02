@@ -163,8 +163,6 @@ Hooks.on("setup", function () {
                 FqCardEngineModule.setupPosition();
             } else if (data.action === "reload") {
                 FqCardEngineModule.restore();
-            } else if (data.action === "updatePlayers") {
-                FqCardEngineModule.updatePlayerHandsDelayed();
             }
         });
         FqCardEngineModule.restore();
@@ -180,8 +178,6 @@ Hooks.on("setup", function () {
             }
         });
         Hooks.on("controlToken", () => FqCardEngineModule.updateCharGauges());
-
-        FqCardEngineModule.updatePlayerHands();
 
         const savedScale = game.settings.get(FqCardEngineModule.moduleName, "HandScaleFloat") ?? 1.0;
         const slider = document.getElementById("fq-size-slider");
