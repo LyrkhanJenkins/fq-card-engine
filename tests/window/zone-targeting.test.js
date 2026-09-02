@@ -121,6 +121,27 @@ describe("ZoneTargeting — état « zone posée » (condition de jeu des cartes
     });
 });
 
+describe("ZoneTargeting.releaseTargets — ardoise vierge du ciblage", () => {
+    test("relâche chaque cible en cours, sans en cibler de nouvelle", () => {
+        const a = sceneToken({id: "a", x: 0, y: 5});
+        const b = sceneToken({id: "b", x: 20, y: 20});
+        mountZoneWorld(null, [casterToken(), a, b], {user: {targets: [a, b]}});
+
+        ZoneTargeting.releaseTargets();
+
+        expect(a.object.setTarget).toHaveBeenCalledWith(false, {releaseOthers: false});
+        expect(b.object.setTarget).toHaveBeenCalledWith(false, {releaseOthers: false});
+        expect(a.object.setTarget).not.toHaveBeenCalledWith(true, {releaseOthers: false});
+        expect(b.object.setTarget).not.toHaveBeenCalledWith(true, {releaseOthers: false});
+    });
+
+    test("sans cible en cours : ne fait rien (aucune erreur)", () => {
+        mountZoneWorld(null, [casterToken()], {user: {targets: []}});
+
+        expect(() => ZoneTargeting.releaseTargets()).not.toThrow();
+    });
+});
+
 describe("ZoneTargeting.snapToGrid — aimantation forcée de la pose", () => {
     test("repose la forme aimantée et neutralise le déplacement par défaut", () => {
         const shape = {move: vi.fn()};
