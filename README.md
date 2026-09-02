@@ -2,6 +2,8 @@
 
 The FQ Card Engine is a combat system for Final Quest 8 combined with DnD5e rules.
 
+![img.png](images/doc/summary.png)
+
 ## Mandatory modules
 - socketlib https://foundryvtt.com/packages/socketlib
 - lib-wrapper https://foundryvtt.com/packages/lib-wrapper
