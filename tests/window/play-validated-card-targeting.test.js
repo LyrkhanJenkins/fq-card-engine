@@ -198,6 +198,56 @@ describe("Garde-fou de ciblage — Zone (poser la zone EST la condition de jeu)"
         expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
     });
 
+    test("Invocation en zone sur une case occupée → FormError MinionZoneOccupied, non délégué", () => {
+        mountForGuard();
+        vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(true);
+        // La fixture pose un token en (0,5) : la zone tombe dessus.
+        vi.spyOn(ZoneTargeting, "getPlacement").mockReturnValue(
+            {type: "rectangle", originX: 0, originY: 5, width: 1, height: 1});
+        const choice = makeChoice({targetType: "Zone", minionsOnZone: true, minions: [{name: "Skeleton lvl 1"}]});
+
+        expect(() => play(choice)).toThrow("FQCARDENGINE.DialogPlayFormErrorMinionZoneOccupied");
+        expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+    });
+
+    test("Invocation en zone 2×2 dont UNE SEULE case est occupée → bloquée", () => {
+        mountForGuard();
+        vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(true);
+        // Cases (0,0), (5,0), (0,5), (5,5) : les deux dernières portent des tokens.
+        vi.spyOn(ZoneTargeting, "getPlacement").mockReturnValue(
+            {type: "rectangle", originX: 0, originY: 0, width: 2, height: 2});
+        const choice = makeChoice({
+            targetType: "Zone", minionsOnZone: true,
+            minions: [{name: "s1"}, {name: "s2"}, {name: "s3"}, {name: "s4"}]
+        });
+
+        expect(() => play(choice)).toThrow("FQCARDENGINE.DialogPlayFormErrorMinionZoneOccupied");
+        expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+    });
+
+    test("Invocation en zone sur des cases libres → délègue", () => {
+        mountForGuard();
+        vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(true);
+        vi.spyOn(ZoneTargeting, "getPlacement").mockReturnValue(
+            {type: "rectangle", originX: 100, originY: 100, width: 1, height: 1});
+        const choice = makeChoice({targetType: "Zone", minionsOnZone: true, minions: [{name: "Skeleton lvl 1"}]});
+
+        expect(() => play(choice)).not.toThrow();
+        expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
+    });
+
+    test("Zone SANS invocation sur une case occupée → délègue (la garde ne vise que l'invocation)", () => {
+        mountForGuard();
+        vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(true);
+        vi.spyOn(ZoneTargeting, "getPlacement").mockReturnValue(
+            {type: "rectangle", originX: 0, originY: 5, width: 1, height: 1});
+        // Une zone de dégâts DOIT pouvoir tomber sur des tokens : c'est même le but.
+        const choice = makeChoice({targetType: "Zone", damage: "1d6", maxReach: "3"});
+
+        expect(() => play(choice)).not.toThrow();
+        expect(PlayCard.callBackplayCard).toHaveBeenCalledTimes(1);
+    });
+
     test("Zone posée + cible individuellement hors portée → délègue (portée contrôlée à la pose, pas par token)", () => {
         mountForGuard(); // cible à distance 1 < minReach 2 : bloquerait en Default
         vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(true);

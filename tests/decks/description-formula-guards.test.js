@@ -93,7 +93,7 @@ const SIMPLE_TOKEN_ALLOWLIST = {
     "FQCARDDESCRIPTION.SiftRuneII": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.SiftRuneIII": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.SkeletonSorcerer": "points de vie/dégâts/déplacement — jetons seuls",
-    "FQCARDDESCRIPTION.SquareOfSkeletons": "coût en points d’action — jeton seul",
+    "FQCARDDESCRIPTION.CrossOfSkeletons": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.SteelRain": "rayon de la zone — jeton seul",
     "FQCARDDESCRIPTION.Uppercut": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.Vortex": "portée — jeton seul",

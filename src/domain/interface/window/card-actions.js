@@ -179,7 +179,8 @@ export default {
             hasXVariable,
             hasYVariable,
             severalChoices: cardContents.length > 1,
-            minions: firstChoice.minions?.length,
+            // Croix d'emplacement : inutile quand la zone posée fixe déjà la case.
+            minions: firstChoice.minionsOnZone ? 0 : firstChoice.minions?.length,
             hasBeenPlayed: firstChoice.hasBeenPlayed,
             isFQInnate: card.system?.fq?.isInnate,
             isPlayedThisRound: CardFqSystem.isPlayedThisRound(firstChoice),
@@ -282,6 +283,9 @@ export default {
             // Entrée du mode ciblage : outil « target » actif + canvas libéré (CSS) +
             // barre flottante « Ciblage… X / N — [Terminé] ». La dialog reste ouverte.
             const enterTargeting = async () => {
+                // Ardoise vierge : le ciblage repart de zéro, sans traîner les cibles
+                // d'une carte précédente ou d'une sélection faite hors dialogue.
+                ZoneTargeting.releaseTargets();
                 await ui.controls?.activate?.({control: "tokens", tool: "target"});
                 root.classList.add("fq-targeting-mode");
                 targetingBar = document.createElement("div");
@@ -306,6 +310,9 @@ export default {
             // clic droit/Échap pour annuler).
             const enterZonePlacement = async () => {
                 const {fd, cardContent} = this.getCardContent(root, cardContents, discards);
+                // Ardoise vierge dès le clic : une pose annulée ou hors portée ne doit
+                // pas laisser en place les cibles acquises par une pose précédente.
+                ZoneTargeting.releaseTargets();
                 root.classList.add("fq-targeting-mode");
                 ui.notifications.info(game.i18n.localize("FQCARDENGINE.TargetingPanelZoneHint"));
                 try {
@@ -433,7 +440,9 @@ export default {
         const nbSelectedMinionLocations = Minion.getNbMinionLocationSelected(fd);
         const nbValideMinionLocations = Minion.getNbValideMinionLocationSelected(fd);
 
-        if (firstChoice.minions?.length &&
+        // Sbires posés dans la zone : c'est la pose de la zone qui fixe l'emplacement,
+        // la croix directionnelle n'est ni affichée ni exigée.
+        if (firstChoice.minions?.length && !firstChoice.minionsOnZone &&
             ((nbSelectedMinionLocations === 0) ||
                 (firstChoice.minions?.length < nbValideMinionLocations) ||
                 (nbSelectedMinionLocations !== nbValideMinionLocations))) {
@@ -466,6 +475,13 @@ export default {
             // de ZoneTargeting) peut se fermer avant que les FX ne jouent — Fx lit
             // ce champ sur le cardContent, jamais ZoneTargeting directement.
             cardContent.zonePlacement = ZoneTargeting.getPlacement();
+            // Invocation en zone : un sbire ne se pose jamais par-dessus un jeton
+            // existant. Une seule case occupée suffit à rendre la carte injouable —
+            // au joueur de reposer sa zone ailleurs.
+            if (cardContent.minionsOnZone && cardContent.minions?.length
+                && Minion.occupiedZoneSquares(cardContent.zonePlacement).length) {
+                throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorMinionZoneOccupied"));
+            }
         } else if (cardContent?.targetType === CardFqSystem.TARGET_TYPE_ADJACENT) {
             // Acquisition automatique au moment du jeu (les tokens ont pu bouger
             // depuis l'aperçu du panneau) : l'anneau vide bloque le jeu.

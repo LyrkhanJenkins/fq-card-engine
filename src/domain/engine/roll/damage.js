@@ -439,21 +439,24 @@ export default class Damage {
      * @param {object} actorData     - Les données de l'acteur à créer.
      * @param {string} currentUserId - L'id de l'utilisateur dont le personnage sert de référence de position.
      * @param {string} location      - La direction d'apparition adjacente (« left », « right », « up », « down »).
+     * @param {object} [position]    - La position absolue (px) imposée (invocation dans une zone posée) ;
+     *                                 à défaut, la case adjacente au personnage.
      *
      * @returns {Promise<void>}
      */
-    static async createActorFromData(actorData, currentUserId, location) {
+    static async createActorFromData(actorData, currentUserId, location, position) {
         const currentUser = game.users.get(currentUserId);
         await Actor.create(actorData).then(async newActor => {
             // Ajouter le jeton à la scène active
             const scene = game.scenes.active;
+            const casterToken = Constants.actorToken(currentUser?.character?.id);
 
             const tokenData = {
                 ...newActor.prototypeToken,
                 actorId: newActor._id,
                 effects: [],
-                x: Geometry.getXAdjacentLocation(Constants.actorToken(currentUser?.character?.id), location),
-                y: Geometry.getYAdjacentLocation(Constants.actorToken(currentUser?.character?.id), location)
+                x: position?.x ?? Geometry.getXAdjacentLocation(casterToken, location),
+                y: position?.y ?? Geometry.getYAdjacentLocation(casterToken, location)
             };
             await scene.createEmbeddedDocuments("Token", [tokenData]).then(async t => {
                 const token = t[0];

@@ -82,4 +82,24 @@ describe("Geometry", () => {
         // myToken en (5,5) ; 'up' → case cible (5,0) : aucun token présent → false
         expect(Geometry.locationIsOccupied("up")).toEqual(false);
     });
+
+    test("squareIsOccupied - vrai sur la case d'un token, faux sur une case vide", () => {
+        // La scène de test porte un token en (0,5) (cf. setup.js).
+        expect(Geometry.squareIsOccupied({x: 0, y: 5})).toEqual(true);
+        expect(Geometry.squareIsOccupied({x: 500, y: 500})).toEqual(false);
+        expect(Geometry.squareIsOccupied(undefined)).toEqual(false);
+    });
+
+    test("squareIsOccupied - un token de plus d'une case occupe TOUTES les cases qu'il déborde", () => {
+        const scene = game.scenes.find(s => s.active);
+        const previous = scene.tokens;
+        scene.tokens = [{x: 100, y: 100, width: 2, height: 2}];
+
+        // Le coin du token, mais aussi les trois cases débordées.
+        expect(Geometry.squareIsOccupied({x: 100, y: 100})).toEqual(true);
+        expect(Geometry.squareIsOccupied({x: 105, y: 105})).toEqual(true);
+        expect(Geometry.squareIsOccupied({x: 110, y: 100})).toEqual(false);
+
+        scene.tokens = previous;
+    });
 });

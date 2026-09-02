@@ -439,6 +439,71 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             spy.mockRestore();
         });
 
+        it("createActorsOnZone : pose le sbire sur le coin de la case de la zone, sans direction", async () => {
+            game.folders.find = vi.fn((fn) => [{id: "tmp", type: "Actor", name: "Temporaire"}].find(fn));
+            const spy = vi.spyOn(Minion, "createActorData").mockResolvedValue(undefined);
+
+            const created = await Minion.createActorsOnZone([{name: "skeleton"}],
+                {type: "rectangle", originX: 60, originY: 25, width: 1, height: 1});
+
+            expect(created).toBe(1);
+            expect(spy).toHaveBeenCalledWith({name: "skeleton"}, null, {x: 60, y: 25});
+
+            spy.mockRestore();
+        });
+
+        it("createActorsOnZone : une zone 2×2 accueille 4 sbires, un par case, en ordre de lecture", async () => {
+            game.folders.find = vi.fn((fn) => [{id: "tmp", type: "Actor", name: "Temporaire"}].find(fn));
+            const spy = vi.spyOn(Minion, "createActorData").mockResolvedValue(undefined);
+            const skeletons = [{name: "s1"}, {name: "s2"}, {name: "s3"}, {name: "s4"}];
+
+            // Grille 5 (world de test) : la zone couvre (60,25), (65,25), (60,30), (65,30).
+            const created = await Minion.createActorsOnZone(skeletons,
+                {type: "rectangle", originX: 60, originY: 25, width: 2, height: 2});
+
+            expect(created).toBe(4);
+            expect(spy).toHaveBeenNthCalledWith(1, skeletons[0], null, {x: 60, y: 25});
+            expect(spy).toHaveBeenNthCalledWith(2, skeletons[1], null, {x: 65, y: 25});
+            expect(spy).toHaveBeenNthCalledWith(3, skeletons[2], null, {x: 60, y: 30});
+            expect(spy).toHaveBeenNthCalledWith(4, skeletons[3], null, {x: 65, y: 30});
+
+            spy.mockRestore();
+        });
+
+        it("createActorsOnZone : jamais plus de sbires que de cases couvertes", async () => {
+            game.folders.find = vi.fn((fn) => [{id: "tmp", type: "Actor", name: "Temporaire"}].find(fn));
+            const spy = vi.spyOn(Minion, "createActorData").mockResolvedValue(undefined);
+
+            // 4 sbires déclarés mais une zone d'une seule case : un seul apparaît.
+            const created = await Minion.createActorsOnZone(
+                [{name: "s1"}, {name: "s2"}, {name: "s3"}, {name: "s4"}],
+                {type: "rectangle", originX: 0, originY: 0, width: 1, height: 1});
+
+            expect(created).toBe(1);
+            expect(spy).toHaveBeenCalledTimes(1);
+
+            spy.mockRestore();
+        });
+
+        it("zoneSquares : une forme non rectangulaire n'offre que sa case d'origine", () => {
+            expect(Minion.zoneSquares({type: "circle", originX: 10, originY: 20, size: 6}))
+                .toEqual([{x: 10, y: 20}]);
+        });
+
+        it("createActorsOnZone : sans géométrie de zone exploitable, aucun sbire n'est créé", async () => {
+            game.folders.find = vi.fn((fn) => [{id: "tmp", type: "Actor", name: "Temporaire"}].find(fn));
+            const spy = vi.spyOn(Minion, "createActorData").mockResolvedValue(undefined);
+
+            // Carte jouée sans pose de zone, pose annulée, ou sbire absent : mieux vaut
+            // pas de sbire qu'un sbire aux pieds du lanceur.
+            await expect(Minion.createActorsOnZone([{name: "skeleton"}], null)).resolves.toBe(0);
+            await expect(Minion.createActorsOnZone([{name: "skeleton"}], {})).resolves.toBe(0);
+            await expect(Minion.createActorsOnZone(undefined, {originX: 0, originY: 0})).resolves.toBe(0);
+            expect(spy).not.toHaveBeenCalled();
+
+            spy.mockRestore();
+        });
+
         describe("createActorData", () => {
             beforeEach(() => {
                 vi.spyOn(Minion, "getTempActorFolder").mockReturnValue({id: "tmp"});
@@ -499,7 +564,8 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
                         })
                     }),
                     "userCharacterId",
-                    "left"
+                    "left",
+                    undefined
                 );
             });
 
@@ -516,7 +582,8 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
                         })
                     }),
                     "userCharacterId",
-                    "up"
+                    "up",
+                    undefined
                 );
             });
         });
@@ -549,6 +616,24 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(spy).toHaveBeenCalledWith(minion, "down");
 
             spy.mockRestore();
+        });
+
+        it("minionsOnZone : un seul sbire, posé sur la case de la zone, sans croix directionnelle", async () => {
+            const onZone = vi.spyOn(Minion, "createActorsOnZone").mockResolvedValue(true);
+            const byDirection = vi.spyOn(Minion, "createActor").mockResolvedValue(undefined);
+            const minion = {name: "skeleton"};
+            const zonePlacement = {type: "rectangle", originX: 60, originY: 25};
+            const cardContent = makeChoice({minions: [minion, {name: "ignoré"}], minionsOnZone: true, zonePlacement});
+
+            // Des directions cochées ne doivent RIEN changer : la zone fait foi.
+            await CardEffect.applyCardEffect(cardContent, makeCard(), {minionDown: true, minionLeft: true});
+
+            expect(onZone).toHaveBeenCalledTimes(1);
+            expect(onZone).toHaveBeenCalledWith([minion, {name: "ignoré"}], zonePlacement);
+            expect(byDirection).not.toHaveBeenCalled();
+
+            onZone.mockRestore();
+            byDirection.mockRestore();
         });
 
         it("minions : un sbire DISTINCT par emplacement sélectionné (minion[i] → i-ème direction)", async () => {

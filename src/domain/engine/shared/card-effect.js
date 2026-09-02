@@ -91,15 +91,20 @@ export default class CardEffect {
                 await CardSelection.playCardSelection(cardContent, card.parent);
             }
             if (cardContent.minions && Array.isArray(cardContent.minions)) {
-                const selectedLocations = [];
-                if (fd.minionLeft) selectedLocations.push("left");
-                if (fd.minionUp) selectedLocations.push("up");
-                if (fd.minionRight) selectedLocations.push("right");
-                if (fd.minionDown) selectedLocations.push("down");
-                for (let i = 0; i < selectedLocations.length; i++) {
-                    const minion = cardContent.minions[i];
-                    if (minion) {
-                        await Minion.createActor(minion, selectedLocations[i]);
+                if (cardContent.minionsOnZone) {
+                    // La zone posée tient lieu d'emplacement : un sbire par case couverte.
+                    await Minion.createActorsOnZone(cardContent.minions, cardContent.zonePlacement);
+                } else {
+                    const selectedLocations = [];
+                    if (fd.minionLeft) selectedLocations.push("left");
+                    if (fd.minionUp) selectedLocations.push("up");
+                    if (fd.minionRight) selectedLocations.push("right");
+                    if (fd.minionDown) selectedLocations.push("down");
+                    for (let i = 0; i < selectedLocations.length; i++) {
+                        const minion = cardContent.minions[i];
+                        if (minion) {
+                            await Minion.createActor(minion, selectedLocations[i]);
+                        }
                     }
                 }
             }

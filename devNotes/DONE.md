@@ -29,6 +29,7 @@ Feat :
 - La fatigue fais des dégâts à chaque fois que l'on repioche sa défausse dans son deck. -> le guerrier runique a une carte pour se proteger de la fatigue
 - Rework design du SpellBook
 - Les cartes neutres deviennent communes et sont automatiquement rajouté dans les spellbooks aux bons niveaux
+- Permet de poser des minions dans une zone plutôt que sur une case adjacente
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

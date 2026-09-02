@@ -1421,9 +1421,9 @@
               "hp": "",
               "draw": "",
               "drop": "",
-              "targetType": "Default",
-              "minReach": "",
-              "maxReach": "",
+              "targetType": "Zone",
+              "minReach": "9",
+              "maxReach": "12",
               "nbTargets": "",
               "damage": "",
               "heal": "",
@@ -1460,7 +1460,12 @@
               "name": "",
               "applyEffectsFormulas": [],
               "hasBeenPlayed": false,
-              "customEvals": []
+              "customEvals": [],
+              "zoneShape": "rectangle",
+              "zoneSize": "1",
+              "zoneWidth": "1",
+              "zoneAngle": "",
+              "minionsOnZone": true
             }
           ]
         }

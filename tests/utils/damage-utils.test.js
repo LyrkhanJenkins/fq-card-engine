@@ -335,6 +335,24 @@ describe("Damage", () => {
             }]);
         });
 
+        it("places the token on the imposed position when one is given (summon on a placed zone)", async () => {
+            const newActor = {_id: "newActorId3", prototypeToken: {name: "Token"}};
+            Actor.create = vi.fn().mockResolvedValue(newActor);
+            const createTokenMock = vi.fn().mockResolvedValue([{id: "tokenId3", actorId: "newActorId3"}]);
+            game.scenes = {active: {id: "sceneId", createEmbeddedDocuments: createTokenMock}};
+            // Le token du lanceur reste en (10,10) : si la position imposée était ignorée,
+            // le sbire apparaîtrait là plutôt que sur la case de la zone.
+            game.canvas.scene.tokens = [{actorId: "userCharacterId", x: 10, y: 10}];
+            game.users = {...game.users, get: vi.fn().mockReturnValue({character: {id: "userCharacterId"}})};
+            game.combat = undefined;
+
+            await Damage.createActorFromData({name: "Minion"}, "user1", null, {x: 60, y: 25});
+
+            expect(createTokenMock).toHaveBeenCalledWith("Token", [expect.objectContaining({
+                actorId: "newActorId3", x: 60, y: 25
+            })]);
+        });
+
         it("should not register a combatant when there is no active combat", async () => {
             const newActor = {_id: "newActorId2", prototypeToken: {}};
             Actor.create = vi.fn().mockResolvedValue(newActor);

@@ -519,6 +519,10 @@
                 {{/each}}
                 <button type="button" data-action="addMinion" data-index="{{i}}">➕ {{localize
                         "FQCARDENGINE.AddMinion"}}</button>
+                <label>{{localize "FQCARDENGINE.InvokeMinionOnZone"}}</label>
+                {{formInput ../fields.fq.fields.choices.element.fields.minionsOnZone
+                            value=choice.minionsOnZone
+                            name=(concat "system.fq.choices." i ".minionsOnZone") rootId=../rootId}}
             </fieldset>
 
             <fieldset>

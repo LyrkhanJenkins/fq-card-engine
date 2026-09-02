@@ -235,6 +235,10 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                     movement: new StringField({required: true, label: "FQCARDENGINE.MinionMovement"}),
                 })
             }), {label: "FQCARDENGINE.Minions"}),
+            // Le sbire apparaît sur la case de la zone posée (ciblage « Zone ») au lieu
+            // d'une case adjacente au lanceur : la pose de la zone TIENT LIEU de choix
+            // d'emplacement, et un seul sbire est invoqué.
+            minionsOnZone: new BooleanField({required: false, label: "FQCARDENGINE.InvokeMinionOnZone"}),
 
             // La carte est rejouable (« passif » = reste en main, ou nombre de charges),
             // ou « ephemere » = détruite définitivement au jeu, sans passer par la défausse

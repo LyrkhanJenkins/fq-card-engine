@@ -136,8 +136,29 @@ export default class Geometry {
      */
     static locationIsOccupied(location) {
         const myToken = Constants.myToken;
-        return !!game.scenes.find(s => s.active).tokens?.find(t =>
-            t.x === Geometry.getXAdjacentLocation(myToken, location) &&
-            t.y === Geometry.getYAdjacentLocation(myToken, location));
+        return Geometry.squareIsOccupied({
+            x: Geometry.getXAdjacentLocation(myToken, location),
+            y: Geometry.getYAdjacentLocation(myToken, location)
+        });
+    }
+
+    /**
+     * Indique si une case de la scène active est occupée par un token.
+     *
+     * L'occupation est testée sur TOUTES les cases couvertes par chaque token, et
+     * pas seulement sur son coin : un token de plus d'une case occupe bel et bien
+     * les cases qu'il déborde.
+     *
+     * @param {{x: number, y: number}} square - Le coin supérieur-gauche de la case (px).
+     *
+     * @returns {boolean} True si un token occupe cette case.
+     */
+    static squareIsOccupied(square) {
+        // Dimensions par défaut à 1 : un token sans `width`/`height` (donnée
+        // partielle) occupe au moins sa propre case — sans ce repli, il
+        // n'occuperait AUCUNE case et laisserait poser un sbire sur lui.
+        return !!game.scenes.find(s => s.active).tokens?.some(token =>
+            Geometry.getAllSquaresOccupiedByToken(token.x, token.y, token.width || 1, token.height || 1)
+                .some(corner => corner.x === square?.x && corner.y === square?.y));
     }
 }

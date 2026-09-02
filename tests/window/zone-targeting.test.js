@@ -100,7 +100,7 @@ describe("ZoneTargeting — état « zone posée » (condition de jeu des cartes
         mountZoneWorld(region, [casterToken()]);
         await ZoneTargeting.placeZoneAndAcquireTargets(
             makeChoice({targetType: "Zone", zoneShape: "circle", zoneSize: "2", maxReach: "3"}));
-        expect(ZoneTargeting.getPlacement()).toEqual({type: "circle", x: 2, y: 7, size: 4});
+        expect(ZoneTargeting.getPlacement()).toEqual({type: "circle", x: 2, y: 7, originX: 0, originY: 5, size: 4});
         ZoneTargeting.clearPlacement();
         expect(ZoneTargeting.getPlacement()).toBeNull();
     });
@@ -121,17 +121,30 @@ describe("ZoneTargeting — état « zone posée » (condition de jeu des cartes
     });
 });
 
+describe("ZoneTargeting.snapToGrid — aimantation forcée de la pose", () => {
+    test("repose la forme aimantée et neutralise le déplacement par défaut", () => {
+        const shape = {move: vi.fn()};
+
+        // Foundry appellerait `shape.move(position, {snap: !event.shiftKey})` : rendre
+        // false lui retire la main, donc Maj ne peut plus débrayer l'aimantation.
+        const result = ZoneTargeting.snapToGrid({shape, position: {x: 37, y: 12}});
+
+        expect(shape.move).toHaveBeenCalledWith({x: 37, y: 12}, {snap: true});
+        expect(result).toBe(false);
+    });
+});
+
 describe("ZoneTargeting.buildPlacementFx — géométrie FX normalisée (grille 5)", () => {
     test("cercle : taille = diamètre converti en cases", () => {
         mountZoneWorld();
         expect(ZoneTargeting.buildPlacementFx({type: "circle", x: 30, y: 40, radius: 10}))
-            .toEqual({type: "circle", x: 30, y: 40, size: 4});
+            .toEqual({type: "circle", x: 30, y: 40, originX: 30, originY: 40, size: 4});
     });
 
     test("rectangle : ancrage ramené au centre, dimensions en cases, rotation conservée", () => {
         mountZoneWorld();
         expect(ZoneTargeting.buildPlacementFx({type: "rectangle", x: 10, y: 20, width: 10, height: 20, rotation: 30}))
-            .toEqual({type: "rectangle", x: 15, y: 30, width: 2, height: 4, rotation: 30});
+            .toEqual({type: "rectangle", x: 15, y: 30, originX: 10, originY: 20, width: 2, height: 4, rotation: 30});
     });
 
     test("cône : point d'arrivée à distance radius dans la direction de rotation", () => {
@@ -145,7 +158,7 @@ describe("ZoneTargeting.buildPlacementFx — géométrie FX normalisée (grille 
     test("ligne sans rotation : point d'arrivée à distance length vers l'est", () => {
         mountZoneWorld();
         expect(ZoneTargeting.buildPlacementFx({type: "line", x: 5, y: 5, length: 20}))
-            .toEqual({type: "line", x: 5, y: 5, endX: 25, endY: 5});
+            .toEqual({type: "line", x: 5, y: 5, originX: 5, originY: 5, endX: 25, endY: 5});
     });
 
     test("forme absente → null", () => {
