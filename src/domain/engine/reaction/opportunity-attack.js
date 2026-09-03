@@ -195,9 +195,9 @@ export default class OpportunityAttack {
      *
      * Le préfiltre ne retient que des critères structurels et bon marché : ni le
      * mobile lui-même, ni le décor (token sans acteur), ni un token absent du
-     * combat, ni un réactant ayant déjà consommé sa réaction ce round. Hostilité
-     * et portée sont ensuite appliquées par `ReachRules.provokers`, à qui elles
-     * sont injectées.
+     * combat, ni un combattant à terre, ni un réactant ayant déjà consommé sa
+     * réaction ce round. Hostilité et portée sont ensuite appliquées par
+     * `ReachRules.provokers`, à qui elles sont injectées.
      *
      * @param {object} movement - Le mouvement livré par le hook `moveToken`.
      * @param {object} mover    - Le TokenDocument qui se déplace.
@@ -210,6 +210,7 @@ export default class OpportunityAttack {
             token.id !== mover?.id
             && token.actorId
             && OpportunityAttack.isCombatant(token, combat)
+            && OpportunityAttack.isStanding(token)
             && ReactionBudget.isAvailable(token, combat));
         const profiles = ReachProfile.buildDistanceProfiles(movement, mover, observers);
         return ReachRules.provokers(
@@ -285,6 +286,31 @@ export default class OpportunityAttack {
      */
     static isCombatant(token, combat) {
         return Boolean(token?.id) && [...(combat?.combatants ?? [])].some(c => c.tokenId === token.id);
+    }
+
+    /**
+     * Ce token tient-il encore debout ?
+     *
+     * Un combattant à zéro point de vie ou moins reste dans le tracker, garde son
+     * arme équipée et conserve sa réaction du round : rien dans les autres gardes
+     * ne l'empêche de frapper quelqu'un qui s'éloigne de son cadavre.
+     *
+     * La lecture est VOLONTAIREMENT permissive : seul un total de points de vie
+     * réellement numérique ET inférieur ou égal à zéro fait taire le réactant. Des
+     * points de vie absents, nuls au sens de `null`, ou illisibles — véhicule, token
+     * sans données d'acteur exploitables — valent « debout », pour qu'une fiche
+     * inhabituelle perde une règle de combat plutôt que d'être silencieusement
+     * exclue de toutes. La conversion implicite est évitée pour cette raison
+     * précise : `Number(null)` vaut `0` et condamnerait une fiche muette.
+     *
+     * @param {object} token - Le TokenDocument à tester.
+     *
+     * @returns {boolean} `false` si les points de vie du token sont connus et nuls
+     *   ou négatifs, `true` dans tous les autres cas.
+     */
+    static isStanding(token) {
+        const hp = token?.actor?.system?.attributes?.hp?.value;
+        return typeof hp !== "number" || !Number.isFinite(hp) || hp > 0;
     }
 
     /**

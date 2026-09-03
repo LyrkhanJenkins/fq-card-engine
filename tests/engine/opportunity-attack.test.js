@@ -23,18 +23,21 @@ const melee = (reach) => ({
 /**
  * Un TokenDocument minimal, positionné en cases.
  *
- * @param {object} data - `id`, `cx`, `cy`, `disposition`, `items`, `spent`.
+ * `hp` est optionnel : omis, l'acteur ne porte aucune donnée de points de vie —
+ * le cas permissif attendu par `isStanding`.
+ *
+ * @param {object} data - `id`, `cx`, `cy`, `disposition`, `items`, `spent`, `hp`.
  *
  * @returns {object} Le TokenDocument.
  */
-function makeToken({id, cx = 0, cy = 0, disposition = HOSTILE, items = [melee(5)], spent}) {
+function makeToken({id, cx = 0, cy = 0, disposition = HOSTILE, items = [melee(5)], spent, hp}) {
     const token = {
         id,
         actorId: `actor-${id}`,
         x: cx * SIZE, y: cy * SIZE, width: 1, height: 1,
         disposition,
         flags: spent ? {[MODULE]: {[ReactionBudget.FLAG_KEY]: spent}} : {},
-        actor: {id: `actor-${id}`, items},
+        actor: {id: `actor-${id}`, items, system: hp === undefined ? {} : {attributes: {hp: {value: hp}}}},
         setFlag: vi.fn(async (scope, key, value) => {
             token.flags[scope] = {...(token.flags[scope] ?? {}), [key]: value};
         }),
@@ -162,6 +165,38 @@ describe("OpportunityAttack.findProvokers", () => {
         mockWorld([observer, mover]);
 
         expect(OpportunityAttack.findProvokers(flee(), mover, game.combat)).toEqual([]);
+    });
+
+    test("un ennemi à terre ne provoque pas", () => {
+        const observer = makeToken({id: "obs", cx: 0, disposition: HOSTILE, hp: 0});
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY});
+        mockWorld([observer, mover]);
+
+        expect(OpportunityAttack.findProvokers(flee(), mover, game.combat)).toEqual([]);
+    });
+
+    test("des points de vie négatifs ne réveillent pas davantage le réactant", () => {
+        const observer = makeToken({id: "obs", cx: 0, disposition: HOSTILE, hp: -7});
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY});
+        mockWorld([observer, mover]);
+
+        expect(OpportunityAttack.findProvokers(flee(), mover, game.combat)).toEqual([]);
+    });
+
+    test("un ennemi encore debout provoque toujours", () => {
+        const observer = makeToken({id: "obs", cx: 0, disposition: HOSTILE, hp: 1});
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY});
+        mockWorld([observer, mover]);
+
+        expect(OpportunityAttack.findProvokers(flee(), mover, game.combat).map(p => p.observer.id)).toEqual(["obs"]);
+    });
+
+    test("des points de vie illisibles valent debout : la règle ne mute pas une fiche inhabituelle", () => {
+        const observer = makeToken({id: "obs", cx: 0, disposition: HOSTILE, hp: null});
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY});
+        mockWorld([observer, mover]);
+
+        expect(OpportunityAttack.findProvokers(flee(), mover, game.combat).map(p => p.observer.id)).toEqual(["obs"]);
     });
 
     test("un ennemi hors du combat ne réagit pas", () => {
