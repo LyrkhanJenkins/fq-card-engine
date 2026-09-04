@@ -12,6 +12,59 @@ import CardFqSystem from "../../system/cards/card-fq-system.mjs";
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
 export default class TargetingPredicates {
+
+    /**
+     * Sélections de cibles figées à l'USAGE d'une activité, indexées par activité.
+     *
+     * La résolution des dégâts arrive bien après `activity.use()` : les handlers de
+     * hook dnd5e asynchrones ne sont pas attendus par Foundry, et l'attente des
+     * animations de dés élargit encore le délai. Relire la sélection de
+     * l'utilisateur à cet instant, c'est lire ce qu'elle est devenue entre-temps —
+     * en jeu, une momie a ainsi frappé une momie alliée, la sélection ayant été
+     * rendue au MJ pendant que ses dés roulaient encore.
+     *
+     * La sélection voyage donc AVEC l'activité, mémorisée par `preUseActivity` (qui
+     * est synchrone et précède tous les jets) et consommée à la résolution. Même
+     * mécanisme, et pour la même raison, que le contexte d'attaque d'opportunité.
+     *
+     * `WeakMap` : une activité oubliée n'empêche pas sa collecte, aucune fuite
+     * possible même si un usage est annulé avant tout jet.
+     *
+     * @type {WeakMap<object, object[]>}
+     */
+    static #targetsByActivity = new WeakMap();
+
+    /**
+     * Fige la sélection de cibles courante pour l'activité donnée.
+     *
+     * @param {object} activity - L'activité dnd5e dont l'usage vient d'être approuvé.
+     *
+     * @returns {void}
+     */
+    static rememberTargetsFor(activity) {
+        if (!activity) {
+            return;
+        }
+        TargetingPredicates.#targetsByActivity.set(activity, Constants.currentTargets);
+    }
+
+    /**
+     * Rend la sélection figée pour l'activité donnée, et l'oublie aussitôt : une
+     * sélection ne sert qu'une résolution.
+     *
+     * @param {object} activity - L'activité dnd5e en cours de résolution.
+     *
+     * @returns {?object[]} Les cibles figées, ou `null` si aucune ne l'a été.
+     */
+    static consumeTargetsFor(activity) {
+        if (!activity || !TargetingPredicates.#targetsByActivity.has(activity)) {
+            return null;
+        }
+        const targets = TargetingPredicates.#targetsByActivity.get(activity);
+        TargetingPredicates.#targetsByActivity.delete(activity);
+        return targets;
+    }
+
     /**
      * Verdicts possibles du comptage de cibles (objet gelé).
      */

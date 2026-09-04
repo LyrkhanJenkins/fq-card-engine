@@ -116,12 +116,14 @@ Hooks.on("dnd5e.preUseActivity", (activity, _usageConfig, _dialogConfig, _messag
     // Use on yourself
     if (!Constants.myTargets()?.length && minRange === 0) {
         consumeUnlessRolled(activity);
+        TargetingPredicates.rememberTargetsFor(activity);
         return true;
     }
 
     const {verdict, outOfReach} = ResourceHandler.evaluateTargeting(activity.actor, itemNbTargets, minRange, maxRange);
     if (verdict === ResourceHandler.TARGETING_VERDICT.OK) {
         consumeUnlessRolled(activity);
+        TargetingPredicates.rememberTargetsFor(activity);
         return true;
     }
     ResourceHandler.warnTargeting(activity.actor, {verdict, nbTargets: itemNbTargets, minReach: minRange, maxReach: maxRange, outOfReach});
@@ -170,6 +172,14 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     let cardContent = {heal: 0, damage: 0, minReach, maxReach, bonusCrit: 0, bonusEva: 0};
     if (opportunityTarget) {
         cardContent.forcedTargets = [opportunityTarget];
+    } else {
+        // Sélection figée à l'usage (voir `TargetingPredicates#targetsByActivity`).
+        // Une sélection vide n'est pas imposée : la résolution garde alors son
+        // chemin normal, dont l'auto-ciblage d'un sort sans portée.
+        const remembered = TargetingPredicates.consumeTargetsFor(subject);
+        if (remembered?.length) {
+            cardContent.forcedTargets = remembered;
+        }
     }
     const dsnAnimations = [];
     for (let roll of rolls) {

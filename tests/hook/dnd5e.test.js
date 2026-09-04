@@ -330,6 +330,40 @@ describe("integration/dnd5e", () => {
             expect(ResourceHandler.consumeResources).toHaveBeenCalledWith(fq, actor);
         });
 
+        it("la résolution frappe les cibles de l'usage, pas celles que la sélection est devenue depuis", async () => {
+            const preUse = getHook("dnd5e.preUseActivity");
+            const rollDamage = getHook("dnd5e.rollDamageV2");
+            game.system = {grid: {distance: 5}};
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
+                verdict: ResourceHandler.TARGETING_VERDICT.OK, targets: [], outOfReach: []});
+            vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
+            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
+
+            const ennemi = {id: "token-lyrkhan"};
+            const alliee = {id: "token-momie-alliee"};
+            const selection = new Set([ennemi]);
+            vi.spyOn(Constants, "myTargets").mockImplementation(() => [...selection]);
+            vi.spyOn(Constants, "currentTargets", "get").mockImplementation(() => [...selection]);
+
+            const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
+            const item = {actor, system: {fq: {action: -1}}};
+            const subject = {item, actor, type: "attack", range: {value: 0, reach: 5}, target: {}};
+
+            preUse(subject, {}, {}, {});
+            // Les dés roulent ; la sélection du MJ est rendue entre-temps et
+            // désigne maintenant une alliée. C'est la course exacte relevée en jeu.
+            selection.clear();
+            selection.add(alliee);
+
+            await rollDamage([{formula: "2d6", total: 7, options: {type: "slashing"}}], {subject});
+
+            expect(Damage.addCriticalEvasionToDamage).toHaveBeenCalledWith(
+                actor, expect.any(Number), expect.objectContaining({forcedTargets: [ennemi]}), expect.any(Array));
+        });
+
         it("attaque d'opportunité : FX joués depuis le token réactant, vers la cible imposée", async () => {
             // Deux jetons pour un même acteur (une horde) : la recherche par acteur
             // rendrait `token-1`, alors que c'est `token-2` qui a réagi.
