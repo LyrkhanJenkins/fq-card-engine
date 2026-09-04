@@ -330,6 +330,26 @@ describe("OpportunityAttack.onMoveToken", () => {
         expect(trigger).toHaveBeenCalledOnce();
     });
 
+    test("un mobile à terre ne provoque pas : traîner un corps hors d'une mêlée n'est pas une fuite", async () => {
+        const observer = makeToken({id: "obs", cx: 0, disposition: HOSTILE});
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY, hp: 0});
+        mockWorld([observer, mover]);
+
+        await OpportunityAttack.onMoveToken(mover, movementOf(at(1, 0), at(2, 0)));
+
+        expect(trigger).not.toHaveBeenCalled();
+    });
+
+    test("un mobile encore debout provoque toujours — la garde ne mute pas le cas normal", async () => {
+        const observer = makeToken({id: "obs", cx: 0, disposition: HOSTILE});
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY, hp: 1});
+        mockWorld([observer, mover]);
+
+        await OpportunityAttack.onMoveToken(mover, movementOf(at(1, 0), at(2, 0)));
+
+        expect(trigger).toHaveBeenCalledOnce();
+    });
+
     test("sur un client joueur, rien ne part — `moveToken` est diffusé partout", async () => {
         const {mover, movement} = scene({userId: "joueur", activeGM: GM_ID});
         await OpportunityAttack.onMoveToken(mover, movement);

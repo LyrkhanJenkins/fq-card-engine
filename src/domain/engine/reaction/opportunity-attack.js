@@ -368,6 +368,14 @@ export default class OpportunityAttack {
         if (!OpportunityAttack.isCombatant(mover, combat)) {
             return;
         }
+        // Un mobile à terre ne provoque pas : traîner un corps hors d'une mêlée
+        // n'est pas une fuite. Symétrique de la garde posée sur l'observateur
+        // dans `findProvokers`, et de même prédicat — la règle vaut pour un PNJ
+        // mort qu'on range comme pour un personnage inconscient qu'un allié tire
+        // hors de portée.
+        if (!OpportunityAttack.isStanding(mover)) {
+            return;
+        }
         const provoked = OpportunityAttack.findProvokers(movement, mover, combat);
         if (provoked.length === 0) {
             return;
