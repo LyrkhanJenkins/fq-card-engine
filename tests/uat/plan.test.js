@@ -163,6 +163,37 @@ describe("buildUatPlan — combat.order", () => {
     });
 });
 
+describe("buildUatPlan — combat.start", () => {
+    it("n'est pas demandé par défaut", () => {
+        const plan = build(2);
+        expect(plan.combat.start).toBe(false);
+        expect(plan.overrides.combat).toBe(false);
+    });
+
+    it("est demandé quand l'option combat est vraie", () => {
+        const plan = build(2, {combat: true});
+        expect(plan.combat.start).toBe(true);
+        expect(plan.overrides.combat).toBe(true);
+    });
+
+    it("ne consomme aucune étape d'aléatoire : le reste du plan est identique dans les deux cas", () => {
+        const withoutCombat = build(2, {allies: 2});
+        const withCombat = build(2, {allies: 2, combat: true});
+
+        expect(withCombat.combat.order).toEqual(withoutCombat.combat.order);
+        expect(withCombat.enemies).toEqual(withoutCombat.enemies);
+        expect(withCombat.allies).toEqual(withoutCombat.allies);
+        expect(withCombat.regions).toEqual(withoutCombat.regions);
+        expect(withCombat.hero).toEqual(withoutCombat.hero);
+    });
+
+    it("l'ordre d'initiative reste calculé même sans combat", () => {
+        const plan = build(2, {allies: 2, enemies: 3});
+        expect(plan.combat.start).toBe(false);
+        expect(plan.combat.order).toHaveLength(1 + plan.enemies.length + plan.allies.length);
+    });
+});
+
 describe("buildUatPlan — journal.regenerateCommand", () => {
     it("contient la graine et chaque surcharge effective", () => {
         const plan = build(4242, {class: "witch", level: 5, difficulty: "hard", placement: "line", allies: 1, regions: 2});
@@ -175,6 +206,12 @@ describe("buildUatPlan — journal.regenerateCommand", () => {
         expect(cmd).toContain("--placement=line");
         expect(cmd).toContain("--allies=1");
         expect(cmd).toContain("--regions=2");
+        expect(cmd).toContain("--combat=false");
+    });
+
+    it("rejoue le combat quand il a été demandé", () => {
+        const plan = build(4242, {class: "witch", level: 5, combat: true});
+        expect(plan.journal.regenerateCommand).toContain("--combat=true");
     });
 });
 

@@ -21,7 +21,7 @@ import {
  */
 
 const REPO_ROOT = process.cwd();
-const SEEDER_SRC = path.join(REPO_ROOT, "tests", "script", "uat-seeder.mjs");
+const WORLD_SCRIPTS = ["uat-seeder.mjs", "uat-random-deck.mjs"];
 
 let worldsDir;
 
@@ -36,7 +36,7 @@ describe("generateWorld", () => {
         expect(targetDir).toBe(path.join(path.resolve(worldsDir), "uat-4242"));
 
         const entries = await readdir(targetDir);
-        expect(entries).toEqual(expect.arrayContaining(["world.json", "uat-seed.json", "uat-seeder.mjs", "data"]));
+        expect(entries).toEqual(expect.arrayContaining(["world.json", "uat-seed.json", "data", ...WORLD_SCRIPTS]));
 
         const world = JSON.parse(await readFile(path.join(targetDir, "world.json"), "utf8"));
         expect(world.id).toBe("uat-4242");
@@ -60,12 +60,14 @@ describe("generateWorld", () => {
         await rm(worldsDir, {recursive: true, force: true});
     });
 
-    it("recopie tests/script/uat-seeder.mjs octet pour octet", async () => {
+    it("recopie chaque script versionné octet pour octet", async () => {
         const {targetDir} = await generateWorld({seed: 4242, "worlds-dir": worldsDir});
 
-        const original = await readFile(SEEDER_SRC);
-        const copy = await readFile(path.join(targetDir, "uat-seeder.mjs"));
-        expect(Buffer.compare(original, copy)).toBe(0);
+        for (const script of WORLD_SCRIPTS) {
+            const original = await readFile(path.join(REPO_ROOT, "tests", "script", script));
+            const copy = await readFile(path.join(targetDir, script));
+            expect(Buffer.compare(original, copy), `script altéré à la copie : ${script}`).toBe(0);
+        }
 
         await rm(worldsDir, {recursive: true, force: true});
     });
@@ -103,6 +105,20 @@ describe("generateWorld", () => {
         expect(plan.overrides.placement).toBe("melee");
         expect(plan.overrides.allies).toBe(1);
         expect(plan.overrides.regions).toBe(2);
+
+        await rm(worldsDir, {recursive: true, force: true});
+    });
+
+    it("ne demande pas le combat sans --combat, et le demande avec", async () => {
+        const args = {seed: 4242, class: "witch", level: 1, "worlds-dir": worldsDir, "dry-run": true};
+
+        const {plan} = await generateWorld(args);
+        expect(plan.combat.start).toBe(false);
+        expect(plan.overrides.combat).toBe(false);
+
+        const withCombat = await generateWorld({...args, combat: true});
+        expect(withCombat.plan.combat.start).toBe(true);
+        expect(withCombat.plan.overrides.combat).toBe(true);
 
         await rm(worldsDir, {recursive: true, force: true});
     });

@@ -68,8 +68,12 @@ export async function seedUatWorld({force = false} = {}) {
         step = "scène (regions, tokens)";
         const refs = await setupScene(scene, plan, heroActor, enemyActors, allyActors);
 
-        step = "combat";
-        await startSeedCombat(scene, plan, refs);
+        // Le plateau est posé, le combat ne l'est pas : sans `combat.start`, aucune
+        // rencontre ni combattant n'est créé et le MJ lance le combat lui-même.
+        if (plan.combat.start) {
+            step = "combat";
+            await startSeedCombat(scene, plan, refs);
+        }
 
         step = "jauges du héros";
         await fillHeroGauges(heroActor);
@@ -421,9 +425,10 @@ async function startSeedCombat(scene, plan, refs) {
  * (classe principale, classes secondaires, picks de stats). Le système recalcule
  * les MAXIMUMS au fil de ces ajouts mais laisse les valeurs courantes à ce qu'elles
  * valaient à l'import : le mana démarre donc en retard d'un ou plusieurs points sur
- * son maximum. Action et zèle sont déjà remis à plat par les hooks de combat du
- * moteur ; on les reprend ici pour que le plateau de départ ne dépende pas de
- * l'ordre d'exécution des hooks.
+ * son maximum. Action et zèle sont repris ici aussi : les hooks de combat du moteur
+ * les remettent à plat quand un combat démarre, mais un monde seedé sans combat
+ * n'en déclenche aucun — le plateau de départ ne doit dépendre ni de ces hooks ni
+ * de leur ordre d'exécution.
  *
  * @param {object} actor - L'acteur héros.
  *
@@ -522,10 +527,16 @@ function buildPlacementAndInitiativePageHtml(plan) {
         .map(entry => `<li>${describeCombatantRef(entry.ref, plan)} — initiative ${entry.initiative}</li>`)
         .join("");
 
+    const combatState = combat.start
+        ? "<p>Le combat est lancé : les combattants ci-dessous portent ces initiatives.</p>"
+        : "<p>Le combat n'est pas lancé : aucune rencontre n'a été créée. "
+            + "L'ordre ci-dessous est l'ordre d'initiative prévu par le plan, à appliquer "
+            + "si le combat est démarré à la main (régénérer avec --combat=true pour l'obtenir d'office).</p>";
+
     return `<h2>Placement</h2><p>Motif : ${placement.pattern}. `
         + `Aire jouable : colonnes ${area.col} à ${area.col + area.cols - 1}, `
         + `lignes ${area.row} à ${area.row + area.rows - 1}.</p>`
-        + `<h2>Ordre d'initiative</h2><ol>${orderHtml}</ol>`;
+        + `<h2>Ordre d'initiative</h2>${combatState}<ol>${orderHtml}</ol>`;
 }
 
 /**

@@ -31,8 +31,13 @@
                     <span class="fq-play-gauge-label fq-gauge-hp">❤</span>
                     <span class="fq-play-gauge-val">{{hpValue}}/{{hpMax}}</span>
                 </div>
-                {{#if outOfReach}}
-                    <span class="fq-play-target-oor-label">{{localize "FQCARDENGINE.TargetingPanelOutOfReach"}}</span>
+                {{!-- Distance et hors-portée sur une seule ligne : « 3 cases, hors de portée ». --}}
+                {{#if hasDist}}
+                    <span class="fq-play-target-reach">{{dist}} {{localize distUnitKey}}{{#if outOfReach}}, <span class="fq-play-target-oor-label">{{localize "FQCARDENGINE.TargetingPanelOutOfReach"}}</span>{{/if}}</span>
+                {{else}}
+                    {{#if outOfReach}}
+                        <span class="fq-play-target-oor-label">{{localize "FQCARDENGINE.TargetingPanelOutOfReach"}}</span>
+                    {{/if}}
                 {{/if}}
             </div>
         </div>

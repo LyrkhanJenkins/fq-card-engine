@@ -87,9 +87,9 @@ describe("template uat-base", () => {
         expect(player.character).toBeNull();
     });
 
-    it("pose la macro 'Seed UAT' en slot 1 de la hotbar du MJ", () => {
+    it("pose 'Seed UAT' en slot 1 et 'Deck aléatoire' en slot 2 de la hotbar du MJ", () => {
         const gm = users.find(u => u.role === 4);
-        expect(gm.hotbar).toEqual({"1": "uatSeedMacro0001"});
+        expect(gm.hotbar).toEqual({"1": "uatSeedMacro0001", "2": "uatDeckMacro0001"});
     });
 
     it("ne laisse au MJ aucun flag du module lié au monde source", () => {
@@ -144,18 +144,31 @@ describe("template uat-base", () => {
         expect(seedMacro.command).toContain("seedUatWorld");
     });
 
+    it("ajoute la macro 'Deck aléatoire' qui importe dynamiquement le script versionné", () => {
+        const deckMacro = macros.find(m => m.name === "Deck aléatoire");
+
+        expect(deckMacro).toBeDefined();
+        expect(deckMacro._id).toBe("uatDeckMacro0001");
+        expect(deckMacro.command).toContain("uat-random-deck.mjs");
+        expect(deckMacro.command).toContain("generateRandomDeck");
+    });
+
     it("force les réglages de jeu attendus dans un monde UAT", () => {
         // Un monde UAT doit exercer le moteur dans sa configuration de jeu réelle :
         // droits de cartes limités côté joueur, initiative jetée automatiquement, jet
         // d'attaque d'arme court-circuité, MJ soumis aux restrictions de déplacement,
         // et diagonales rectilinéaires (CONST.GRID_DIAGONALS.RECTILINEAR = 3), la règle
-        // de grille pour laquelle les portées des cartes sont conçues.
+        // de grille pour laquelle les portées des cartes sont conçues. L'IA de PNJ est
+        // allumée d'emblée et restreinte aux activités offensives : c'est le comportement
+        // qu'un monde UAT sert à exercer.
         const expected = {
             "fq-card-engine.PlayerLimitCardsRight": true,
             "fq-card-engine.RollInitiative": true,
             "fq-card-engine.BypassWeaponAttackRoll": true,
             "fq-restrain-movement.gmNotRestrained": false,
-            "core.gridDiagonals": 3
+            "core.gridDiagonals": 3,
+            "fq-npc-ai.enabled": true,
+            "fq-npc-ai.combatActivitiesOnly": true
         };
 
         for (const [key, value] of Object.entries(expected)) {
@@ -166,11 +179,22 @@ describe("template uat-base", () => {
         }
     });
 
-    it("active fq-card-engine dans le réglage core.moduleConfiguration", () => {
+    it("active fq-card-engine et fq-npc-ai dans le réglage core.moduleConfiguration", () => {
         const setting = settings.find(s => s.key === "core.moduleConfiguration");
 
         expect(setting).toBeDefined();
         const moduleConfiguration = JSON.parse(setting.value);
         expect(moduleConfiguration["fq-card-engine"]).toBe(true);
+        expect(moduleConfiguration["fq-npc-ai"]).toBe(true);
+    });
+
+    it("conserve les modules déjà actifs du monde source en activant fq-npc-ai", () => {
+        const setting = settings.find(s => s.key === "core.moduleConfiguration");
+        const moduleConfiguration = JSON.parse(setting.value);
+
+        // La fusion ne doit rien perdre : les dépendances du moteur restent actives.
+        for (const moduleId of ["dae", "lib-wrapper", "socketlib", "sequencer", "fq-restrain-movement"]) {
+            expect(moduleConfiguration[moduleId], `module désactivé : ${moduleId}`).toBe(true);
+        }
     });
 });

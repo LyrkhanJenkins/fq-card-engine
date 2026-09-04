@@ -690,6 +690,15 @@
     letter-spacing: 0.05em;
 }
 
+/* Ligne « 3 cases, hors de portée » : même graisse que la mention hors-portée,
+   qui garde seule sa couleur d'alerte à l'intérieur. */
+.fq-play-target-reach {
+    font-size: 13px;
+    font-style: italic;
+    color: rgba(var(--fq-white-rgb), 0.5);
+    letter-spacing: 0.05em;
+}
+
 /* Trop de cibles sélectionnées : le compteur (panneau + barre flottante) passe
    au rouge */
 .fq-play-targets-counter.fq-play-target--oor,

@@ -2,6 +2,7 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
+- Le scintillement des dégâts rend des fois le token invisible
 - No spellbook après montée jusqu'au niveau 4
 - Frappe arcanique cassé?
 - Bug avec le squelette géant
@@ -26,6 +27,7 @@ Je l'ai donc rendu comme carte passive gratuite, rejouable une fois par round : 
 
 ### Versions prévues
 #### 3.0.0
+- Lancer les dé auto save et passe son tour throw par un module ou par le module ET supprimer les minions qui sont mort?
 - 2 Cartes neutres à faire : le dash, et une carte inné qui permet de piocher n'improte quel carte dans le deck? (ne défausse pas une carte inné hors combat?)
 - A relire et caractériser :
   Ajout de cartes par classes pour caractérisation (+ de réactif et de passif?) (Des cartes de bases ne sont pas forcément passive)

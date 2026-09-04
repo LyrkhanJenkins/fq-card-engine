@@ -3,6 +3,7 @@ import TargetingPredicates from "../../engine/shared/targeting-predicates.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import Constants from "../../constants.js";
 import RollService from "../../engine/roll/roll-service.js";
+import Geometry from "../../engine/shared/geometry.js";
 
 /**
  * View-model d'affichage du ciblage pour la "dialog-play" .
@@ -52,9 +53,13 @@ export default class TargetingView {
             }
         }
 
+        // La distance est mesurée pour TOUTE cible, hors de portée ou non : le joueur
+        // doit pouvoir juger d'un coup d'œil de ce qui le sépare de sa cible avant de
+        // jouer la carte, et pas seulement constater qu'elle est trop loin.
         const targets = tokens.map(t => {
             const hpValue = t.actor?.system?.attributes?.hp?.value ?? 0;
             const hpMax = t.actor?.system?.attributes?.hp?.max ?? 1;
+            const dist = casterToken ? Geometry.distanceBetweenTokens(casterToken, t) : null;
             return {
                 name: t.name,
                 img: t.document?.texture?.src,
@@ -62,7 +67,11 @@ export default class TargetingView {
                 hpMax,
                 hpPct: Math.round((hpValue / hpMax) * 100),
                 outOfReach: outOfReachByToken.has(t),
-                dist: outOfReachByToken.get(t) ?? null,
+                dist,
+                hasDist: dist !== null,
+                distUnitKey: dist > 1
+                    ? "FQCARDENGINE.TargetingPanelSquares"
+                    : "FQCARDENGINE.TargetingPanelSquare",
             };
         });
 

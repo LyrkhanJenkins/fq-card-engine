@@ -81,6 +81,8 @@
   "FQCARDENGINE.TargetingPanelTitle": "Targets",
   "FQCARDENGINE.TargetingPanelCounterLabel": "Targets:",
   "FQCARDENGINE.TargetingPanelOutOfReach": "out of reach",
+  "FQCARDENGINE.TargetingPanelSquare": "square",
+  "FQCARDENGINE.TargetingPanelSquares": "squares",
   "FQCARDENGINE.TargetingPanelTargetButton": "Target",
   "FQCARDENGINE.TargetingPanelTargetHint": "Click the tokens to target on the scene, then \"Done\".",
   "FQCARDENGINE.TargetingPanelInProgress": "Targeting…",

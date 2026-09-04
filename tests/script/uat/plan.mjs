@@ -21,7 +21,7 @@ import {createRng} from "./rng.mjs";
  * l'appelant — typiquement `generate-world.mjs`).
  */
 
-export const PLAN_VERSION = 3;
+export const PLAN_VERSION = 4;
 
 /**
  * Identifiant constant de l'outil, écrit dans `plan.generator.tool`. C'est le
@@ -296,6 +296,7 @@ function resolveEnemies({options, level, difficulty, monsterIndex, rng}) {
  * @param {string} [params.options.placement]    - Un motif de `PLACEMENT_PATTERNS`.
  * @param {number} [params.options.allies]       - Le nombre d'alliés (0+).
  * @param {number} [params.options.regions]      - Le nombre de regions (0+).
+ * @param {boolean} [params.options.combat]      - Préparer et lancer le combat (défaut : non).
  * @param {object} params.catalog                - Le catalogue rendu par `loadClassCatalog`.
  * @param {object} params.monsterIndex           - L'index rendu par `loadMonsterIndex`.
  * @param {Array<{name: string, uuid: string, width: number, height: number}>} [params.minions] - Rendu par `loadMinions`.
@@ -401,6 +402,9 @@ export function buildUatPlan({seed, options = {}, catalog, monsterIndex, minions
     placeEncounter({pattern, hero: heroFootprint, enemies, allies, rng, area: ARENA_AREA});
 
     // --- Initiatives ---------------------------------------------------------
+    // Les initiatives sont tirées même quand le combat n'est pas lancé : le tirage
+    // reste identique d'un monde à l'autre à graine égale (le flux de l'aléatoire ne
+    // dépend d'aucune surcharge booléenne), et l'ordre calculé sert au Journal.
     const heroInitiative = rng.int(1, 20);
     for (const enemy of enemies) enemy.initiative = rng.int(1, 20);
     for (const ally of allies) ally.initiative = rng.int(1, 20);
@@ -414,6 +418,11 @@ export function buildUatPlan({seed, options = {}, catalog, monsterIndex, minions
         ...allies.map((ally, index) => ({ref: `ally:${index}`, initiative: ally.initiative}))
     ];
     const order = combatants.slice().sort((a, b) => b.initiative - a.initiative);
+
+    // Aucun combat par défaut : un monde généré doit s'ouvrir sur un plateau posé, pas
+    // sur un tour déjà engagé — le MJ décide lui-même quand lancer le combat. Le seeder
+    // ne crée ni rencontre ni combattant tant que --combat n'est pas demandé.
+    const startCombat = options.combat === true;
 
     // --- Héros (assemblage final) ----------------------------------------------
     const mainSlug = classEntries[0].slug;
@@ -450,7 +459,8 @@ export function buildUatPlan({seed, options = {}, catalog, monsterIndex, minions
         difficulty,
         placement: pattern,
         allies: allies.length,
-        regions: regions.length
+        regions: regions.length,
+        combat: startCombat
     };
 
     // --- Journal -------------------------------------------------------------
@@ -458,7 +468,7 @@ export function buildUatPlan({seed, options = {}, catalog, monsterIndex, minions
     const regenerateCommand = "npm run testWorld:random -- "
         + `--seed=${seed} --class=${overrides.class} --level=${overrides.level} --enemies=${enemiesArg} `
         + `--difficulty=${overrides.difficulty} --placement=${overrides.placement} `
-        + `--allies=${overrides.allies} --regions=${overrides.regions}`;
+        + `--allies=${overrides.allies} --regions=${overrides.regions} --combat=${overrides.combat}`;
 
     const classSummary = classEntries.map(entry => `${catalog[entry.slug].className} niv.${entry.level}`).join(" / ");
     const journal = {
@@ -485,7 +495,7 @@ export function buildUatPlan({seed, options = {}, catalog, monsterIndex, minions
         enemies,
         allies,
         regions,
-        combat: {round: 1, turn: 0, order},
+        combat: {start: startCombat, round: 1, turn: 0, order},
         placement: {pattern, area: ARENA_AREA},
         journal
     };

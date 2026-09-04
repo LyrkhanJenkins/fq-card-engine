@@ -22,9 +22,20 @@ const FORCE = process.argv.includes("--force");
 const GM_USER_ID = "uUbINdqSmS5ll9IK";
 const PLAYER_USER_ID = "uatPlayerUser001";
 const SEED_MACRO_ID = "uatSeedMacro0001";
+const DECK_MACRO_ID = "uatDeckMacro0001";
 const MODULE_ID = "fq-card-engine";
 const ARENA_SCENE_ID = "Pl5kNER7PeAwjkHI";
 const UNUSED_ARENA_IMAGE = "ancienne_arene_semoutiene.png";
+
+// Modules absents du monde source mais que tout monde UAT doit charger. Ils sont
+// FUSIONNÉS dans le core.moduleConfiguration existant, jamais substitués à lui : la
+// liste des modules déjà actifs dans le monde source fait foi, on ne fait qu'y ajouter.
+const FORCED_ACTIVE_MODULES = ["fq-npc-ai"];
+
+// Id figé du réglage core.moduleConfiguration créé de toutes pièces si le monde source
+// n'en portait aucun — cas théorique, mais échouer silencieusement produirait un
+// template où les modules forcés ci-dessus ne seraient pas chargés.
+const MODULE_CONFIGURATION_ID = "fqUatModules0001";
 
 // Réglages de portée monde forcés dans tout monde UAT : les mondes générés doivent
 // tester le moteur dans sa configuration de jeu réelle. Les réglages d'autres modules
@@ -44,7 +55,15 @@ const FORCED_SETTINGS = [
     // Attaques d'opportunité : éteintes à l'installation, parce qu'elles changent les
     // règles de combat d'un monde existant et doivent rester un choix explicite du MJ.
     // Un monde UAT sert précisément à les exercer.
-    {module: MODULE_ID, key: "OpportunityAttack", value: true, id: "fqUatSetting0006"}
+    {module: MODULE_ID, key: "OpportunityAttack", value: true, id: "fqUatSetting0006"},
+    // Bascule « activer l'IA » de fq-npc-ai : éteinte à l'installation, alors qu'un monde
+    // UAT sert justement à faire jouer les PNJ. Le bouton des contrôles de scène reste le
+    // levier normal du MJ ; ce réglage n'en fixe que l'état de départ.
+    {module: "fq-npc-ai", key: "enabled", value: true, id: "fqUatSetting0007"},
+    // PNJ restreints aux seules activités offensives : c'est le comportement que l'UAT
+    // doit exercer, et il rend les tours de PNJ lisibles — un PNJ qui lance une entrave
+    // ou un utilitaire brouille la lecture de ce qu'on cherche à valider.
+    {module: "fq-npc-ai", key: "combatActivitiesOnly", value: true, id: "fqUatSetting0008"}
 ];
 
 // Horodatage figé pour que le template one-shot reste reproductible à l'octet
@@ -147,7 +166,7 @@ async function transformUsers() {
             const doc = await readJson(file);
             if (doc._id === GM_USER_ID) {
                 doc.character = null;
-                doc.hotbar = {"1": SEED_MACRO_ID};
+                doc.hotbar = {"1": SEED_MACRO_ID, "2": DECK_MACRO_ID};
                 // Les flags du module lient chaque barre de main du MJ à un couple
                 // (user, jeu de cartes) du monde source. Ces ids n'existent pas dans un
                 // monde généré : les conserver laisse le conteneur de main pré-câblé sur
@@ -254,9 +273,45 @@ async function transformSettings() {
             });
         }
 
+        await activateForcedModules(tmpDir, docsByKey);
+
         await compilePack(tmpDir, dbPath, {recursive: true, log: false});
     });
     console.info(`Réglages forcés : ${FORCED_SETTINGS.map(s => `${s.module}.${s.key}=${s.value}`).join(", ")}.`);
+    console.info(`Modules activés en plus de ceux du monde source : ${FORCED_ACTIVE_MODULES.join(", ")}.`);
+}
+
+/**
+ * Active `FORCED_ACTIVE_MODULES` dans le réglage `core.moduleConfiguration` extrait,
+ * en préservant l'état de tous les autres modules du monde source.
+ *
+ * @param {string} tmpDir - Le dossier d'extraction temporaire des réglages.
+ * @param {Map<string, {file: string, doc: object}>} docsByKey - Les réglages extraits, indexés par clé.
+ *
+ * @returns {Promise<void>}
+ */
+async function activateForcedModules(tmpDir, docsByKey) {
+    const existing = docsByKey.get("core.moduleConfiguration");
+    const configuration = existing ? JSON.parse(existing.doc.value) : {};
+
+    for (const moduleId of FORCED_ACTIVE_MODULES) {
+        configuration[moduleId] = true;
+    }
+
+    if (existing) {
+        existing.doc.value = JSON.stringify(configuration);
+        await writeJson(existing.file, existing.doc);
+        return;
+    }
+
+    await writeJson(path.join(tmpDir, `${MODULE_CONFIGURATION_ID}.json`), {
+        key: "core.moduleConfiguration",
+        user: null,
+        value: JSON.stringify(configuration),
+        _id: MODULE_CONFIGURATION_ID,
+        _stats: buildStats(),
+        _key: `!settings!${MODULE_CONFIGURATION_ID}`
+    });
 }
 
 async function transformMacros() {
@@ -266,34 +321,66 @@ async function transformMacros() {
         // Les 13 macros existantes sont recopiées telles quelles.
         await extractPack(dbPath, tmpDir, {collection, log: false});
 
-        const seedMacro = {
+        await writeJson(path.join(tmpDir, "seed-uat.json"), buildWorldScriptMacro({
+            id: SEED_MACRO_ID,
             name: "Seed UAT",
-            type: "script",
-            command: [
-                "try {",
-                "    const url = `/worlds/${game.world.id}/uat-seeder.mjs?t=${Date.now()}`;",
-                "    const module = await import(url);",
-                "    await module.seedUatWorld();",
-                "} catch (err) {",
-                "    ui.notifications.error(err.message);",
-                "}"
-            ].join("\n"),
             img: "icons/svg/dice-target.svg",
-            author: GM_USER_ID,
-            scope: "global",
-            folder: null,
-            ownership: {default: 0},
-            flags: {},
-            _stats: buildStats(),
-            _id: SEED_MACRO_ID,
-            sort: 0,
-            _key: `!macros!${SEED_MACRO_ID}`
-        };
-        await writeJson(path.join(tmpDir, "seed-uat.json"), seedMacro);
+            script: "uat-seeder.mjs",
+            entryPoint: "seedUatWorld"
+        }));
+
+        await writeJson(path.join(tmpDir, "random-deck.json"), buildWorldScriptMacro({
+            id: DECK_MACRO_ID,
+            name: "Deck aléatoire",
+            img: "icons/svg/card-hand.svg",
+            script: "uat-random-deck.mjs",
+            entryPoint: "generateRandomDeck"
+        }));
 
         await compilePack(tmpDir, dbPath, {recursive: true, log: false});
     });
-    console.info("Macro 'Seed UAT' ajoutée aux 13 macros existantes.");
+    console.info("Macros 'Seed UAT' et 'Deck aléatoire' ajoutées aux 13 macros existantes.");
+}
+
+/**
+ * Construit une macro de script qui importe dynamiquement un module ES déposé à
+ * la racine du monde par le générateur, et en appelle le point d'entrée. Le
+ * paramètre d'horodatage de l'URL contourne le cache du navigateur : sans lui,
+ * régénérer un monde ne suffirait pas à recharger un script corrigé.
+ *
+ * @param {object} params
+ * @param {string} params.id         - L'id figé de la macro.
+ * @param {string} params.name       - Le nom affiché dans la hotbar.
+ * @param {string} params.img        - L'icône de la macro.
+ * @param {string} params.script     - Le nom du fichier à la racine du monde.
+ * @param {string} params.entryPoint - La fonction exportée à appeler.
+ *
+ * @returns {object} Le document de macro, prêt pour `compilePack`.
+ */
+function buildWorldScriptMacro({id, name, img, script, entryPoint}) {
+    return {
+        name,
+        type: "script",
+        command: [
+            "try {",
+            `    const url = \`/worlds/\${game.world.id}/${script}?t=\${Date.now()}\`;`,
+            "    const module = await import(url);",
+            `    await module.${entryPoint}();`,
+            "} catch (err) {",
+            "    ui.notifications.error(err.message);",
+            "}"
+        ].join("\n"),
+        img,
+        author: GM_USER_ID,
+        scope: "global",
+        folder: null,
+        ownership: {default: 0},
+        flags: {},
+        _stats: buildStats(),
+        _id: id,
+        sort: 0,
+        _key: `!macros!${id}`
+    };
 }
 
 async function patchWorldJson() {

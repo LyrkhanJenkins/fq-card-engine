@@ -81,6 +81,8 @@
   "FQCARDENGINE.TargetingPanelTitle": "Cibles",
   "FQCARDENGINE.TargetingPanelCounterLabel": "Cibles :",
   "FQCARDENGINE.TargetingPanelOutOfReach": "hors de portée",
+  "FQCARDENGINE.TargetingPanelSquare": "case",
+  "FQCARDENGINE.TargetingPanelSquares": "cases",
   "FQCARDENGINE.TargetingPanelTargetButton": "Cibler",
   "FQCARDENGINE.TargetingPanelTargetHint": "Cliquez les tokens à cibler sur la scène, puis « Terminé ».",
   "FQCARDENGINE.TargetingPanelInProgress": "Ciblage…",

@@ -10,8 +10,8 @@ import {loadMonsterIndex} from "./uat/monsters.mjs";
 
 /**
  * Générateur de mondes UAT (D-01) : ne fait QUE du système de fichiers — copier
- * le template committé, patcher world.json, écrire le plan et recopier le
- * seeder versionné. Aucune base LevelDB n'est ouverte, ce qui rend l'outil
+ * le template committé, patcher world.json, écrire le plan et recopier les
+ * scripts versionnés. Aucune base LevelDB n'est ouverte, ce qui rend l'outil
  * utilisable Foundry ouvert (contrairement à build-uat-base.mjs).
  *
  * Version complète (plan 19-03) : tous les axes de randomisation sont
@@ -22,7 +22,10 @@ import {loadMonsterIndex} from "./uat/monsters.mjs";
 
 const MODULE_DIR = process.cwd();
 const TEMPLATE_DIR = path.join(MODULE_DIR, "tests", "script", "uat-base");
-const SEEDER_SRC = path.join(MODULE_DIR, "tests", "script", "uat-seeder.mjs");
+// Scripts versionnés recopiés à la racine de chaque monde généré : les macros du
+// template les importent par `/worlds/<monde>/<fichier>`, ils doivent donc y être.
+const WORLD_SCRIPTS = ["uat-seeder.mjs", "uat-random-deck.mjs"];
+const SCRIPTS_DIR = path.join(MODULE_DIR, "tests", "script");
 const DEFAULT_WORLDS_DIR = path.join(MODULE_DIR, "..", "..", "worlds");
 const INSTALLED_SYSTEM_MANIFEST = path.join(MODULE_DIR, "..", "..", "systems", "dnd5e", "system.json");
 
@@ -155,6 +158,7 @@ function buildCli(argv) {
         .option("placement", {type: "string", describe: "packed | scattered | line | melee"})
         .option("allies", {type: "number", describe: "Nombre d'alliés (défaut 0)"})
         .option("regions", {type: "number", describe: "Nombre de regions"})
+        .option("combat", {type: "boolean", default: false, describe: "Prépare et lance le combat au seed (défaut : non)"})
         .option("name", {type: "string", describe: "Nom du monde (défaut uat-<graine>)"})
         .option("worlds-dir", {type: "string", describe: "Dossier worlds cible (défaut le DataPath)"})
         .option("dry-run", {type: "boolean", default: false, describe: "Construit et affiche le plan sans rien écrire"})
@@ -184,7 +188,7 @@ function randomSeed() {
 
 /**
  * Génère un monde UAT complet : copie du template, plan écrit dans
- * `uat-seed.json`, seeder versionné recopié. N'ouvre aucune base LevelDB
+ * `uat-seed.json`, scripts versionnés recopiés. N'ouvre aucune base LevelDB
  * (D-01) : uniquement du système de fichiers et du JSON.
  *
  * @param {object} options                    - Options reconnues (voir `parseArgs`).
@@ -196,6 +200,7 @@ function randomSeed() {
  * @param {string} [options.placement]
  * @param {number} [options.allies]
  * @param {number} [options.regions]
+ * @param {boolean} [options.combat]           - Prépare et lance le combat au seed (défaut : non).
  * @param {string} [options.name]              - Le nom du monde (défaut `uat-<seed>`).
  * @param {string} [options["worlds-dir"]]     - Le dossier `worlds` cible (défaut le DataPath).
  * @param {boolean} [options["dry-run"]]       - Si vrai, construit et affiche le plan sans rien écrire.
@@ -232,7 +237,8 @@ export async function generateWorld(options = {}) {
         difficulty: options.difficulty,
         placement: options.placement,
         allies: options.allies !== undefined ? Number(options.allies) : undefined,
-        regions: options.regions !== undefined ? Number(options.regions) : undefined
+        regions: options.regions !== undefined ? Number(options.regions) : undefined,
+        combat: options.combat === true ? true : undefined
     };
     for (const key of Object.keys(planOptions)) {
         if (planOptions[key] === undefined) delete planOptions[key];
@@ -273,7 +279,9 @@ export async function generateWorld(options = {}) {
     // uat-seed.json est écrit AVANT le seeder : c'est le marqueur qui identifie un
     // monde produit par l'outil (isToolGeneratedWorld, réutilisé par clean-worlds.mjs).
     await writeFile(path.join(targetDir, "uat-seed.json"), `${JSON.stringify(plan, null, 2)}\n`);
-    await cp(SEEDER_SRC, path.join(targetDir, "uat-seeder.mjs"));
+    for (const script of WORLD_SCRIPTS) {
+        await cp(path.join(SCRIPTS_DIR, script), path.join(targetDir, script));
+    }
 
     console.info(`Monde UAT généré: ${targetDir}`);
     console.info(plan.journal.regenerateCommand);

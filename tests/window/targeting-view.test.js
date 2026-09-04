@@ -96,6 +96,21 @@ describe("TargetingView.build — hors-portée / PV", () => {
         expect(view.targets[0].outOfReach).toBe(false);
     });
 
+    test("cible à portée → distance mesurée quand même, unité au singulier", () => {
+        mountDeterministic();
+        const view = TargetingView.build(makeChoice({targetType: "Default", maxReach: "3"}));
+        expect(view.targets[0].dist).toBe(1);
+        expect(view.targets[0].hasDist).toBe(true);
+        expect(view.targets[0].distUnitKey).toBe("FQCARDENGINE.TargetingPanelSquare");
+    });
+
+    test("distance supérieure à une case → unité au pluriel", () => {
+        mountDeterministic({user: {targets: [{name: "Lointaine", document: {x: 15, y: 5, width: 1, height: 1}}]}});
+        const view = TargetingView.build(makeChoice({targetType: "Default", maxReach: "3"}));
+        expect(view.targets[0].dist).toBe(2);
+        expect(view.targets[0].distUnitKey).toBe("FQCARDENGINE.TargetingPanelSquares");
+    });
+
     test("cible hors portée → outOfReach true + dist numérique", () => {
         mountDeterministic();
         const view = TargetingView.build(makeChoice({targetType: "Default", maxReach: "0"}));
