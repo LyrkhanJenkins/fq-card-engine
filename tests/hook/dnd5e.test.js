@@ -118,6 +118,43 @@ describe("integration/dnd5e", () => {
             expect(result).toBe(true);
         });
 
+        it("le bonus de portée de l'acteur qui agit étend la portée maximale, jamais la minimale", () => {
+            const hook = getHook("dnd5e.preUseActivity");
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "t1"}]);
+            vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
+                verdict: ResourceHandler.TARGETING_VERDICT.OK, targets: [{id: "t1"}], outOfReach: []});
+            const actor = {system: {fq: {bonus: {range: 2}}}};
+            const activity = {
+                actor, item: {system: {fq: {}}}, type: "attack",
+                range: {value: 10, reach: 0}, target: {}
+            };
+
+            hook(activity, {}, {}, {});
+
+            // Sans bonus : min 1, max 2. Le bonus de deux cases porte le max à 4
+            // et laisse le min intact — un coup pré-validé grâce au bonus était
+            // sinon refusé par cette garde, ce qui termine le tour d'un PNJ.
+            expect(ResourceHandler.evaluateTargeting).toHaveBeenCalledWith(actor, 1, 1, 4);
+        });
+
+        it("le bonus lu est celui de l'acteur qui agit, pas celui du personnage de l'utilisateur", () => {
+            const hook = getHook("dnd5e.preUseActivity");
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "t1"}]);
+            vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
+                verdict: ResourceHandler.TARGETING_VERDICT.OK, targets: [{id: "t1"}], outOfReach: []});
+            // Le personnage de l'utilisateur a un gros bonus ; le PNJ qui agit,
+            // aucun. Lire le premier donnerait au PNJ une portée qu'il n'a pas.
+            vi.spyOn(Constants, "rangeBonus", "get").mockReturnValue(9);
+            const actor = {system: {fq: {bonus: {range: 0}}}};
+            const activity = {actor, item: {system: {fq: {}}}, type: "attack", range: {value: 10, reach: 0}, target: {}};
+
+            hook(activity, {}, {}, {});
+
+            expect(ResourceHandler.evaluateTargeting).toHaveBeenCalledWith(actor, 1, 1, 2);
+        });
+
         it("délègue à evaluateTargeting : verdict non-OK → avertit (warnTargeting) et retourne false", () => {
             const hook = getHook("dnd5e.preUseActivity");
             vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);

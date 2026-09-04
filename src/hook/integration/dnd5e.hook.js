@@ -73,11 +73,17 @@ const consumeUnlessRolled = (activity) => {
  *
  * @returns {{minReach: number, maxReach: number}} Les portées en cases.
  */
-const activityReachInCases = (range) => {
+const activityReachInCases = (range, actor) => {
     const squareDistance = game.system.grid.distance;
+    // Bonus de portée de l'ACTEUR QUI AGIT, jamais `Constants.rangeBonus` :
+    // celui-ci lit le personnage de l'utilisateur courant, ce qui donnerait à
+    // un PNJ joué par le MJ le bonus du personnage du MJ. Le bonus s'exprime en
+    // cases et ne s'ajoute qu'à la portée MAXIMALE, comme partout ailleurs.
+    const rawBonus = Number(actor?.system?.fq?.bonus?.range ?? 0);
+    const bonus = Number.isFinite(rawBonus) ? rawBonus : 0;
     return {
         minReach: Math.trunc((range.value ? squareDistance : range.reach) ?? 0) / squareDistance,
-        maxReach: Math.trunc((range.value ?? range.reach) ?? 0) / squareDistance
+        maxReach: (Math.trunc((range.value ?? range.reach) ?? 0) / squareDistance) + bonus
     };
 };
 
@@ -111,7 +117,7 @@ Hooks.on("dnd5e.preUseActivity", (activity, _usageConfig, _dialogConfig, _messag
     if (!ResourceHandler.checkResources(activity.item.system?.fq, activity.actor)) {
         return false;
     }
-    const {minReach: minRange, maxReach: maxRange} = activityReachInCases(activity.range);
+    const {minReach: minRange, maxReach: maxRange} = activityReachInCases(activity.range, activity.actor);
     const itemNbTargets = ResourceHandler.determineNbTargets(activity.target);
     // Use on yourself
     if (!Constants.myTargets()?.length && minRange === 0) {
@@ -158,7 +164,7 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     const opportunity = OpportunityAttack.consumeContextFor(subject);
     const opportunityTarget = opportunity?.target ?? null;
     const item = subject.item;
-    const {minReach, maxReach} = activityReachInCases(subject.range);
+    const {minReach, maxReach} = activityReachInCases(subject.range, subject.actor);
 
     const token = opportunity?.source ?? Constants.actorToken(subject.actor.id);
     if (!subject.item) {
