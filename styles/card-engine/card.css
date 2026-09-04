@@ -28,6 +28,9 @@
     background: none !important;
     box-shadow: none !important;
     padding-left: calc(28px * var(--fq-scale));
+
+    /* Le glissement horizontal est animé image par image (board-layout.js) */
+    will-change: transform;
 }
 
 /* ============================================================
@@ -44,11 +47,13 @@
     cursor: pointer;
     position: relative;
     filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85));
-    z-index: 10;
+    /* Rang d'empilement posé par applyFan : croissant de gauche à droite. */
+    z-index: var(--fan-z, 10);
     margin-left: calc(-1 * var(--fq-card-w) * var(--fq-scale) * 0.24);
 
     transform-origin: bottom center;
     will-change: transform;
+    transition: transform 0.28s cubic-bezier(0.22, 0.68, 0, 1.25);
 
     /* Annule les anciens background directs sur la carte */
     background-size: 0 !important;
@@ -80,6 +85,24 @@
     transform: rotate(0deg) translateY(-28px) scale(1.25) !important;
     z-index: 100;
     filter: drop-shadow(0 0 8px rgba(var(--fq-gold-rgb), 0.5)) drop-shadow(0 6px 16px rgba(var(--fq-black-rgb), 0.95)) !important;
+}
+
+/* La carte pointée passe devant toutes les autres, celles de droite comprises :
+   le z-index de .fq-card-inner reste prisonnier du contexte d'empilement de la
+   carte, il faut donc remonter la carte elle-même. */
+.fq-card:hover,
+.fq-card-engine-card:hover {
+    z-index: 500;
+}
+
+/* Dans la main, les deux voisines immédiates s'écartent pour dégager la carte
+   pointée. Limité à .fq-card-zone : les cartes du grimoire ne se recouvrent pas. */
+.fq-card-zone .fq-card:hover + .fq-card .fq-card-inner {
+    transform: translateX(9px);
+}
+
+.fq-card-zone .fq-card:has(+ .fq-card:hover) .fq-card-inner {
+    transform: translateX(-9px);
 }
 
 /* Le tooltip suit l'inner */

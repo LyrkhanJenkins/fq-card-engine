@@ -157,6 +157,84 @@ describe("integration/dnd5e", () => {
             expect(result).toBe(true);
             expect(warnSpy).not.toHaveBeenCalled();
         });
+
+        it("consomme le coût FQ d'une activité hors soin/attaque/dégâts, qu'aucun jet ne viendrait facturer", () => {
+            const hook = getHook("dnd5e.preUseActivity");
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "t1"}]);
+            vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
+                verdict: ResourceHandler.TARGETING_VERDICT.OK, targets: [{id: "t1"}], outOfReach: []
+            });
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            const fq = {action: -3};
+            const activity = {
+                actor: {}, item: {system: {fq}}, type: "utility",
+                range: {value: 10, reach: 0}, target: {}
+            };
+
+            const result = hook(activity, {}, {}, {});
+
+            expect(result).toBe(true);
+            expect(ResourceHandler.consumeResources).toHaveBeenCalledWith(fq, activity.actor);
+        });
+
+        it("consomme aussi sur le chemin d'auto-cible", () => {
+            const hook = getHook("dnd5e.preUseActivity");
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(Constants, "myTargets").mockReturnValue([]);
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            const fq = {mana: -2};
+            const activity = {
+                actor: {}, item: {system: {fq}}, type: "utility",
+                range: {value: 0, reach: 0}, target: {}
+            };
+
+            const result = hook(activity, {}, {}, {});
+
+            expect(result).toBe(true);
+            expect(ResourceHandler.consumeResources).toHaveBeenCalledWith(fq, activity.actor);
+        });
+
+        it("ne consomme PAS un soin, une attaque ou des dégâts : leur coût reste prélevé après le jet de dés", () => {
+            const hook = getHook("dnd5e.preUseActivity");
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "t1"}]);
+            vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
+                verdict: ResourceHandler.TARGETING_VERDICT.OK, targets: [{id: "t1"}], outOfReach: []
+            });
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+
+            for (const type of ["heal", "attack", "damage"]) {
+                const activity = {
+                    actor: {}, item: {system: {fq: {action: -3}}}, type,
+                    range: {value: 10, reach: 0}, target: {}
+                };
+
+                expect(hook(activity, {}, {}, {})).toBe(true);
+            }
+
+            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
+        });
+
+        it("ne consomme rien quand le ciblage est refusé : une activité écartée ne coûte pas", () => {
+            const hook = getHook("dnd5e.preUseActivity");
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "t1"}]);
+            vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
+                verdict: ResourceHandler.TARGETING_VERDICT.OUT_OF_REACH, targets: [], outOfReach: []
+            });
+            vi.spyOn(ResourceHandler, "warnTargeting").mockImplementation(() => {});
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            const activity = {
+                actor: {}, item: {system: {fq: {action: -3}}}, type: "utility",
+                range: {value: 10, reach: 0}, target: {}
+            };
+
+            const result = hook(activity, {}, {}, {});
+
+            expect(result).toBe(false);
+            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
+        });
     });
 
     describe("dnd5e.rollDamageV2", () => {

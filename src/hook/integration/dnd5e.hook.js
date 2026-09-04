@@ -9,6 +9,24 @@ import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../domain/trading/trad
 import SpellbookWindow from "../../domain/interface/window/spellbook-window.js";
 
 /**
+ * Types d'activité dont le coût FQ est prélevé au JET DE DÉS (`rollDamageV2`),
+ * et non à l'usage.
+ *
+ * La distinction est délibérée : pour un soin, une attaque ou des dégâts, le
+ * coût ne doit être payé qu'une fois tous les dés lancés — un usage abandonné en
+ * cours de résolution ne coûte rien. Les autres types d'activité n'atteignent
+ * jamais `rollDamageV2` : sans prélèvement à l'usage, leur coût ne serait jamais
+ * payé et l'activité resterait indéfiniment jouable.
+ *
+ * Liste unique, partagée par les deux points de prélèvement : deux listes
+ * jumelles finiraient par diverger, et la divergence se paierait en ressources
+ * prélevées deux fois ou jamais.
+ *
+ * @type {string[]}
+ */
+const ROLL_CONSUMING_TYPES = Object.freeze(["heal", "attack", "damage"]);
+
+/**
  * Indique si la logique FQ ne doit PAS s'appliquer à une activité dnd5e donnée :
  * c'est le cas lorsqu'il n'y a pas d'acteur et que l'activité n'est ni un soin,
  * ni une attaque, ni des dégâts.
@@ -18,9 +36,28 @@ import SpellbookWindow from "../../domain/interface/window/spellbook-window.js";
  * @returns {boolean|undefined} True si la logique FQ doit être ignorée, undefined sinon.
  */
 const notApplyFQOnActivity = (activity) => {
-    if (!activity.actor && !["heal", "attack", "damage"].includes(activity.type)) {
+    if (!activity.actor && !ROLL_CONSUMING_TYPES.includes(activity.type)) {
         return true;
     }
+};
+
+/**
+ * Prélève le coût FQ d'une activité qu'aucun jet de dés ne viendra facturer.
+ *
+ * Appelée sur les seuls chemins d'APPROBATION du garde d'usage, jamais sur un
+ * refus : une activité écartée pour ciblage invalide ou ressources
+ * insuffisantes ne coûte rien. Les types de `ROLL_CONSUMING_TYPES` sont laissés
+ * à `rollDamageV2`, qui garde sa règle du prélèvement après les dés.
+ *
+ * @param {object} activity - L'activité dnd5e approuvée (`type`, `item`, `actor`).
+ *
+ * @returns {void}
+ */
+const consumeUnlessRolled = (activity) => {
+    if (ROLL_CONSUMING_TYPES.includes(activity.type)) {
+        return;
+    }
+    ResourceHandler.consumeResources(activity.item?.system?.fq, activity.actor);
 };
 
 /**
@@ -76,11 +113,13 @@ Hooks.on("dnd5e.preUseActivity", (activity, _usageConfig, _dialogConfig, _messag
     const itemNbTargets = ResourceHandler.determineNbTargets(activity.target);
     // Use on yourself
     if (!Constants.myTargets()?.length && minRange === 0) {
+        consumeUnlessRolled(activity);
         return true;
     }
 
     const {verdict, outOfReach} = ResourceHandler.evaluateTargeting(activity.actor, itemNbTargets, minRange, maxRange);
     if (verdict === ResourceHandler.TARGETING_VERDICT.OK) {
+        consumeUnlessRolled(activity);
         return true;
     }
     ResourceHandler.warnTargeting(activity.actor, {verdict, nbTargets: itemNbTargets, minReach: minRange, maxReach: maxRange, outOfReach});
@@ -122,7 +161,7 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
         return;
     }
 
-    if (!opportunityTarget && ["heal", "damage", "attack"].includes(subject.type)) {
+    if (!opportunityTarget && ROLL_CONSUMING_TYPES.includes(subject.type)) {
         ResourceHandler.consumeResources(item.system?.fq, subject.actor);
     }
     let resultArray = [];
