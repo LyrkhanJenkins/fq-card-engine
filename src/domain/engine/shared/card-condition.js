@@ -2,6 +2,7 @@ import Constants from "../../constants.js";
 import Geometry from "./geometry.js";
 import TargetingPredicates from "./targeting-predicates.js";
 import TradingCards from "../../trading/trading-cards.js";
+import WeaponDamage, {WEAPON_TOKENS} from "../roll/weapon-damage.js";
 
 /**
  * Conditions personnalisées des cartes : le moteur d'évaluation pur des
@@ -155,6 +156,28 @@ export default class CardCondition {
             return false;
         }
         return CardCondition.#logsThisRound().some(l => CardCondition.#damageEntriesOnToken(l, tokenId).length);
+    }
+
+    /**
+     * Somme des dégâts FQ effectifs encaissés par l'acteur pendant le round
+     * courant, toutes sources confondues — le pendant chiffré de
+     * {@link CardCondition.tookDamageThisRound}, pour les cartes dont le
+     * déclenchement dépend d'un SEUIL de dégâts cumulés et non d'un seul coup.
+     * Les dégâts périodiques (`fq.bonus.dot`), appliqués hors du pipeline de
+     * cartes, ne sont pas journalisés et n'entrent donc pas dans ce total.
+     *
+     * @param {object} [actor] - L'acteur ; à défaut, le personnage de l'utilisateur.
+     *
+     * @returns {number} Le total encaissé ce round (0 sans token, sans combat ou sans dégât).
+     */
+    static damageTakenThisRound(actor = Constants.actorCurrent) {
+        const tokenId = CardCondition.#tokenIdOf(actor);
+        if (!tokenId) {
+            return 0;
+        }
+        return CardCondition.#logsThisRound()
+            .flatMap(l => CardCondition.#damageEntriesOnToken(l, tokenId))
+            .reduce((total, entry) => total + Number(entry.value || 0), 0);
     }
 
     /**
@@ -704,6 +727,22 @@ export default class CardCondition {
     static hasEquippedShield(actor = Constants.actorCurrent) {
         const equipped = actor?.items?.filter(i => i.type === "equipment" && i.system?.equipped) ?? [];
         return equipped.some(i => i.system?.type?.value === "shield");
+    }
+
+    /**
+     * Coût en points d'action, en valeur absolue, de la PREMIÈRE arme de mêlée
+     * équipée — la même que celle dont le jeton `@wpnM` tire ses dégâts, les
+     * catégories venant de `WEAPON_TOKENS` et non d'une liste recopiée. Sert aux
+     * cartes qui rendent (ou facturent) « le prix d'un coup d'arme », et vaut
+     * garde-fou d'équipement : sans arme de mêlée, le coût est 0.
+     *
+     * @param {object} [actor] - L'acteur porteur ; à défaut, le personnage de l'utilisateur.
+     *
+     * @returns {number} Le coût en points d'action de l'arme (0 si aucune arme de mêlée équipée).
+     */
+    static equippedMeleeWeaponActionCost(actor = Constants.actorCurrent) {
+        const weapon = WeaponDamage.getEquippedWeapon(actor, WEAPON_TOKENS["@wpnM"].categories);
+        return Math.abs(Number(weapon?.system?.fq?.action ?? 0));
     }
 
     /* ------------------------------------------------------------------ */

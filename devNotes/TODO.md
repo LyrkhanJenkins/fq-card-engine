@@ -2,6 +2,7 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
+- Reactif utilisable au début de son tour?
 - Le scintillement des dégâts rend des fois le token invisible
 - No spellbook après montée jusqu'au niveau 4
 - Frappe arcanique cassé?

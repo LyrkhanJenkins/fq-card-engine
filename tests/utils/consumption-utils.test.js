@@ -88,14 +88,20 @@ describe("ResourceHandler", () => {
             expect(localActor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
         });
 
-        it("resets minions.sacrificedSkeleton when xvalue matches", () => {
-            const localActor = {system: {fq: {}}, update: vi.fn()};
-            ResourceHandler.consumeResources({xvalue: "fq.minions.sacrificedSkeleton"}, localActor);
+        it("déduit du score de sacrifice au plus xmax, et laisse le reliquat", () => {
+            const localActor = {system: {fq: {minions: {sacrificedSkeleton: 6}}}, update: vi.fn()};
+            ResourceHandler.consumeResources({xvalue: "fq.minions.sacrificedSkeleton", xmax: 4}, localActor);
+            expect(localActor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 2});
+        });
+
+        it("ne déduit que ce que le score contient quand il est sous le plafond", () => {
+            const localActor = {system: {fq: {minions: {sacrificedSkeleton: 3}}}, update: vi.fn()};
+            ResourceHandler.consumeResources({xvalue: "fq.minions.sacrificedSkeleton", xmax: 4}, localActor);
             expect(localActor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 0});
         });
 
-        it("resets minions.sacrificedSkeleton when yvalue matches", () => {
-            const localActor = {system: {fq: {}}, update: vi.fn()};
+        it("vide le score quand la carte ne déclare aucun plafond", () => {
+            const localActor = {system: {fq: {minions: {sacrificedSkeleton: 7}}}, update: vi.fn()};
             ResourceHandler.consumeResources({yvalue: "fq.minions.sacrificedSkeleton"}, localActor);
             expect(localActor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 0});
         });

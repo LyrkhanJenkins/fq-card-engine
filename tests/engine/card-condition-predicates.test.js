@@ -65,6 +65,26 @@ describe("CardCondition — prédicats de logs de combat", () => {
         expect(CardCondition.tookDamageThisRound()).toBe(false);
     });
 
+    it("damageTakenThisRound : somme les dégâts effectifs du round, en ignorant les autres rounds", () => {
+        mountScene({
+            tokens: [me(), foe()],
+            logs: [damageLog({value: 5}), damageLog({value: 7}), damageLog({value: 4, round: 1})]
+        });
+
+        expect(CardCondition.damageTakenThisRound()).toBe(12);
+    });
+
+    it("damageTakenThisRound : 0 sur esquive, hors combat, ou sans token du personnage", () => {
+        mountScene({tokens: [me(), foe()], logs: [damageLog({value: 0, evasion: true})]});
+        expect(CardCondition.damageTakenThisRound()).toBe(0);
+
+        mountScene({tokens: [me(), foe()], logs: null});
+        expect(CardCondition.damageTakenThisRound()).toBe(0);
+
+        mountScene({tokens: [foe()], logs: [damageLog({})]});
+        expect(CardCondition.damageTakenThisRound()).toBe(0);
+    });
+
     it("attackerWithinReach : vrai si le dernier assaillant du round est à portée", () => {
         mountScene({tokens: [me(), foe(GRID, 0)], logs: [damageLog({})]});
 
@@ -445,6 +465,21 @@ describe("CardCondition — état du personnage", () => {
         expect(CardCondition.hasEquippedShield({items: [shield]})).toBe(true);
         expect(CardCondition.hasEquippedShield({items: []})).toBe(false);
         expect(CardCondition.hasEquippedShield(undefined)).toBe(false);
+    });
+
+    it("equippedMeleeWeaponActionCost : coût de la première arme de mêlée équipée, 0 sans arme", () => {
+        const sword = {type: "weapon", system: {equipped: true, type: {value: "simpleM"}, fq: {action: -9}}};
+        const bow = {type: "weapon", system: {equipped: true, type: {value: "simpleR"}, fq: {action: -10}}};
+        const stowedAxe = {type: "weapon", system: {equipped: false, type: {value: "martialM"}, fq: {action: -12}}};
+
+        mountScene({character: {id: "me", items: [bow, sword]}});
+        expect(CardCondition.equippedMeleeWeaponActionCost()).toBe(9);
+
+        mountScene({character: {id: "me", items: [bow, stowedAxe]}});
+        expect(CardCondition.equippedMeleeWeaponActionCost()).toBe(0);
+
+        expect(CardCondition.equippedMeleeWeaponActionCost({items: [sword]})).toBe(9);
+        expect(CardCondition.equippedMeleeWeaponActionCost(undefined)).toBe(0);
     });
 });
 

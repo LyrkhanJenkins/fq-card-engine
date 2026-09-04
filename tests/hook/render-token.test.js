@@ -168,4 +168,20 @@ describe("render-token", () => {
             expect(socket.executeAsGM).toHaveBeenCalledWith("deleteToken", "token-2");
         });
     });
+
+    describe("TokenHud.getSacrificedScore", () => {
+
+        it("lit la table par préfixe : le jeton d'un sbire porte un suffixe aléatoire", () => {
+            expect(TokenHud.getSacrificedScore("Skeleton lvl 3_428913")).toBe(3);
+            expect(TokenHud.getSacrificedScore("Skeleton lvl 4_1")).toBe(4);
+            expect(TokenHud.getSacrificedScore("Giant Skeleton_77")).toBe(5);
+            expect(TokenHud.getSacrificedScore("Skeleton Sorcerer_9")).toBe(6);
+        });
+
+        it("vaut 1 pour un squelette absent de la table, et sans nom", () => {
+            expect(TokenHud.getSacrificedScore("Skeleton lvl 1_3")).toBe(1);
+            expect(TokenHud.getSacrificedScore("Squelette du MJ")).toBe(1);
+            expect(TokenHud.getSacrificedScore(undefined)).toBe(1);
+        });
+    });
 });

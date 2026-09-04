@@ -30,10 +30,16 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static MINION_TYPE_NONE = "";
     static MINION_TYPE_BEAST = "beast";
     static MINION_TYPE_SKELETON = "skeleton";
+    // Le Roi Squelette a son propre type — et non le type `skeleton` — pour deux
+    // raisons : il ne consomme pas le plafond de la piétaille, et les bonus
+    // d'invocation stockés sur `system.fq.minions.skeletonKing` ne profitent
+    // qu'à lui (cf. `Minion.statBonus`).
+    static MINION_TYPE_SKELETON_KING = "skeletonKing";
     static MINION_TYPE_CHOICE = {
         "": "FQCARDENGINE.MinionTypeNone",
         "beast": "FQCARDENGINE.MinionTypeBeast",
-        "skeleton": "FQCARDENGINE.MinionTypeSkeleton"
+        "skeleton": "FQCARDENGINE.MinionTypeSkeleton",
+        "skeletonKing": "FQCARDENGINE.MinionTypeSkeletonKing"
     };
 
     /**

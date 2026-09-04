@@ -1061,9 +1061,28 @@ export default class CardEffect {
         } else if (cardContent && (cardContent.xvalue || cardContent.yvalue)) {
             // Une seule résolution des cibles : xvalue et yvalue voient le MÊME ensemble.
             const targets = Constants.myTargets(cardContent.targetType);
-            CardEffect.recalculatedWithWYValue(cardContent, CardEffect.getXYValue(cardContent.xvalue, targets),
-                CardEffect.getXYValue(cardContent.yvalue, targets));
+            CardEffect.recalculatedWithWYValue(cardContent,
+                CardEffect.boundedXYValue(CardEffect.getXYValue(cardContent.xvalue, targets), cardContent.xmax),
+                CardEffect.boundedXYValue(CardEffect.getXYValue(cardContent.yvalue, targets), cardContent.ymax));
         }
+    }
+
+    /**
+     * Plafonne une valeur X/Y CALCULÉE (issue de `xvalue`/`yvalue`) par sa borne
+     * `xmax`/`ymax`. Une valeur saisie par le joueur est jugée par
+     * {@link CardEffect.evaluateXYBounds}, qui refuse le jeu au-delà de la borne ;
+     * une valeur calculée n'a personne à qui refuser quoi que ce soit — la borne
+     * s'y applique donc comme un plafond silencieux (ex. le score de squelettes
+     * sacrifiés, dont une carte ne peut dépenser que `xmax` points).
+     *
+     * @param {number}        value - La valeur calculée.
+     * @param {string|number} [bound] - La borne, déjà résolue en nombre au moment du jeu.
+     *
+     * @returns {number} La valeur, plafonnée si une borne exploitable est déclarée.
+     */
+    static boundedXYValue(value, bound) {
+        const cap = Number(bound);
+        return Number.isFinite(cap) && cap > 0 ? Math.min(value, cap) : value;
     }
 
     /**

@@ -3590,6 +3590,580 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemAbsZero001"
+    },
+    {
+      "_id": "FQelemImmol00001",
+      "name": "FQCARDTITLE.AbsoluteImmolation",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.AbsoluteImmolation"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2800000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "-12",
+              "mana": "-3",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-4",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "8",
+              "nbTargets": "",
+              "damage": "(4*XXX + 2d8)[fire]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:[...(FqCardEngineModule.cst.myTargets()[0]?.actor?.effects ?? [])].filter(e => e.name === \"Burn\").length",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                },
+                {
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Burn\"], 8)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingNbEffect",
+                      "arg": "{\"nbElement\": \"8\"}"
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.fireball.explosion.orange",
+                "onTarget": true
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 13,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "GkukoBpykcafjbri",
+        "createdTime": 1788609600000,
+        "modifiedTime": 1788609600000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemImmol00001"
+    },
+    {
+      "_id": "FQelemGlacial001",
+      "name": "FQCARDTITLE.GlacialEternity",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.GlacialEternity"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2900000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "-11",
+              "mana": "-3",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-3",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "9",
+              "nbTargets": "",
+              "damage": "(4*@int + 3d10)[cold]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Frost",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "frost"
+                        },
+                        {
+                          "status": "frost"
+                        },
+                        {
+                          "status": "frost"
+                        },
+                        {
+                          "status": "frost"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Frost\",\"count\":\"4\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Frost\",\"turn\":\"3\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                },
+                {
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Frost\"], 2)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingNbEffect",
+                      "arg": "{\"nbElement\": \"2\"}"
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.spell_projectile.ice_shard.blue",
+                "onTarget": true
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 13,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "GkukoBpykcafjbri",
+        "createdTime": 1788609600000,
+        "modifiedTime": 1788609600000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlacial001"
+    },
+    {
+      "_id": "FQelemSepulcre01",
+      "name": "FQCARDTITLE.StoneSepulcher",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.StoneSepulcher"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3000000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "-13",
+              "mana": "-2",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-3",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "4",
+              "nbTargets": "",
+              "damage": "(5*@int + 2d12)[bludgeoning]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Stone Sepulcher",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "earth"
+                        },
+                        {
+                          "status": "earth"
+                        },
+                        {
+                          "name": "Stone Sepulcher",
+                          "img": "icons/magic/earth/strike-body-stone-crumble.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.movement.walk",
+                              "value": "0",
+                              "type": "override",
+                              "priority": 20
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 2
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Earth Effect\",\"count\":\"2\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\": \"Stone Sepulcher\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                },
+                {
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Earth Effect\"], 4)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingNbEffect",
+                      "arg": "{\"nbElement\": \"4\"}"
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.falling_rocks.top.1x1.grey",
+                "onTarget": true
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 13,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "GkukoBpykcafjbri",
+        "createdTime": 1788609600000,
+        "modifiedTime": 1788609600000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemSepulcre01"
+    },
+    {
+      "_id": "FQelemCycloneEy1",
+      "name": "FQCARDTITLE.CycloneEye",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.CycloneEye"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3100000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "-10",
+              "mana": "-3",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-4",
+              "targetType": "Zone",
+              "minReach": "2",
+              "maxReach": "8",
+              "nbTargets": "",
+              "damage": "(3*@wis + 2d10)[thunder]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Air Effect",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        },
+                        {
+                          "status": "air"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
+                          "arg": "{\"effectName\":\"Air Effect\",\"count\":\"3\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        }
+                      ],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Air Effect\"], 3)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissingNbEffect",
+                      "arg": "{\"nbElement\": \"3\"}"
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.whirlwind.bluegrey",
+                "onTarget": true
+              },
+              "hasBeenPlayed": false,
+              "zoneShape": "circle",
+              "zoneSize": "2"
+            }
+          ],
+          "level": 13,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "GkukoBpykcafjbri",
+        "createdTime": 1788609600000,
+        "modifiedTime": 1788609600000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCycloneEy1"
     }
   ],
   "width": null,

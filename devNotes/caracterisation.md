@@ -86,10 +86,10 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 **Rôle** : DPS magique « glass cannon », mono-cible burst avec pivot AoE (Météore, Onde glacée, Choc de feu), contrôle/debuff en sous-produit.
 
 **Mécaniques signature** :
-- Feu : plus de dégâts sur la durée, plus de cumul avec xvalue : Dégâts de durée sur 5 6 tours. Petit dégâts, plein de dots
-- Givre : Réduire les points d'actions: faible chance de placer un effet de givre: mono cible
-- Terre : Réduire l'esquive, Bloquer, Réduire la portée : Gros dégâts monocible.
-- Air : Réduire le déplacement des cibles: Dégâts multicibles.
+- Feu : plus de dégâts sur la durée, plus de cumul avec xvalue : Dégâts de durée sur 5 6 tours. Petit dégâts, plein de dots (2 effets en moyenne)
+- Givre : Réduire les points d'actions: faible chance de placer un effet de givre: mono cible (0.33 effet en moyenne)
+- Terre : Réduire l'esquive, Bloquer, Réduire la portée : Gros dégâts monocible.  (1 effet en moyenne)
+- Air : Réduire le déplacement des cibles: Dégâts multicibles. (0.67 effet en moyenne)
 - Feu + Terre: Les plus gros dégâts monocible ou quelques cibles
 - Feu + Air: Plein d'effet de brulure et d'air
 - Feu + Givre: Monocible, transfert d'effets?
@@ -214,7 +214,7 @@ d’actions ou 1 point de zèle, 1 fois par tour)
 
 **Stats FQ** : **esquive la mieux dotée du jeu**, zèle et déplacement bien fournis. **Jamais de critique** — il joue le volume, pas le burst.
 
-**Rôle** : bruiser mobile à tempo, duelliste corps à corps, avec appoints tank (taunt Uppercut, Interruption) et soins (Vive-Esquive, Méditation Zen, Paume Curative).
+**Rôle** : bruiser mobile à tempo, duelliste corps à corps, avec appoints tank, Healers (taunt Uppercut, Interruption) et soins (Vive-Esquive, Méditation Zen, Paume Curative).
 
 **Mécaniques signature** :
 - **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume Curative).
@@ -226,6 +226,7 @@ d’actions ou 1 point de zèle, 1 fois par tour)
 Le seul a faire plus de dégâts avec toutes les cartes en main
 Le seul a pouvoir augmenter son zèle max
 **Boucle de jeu** : enchaîner les petites frappes → zèle → convertir en cartes/actions/burst ; l'ordre de jeu dans le tour est la compétence clé.
+- Les heals uniquements pour les autres (comme l'illusionniste?)
 
 **Faiblesses** :
 - Aucun Critique

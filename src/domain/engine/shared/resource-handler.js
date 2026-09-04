@@ -10,7 +10,31 @@ import {createWarning} from "../../../core/utils/chat.utils.js";
  * contrôle du nombre de cibles et de la portée, et validation du tour de jeu.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
+/**
+ * Chemin du score de squelettes sacrifiés, tel qu'une carte le désigne dans son
+ * `xvalue`/`yvalue`. Une carte qui lit ce score le DÉPENSE.
+ * @type {string}
+ */
+export const SACRIFICE_PATH = "fq.minions.sacrificedSkeleton";
+
 export default class ResourceHandler {
+
+    /**
+     * Le plafond de dépense d'une carte qui puise dans un compteur : la borne
+     * `xmax`/`ymax` du contenu (déjà résolue en nombre au moment du jeu), ou le
+     * compteur entier si la carte n'en déclare pas.
+     *
+     * @param {object} resources - Le contenu (choix) de la carte joué.
+     * @param {number} fallback  - La valeur retenue en l'absence de borne.
+     *
+     * @returns {number} Le plafond de dépense.
+     */
+    static #spendCap(resources, fallback) {
+        const bound = resources?.xvalue === SACRIFICE_PATH ? resources?.xmax : resources?.ymax;
+        const cap = Number(bound);
+        return Number.isFinite(cap) && cap > 0 ? cap : fallback;
+    }
+
     /**
      * Vérifie que l'acteur dispose de suffisamment de ressources pour payer les
      * coûts indiqués (hp, action, mana, zeal, défausse). Affiche un message
@@ -148,9 +172,15 @@ export default class ResourceHandler {
                 "system.fq.cards.currentDrop": newDrop
             });
         }
-        if (resources?.xvalue === "fq.minions.sacrificedSkeleton" || resources?.yvalue === "fq.minions.sacrificedSkeleton") {
+        if (resources?.xvalue === SACRIFICE_PATH || resources?.yvalue === SACRIFICE_PATH) {
+            // Le score de sacrifice est DÉDUIT de ce que la carte a réellement
+            // dépensé — c'est-à-dire X, lui-même plafonné par `xmax` (cf.
+            // `CardEffect.boundedXYValue`) — et non vidé : sacrifier un gros
+            // squelette laisse le reliquat disponible pour la carte suivante.
+            const current = actor.system?.fq.minions.sacrificedSkeleton ?? 0;
+            const spent = Math.min(current, ResourceHandler.#spendCap(resources, current));
             actor.update({
-                "system.fq.minions.sacrificedSkeleton": 0
+                "system.fq.minions.sacrificedSkeleton": Math.max(0, current - spent)
             });
         }
         if (resources?.xvalue === "fq.cards.currentDrop" || resources?.yvalue === "fq.cards.currentDrop") {

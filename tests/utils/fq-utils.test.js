@@ -374,6 +374,32 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(cardContent.damage).toBe("7+2");
             spy.mockRestore();
         });
+
+        it("plafonne une valeur CALCULÉE par xmax/ymax", () => {
+            const spy = vi.spyOn(CardEffect, "getXYValue").mockReturnValueOnce(9).mockReturnValueOnce(1);
+            const cardContent = makeChoice({
+                damage: "XXX+YYY", xvalue: "nbTargets", yvalue: "nbTargets", xmax: 4, ymax: 4
+            });
+
+            CardEffect.substituteXAndYValue(cardContent, false, undefined, undefined);
+
+            expect(cardContent.damage).toBe("4+1");
+            spy.mockRestore();
+        });
+    });
+
+    describe("boundedXYValue", () => {
+        it("plafonne par la borne quand elle est exploitable", () => {
+            expect(CardEffect.boundedXYValue(9, 4)).toBe(4);
+            expect(CardEffect.boundedXYValue(9, "4")).toBe(4);
+            expect(CardEffect.boundedXYValue(2, 4)).toBe(2);
+        });
+
+        it("laisse la valeur intacte sans borne exploitable", () => {
+            expect(CardEffect.boundedXYValue(9, "")).toBe(9);
+            expect(CardEffect.boundedXYValue(9, undefined)).toBe(9);
+            expect(CardEffect.boundedXYValue(9, "10+@dex")).toBe(9);
+        });
     });
 
     // ─── Tâche 1 (tracer) : création de sbires de bout en bout ─────────────────

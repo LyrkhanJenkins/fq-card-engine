@@ -10,6 +10,20 @@ import {socket} from "../../hook/integration/socketlib.hook.js";
 export default class TokenHud {
 
     /**
+     * Score de sacrifice par sbire : ce que rapporte au compteur
+     * `fq.minions.sacrificedSkeleton` le squelette envoyé au charnier. Tout
+     * squelette absent de la table vaut 1 (le squelette de niveau 1).
+     * @type {Object<string, number>}
+     */
+    static SACRIFICE_SCORES = Object.freeze({
+        "Skeleton lvl 2": 2,
+        "Skeleton lvl 3": 3,
+        "Skeleton lvl 4": 4,
+        "Giant Skeleton": 5,
+        "Skeleton Sorcerer": 6
+    });
+
+    /**
      * Ajoute au HUD du token un bouton « sacrifier le squelette » (uniquement pour
      * les tokens dont le nom contient « Skeleton »). Au clic : joue un effet Sequencer
      * si disponible, publie un message de chat, incrémente le score de squelettes
@@ -90,18 +104,12 @@ export default class TokenHud {
      * @returns {number} Le score de sacrifice (1 par défaut).
      */
     static getSacrificedScore(tokenName) {
-        switch (tokenName) {
-        case "Skeleton lvl 2":
-            return 2;
-        case "Skeleton lvl 3":
-            return 3;
-        case "Giant Skeleton":
-            return 4;
-        case "Skeleton Sorcerer":
-            return 5;
-        default:
-            return 1;
-        }
+        // Le jeton d'un sbire porte le nom du sbire SUIVI d'un suffixe aléatoire
+        // (« Skeleton lvl 3_428913 », cf. `Minion.createActorData`) : la table se
+        // lit donc par préfixe, jamais par égalité.
+        const name = String(tokenName ?? "");
+        const entry = Object.entries(TokenHud.SACRIFICE_SCORES).find(([minion]) => name.startsWith(minion));
+        return entry ? entry[1] : 1;
     }
 
     /**
