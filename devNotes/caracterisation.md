@@ -71,12 +71,6 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - Les dégâts de zone ne font pas beaucoup moins de dégâts que les sorts monocibles (ne divise pas les dégâts entre les cibles)
 
 **Questionnement et TODO Générique :** 
-- Supprimer les cartes neutre pour le moment et faire des mécaniques différentes pour récupérer action mana ou pioche?
-OU - Assumer jusqu'au bout des cartes neutres
-  - Neutre? Dash -> défaussez 2 cartes, 10 actions -> double le déplacement
-- TODO Virus à partir de poison?
-- TODO Poison (dégâts et duplication)
-- TODO Malédiction sans dégâts
 - Plusieurs attaques d'opportunités?
 - L'esquive fait demi-dégâts?
 - Utiliser l'IA pour rééquilibrer les dégâts, les couts, le nombre de cartes
@@ -85,22 +79,23 @@ OU - Assumer jusqu'au bout des cartes neutres
 
 > « Allie des effets de feu, de givre, d'air et de terre pour infliger d'importants dégâts. Fragile mais possède les plus gros dégâts bruts du jeu. »
 
-**Identité dnd5e** : d4 , INT + SAG (les deux requises). Deux cartes hors-thème récompensent DEX (Assassin du néant) et CHA (Plastron magique).
+**Identité dnd5e** : d4 , INT + SAG (les deux requises).
 
 **Stats FQ** : mana écrasant (12/22 du pool primaire), puis points d'action. **Aucune esquive en primaire** : la survie n'est pas une option de build, c'est la portée qui protège.
 
 **Rôle** : DPS magique « glass cannon », mono-cible burst avec pivot AoE (Météore, Onde glacée, Choc de feu), contrôle/debuff en sous-produit.
 
 **Mécaniques signature** :
-- Feu : plus de dégâts sur la durée, plus de cumul avec xvalue : Dégâts de durée sur 5 6 tours
-- Givre : Réduire l'esquive, Augmenter fortement l'esquive : Dégâts en 2 tours, 3 tours
-- Terre : Réduire le déplacement, Bloquer, Réduire la portée : Gros dégâts monocible
-- Air : Réduire le critique, Augmenter fortement le critique : Dégâts multicibles
-- **Les 4 effets élémentaires** : Brûlure (DoT), Givre (−PA max de la cible), Air (−déplacement, jusqu'à immobilisation), Terre (−esquive / −critique). Posés en proc (`1d2`, `1d3`…) par les cartes de niveau 1 et par la carte de base *Magie Des Éléments* (4 choix, passive, coût = 1 défausse).
-- **Payoff à étages** : 9 cartes sur 23 exigent des effets actifs via `targetsHaveEffect` — 1 effet (Givrefeu, Météore, Brouillard…), 2 effets différents (Assassin du néant), 4 effets (Missiles Magiques +, le finisher).
-- **X à risque/récompense** : plus X monte, plus les dégâts montent mais plus la chance d'appliquer l'effet baisse (`1d(4−X)`).
-- **Zèle bidirectionnel** : les cartes de pose génèrent du zèle, les finishers le consomment (jusqu'à −4).
-- Dégâts multi-types systématiques (6 types) pour contourner les résistances. Aucun minion, une seule réactive (Captation de mana).
+- Feu : plus de dégâts sur la durée, plus de cumul avec xvalue : Dégâts de durée sur 5 6 tours. Petit dégâts, plein de dots
+- Givre : Réduire les points d'actions: faible chance de placer un effet de givre: mono cible
+- Terre : Réduire l'esquive, Bloquer, Réduire la portée : Gros dégâts monocible.
+- Air : Réduire le déplacement des cibles: Dégâts multicibles.
+- Feu + Terre: Les plus gros dégâts monocible ou quelques cibles
+- Feu + Air: Plein d'effet de brulure et d'air
+- Feu + Givre: Monocible, transfert d'effets?
+- Terre + Air: Plein de dégâts a pleins de cibles accentués
+- Terre + Givre: Plein de dégâts à ceux qui ont des effets de givre en prio
+- Givre + Air: Altération d'état (Brouillard)
 
 **Boucle de jeu** : tours 1‑2 amorçage (poser les éléments, accumuler zèle) → tours 3+ détonation (combos verrouillés par prérequis).
 
@@ -109,7 +104,7 @@ OU - Assumer jusqu'au bout des cartes neutres
 
 **Questionnement et TODO :**
 - Cartes qui génére des boules de feu, de givre ...etc au bout de tant de tour?.
-- Changement de boule de feu en trait de feu pour coller a dnd5e, la boule de feu fait de gros dégâts de zone
+- Changement de boule de feu en trait de feu pour coller a dnd5e, la boule de feu fait de gros dégâts de zone (Reste image)
 ---
 
 # Gardien

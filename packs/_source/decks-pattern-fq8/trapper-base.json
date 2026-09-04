@@ -2137,7 +2137,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 11,
+          "level": 13,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2299,7 +2299,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 11,
+          "level": 13,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2451,7 +2451,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 11,
+          "level": 13,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2603,7 +2603,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 11,
+          "level": 13,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2708,7 +2708,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 11,
+          "level": 13,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2813,7 +2813,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 11,
+          "level": 13,
           "isInnate": false,
           "class": "trapper",
           "choices": [
