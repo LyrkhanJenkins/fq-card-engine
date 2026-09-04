@@ -706,6 +706,30 @@
     color: rgba(var(--fq-danger-d-rgb), 0.9);
 }
 
+/* Infobulle de distance suivant le curseur pendant le ciblage : posée sur
+   `document.body`, donc au-dessus du canvas comme la barre de ciblage, et
+   traversante pour ne jamais voler un clic de ciblage. */
+.fq-play-distance-tooltip {
+    display: none;
+    position: fixed;
+    z-index: 10002;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(var(--fq-panel-b-rgb), 0.92);
+    border: 1px solid rgba(var(--fq-gold-rgb), 0.6);
+    box-shadow: 0 4px 14px rgba(var(--fq-black-rgb), 0.5);
+    font-family: 'Palatino Linotype', Georgia, serif;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    color: rgba(var(--fq-gold-hi-rgb), 0.95);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.fq-play-distance-tooltip--visible {
+    display: block;
+}
+
 /* ── Mode ciblage ── */
 /* Pendant le ciblage : on efface l'overlay (opacité 0) et on le rend traversant
    (pointer-events) pour libérer le canvas, sans fermer la dialog (état préservé).

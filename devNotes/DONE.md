@@ -32,6 +32,7 @@ Feat :
 - Les cartes neutres deviennent communes et sont automatiquement rajouté dans les spellbooks aux bons niveaux
 - Permet de poser des minions dans une zone plutôt que sur une case adjacente
 - Nb max de familier par type et buff pour les familier
+- Ajout de la distance d'une cible dans la dialog-play et dans le ciblage
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

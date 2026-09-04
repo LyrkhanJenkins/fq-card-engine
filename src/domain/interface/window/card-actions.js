@@ -4,6 +4,7 @@ import TargetingView from "../targeting/targeting-view.js";
 import ZoneTargeting from "../targeting/zone-targeting.js";
 import AdjacentTargeting from "../targeting/adjacent-targeting.js";
 import CombatTargeting from "../targeting/combat-targeting.js";
+import TargetDistanceTooltip from "../targeting/target-distance-tooltip.js";
 import ObjectUtils from "../../../core/utils/object.utils.js";
 import Minion from "../../engine/shared/minion.js";
 import PlayCard from "../../engine/play-card.js";
@@ -275,6 +276,7 @@ export default {
             const exitTargeting = async () => {
                 await ui.controls?.activate?.({control: "tokens", tool: "select"});
                 root.classList.remove("fq-targeting-mode");
+                TargetDistanceTooltip.deactivate();
                 targetingBar?.remove();
                 targetingBar = null;
                 renderPanel();
@@ -300,6 +302,7 @@ export default {
                 targetingBar.append(label, doneBtn);
                 document.body.appendChild(targetingBar);
                 updateBar(currentView());
+                TargetDistanceTooltip.activate();
                 ui.notifications.info(game.i18n.localize("FQCARDENGINE.TargetingPanelTargetHint"));
             };
 
@@ -375,6 +378,7 @@ export default {
                 if (openPlayDialog === app) openPlayDialog = null;
                 Hooks.off("targetToken", targetHookId);
                 ZoneTargeting.clearPlacement();
+                TargetDistanceTooltip.deactivate();
                 targetingBar?.remove();
                 if (root.classList.contains("fq-targeting-mode")) {
                     ui.controls?.activate?.({control: "tokens", tool: "select"});
