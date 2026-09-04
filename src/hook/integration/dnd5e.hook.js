@@ -3,6 +3,7 @@ import Damage from "../../domain/engine/roll/damage.js";
 import {socket} from "./socketlib.hook.js";
 import Constants from "../../domain/constants.js";
 import {createInfo} from "../../core/utils/chat.utils.js";
+import Facing from "../../domain/engine/shared/facing.js";
 import Fx from "../../domain/engine/shared/fx.js";
 import TargetingPredicates from "../../domain/engine/shared/targeting-predicates.js";
 import OpportunityAttack from "../../domain/engine/reaction/opportunity-attack.js";
@@ -211,6 +212,12 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
             for (const res of resultArray) {
                 await socket.executeAsGM("applyActorHpModification", res.targetTokenId, res.value, res.type);
             }
+
+            // Orientation vers la cible : le token attaquant regarde ce qu'il
+            // frappe. La première cible fait foi — une attaque de zone n'a pas
+            // de direction unique, et suivre la première reste plus lisible que
+            // ne pas bouger du tout.
+            Facing.faceTarget(token, (cardContent.forcedTargets ?? Constants.myTargets())?.[0]);
 
             // `opportunityTarget` n'est posé que par la résolution d'attaque
             // d'opportunité : sans ce message, une AO est indiscernable d'une

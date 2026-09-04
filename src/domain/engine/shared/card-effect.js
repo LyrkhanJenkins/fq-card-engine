@@ -8,6 +8,7 @@ import Constants, {
     OriginFQEffectLabel,
     OTHER_ROLL_COLOR
 } from "../../constants.js";
+import Facing from "./facing.js";
 import Fx from "./fx.js";
 import {createInfo, createWarning} from "../../../core/utils/chat.utils.js";
 import {ERROR_COLOR} from "../../../core/constants.js";
@@ -123,6 +124,11 @@ export default class CardEffect {
             // On attend ICI, une seule fois, que TOUTES les animations Dice So Nice
             // du jet soient terminées (les dés sont partis simultanément plus haut).
             await Promise.all(dsnAnimations);
+
+            // Orientation vers la cible, avant les FX : le lanceur regarde ce
+            // qu'il vise. Les cibles se résolvent ici avec le type de ciblage de
+            // la carte, comme partout ailleurs dans ce fichier.
+            Facing.faceTarget(Constants.myToken, (cardContent.forcedTargets ?? Constants.myTargets(cardContent.targetType))?.[0]);
 
             const match = cardContent.damage?.match(/\[([a-z]+)\]/i);
             await Fx.handleSpecialEffect(cardContent, resultArray, Constants.myToken, match ? match[1] : null);
