@@ -119,6 +119,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Mécaniques signature** :
 - **PV comme monnaie** : Frappe Héroïque (−(6−@con) PV au lieu du mana), Frappe provocatrice, Tourbillon de Lame, Montée de la rage (PV → mana).
+- **Compétences pour aggriper des alliés ou des ennemis** 
 - **Zèle bidirectionnel** : généré en frappant (+1 sur les attaques de base), dépensé sur les gros coups et toutes les réactions.
 - **Charges de lame** : Chargement Des Lames (cap 12 → dégâts ×2) et Tourbillon De Lame (cap 8 → AoE adjacente), via compteurs `flags.fq` + `counterWithinCap`/`counterEquals`.
 - **Réactions défensives** : Coup de bouclier (contre-charge), Intervention (prend les dégâts d'un allié à sa place), Levée De Bouclier (récupère la moitié des dégâts subis).
@@ -131,6 +132,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - Le moins de point de mana
 
 **Questionnement et TODO :**
+- Différence entre le Gardien et le moine: Le moine fait des charges, et plein de deplacement perso alors que le gardien agrippe des cibles ou les bloques pour y aller
 - Ange Gardien : Générer un bouclier qui regagne des points de vie chaque tour (Tisse-mort de slay the spire?)
   Sort pour l'améliorer, ou pour taunt ou pour toucher plusieurs cibles
   - Berzerk : Sort qui enlève des points de vie + Sort qui font plus de dégâts si moins de vie ou qui fait piocher en

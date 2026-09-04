@@ -44,6 +44,7 @@ globalThis.socketlib = {
 await import("../../src/init-engine.js");
 const PlayCard = (await import("../../src/domain/engine/play-card.js")).default;
 const CardEffect = (await import("../../src/domain/engine/shared/card-effect.js")).default;
+const Minion = (await import("../../src/domain/engine/shared/minion.js")).default;
 
 /**
  * Construit un contexte `ctx` minimal pour `playValidatedCard`, sans variables
@@ -160,6 +161,49 @@ describe("playValidatedCard", () => {
 
         expect(() => window.FqCardEngineModule.playValidatedCard(to, fd, cardContent, ctx)).toThrow();
         expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+    });
+
+    test("garde plafond de sbires : un dépassement lève FormError et n'appelle pas callBackplayCard", () => {
+        const choiceWithMinions = makeChoice({minions: [{type: "beast"}]});
+        const card = makeCard({system: {fq: {maxSameCard: 1, class: "trapper", level: 13, isInnate: false, choices: [choiceWithMinions]}}});
+        const ctx = makeCtx({firstChoice: choiceWithMinions, cardContents: [choiceWithMinions], initCardContents: card.system.fq.choices, card});
+        const to = {id: "discard-pile"};
+        const fd = {XXX: undefined, YYY: undefined};
+
+        // Les emplacements sont valides : c'est bien le plafond, et lui seul, qui bloque.
+        vi.spyOn(Minion, "getNbMinionLocationSelected").mockReturnValue(1);
+        vi.spyOn(Minion, "getNbValideMinionLocationSelected").mockReturnValue(1);
+        vi.spyOn(Minion, "capVerdict").mockReturnValue({type: "beast", current: 1, max: 1, requested: 1});
+
+        try {
+            expect(() => window.FqCardEngineModule.playValidatedCard(to, fd, choiceWithMinions, ctx)).toThrow();
+            expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+        } finally {
+            Minion.getNbMinionLocationSelected.mockRestore();
+            Minion.getNbValideMinionLocationSelected.mockRestore();
+            Minion.capVerdict.mockRestore();
+        }
+    });
+
+    test("garde plafond de sbires : sous le plafond, la carte est déléguée au moteur", () => {
+        const choiceWithMinions = makeChoice({minions: [{type: "beast"}]});
+        const card = makeCard({system: {fq: {maxSameCard: 1, class: "trapper", level: 13, isInnate: false, choices: [choiceWithMinions]}}});
+        const ctx = makeCtx({firstChoice: choiceWithMinions, cardContents: [choiceWithMinions], initCardContents: card.system.fq.choices, card});
+        const to = {id: "discard-pile"};
+        const fd = {XXX: undefined, YYY: undefined};
+
+        vi.spyOn(Minion, "getNbMinionLocationSelected").mockReturnValue(1);
+        vi.spyOn(Minion, "getNbValideMinionLocationSelected").mockReturnValue(1);
+        vi.spyOn(Minion, "capVerdict").mockReturnValue(null);
+
+        try {
+            window.FqCardEngineModule.playValidatedCard(to, fd, choiceWithMinions, ctx);
+            expect(PlayCard.callBackplayCard).toHaveBeenCalled();
+        } finally {
+            Minion.getNbMinionLocationSelected.mockRestore();
+            Minion.getNbValideMinionLocationSelected.mockRestore();
+            Minion.capVerdict.mockRestore();
+        }
     });
 
     test("choix multiples + betterChatMessages OFF : émet le message de choix hérité avant de déléguer", () => {

@@ -148,11 +148,11 @@ export default {
             currentDrop: character.system?.fq?.cards?.currentDrop ?? 0,
             critical: character.system?.fq?.attributes?.critical ?? 0,
             evasion: character.system?.fq?.attributes?.evasion ?? 0,
-            sacrificedSkeleton: character.system?.fq?.special?.sacrificedSkeleton ?? 0,
+            sacrificedSkeleton: character.system?.fq?.minions?.sacrificedSkeleton ?? 0,
             rangeBonus: character.system?.fq?.bonus?.range ?? 0,
             damageBonus: character.system?.fq?.bonus?.damage ?? "",
             healBonus: character.system?.fq?.bonus?.heal ?? "",
-            showSacrifice: (character.system?.fq?.special?.sacrificedSkeleton ?? 0) > 0,
+            showSacrifice: (character.system?.fq?.minions?.sacrificedSkeleton ?? 0) > 0,
             showRangeBonus: (character.system?.fq?.bonus?.range ?? 0) > 0,
             showDamageBonus: DisplayCard.hasBonusStr(character.system?.fq?.bonus?.damage),
             showHealBonus: DisplayCard.hasBonusStr(character.system?.fq?.bonus?.heal),
@@ -511,6 +511,25 @@ export default {
             const errorKey = TARGETING_FORM_ERROR[verdict];
             if (errorKey) {
                 throw new FormError(game.i18n.localize(errorKey));
+            }
+        }
+
+        // ── Garde de plafond de sbires ── Un invocateur ne tient qu'un nombre borné
+        // de sbires par type (une bête, six squelettes, plus les bonus gagnés en
+        // combat). Le refus arrive AVANT le paiement des coûts : dépasser le plafond
+        // ne doit pas coûter d'action, de mana ni de zèle. Le nombre réellement
+        // invoqué dépend du mode de pose, d'où la limite passée au verdict.
+        if (cardContent?.minions?.length) {
+            const summonLimit = cardContent.minionsOnZone
+                ? Minion.zoneSquares(cardContent.zonePlacement).length
+                : nbSelectedMinionLocations;
+            const capVerdict = Minion.capVerdict(cardContent.minions, summonLimit);
+            if (capVerdict) {
+                throw new FormError(game.i18n.format("FQCARDENGINE.DialogPlayFormErrorMinionCap", {
+                    minionType: game.i18n.localize(CardFqSystem.MINION_TYPE_CHOICE[capVerdict.type] ?? capVerdict.type),
+                    current: capVerdict.current,
+                    max: capVerdict.max
+                }));
             }
         }
 

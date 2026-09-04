@@ -16,9 +16,6 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static TARGET_TYPE_COMBAT_ENEMIES = "CombatEnemies";
     static TARGET_TYPE_COMBAT_ALLIES = "CombatAllies";
     static NEUTRAL_CLASS = "neutral";
-    // Valeurs non numériques du champ `replayable` d'un choix : « passif » (la
-    // carte reste en main, rejouable une fois par tour de combat) et « ephemere »
-    // (la carte est détruite définitivement au lieu d'être défaussée).
     static REPLAYABLE_PASSIVE = "passif";
     static REPLAYABLE_EPHEMERAL = "ephemere";
     static TARGET_TYPE_CHOICE = {
@@ -28,6 +25,15 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         "Adjacent": "FQCARDENGINE.TargetTypeAdjacent",
         "CombatEnemies": "FQCARDENGINE.TargetTypeCombatEnemies",
         "CombatAllies": "FQCARDENGINE.TargetTypeCombatAllies"
+    };
+
+    static MINION_TYPE_NONE = "";
+    static MINION_TYPE_BEAST = "beast";
+    static MINION_TYPE_SKELETON = "skeleton";
+    static MINION_TYPE_CHOICE = {
+        "": "FQCARDENGINE.MinionTypeNone",
+        "beast": "FQCARDENGINE.MinionTypeBeast",
+        "skeleton": "FQCARDENGINE.MinionTypeSkeleton"
     };
 
     /**
@@ -228,6 +234,13 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             minions: new ArrayField(new SchemaField({
                 // test to eval in javascript for custom check/ exec
                 name: new StringField({required: true, label: "FQCARDENGINE.MinionName"}),
+                // Le type décide du plafond d'invocations simultanées appliqué au sbire.
+                type: new StringField({
+                    required: false,
+                    label: "FQCARDENGINE.MinionType",
+                    choices: this.MINION_TYPE_CHOICE,
+                    initial: () => this.MINION_TYPE_NONE,
+                }),
                 // message to display if test false
                 data: new SchemaField({
                     hp: new StringField({required: true, label: "FQCARDENGINE.MinionHp"}),

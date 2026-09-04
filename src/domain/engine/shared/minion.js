@@ -1,6 +1,7 @@
 import RollService from "../roll/roll-service.js";
 import Geometry from "./geometry.js";
-import {DEFAULT_MAX_ZEAL} from "../../constants.js";
+import Constants, {DEFAULT_MAX_ZEAL} from "../../constants.js";
+import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
 
 /**
@@ -10,6 +11,7 @@ import {socket} from "../../../hook/integration/socketlib.hook.js";
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
 export default class Minion {
+
 
     /**
      * Crée un sbire (minion) : s'assure de l'existence du dossier temporaire
@@ -123,11 +125,30 @@ export default class Minion {
         if (actorData) {
             actorData.folder = Minion.getTempActorFolder().id;
             actorData.name = actorData.name + "_" + Math.floor(Math.random() * 1000000);
+            // Les bonus gagnés en combat s'ajoutent aux surcharges déclarées par la
+            // carte, et s'appliquent même si la carte ne surcharge pas la
+            // caractéristique : la base est alors celle du compendium.
+            const bonus = Minion.statBonus(minion?.type);
+            if (minion.data?.hp || bonus.hp) {
+                // Un seul jet pour le maximum ET la valeur courante : une formule à dés
+                // donnerait sinon deux totaux différents, et le sbire naîtrait blessé.
+                const hp = Number(minion.data?.hp
+                    ? RollService.rollResultSync(minion.data.hp)
+                    : actorData.system.attributes.hp.max) + bonus.hp;
+                actorData.system.attributes.hp.max = hp;
+                actorData.system.attributes.hp.value = hp;
+            }
+            if (minion.data?.damageBonus || bonus.damageBonus) {
+                actorData.system.fq.bonus.damage = Number(minion.data?.damageBonus
+                    ? RollService.rollResultSync(minion.data.damageBonus)
+                    : actorData.system.fq.bonus.damage) + bonus.damageBonus;
+            }
+            if (minion.data?.movement || bonus.movement) {
+                actorData.system.attributes.movement.walk = Number(minion.data?.movement
+                    ? RollService.rollResultSync(minion.data.movement)
+                    : actorData.system.attributes.movement.walk) + bonus.movement;
+            }
             if (minion.data) {
-                if (minion.data.hp) {
-                    actorData.system.attributes.hp.max = RollService.rollResultSync(minion.data.hp);
-                    actorData.system.attributes.hp.value = RollService.rollResultSync(minion.data.hp);
-                }
                 if (minion.data.critical) {
                     actorData.system.fq.attributes.critical = RollService.rollResultSync(minion.data.critical);
                 }
@@ -146,20 +167,122 @@ export default class Minion {
                     actorData.system.fq.zeal.max = DEFAULT_MAX_ZEAL;
                     actorData.system.fq.zeal.value = RollService.rollResultSync(minion.data.zeal);
                 }
-                if (minion.data.damageBonus) {
-                    actorData.system.fq.bonus.damage = RollService.rollResultSync(minion.data.damageBonus);
-                }
                 if (minion.data.healBonus) {
                     actorData.system.fq.bonus.heal = RollService.rollResultSync(minion.data.healBonus);
                 }
-                if (minion.data.movement) {
-                    actorData.system.attributes.movement.walk = RollService.rollResultSync(minion.data.movement);
-                }
             }
             actorData.ownership[game.userId] = 3;
+            // Sans cette estampille, rien ne relie un sbire posé sur la scène à son
+            // invocateur : c'est elle, et elle seule, qui rend le plafond comptable.
+            actorData.flags = actorData.flags ?? {};
+            actorData.flags[FqCardEngineModule.moduleName] = {
+                ...(actorData.flags[FqCardEngineModule.moduleName] ?? {}),
+                minionType: minion?.type ?? CardFqSystem.MINION_TYPE_NONE,
+                summonerId: Constants.myId ?? null
+            };
 
             await socket.executeAsGM("createActorFromData", actorData, game.userId, location, position);
         }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Plafond d'invocations simultanées, par type de sbire                 */
+    /* ------------------------------------------------------------------ */
+
+    /**
+     * Les bonus de caractéristiques gagnés en combat pour un type de sbire, tels
+     * qu'ils s'ajouteront à CHAQUE invocation suivante. Toujours un objet complet,
+     * pour que l'appelant additionne sans garde.
+     *
+     * @param {string}  [type]  - Le type de sbire.
+     * @param {Actor}   [actor] - L'invocateur (défaut : le personnage courant).
+     *
+     * @returns {{hp: number, damageBonus: number, movement: number}} Les bonus (0 par défaut).
+     */
+    static statBonus(type, actor = Constants.actorCurrent) {
+        const stored = type ? actor?.system?.fq?.minions?.[type] : null;
+        return {
+            hp: Number(stored?.hp ?? 0) || 0,
+            damageBonus: Number(stored?.damage ?? 0) || 0,
+            movement: Number(stored?.movement ?? 0) || 0
+        };
+    }
+
+    /**
+     * Le nombre de sbires d'un type qu'un invocateur peut tenir en jeu : le
+     * plafond de base du type, augmenté du bonus gagné en combat.
+     *
+     * Un type non plafonné (type vide, ou type inconnu de la table) renvoie
+     * l'infini : la garde ne s'y applique jamais.
+     *
+     * @param {string} [type]  - Le type de sbire.
+     * @param {Actor}  [actor] - L'invocateur (défaut : le personnage courant).
+     *
+     * @returns {number} Le plafond effectif, ou Infinity si le type n'est pas plafonné.
+     */
+    static maxOf(type, actor = Constants.actorCurrent) {
+        const max = type ? actor?.system?.fq?.minions?.[type]?.max : undefined;
+        return Number.isFinite(max) ? max : Infinity;
+    }
+
+    /**
+     * Compte les sbires d'un type déjà en jeu pour un invocateur : les jetons
+     * VIVANTS de la scène active portant l'estampille posée à l'invocation.
+     *
+     * Un sbire à 0 PV ne compte plus — son jeton peut rester sur la scène le
+     * temps que le MJ le retire, sans pour autant bloquer une nouvelle invocation.
+     *
+     * @param {string} type         - Le type de sbire compté.
+     * @param {string} [summonerId] - L'id de l'acteur invocateur (défaut : le personnage courant).
+     *
+     * @returns {number} Le nombre de sbires vivants de ce type invoqués par cet acteur.
+     */
+    static countOnScene(type, summonerId = Constants.myId) {
+        if (!type || !summonerId) {
+            return 0;
+        }
+        const tokens = game.canvas?.scene?.tokens ?? game.scenes?.active?.tokens ?? [];
+        return [...tokens].filter(token => {
+            const flags = token.actor?.flags?.[FqCardEngineModule.moduleName];
+            return flags?.minionType === type
+                && flags?.summonerId === summonerId
+                && (token.actor?.system?.attributes?.hp?.value ?? 0) > 0;
+        }).length;
+    }
+
+    /**
+     * Juge si les sbires qu'un choix s'apprête à invoquer tiennent sous les
+     * plafonds de leurs types. Ne publie rien et ne lève rien : renvoie un verdict
+     * que l'appelant traduit en `FormError`, sur le même patron que les gardes de
+     * ciblage.
+     *
+     * `limit` reproduit ce que le moteur créera réellement : les emplacements
+     * sélectionnés pour une invocation au contact, les cases couvertes pour une
+     * invocation en zone. Sans limite, tous les sbires déclarés sont comptés.
+     *
+     * @param {object[]} [minions] - Les sbires déclarés par le choix.
+     * @param {number}   [limit]   - Le nombre de sbires réellement créés.
+     * @param {Actor}    [actor]   - L'invocateur (défaut : le personnage courant).
+     *
+     * @returns {{type: string, current: number, max: number, requested: number}|null}
+     *          Le premier type en dépassement, ou null si tout tient.
+     */
+    static capVerdict(minions, limit = Infinity, actor = Constants.actorCurrent) {
+        const requestedByType = {};
+        for (const minion of (minions ?? []).filter(Boolean).slice(0, limit)) {
+            if (!minion.type) {
+                continue;
+            }
+            requestedByType[minion.type] = (requestedByType[minion.type] ?? 0) + 1;
+        }
+        for (const [type, requested] of Object.entries(requestedByType)) {
+            const max = Minion.maxOf(type, actor);
+            const current = Minion.countOnScene(type, actor?.id);
+            if (current + requested > max) {
+                return {type, current, max, requested};
+            }
+        }
+        return null;
     }
 
     /**

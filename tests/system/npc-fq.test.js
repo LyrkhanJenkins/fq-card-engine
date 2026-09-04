@@ -20,8 +20,9 @@ describe("NPCDataFQ.defineSchema", () => {
         expect(fq.action.value.initial).toBe(10);
     });
 
-    it("n'expose pas cards ni special (npc ≠ character)", () => {
+    it("n'expose pas cards, cardBonus ni minions (npc ≠ character)", () => {
         expect(fq).not.toHaveProperty("cards");
-        expect(fq).not.toHaveProperty("special");
+        expect(fq).not.toHaveProperty("cardBonus");
+        expect(fq).not.toHaveProperty("minions");
     });
 });

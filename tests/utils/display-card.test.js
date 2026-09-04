@@ -514,7 +514,7 @@ describe("DisplayCard — périmètres exclus : non-régression (D-12, D-13, Tas
     it("une formule à bonus nommé (@bonus.serenityRune) produit EXACTEMENT le même nombre de pastilles que sans ce jeton (D-12)", () => {
         game.user.character = {
             items: [],
-            system: {abilities: {...NEUTRAL_ABILITIES}, fq: {bonus: {cards: {serenityRune: 2}}}}
+            system: {abilities: {...NEUTRAL_ABILITIES}, fq: {cardBonus: {serenityRune: 2}}}
         };
         const countPills = s => (s.match(/class="fq-formula-pill/g) ?? []).length;
         const withoutBonus = DisplayCard.wrapEmojiTooltips(FormulaDisplay.forDisplay("1d6+@str[fire]", actorWith()));

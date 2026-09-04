@@ -712,7 +712,7 @@
               "xmax": "",
               "ymin": "",
               "ymax": "",
-              "xvalue": "fq.special.sacrificedSkeleton",
+              "xvalue": "fq.minions.sacrificedSkeleton",
               "yvalue": "",
               "replayable": "",
               "sound": "",
@@ -885,7 +885,7 @@
               "xmax": "",
               "ymin": "",
               "ymax": "",
-              "xvalue": "fq.special.sacrificedSkeleton",
+              "xvalue": "fq.minions.sacrificedSkeleton",
               "yvalue": "",
               "replayable": "",
               "sound": "",
@@ -1650,8 +1650,8 @@
               "xmax": "",
               "ymin": "",
               "ymax": "",
-              "xvalue": "SCRIPT:Math.min(game.user.character.system.fq.special.sacrificedSkeleton,3)",
-              "yvalue": "fq.special.sacrificedSkeleton",
+              "xvalue": "SCRIPT:Math.min(game.user.character.system.fq.minions.sacrificedSkeleton,3)",
+              "yvalue": "fq.minions.sacrificedSkeleton",
               "messages": [
                 {
                   "key": "FQCARDENGINE.CardMsgMinionInvoked",
@@ -1670,7 +1670,7 @@
               ],
               "customEvals": [
                 {
-                  "script": "Math.min(game.user.character.system.fq.special.sacrificedSkeleton,3) > 0 && Math.min(game.user.character.system.fq.special.sacrificedSkeleton,3) <= 3",
+                  "script": "Math.min(game.user.character.system.fq.minions.sacrificedSkeleton,3) > 0 && Math.min(game.user.character.system.fq.minions.sacrificedSkeleton,3) <= 3",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.WarningMsgXValueInferiorXMin",
@@ -2089,7 +2089,7 @@
               "xmax": "",
               "ymin": "",
               "ymax": "",
-              "xvalue": "fq.special.sacrificedSkeleton",
+              "xvalue": "fq.minions.sacrificedSkeleton",
               "yvalue": "",
               "applyEffectsFormulas": [
                 {
@@ -2131,7 +2131,7 @@
               ],
               "customEvals": [
                 {
-                  "script": "game.user.character.system.fq.special.sacrificedSkeleton > 0",
+                  "script": "game.user.character.system.fq.minions.sacrificedSkeleton > 0",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.SacrifySkeletonButton",

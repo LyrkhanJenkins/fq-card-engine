@@ -383,13 +383,13 @@ describe("CardCondition — état du personnage", () => {
         expect(CardCondition.counterEquals("bladeCharging", 0)).toBe(true);
     });
 
-    it("specialAtLeast : attribut spécial FQ au minimum requis", () => {
-        mountScene({character: {id: "me", system: {fq: {special: {sacrificedSkeleton: 2}}}}});
-        expect(CardCondition.specialAtLeast("sacrificedSkeleton")).toBe(true);
-        expect(CardCondition.specialAtLeast("sacrificedSkeleton", 3)).toBe(false);
+    it("minionsAtLeast : compteur de sbires au minimum requis", () => {
+        mountScene({character: {id: "me", system: {fq: {minions: {sacrificedSkeleton: 2}}}}});
+        expect(CardCondition.minionsAtLeast("sacrificedSkeleton")).toBe(true);
+        expect(CardCondition.minionsAtLeast("sacrificedSkeleton", 3)).toBe(false);
 
         mountScene({character: {id: "me"}});
-        expect(CardCondition.specialAtLeast("sacrificedSkeleton")).toBe(false);
+        expect(CardCondition.minionsAtLeast("sacrificedSkeleton")).toBe(false);
     });
 
     it("hasMana / missingMana : réserve de mana", () => {

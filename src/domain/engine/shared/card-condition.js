@@ -621,16 +621,16 @@ export default class CardCondition {
     }
 
     /**
-     * Indique si un attribut spécial FQ du personnage (`system.fq.special.*`)
-     * atteint un minimum.
+     * Indique si un compteur de sbires du personnage (`system.fq.minions.*`)
+     * atteint un minimum — le squelette sacrifié de la sorcière, par exemple.
      *
-     * @param {string} name  - Le nom de l'attribut spécial.
+     * @param {string} name  - Le nom du compteur.
      * @param {number} [min] - Le minimum requis (défaut 1).
      *
-     * @returns {boolean} True si l'attribut vaut au moins `min`.
+     * @returns {boolean} True si le compteur vaut au moins `min`.
      */
-    static specialAtLeast(name, min = 1) {
-        return Number(Constants.actorFQ?.special?.[name] ?? 0) >= min;
+    static minionsAtLeast(name, min = 1) {
+        return Number(Constants.actorFQ?.minions?.[name] ?? 0) >= min;
     }
 
     /**

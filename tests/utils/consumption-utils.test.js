@@ -88,16 +88,16 @@ describe("ResourceHandler", () => {
             expect(localActor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
         });
 
-        it("resets special.sacrificedSkeleton when xvalue matches", () => {
+        it("resets minions.sacrificedSkeleton when xvalue matches", () => {
             const localActor = {system: {fq: {}}, update: vi.fn()};
-            ResourceHandler.consumeResources({xvalue: "fq.special.sacrificedSkeleton"}, localActor);
-            expect(localActor.update).toHaveBeenCalledWith({"system.fq.special.sacrificedSkeleton": 0});
+            ResourceHandler.consumeResources({xvalue: "fq.minions.sacrificedSkeleton"}, localActor);
+            expect(localActor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 0});
         });
 
-        it("resets special.sacrificedSkeleton when yvalue matches", () => {
+        it("resets minions.sacrificedSkeleton when yvalue matches", () => {
             const localActor = {system: {fq: {}}, update: vi.fn()};
-            ResourceHandler.consumeResources({yvalue: "fq.special.sacrificedSkeleton"}, localActor);
-            expect(localActor.update).toHaveBeenCalledWith({"system.fq.special.sacrificedSkeleton": 0});
+            ResourceHandler.consumeResources({yvalue: "fq.minions.sacrificedSkeleton"}, localActor);
+            expect(localActor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 0});
         });
 
         it("resets cards.currentDrop when xvalue matches fq.cards.currentDrop", () => {

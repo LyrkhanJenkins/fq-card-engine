@@ -1018,6 +1018,28 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(RollService.hasAbilitiesBonus(undefined)).toBe(false);
             expect(RollService.hasAbilitiesBonus(null)).toBe(false);
         });
+
+        it("hasAbilitiesBonus : false sans lever quand l'utilisateur n'a aucun personnage assigné (MJ)", () => {
+            const character = game.user.character;
+            game.user.character = undefined;
+            try {
+                expect(() => RollService.hasAbilitiesBonus("@dex")).not.toThrow();
+                expect(RollService.hasAbilitiesBonus("@dex")).toBe(false);
+                expect(RollService.hasAbilitiesBonus("@str")).toBe(false);
+            } finally {
+                game.user.character = character;
+            }
+        });
+
+        it("replaceAbilitiesBonus : substitue 0 quand l'utilisateur n'a aucun personnage assigné (MJ)", () => {
+            const character = game.user.character;
+            game.user.character = undefined;
+            try {
+                expect(RollService.replaceAbilitiesBonus("@str/@dex")).toBe("0/0");
+            } finally {
+                game.user.character = character;
+            }
+        });
     });
 
     describe("getNbValideMinionLocationSelected / getNbMinionLocationSelected", () => {

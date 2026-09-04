@@ -494,6 +494,13 @@
                                     name=(concat "system.fq.choices." i ".minions." minionIndex ".name")
                                     rootId=../../rootId
                             }}
+                            <label>{{localize "FQCARDENGINE.MinionType"}}</label>
+                            {{formInput
+                                    ../../fields.fq.fields.choices.element.fields.minions.element.fields.type
+                                    value=minion.type
+                                    name=(concat "system.fq.choices." i ".minions." minionIndex ".type")
+                                    rootId=../../rootId
+                            }}
                             <button type="button" data-action="removeMinion"
                                     data-index="{{i}}" data-minion-index="{{minionIndex}}">❌
                             </button>

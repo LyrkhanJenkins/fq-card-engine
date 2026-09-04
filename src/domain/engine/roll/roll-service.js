@@ -122,7 +122,7 @@ export default class RollService {
 
     /**
      * Remplace chaque jeton de bonus nommé (`@bonus.<nom>`) par la valeur
-     * `system.fq.bonus.cards.<nom>` du personnage courant (posée par des effets
+     * `system.fq.cardBonus.<nom>` du personnage courant (posée par des effets
      * actifs), ou `0` si aucune valeur n'est déclarée. Les jetons de bonus sont
      * résolus AVANT les caractéristiques : `@bonus.` doit disparaître de la
      * chaîne sans jamais être tronqué par un autre remplacement.
@@ -133,7 +133,7 @@ export default class RollService {
      */
     static replaceNamedBonus(str) {
         return str.replace(/@bonus\.(\w+)/g, (_, name) => {
-            const bonus = Number(Constants.actorFQ?.bonus?.cards?.[name]);
+            const bonus = Number(Constants.actorFQ?.cardBonus?.[name]);
             return Number.isFinite(bonus) ? bonus.toString() : "0";
         });
     }
@@ -141,6 +141,11 @@ export default class RollService {
     /**
      * Indique si une chaîne référence une caractéristique dont le modificateur du
      * personnage est positif (sert à décider d'afficher un indicateur de bonus).
+     * Un utilisateur sans personnage assigné — typiquement le MJ qui ouvre le
+     * grimoire ou la main d'un joueur — n'a aucune caractéristique à comparer :
+     * aucun indicateur n'est alors affiché. Sans ce repli, la lecture lève un
+     * TypeError qui remonte jusqu'au rendu des cartes et l'annule entièrement,
+     * sans message.
      *
      * @param {string} str - La chaîne à inspecter.
      *
@@ -148,6 +153,7 @@ export default class RollService {
      */
     static hasAbilitiesBonus(str) {
         if (typeof str !== "string") return false;
-        return ABILITIES.some(ability => str.includes(`@${ability}`) && Constants.actorAbi[ability].mod > 0);
+        const abilities = Constants.actorAbi;
+        return ABILITIES.some(ability => str.includes(`@${ability}`) && abilities?.[ability]?.mod > 0);
     }
 }

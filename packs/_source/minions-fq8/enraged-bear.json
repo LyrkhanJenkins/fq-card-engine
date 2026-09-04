@@ -840,7 +840,7 @@
         "pick": 0,
         "currentDrop": 0
       },
-      "special": {
+      "minions": {
         "sacrificedSkeleton": 1
       }
     },

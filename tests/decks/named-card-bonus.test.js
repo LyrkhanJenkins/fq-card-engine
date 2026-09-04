@@ -15,7 +15,7 @@ const {playChoice} = await import("./play-harness.js");
 
 /**
  * Jetons de bonus nommés `@bonus.<nom>` : dans N'IMPORTE QUELLE formule d'un
- * choix, le jeton est remplacé par `system.fq.bonus.cards.<nom>` de l'acteur
+ * choix, le jeton est remplacé par `system.fq.cardBonus.<nom>` de l'acteur
  * (posé par des effets actifs en jeu), ou par 0 si aucune valeur n'est
  * déclarée — via le VRAI `playValidatedCard` (la substitution passe par
  * `replaceCardContentAbilitiesBonus` → `RollService.replaceNamedBonus`).
@@ -40,7 +40,7 @@ describe("@bonus.<nom> — bonus nommés dans les formules (bout en bout)", () =
 
     test("un jeton déclaré sur l'acteur s'ajoute aux dégâts", async () => {
         const result = await playChoice(makeDamageCard("1d4 + @bonus.knife"), 0, {
-            world: {character: {system: {fq: {bonus: {cards: {knife: 2}}}}}},
+            world: {character: {system: {fq: {cardBonus: {knife: 2}}}}},
             dice: DICE
         });
 
@@ -67,7 +67,7 @@ describe("@bonus.<nom> — bonus nommés dans les formules (bout en bout)", () =
         };
 
         const result = await playChoice(card, 0, {
-            world: {character: {system: {fq: {action: {value: 50, max: 200}, bonus: {cards: {haste: 2}}}}}}
+            world: {character: {system: {fq: {action: {value: 50, max: 200}, cardBonus: {haste: 2}}}}}
         });
 
         expect(result.threw).toBe(false);

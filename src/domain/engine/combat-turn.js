@@ -104,7 +104,7 @@ export default class CombatTurn {
      * @returns {void}
      */
     static resetSacrificedSkeleton(combatants) {
-        CombatTurn.#resetAttribute(combatants, "system.fq.special.sacrificedSkeleton", () => 0);
+        CombatTurn.#resetAttribute(combatants, "system.fq.minions.sacrificedSkeleton", () => 0);
     }
 
     /**

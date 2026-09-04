@@ -153,7 +153,7 @@ describe("render-token", () => {
             const hook = getHook("renderTokenHUD");
             const {container, colLeft} = buildHudHtml();
             game.user.isGM = true;
-            game.user.character.system.fq.special = {sacrificedSkeleton: 0};
+            game.user.character.system.fq.minions = {sacrificedSkeleton: 0};
             const hudObject = {
                 document: {name: "Skeleton lvl 2"}, name: "Skeleton lvl 2", id: "token-2", actor: {items: [], isOwner: true}
             };
@@ -164,7 +164,7 @@ describe("render-token", () => {
 
             expect(ChatMessage.create).toHaveBeenCalled();
             // "Skeleton lvl 2" -> score de sacrifice 2 (getSacrificedScore)
-            expect(game.user.character.update).toHaveBeenCalledWith({"system.fq.special.sacrificedSkeleton": 2});
+            expect(game.user.character.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 2});
             expect(socket.executeAsGM).toHaveBeenCalledWith("deleteToken", "token-2");
         });
     });

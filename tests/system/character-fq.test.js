@@ -1,21 +1,22 @@
 import {describe, expect, it} from "vitest";
 import CharacterDataFQ from "../../src/domain/system/actors/character-fq.mjs";
 
-// Caractérisation de la composition `common` + `cards` + `special` pour les
+// Caractérisation de la composition `common` + `cards` + `cardBonus` + `minions` pour les
 // personnages (MODEL-03). `defineSchema().fq` est l'objet obtenu par le
-// SchemaField mocké : `{...CreatureFQTemplate.common, cards, special}`.
+// SchemaField mocké : `{...CreatureFQTemplate.common, cards, cardBonus, minions}`.
 
 describe("CharacterDataFQ.defineSchema", () => {
     const fq = CharacterDataFQ.defineSchema().fq;
 
-    it("expose les clés communes plus cards et special", () => {
+    it("expose les clés communes plus cards, cardBonus et minions", () => {
         expect(fq).toHaveProperty("action");
         expect(fq).toHaveProperty("mana");
         expect(fq).toHaveProperty("zeal");
         expect(fq).toHaveProperty("attributes");
         expect(fq).toHaveProperty("bonus");
         expect(fq).toHaveProperty("cards");
-        expect(fq).toHaveProperty("special");
+        expect(fq).toHaveProperty("cardBonus");
+        expect(fq).toHaveProperty("minions");
     });
 
     it("hérite des défauts du template commun (composition de CreatureFQTemplate.common)", () => {
@@ -31,9 +32,9 @@ describe("CharacterDataFQ.defineSchema", () => {
         });
     });
 
-    describe("special", () => {
+    describe("minions", () => {
         it("verrouille le défaut sacrificedSkeleton", () => {
-            expect(fq.special.sacrificedSkeleton.initial).toBe(1);
+            expect(fq.minions.sacrificedSkeleton.initial).toBe(1);
         });
     });
 });

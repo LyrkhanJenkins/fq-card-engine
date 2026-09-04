@@ -67,6 +67,7 @@
               "minions": [
                 {
                   "name": "Tamed Wolf",
+                  "type": "beast",
                   "data": {
                     "hp": "10+@cha",
                     "damageBonus": "+ceil(@cha/3)",
@@ -1444,6 +1445,7 @@
               "minions": [
                 {
                   "name": "Enraged Bear",
+                  "type": "beast",
                   "data": {
                     "hp": "35+3*@cha",
                     "damageBonus": "+@int+@dex",
@@ -2958,6 +2960,536 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trPitTrap0000001"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.BeastPack"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.BeastPack",
+      "description": "",
+      "_id": "trapBeastPack01x",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "level": 13,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "action": "-12",
+              "mana": "-2",
+              "zeal": "-3",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgBeastCapIncreased",
+                  "arg": ""
+                }
+              ],
+              "minions": [],
+              "applyEffectsFormulas": [
+                {
+                  "title": "Beast Pack",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Beast Pack",
+                          "img": "icons/magic/control/silhouette-grow-shrink-blue.webp",
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": [
+                            {
+                              "key": "system.fq.minions.beast.max",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          }
+                        }
+                      ],
+                      "removeEffectName": "",
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgBeastCapIncreased",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "hasBeenPlayed": false,
+              "customEvals": [
+                {
+                  "script": "!FqCardEngineModule.cond.selfHasEffect([\"Beast Pack\"])",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgBeastCapAlreadyRaised",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 22,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788000000000,
+        "modifiedTime": 1788000000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastPack01x"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.BeastTraining"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.BeastTraining",
+      "description": "",
+      "_id": "trapBeastTrain1x",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "level": 13,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "action": "-8",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgBeastHpBonus",
+                  "arg": ""
+                }
+              ],
+              "minions": [],
+              "applyEffectsFormulas": [
+                {
+                  "title": "Beast Training",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Beast Training",
+                          "img": "icons/magic/life/heart-cross-green.webp",
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": [
+                            {
+                              "key": "system.fq.minions.beast.hp",
+                              "value": "5",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          }
+                        }
+                      ],
+                      "removeEffectName": "",
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgBeastHpBonus",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 23,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788000000000,
+        "modifiedTime": 1788000000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastTrain1x"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.SharpenedFangs"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.SharpenedFangs",
+      "description": "",
+      "_id": "trapSharpFangs1x",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "level": 13,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "-2",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgBeastDamageBonus",
+                  "arg": ""
+                }
+              ],
+              "minions": [],
+              "applyEffectsFormulas": [
+                {
+                  "title": "Sharpened Fangs",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Sharpened Fangs",
+                          "img": "icons/skills/melee/blade-tips-double-blue.webp",
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": [
+                            {
+                              "key": "system.fq.minions.beast.damage",
+                              "value": "2",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          }
+                        }
+                      ],
+                      "removeEffectName": "",
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgBeastDamageBonus",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 24,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788000000000,
+        "modifiedTime": 1788000000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapSharpFangs1x"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.HuntingInstinct"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.HuntingInstinct",
+      "description": "",
+      "_id": "trapHuntInstin1x",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "level": 13,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "action": "-6",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgBeastMovementBonus",
+                  "arg": ""
+                }
+              ],
+              "minions": [],
+              "applyEffectsFormulas": [
+                {
+                  "title": "Hunting Instinct",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Hunting Instinct",
+                          "img": "icons/skills/movement/feet-winged-boots-glowing-yellow.webp",
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": [
+                            {
+                              "key": "system.fq.minions.beast.movement",
+                              "value": "5",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          }
+                        }
+                      ],
+                      "removeEffectName": "",
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgBeastMovementBonus",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 25,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788000000000,
+        "modifiedTime": 1788000000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapHuntInstin1x"
     }
   ],
   "width": null,

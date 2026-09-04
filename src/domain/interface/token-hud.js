@@ -58,11 +58,11 @@ export default class TokenHud {
             ChatMessage.create({
                 speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
                 content: `<span>${game.i18n.format("FQCARDENGINE.SacrifySkeletonMsg")}, ${game.i18n.format("FQCARDENGINE.SacrificedScoreSkeletonMsg",
-                    {"sacrifice": Constants.actorCurrent.system.fq.special.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)})}</span>`
+                    {"sacrifice": Constants.actorCurrent.system.fq.minions.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)})}</span>`
             });
             Constants.actorCurrent.update({
-                "system.fq.special.sacrificedSkeleton":
-                    Constants.actorCurrent.system.fq.special.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)
+                "system.fq.minions.sacrificedSkeleton":
+                    Constants.actorCurrent.system.fq.minions.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)
             });
             socket.executeAsGM("deleteToken", token.id);
         });

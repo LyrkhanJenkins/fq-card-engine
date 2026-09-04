@@ -430,7 +430,7 @@ describe("hook/combat.hook.js", () => {
             // resetCurrentDropCard
             expect(activeCombatant.actor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
             // resetSacrificedSkeleton
-            expect(activeCombatant.actor.update).toHaveBeenCalledWith({"system.fq.special.sacrificedSkeleton": 0});
+            expect(activeCombatant.actor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 0});
             // drawHand : utilisateur actif -> executeAsUser ; utilisateur inactif -> executeAsGM
             expect(socket.executeAsUser).toHaveBeenCalledWith("drawCard", "active-user", "hand-active", "deck-active", 4);
             expect(socket.executeAsGM).toHaveBeenCalledWith("drawCard", "hand-inactive", "deck-inactive", 2);
@@ -484,7 +484,7 @@ describe("hook/combat.hook.js", () => {
 
             await getHook("combatTurnChange")(combat, {}, {});
 
-            expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.special.sacrificedSkeleton": 0});
+            expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 0});
             expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
             expect(socket.executeAsUser).toHaveBeenCalledWith("drawCard", "player-user", "hand-1", "deck-1", 2);
             expect(recallSpy).not.toHaveBeenCalled();

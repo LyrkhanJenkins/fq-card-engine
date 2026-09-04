@@ -148,9 +148,9 @@ export default class ResourceHandler {
                 "system.fq.cards.currentDrop": newDrop
             });
         }
-        if (resources?.xvalue === "fq.special.sacrificedSkeleton" || resources?.yvalue === "fq.special.sacrificedSkeleton") {
+        if (resources?.xvalue === "fq.minions.sacrificedSkeleton" || resources?.yvalue === "fq.minions.sacrificedSkeleton") {
             actor.update({
-                "system.fq.special.sacrificedSkeleton": 0
+                "system.fq.minions.sacrificedSkeleton": 0
             });
         }
         if (resources?.xvalue === "fq.cards.currentDrop" || resources?.yvalue === "fq.cards.currentDrop") {

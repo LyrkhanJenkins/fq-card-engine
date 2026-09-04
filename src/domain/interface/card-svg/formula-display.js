@@ -1003,7 +1003,7 @@ export default class FormulaDisplay {
 
     /**
      * Remplace, dans une chaîne, chaque jeton de bonus nommé (`@bonus.<nom>`)
-     * par la valeur `system.fq.bonus.cards.<nom>` de l'acteur, ou `0` si aucune
+     * par la valeur `system.fq.cardBonus.<nom>` de l'acteur, ou `0` si aucune
      * valeur n'est déclarée. Sémantique identique à
      * `RollService.replaceNamedBonus`, appliquée AVANT la simplification pour
      * que le jeton n'atteigne jamais le parseur. Aucune pastille n'est jamais
@@ -1016,7 +1016,7 @@ export default class FormulaDisplay {
      */
     static substituteNamedBonusTokens(str, actor) {
         return str.replace(/@bonus\.(\w+)/g, (_, name) => {
-            const bonus = Number(actor?.system?.fq?.bonus?.cards?.[name]);
+            const bonus = Number(actor?.system?.fq?.cardBonus?.[name]);
             return Number.isFinite(bonus) ? bonus.toString() : "0";
         });
     }

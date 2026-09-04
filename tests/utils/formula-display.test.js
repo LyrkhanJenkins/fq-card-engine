@@ -1042,7 +1042,7 @@ describe("FormulaDisplay — garde-fous d'injection (Task 3)", () => {
     });
 
     it("une formule contenant @bonus.serenityRune ne produit aucune pastille supplémentaire pour ce bonus (D-12)", () => {
-        game.user.character.system.fq = {bonus: {cards: {serenityRune: 2}}};
+        game.user.character.system.fq = {cardBonus: {serenityRune: 2}};
         const withoutBonus = FormulaDisplay.forDisplay("1d6+@str[fire]", actorWith());
         game.user.character.system.abilities = {...NEUTRAL_ABILITIES};
         const withBonus = FormulaDisplay.forDisplay("1d6+@str+@bonus.serenityRune[fire]", actorWith());
