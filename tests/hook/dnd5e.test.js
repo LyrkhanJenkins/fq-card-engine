@@ -359,6 +359,10 @@ describe("integration/dnd5e", () => {
                 expect.objectContaining({forcedTargets: [fuyard]}), expect.any(Array), reactant, "slashing");
             // Une attaque d'opportunité est gratuite.
             expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
+            // …et le chat le dit, par un message à part : sans lui, une AO est
+            // indiscernable d'une attaque ordinaire dans le fil de discussion.
+            expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
+                content: expect.stringContaining("FQCARDENGINE.ChatMessagePartOpportunityAttack")}));
         });
 
         it("joue les FX seulement après la fin des animations de dés (Dice So Nice)", async () => {

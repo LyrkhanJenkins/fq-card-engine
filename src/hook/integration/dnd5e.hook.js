@@ -2,6 +2,7 @@ import ResourceHandler from "../../domain/engine/shared/resource-handler.js";
 import Damage from "../../domain/engine/roll/damage.js";
 import {socket} from "./socketlib.hook.js";
 import Constants from "../../domain/constants.js";
+import {createInfo} from "../../core/utils/chat.utils.js";
 import Fx from "../../domain/engine/shared/fx.js";
 import TargetingPredicates from "../../domain/engine/shared/targeting-predicates.js";
 import OpportunityAttack from "../../domain/engine/reaction/opportunity-attack.js";
@@ -211,6 +212,12 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
                 await socket.executeAsGM("applyActorHpModification", res.targetTokenId, res.value, res.type);
             }
 
+            // `opportunityTarget` n'est posé que par la résolution d'attaque
+            // d'opportunité : sans ce message, une AO est indiscernable d'une
+            // attaque ordinaire dans le fil de discussion.
+            if (opportunityTarget) {
+                createInfo(game.i18n.localize("FQCARDENGINE.ChatMessagePartOpportunityAttack"), {actor: item.actor});
+            }
             Damage.displayResult(item.actor, resultArray, null);
             await socket.executeAsGM("logCardPlayed", resultArray, cardContent, item.actor.id,
                 TargetingPredicates.resolveTargetActorIds(cardContent, item.actor));

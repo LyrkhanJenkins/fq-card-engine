@@ -1292,5 +1292,6 @@
   "FQCARDCHOICE.Evil" : "Evil",
   "FQCARDCHOICE.Demon" : "Demon",
   "FQCARDCHOICE.Angel" : "Angel",
-  "FQCARDCHOICE.SummonSkeleton" : "Summon Skeleton"
+  "FQCARDCHOICE.SummonSkeleton" : "Summon Skeleton",
+  "FQCARDENGINE.ChatMessagePartOpportunityAttack": "Opportunity attack"
 }
