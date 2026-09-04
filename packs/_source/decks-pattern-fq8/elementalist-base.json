@@ -410,7 +410,7 @@
               "minReach": "1",
               "maxReach": "6",
               "nbTargets": "",
-              "damage": "(@wis+1d4)[fire]",
+              "damage": "(@wis+1d6)[fire]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -488,8 +488,8 @@
               "replayable": "",
               "sound": "",
               "visual": {
-                "path": "jb2a.fireball.explosion.orange",
-                "onTarget": true
+                "path": "",
+                "onTarget": false
               },
               "name": "",
               "messages": [],
