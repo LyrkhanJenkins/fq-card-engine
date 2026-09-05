@@ -171,6 +171,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - **Transmutation de ressources** : Sang Bleu (2 PV → 1 mana), Le Bien Et Le Mal (transfert de PV à portée quasi illimitée), Soins d'Urgence (défausse → soin), Infusion de Mana (génère une source de mana passive permanente).
 - **Cartes génératives** : Infusion de Mana et Frappe de Lumière (AoE ennemis qui débloque un soin de groupe gratuit).
 - **Auto-sabotage assumé** : Frappe Solaire neutralise CON et SAG 3 tours après le nuke.
+- **Beaucoup de carte automatique**: Les auras qui coute 1 mana par tour a combiner avec les infusions de mana
 
 **Boucle de jeu** : maudire tôt → laisser tourner les DoT en soignant/réagissant → détoner ; alimenter le tout par conversion de ressources.
 

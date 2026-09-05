@@ -3605,6 +3605,215 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trAttackOrder001"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.HuntingFalcon"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.HuntingFalcon",
+      "description": "",
+      "_id": "Q7xhCz2mNbT4vRoa",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "level": 13,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "action": "-14",
+              "mana": "-2",
+              "zeal": "-3",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Zone",
+              "minReach": "10",
+              "maxReach": "16",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgMinionInvoked",
+                  "arg": "{\"minion\": \"Hunting Falcon\"}"
+                }
+              ],
+              "minions": [
+                {
+                  "name": "Hunting Falcon",
+                  "type": "beast",
+                  "data": {
+                    "hp": "18+@cha",
+                    "damageBonus": "+@dex",
+                    "movement": ""
+                  }
+                }
+              ],
+              "replayable": "",
+              "sound": "specific_spells/incantation.mp3",
+              "visual": {
+                "path": "jb2a.magic_signs.circle.02.conjuration.intro.yellow",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "zoneShape": "rectangle",
+              "zoneSize": "1",
+              "zoneWidth": "1",
+              "zoneAngle": "",
+              "minionsOnZone": true
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 27,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786500000000,
+        "modifiedTime": 1786500000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Q7xhCz2mNbT4vRoa"
+    },
+    {
+      "_id": "Yk3pLdW8sJfE6nHu",
+      "name": "FQCARDTITLE.GiantTurtle",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.GiantTurtle"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 28,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "trapper",
+          "choices": [
+            {
+              "action": "-16",
+              "mana": "-3",
+              "zeal": "-3",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgMinionInvoked",
+                  "arg": "{\"minion\": \"Giant Turtle\"}"
+                }
+              ],
+              "minions": [
+                {
+                  "name": "Giant Turtle",
+                  "type": "beast",
+                  "data": {
+                    "hp": "70+5*@cha",
+                    "damageBonus": "+ceil(@cha/3)",
+                    "movement": ""
+                  }
+                }
+              ],
+              "replayable": "",
+              "sound": "specific_spells/incantation.mp3",
+              "visual": {
+                "path": "jb2a.magic_signs.circle.02.conjuration.intro.yellow",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ],
+          "level": 13,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786500000000,
+        "modifiedTime": 1786500000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Yk3pLdW8sJfE6nHu"
     }
   ],
   "width": null,
