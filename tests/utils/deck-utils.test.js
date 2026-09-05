@@ -284,7 +284,7 @@ describe("TradingCards", () => {
             };
             const cardContent = {targetType: "Default", damage: "1d6"};
             PlayCard.logCardPlayed([{key: "Dégâts", value: 5}], cardContent, "userCharacterId",
-                ["target1", "target2"]);
+                ["target1", "target2"], "FQCARDTITLE.Ambush");
 
             expect(updateMock).toHaveBeenCalledWith({
                 "flags.fq": {
@@ -292,10 +292,23 @@ describe("TradingCards", () => {
                         actorId: "userCharacterId",
                         targetsId: ["target1", "target2"],
                         round: 2,
-                        turn: 1
+                        turn: 1,
+                        cardName: "FQCARDTITLE.Ambush"
                     })]
                 }
             });
+        });
+
+        // Le contenu journalisé est le CHOIX joué : il n'identifie pas la carte.
+        // Sans nom fourni (attaque dnd5e), l'entrée porte explicitement null.
+        it("journalise null comme nom de carte quand l'appelant n'en fournit pas", () => {
+            const updateMock = vi.fn();
+            game.combat = {flags: {fq: {logs: []}}, round: 2, turn: 1, update: updateMock};
+
+            PlayCard.logCardPlayed([], {targetType: "Default"}, "me", ["target1"]);
+
+            const {logs} = updateMock.mock.calls[0][0]["flags.fq"];
+            expect(logs[0].cardName).toBeNull();
         });
 
         it("n'ajoute pas l'entrée dans le tableau des flags : muter en place viderait le diff de update()", () => {

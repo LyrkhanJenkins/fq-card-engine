@@ -521,7 +521,7 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
             .map(call => ({targetTokenId: call[1], value: call[2], type: call[3]})),
         logCalls: socketCalls
             .filter(call => call[0] === "logCardPlayed")
-            .map(call => ({resultArray: call[1], cardContent: call[2]})),
+            .map(call => ({resultArray: call[1], cardContent: call[2], cardName: call[5] ?? null})),
         effectsCreated: socketCalls
             .filter(call => call[0] === "addEffectForTarget")
             .map(call => ({effect: call[1], targetId: call[2]})),

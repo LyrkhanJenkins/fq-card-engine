@@ -35,6 +35,20 @@ export default class Geometry {
     }
 
     /**
+     * Retourne la position (px) du coin haut-gauche d'un token, qu'il soit donné
+     * sous forme de placeable (qui porte ses coordonnées) ou de document.
+     * Normalisation unique, partagée par tous les prédicats qui comparent des
+     * cases : alignements, diagonales, adjacence.
+     *
+     * @param {object} token - Le token (placeable ou document).
+     *
+     * @returns {{x: number, y: number}} La position en pixels.
+     */
+    static positionOf(token) {
+        return {x: token?.x ?? token?.document?.x, y: token?.y ?? token?.document?.y};
+    }
+
+    /**
      * Calcule la distance minimale (en cases) entre deux tokens donnés sous
      * forme de placeable ou de document (le document est utilisé s'il existe).
      *

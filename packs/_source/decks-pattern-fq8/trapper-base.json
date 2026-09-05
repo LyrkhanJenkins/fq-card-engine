@@ -1170,7 +1170,7 @@
               ],
               "customEvals": [
                 {
-                  "script": "!FqCardEngineModule.cond.hasPlayedCardThisRound() || FqCardEngineModule.cond.lastPlayedCardIs(\"Ambush\")",
+                  "script": "!FqCardEngineModule.cond.hasPlayedCardThisRound() || FqCardEngineModule.cond.lastPlayedCardIs(\"FQCARDTITLE.Ambush\")",
                   "errorMessages": [
                     {
                       "key": "FQCARDENGINE.CardWarningMsgOnlyThisSpellThisTurn",

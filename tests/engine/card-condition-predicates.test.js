@@ -122,17 +122,29 @@ describe("CardCondition — prédicats de logs de combat", () => {
 
     it("hasPlayedCardThisRound / lastPlayedCardIs : basés sur mes logs du round", () => {
         mountScene({tokens: [me()], logs: [
-            {actorId: "me", targetsId: [], round: 2, resultArray: {}, cardContent: {name: "Ambush"}},
-            {actorId: "foe", targetsId: [], round: 2, resultArray: {}, cardContent: {name: "Autre"}}
+            {actorId: "me", targetsId: [], round: 2, resultArray: {}, cardName: "FQCARDTITLE.Ambush", cardContent: {}},
+            {actorId: "foe", targetsId: [], round: 2, resultArray: {}, cardName: "FQCARDTITLE.Other", cardContent: {}}
         ]});
 
         expect(CardCondition.hasPlayedCardThisRound()).toBe(true);
-        expect(CardCondition.lastPlayedCardIs("Ambush")).toBe(true);
-        expect(CardCondition.lastPlayedCardIs("Autre")).toBe(false);
+        expect(CardCondition.lastPlayedCardIs("FQCARDTITLE.Ambush")).toBe(true);
+        expect(CardCondition.lastPlayedCardIs("FQCARDTITLE.Other")).toBe(false);
 
         mountScene({tokens: [me()], logs: []});
         expect(CardCondition.hasPlayedCardThisRound()).toBe(false);
-        expect(CardCondition.lastPlayedCardIs("Ambush")).toBe(false);
+        expect(CardCondition.lastPlayedCardIs("FQCARDTITLE.Ambush")).toBe(false);
+    });
+
+    // Le NOM DE CARTE, pas le nom du choix : un choix n'en porte le plus souvent
+    // aucun (`name: ""`), si bien qu'une comparaison sur `cardContent.name` ne
+    // reconnaîtrait jamais la carte que la condition vise.
+    it("lastPlayedCardIs : ignore le nom du choix et une attaque dnd5e (sans carte)", () => {
+        mountScene({tokens: [me()], logs: [
+            {actorId: "me", targetsId: [], round: 2, resultArray: {}, cardName: null,
+                cardContent: {name: "FQCARDTITLE.Ambush"}}
+        ]});
+
+        expect(CardCondition.lastPlayedCardIs("FQCARDTITLE.Ambush")).toBe(false);
     });
 
     it("lastPlayedCardCostMana : ma dernière carte du combat (tous rounds) coûtait du mana", () => {
@@ -513,6 +525,23 @@ describe("CardCondition.isReactiveReady — verdict du glow des réactifs", () =
         game.combat.combatant = undefined;
 
         expect(CardCondition.isReactiveReady(reactiveChoice())).toBe(true);
+    });
+
+    it("reactiveBlockedByOwnTurn : la règle partagée avec le garde de jouabilité", () => {
+        mountScene({tokens: [me()], logs: []});
+        game.combat.combatant = {actor: {id: "me"}};
+        expect(CardCondition.reactiveBlockedByOwnTurn(reactiveChoice())).toBe(true);
+        expect(CardCondition.reactiveBlockedByOwnTurn(reactiveChoice({reactive: false}))).toBe(false);
+        expect(CardCondition.reactiveBlockedByOwnTurn(undefined)).toBe(false);
+
+        game.combat.combatant = {actor: {id: "foe"}};
+        expect(CardCondition.reactiveBlockedByOwnTurn(reactiveChoice())).toBe(false);
+
+        game.combat.combatant = undefined;
+        expect(CardCondition.reactiveBlockedByOwnTurn(reactiveChoice())).toBe(false);
+
+        mountScene({tokens: [me()], logs: null});
+        expect(CardCondition.reactiveBlockedByOwnTurn(reactiveChoice())).toBe(false);
     });
 
     it("suit le verdict des customEvals : échec ou erreur = non prêt", () => {

@@ -340,22 +340,29 @@ export default class PlayCard {
 
     /**
      * Enregistre dans les flags du combat actif une entrée de log décrivant la
-     * carte jouée : acteur, cibles, round/tour, résultats et contenu de la carte.
-     * N'a aucun effet hors combat.
+     * carte jouée : acteur, cibles, round/tour, résultats, contenu et nom de la
+     * carte. N'a aucun effet hors combat.
      *
      * Cette méthode s'exécute chez le MJ (socket `logCardPlayed`) : l'acteur et
      * les cibles ne peuvent donc pas être déduits du contexte local — le MJ n'a
      * pas forcément de personnage assigné et ses cibles ne sont pas celles du
      * joueur. Ils sont résolus par l'appelant et passés en paramètres.
      *
+     * Le nom de la CARTE est journalisé à part : `cardContent` est le CHOIX joué,
+     * dont le nom est le plus souvent vide et n'est jamais celui de sa carte. Sans
+     * ce champ, aucun prédicat ne peut reconnaître une carte déjà jouée
+     * (cf. `CardCondition.lastPlayedCardIs`). Il vaut null pour une attaque dnd5e,
+     * qui n'est pas une carte.
+     *
      * @param {object[]} initResultatArray - Le tableau des résultats de l'effet joué.
      * @param {object}   cardContent       - Le contenu (choix) de la carte jouée.
      * @param {string}   actorId           - L'id de l'acteur qui joue la carte.
      * @param {string[]} targetsId         - Les ids des acteurs ciblés.
+     * @param {?string}  [cardName]        - Le nom de la carte jouée (clé i18n), null hors carte.
      *
      * @returns {void}
      */
-    static logCardPlayed(initResultatArray, cardContent, actorId, targetsId) {
+    static logCardPlayed(initResultatArray, cardContent, actorId, targetsId, cardName = null) {
         if (game.combat) {
             // Copie du tableau : muter en place celui des flags rendrait le diff
             // de `update()` vide, et l'entrée ne serait ni persistée ni diffusée.
@@ -363,6 +370,7 @@ export default class PlayCard {
             FQLogs.push({
                 "actorId": actorId,
                 "targetsId": targetsId ?? [],
+                "cardName": cardName ?? null,
                 "round": game.combat.round,
                 "turn": game.combat.turn,
                 resultArray: {...initResultatArray},

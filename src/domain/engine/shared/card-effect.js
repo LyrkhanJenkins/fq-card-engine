@@ -139,7 +139,7 @@ export default class CardEffect {
 
             Damage.displayResult(Constants.actorCurrent, resultArray, cardMessages);
             await socket.executeAsGM("logCardPlayed", resultArray, cardContent, Constants.actorCurrent?.id,
-                TargetingPredicates.resolveTargetActorIds(cardContent));
+                TargetingPredicates.resolveTargetActorIds(cardContent), card?.name);
         } else {
             createInfo(game.i18n.localize("FQCARDENGINE.InfoMsgNoAddedEffect"), {actor: Constants.actorCurrent});
         }
@@ -902,7 +902,7 @@ export default class CardEffect {
             // S'agit t-il d'un sort réactive et peut on la jouer?
             if (cardContent && !cardContent.reactive && !ResourceHandler.validateUseSpellInTurn(Constants.actorCurrent)) {
                 return false;
-            } else if (cardContent?.reactive && (!game.combat || game.combat.combatant.actor?.id === Constants.actorCurrent?.id)) {
+            } else if (CardCondition.reactiveBlockedByOwnTurn(cardContent)) {
                 createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPlayReactiveCard"), {actor: Constants.actorCurrent});
                 return false;
             }

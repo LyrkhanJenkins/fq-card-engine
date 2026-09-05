@@ -122,7 +122,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         expect(Damage.buildHealDiceLauncher).toHaveBeenCalled();
         expect(Damage.displayResult).toHaveBeenCalled();
         expect(socket.executeAsGM).toHaveBeenCalledWith("logCardPlayed", expect.any(Array), cardContent,
-            expect.any(String), expect.any(Array));
+            expect.any(String), expect.any(Array), card.name);
     });
 
     it("applyCardEffect - branche cardContent null : publie InfoMsgNoAddedEffect", async () => {
@@ -872,7 +872,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(result).toBe(true);
         });
 
-        it("carte réactive jouée hors du tour de l'acteur : renvoie false et publie WarningMsgPlayReactiveCard", () => {
+        it("carte réactive jouée pendant le tour de son porteur : renvoie false et publie WarningMsgPlayReactiveCard", () => {
             game.combat = {round: 1, combatant: {actor: {id: "userCharacterId"}}};
             const cardContent = makeChoice({reactive: true});
 
@@ -882,6 +882,23 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
                 content: expect.stringContaining("FQCARDENGINE.WarningMsgPlayReactiveCard")
             }));
+        });
+
+        it("carte réactive jouée hors du tour de son porteur : reste jouable", () => {
+            game.combat = {round: 1, combatant: {actor: {id: "someoneElse"}}};
+            const cardContent = makeChoice({reactive: true});
+
+            expect(CardEffect.checkIfCanUseCard(cardContent, makeCard())).toBe(true);
+        });
+
+        // Un combat dont l'initiative n'est pas encore lancée n'a PAS de combattant
+        // actif : le garde de jouabilité doit répondre comme le halo de la main
+        // (`isReactiveReady`) — personne ne joue son tour, donc rien ne bloque.
+        it("carte réactive dans un combat sans combattant actif : reste jouable, sans erreur", () => {
+            game.combat = {round: 1};
+            const cardContent = makeChoice({reactive: true});
+
+            expect(CardEffect.checkIfCanUseCard(cardContent, makeCard())).toBe(true);
         });
 
         // v2.0.2 : le moteur ne contrôle PLUS DU TOUT le ciblage. Tout le contrôle

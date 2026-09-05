@@ -99,7 +99,7 @@ export default class CardCondition {
         if (!choice?.reactive || !game.combat) {
             return false;
         }
-        if (game.combat.combatant?.actor?.id === Constants.myId) {
+        if (CardCondition.reactiveBlockedByOwnTurn(choice)) {
             return false;
         }
         const substituted = {
@@ -110,6 +110,29 @@ export default class CardCondition {
             }))
         };
         return CardCondition.evaluate(substituted, card).ok;
+    }
+
+    /**
+     * Indique si un choix réactif est bloqué parce que c'est le tour de son
+     * porteur — LA règle « un réactif se joue hors de son tour », définie une
+     * seule fois pour ses deux lectures : le garde de jouabilité
+     * (`checkIfCanUseCard`, qui publie l'avertissement) et le verdict silencieux
+     * du halo de la main ({@link CardCondition.isReactiveReady}). Les deux ne
+     * doivent jamais diverger.
+     *
+     * Un combat dont le combattant actif n'est pas encore désigné ne bloque
+     * rien : personne ne joue son tour.
+     *
+     * @param {object} [cardContent] - Le contenu (choix) de la carte.
+     * @param {object} [actor]       - Le porteur ; à défaut, le personnage de l'utilisateur.
+     *
+     * @returns {boolean} True si le choix est réactif et que c'est le tour du porteur.
+     */
+    static reactiveBlockedByOwnTurn(cardContent, actor = Constants.actorCurrent) {
+        if (!cardContent?.reactive || !game.combat) {
+            return false;
+        }
+        return game.combat.combatant?.actor?.id === actor?.id;
     }
 
     /* ------------------------------------------------------------------ */
@@ -127,39 +150,99 @@ export default class CardCondition {
     }
 
     /**
-     * Retourne l'id du token de scène d'un acteur, ou undefined.
+     * Retourne les entrées de log portées par un acteur — celles du round
+     * courant, ou celles de tout le combat si `allRounds` est demandé. Tableau
+     * vide sans acteur ou hors combat : la garde commune à tous les prédicats
+     * qui interrogent « ce que j'ai joué ».
      *
-     * @param {object} actor - L'acteur recherché.
+     * @param {object}  actor               - L'acteur dont on lit les logs.
+     * @param {object}  [options]           - Les options de fenêtre.
+     * @param {boolean} [options.allRounds] - Vrai pour balayer tout le combat.
      *
-     * @returns {string|undefined} L'id du token sur la scène active.
+     * @returns {object[]} Les entrées de log de cet acteur.
      */
-    static #tokenIdOf(actor) {
-        return Constants.actorToken(actor?.id)?.id;
+    static #logsOf(actor, {allRounds = false} = {}) {
+        if (!actor?.id) {
+            return [];
+        }
+        const logs = allRounds ? (game.combat?.flags?.fq?.logs ?? []) : CardCondition.#logsThisRound();
+        return logs.filter(l => l.actorId === actor.id);
     }
 
     /**
-     * Extrait d'un log les entrées de dégâts FQ effectifs (valeur > 0) ayant
-     * touché le token donné.
+     * Retourne la dernière entrée de log d'un acteur dans la fenêtre demandée.
      *
-     * @param {object} log     - Une entrée de log de combat.
-     * @param {string} tokenId - L'id du token visé.
+     * @param {object} actor     - L'acteur dont on lit les logs.
+     * @param {object} [options] - Les options de fenêtre de {@link CardCondition.#logsOf}.
      *
-     * @returns {object[]} Les entrées de dégâts subies par ce token.
+     * @returns {object|undefined} La dernière entrée, ou undefined.
      */
-    static #damageEntriesOnToken(log, tokenId) {
+    static #lastLogOf(actor, options) {
+        return CardCondition.#logsOf(actor, options).at(-1);
+    }
+
+    /**
+     * Extrait d'un log les entrées de dégâts FQ effectifs (valeur > 0), toutes
+     * cibles confondues ou limitées au token donné. Définition unique de « des
+     * dégâts ont réellement été infligés ».
+     *
+     * @param {object} log       - Une entrée de log de combat.
+     * @param {string} [tokenId] - L'id du token visé ; à défaut, toutes les cibles.
+     *
+     * @returns {object[]} Les entrées de dégâts effectifs correspondantes.
+     */
+    static #damageEntries(log, tokenId) {
         return Object.values(log.resultArray ?? {})
-            .filter(r => r.type === "damageFQ" && r.value > 0 && r.targetTokenId === tokenId);
+            .filter(r => r.type === "damageFQ" && r.value > 0 && (!tokenId || r.targetTokenId === tokenId));
     }
 
     /**
-     * Retourne la position (px) d'un token, qu'il soit placeable ou document.
+     * Applique un prédicat à TOUTES les cibles sélectionnées. Faux sans cible :
+     * une sélection vide ne satisfait jamais une condition de ciblage.
      *
-     * @param {object} token - Le token.
+     * @param {function(object): boolean} predicate - Le prédicat évalué par cible.
      *
-     * @returns {{x: number, y: number}} La position en pixels.
+     * @returns {boolean} True s'il y a au moins une cible et qu'elles passent toutes.
      */
-    static #posOf(token) {
-        return {x: token.x ?? token.document?.x, y: token.y ?? token.document?.y};
+    static #everyTarget(predicate) {
+        const targets = Constants.currentTargets;
+        return targets.length > 0 && targets.every(predicate);
+    }
+
+    /**
+     * Retourne les effets actifs d'un porteur correspondant aux noms donnés
+     * (liste vide = tous ses effets). Tolère l'absence de porteur.
+     *
+     * @param {object}   holder  - L'acteur porteur des effets.
+     * @param {string[]} [names] - Les noms d'effets retenus (vide = tous).
+     *
+     * @returns {object[]} Les effets correspondants.
+     */
+    static #effectsNamed(holder, names = []) {
+        return [...(holder?.effects ?? [])].filter(e => !names.length || names.includes(e.name));
+    }
+
+    /**
+     * Retourne un compteur des flags FQ du personnage de l'utilisateur (0 si absent).
+     *
+     * @param {string} name - Le nom du compteur dans `flags.fq`.
+     *
+     * @returns {*} La valeur du compteur.
+     */
+    static #counter(name) {
+        return Constants.actorCurrent?.flags?.fq?.[name] ?? 0;
+    }
+
+    /**
+     * Indique si une réserve `{value, max}` est entamée. Faux si la réserve
+     * n'existe pas : on ne restaure pas ce qui n'est pas suivi.
+     *
+     * @param {?{value: number, max: number}} pool - La réserve inspectée.
+     *
+     * @returns {boolean} True si la valeur courante est sous le maximum.
+     */
+    static #belowMax(pool) {
+        return pool != null && pool.value < pool.max;
     }
 
     /**
@@ -220,11 +303,7 @@ export default class CardCondition {
      * @returns {boolean} True si au moins une entrée de dégâts l'a touché ce round.
      */
     static tookDamageThisRound(actor = Constants.actorCurrent) {
-        const tokenId = CardCondition.#tokenIdOf(actor);
-        if (!tokenId) {
-            return false;
-        }
-        return CardCondition.#logsThisRound().some(l => CardCondition.#damageEntriesOnToken(l, tokenId).length);
+        return CardCondition.damageTakenThisRound(actor) > 0;
     }
 
     /**
@@ -240,12 +319,12 @@ export default class CardCondition {
      * @returns {number} Le total encaissé ce round (0 sans token, sans combat ou sans dégât).
      */
     static damageTakenThisRound(actor = Constants.actorCurrent) {
-        const tokenId = CardCondition.#tokenIdOf(actor);
+        const tokenId = Constants.actorToken(actor?.id)?.id;
         if (!tokenId) {
             return 0;
         }
         return CardCondition.#logsThisRound()
-            .flatMap(l => CardCondition.#damageEntriesOnToken(l, tokenId))
+            .flatMap(l => CardCondition.#damageEntries(l, tokenId))
             .reduce((total, entry) => total + Number(entry.value || 0), 0);
     }
 
@@ -260,23 +339,18 @@ export default class CardCondition {
      *                    l'assaillant est à `maxCases` ou moins.
      */
     static attackerWithinReach(maxCases, actor = Constants.actorCurrent) {
-        const tokenId = CardCondition.#tokenIdOf(actor);
-        if (!tokenId) {
+        const victimToken = Constants.actorToken(actor?.id);
+        if (!victimToken) {
             return false;
         }
         const lastHit = CardCondition.#logsThisRound()
-            .filter(l => CardCondition.#damageEntriesOnToken(l, tokenId).length)
+            .filter(l => CardCondition.#damageEntries(l, victimToken.id).length)
             .at(-1);
-        if (!lastHit) {
+        const attackerToken = lastHit ? Constants.actorToken(lastHit.actorId) : undefined;
+        if (!attackerToken) {
             return false;
         }
-        const attackerToken = Constants.actorToken(lastHit.actorId);
-        const myToken = Constants.actorToken(actor?.id);
-        if (!attackerToken || !myToken) {
-            return false;
-        }
-        const dist = Geometry.distanceBetweenTokens(myToken, attackerToken);
-        return dist <= maxCases;
+        return Geometry.distanceBetweenTokens(victimToken, attackerToken) <= maxCases;
     }
 
     /**
@@ -303,11 +377,7 @@ export default class CardCondition {
      * @returns {boolean} True si l'une de ses attaques du round a été esquivée.
      */
     static attackEvadedThisRound(actor = Constants.actorCurrent) {
-        if (!actor?.id) {
-            return false;
-        }
-        return CardCondition.#logsThisRound()
-            .filter(l => l.actorId === actor.id)
+        return CardCondition.#logsOf(actor)
             .some(l => Object.values(l.resultArray ?? {}).some(r => r.evasion));
     }
 
@@ -319,10 +389,7 @@ export default class CardCondition {
      * @returns {boolean} True si un log du round porte son id.
      */
     static hasPlayedCardThisRound(actor = Constants.actorCurrent) {
-        if (!actor?.id) {
-            return false;
-        }
-        return CardCondition.#logsThisRound().some(l => l.actorId === actor.id);
+        return CardCondition.#logsOf(actor).length > 0;
     }
 
     /**
@@ -348,19 +415,18 @@ export default class CardCondition {
     }
 
     /**
-     * Indique si la dernière carte jouée par l'acteur ce round porte le nom donné.
+     * Indique si la dernière carte jouée par l'acteur ce round est bien celle
+     * dont le nom est donné — le nom de la CARTE tel qu'il est journalisé, une
+     * clé i18n (`FQCARDTITLE.Ambush`), et non le nom du CHOIX joué : un choix
+     * n'en porte le plus souvent aucun, et jamais celui de sa carte.
      *
-     * @param {string} name    - Le nom attendu (`cardContent.name`).
+     * @param {string} name    - Le nom de carte attendu (clé i18n).
      * @param {object} [actor] - L'acteur ; à défaut, le personnage de l'utilisateur.
      *
-     * @returns {boolean} True si sa dernière carte du round s'appelle `name`.
+     * @returns {boolean} True si sa dernière carte du round est celle-là.
      */
     static lastPlayedCardIs(name, actor = Constants.actorCurrent) {
-        if (!actor?.id) {
-            return false;
-        }
-        const last = CardCondition.#logsThisRound().filter(l => l.actorId === actor.id).at(-1);
-        return last?.cardContent?.name === name;
+        return CardCondition.#lastLogOf(actor)?.cardName === name;
     }
 
     /**
@@ -372,12 +438,7 @@ export default class CardCondition {
      * @returns {boolean} True si sa dernière carte du combat coûtait du mana.
      */
     static lastPlayedCardCostMana(actor = Constants.actorCurrent) {
-        if (!actor?.id) {
-            return false;
-        }
-        const logs = game.combat?.flags?.fq?.logs ?? [];
-        const last = logs.filter(l => l.actorId === actor.id).at(-1);
-        return Number(last?.cardContent?.mana) < 0;
+        return Number(CardCondition.#lastLogOf(actor, {allRounds: true})?.cardContent?.mana) < 0;
     }
 
     /**
@@ -390,11 +451,7 @@ export default class CardCondition {
      *                    sélection courante.
      */
     static lastPlayedDamageCardOnOtherTarget() {
-        const actor = Constants.actorCurrent;
-        if (!actor?.id) {
-            return false;
-        }
-        const last = CardCondition.#logsThisRound().filter(l => l.actorId === actor.id).at(-1);
+        const last = CardCondition.#lastLogOf(Constants.actorCurrent);
         const cardContent = last?.cardContent;
         if (!cardContent || cardContent.nbTargets || !cardContent.minReach || !cardContent.damage) {
             return false;
@@ -411,15 +468,11 @@ export default class CardCondition {
      *                    infligé des dégâts ce round.
      */
     static targetsDealtDamageThisRound() {
-        const targets = Constants.currentTargets;
-        if (!targets.length) {
-            return false;
-        }
         const logs = CardCondition.#logsThisRound();
-        return targets.every(t => {
+        return CardCondition.#everyTarget(t => {
             const actorId = Constants.tokenActorId(t);
             return logs.filter(l => l.actorId === actorId)
-                .some(l => Object.values(l.resultArray ?? {}).some(r => r.type === "damageFQ" && r.value > 0));
+                .some(l => CardCondition.#damageEntries(l).length);
         });
     }
 
@@ -431,12 +484,8 @@ export default class CardCondition {
      *                    subi des dégâts ce round.
      */
     static targetsTookDamageThisRound() {
-        const targets = Constants.currentTargets;
-        if (!targets.length) {
-            return false;
-        }
         const logs = CardCondition.#logsThisRound();
-        return targets.every(t => logs.some(l => CardCondition.#damageEntriesOnToken(l, t.id).length));
+        return CardCondition.#everyTarget(t => logs.some(l => CardCondition.#damageEntries(l, t.id).length));
     }
 
     /**
@@ -447,12 +496,8 @@ export default class CardCondition {
      *                    et que toutes les cibles sont ce combattant.
      */
     static targetsAreCurrentCombatant() {
-        const targets = Constants.currentTargets;
         const tokenId = game.combat?.combatant?.tokenId;
-        if (!targets.length || !tokenId) {
-            return false;
-        }
-        return targets.every(t => t.id === tokenId);
+        return !!tokenId && CardCondition.#everyTarget(t => t.id === tokenId);
     }
 
     /**
@@ -469,11 +514,8 @@ export default class CardCondition {
      *                    et qu'aucune cible n'a bougé depuis le début du tour.
      */
     static targetsHaveNotMovedThisTurn() {
-        const targets = Constants.currentTargets;
-        if (!targets.length || !game.combat) {
-            return false;
-        }
-        return targets.every(t => !(t.document?.movementHistory ?? t.movementHistory ?? []).length);
+        return !!game.combat
+            && CardCondition.#everyTarget(t => !(t.document?.movementHistory ?? t.movementHistory ?? []).length);
     }
 
     /* ------------------------------------------------------------------ */
@@ -512,13 +554,12 @@ export default class CardCondition {
      *                    alignées orthogonalement avec le lanceur.
      */
     static targetsAlignedWithSelf() {
-        const targets = Constants.currentTargets;
         const myToken = Constants.myToken;
-        if (!targets.length || !myToken) {
+        if (!myToken) {
             return false;
         }
-        return targets.every(t => CardCondition.#posOf(t).x === myToken.x)
-            || targets.every(t => CardCondition.#posOf(t).y === myToken.y);
+        return CardCondition.#everyTarget(t => Geometry.positionOf(t).x === myToken.x)
+            || CardCondition.#everyTarget(t => Geometry.positionOf(t).y === myToken.y);
     }
 
     /**
@@ -529,13 +570,12 @@ export default class CardCondition {
      *                    en diagonale du lanceur.
      */
     static targetsDiagonalWithSelf() {
-        const targets = Constants.currentTargets;
         const myToken = Constants.myToken;
-        if (!targets.length || !myToken) {
+        if (!myToken) {
             return false;
         }
-        return targets.every(t => {
-            const pos = CardCondition.#posOf(t);
+        return CardCondition.#everyTarget(t => {
+            const pos = Geometry.positionOf(t);
             return Math.abs(pos.x - myToken.x) === Math.abs(pos.y - myToken.y);
         });
     }
@@ -555,8 +595,8 @@ export default class CardCondition {
         if (!targets.length || !squareSize) {
             return false;
         }
-        const cols = targets.map(t => CardCondition.#posOf(t).x / squareSize);
-        const rows = targets.map(t => CardCondition.#posOf(t).y / squareSize);
+        const cols = targets.map(t => Geometry.positionOf(t).x / squareSize);
+        const rows = targets.map(t => Geometry.positionOf(t).y / squareSize);
         return (Math.max(...cols) - Math.min(...cols)) <= side - 1
             && (Math.max(...rows) - Math.min(...rows)) <= side - 1;
     }
@@ -575,7 +615,7 @@ export default class CardCondition {
         if (!targets.length || !myToken) {
             return false;
         }
-        const positions = targets.map(t => CardCondition.#posOf(t));
+        const positions = targets.map(t => Geometry.positionOf(t));
         const onColumn = positions.every(p => p.x === myToken.x)
             && (positions.every(p => p.y > myToken.y) || positions.every(p => p.y < myToken.y));
         const onRow = positions.every(p => p.y === myToken.y)
@@ -614,7 +654,10 @@ export default class CardCondition {
     }
 
     /**
-     * Indique si deux tokens occupent des cases orthogonalement adjacentes.
+     * Indique si deux tokens occupent des cases orthogonalement adjacentes,
+     * c'est-à-dire distantes d'exactement une case en distance de Manhattan :
+     * une diagonale en vaut deux, et une grille absente rend la distance non
+     * finie, donc la réponse fausse.
      *
      * @param {object} a - Le premier token.
      * @param {object} b - Le second token.
@@ -622,14 +665,9 @@ export default class CardCondition {
      * @returns {boolean} True si les tokens se touchent orthogonalement.
      */
     static #areOrthogonallyAdjacent(a, b) {
-        const squareSize = game.canvas?.scene?.dimensions?.size;
-        if (!squareSize) {
-            return false;
-        }
-        const posA = CardCondition.#posOf(a);
-        const posB = CardCondition.#posOf(b);
-        return (Math.abs(posA.x - posB.x) === squareSize && posA.y === posB.y)
-            || (Math.abs(posA.y - posB.y) === squareSize && posA.x === posB.x);
+        const posA = Geometry.positionOf(a);
+        const posB = Geometry.positionOf(b);
+        return Geometry.getDistanceBetweenTwoSquares(posA.x, posA.y, posB.x, posB.y) === 1;
     }
 
     /* ------------------------------------------------------------------ */
@@ -645,11 +683,7 @@ export default class CardCondition {
      * @returns {boolean} True si un effet correspondant est porté.
      */
     static selfHasEffect(names = []) {
-        const effects = [...(Constants.actorCurrent?.effects ?? [])];
-        if (!names.length) {
-            return !!effects.length;
-        }
-        return effects.some(e => names.includes(e.name));
+        return CardCondition.selfEffectCount(names) >= 1;
     }
 
     /**
@@ -664,8 +698,7 @@ export default class CardCondition {
      * @returns {number} Le nombre d'effets correspondants (0 sans acteur).
      */
     static selfEffectCount(names = []) {
-        const effects = [...(Constants.actorCurrent?.effects ?? [])];
-        return effects.filter(e => !names.length || names.includes(e.name)).length;
+        return CardCondition.#effectsNamed(Constants.actorCurrent, names).length;
     }
 
     /**
@@ -679,8 +712,7 @@ export default class CardCondition {
      * @returns {boolean} True si chaque cible mourrait à `threshold` dégâts.
      */
     static targetsHpBelow(threshold) {
-        const targets = Constants.currentTargets;
-        return targets.length > 0 && targets.every(t => {
+        return CardCondition.#everyTarget(t => {
             const hp = t.actor?.system?.attributes?.hp?.value;
             return Number.isFinite(hp) && hp < threshold;
         });
@@ -696,10 +728,8 @@ export default class CardCondition {
      * @returns {boolean} True si une cible porte assez d'effets correspondants.
      */
     static targetsHaveEffect(names = [], minCount = 1) {
-        return Constants.currentTargets.some(t => {
-            const effects = [...(t.actor?.effects ?? [])];
-            return effects.filter(e => !names.length || names.includes(e.name)).length >= minCount;
-        });
+        return Constants.currentTargets
+            .some(t => CardCondition.#effectsNamed(t.actor, names).length >= minCount);
     }
 
     /**
@@ -727,8 +757,7 @@ export default class CardCondition {
         return [...(game.canvas?.scene?.tokens ?? [])]
             .filter(token => token.actorId && combatantTokenIds.includes(token.id))
             .filter(token => TargetingPredicates.areEnemies(token, casterToken))
-            .reduce((total, token) => total + [...(token.actor?.effects ?? [])]
-                .filter(e => !names.length || names.includes(e.name)).length, 0);
+            .reduce((total, token) => total + CardCondition.#effectsNamed(token.actor, names).length, 0);
     }
 
     /* ------------------------------------------------------------------ */
@@ -747,8 +776,7 @@ export default class CardCondition {
      * @returns {boolean} True si compteur + ajout ≤ plafond.
      */
     static counterWithinCap(name, add, cap) {
-        const current = Constants.actorCurrent?.flags?.fq?.[name] ?? 0;
-        return current + Number(add || 0) <= cap;
+        return CardCondition.#counter(name) + Number(add || 0) <= cap;
     }
 
     /**
@@ -760,7 +788,7 @@ export default class CardCondition {
      * @returns {boolean} True si le compteur vaut `value` (0 si absent).
      */
     static counterEquals(name, value) {
-        return (Constants.actorCurrent?.flags?.fq?.[name] ?? 0) === value;
+        return CardCondition.#counter(name) === value;
     }
 
     /**
@@ -809,8 +837,7 @@ export default class CardCondition {
      * @returns {boolean} True si mana courant < mana max.
      */
     static missingMana() {
-        const mana = Constants.actorFQ?.mana;
-        return mana != null && mana.value < mana.max;
+        return CardCondition.#belowMax(Constants.actorFQ?.mana);
     }
 
     /**
@@ -846,8 +873,7 @@ export default class CardCondition {
      * @returns {boolean} True si PV courants < PV max.
      */
     static missingHp(actor = Constants.actorCurrent) {
-        const hp = actor?.system?.attributes?.hp;
-        return hp != null && hp.value < hp.max;
+        return CardCondition.#belowMax(actor?.system?.attributes?.hp);
     }
 
     /**
