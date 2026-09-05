@@ -1,6 +1,7 @@
 import {OriginFQEffectLabel} from "../domain/constants.js";
 import TradingCards, {DECK_TYPE, HAND_TYPE} from "../domain/trading/trading-cards.js";
 import CombatTurn from "../domain/engine/combat-turn.js";
+import AutoCard from "../domain/engine/auto-card.js";
 
 Hooks.on("deleteCombat", async function (combat, _delta) {
     if (CombatTurn.isLocalUserFirstActiveGM()) {
@@ -85,4 +86,9 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
         }
         await CombatTurn.deleteExpiredEffects(combat.combatant?.actor);
     }
+
+    // Cartes automatiques : hors du bloc MJ, car le rejeu s'exécute sur le client
+    // du PORTEUR — le pipeline de jeu lit le personnage de l'utilisateur courant et
+    // pose ses cibles. Chaque client ne traite donc que ses propres cartes.
+    await AutoCard.playTurnAutoCards();
 });

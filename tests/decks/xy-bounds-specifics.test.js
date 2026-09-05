@@ -569,15 +569,19 @@ async function filterByReach(entries) {
     return out;
 }
 
-// Le champ `replayable` porte trois mécaniques exclusives : un nombre de charges,
-// « passif », ou « ephemere ». Un lot par mécanique.
+// Le champ `replayable` porte quatre mécaniques exclusives : un nombre de charges,
+// « passif », « auto » (rejeu de début de tour), ou « ephemere ». Un lot par mécanique.
 const chargedReplayableCandidates = await filterByReach(rawEntries.filter(entry => isFilled(entry.choice.replayable)
     && entry.choice.replayable !== "passif"
+    && entry.choice.replayable !== "auto"
     && entry.choice.replayable !== "ephemere"
     && isSimpleReplayableChoice(entry.choice)));
 
 const passifCandidates = await filterByReach(rawEntries.filter(entry => entry.choice.replayable === "passif"
     && isSimpleReplayableChoice(entry.choice)));
+
+const autoCandidates = rawEntries.filter(entry => entry.choice.replayable === "auto"
+    && isSimpleReplayableChoice(entry.choice));
 
 const ephemeralCandidates = rawEntries.filter(entry => entry.choice.replayable === "ephemere"
     && isSimpleReplayableChoice(entry.choice));
@@ -614,6 +618,29 @@ describe("Mécanique : replayable \"passif\" — réécrit la carte et ne la dé
             expect(result.threw).toBe(false);
             expect(result.card.update).toHaveBeenCalled();
             expect(chatText(result)).toContain("FQCARDENGINE.InfoMsgPassiveSpell");
+            expect(result.passCalls).toHaveLength(0);
+        }
+    );
+});
+
+describe("Mécanique : replayable \"auto\" — rejeu de début de tour : reste en main, jamais défaussée au jeu", () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
+    test.each(autoCandidates)(
+        "$deckFile :: $cardName :: choix $choiceIndex — message automatique, réécriture, jamais de passage à la défausse",
+        async ({card, choiceIndex}) => {
+            const result = await playChoice(card, choiceIndex, {world: abundantWorld()});
+            // Le monde fixture n'a ni combat ni cible : un choix à ciblage « Combat »
+            // est rejeté par une FormError en amont de la mécanique. Le rejeu de
+            // début de tour est caractérisé par tests/decks/auto-card.test.js.
+            if (result.threw) {
+                expect(result.error).toBeInstanceOf(FormError);
+                return;
+            }
+            expect(result.card.update).toHaveBeenCalled();
+            expect(chatText(result)).toContain("FQCARDENGINE.InfoMsgAutoSpell");
             expect(result.passCalls).toHaveLength(0);
         }
     );

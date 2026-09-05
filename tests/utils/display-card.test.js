@@ -541,6 +541,13 @@ describe("DisplayCard.buildBubbleData — bulle de rejouabilité", () => {
         expect(data.replayableTooltip).toBe("FQCARDENGINE.TooltipReplayablePassive");
     });
 
+    it("affiche « A » et le tooltip automatique pour un choix rejoué de lui-même", () => {
+        const data = DisplayCard.buildBubbleData({replayable: "auto"});
+
+        expect(data.replayable).toBe("A");
+        expect(data.replayableTooltip).toBe("FQCARDENGINE.TooltipReplayableAuto");
+    });
+
     it("affiche « E » et le tooltip éphémère pour un choix éphémère", () => {
         const data = DisplayCard.buildBubbleData({replayable: "ephemere"});
 

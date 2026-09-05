@@ -18,6 +18,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static NEUTRAL_CLASS = "neutral";
     static REPLAYABLE_PASSIVE = "passif";
     static REPLAYABLE_EPHEMERAL = "ephemere";
+    static REPLAYABLE_AUTO = "auto";
     static TARGET_TYPE_CHOICE = {
         "Default": "FQCARDENGINE.TargetTypeDefault",
         "Skeletons": "FQCARDENGINE.TargetTypeSkeletons",
@@ -83,6 +84,33 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     }
 
     /**
+     * Indique si un choix est AUTOMATIQUE : le jouer l'installe, et le moteur le
+     * rejoue seul au début de chaque tour de son porteur en repayant le coût de
+     * la carte. La carte reste en main comme un passif ; elle rejoint la défausse
+     * le tour où le coût ne peut plus être payé. Automatique, passif, charges et
+     * éphémère se partagent le champ `replayable` et s'excluent donc.
+     *
+     * @param {object} [choice] - Le choix (contenu) d'une carte.
+     *
+     * @returns {boolean} True si le choix est automatique.
+     */
+    static isAutoChoice(choice) {
+        return choice?.replayable === this.REPLAYABLE_AUTO;
+    }
+
+    /**
+     * Retourne l'indice du premier choix automatique d'une carte, ou -1 si la
+     * carte n'en porte aucun — le repère du rejeu de début de tour.
+     *
+     * @param {Card} [card] - La carte.
+     *
+     * @returns {number} L'indice du choix automatique, ou -1.
+     */
+    static autoChoiceIndex(card) {
+        return (card?.system?.fq?.choices ?? []).findIndex(choice => CardFqSystem.isAutoChoice(choice));
+    }
+
+    /**
      * Indique si un choix a déjà été joué pendant le round de combat courant et
      * ne peut donc pas l'être à nouveau. Le verdict combine le marquage
      * `hasBeenPlayed` et l'horodatage `playedRound`, posés au jeu d'un choix
@@ -92,7 +120,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
      * Un `replayable` numérique porte des CHARGES : la carte reste rejouable
      * autant de fois que ses charges le permettent, y compris plusieurs fois dans
      * le même tour. Seul un `replayable` vide ou non numérique (`passif`,
-     * `ephemere`) bloque.
+     * `auto`, `ephemere`) bloque.
      *
      * @param {object} [choice] - Le choix (contenu) d'une carte.
      *
@@ -260,6 +288,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             minionsOnZone: new BooleanField({required: false, label: "FQCARDENGINE.InvokeMinionOnZone"}),
 
             // La carte est rejouable (« passif » = reste en main, ou nombre de charges),
+            // « auto » = rejouée seule au début de chaque tour du porteur,
             // ou « ephemere » = détruite définitivement au jeu, sans passer par la défausse
             replayable: new StringField({required: true, label: "FQCARDENGINE.Replayable"}),
             retrieveFromDiscard: new StringField({required: true, label: "FQCARDENGINE.RetrieveFromDiscard"}),

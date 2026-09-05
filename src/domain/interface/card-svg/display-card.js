@@ -447,8 +447,8 @@ export default class DisplayCard {
 
     /**
      * Clé de localisation du tooltip expliquant la bulle de rejouabilité, choisie
-     * selon ce que la bulle affiche : « P » passif, « E » éphémère, « ∞ » rejouable
-     * sans limite, ou un nombre de charges restantes.
+     * selon ce que la bulle affiche : « P » passif, « A » automatique, « E » éphémère,
+     * « ∞ » rejouable sans limite, ou un nombre de charges restantes.
      *
      * @param {string|number|null} replayable - La valeur affichée dans la bulle.
      *
@@ -464,6 +464,9 @@ export default class DisplayCard {
         if (replayable === "E") {
             return "FQCARDENGINE.TooltipReplayableEphemeral";
         }
+        if (replayable === "A") {
+            return "FQCARDENGINE.TooltipReplayableAuto";
+        }
         if (replayable === "∞") {
             return "FQCARDENGINE.TooltipReplayableInfinite";
         }
@@ -473,7 +476,7 @@ export default class DisplayCard {
     /**
      * Construit les données de bulle communes à toutes les vues d'une carte (main,
      * dialogue « Jouer la carte », voile plein écran) : coûts, portées, réactivité,
-     * rejouabilité (« P » passif, « E » éphémère, ou le nombre de charges),
+     * rejouabilité (« P » passif, « A » automatique, « E » éphémère, ou le nombre de charges),
      * limite d'exemplaires, classe, et les indicateurs de modificateur
      * (`*Mod`) signalant qu'un coût/portée dépend d'une caractéristique (@str, @int…).
      * Le voile plein écran ignore simplement les `*Mod` qu'il n'affiche pas.
@@ -490,8 +493,9 @@ export default class DisplayCard {
         const minReach = DisplayCard.getNumberForBubbleCardSvg(choice.minReach);
         const maxReach = DisplayCard.getNumberForBubbleCardSvg(choice.maxReach);
         const replayable = choice?.replayable === CardFqSystem.REPLAYABLE_PASSIVE ? "P"
-            : CardFqSystem.isEphemeralChoice(choice) ? "E"
-                : !choice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(choice?.replayable);
+            : CardFqSystem.isAutoChoice(choice) ? "A"
+                : CardFqSystem.isEphemeralChoice(choice) ? "E"
+                    : !choice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(choice?.replayable);
         return {
             action,
             mana,

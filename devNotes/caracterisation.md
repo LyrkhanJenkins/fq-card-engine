@@ -4,6 +4,7 @@ Document de référence design : ce qui définit chaque classe (identité dnd5e,
 
 ---
 
+
 ## Rappel système
 
 ### Rôle des caractéristiques dnd5e
@@ -73,7 +74,15 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 **Questionnement et TODO Générique :** 
 - Plusieurs attaques d'opportunités?
 - L'esquive fait demi-dégâts?
-- Utiliser l'IA pour rééquilibrer les dégâts, les couts, le nombre de cartes
+  **Dernière passe pour chaque sort :**
+
+- Verifier caracterisation des autres classes
+- Equilibrage de la classe manuel puis IA
+- dégâts
+- couts
+- nb de cartes
+- synergie
+- Vérifier caracterisation abilities dnd
 
 # Élémentaliste
 
@@ -151,6 +160,9 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 **Stats FQ** : mana très dominant (8 paliers en primaire + 10 en secondaire), points d'action ensuite. Zèle réservé aux hauts niveaux mais **généré en jeu** par la moitié du deck.
 
 **Rôle** : soigneur-protecteur **réactif** doublé d'un contrôleur DoT — sa valeur se mesure pendant les tours adverses.
+- Soutien : Aura
+- Dps DOT
+- Healeur (pas de HOT) bouclier
 
 **Mécaniques signature** :
 - **Malédiction (`Curse`)** : Pose plusieurs stacks sur des cibles, permets d'utiliser d'autre sort efficaces avec bc de stack. Tue une cible ayant suffisament de malédiction 
@@ -167,14 +179,11 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 **Questionnement et TODO :**
 - Soins: De plus gros soins avec le zèle
 - Mana : De plus gros bouclier avec du mana ou plus de malédiction (ou dégâts?)
-- Malédiction: Stack plein de malediction qui n'ont plus de durée, et les releases plus il ya de stack plus ça fait mal
 - Des cartes qui ont beaucoup de charges couplé avec des cartes a petit coût (Refonte malédiction?)
-- Suppression des bouclier temporaire -> Gardien, plutôt des soins?
 - Rituel lumineux : Chercher dans votre deck une carte de soins ou de bouclier et mettez la dans votre main (5 points
 d’actions ou 1 point de zèle, 1 fois par tour)
 - Rituel sombre : Chercher dans votre cimetière une carte de soins ou de bouclier et mettez la dans votre main (5 points
 d’actions ou 1 point de zèle, 1 fois par tour)
-- Aura ou Buff qui affecte tous les alliées ou tous les ennemis (utile avec la portée)?
 
 ---
 
@@ -215,6 +224,9 @@ d’actions ou 1 point de zèle, 1 fois par tour)
 **Stats FQ** : **esquive la mieux dotée du jeu**, zèle et déplacement bien fournis. **Jamais de critique** — il joue le volume, pas le burst.
 
 **Rôle** : bruiser mobile à tempo, duelliste corps à corps, avec appoints tank, Healers (taunt Uppercut, Interruption) et soins (Vive-Esquive, Méditation Zen, Paume Curative).
+- Healeur fort mais corps à corps
+- Duelliste corps à corps ultra mobile
+- Tank spé esquive
 
 **Mécaniques signature** :
 - **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume Curative).
@@ -234,7 +246,7 @@ Le seul a pouvoir augmenter son zèle max
 **Questionnement et TODO :**
 - Permettre de piochez plus de cartes, et faire plus de dégâts avec le nombre de carte dans la main, utilisez des xvalue préfini
 - Combo avec plein de zèle, utilisez le zèle, chargez vite le zèle
-- Deuxième tank : augmente l'esquive , combo d'esquive ou de réactif, ne peut plus gagner de zèle si en mode esquive?
+- Deuxième tank : augmente l'esquive, combo d'esquive ou de réactif, ne peut plus gagner de zèle si en mode esquive?
 
 ---
 
@@ -277,9 +289,13 @@ Le seul a pouvoir augmenter son zèle max
 
 **Stats FQ** : action + mana + main. La **portée n'est achetable nulle part** — c'est précisément sa mécanique : elle se construit en combat.
 
-**Rôle** : Contrôleur de portée / Soutien hybride (presque un barde-apothicaire)/ Healeur, Possède des sorts matchant avec toutes les autres classes?
+**Rôle** :
+- Dégâts corps à corps (bonus portée)
+- Soutien hybride (bonus de portée) sort qui marche avec toutes les classes
+- Healeur à reaction et spe HOT (derniers dégâts)
 
 **Mécaniques signature** :
+- **Bonus de portée"
 - **Cartes de manipulation d'espace**: peut bouger des cibles autre que lui
 - **Cartes de manipulation temporaire**: Soins des derniers dégâts subit, soins HOT?
 - **La portée comme ressource cumulative** (`fq.bonus.range`) : gains fiables (Allonge magique, Fouet Enchanté, Salto Arrière), aléatoires (Rapière Enchantée 1d2), massifs temporaires (Potion d'allonge +@wis). Puis **8 cartes la dépensent ou la scalent** : dégâts (Frappe Illusoire, Volée de shuriken, Prise En Traître), nombre de cibles (Attaque Latérale `2*(1+X)`, Diagonale `4*(1+X/2)`), DoT (Nuage de dague), portée min (Attaque En Cercle), conversion (Illusion De Caractéristiques : portée → critique/soins/mana).

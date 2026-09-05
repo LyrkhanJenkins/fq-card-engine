@@ -7,7 +7,7 @@ import TargetingPredicates from "./shared/targeting-predicates.js";
 
 /**
  * Orchestration du jeu et de la défausse d'une carte : gestion des cartes
- * rejouables (passives/à charges), des cartes éphémères (détruites au jeu),
+ * rejouables (passives/automatiques/à charges), des cartes éphémères (détruites au jeu),
  * application des effets, envoi des messages de chat et transfert de la carte
  * vers la pile de défausse.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
@@ -99,6 +99,15 @@ export default class PlayCard {
                 });
                 createStatus(game.i18n.localize("FQCARDENGINE.InfoMsgPassiveSpell"),
                     {actor: Constants.actorCurrent, color: SUCCESS_COLOR});
+            } else if (CardFqSystem.isAutoChoice(cardContent)) {
+                // Carte automatique : elle s'installe et reste en main, marquée jouée
+                // pour le round en cours. C'est `AutoCard.playTurnAutoCards` qui la
+                // rejouera — et repaiera son coût — au début de chaque tour du porteur.
+                CardEffect.rewriteCardContent(card, initCardContents, {
+                    hasBeenPlayed: true, playedRound: game.combat?.round.toString()
+                });
+                createStatus(game.i18n.localize("FQCARDENGINE.InfoMsgAutoSpell"),
+                    {actor: Constants.actorCurrent, color: SUCCESS_COLOR});
             } else if (cardContent?.replayable) {
                 cardContent.replayable = RollService.rollResultSync(cardContent.replayable);
                 if (Number(cardContent?.replayable) > 1) {
@@ -124,7 +133,8 @@ export default class PlayCard {
         const leavesHand = !game.user?.isGM || CONFIG.FqCardEngine.options.GMUsingCards;
 
         if (cardContent && !ephemeral &&
-            (!cardContent.replayable || (cardContent.replayable !== CardFqSystem.REPLAYABLE_PASSIVE && cardContent.replayable <= 1)) &&
+            (!cardContent.replayable || (cardContent.replayable !== CardFqSystem.REPLAYABLE_PASSIVE &&
+                cardContent.replayable !== CardFqSystem.REPLAYABLE_AUTO && cardContent.replayable <= 1)) &&
             leavesHand
         ) {
             result = PlayCard.transferToPile(currentCards, to, card, fd);
