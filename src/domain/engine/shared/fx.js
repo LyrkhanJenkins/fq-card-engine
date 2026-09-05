@@ -15,6 +15,19 @@ export default class Fx {
     static GENERIC_VISUAL_PATH = this.VISUAL_PATH + "generics/";
 
     /**
+     * Opacité basse du clignotement de dégâts : le token est fortement estompé mais
+     * jamais totalement invisible, pour qu'une animation interrompue ne puisse pas
+     * le faire disparaître de la scène.
+     */
+    static BLINK_MIN_OPACITY = 0.15;
+
+    /** Durée (ms) du retour à l'opacité pleine d'un battement de clignotement. */
+    static BLINK_STEP_DURATION = 200;
+
+    /** Marge (ms) au-delà du clignotement avant de forcer la restauration d'opacité. */
+    static BLINK_SAFETY_MARGIN = 1500;
+
+    /**
      * Importe une macro depuis le compendium `macros-sequencer` si elle n'existe
      * pas déjà dans le monde. Le nom de la macro est le premier mot de la chaîne.
      *
@@ -215,8 +228,15 @@ export default class Fx {
     }
 
     /**
-     * Ajoute à une séquence une animation de clignotement (fondu 0 → 1) répétée
-     * sur un token, typiquement pour signaler l'encaissement de dégâts.
+     * Ajoute à une séquence une animation de clignotement (fondu bas → plein)
+     * répétée sur un token, typiquement pour signaler l'encaissement de dégâts.
+     *
+     * Le clignotement descend jusqu'à {@link Fx.BLINK_MIN_OPACITY} et non jusqu'à
+     * zéro, et un filet de sécurité restaure l'opacité pleine même si la séquence
+     * n'atteint jamais sa fin : une animation Sequencer sur l'alpha d'un token peut
+     * être annulée par une autre séquence lancée sur le même token (enchaînements
+     * rapides de dégâts), auquel cas le `waitUntilFinished` qui suit ne se résout
+     * plus et le token resterait estompé indéfiniment.
      *
      * @param {object} seq         - La séquence Sequencer à enrichir.
      * @param {object} token       - Le token sur lequel jouer le clignotement.
@@ -226,18 +246,52 @@ export default class Fx {
      * @returns {void}
      */
     static getBlinkAnimation(seq, token, fadeIn, repeats = 2) {
+        const blinkDuration = repeats * (fadeIn + Fx.BLINK_STEP_DURATION);
+        let safetyTimeout = null;
+
+        seq.thenDo(() => {
+            safetyTimeout = setTimeout(() => Fx.restoreTokenOpacity(token), blinkDuration + Fx.BLINK_SAFETY_MARGIN);
+        });
+
         for (let i = 0; i < repeats; i++) {
             seq.animation()
                 .on(token)
                 .fadeIn(fadeIn)
-                .opacity(0)
+                .opacity(Fx.BLINK_MIN_OPACITY)
                 .waitUntilFinished()
                 .animation()
-                .duration(200)
+                .duration(Fx.BLINK_STEP_DURATION)
                 .on(token)
                 .fadeIn(fadeIn)
                 .opacity(1)
                 .waitUntilFinished();
+        }
+
+        seq.thenDo(() => {
+            clearTimeout(safetyTimeout);
+            Fx.restoreTokenOpacity(token);
+        });
+    }
+
+    /**
+     * Redonne son opacité pleine à un token, indépendamment de Sequencer. Sert de
+     * filet de sécurité au clignotement : un token dont l'animation a été interrompue
+     * ne doit jamais rester estompé sur la scène.
+     *
+     * @param {object} token - Le token (placeable ou document) à restaurer.
+     *
+     * @returns {void}
+     */
+    static restoreTokenOpacity(token) {
+        const placeable = token?.object ?? token;
+        if (!placeable || placeable.destroyed) {
+            return;
+        }
+        if (typeof placeable.alpha === "number") {
+            placeable.alpha = 1;
+        }
+        if (placeable.mesh && !placeable.mesh.destroyed) {
+            placeable.mesh.alpha = 1;
         }
     }
 

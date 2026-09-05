@@ -2,7 +2,6 @@
 ### Fix Prioritaire
 
 ### Fix à prioriser
-- Le scintillement des dégâts rend des fois le token invisible
 
 ### Versions prévues
 #### 3.0.0

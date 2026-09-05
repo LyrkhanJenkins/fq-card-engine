@@ -42,6 +42,7 @@ Fix :
 - Carte triée par niveau puis par nom dans les decks , le bouton cassé est supprimé
 - Limitation des droits des joueurs n'enlève plus le ciblage et le choix du mouvement sur les tokens
 - Les coordonnées d'un token dans le moteur sont simplifié à la case qui contient le centre du token
+- Le scintillement des dégâts rend des fois le token invisible
 
 Chore :
 - Support de la version 14.366, 14.367

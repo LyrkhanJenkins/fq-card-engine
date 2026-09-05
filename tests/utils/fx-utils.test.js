@@ -19,7 +19,7 @@ function makeChainableSequence() {
     const chainable = {};
     const chainMethods = [
         "effect", "file", "atLocation", "size", "stretchTo", "waitUntilFinished",
-        "animation", "on", "fadeIn", "opacity", "duration", "sound", "rotate"
+        "animation", "on", "fadeIn", "opacity", "duration", "sound", "rotate", "thenDo"
     ];
     chainMethods.forEach(method => {
         chainable[method] = vi.fn(() => chainable);
@@ -257,6 +257,79 @@ describe("Fx", () => {
             Fx._createTargetFeedback({id: "t1"}, {heal: "1d4"}, false);
 
             expect(globalThis.Sequence).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("clignotement de dégâts (getBlinkAnimation / restoreTokenOpacity)", () => {
+
+        beforeEach(() => {
+            globalThis.Sequence = vi.fn().mockImplementation(function () {
+                return makeChainableSequence();
+            });
+        });
+
+        it("ne descend jamais jusqu'à une opacité nulle", () => {
+            const seq = new globalThis.Sequence();
+
+            Fx.getBlinkAnimation(seq, {id: "t1"}, 100, 3);
+
+            const opacities = seq.opacity.mock.calls.map(call => call[0]);
+            expect(opacities).not.toContain(0);
+            expect(opacities).toContain(Fx.BLINK_MIN_OPACITY);
+            expect(opacities).toContain(1);
+        });
+
+        it("restaure l'opacité pleine à la fin de la séquence", () => {
+            const seq = new globalThis.Sequence();
+            const token = {id: "t1", alpha: 1, mesh: {alpha: 1}};
+
+            Fx.getBlinkAnimation(seq, token, 100, 2);
+            token.alpha = Fx.BLINK_MIN_OPACITY;
+            token.mesh.alpha = Fx.BLINK_MIN_OPACITY;
+            seq.thenDo.mock.calls.at(-1)[0]();
+
+            expect(token.alpha).toBe(1);
+            expect(token.mesh.alpha).toBe(1);
+        });
+
+        it("restaure l'opacité même si la séquence est interrompue en plein clignotement", () => {
+            vi.useFakeTimers();
+            const seq = new globalThis.Sequence();
+            const token = {id: "t1", alpha: 1, mesh: {alpha: 1}};
+
+            Fx.getBlinkAnimation(seq, token, 100, 8);
+            seq.thenDo.mock.calls[0][0]();
+            token.alpha = Fx.BLINK_MIN_OPACITY;
+            token.mesh.alpha = Fx.BLINK_MIN_OPACITY;
+            vi.advanceTimersByTime(8 * (100 + Fx.BLINK_STEP_DURATION) + Fx.BLINK_SAFETY_MARGIN);
+
+            expect(token.alpha).toBe(1);
+            expect(token.mesh.alpha).toBe(1);
+        });
+
+        it("le filet de sécurité est annulé quand la séquence va au bout", () => {
+            vi.useFakeTimers();
+            const seq = new globalThis.Sequence();
+            const token = {id: "t1", alpha: 1, mesh: {alpha: 1}};
+
+            Fx.getBlinkAnimation(seq, token, 100, 2);
+            seq.thenDo.mock.calls[0][0]();
+            seq.thenDo.mock.calls.at(-1)[0]();
+
+            expect(vi.getTimerCount()).toBe(0);
+        });
+
+        it("restoreTokenOpacity : accepte un document de token et ignore un placeable détruit", () => {
+            const placeable = {alpha: 0.15, mesh: {alpha: 0.15}};
+
+            Fx.restoreTokenOpacity({object: placeable});
+            expect(placeable.alpha).toBe(1);
+
+            const destroyed = {alpha: 0.15, destroyed: true, mesh: {alpha: 0.15}};
+            Fx.restoreTokenOpacity(destroyed);
+            expect(destroyed.alpha).toBe(0.15);
+
+            expect(() => Fx.restoreTokenOpacity(null)).not.toThrow();
         });
     });
 
