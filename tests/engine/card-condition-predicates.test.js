@@ -641,3 +641,76 @@ describe("CardCondition — tour et immobilité des cibles", () => {
         expect(CardCondition.targetsHaveNotMovedThisTurn()).toBe(false);
     });
 });
+
+describe("CardCondition — fenêtre « depuis la fin de mon tour »", () => {
+
+    /**
+     * Installe un combat dont l'ordre d'initiative est `me` (index 0) puis deux
+     * adversaires, positionné au round et au tour donnés, avec les logs fournis.
+     */
+    function mountWindow({round = 3, turn = 1, logs = []} = {}) {
+        game.user.character = {id: "me"};
+        game.combat = {
+            id: "c1", round, turn,
+            turns: [{actorId: "me"}, {actorId: "foe"}, {actorId: "foe2"}],
+            flags: {fq: {logs}}
+        };
+    }
+
+    /** Entrée de log : `actorId` joue une carte réactive ou non, à ce round et ce tour. */
+    function playLog({actorId = "me", reactive = true, round = 3, turn = 1}) {
+        return {actorId, targetsId: [], round, turn, resultArray: {}, cardContent: {reactive}};
+    }
+
+    it("compte les réactifs joués après mon tour dans le round courant", () => {
+        mountWindow({round: 3, turn: 2, logs: [playLog({turn: 1}), playLog({turn: 2})]});
+
+        expect(CardCondition.reactivesPlayedSinceMyTurn(2)).toBe(true);
+        expect(CardCondition.reactivesPlayedSinceMyTurn(3)).toBe(false);
+    });
+
+    it("franchit le passage de round : les réactifs du round précédent, après mon tour, comptent", () => {
+        mountWindow({round: 4, turn: 0, logs: [playLog({round: 3, turn: 1}), playLog({round: 3, turn: 2})]});
+
+        expect(CardCondition.reactivesPlayedSinceMyTurn(2)).toBe(true);
+    });
+
+    it("écarte les cartes jouées pendant mon propre tour", () => {
+        mountWindow({round: 3, turn: 2, logs: [playLog({turn: 0}), playLog({turn: 0}), playLog({turn: 2})]});
+
+        expect(CardCondition.reactivesPlayedSinceMyTurn(2)).toBe(false);
+        expect(CardCondition.reactivesPlayedSinceMyTurn(1)).toBe(true);
+    });
+
+    it("écarte les cartes antérieures à mon dernier tour", () => {
+        mountWindow({round: 3, turn: 2, logs: [playLog({round: 2, turn: 2}), playLog({round: 3, turn: 1})]});
+
+        expect(CardCondition.reactivesPlayedSinceMyTurn(2)).toBe(false);
+        expect(CardCondition.reactivesPlayedSinceMyTurn(1)).toBe(true);
+    });
+
+    it("ne compte ni les cartes non réactives, ni celles des autres combattants", () => {
+        mountWindow({round: 3, turn: 2, logs: [
+            playLog({turn: 1, reactive: false}),
+            playLog({turn: 1, actorId: "foe"}),
+            playLog({turn: 2})
+        ]});
+
+        expect(CardCondition.reactivesPlayedSinceMyTurn(2)).toBe(false);
+        expect(CardCondition.reactivesPlayedSinceMyTurn(1)).toBe(true);
+    });
+
+    it("faux hors combat, sans personnage, ou si le personnage ne combat pas", () => {
+        mountWindow({logs: [playLog({turn: 1})]});
+        game.combat = null;
+        expect(CardCondition.reactivesPlayedSinceMyTurn(1)).toBe(false);
+
+        mountWindow({logs: [playLog({turn: 1})]});
+        game.user.character = null;
+        expect(CardCondition.reactivesPlayedSinceMyTurn(1)).toBe(false);
+
+        mountWindow({logs: [playLog({turn: 1})]});
+        game.combat.turns = [{actorId: "foe"}, {actorId: "foe2"}];
+        expect(CardCondition.reactivesPlayedSinceMyTurn(1)).toBe(false);
+    });
+});

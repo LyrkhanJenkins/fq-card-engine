@@ -162,6 +162,52 @@ export default class CardCondition {
         return {x: token.x ?? token.document?.x, y: token.y ?? token.document?.y};
     }
 
+    /**
+     * Retourne la borne du dernier tour joué par un acteur dans le combat en
+     * cours, sous la forme `{round, turn}` — le repère depuis lequel se mesure
+     * la fenêtre « depuis la fin de mon tour ».
+     *
+     * Le tour d'un combattant est son INDEX dans l'ordre d'initiative : la
+     * borne porte donc cet index, et le round de son dernier passage — le round
+     * courant si son tour y est déjà passé, le précédent sinon (son propre tour
+     * en cours compris, puisque la fenêtre ne s'ouvre qu'à la fin de celui-ci).
+     *
+     * @param {object} actor - L'acteur dont on cherche le dernier tour.
+     *
+     * @returns {?{round: number, turn: number}} La borne, ou null hors combat ou
+     *                                           si l'acteur n'est pas un combattant.
+     */
+    static #lastTurnOf(actor) {
+        const combat = game.combat;
+        const round = Number(combat?.round);
+        const turn = Number(combat?.turn);
+        const index = (combat?.turns ?? []).findIndex(c => (c.actorId ?? c.actor?.id) === actor?.id);
+        if (index < 0 || !Number.isFinite(round) || !Number.isFinite(turn)) {
+            return null;
+        }
+        return {round: turn > index ? round : round - 1, turn: index};
+    }
+
+    /**
+     * Retourne les entrées de log postérieures à la fin du dernier tour de
+     * l'acteur : strictement après sa borne `{round, turn}`, ce qui écarte les
+     * cartes jouées pendant son propre tour et couvre le passage de round.
+     *
+     * @param {object} actor - L'acteur de référence.
+     *
+     * @returns {object[]} Les entrées de log de la fenêtre (vide hors combat).
+     */
+    static #logsSinceLastTurnOf(actor) {
+        const boundary = CardCondition.#lastTurnOf(actor);
+        if (!boundary) {
+            return [];
+        }
+        return (game.combat?.flags?.fq?.logs ?? []).filter(log => {
+            const round = Number(log.round);
+            return round > boundary.round || (round === boundary.round && Number(log.turn) > boundary.turn);
+        });
+    }
+
     /* ------------------------------------------------------------------ */
     /* Prédicats sur les logs de combat (dégâts, sorts, cartes jouées)     */
     /* ------------------------------------------------------------------ */
@@ -277,6 +323,28 @@ export default class CardCondition {
             return false;
         }
         return CardCondition.#logsThisRound().some(l => l.actorId === actor.id);
+    }
+
+    /**
+     * Indique si l'acteur a joué au moins `n` cartes RÉACTIVES depuis la fin de
+     * son dernier tour — la fenêtre des réactifs qui récompensent une chaîne de
+     * ripostes. Elle court d'un tour de l'acteur au suivant et franchit donc le
+     * passage de round, contrairement aux prédicats en `ThisRound`.
+     *
+     * Seules les cartes passées par le moteur sont comptées : le journal de
+     * combat n'enregistre que celles-là.
+     *
+     * @param {number} [n]     - Le minimum requis (défaut 1).
+     * @param {object} [actor] - L'acteur ; à défaut, le personnage de l'utilisateur.
+     *
+     * @returns {boolean} True si la fenêtre contient au moins `n` cartes réactives de l'acteur.
+     */
+    static reactivesPlayedSinceMyTurn(n = 1, actor = Constants.actorCurrent) {
+        if (!actor?.id) {
+            return false;
+        }
+        return CardCondition.#logsSinceLastTurnOf(actor)
+            .filter(l => l.actorId === actor.id && !!l.cardContent?.reactive).length >= n;
     }
 
     /**

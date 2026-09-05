@@ -93,7 +93,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Identité dnd5e** : d4 , INT + SAG (les deux requises).
 
-**Stats FQ** : mana écrasant (12/22 du pool primaire), puis points d'action. **Aucune esquive en primaire** : la survie n'est pas une option de build, c'est la portée qui protège.
+**Stats FQ** : mana écrasant (12/22 du pool primaire), puis points d'action. 
 
 **Rôle** : DPS magique « glass cannon », mono-cible burst avec pivot AoE (Météore, Onde glacée, Choc de feu), contrôle/debuff en sous-produit.
 
@@ -113,10 +113,9 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Faiblesse**:
 - Le moins de point de vie (d4)
+- Faible déplacement et esquive, doit rester à distance
 
 **Questionnement et TODO :**
-- Cartes qui génére des boules de feu, de givre ...etc au bout de tant de tour?.
-- Changement de boule de feu en trait de feu pour coller a dnd5e, la boule de feu fait de gros dégâts de zone (Reste image)
 ---
 
 # Gardien
@@ -127,12 +126,14 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Stats FQ** : profil équilibré tourné vers l'action et la main (la plus grosse main du jeu selon l'historique), quasi **aucun mana** (1 item résiduel). Sa vraie ressource est le couple PV + zèle.
 
-**Rôle** : tank offensif / bruiser « sustain-tank », protecteur d'équipe à partir du niveau 6.
+**Rôle** : 
+- Tank qui fait moins de dégâts
+- Soutien
+- Dps consommant des PVs pour faire plus de dégâts
 
 **Mécaniques signature** :
 - **PV comme monnaie** : Frappe Héroïque (−(6−@con) PV au lieu du mana), Frappe provocatrice, Tourbillon de Lame, Montée de la rage (PV → mana).
-- **Compétences pour aggriper des alliés ou des ennemis** 
-- **Zèle bidirectionnel** : généré en frappant (+1 sur les attaques de base), dépensé sur les gros coups et toutes les réactions.
+- **Compétences pour agripper des alliés ou des ennemis** (pas de déplacement supplémentaire plutôt des choses pour attraper )
 - **Charges de lame** : Chargement Des Lames (cap 12 → dégâts ×2) et Tourbillon De Lame (cap 8 → AoE adjacente), via compteurs `flags.fq` + `counterWithinCap`/`counterEquals`.
 - **Réactions défensives** : Coup de bouclier (contre-charge), Intervention (prend les dégâts d'un allié à sa place), Levée De Bouclier (récupère la moitié des dégâts subis).
 - **Postures et trade-off crit ↔ esquive** : Changement De Posture (rejouable à l'infini), Posture De Berzerker et Rage Ultime (puissance contre auto-DoT).
@@ -142,19 +143,9 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Faiblesse**:
 - Le moins de point de mana
+- A du mal à arriver au contact d'une cible (pas de sort pour augmenter le déplacement, uniquement pour aggriper des ennemis)
 
 **Questionnement et TODO :**
-- Différence entre le Gardien et le moine: Le moine fait des charges, et plein de deplacement perso alors que le gardien agrippe des cibles ou les bloques pour y aller
-- Ange Gardien : Générer un bouclier qui regagne des points de vie chaque tour (Tisse-mort de slay the spire?)
-  Sort pour l'améliorer, ou pour taunt ou pour toucher plusieurs cibles
-  - Berzerk : Sort qui enlève des points de vie + Sort qui font plus de dégâts si moins de vie ou qui fait piocher en
-    enlevant des points de vie
-  - Rage : Sort pour monter le zèle, sort qui fait plus de dégâts plus on a de zèle pas dépenser,
-    sort qui fait gagner du zèle max: Remplacer par exemple la lame chargée par ça
-  - Transfert de pv vers des alliés
-
-    - Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts
-      suivant le zèle qu'a la cible plutôt que la chargé Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
 ---
 
 # Mage Blanc
@@ -167,7 +158,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Rôle** : soigneur-protecteur **réactif** doublé d'un contrôleur DoT — sa valeur se mesure pendant les tours adverses.
 - Soutien : Aura
-- Dps DOT
+- Dps avec malédictions (gros dégâts quand beaucoup de stacks)
 - Healeur (pas de HOT) bouclier
 
 **Mécaniques signature** :
@@ -184,9 +175,6 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 **Faiblesse**:
 
 **Questionnement et TODO :**
-- Soins: De plus gros soins avec le zèle
-- Mana : De plus gros bouclier avec du mana ou plus de malédiction (ou dégâts?)
-- Des cartes qui ont beaucoup de charges couplé avec des cartes a petit coût (Refonte malédiction?)
 - Rituel lumineux : Chercher dans votre deck une carte de soins ou de bouclier et mettez la dans votre main (5 points
 d’actions ou 1 point de zèle, 1 fois par tour)
 - Rituel sombre : Chercher dans votre cimetière une carte de soins ou de bouclier et mettez la dans votre main (5 points
