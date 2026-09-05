@@ -9,6 +9,21 @@ export const OTHER_ROLL_COLOR = "#34CBE3";
 export const SUCCESS_COLOR = "green";
 export const FAIL_COLOR = "red";
 export const OriginFQEffectLabel = "FQ Effect";
+
+/**
+ * Clé du drapeau de module posé sur une carte réactive PRÉPARÉE (armée à son
+ * propre tour, jouée seule dès que ses conditions sont réunies). Sa valeur porte
+ * l'instantané du formulaire de jeu — voir `PreparedCard`.
+ * @type {string}
+ */
+export const PREPARED_FLAG = "prepared";
+
+/**
+ * Couleur des messages de statut d'une carte préparée — le bleu de son halo dans
+ * la main, pour que le chat et la main parlent la même langue.
+ * @type {string}
+ */
+export const PREPARED_COLOR = "#5AAAE6";
 export const DEFAULT_MAX_ZEAL = 8;
 
 // Construit une apparence Dice So Nice « forcée » à partir d'une couleur de fond.

@@ -233,6 +233,32 @@
     }
 }
 
+/* Réactif ARMÉ : la carte a été préparée à son propre tour et attend que ses
+   conditions soient réunies. Halo bleu, respiration lente (l'attente n'est pas
+   une urgence). Déclaré après le halo orange, il l'emporte si les deux classes
+   cohabitent — une cohabitation qui ne dure que le temps du déclenchement,
+   puisqu'une carte armée et prête part aussitôt. */
+.fq-card--prepared {
+    animation: fq-prepared-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes fq-prepared-glow {
+    0%, 100% {
+        filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85)) drop-shadow(0 0 5px rgba(var(--fq-prepared-rgb), 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85)) drop-shadow(0 0 6px rgba(var(--fq-prepared-rgb), 1)) drop-shadow(0 0 22px rgba(var(--fq-prepared-rgb), 0.85));
+    }
+}
+
+/* Accessibilité : halo bleu statique, sans pulsations. */
+@media (prefers-reduced-motion: reduce) {
+    .fq-card--prepared {
+        animation: none;
+        filter: drop-shadow(0 3px 8px rgba(var(--fq-black-rgb), 0.85)) drop-shadow(0 0 12px rgba(var(--fq-prepared-rgb), 0.8));
+    }
+}
+
 /* ============================================================
    DIALOG DE RÉCUPÉRATION EN DÉFAUSSE
    Grille des cartes éligibles (retrieveFromDiscard) : chaque option est

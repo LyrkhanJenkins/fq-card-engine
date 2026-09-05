@@ -428,4 +428,108 @@ describe("playDialog", () => {
             );
         });
     });
+
+    describe("préparation d'une carte réactive", () => {
+        const MY_ACTOR_ID = "my-actor";
+
+        /**
+         * Place le combat sur le tour du personnage de l'utilisateur — le seul
+         * moment où une carte réactive s'arme au lieu de se jouer.
+         *
+         * @param {string} [combatantId=MY_ACTOR_ID] - L'acteur dont c'est le tour.
+         *
+         * @returns {void}
+         */
+        function setTurn(combatantId = MY_ACTOR_ID) {
+            globalThis.game.user.character.id = MY_ACTOR_ID;
+            globalThis.game.combat = {combatant: {actor: {id: combatantId}}};
+        }
+
+        /**
+         * Construit une carte au choix unique réactif.
+         *
+         * @param {object} [overrides] - Surcharge de la carte (flags, id…).
+         *
+         * @returns {object} La carte réactive.
+         */
+        function makeReactiveCard(overrides = {}) {
+            return makePlayableCard({
+                id: "reactive-1", _id: "reactive-1", sort: 1,
+                choices: [makePlayableChoice({reactive: true})],
+                ...overrides
+            });
+        }
+
+        /**
+         * Construit une racine jsdom minimale portant le formulaire attendu par
+         * `getCardContent` (`form.cards-dialog`).
+         *
+         * @returns {HTMLElement} La racine avec le formulaire.
+         */
+        function makePlayRoot() {
+            const root = document.createElement("div");
+            root.innerHTML = "<form class='cards-dialog'></form>";
+            return root;
+        }
+
+        test("à son tour, le bouton principal propose de préparer la carte", async () => {
+            const reactiveCard = makeReactiveCard();
+            currentCards = makeHand([reactiveCard]);
+            globalThis.game.cards = [currentCards, pile];
+            setTurn();
+
+            await window.FqCardEngineModule.playDialog(currentCards, reactiveCard);
+
+            expect(Dialog.wait.mock.calls[0][0].buttons.ok.label).toBe("FQCARDENGINE.PrepareCard");
+        });
+
+        test("hors de son tour, la même carte se joue normalement", async () => {
+            const reactiveCard = makeReactiveCard();
+            currentCards = makeHand([reactiveCard]);
+            globalThis.game.cards = [currentCards, pile];
+            setTurn("someone-else");
+
+            await window.FqCardEngineModule.playDialog(currentCards, reactiveCard);
+
+            expect(Dialog.wait.mock.calls[0][0].buttons.ok.label).toBe("FQCARDENGINE.PlayCard");
+        });
+
+        test("à son tour, une carte non réactive se joue normalement", async () => {
+            setTurn();
+
+            await window.FqCardEngineModule.playDialog(currentCards, card);
+
+            expect(Dialog.wait.mock.calls[0][0].buttons.ok.label).toBe("FQCARDENGINE.PlayCard");
+        });
+
+        test("une carte déjà armée offre le désarmement, en plus du jeu", async () => {
+            const reactiveCard = makeReactiveCard({flags: {"fq-card-engine": {prepared: {fd: {}, toId: "pile-1"}}}});
+            currentCards = makeHand([reactiveCard]);
+            globalThis.game.cards = [currentCards, pile];
+            setTurn("someone-else");
+
+            await window.FqCardEngineModule.playDialog(currentCards, reactiveCard);
+
+            const buttons = Dialog.wait.mock.calls[0][0].buttons;
+            expect(buttons.ok.label).toBe("FQCARDENGINE.PlayCard");
+            expect(buttons.unprepare).toBeDefined();
+        });
+
+        test("le bouton de préparation arme la carte au lieu de la jouer", async () => {
+            const reactiveCard = makeReactiveCard();
+            reactiveCard.setFlag = vi.fn().mockResolvedValue(null);
+            currentCards = makeHand([reactiveCard]);
+            globalThis.game.cards = [currentCards, pile];
+            setTurn();
+
+            await window.FqCardEngineModule.playDialog(currentCards, reactiveCard);
+            await Dialog.wait.mock.calls[0][0].buttons.ok.callback([makePlayRoot()]);
+
+            expect(reactiveCard.setFlag).toHaveBeenCalledWith(
+                "fq-card-engine", "prepared",
+                expect.objectContaining({fd: expect.any(Object), toId: pile.id})
+            );
+            expect(PlayCard.callBackplayCard).not.toHaveBeenCalled();
+        });
+    });
 });

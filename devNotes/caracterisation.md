@@ -83,6 +83,9 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - nb de cartes
 - synergie
 - Vérifier caracterisation abilities dnd
+- Verification cahque fonctionnalité du moteur pour cahque classe
+- Faire un inventaire des types de dégâts
+- Faire vérifier IA les descriptions
 
 # Élémentaliste
 
@@ -149,6 +152,9 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
   - Rage : Sort pour monter le zèle, sort qui fait plus de dégâts plus on a de zèle pas dépenser,
     sort qui fait gagner du zèle max: Remplacer par exemple la lame chargée par ça
   - Transfert de pv vers des alliés
+
+    - Pouvoir faire une lame chargé en une fois ou refonte?- > Remplacer la lame chargée par un sort qui fait plus de dégâts
+      suivant le zèle qu'a la cible plutôt que la chargé Ou découper en plusieurs sorts, ceux qui charge du zèle et ceux qui en utilise?
 ---
 
 # Mage Blanc

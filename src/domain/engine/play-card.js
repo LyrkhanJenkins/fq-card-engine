@@ -1,4 +1,4 @@
-import Constants, {SUCCESS_COLOR} from "../constants.js";
+import Constants, {PREPARED_FLAG, SUCCESS_COLOR} from "../constants.js";
 import CardEffect from "./shared/card-effect.js";
 import RollService from "./roll/roll-service.js";
 import CardFqSystem from "../system/cards/card-fq-system.mjs";
@@ -162,6 +162,10 @@ export default class PlayCard {
      * au jeu d'une carte non rejouable. Une erreur de transfert est notifiée à
      * l'utilisateur sans interrompre le flux appelant.
      *
+     * Une préparation de carte réactive ne survit pas à la défausse : elle vaut
+     * pour une carte EN MAIN. Sans cet effacement, une carte armée puis
+     * défaussée reviendrait armée de la défausse au premier rappel.
+     *
      * @param {Cards}  currentCards - La main courante contenant la carte.
      * @param {Cards}  to           - La pile de défausse cible.
      * @param {Card}   card         - La carte transférée.
@@ -170,10 +174,15 @@ export default class PlayCard {
      * @returns {Promise<*>} La promesse du transfert.
      */
     static transferToPile(currentCards, to, card, fd) {
+        const moduleName = globalThis.FqCardEngineModule.moduleName;
+        const updateData = fd.down ? {face: null} : {};
+        if (card.flags?.[moduleName]?.[PREPARED_FLAG]) {
+            updateData.flags = {[moduleName]: {[PREPARED_FLAG]: null}};
+        }
         return currentCards.pass(to, [card.id], {
             action: "pass",
             chatNotification: !CONFIG.FqCardEngine.options.hideMessages,
-            updateData: fd.down ? {face: null} : {}
+            updateData
         }).catch(err => {
             return ui.notifications.error(err.message);
         });

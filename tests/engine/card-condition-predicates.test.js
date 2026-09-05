@@ -532,6 +532,16 @@ describe("CardCondition.isReactiveReady — verdict du glow des réactifs", () =
         expect(CardCondition.isReactiveReady(choice)).toBe(true);
         expect(choice.customEvals[0].script).toBe("XXX + YYY === 2");
     });
+
+    it("substitue les valeurs demandées à XXX/YYY — celles d'une carte préparée", () => {
+        mountScene({tokens: [me()], logs: []});
+        game.combat.combatant = {actor: {id: "foe"}};
+        const choice = reactiveChoice({customEvals: [{script: "XXX + YYY === 7"}]});
+
+        expect(CardCondition.isReactiveReady(choice, undefined, {xValue: 3, yValue: 4})).toBe(true);
+        expect(CardCondition.isReactiveReady(choice, undefined, {xValue: 1, yValue: 4})).toBe(false);
+        expect(choice.customEvals[0].script).toBe("XXX + YYY === 7");
+    });
 });
 
 describe("CardCondition — pioche et main", () => {

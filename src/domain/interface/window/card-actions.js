@@ -12,6 +12,7 @@ import FormError from "../../../core/error/form-error.model.js";
 import CardEffect from "../../engine/shared/card-effect.js";
 import ResourceHandler from "../../engine/shared/resource-handler.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
+import PreparedCard from "../../engine/prepared-card.js";
 import {PILE_TYPE} from "../../trading/trading-cards.js";
 
 // Correspondance verdict de ciblage (`ResourceHandler.TARGETING_VERDICT`) → clé du
@@ -113,11 +114,8 @@ export default {
         cardContents.forEach(cc => cc.localizedName = game.i18n.localize(cc.name));
 
         let firstChoice = cardContents[0];
-        const firstChoiceString = JSON.stringify(firstChoice);
 
-        const hasXVariable = !firstChoice.xvalue && !!firstChoiceString.match(/XXX/);
-        const hasYVariable = !firstChoice.yvalue && !!firstChoiceString.match(/YYY/);
-        const hasVariables = hasXVariable || hasYVariable;
+        const {hasXVariable, hasYVariable, hasVariables} = CardFqSystem.choiceVariables(firstChoice);
 
         if (!Constants.actorCurrent) {
             ui.notifications.warn(game.i18n.localize("FQCARDENGINE.NoOwnedCharacter"));
@@ -187,18 +185,43 @@ export default {
             isPlayedThisRound: CardFqSystem.isPlayedThisRound(firstChoice),
         });
 
+        // ── Bouton principal : « Jouer » ou « Préparer » ──
+        // Une carte réactive est refusée au jeu pendant le tour de son porteur.
+        // Plutôt que de la lui interdire sèchement, le dialogue lui propose de
+        // l'ARMER : le moteur la jouera seul dès que ses conditions seront
+        // réunies hors de son tour. Le verdict porte sur le CHOIX SÉLECTIONNÉ
+        // (une carte peut mêler choix réactif et choix ordinaire), d'où le
+        // rafraîchissement du libellé au changement de choix (voir renderDialog).
+        const isPrepareMode = (cardContent) => PreparedCard.isOwnTurn() && PreparedCard.isPreparable(cardContent);
+
         let buttons = {
             ok: {
                 icon: `<i class="fas fa-bolt"></i>`,
-                label: game.i18n.localize("FQCARDENGINE.PlayCard"),
+                label: game.i18n.localize(isPrepareMode(firstChoice)
+                    ? "FQCARDENGINE.PrepareCard" : "FQCARDENGINE.PlayCard"),
                 callback: html => {
                     const {to, fd, cardContent} = this.getCardContent(html[0], cardContents, discards);
-                    this.playValidatedCard(to, fd, cardContent, {
-                        firstChoice, cardContents, hasVariables, initCardContents, currentCards, card
-                    });
+                    const ctx = {firstChoice, cardContents, hasVariables, initCardContents, currentCards, card};
+                    if (isPrepareMode(cardContent)) {
+                        this.prepareValidatedCard(to, fd, cardContent, ctx);
+                        return;
+                    }
+                    this.playValidatedCard(to, fd, cardContent, ctx);
                 }
             },
         };
+
+        // Carte déjà armée : le désarmement est un bouton à part, pour ne jamais
+        // priver le joueur du jeu manuel pendant le tour d'un autre.
+        if (PreparedCard.isPrepared(card)) {
+            buttons = {
+                ...buttons, unprepare: {
+                    icon: `<i class="fas fa-hourglass-end"></i>`,
+                    label: game.i18n.localize("FQCARDENGINE.CancelPreparedCard"),
+                    callback: () => PreparedCard.cancel(card)
+                }
+            };
+        }
 
         // Cartes éphémères : aucune défausse volontaire possible, jouer est leur
         // seule sortie de la main. Les cartes innées se défaussent comme les autres :
@@ -364,11 +387,22 @@ export default {
             const targetHookId = Hooks.on("targetToken", () => renderPanel());
             // Changer de choix invalide la zone posée (l'autre choix peut avoir une
             // toute autre forme/taille de zone, voire ne pas être une zone).
+            // Le libellé du bouton principal suit le choix sélectionné : « Préparer »
+            // sur un choix réactif pendant son propre tour, « Jouer » sinon.
+            const refreshMainButton = () => {
+                const {cardContent} = this.getCardContent(root, cardContents, discards);
+                const okBtn = root.querySelector("button[data-button=\"ok\"]");
+                if (!okBtn) return;
+                const key = isPrepareMode(cardContent) ? "FQCARDENGINE.PrepareCard" : "FQCARDENGINE.PlayCard";
+                okBtn.innerHTML = `<i class="fas fa-bolt"></i> ${game.i18n.localize(key)}`;
+            };
+
             root.querySelector("select[name=\"nameContent\"]")?.addEventListener("change", () => {
                 ZoneTargeting.clearPlacement();
                 acquireIfAutomatic();
                 renderPanel();
                 refreshDescription();
+                refreshMainButton();
             });
             // Nettoyage obligatoire à la fermeture de CETTE dialog : retirer le hook
             // targetToken (pas de fuite), enlever la barre et revenir à l'outil « select »
@@ -453,17 +487,9 @@ export default {
             throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorMinionLocation"));
         }
 
-        if (fd.XXX === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorXXX"));
-        if (fd.YYY === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorYYY"));
-
-        // Recalcul complet du contenu avec els caracteristiques dnd5E
-        CardEffect.replaceCardContentAbilitiesBonus(cardContent);
-
-        // Garde de bornes max et min de X/Y
-        const boundVerdict = CardEffect.evaluateXYBounds(cardContent, fd.XXX, fd.YYY);
-        if (boundVerdict) {
-            throw new FormError(game.i18n.format(boundVerdict.messageKey, boundVerdict.format));
-        }
+        // Recalcul complet du contenu avec els caracteristiques dnd5E, puis garde
+        // des variables X/Y (saisie et bornes) — la même que celle d'une préparation.
+        this.checkXYForm(cardContent, fd);
         // calcul X/Y
         CardEffect.substituteXAndYValue(cardContent, hasVariables, fd.XXX, fd.YYY);
         CardEffect.prepareDataFromCard(cardContent);
@@ -544,6 +570,52 @@ export default {
             });
         }
         return PlayCard.callBackplayCard(to, fd, cardContent, hasVariables, initCardContents, currentCards, card);
+    },
+
+    /**
+     * Garde des variables X/Y du formulaire : valeurs saisies et bornes du choix.
+     * Le contenu est d'abord recalculé avec les caractéristiques dnd5e, les
+     * bornes pouvant en dépendre. Mute `cardContent` sur place, comme le reste
+     * de la préparation du contenu.
+     *
+     * @param {object} cardContent - Le contenu (choix) sélectionné de la carte.
+     * @param {object} fd          - Les données du formulaire du dialogue (XXX, YYY).
+     *
+     * @throws {FormError} Si une variable n'est pas saisie ou sort de ses bornes.
+     *
+     * @returns {void}
+     */
+    checkXYForm(cardContent, fd) {
+        if (fd.XXX === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorXXX"));
+        if (fd.YYY === null) throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorYYY"));
+
+        CardEffect.replaceCardContentAbilitiesBonus(cardContent);
+
+        const boundVerdict = CardEffect.evaluateXYBounds(cardContent, fd.XXX, fd.YYY);
+        if (boundVerdict) {
+            throw new FormError(game.i18n.format(boundVerdict.messageKey, boundVerdict.format));
+        }
+    },
+
+    /**
+     * Arme une carte réactive au lieu de la jouer : le choix retenu et les
+     * variables saisies sont mémorisés sur la carte, qui reste en main. Seule la
+     * saisie du formulaire est contrôlée ici — ni ressources ni ciblage, qui
+     * seront jugés au déclenchement, dans les conditions du moment.
+     *
+     * @param {Cards}  to          - La pile de défausse cible retenue.
+     * @param {object} fd          - Les données du formulaire du dialogue.
+     * @param {object} cardContent - Le contenu (choix) sélectionné de la carte.
+     * @param {object} ctx         - Le contexte du dialogue (voir `playValidatedCard`).
+     *
+     * @returns {Promise<void>} La promesse de l'écriture de la préparation.
+     */
+    prepareValidatedCard(to, fd, cardContent, ctx) {
+        // Copie de travail : la garde des bornes recalcule le contenu, ce que la
+        // préparation ne doit pas figer — c'est au déclenchement que la carte est
+        // résolue, avec les caractéristiques de ce moment-là.
+        this.checkXYForm(ObjectUtils.deepCopy(cardContent), fd);
+        return PreparedCard.prepare(ctx.card, fd, to);
     },
 
     /**

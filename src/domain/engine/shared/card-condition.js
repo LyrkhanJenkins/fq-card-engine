@@ -5,6 +5,20 @@ import TradingCards from "../../trading/trading-cards.js";
 import WeaponDamage, {WEAPON_TOKENS} from "../roll/weapon-damage.js";
 
 /**
+ * Hooks Foundry qui peuvent rendre un choix réactif jouable, donc au terme
+ * desquels `isReactiveReady` doit être réévalué : logs de combat (carte jouée,
+ * attaque/sort dnd5e via `updateCombat`), changement de combattant, début et
+ * fin de combat, changement de cible. Liste unique, partagée par les DEUX
+ * consommateurs du verdict — le halo orange de la main (`hand-board.js`) et le
+ * déclenchement des cartes préparées (`prepared-card.hook.js`) : ce que le halo
+ * promet et ce que la préparation joue ne doivent jamais diverger.
+ * @type {string[]}
+ */
+export const REACTIVE_READY_HOOKS = Object.freeze([
+    "updateCombat", "combatTurnChange", "createCombat", "deleteCombat", "targetToken"
+]);
+
+/**
  * Conditions personnalisées des cartes : le moteur d'évaluation pur des
  * `customEvals` d'un choix, et les prédicats génériques que les scripts des
  * decks appellent en une ligne via `FqCardEngineModule.cond.*`.
@@ -63,16 +77,25 @@ export default class CardCondition {
      * Indique si un choix réactif est prêt à être joué — le verdict du glow
      * orange de la main : choix réactif, combat actif, hors du tour du joueur
      * (mêmes règles que `checkIfCanUseCard`), et tous les `customEvals` passent
-     * en évaluation silencieuse. Les variables `XXX`/`YYY` des scripts sont
-     * évaluées à 1 (valeur minimale) puisqu'aucun formulaire n'est ouvert ;
-     * un script en erreur rend le choix non prêt.
+     * en évaluation silencieuse. Aucune évaluation n'a lieu pendant le tour du
+     * joueur : le verdict tombe avant les scripts. Un script en erreur rend le
+     * choix non prêt.
      *
-     * @param {object} choice - Le choix de la carte (contenu brut, non préparé).
-     * @param {Card}   [card] - La carte concernée (visible des scripts).
+     * Les variables `XXX`/`YYY` des scripts valent 1 par défaut (valeur
+     * minimale) puisqu'aucun formulaire n'est ouvert. Une carte PRÉPARÉE porte
+     * en revanche les valeurs saisies à sa préparation : son déclenchement
+     * automatique doit juger les conditions sur les nombres qui seront
+     * réellement joués.
+     *
+     * @param {object} choice             - Le choix de la carte (contenu brut, non préparé).
+     * @param {Card}   [card]             - La carte concernée (visible des scripts).
+     * @param {object} [options]          - Les valeurs de substitution des variables.
+     * @param {number|string} [options.xValue=1] - La valeur substituée à `XXX`.
+     * @param {number|string} [options.yValue=1] - La valeur substituée à `YYY`.
      *
      * @returns {boolean} True si la carte réactive peut être mise en évidence.
      */
-    static isReactiveReady(choice, card) {
+    static isReactiveReady(choice, card, {xValue = 1, yValue = 1} = {}) {
         if (!choice?.reactive || !game.combat) {
             return false;
         }
@@ -83,7 +106,7 @@ export default class CardCondition {
             ...choice,
             customEvals: (Array.isArray(choice.customEvals) ? choice.customEvals : []).map(customEval => ({
                 ...customEval,
-                script: customEval.script?.replaceAll("XXX", "1").replaceAll("YYY", "1")
+                script: customEval.script?.replaceAll("XXX", String(xValue)).replaceAll("YYY", String(yValue))
             }))
         };
         return CardCondition.evaluate(substituted, card).ok;

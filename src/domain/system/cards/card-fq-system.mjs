@@ -133,6 +133,24 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         }
         return !!choice?.hasBeenPlayed && !!game.combat && choice?.playedRound === game.combat.round?.toString();
     }
+
+    /**
+     * Indique quelles variables libres un choix expose au joueur : `XXX` et
+     * `YYY` sont saisies au dialogue tant que le choix ne les fixe pas lui-même
+     * (`xvalue`/`yvalue`). Le verdict est le même pour le dialogue de jeu, qui
+     * affiche les champs, et pour le déclenchement d'une carte préparée, qui
+     * doit resubstituer les mêmes valeurs sans passer par un formulaire.
+     *
+     * @param {object} [choice] - Le choix (contenu) d'une carte.
+     *
+     * @returns {{hasXVariable: boolean, hasYVariable: boolean, hasVariables: boolean}} Les variables libres du choix.
+     */
+    static choiceVariables(choice) {
+        const serialized = JSON.stringify(choice ?? {});
+        const hasXVariable = !choice?.xvalue && serialized.includes("XXX");
+        const hasYVariable = !choice?.yvalue && serialized.includes("YYY");
+        return {hasXVariable, hasYVariable, hasVariables: hasXVariable || hasYVariable};
+    }
     // Formes de zone posables sur le canvas (types de RegionShapeData Foundry v14).
     static ZONE_SHAPE_CHOICE = {
         circle: "FQCARDENGINE.ZoneShapeCircle",

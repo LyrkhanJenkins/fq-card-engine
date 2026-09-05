@@ -1,6 +1,7 @@
 import TradingCards, {DECK_TYPE, HAND_TYPE, SPELLBOOK_TYPE} from "../../trading/trading-cards.js";
 import DisplayCard from "../card-svg/display-card.js";
-import CardCondition from "../../engine/shared/card-condition.js";
+import CardCondition, {REACTIVE_READY_HOOKS} from "../../engine/shared/card-condition.js";
+import PreparedCard from "../../engine/prepared-card.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {formatFatigue} from "../../../core/utils/dialog.utils.js";
 import SpellbookWindow from "./spellbook-window.js";
@@ -163,13 +164,12 @@ export default class HandBoard {
             });
 
         // Réévaluation du glow des réactifs (isReactiveReady) : sa jouabilité
-        // dépend d'événements sans lien avec les documents cartes — logs de
-        // combat (carte jouée, attaque/sort dnd5e via updateCombat), changement
-        // de combattant, début/fin de combat, changement de cible. Débouncé car
-        // renderCards reconstruit tout le DOM de la main et targetToken se
-        // déclenche une fois par token (dé)ciblé.
+        // dépend d'événements sans lien avec les documents cartes, énumérés une
+        // seule fois par REACTIVE_READY_HOOKS. Débouncé car renderCards
+        // reconstruit tout le DOM de la main et targetToken se déclenche une
+        // fois par token (dé)ciblé.
         this._refreshReactiveGlow = foundry.utils.debounce(() => t.update(), 150);
-        for (const hook of ["updateCombat", "combatTurnChange", "createCombat", "deleteCombat", "targetToken"]) {
+        for (const hook of REACTIVE_READY_HOOKS) {
             this._hookIds[hook] = Hooks.on(hook, () => t._refreshReactiveGlow());
         }
         //auto register to listen for updates
@@ -208,6 +208,9 @@ export default class HandBoard {
             // glow sur les barres qui affichent la main d'un autre joueur (vue MJ).
             isReactiveReady: (!this.currentUser || this.currentUser.id === game.user?.id)
                 && CardCondition.isReactiveReady(cardContent, c),
+            // Carte armée : le halo bleu dure tant que la préparation tient, y
+            // compris pendant le tour de son porteur — c'est là qu'il l'a posée.
+            isPrepared: PreparedCard.isPrepared(c),
             cardsid: this.currentCards._id,
             uuid: c.uuid,
             back: forceFace ? false : (c.face == null),

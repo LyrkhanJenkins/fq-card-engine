@@ -40,6 +40,11 @@ export default class ResourceHandler {
      * coûts indiqués (hp, action, mana, zeal, défausse). Affiche un message
      * d'avertissement pour la première ressource insuffisante.
      *
+     * Le mode `silent` rend le même verdict sans rien publier : il sert aux
+     * évaluations répétées et automatiques (déclenchement d'une carte réactive
+     * préparée, réévaluées à chaque événement de combat), qui inonderaient
+     * sinon le chat d'un avertissement par évaluation.
+     *
      * @param {object} resources         - Les coûts à payer (valeurs négatives).
      * @param {number} [resources.hp]     - Coût en points de vie.
      * @param {number} [resources.action] - Coût en points d'action.
@@ -47,10 +52,12 @@ export default class ResourceHandler {
      * @param {number} [resources.zeal]   - Coût en zèle.
      * @param {number} [resources.drop]   - Coût en défausses (vérifié seulement en combat).
      * @param {object} actor             - L'acteur qui paie les coûts.
+     * @param {object} [options]          - Les options de vérification.
+     * @param {boolean} [options.silent=false] - Ne publie aucun avertissement.
      *
      * @returns {boolean} True si toutes les ressources sont suffisantes (ou pas d'acteur), false sinon.
      */
-    static checkResources(resources, actor) {
+    static checkResources(resources, actor, {silent = false} = {}) {
         if (!actor) {
             return true;
         }
@@ -60,7 +67,9 @@ export default class ResourceHandler {
                 continue;
             }
             if (current(actor) + resources[field] < 0) {
-                ResourceHandler.createUserWarningMessage(game.i18n.localize(warningKey), actor);
+                if (!silent) {
+                    ResourceHandler.createUserWarningMessage(game.i18n.localize(warningKey), actor);
+                }
                 return false;
             }
         }
