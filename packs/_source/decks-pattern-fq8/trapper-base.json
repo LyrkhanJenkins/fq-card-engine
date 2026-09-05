@@ -3919,6 +3919,202 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntsEnd000001"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.TrapStash"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.TrapStash",
+      "description": "",
+      "_id": "trTrapStash00001",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "level": 5,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "name": "",
+              "action": "-4",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "3",
+              "chooseCardsCount": "1",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [],
+              "executeEval": "const uid = game.user.id;\nconst book = game.cards.find(c => c.ownership[uid] === 3 && c.system?.fq?.type === \"SPELLBOOK\" && c.system?.fq?.owner === uid);\nconst names = [...new Set([...(book?.cards ?? [])].filter(c => c.system?.fq?.class === \"trapper\" && (c.system?.fq?.choices ?? []).some(x => x.reactive)).map(c => c.name))];\ncardContent.chooseCardsList = names.map(n => `fq-card-engine.decks-pattern-fq8.Trapper Base.${n}`).join(\",\");",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 30,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "GkukoBpykcafjbri",
+        "createdTime": 1788976800000,
+        "modifiedTime": 1788976800000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trTrapStash00001"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.HuntersWhistle"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.HuntersWhistle",
+      "description": "",
+      "_id": "trHuntersWhis001",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "level": 7,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "name": "",
+              "action": "-5",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "1",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [],
+              "executeEval": "const uid = game.user.id;\nconst book = game.cards.find(c => c.ownership[uid] === 3 && c.system?.fq?.type === \"SPELLBOOK\" && c.system?.fq?.owner === uid);\nconst names = [...new Set([...(book?.cards ?? [])].filter(c => c.system?.fq?.class === \"trapper\" && (c.system?.fq?.choices ?? []).some(x => (x.minions ?? []).some(m => m.type === \"beast\"))).map(c => c.name))];\ncardContent.chooseCardsList = names.map(n => `fq-card-engine.decks-pattern-fq8.Trapper Base.${n}`).join(\",\");",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.magic_signs.circle.02.conjuration.intro.yellow",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 31,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "GkukoBpykcafjbri",
+        "createdTime": 1788976800000,
+        "modifiedTime": 1788976800000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntersWhis001"
     }
   ],
   "width": null,
