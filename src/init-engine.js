@@ -26,6 +26,9 @@ CONFIG.FqCardEngine = {
 window.FqCardEngineModule = {
     cst: Constants,
     cond: CardCondition,
+    // Surface publique des scripts de carte (executeEval) : ordonner une attaque
+    // d'arme à un acteur qui n'est pas le lanceur — un sbire, typiquement.
+    wpn: WeaponDamage,
     handMiniBarList: new Array(),
     moduleName: "fq-card-engine",
     eventName: "module.fq-card-engine",

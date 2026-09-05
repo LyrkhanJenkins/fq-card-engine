@@ -3490,6 +3490,121 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapHuntInstin1x"
+    },
+    {
+      "_id": "trAttackOrder001",
+      "name": "FQCARDTITLE.AttackOrder",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.AttackOrder"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 26,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "trapper",
+          "level": 13,
+          "isInnate": false,
+          "choices": [
+            {
+              "name": "",
+              "action": "-4",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "12",
+              "nbTargets": "1",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgAttackOrder",
+                  "arg": ""
+                }
+              ],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.minionTokensOnScene(\"beast\").length > 0",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoBeastOnScene",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "const prey = FqCardEngineModule.cst.currentTargets[0];\nconst beasts = FqCardEngineModule.cond.minionTokensOnScene(\"beast\");\nif (prey && beasts.length) {\nconst preyDoc = prey.document ?? prey;\nconst distance = t => Math.hypot(t.x - preyDoc.x, t.y - preyDoc.y);\nconst closest = beasts.sort((a, b) => distance(a) - distance(b))[0];\nFqCardEngineModule.wpn.triggerFirstEquippedWeapon(closest.actor, \"@wpnM\");\n}",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.bardic_inspiration.greenorange",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "GkukoBpykcafjbri",
+        "createdTime": 1788400000000,
+        "modifiedTime": 1788400000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trAttackOrder001"
     }
   ],
   "width": null,

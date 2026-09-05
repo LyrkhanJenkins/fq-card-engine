@@ -1406,5 +1406,9 @@
   "FQCARDTITLE.SacrificialFury" : "Fureur Sacrificielle",
   "FQCARDDESCRIPTION.SacrificialFury" : "Vous coûte {0_hp} points de vie et inflige {0_damage} dégâts à tous les ennemis adjacents.",
   "FQCARDTITLE.LastStand" : "Baroud D'Honneur",
-  "FQCARDDESCRIPTION.LastStand" : "Jouable uniquement avec 2 cartes ou moins en main et sans vous être défaussé ce tour-ci.\nAu choix : vous soigner de {0_hp} points de vie, ou infliger {1_damage} dégâts à une cible adjacente.\nVous gagnez 2 points de zèle."
+  "FQCARDDESCRIPTION.LastStand" : "Jouable uniquement avec 2 cartes ou moins en main et sans vous être défaussé ce tour-ci.\nAu choix : vous soigner de {0_hp} points de vie, ou infliger {1_damage} dégâts à une cible adjacente.\nVous gagnez 2 points de zèle.",
+  "FQCARDENGINE.CardMsgAttackOrder" : "Sur votre ordre, votre familier le plus proche se jette sur la proie",
+  "FQCARDENGINE.CardWarningMsgNoBeastOnScene" : "Vous n'avez aucun familier vivant sur la scène",
+  "FQCARDTITLE.AttackOrder" : "Ordre D'Attaquer",
+  "FQCARDDESCRIPTION.AttackOrder" : "Désignez une proie : votre familier le plus proche l'attaque immédiatement avec son arme équipée, pendant votre tour.\nL'attaque coûte au familier ses propres points d'action, et il doit être à portée de la proie."
 }

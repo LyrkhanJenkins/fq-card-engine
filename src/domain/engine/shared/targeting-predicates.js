@@ -156,6 +156,30 @@ export default class TargetingPredicates {
      *
      * @returns {{target: object, dist: number}[]} Les cibles hors portée et leur distance.
      */
+    /**
+     * Les tokens des sbires VIVANTS d'un type donné invoqués par un invocateur,
+     * sur la scène active — la lecture unique des estampilles posées à
+     * l'invocation (`minionType`/`summonerId`), partagée par le plafond
+     * d'invocations et par les cartes qui donnent un ordre à leurs sbires.
+     *
+     * @param {string} type         - Le type de sbire (`beast`, `skeleton`…).
+     * @param {string} [summonerId] - L'id de l'invocateur (défaut : le personnage courant).
+     *
+     * @returns {object[]} Les tokens des sbires vivants correspondants (vide si type ou invocateur manquant).
+     */
+    static livingMinionTokens(type, summonerId = Constants.myId) {
+        if (!type || !summonerId) {
+            return [];
+        }
+        const tokens = game.canvas?.scene?.tokens ?? game.scenes?.active?.tokens ?? [];
+        return [...tokens].filter(token => {
+            const flags = token.actor?.flags?.[FqCardEngineModule.moduleName];
+            return flags?.minionType === type
+                && flags?.summonerId === summonerId
+                && (token.actor?.system?.attributes?.hp?.value ?? 0) > 0;
+        });
+    }
+
     static findOutOfReachTargets(casterToken, targets, minReach, maxReach) {
         const outOfReach = [];
         targets.forEach(target => {

@@ -657,6 +657,22 @@ export default class CardCondition {
     }
 
     /**
+     * Les tokens des sbires vivants d'un type donné invoqués par le personnage
+     * courant — le repérage que les cartes d'ORDRE consomment : la condition de
+     * jouabilité (« au moins un familier en vie ») comme le script d'exécution
+     * (« lequel attaque »). À ne pas confondre avec
+     * {@link CardCondition.minionsAtLeast}, qui lit les compteurs de BONUS
+     * d'invocation et non les sbires réellement posés.
+     *
+     * @param {string} type - Le type de sbire (`beast`, `skeleton`…).
+     *
+     * @returns {object[]} Les tokens des sbires vivants de ce type (vide si aucun).
+     */
+    static minionTokensOnScene(type) {
+        return TargetingPredicates.livingMinionTokens(type);
+    }
+
+    /**
      * Indique si le personnage dispose d'au moins `n` points de mana.
      *
      * @param {number} [n] - Le minimum requis (défaut 1).

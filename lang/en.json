@@ -1406,5 +1406,9 @@
   "FQCARDTITLE.SacrificialFury" : "Sacrificial Fury",
   "FQCARDDESCRIPTION.SacrificialFury" : "Costs you {0_hp} hit points and deals {0_damage} damage to every adjacent enemy.",
   "FQCARDTITLE.LastStand" : "Last Stand",
-  "FQCARDDESCRIPTION.LastStand" : "Playable only with 2 cards or fewer in hand and no card discarded this turn.\nChoose: heal yourself for {0_hp} hit points, or deal {1_damage} damage to an adjacent target.\nYou gain 2 zeal points."
+  "FQCARDDESCRIPTION.LastStand" : "Playable only with 2 cards or fewer in hand and no card discarded this turn.\nChoose: heal yourself for {0_hp} hit points, or deal {1_damage} damage to an adjacent target.\nYou gain 2 zeal points.",
+  "FQCARDENGINE.CardMsgAttackOrder" : "At your command, your nearest beast leaps at the prey",
+  "FQCARDENGINE.CardWarningMsgNoBeastOnScene" : "You have no living beast on the scene",
+  "FQCARDTITLE.AttackOrder" : "Attack Order",
+  "FQCARDDESCRIPTION.AttackOrder" : "Designate a prey: your nearest beast attacks it at once with its equipped weapon, during your turn.\nThe attack costs the beast its own action points, and it must be within reach of the prey."
 }

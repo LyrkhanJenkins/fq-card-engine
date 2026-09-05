@@ -1,5 +1,6 @@
 import RollService from "../roll/roll-service.js";
 import Geometry from "./geometry.js";
+import TargetingPredicates from "./targeting-predicates.js";
 import Constants, {DEFAULT_MAX_ZEAL} from "../../constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
@@ -238,16 +239,7 @@ export default class Minion {
      * @returns {number} Le nombre de sbires vivants de ce type invoqués par cet acteur.
      */
     static countOnScene(type, summonerId = Constants.myId) {
-        if (!type || !summonerId) {
-            return 0;
-        }
-        const tokens = game.canvas?.scene?.tokens ?? game.scenes?.active?.tokens ?? [];
-        return [...tokens].filter(token => {
-            const flags = token.actor?.flags?.[FqCardEngineModule.moduleName];
-            return flags?.minionType === type
-                && flags?.summonerId === summonerId
-                && (token.actor?.system?.attributes?.hp?.value ?? 0) > 0;
-        }).length;
+        return TargetingPredicates.livingMinionTokens(type, summonerId).length;
     }
 
     /**
