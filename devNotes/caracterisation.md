@@ -74,8 +74,10 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 **Questionnement et TODO Générique :** 
 - Plusieurs attaques d'opportunités?
 - L'esquive fait demi-dégâts?
-  **Dernière passe pour chaque sort :**
+- Combos: si réussi certaines actions -> redonnes tous les points d'actions pour jouer d'autre carte ou réduit le coup
+  de carte à 0 
 
+  **Dernière passe pour chaque sort :**
 - Verifier caracterisation des autres classes
 - Equilibrage de la classe manuel puis IA
 - dégâts
@@ -175,11 +177,6 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 **Faiblesse**:
 
 **Questionnement et TODO :**
-- Rituel lumineux : Chercher dans votre deck une carte de soins ou de bouclier et mettez la dans votre main (5 points
-d’actions ou 1 point de zèle, 1 fois par tour)
-- Rituel sombre : Chercher dans votre cimetière une carte de soins ou de bouclier et mettez la dans votre main (5 points
-d’actions ou 1 point de zèle, 1 fois par tour)
-
 ---
 
 # Trapper
@@ -339,8 +336,6 @@ Le seul a pouvoir augmenter son zèle max
 - Pas d'amélioration personnel d'esquive par les cartes
 
 **Questionnement et TODO :**
-- Combos: si réussi certaines actions -> redonnes tous les points d'actions pour jouer d'autre carte ou réduit le coup
-  de carte à 0
 ---
 
 # Guerrier Runique
