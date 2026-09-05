@@ -40,7 +40,7 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 1,
           "class": "neutral",
           "choices": [
             {
@@ -84,7 +84,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 2,
+          "level": 3,
           "isInnate": false
         }
       },
@@ -94,7 +94,7 @@
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1788280797729,
+        "modifiedTime": 1788638323291,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -176,18 +176,18 @@
               "hasBeenPlayed": false
             }
           ],
-          "maxSameCard": 2,
-          "level": 3,
+          "maxSameCard": 1,
+          "level": 8,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690796,
+        "modifiedTime": 1788638251123,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -212,7 +212,7 @@
       "type": "base",
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 1,
           "isInnate": false,
           "class": "neutral",
           "choices": [
@@ -252,7 +252,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 3
+          "level": 2
         }
       },
       "suit": "",
@@ -268,12 +268,12 @@
       "sort": 300000,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004418439,
-        "modifiedTime": 1786004418444,
+        "modifiedTime": 1788638182504,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -312,7 +312,7 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 1,
           "class": "neutral",
           "choices": [
             {
@@ -356,17 +356,17 @@
               "targetType": "Default"
             }
           ],
-          "level": 2,
+          "level": 4,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430829,
+        "modifiedTime": 1788638196316,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -405,7 +405,7 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 1,
           "class": "neutral",
           "choices": [
             {
@@ -449,17 +449,17 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 2,
+          "level": 7,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690795,
+        "modifiedTime": 1788638204761,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -483,7 +483,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iii.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterIII"
         }
       ],
@@ -498,7 +498,7 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 1,
           "class": "neutral",
           "choices": [
             {
@@ -542,17 +542,17 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 3,
+          "level": 1,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1788368400000,
+        "modifiedTime": 1788638844604,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -576,7 +576,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_vi.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterVI"
         }
       ],
@@ -591,7 +591,7 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 1,
           "class": "neutral",
           "choices": [
             {
@@ -640,12 +640,12 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004435185,
-        "modifiedTime": 1788368400000,
+        "modifiedTime": 1788638856274,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -669,7 +669,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_ix.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterIX"
         }
       ],
@@ -682,7 +682,7 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 1,
           "class": "neutral",
           "choices": [
             {
@@ -736,7 +736,7 @@
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788368400000,
-        "modifiedTime": 1788368400000,
+        "modifiedTime": 1788638865877,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -760,7 +760,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/neutral/dash.png",
           "text": "FQCARDDESCRIPTION.Dash"
         }
       ],
@@ -773,7 +773,7 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 1,
           "class": "neutral",
           "choices": [
             {
@@ -851,8 +851,8 @@
               "targetType": "Default"
             }
           ],
-          "level": 6,
-          "isInnate": false
+          "level": 5,
+          "isInnate": true
         }
       },
       "_stats": {
@@ -861,7 +861,7 @@
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788368400000,
-        "modifiedTime": 1788368400000,
+        "modifiedTime": 1788639007156,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -885,7 +885,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/neutral/recollection.png",
           "text": "FQCARDDESCRIPTION.Recollection"
         }
       ],
@@ -938,7 +938,7 @@
               "retrieveFromDeck": "*"
             }
           ],
-          "level": 4,
+          "level": 10,
           "isInnate": true
         }
       },
@@ -948,7 +948,7 @@
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788368400000,
-        "modifiedTime": 1788368400000,
+        "modifiedTime": 1788639153523,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
