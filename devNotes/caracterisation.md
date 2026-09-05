@@ -195,7 +195,7 @@ d’actions ou 1 point de zèle, 1 fois par tour)
 **Mécaniques signature** :
 - **Le critique comme ressource** : buffs (Tireur d'Élite, Ajustage de Tir passif), conversion (Retrouver des Forces vend du critique contre du mana), et surtout les **pièges dont les dégâts scalent sur le score de critique** (`2d(critique)`) tout en étant incritiquables.
 - **Portée extrême** : `maxReach` formulés (`10+@dex`, `7+@dex`), Tir Supersonique à portée illimitée ; **coût en action = distance** (`xvalue: reach`) sur Tir Précis et Supersonique.
-- **Pièges réactifs** : Piège à Pointes / Empoisonné — 0 action, 1 mana, déclenchés par `targetsWithinReach` quand un ennemi approche.
+- **Spécialiste du réactif** : Piège à Pointes / Empoisonné — 0 action, 1 mana, déclenchés par `targetsWithinReach` quand un ennemi approche.
 - **Auto-handicap comme ressource** : Embuscade (vide tous les PA → +@wis dégâts cumulable), Tir Enraciné (convertit le déplacement en dégâts + auto-immobilisation).
 - **Bêtes** : Tamed Wolf et Enraged Bear, jouant après le tour du Trapper, scaling `@cha`.
 - Zones distance (rectangle 3×3, ligne, cercle), entraves (Traquenard, repoussée du Tir Supersonique), DoT poison.
@@ -207,7 +207,6 @@ d’actions ou 1 point de zèle, 1 fois par tour)
 - Pas d'attaque corps à corps
 
 **Questionnement et TODO :**
-- Bêtes : sorts qui permettent de générer des bêtes plus puissantes, transferez des caractéristiques X 2 ou 3 sur une bête?
 ---
 
 # Moine
@@ -269,11 +268,6 @@ Le seul a pouvoir augmenter son zèle max
 - Peu de point de vie
 
 **Questionnement et TODO :**
-- Squelette trop faible?
-- Armée des morts: plus on a de squelette, plus on peut faire des choses
-  - Roi Squelette : Construire un super squelette: Essayer de merger le plus de squelette pour en faire un puissant, permetre de garder
-    le score de sacrifice après
-  - Nécromancie: Aller chercher des cartes spécifiques dans la défausse, jouer des cartes depuis la défausse
 ---
 
 # Illusionniste

@@ -714,3 +714,51 @@ describe("CardCondition — fenêtre « depuis la fin de mon tour »", () => {
         expect(CardCondition.reactivesPlayedSinceMyTurn(1)).toBe(false);
     });
 });
+
+describe("CardCondition — effets portés par le camp adverse", () => {
+
+    /** Document token de scène : camp (disposition), inscription au combat et effets portés. */
+    function combatToken({id, actorId, disposition, effects = []}) {
+        return {id, actorId, disposition, actor: {id: actorId, effects}};
+    }
+
+    /** Installe une scène dont TOUS les tokens donnés sont inscrits au combat. */
+    function mountSides(tokens, {combatants = tokens} = {}) {
+        game.user.character = {id: "me"};
+        game.canvas = {scene: {dimensions: {size: GRID}, tokens}};
+        game.combat = {round: 1, combatants: combatants.map(t => ({tokenId: t.id}))};
+    }
+
+    const caster = () => combatToken({id: "tokMe", actorId: "me", disposition: 1});
+
+    it("combatEnemiesEffectCount : additionne les effets nommés de tous les ennemis du combat", () => {
+        mountSides([
+            caster(),
+            combatToken({id: "tokFoe1", actorId: "foe1", disposition: -1, effects: [{name: "Curse"}, {name: "Curse"}]}),
+            combatToken({id: "tokFoe2", actorId: "foe2", disposition: -1, effects: [{name: "Curse"}, {name: "Burn"}]})
+        ]);
+
+        expect(CardCondition.combatEnemiesEffectCount(["Curse"])).toBe(3);
+        expect(CardCondition.combatEnemiesEffectCount()).toBe(4);
+        expect(CardCondition.combatEnemiesEffectCount(["Frost"])).toBe(0);
+    });
+
+    it("combatEnemiesEffectCount : ignore les alliés, le lanceur et les tokens hors combat", () => {
+        const outsider = combatToken({id: "tokFoe3", actorId: "foe3", disposition: -1, effects: [{name: "Curse"}]});
+        const ally = combatToken({id: "tokAlly", actorId: "ally", disposition: 1, effects: [{name: "Curse"}]});
+        const cursedCaster = combatToken({id: "tokMe", actorId: "me", disposition: 1, effects: [{name: "Curse"}]});
+        const foe = combatToken({id: "tokFoe1", actorId: "foe1", disposition: -1, effects: [{name: "Curse"}]});
+        mountSides([cursedCaster, ally, foe, outsider], {combatants: [cursedCaster, ally, foe]});
+
+        expect(CardCondition.combatEnemiesEffectCount(["Curse"])).toBe(1);
+    });
+
+    it("combatEnemiesEffectCount : 0 sans token du lanceur sur la scène et hors combat", () => {
+        mountSides([combatToken({id: "tokFoe1", actorId: "foe1", disposition: -1, effects: [{name: "Curse"}]})]);
+        expect(CardCondition.combatEnemiesEffectCount(["Curse"])).toBe(0);
+
+        mountSides([caster(), combatToken({id: "tokFoe1", actorId: "foe1", disposition: -1, effects: [{name: "Curse"}]})]);
+        game.combat = null;
+        expect(CardCondition.combatEnemiesEffectCount(["Curse"])).toBe(0);
+    });
+});

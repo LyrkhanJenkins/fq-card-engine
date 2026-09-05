@@ -702,6 +702,35 @@ export default class CardCondition {
         });
     }
 
+    /**
+     * Compte les effets actifs portés par TOUS les ennemis du combat en cours —
+     * parmi les noms donnés si une liste est fournie, tous sinon. Le camp est
+     * celui du ciblage « Combat » (`TargetingPredicates.areEnemies` sur la
+     * disposition du token, comparée à celle du lanceur) et le corpus celui de
+     * `CombatTargeting` : les tokens de la scène active inscrits au combat.
+     * Sert aux cartes dont la puissance dépend d'un empilement d'effets RÉPANDU
+     * sur le camp adverse (ex : les malédictions semées par le Mage Blanc), là
+     * où {@link CardCondition.selfEffectCount} compte celui du lanceur et
+     * {@link CardCondition.targetsHaveEffect} celui des seules cibles
+     * sélectionnées.
+     *
+     * @param {string[]} [names] - Les noms d'effets comptés (vide = tous).
+     *
+     * @returns {number} Le nombre total d'effets correspondants (0 hors combat ou sans token du lanceur).
+     */
+    static combatEnemiesEffectCount(names = []) {
+        const casterToken = TargetingPredicates.findCasterToken(Constants.actorCurrent);
+        if (!casterToken) {
+            return 0;
+        }
+        const combatantTokenIds = Constants.combatantTokenIds;
+        return [...(game.canvas?.scene?.tokens ?? [])]
+            .filter(token => token.actorId && combatantTokenIds.includes(token.id))
+            .filter(token => TargetingPredicates.areEnemies(token, casterToken))
+            .reduce((total, token) => total + [...(token.actor?.effects ?? [])]
+                .filter(e => !names.length || names.includes(e.name)).length, 0);
+    }
+
     /* ------------------------------------------------------------------ */
     /* Prédicats sur l'état du personnage                                  */
     /* ------------------------------------------------------------------ */
