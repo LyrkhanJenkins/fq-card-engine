@@ -136,7 +136,7 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 7,
+          "maxSameCard": 5,
           "class": "trapper",
           "choices": [
             {
@@ -194,6 +194,93 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!6b9vSzD4cZQZSYIu.gbW08JaE31eaVYY6"
+    },{
+      "_id": "gbW08JaE32eaVYY7",
+      "name": "FQCARDTITLE.PreciseShotII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/trapper/precise_shot_II.PNG",
+          "text": "FQCARDDESCRIPTION.PreciseShot"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "trapper",
+          "choices": [
+            {
+              "action": "-XXX",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "5",
+              "maxReach": "10+@dex",
+              "nbTargets": "",
+              "damage": "(5 + @dex + @wpnR)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "5",
+              "xmax": "10+@dex",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "reach",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.arrow.physical.white.01",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 21,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004430824,
+        "modifiedTime": 1786004430827,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.gbW08JaE32eaVYY7"
     },
     {
       "_id": "KJD2EDaDIQ6ZsPgD",
@@ -2806,8 +2893,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trPitTrap0000001",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trPitTrap0000001"
     },
     {
       "faces": [
@@ -3451,8 +3538,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trAttackOrder001",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trAttackOrder001"
     },
     {
       "faces": [
@@ -3772,7 +3859,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/TrapStash.png",
           "text": "FQCARDDESCRIPTION.TrapStash"
         }
       ],
@@ -3854,17 +3941,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788976800000,
-        "modifiedTime": 1788976800000,
+        "modifiedTime": 1788707230791,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trTrapStash00001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trTrapStash00001",
+      "cards": []
     },
     {
       "faces": [
@@ -3968,7 +4055,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/LoneHunter.png",
           "text": "FQCARDDESCRIPTION.LoneHunter"
         }
       ],
@@ -4051,15 +4138,15 @@
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788700000000,
-        "modifiedTime": 1788700000000,
+        "modifiedTime": 1788707211507,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trLoneHunter0001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trLoneHunter0001",
+      "cards": []
     },
     {
       "faces": [
@@ -4176,7 +4263,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/WildOffering.png",
           "text": "FQCARDDESCRIPTION.WildOffering"
         }
       ],
@@ -4273,15 +4360,15 @@
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788700000000,
-        "modifiedTime": 1788700000000,
+        "modifiedTime": 1788707489897,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trWildOffering01"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trWildOffering01",
+      "cards": []
     }
   ],
   "width": null,

@@ -756,6 +756,7 @@
   "FQCARDTITLE.ShadowForm" : "Forme d‘Ombre",
   "FQCARDDESCRIPTION.ShadowForm" : "Vous perdez 6 points de vie, moins @cha.\nAugmente les dégâts de la sorcière et des squelettes du tiers de votre Charisme jusqu’au prochain tour",
   "FQCARDTITLE.PreciseShot" : "Tir Précis",
+  "FQCARDTITLE.PreciseShotII" : "Tir Précis II",
   "FQCARDDESCRIPTION.PreciseShot" : "Inflige {0_damage} points de dégâts,\nX = distance de la cible.\n Xmin = {0_xmin}, Xmax = {0_xmax}. Portée pour ce sort augmentée de @dex",
   "FQCARDTITLE.WeakPointStudy" : "Etude Du Point Faible",
   "FQCARDDESCRIPTION.WeakPointStudy" : "Utilisable uniquement lorsqu’une cible esquive une de vos cartes : Récupérez la carte esquivée ou deux cartes de votre défausse et mettez-les dans votre main.\nAugmente tous les dégâts de @int",
