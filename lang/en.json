@@ -1444,5 +1444,17 @@
   "FQCARDENGINE.CardMsgAttackOrder" : "At your command, your nearest beast leaps at the prey",
   "FQCARDENGINE.CardWarningMsgNoBeastOnScene" : "You have no living beast on the scene",
   "FQCARDTITLE.AttackOrder" : "Attack Order",
-  "FQCARDDESCRIPTION.AttackOrder" : "Designate a prey: your nearest beast attacks it at once with its equipped weapon, during your turn.\nThe attack costs the beast its own action points, and it must be within reach of the prey."
+  "FQCARDDESCRIPTION.AttackOrder" : "Designate a prey: your nearest beast attacks it at once with its equipped weapon, during your turn.\nThe attack costs the beast its own action points, and it must be within reach of the prey.",
+  "FQCARDENGINE.CardMsgRepulsionGust" : "The gust hurls the target 5 squares in the opposite direction",
+  "FQCARDTITLE.RepulsionGust" : "Repulsion Gust",
+  "FQCARDDESCRIPTION.RepulsionGust" : "Reactive: playable only on an adjacent target carrying an air effect.\nThe target is hurled 5 squares in the direction opposite to yours.",
+  "FQCARDENGINE.CardMsgBurningTrail" : "Fleeing fans the flames: the target's burn effects are doubled",
+  "FQCARDTITLE.BurningTrail" : "Burning Trail",
+  "FQCARDDESCRIPTION.BurningTrail" : "Reactive: playable only on a target carrying a burn effect and gone out of your reach (beyond 6 squares).\nDoubles the burn effects it carries.",
+  "FQCARDENGINE.CardWarningMsgNoRangedAttacker" : "No attacker wounded you from range this round",
+  "FQCARDTITLE.SpellAbsorption" : "Spell Absorption",
+  "FQCARDDESCRIPTION.SpellAbsorption" : "Reactive: playable only after taking ranged damage this round, the attacker standing more than one square away from you.\nYou absorb the bolt and recover 3 mana points.",
+  "FQCARDENGINE.CardMsgTimeRecallTrap" : "The trap snaps shut: you return to the square you occupied at the start of your turn (GM action)",
+  "FQCARDTITLE.TimeRecallTrap" : "Time Recall Trap",
+  "FQCARDDESCRIPTION.TimeRecallTrap" : "Reactive: prepare it during your turn, it fires on its own as soon as your turn ends.\nYou then return to the square you occupied at the start of that turn."
 }

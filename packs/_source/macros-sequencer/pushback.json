@@ -1,0 +1,31 @@
+{
+  "name": "PushBack",
+  "type": "script",
+  "author": "ynIo5hURbsdbG4cp",
+  "img": "icons/magic/air/wind-tornado-spiral-blue.webp",
+  "scope": "global",
+  "command": "if (args[0] === \"on\") {\n\nconst distance = Number(args[1]) || 5;\n\nconst lastArg = args[args.length - 1];\nconst triggeringActor = game.actors.get(lastArg?.actorId);\n  const triggeringUser = [... game.users].filter(u => u.character?.id === triggeringActor.id)[0];\n// Cible(s) du joueur déclencheur (et pas du GM)\nconst targets = triggeringUser ? Array.from(triggeringUser.targets) : [];\nconst target = targets[0];\n\nif (!target) {\n  ui.notifications.warn(\"Aucune cible sélectionnée !\");\n  return;\n}\n\n// Infos de grille\nconst gridSize = canvas.grid.size;\n\n// Vecteur lanceur -> cible : la direction de la projection\nconst dx = target.center.x - token.center.x;\nconst dy = target.center.y - token.center.y;\nconst len = Math.hypot(dx, dy);\n\n// Le lanceur et la cible sur la même case : aucune direction à suivre\nif (!len) {\n  ui.notifications.error(\"Impossible de déterminer la direction de la projection !\");\n  return;\n}\n\n// Chaque axe est arrondi à la case : la projection reste alignée sur la grille\nconst newPos = {\n  x: target.position.x + Math.round((dx / len) * distance) * gridSize,\n  y: target.position.y + Math.round((dy / len) * distance) * gridSize\n};\n\n// Séquence de projection : la bourrasque part du lanceur et emporte la cible\nnew Sequence()\n  .effect()\n    .file(\"jb2a.gust_of_wind.veryfast\")\n    .atLocation(token)\n    .stretchTo(newPos)\n    .elevation(0)\n  .wait(100)\n  .effect()\n    .copySprite(target)\n    .fadeIn(50)\n    .duration(300)\n    .fadeOut(150)\n    .filter(\"Blur\")\n    .elevation(0)\n  .animation()\n    .on(target)\n    .teleportTo(newPos)\n    .snapToGrid()\n    .waitUntilFinished()\n  .effect()\n    .file(\"jb2a.wind_lines.01.01.white\")\n    .atLocation(newPos)\n    .scaleToObject()\n  .play();\n}",
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "advanced-macros": {
+      "runForSpecificUser": ""
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1788400000000,
+    "modifiedTime": 1788400000000,
+    "lastModifiedBy": "dnd5ebuilder0000"
+  },
+  "_id": "fqpushback000001",
+  "sort": 600000,
+  "_key": "!macros!fqpushback000001"
+}

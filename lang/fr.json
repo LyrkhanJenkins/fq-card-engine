@@ -1444,5 +1444,17 @@
   "FQCARDENGINE.CardMsgAttackOrder" : "Sur votre ordre, votre familier le plus proche se jette sur la proie",
   "FQCARDENGINE.CardWarningMsgNoBeastOnScene" : "Vous n'avez aucun familier vivant sur la scène",
   "FQCARDTITLE.AttackOrder" : "Ordre D'Attaquer",
-  "FQCARDDESCRIPTION.AttackOrder" : "Désignez une proie : votre familier le plus proche l'attaque immédiatement avec son arme équipée, pendant votre tour.\nL'attaque coûte au familier ses propres points d'action, et il doit être à portée de la proie."
+  "FQCARDDESCRIPTION.AttackOrder" : "Désignez une proie : votre familier le plus proche l'attaque immédiatement avec son arme équipée, pendant votre tour.\nL'attaque coûte au familier ses propres points d'action, et il doit être à portée de la proie.",
+  "FQCARDENGINE.CardMsgRepulsionGust" : "La bourrasque projette la cible de 5 cases dans la direction opposée",
+  "FQCARDTITLE.RepulsionGust" : "Bourrasque De Répulsion",
+  "FQCARDDESCRIPTION.RepulsionGust" : "Réactif : jouable uniquement sur une cible adjacente portant un effet d'air.\nLa cible est projetée de 5 cases dans la direction opposée à la vôtre.",
+  "FQCARDENGINE.CardMsgBurningTrail" : "La fuite attise les flammes : les effets de brûlure de la cible sont doublés",
+  "FQCARDTITLE.BurningTrail" : "Traînée Ardente",
+  "FQCARDDESCRIPTION.BurningTrail" : "Réactif : jouable uniquement sur une cible portant un effet de brûlure et sortie de votre portée (au-delà de 6 cases).\nDouble les effets de brûlure qu'elle porte.",
+  "FQCARDENGINE.CardWarningMsgNoRangedAttacker" : "Aucun assaillant à distance ne vous a blessé ce round",
+  "FQCARDTITLE.SpellAbsorption" : "Absorption De Sort",
+  "FQCARDDESCRIPTION.SpellAbsorption" : "Réactif : jouable uniquement après avoir subi des dégâts à distance ce round, l'assaillant se trouvant à plus d'une case de vous.\nVous absorbez le trait et récupérez 3 points de mana.",
+  "FQCARDENGINE.CardMsgTimeRecallTrap" : "Le piège se referme : vous revenez sur la case que vous occupiez au début de votre tour (Action MJ)",
+  "FQCARDTITLE.TimeRecallTrap" : "Piège De Retour Dans Le Temps",
+  "FQCARDDESCRIPTION.TimeRecallTrap" : "Réactif : préparez-le pendant votre tour, il se déclenche seul dès que votre tour s'achève.\nVous revenez alors sur la case que vous occupiez au début de ce tour."
 }

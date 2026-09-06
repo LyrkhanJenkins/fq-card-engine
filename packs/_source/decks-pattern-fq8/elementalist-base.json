@@ -4164,6 +4164,288 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCycloneEy1"
+    },
+    {
+      "_id": "fq13ElemGust01Az",
+      "name": "FQCARDTITLE.RepulsionGust",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.RepulsionGust"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3200000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "1",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Repulsion Gust",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Repulsion Gust",
+                          "img": "icons/magic/air/wind-tornado-spiral-blue.webp",
+                          "expireOnDamage": false,
+                          "showIcon": 0,
+                          "changes": [
+                            {
+                              "key": "macro.execute",
+                              "value": "PushBack 5",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          }
+                        }
+                      ],
+                      "messages": []
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgRepulsionGust",
+                  "arg": ""
+                }
+              ],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Air Effect\"])",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissing1Effect",
+                      "arg": "{\"effectName\":\"Air Effect\"}"
+                    }
+                  ]
+                },
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.whirlwind.bluegrey",
+                "onTarget": true
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 13,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788685199085,
+        "modifiedTime": 1788685199085,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.fq13ElemGust01Az"
+    },
+    {
+      "_id": "fq13ElemTrail02B",
+      "name": "FQCARDTITLE.BurningTrail",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.BurningTrail"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3300000,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "elementalist",
+          "choices": [
+            {
+              "name": "",
+              "action": "",
+              "mana": "-2",
+              "zeal": "-1",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "7",
+              "maxReach": "999999",
+              "nbTargets": "1",
+              "damage": "",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgBurningTrail",
+                  "arg": ""
+                }
+              ],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Burn\"])",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgMissing1Effect",
+                      "arg": "{\"effectName\":\"Burn\"}"
+                    }
+                  ]
+                },
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "const target = FqCardEngineModule.cst.currentTargets[0]?.actor;\nif (target) {\nconst copies = target.effects.filter(e => e.name === \"Burn\").map(e => {\nconst data = e.toObject();\ndelete data._id;\nreturn data;\n});\nif (copies.length) target.createEmbeddedDocuments(\"ActiveEffect\", copies);\n}",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.flames.02.orange",
+                "onTarget": true
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 13,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788685199085,
+        "modifiedTime": 1788685199085,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.fq13ElemTrail02B"
     }
   ],
   "width": null,
