@@ -4,7 +4,6 @@ Document de référence design : ce qui définit chaque classe (identité dnd5e,
 
 ---
 
-
 ## Rappel système
 
 ### Rôle des caractéristiques dnd5e
@@ -72,8 +71,6 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - Les dégâts de zone ne font pas beaucoup moins de dégâts que les sorts monocibles (ne divise pas les dégâts entre les cibles)
 
 **Questionnement et TODO Générique :** 
-- Plusieurs attaques d'opportunités?
-- L'esquive fait demi-dégâts?
 - Combos: si réussi certaines actions -> redonnes tous les points d'actions pour jouer d'autre carte ou réduit le coup
   de carte à 0 
 
@@ -90,6 +87,98 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - Faire vérifier IA les descriptions
 - Compléter avec des sorts de rang 2 (juste des sorts plus fort exemple trait de feu II) pour les niveaus supérieurs OU les trous
 
+---
+
+# Moine
+
+> « Adepte d'un jeu très dynamique : joue beaucoup de cartes différentes pour monter rapidement son zèle. Robuste, score d'esquive élevé. »
+
+**Identité dnd5e** : d8, FOR + DEX. CON alimente les soins et coûts, SAG/CHA les plafonds de X.
+
+**Stats FQ** : **esquive la mieux dotée du jeu**, zèle et déplacement bien fournis. **Jamais de critique** — il joue le volume, pas le burst.
+
+**Rôle** : bruiser mobile à tempo, duelliste corps à corps, avec appoints tank, Healers (taunt Uppercut, Interruption) et soins (Vive-Esquive, Méditation Zen, Paume Curative).
+- Healeur fort mais corps à corps
+- Duelliste corps à corps ultra mobile
+- Tank spé esquive
+
+**Mécaniques signature** :
+- **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume Curative).
+  - Poing Rouge est la seule carte du jeu qui monte `zeal.max` (+5, permanent).
+- **Flux de cartes** : Souffle de Ki (zèle → X cartes **et** 2X actions), Maître Du Chi (carte de base passive bidirectionnelle : défausse ↔ zèle ↔ pioche), Armes Secrètes (monétise la défausse en dégâts inesquivables).
+- **Rejouable conditionnel scripté** (unique au Moine) : Coup Droit/Gauche rejouables 2× seulement si assez de PA déjà dépensés ce tour — récompense l'**ordonnancement** des cartes.
+- **Défense réactive** : 4 réactives (Bouclier Zélé sur sort subi, Vive-Esquive sur dégâts, Armes Secrètes, Interruption qui divise par 2 les PA adverses) + Dissimulation (intouchable 1 tour au prix de dégâts nuls, puis fenêtre offensive).
+- **Déplacement améliorable**: Dégâts et déplacement (déplacement éclair) (le seul avec le Gardien ? ENlever le gardien?)
+  Le seul a faire plus de dégâts avec toutes les cartes en main
+  Le seul a pouvoir augmenter son zèle max
+  **Boucle de jeu** : enchaîner les petites frappes → zèle → convertir en cartes/actions/burst ; l'ordre de jeu dans le tour est la compétence clé.
+- Les heals uniquements pour les autres (comme l'illusionniste?)
+
+**Faiblesses** :
+- Aucun Critique
+
+**Questionnement et TODO :**
+
+---
+---
+
+# Gardien
+
+> « Le plus grand nombre de points de vie du jeu. Peut puiser dans ses points de vie pour améliorer ses dégâts. »
+
+**Identité dnd5e** : d12, FOR + CON. CHA sert aux cartes de provocation et au Coup de bouclier.
+
+**Stats FQ** : profil équilibré tourné vers l'action et la main (la plus grosse main du jeu selon l'historique), quasi **aucun mana** (1 item résiduel). Sa vraie ressource est le couple PV + zèle.
+
+**Rôle** :
+- Tank qui fait moins de dégâts
+- Soutien
+- Dps consommant des PVs pour faire plus de dégâts
+
+**Mécaniques signature** :
+- **PV comme monnaie** : Frappe Héroïque (−(6−@con) PV au lieu du mana), Frappe provocatrice, Tourbillon de Lame, Montée de la rage (PV → mana).
+- **Compétences pour agripper des alliés ou des ennemis** (pas de déplacement supplémentaire plutôt des choses pour attraper )
+- **Charges de lame** : Chargement Des Lames (cap 12 → dégâts ×2) et Tourbillon De Lame (cap 8 → AoE adjacente), via compteurs `flags.fq` + `counterWithinCap`/`counterEquals`.
+- **Réactions défensives** : Coup de bouclier (contre-charge), Intervention (prend les dégâts d'un allié à sa place), Levée De Bouclier (récupère la moitié des dégâts subis).
+- **Postures et trade-off crit ↔ esquive** : Changement De Posture (rejouable à l'infini), Posture De Berzerker et Rage Ultime (puissance contre auto-DoT).
+- **Taunt** : Frappe provocatrice, seule carte de provocation du jeu avec l'Uppercut du Moine.
+
+**Boucle de jeu** : frapper pour générer du zèle, payer en PV ce que le mana ne couvre pas, encaisser/réagir hors tour, basculer protecteur (Rempart Magique, Intervention, Essor Vital) en fin de combat.
+
+**Faiblesse**:
+- Le moins de point de mana
+- A du mal à arriver au contact d'une cible (pas de sort pour augmenter le déplacement, uniquement pour aggriper des ennemis)
+
+**Questionnement et TODO :**
+---
+# Mage Blanc
+
+> « Le meilleur soigneur et protecteur, mais ses malédictions peuvent infliger d'importants dégâts également. »
+
+**Identité dnd5e** : d6, CON + SAG (les deux requises) ; INT s'ajoute en pratique (dégâts radiants, boucliers réactifs) — classe structurellement étalée sur 3 caracs.
+
+**Stats FQ** : mana très dominant (8 paliers en primaire + 10 en secondaire), points d'action ensuite. Zèle réservé aux hauts niveaux mais **généré en jeu** par la moitié du deck.
+
+**Rôle** : soigneur-protecteur **réactif** doublé d'un contrôleur DoT — sa valeur se mesure pendant les tours adverses.
+- Soutien : Aura
+- Dps avec malédictions (gros dégâts quand beaucoup de stacks)
+- Healeur (pas de HOT) bouclier
+
+**Mécaniques signature** :
+- **Malédiction (`Curse`)** : Pose plusieurs stacks sur des cibles, permets d'utiliser d'autre sort efficaces avec bc de stack. Tue une cible ayant suffisament de malédiction
+- Le pendant positif `Bless` (DoT négatif = régénération) arrive au niveau 7.
+- **Suite de boucliers réactifs** : 5 cartes `reactive` (Bouclier de Mana, Divin, Vengeur, Empathique, Malédiction Instantanée) avec `replayable` indexé sur `@wis` — la sagesse fixe le nombre de réactions. Trois modèles de mitigation distincts : PV temporaires, soin réactif répété, invulnérabilité + restauration (Bouclier Divin).
+- **Transmutation de ressources** : Sang Bleu (2 PV → 1 mana), Le Bien Et Le Mal (transfert de PV à portée quasi illimitée), Soins d'Urgence (défausse → soin), Infusion de Mana (génère une source de mana passive permanente).
+- **Cartes génératives** : Infusion de Mana et Frappe de Lumière (AoE ennemis qui débloque un soin de groupe gratuit).
+- **Auto-sabotage assumé** : Frappe Solaire neutralise CON et SAG 3 tours après le nuke.
+- **Beaucoup de carte automatique**: Les auras qui coute 1 mana par tour a combiner avec les infusions de mana
+
+**Boucle de jeu** : maudire tôt → laisser tourner les DoT en soignant/réagissant → détoner ; alimenter le tout par conversion de ressources.
+
+**Faiblesse**:
+
+**Questionnement et TODO :**
+---
 # Élémentaliste
 
 > « Allie des effets de feu, de givre, d'air et de terre pour infliger d'importants dégâts. Fragile mais possède les plus gros dégâts bruts du jeu. »
@@ -120,66 +209,6 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Questionnement et TODO :**
 ---
-
-# Gardien
-
-> « Le plus grand nombre de points de vie du jeu. Peut puiser dans ses points de vie pour améliorer ses dégâts. »
-
-**Identité dnd5e** : d12, FOR + CON. CHA sert aux cartes de provocation et au Coup de bouclier.
-
-**Stats FQ** : profil équilibré tourné vers l'action et la main (la plus grosse main du jeu selon l'historique), quasi **aucun mana** (1 item résiduel). Sa vraie ressource est le couple PV + zèle.
-
-**Rôle** : 
-- Tank qui fait moins de dégâts
-- Soutien
-- Dps consommant des PVs pour faire plus de dégâts
-
-**Mécaniques signature** :
-- **PV comme monnaie** : Frappe Héroïque (−(6−@con) PV au lieu du mana), Frappe provocatrice, Tourbillon de Lame, Montée de la rage (PV → mana).
-- **Compétences pour agripper des alliés ou des ennemis** (pas de déplacement supplémentaire plutôt des choses pour attraper )
-- **Charges de lame** : Chargement Des Lames (cap 12 → dégâts ×2) et Tourbillon De Lame (cap 8 → AoE adjacente), via compteurs `flags.fq` + `counterWithinCap`/`counterEquals`.
-- **Réactions défensives** : Coup de bouclier (contre-charge), Intervention (prend les dégâts d'un allié à sa place), Levée De Bouclier (récupère la moitié des dégâts subis).
-- **Postures et trade-off crit ↔ esquive** : Changement De Posture (rejouable à l'infini), Posture De Berzerker et Rage Ultime (puissance contre auto-DoT).
-- **Taunt** : Frappe provocatrice, seule carte de provocation du jeu avec l'Uppercut du Moine.
-
-**Boucle de jeu** : frapper pour générer du zèle, payer en PV ce que le mana ne couvre pas, encaisser/réagir hors tour, basculer protecteur (Rempart Magique, Intervention, Essor Vital) en fin de combat.
-
-**Faiblesse**:
-- Le moins de point de mana
-- A du mal à arriver au contact d'une cible (pas de sort pour augmenter le déplacement, uniquement pour aggriper des ennemis)
-
-**Questionnement et TODO :**
----
-
-# Mage Blanc
-
-> « Le meilleur soigneur et protecteur, mais ses malédictions peuvent infliger d'importants dégâts également. »
-
-**Identité dnd5e** : d6, CON + SAG (les deux requises) ; INT s'ajoute en pratique (dégâts radiants, boucliers réactifs) — classe structurellement étalée sur 3 caracs.
-
-**Stats FQ** : mana très dominant (8 paliers en primaire + 10 en secondaire), points d'action ensuite. Zèle réservé aux hauts niveaux mais **généré en jeu** par la moitié du deck.
-
-**Rôle** : soigneur-protecteur **réactif** doublé d'un contrôleur DoT — sa valeur se mesure pendant les tours adverses.
-- Soutien : Aura
-- Dps avec malédictions (gros dégâts quand beaucoup de stacks)
-- Healeur (pas de HOT) bouclier
-
-**Mécaniques signature** :
-- **Malédiction (`Curse`)** : Pose plusieurs stacks sur des cibles, permets d'utiliser d'autre sort efficaces avec bc de stack. Tue une cible ayant suffisament de malédiction 
-- Le pendant positif `Bless` (DoT négatif = régénération) arrive au niveau 7.
-- **Suite de boucliers réactifs** : 5 cartes `reactive` (Bouclier de Mana, Divin, Vengeur, Empathique, Malédiction Instantanée) avec `replayable` indexé sur `@wis` — la sagesse fixe le nombre de réactions. Trois modèles de mitigation distincts : PV temporaires, soin réactif répété, invulnérabilité + restauration (Bouclier Divin).
-- **Transmutation de ressources** : Sang Bleu (2 PV → 1 mana), Le Bien Et Le Mal (transfert de PV à portée quasi illimitée), Soins d'Urgence (défausse → soin), Infusion de Mana (génère une source de mana passive permanente).
-- **Cartes génératives** : Infusion de Mana et Frappe de Lumière (AoE ennemis qui débloque un soin de groupe gratuit).
-- **Auto-sabotage assumé** : Frappe Solaire neutralise CON et SAG 3 tours après le nuke.
-- **Beaucoup de carte automatique**: Les auras qui coute 1 mana par tour a combiner avec les infusions de mana
-
-**Boucle de jeu** : maudire tôt → laisser tourner les DoT en soignant/réagissant → détoner ; alimenter le tout par conversion de ressources.
-
-**Faiblesse**:
-
-**Questionnement et TODO :**
----
-
 # Trapper
 
 > « Classe à distance spécialisée dans les attaques critiques, accompagnée de son familier, ou qui peut poser des pièges redoutables. »
@@ -206,42 +235,6 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Questionnement et TODO :**
 ---
-
-# Moine
-
-> « Adepte d'un jeu très dynamique : joue beaucoup de cartes différentes pour monter rapidement son zèle. Robuste, score d'esquive élevé. »
-
-**Identité dnd5e** : d8, FOR + DEX. CON alimente les soins et coûts, SAG/CHA les plafonds de X.
-
-**Stats FQ** : **esquive la mieux dotée du jeu**, zèle et déplacement bien fournis. **Jamais de critique** — il joue le volume, pas le burst.
-
-**Rôle** : bruiser mobile à tempo, duelliste corps à corps, avec appoints tank, Healers (taunt Uppercut, Interruption) et soins (Vive-Esquive, Méditation Zen, Paume Curative).
-- Healeur fort mais corps à corps
-- Duelliste corps à corps ultra mobile
-- Tank spé esquive
-
-**Mécaniques signature** :
-- **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume Curative).
-    - Poing Rouge est la seule carte du jeu qui monte `zeal.max` (+5, permanent).
-- **Flux de cartes** : Souffle de Ki (zèle → X cartes **et** 2X actions), Maître Du Chi (carte de base passive bidirectionnelle : défausse ↔ zèle ↔ pioche), Armes Secrètes (monétise la défausse en dégâts inesquivables).
-- **Rejouable conditionnel scripté** (unique au Moine) : Coup Droit/Gauche rejouables 2× seulement si assez de PA déjà dépensés ce tour — récompense l'**ordonnancement** des cartes.
-- **Défense réactive** : 4 réactives (Bouclier Zélé sur sort subi, Vive-Esquive sur dégâts, Armes Secrètes, Interruption qui divise par 2 les PA adverses) + Dissimulation (intouchable 1 tour au prix de dégâts nuls, puis fenêtre offensive).
-- **Déplacement améliorable**: Dégâts et déplacement (déplacement éclair) (le seul avec le Gardien ? ENlever le gardien?)
-Le seul a faire plus de dégâts avec toutes les cartes en main
-Le seul a pouvoir augmenter son zèle max
-**Boucle de jeu** : enchaîner les petites frappes → zèle → convertir en cartes/actions/burst ; l'ordre de jeu dans le tour est la compétence clé.
-- Les heals uniquements pour les autres (comme l'illusionniste?)
-
-**Faiblesses** :
-- Aucun Critique
-
-**Questionnement et TODO :**
-- Permettre de piochez plus de cartes, et faire plus de dégâts avec le nombre de carte dans la main, utilisez des xvalue préfini
-- Combo avec plein de zèle, utilisez le zèle, chargez vite le zèle
-- Deuxième tank : augmente l'esquive, combo d'esquive ou de réactif, ne peut plus gagner de zèle si en mode esquive?
-
----
-
 # Sorcière
 
 > « Un mage puissant. Sa force réside dans le nombre de squelettes qu'elle ranime pour détruire ses adversaires. »
@@ -264,6 +257,33 @@ Le seul a pouvoir augmenter son zèle max
 **Faiblesse**:
 - Vite à cours de mana?
 - Peu de point de vie
+
+**Questionnement et TODO :**
+---
+
+# Maître d'Armes
+
+> « Expert de tout l'arsenal : ses cartes frappent avec l'arme du moment, au corps à corps comme à distance. »
+
+**Identité dnd5e** : d10, FOR + DEX (3eme: CHA). DEX domine (tirs, finishers), FOR sur les gros coups de mêlée (`2*@str`).
+
+**Stats FQ** : zèle+ action + critique + main.
+
+**Rôle** : DPS martial polyvalent sur deux rails parallèles — mêlée (`@wpnM`) et distance (`@wpnR`) — chacun avec sa version rapide (−3), standard (−6, +1 zèle), lourde (−11/−12, +1 zèle) et son finisher niv. 7 (−13, −2 zèle : Ouragan de lames mono / Pluie d'acier en zone).
+
+**Mécaniques signature** :
+- **Buffs d'arme fenêtrés** : Huile d'affûtage (mêlée), Prise équilibrée (distance), Maîtrise des armes (les deux, 3 rounds) — tour de setup puis burst.
+- **Carte qui s'améliore en carte coutant de plus en plus cher jusqu'a faire de gros dégâts**
+- **Carte qui duplique une autre carte en main (Le seul a pouvoir faire ça)**
+- **Tous les buffs/malus dure 1 tour**
+- **Moteur couteaux de lancer** : Ceinture de couteaux (−2 action) fabrique une carte *Couteau de lancer* **gratuite** (jusqu'à ×24), boostée en permanence et cumulativement par Affûtage des couteaux (`@bonus.knife`).
+- **Soutien (Charisme)** : Buff des dégâts des armes des autres (+ fort pour les faibles jets) + Réduit l'esquive a 0? **
+- Le seul a avoir des sort faisant des dégâts d'armes touchants plusieurs cibles (A vérifier illusionniste, guerrier runique et gardien?)
+  **Boucle de jeu** : Réunir les bonnes cartes pour faire de gros dégâts corps à corps OU distance OU build les couteaux de lancer OU ...
+
+**Faiblesses** :
+- Pas de heal personnel
+- Pas d'amélioration personnel d'esquive par les cartes
 
 **Questionnement et TODO :**
 ---
@@ -303,42 +323,14 @@ Le seul a pouvoir augmenter son zèle max
 - Moins de dégâts?
 
 **Questionnement et TODO :**
-- Maitre du temps : Change les dés, permet de revenir à son point d'origine ou dans le temps
 - Si vous faites un critique, vous pouvez augmenter votre bonus de portée de 1. ?
 - Si vous faites une esquive, vous pouvez augmenter votre bonus de portée de 1. ?
-- Sort d’assistances : (2 de portée) (Coût : 1 point de zèle ou 1 carte défaussée)
+- Sort d’assistances : (2 de portée) (Coût : 1 point de zèle ou 1 carte défaussée) (doublon avec le moine ou seumleen,t sur elks alliés alors ça va?)
   o Peut agripper quelqu’un pour le ramener sur une case adjacente, lui rend 1d4 points de vie.
   o Peut pousser quelqu’un de X cases dans un sens (X étant le bonus de portée), lui rend 1d4 points de vie.
   o Peut se téléporter vers une case adjacente d’un allié (2 de portée), lui rend 1d4 point de vie.
+
 ---
-
-# Maître d'Armes
-
-> « Expert de tout l'arsenal : ses cartes frappent avec l'arme du moment, au corps à corps comme à distance. »
-
-**Identité dnd5e** : d10, FOR + DEX (3eme: CHA). DEX domine (tirs, finishers), FOR sur les gros coups de mêlée (`2*@str`).
-
-**Stats FQ** : zèle+ action + critique + main. 
-
-**Rôle** : DPS martial polyvalent sur deux rails parallèles — mêlée (`@wpnM`) et distance (`@wpnR`) — chacun avec sa version rapide (−3), standard (−6, +1 zèle), lourde (−11/−12, +1 zèle) et son finisher niv. 7 (−13, −2 zèle : Ouragan de lames mono / Pluie d'acier en zone).
-
-**Mécaniques signature** :
-- **Buffs d'arme fenêtrés** : Huile d'affûtage (mêlée), Prise équilibrée (distance), Maîtrise des armes (les deux, 3 rounds) — tour de setup puis burst.
-- **Carte qui s'améliore en carte coutant de plus en plus cher jusqu'a faire de gros dégâts**
-- **Carte qui duplique une autre carte en main (Le seul a pouvoir faire ça)**
-- **Tous les buffs/malus dure 1 tour**
-- **Moteur couteaux de lancer** : Ceinture de couteaux (−2 action) fabrique une carte *Couteau de lancer* **gratuite** (jusqu'à ×24), boostée en permanence et cumulativement par Affûtage des couteaux (`@bonus.knife`).
-- **Soutien (Charisme)** : Buff des dégâts des armes des autres (+ fort pour les faibles jets) + Réduit l'esquive a 0? **
-- Le seul a avoir des sort faisant des dégâts d'armes touchants plusieurs cibles (A vérifier illusionniste, guerrier runique et gardien?)
-**Boucle de jeu** : Réunir les bonnes cartes pour faire de gros dégâts corps à corps OU distance OU build les couteaux de lancer OU ...
-
-**Faiblesses** :
-- Pas de heal personnel
-- Pas d'amélioration personnel d'esquive par les cartes
-
-**Questionnement et TODO :**
----
-
 # Guerrier Runique
 
 > « DeckBuilder: entre en combat avec très peu de cartes ; ses runes en génèrent de nouvelles au fil de l'affrontement, rendant son deck de plus en plus puissant. »
