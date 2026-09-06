@@ -242,9 +242,10 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
                 createInfo(game.i18n.localize("FQCARDENGINE.ChatMessagePartOpportunityAttack"), {actor: item.actor});
             }
             Damage.displayResult(item.actor, resultArray, null);
+            const {forcedTargets: _forcedTargets, ...loggedContent} = cardContent;
             // Nom de carte null : une attaque dnd5e n'est pas une carte, et le journal
             // ne doit pas la faire reconnaître comme telle par les conditions de carte.
-            await socket.executeAsGM("logCardPlayed", resultArray, cardContent, item.actor.id,
+            await socket.executeAsGM("logCardPlayed", resultArray, loggedContent, item.actor.id,
                 TargetingPredicates.resolveTargetActorIds(cardContent, item.actor), null);
         }
     }

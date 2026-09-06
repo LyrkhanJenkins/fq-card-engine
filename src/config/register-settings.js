@@ -1,4 +1,5 @@
 import {OPPORTUNITY_ATTACK_SETTING} from "../domain/engine/reaction/opportunity-attack.js";
+import {DEATH_SAVE_SETTING} from "../domain/engine/death-save.js";
 
 /**
  * Enregistrement des réglages du module (`game.settings.register`).
@@ -57,6 +58,17 @@ export function registerSettings() {
         onChange: value => { // value is the new value of the setting
             CONFIG.FqCardEngine.options.rollInitiative = value;
         },
+        filePicker: false,  // set true with a String `type` to use a file picker input
+    });
+    game.settings.register(FqCardEngineModule.moduleName, DEATH_SAVE_SETTING, {
+        name: game.i18n.localize("FQCARDENGINE.DeathSaveSetting"),
+        hint: game.i18n.localize("FQCARDENGINE.DeathSaveSettingHint"),
+        scope: "world",     // "world" = sync to db, "client" = local storage
+        config: true,       // false if you dont want it to show in module config
+        type: Boolean,       // Number, Boolean, String,
+        // Désactivée par défaut : elle confie au moteur la mort des personnages et
+        // la disparition des sbires, ce doit être un choix explicite du MJ.
+        default: false,
         filePicker: false,  // set true with a String `type` to use a file picker input
     });
     game.settings.register(FqCardEngineModule.moduleName, "BetterChatMessages", {

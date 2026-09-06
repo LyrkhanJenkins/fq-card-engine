@@ -1,6 +1,7 @@
 import TradingCards, {DECK_TYPE, HAND_TYPE, PILE_TYPE} from "../trading/trading-cards.js";
 import {createWarning} from "../../core/utils/chat.utils.js";
 import {socket} from "../../hook/integration/socketlib.hook.js";
+import DeathSave from "./death-save.js";
 
 /**
  * Action FQ déclenchée par les hooks Foundry pendant le changement d'état du combat : réinitialisation des
@@ -196,6 +197,10 @@ export default class CombatTurn {
      * (nombre de cartes défini par `fq.cards.hand`). La pioche s'exécute côté
      * joueur s'il est connecté, sinon côté MJ via socket.
      *
+     * Un personnage déjà à terre à l'ouverture du combat ne reçoit pas de main : il
+     * n'aura pas de tour à jouer tant qu'un jet de sauvegarde ne l'a pas remis
+     * debout, et la pioche de début de tour lui est refusée pour la même raison.
+     *
      * @param {object[]} combatants - Les combattants du combat.
      *
      * @returns {Promise<void>}
@@ -204,6 +209,7 @@ export default class CombatTurn {
         // get users with actors
         const users = game.users.filter(user => user.character?.id);
         for (const combatant1 of combatants
+            .filter(combatant => !DeathSave.skipsTurn(combatant.actor))
             .filter(combatant => users.filter(user => user.character?.id === combatant.actor.id).length === 1)) {
             const user = users.find(user => user.character.id === combatant1.actor.id);
             const deck = TradingCards.getFirstDeck(user?.id, DECK_TYPE);

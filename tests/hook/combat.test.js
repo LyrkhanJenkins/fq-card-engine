@@ -436,6 +436,43 @@ describe("hook/combat.hook.js", () => {
             expect(socket.executeAsGM).toHaveBeenCalledWith("drawCard", "hand-inactive", "deck-inactive", 2);
         });
 
+        it("premier round : un personnage déjà à terre ne reçoit pas de main de départ", async () => {
+            globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+            game.settings.get = vi.fn(() => true);
+            const deboutCombatant = makeCombatant({
+                actorId: "debout-actor",
+                fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 3}, cards: {hand: 4, pick: 1, currentDrop: 0}}
+            });
+            const aTerreCombatant = makeCombatant({
+                actorId: "a-terre-actor",
+                fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 1}, cards: {hand: 4, pick: 1, currentDrop: 0}},
+                attributes: {exhaustion: 0, hp: {value: 0, max: 12}}
+            });
+
+            game.users = Object.assign([
+                {id: "debout-user", character: {id: "debout-actor"}, active: true},
+                {id: "a-terre-user", character: {id: "a-terre-actor"}, active: true}
+            ], {activeGM: {id: GM_ID}});
+
+            vi.spyOn(TradingCards, "getFirstDeck").mockImplementation((userId, typeFq) => (
+                {id: `${typeFq === DECK_TYPE ? "deck" : "hand"}-${userId}`}
+            ));
+
+            const combat = {
+                round: 1, turn: 0,
+                previous: {round: 0, turn: 0},
+                current: {round: 1, turn: 0},
+                combatants: [deboutCombatant, aTerreCombatant],
+                combatant: null
+            };
+
+            await getHook("combatTurnChange")(combat, {}, {});
+
+            expect(socket.executeAsUser)
+                .toHaveBeenCalledWith("drawCard", "debout-user", "hand-debout-user", "deck-debout-user", 4);
+            expect(socket.executeAsUser).toHaveBeenCalledTimes(1);
+        });
+
         it("dégâts de poison (dot) hors premier round, sans tour de joueur associé", async () => {
             const combatant = makeCombatant({
                 actorId: "dot-actor",

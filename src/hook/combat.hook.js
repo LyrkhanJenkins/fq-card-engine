@@ -2,6 +2,7 @@ import {OriginFQEffectLabel} from "../domain/constants.js";
 import TradingCards, {DECK_TYPE, HAND_TYPE} from "../domain/trading/trading-cards.js";
 import CombatTurn from "../domain/engine/combat-turn.js";
 import AutoCard from "../domain/engine/auto-card.js";
+import DeathSave from "../domain/engine/death-save.js";
 
 Hooks.on("deleteCombat", async function (combat, _delta) {
     if (CombatTurn.isLocalUserFirstActiveGM()) {
@@ -71,9 +72,12 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
         const actor = combat.combatant?.actor;
         const user = game.users.find(user => user.character?.id === actor?.id);
         if (combat.previous.round !== 0 && actor?.system?.fq.bonus.dot) {
-            actor.update({"system.attributes.hp.value": actor.system.attributes.hp.value - actor.system.fq.bonus.dot});
+            await actor.update({"system.attributes.hp.value": actor.system.attributes.hp.value - actor.system.fq.bonus.dot});
         }
-        if (combat.previous.round !== 0 && user) { // C'est le tour d'un joueur !
+        // Début de tour à 0 point de vie : jet de sauvegarde contre la mort pour un
+        // personnage, dissipation pour un sbire. Le tour consommé ne se déroule pas.
+        const turnConsumed = await DeathSave.resolveTurnStart(combat);
+        if (!turnConsumed && combat.previous.round !== 0 && user) { // C'est le tour d'un joueur !
             CombatTurn.resetSacrificedSkeleton(combatants);
             CombatTurn.resetCurrentDropCard(combatants);
             // Un utilisateur ne devrait avoir qu'une main, une pile et un deck (FQ)
@@ -90,5 +94,8 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
     // Cartes automatiques : hors du bloc MJ, car le rejeu s'exécute sur le client
     // du PORTEUR — le pipeline de jeu lit le personnage de l'utilisateur courant et
     // pose ses cibles. Chaque client ne traite donc que ses propres cartes.
-    await AutoCard.playTurnAutoCards();
+    // Un porteur à terre ne rejoue rien : son tour appartient au jet de sauvegarde.
+    if (!DeathSave.skipsTurn(combat.combatant?.actor)) {
+        await AutoCard.playTurnAutoCards();
+    }
 });

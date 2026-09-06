@@ -401,6 +401,49 @@ describe("integration/dnd5e", () => {
                 actor, expect.any(Number), expect.objectContaining({forcedTargets: [ennemi]}), expect.any(Array));
         });
 
+        it("le journal ne reçoit pas les cibles imposées : un Token est un graphe circulaire", async () => {
+            const preUse = getHook("dnd5e.preUseActivity");
+            const rollDamage = getHook("dnd5e.rollDamageV2");
+            game.system = {grid: {distance: 5}};
+            vi.spyOn(ResourceHandler, "checkResources").mockReturnValue(true);
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
+                verdict: ResourceHandler.TARGETING_VERDICT.OK, targets: [], outOfReach: []});
+            vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
+            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
+
+            // Un Token de Foundry est un objet PIXI qui se référence lui-même par sa
+            // scène et son calque : c'est CE graphe qui faisait déborder la pile dans
+            // la sérialisation socketlib, chez un joueur uniquement.
+            const cible = {id: "token-cible"};
+            cible.scene = {tokens: [cible]};
+            vi.spyOn(Constants, "myTargets").mockReturnValue([cible]);
+            vi.spyOn(Constants, "currentTargets", "get").mockReturnValue([cible]);
+
+            const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
+            const item = {actor, system: {fq: {action: -1}}};
+            const subject = {item, actor, type: "attack", range: {value: 0, reach: 5}, target: {}};
+
+            preUse(subject, {}, {}, {});
+            // Le mock socketlib du fichier est partagé et jamais vidé entre les tests :
+            // sans ce nettoyage, la recherche ci-dessous retomberait sur le journal
+            // d'un test précédent, et l'assertion ne prouverait rien.
+            socket.executeAsGM.mockClear();
+            await rollDamage([{formula: "2d6", total: 7, options: {type: "slashing"}}], {subject});
+
+            // La résolution locale, elle, garde bien les cibles figées.
+            expect(Damage.addCriticalEvasionToDamage).toHaveBeenCalledWith(
+                actor, expect.any(Number), expect.objectContaining({forcedTargets: [cible]}), expect.any(Array));
+
+            const logged = socket.executeAsGM.mock.calls.find(call => call[0] === "logCardPlayed")?.[2];
+            expect(logged).toBeDefined();
+            expect(logged).not.toHaveProperty("forcedTargets");
+            // La charge du journal doit rester sérialisable de bout en bout : socketlib
+            // la transporte, puis Foundry l'écrit dans les flags du combat.
+            expect(() => JSON.stringify(logged)).not.toThrow();
+        });
+
         it("attaque d'opportunité : FX joués depuis le token réactant, vers la cible imposée", async () => {
             // Deux jetons pour un même acteur (une horde) : la recherche par acteur
             // rendrait `token-1`, alors que c'est `token-2` qui a réagi.

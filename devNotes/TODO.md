@@ -5,7 +5,6 @@
 
 ### Versions prévues
 #### 3.0.0
-- Lancer les dé auto save et passe son tour throw par un module ou par le module ET supprimer les minions qui sont mort?
 - Est ce qu'on redivise pas en plusieurs modules : FX, Dégâts... avant de release?
 
 #### 3.0.1

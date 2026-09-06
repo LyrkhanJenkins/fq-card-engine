@@ -63,7 +63,8 @@ const FORCED_SETTINGS = [
     // PNJ restreints aux seules activités offensives : c'est le comportement que l'UAT
     // doit exercer, et il rend les tours de PNJ lisibles — un PNJ qui lance une entrave
     // ou un utilitaire brouille la lecture de ce qu'on cherche à valider.
-    {module: "fq-npc-ai", key: "combatActivitiesOnly", value: true, id: "fqUatSetting0008"}
+    {module: "fq-npc-ai", key: "combatActivitiesOnly", value: true, id: "fqUatSetting0008"},
+    {module: MODULE_ID, key: "DeathSaveOnTurnStart", value: true, id: "fqUatSetting0009"}
 ];
 
 // Horodatage figé pour que le template one-shot reste reproductible à l'octet
