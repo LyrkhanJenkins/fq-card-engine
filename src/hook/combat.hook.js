@@ -66,7 +66,7 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
                 CombatTurn.resetZeal(combatants);
                 await CombatTurn.drawHand(combatants);
                 CombatTurn.resetCurrentDropCard(combatants);
-                CombatTurn.resetSacrificedSkeleton(combatants);
+                CombatTurn.resetSacrificedMinion(combatants);
             }
         }
         const actor = combat.combatant?.actor;
@@ -78,7 +78,7 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
         // personnage, dissipation pour un sbire. Le tour consommé ne se déroule pas.
         const turnConsumed = await DeathSave.resolveTurnStart(combat);
         if (!turnConsumed && combat.previous.round !== 0 && user) { // C'est le tour d'un joueur !
-            CombatTurn.resetSacrificedSkeleton(combatants);
+            CombatTurn.resetSacrificedMinion(combatants);
             CombatTurn.resetCurrentDropCard(combatants);
             // Un utilisateur ne devrait avoir qu'une main, une pile et un deck (FQ)
             const deck = TradingCards.getFirstDeck(user?.id, DECK_TYPE);

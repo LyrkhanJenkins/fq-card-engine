@@ -15,7 +15,7 @@ import {createWarning} from "../../../core/utils/chat.utils.js";
  * `xvalue`/`yvalue`. Une carte qui lit ce score le DÉPENSE.
  * @type {string}
  */
-export const SACRIFICE_PATH = "fq.minions.sacrificedSkeleton";
+export const SACRIFICE_PATH = "fq.minions.sacrificedMinion";
 
 export default class ResourceHandler {
 
@@ -186,10 +186,10 @@ export default class ResourceHandler {
             // dépensé — c'est-à-dire X, lui-même plafonné par `xmax` (cf.
             // `CardEffect.boundedXYValue`) — et non vidé : sacrifier un gros
             // squelette laisse le reliquat disponible pour la carte suivante.
-            const current = actor.system?.fq.minions.sacrificedSkeleton ?? 0;
+            const current = actor.system?.fq.minions.sacrificedMinion ?? 0;
             const spent = Math.min(current, ResourceHandler.#spendCap(resources, current));
             actor.update({
-                "system.fq.minions.sacrificedSkeleton": Math.max(0, current - spent)
+                "system.fq.minions.sacrificedMinion": Math.max(0, current - spent)
             });
         }
         if (resources?.xvalue === "fq.cards.currentDrop" || resources?.yvalue === "fq.cards.currentDrop") {

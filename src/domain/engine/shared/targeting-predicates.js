@@ -156,11 +156,40 @@ export default class TargetingPredicates {
      *
      * @returns {{target: object, dist: number}[]} Les cibles hors portée et leur distance.
      */
+    static findOutOfReachTargets(casterToken, targets, minReach, maxReach) {
+        const outOfReach = [];
+        targets.forEach(target => {
+            const dist = Geometry.distanceBetweenTokens(casterToken, target);
+            if (minReach > dist || maxReach < dist) {
+                outOfReach.push({target, dist});
+            }
+        });
+        return outOfReach;
+    }
+
+    /**
+     * Indique si un jeton porte un sbire VIVANT invoqué par `summonerId` — la
+     * lecture unique des estampilles posées à l'invocation (`minionType`/
+     * `summonerId`), partagée par le recensement des sbires d'un type et par le
+     * bouton de sacrifice du HUD, qui n'en filtre aucun.
+     *
+     * @param {object} token        - Le jeton (ou son document) à juger.
+     * @param {string} [summonerId] - L'id de l'invocateur (défaut : le personnage courant).
+     *
+     * @returns {boolean} True si le jeton porte un sbire vivant de cet invocateur.
+     */
+    static isLivingMinion(token, summonerId = Constants.myId) {
+        const flags = token?.actor?.flags?.[FqCardEngineModule.moduleName];
+        return !!summonerId
+            && !!flags?.minionType
+            && flags.summonerId === summonerId
+            && (token.actor?.system?.attributes?.hp?.value ?? 0) > 0;
+    }
+
     /**
      * Les tokens des sbires VIVANTS d'un type donné invoqués par un invocateur,
-     * sur la scène active — la lecture unique des estampilles posées à
-     * l'invocation (`minionType`/`summonerId`), partagée par le plafond
-     * d'invocations et par les cartes qui donnent un ordre à leurs sbires.
+     * sur la scène active — le recensement que consomment le plafond
+     * d'invocations et les cartes qui lisent leurs sbires.
      *
      * @param {string} type         - Le type de sbire (`beast`, `skeleton`…).
      * @param {string} [summonerId] - L'id de l'invocateur (défaut : le personnage courant).
@@ -172,23 +201,9 @@ export default class TargetingPredicates {
             return [];
         }
         const tokens = game.canvas?.scene?.tokens ?? game.scenes?.active?.tokens ?? [];
-        return [...tokens].filter(token => {
-            const flags = token.actor?.flags?.[FqCardEngineModule.moduleName];
-            return flags?.minionType === type
-                && flags?.summonerId === summonerId
-                && (token.actor?.system?.attributes?.hp?.value ?? 0) > 0;
-        });
-    }
-
-    static findOutOfReachTargets(casterToken, targets, minReach, maxReach) {
-        const outOfReach = [];
-        targets.forEach(target => {
-            const dist = Geometry.distanceBetweenTokens(casterToken, target);
-            if (minReach > dist || maxReach < dist) {
-                outOfReach.push({target, dist});
-            }
-        });
-        return outOfReach;
+        return [...tokens].filter(token =>
+            TargetingPredicates.isLivingMinion(token, summonerId)
+            && token.actor.flags[FqCardEngineModule.moduleName].minionType === type);
     }
 
     /**

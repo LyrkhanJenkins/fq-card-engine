@@ -12,7 +12,7 @@ const {SchemaField, NumberField, ObjectField} = foundry.data.fields;
  * @property {number} fq.cards.currentDrop          Current discard card score.
  * @property {object} fq.cardBonus                  Named card bonuses.
  * @property {object} fq.minions                    Minion caps and summoning bonuses, by type.
- * @property {number} fq.minions.sacrificedSkeleton Sacrificed skeletons count.
+ * @property {number} fq.minions.sacrificedMinion Sacrificed skeletons count.
  */
 export default class CharacterDataFQ {
 
@@ -70,8 +70,8 @@ export default class CharacterDataFQ {
                     beast: new SchemaField(CharacterDataFQ.minionType(1), {label: "FQCARDENGINE.MinionTypeBeast"}),
                     skeleton: new SchemaField(CharacterDataFQ.minionType(6), {label: "FQCARDENGINE.MinionTypeSkeleton"}),
                     skeletonKing: new SchemaField(CharacterDataFQ.minionType(1), {label: "FQCARDENGINE.MinionTypeSkeletonKing"}),
-                    sacrificedSkeleton: new NumberField({
-                        nullable: false, integer: true, min: 0, initial: 1, label: "FQCARDENGINE.SacrificedSkeleton"
+                    sacrificedMinion: new NumberField({
+                        nullable: false, integer: true, min: 0, initial: 1, label: "FQCARDENGINE.SacrificedMinion"
                     }),
                 }, {label: "FQCARDENGINE.Minions"}),
             })

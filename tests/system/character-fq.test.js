@@ -33,8 +33,8 @@ describe("CharacterDataFQ.defineSchema", () => {
     });
 
     describe("minions", () => {
-        it("verrouille le défaut sacrificedSkeleton", () => {
-            expect(fq.minions.sacrificedSkeleton.initial).toBe(1);
+        it("verrouille le défaut sacrificedMinion", () => {
+            expect(fq.minions.sacrificedMinion.initial).toBe(1);
         });
     });
 });

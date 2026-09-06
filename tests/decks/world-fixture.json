@@ -23,7 +23,7 @@
         "cards": {"currentDrop": 0},
         "bonus": {"range": 0, "damage": "", "heal": ""},
         "attributes": {"critical": 1, "evasion": 1},
-        "minions": {"sacrificedSkeleton": 0}
+        "minions": {"sacrificedMinion": 0}
       }
     }
   },

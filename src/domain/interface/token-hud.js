@@ -1,46 +1,53 @@
 import Constants from "../constants.js";
 import WeaponDamage from "../engine/roll/weapon-damage.js";
+import TargetingPredicates from "../engine/shared/targeting-predicates.js";
 import {socket} from "../../hook/integration/socketlib.hook.js";
 
 /**
  * Gestion des boutons personnalisés ajoutés au HUD des tokens (dégâts, sacrifice
- * de squelette) et suppression de token côté MJ.
+ * de sbire) et suppression de token côté MJ.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
 export default class TokenHud {
 
     /**
      * Score de sacrifice par sbire : ce que rapporte au compteur
-     * `fq.minions.sacrificedSkeleton` le squelette envoyé au charnier. Tout
-     * squelette absent de la table vaut 1 (le squelette de niveau 1).
+     * `fq.minions.sacrificedMinion` le sbire envoyé au charnier. Tout sbire
+     * absent de la table — les familiers du trappeur — vaut le score par défaut
+     * de `getSacrificedScore`.
      * @type {Object<string, number>}
      */
     static SACRIFICE_SCORES = Object.freeze({
+        "Skeleton lvl 1": 1,
         "Skeleton lvl 2": 2,
         "Skeleton lvl 3": 3,
         "Skeleton lvl 4": 4,
-        "Giant Skeleton": 5,
-        "Skeleton Sorcerer": 6
+        "Giant Skeleton": 6,
+        "Skeleton Sorcerer": 7
     });
 
     /**
-     * Ajoute au HUD du token un bouton « sacrifier le squelette » (uniquement pour
-     * les tokens dont le nom contient « Skeleton »). Au clic : joue un effet Sequencer
-     * si disponible, publie un message de chat, incrémente le score de squelettes
-     * sacrifiés du personnage et supprime le token via socket (droits MJ).
+     * Ajoute au HUD du token un bouton « sacrifier le sbire », réservé aux sbires
+     * VIVANTS invoqués par le personnage courant : le verdict vient de
+     * l'estampille posée à l'invocation ({@link TargetingPredicates.isLivingMinion}),
+     * et non du nom du token — un squelette de la sorcière comme un familier du
+     * trappeur s'offrent au charnier, la créature d'un autre joueur ou du MJ non.
+     * Au clic : joue un effet Sequencer si disponible, publie un message de chat,
+     * incrémente le score de sacrifice du personnage et supprime le token via
+     * socket (droits MJ).
      *
      * @param {HTMLElement} column - La colonne du HUD où insérer le bouton.
      * @param {object}      token  - Le token concerné.
      *
      * @returns {void}
      */
-    static addSqueletonButton(column, token) {
-        if (!token.document.name.includes("Skeleton")) return;
-        if (column.querySelector("[data-action='skeleton-sacrificed']")) return;
+    static addSacrificeButton(column, token) {
+        if (!TargetingPredicates.isLivingMinion(token)) return;
+        if (column.querySelector("[data-action='minion-sacrificed']")) return;
         column.appendChild(TokenHud.#createHudButton({
-            tooltipKey: "FQCARDENGINE.SacrifySkeletonButton",
+            tooltipKey: "FQCARDENGINE.SacrifyMinionButton",
             iconSrc: "icons/magic/death/skeleton-skull-soul-blue.webp",
-            action: "skeleton-sacrificed",
+            action: "minion-sacrificed",
             onClick: () => {
                 if (game.modules.get("sequencer")?.active) {
                     new Sequence()
@@ -68,12 +75,12 @@ export default class TokenHud {
                 }
                 ChatMessage.create({
                     speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-                    content: `<span>${game.i18n.format("FQCARDENGINE.SacrifySkeletonMsg")}, ${game.i18n.format("FQCARDENGINE.SacrificedScoreSkeletonMsg",
-                        {"sacrifice": Constants.actorCurrent.system.fq.minions.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)})}</span>`
+                    content: `<span>${game.i18n.format("FQCARDENGINE.SacrifyMinionMsg")}, ${game.i18n.format("FQCARDENGINE.SacrificedScoreMinionMsg",
+                        {"sacrifice": Constants.actorCurrent.system.fq.minions.sacrificedMinion + TokenHud.getSacrificedScore(token.name)})}</span>`
                 });
                 Constants.actorCurrent.update({
-                    "system.fq.minions.sacrificedSkeleton":
-                        Constants.actorCurrent.system.fq.minions.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)
+                    "system.fq.minions.sacrificedMinion":
+                        Constants.actorCurrent.system.fq.minions.sacrificedMinion + TokenHud.getSacrificedScore(token.name)
                 });
                 socket.executeAsGM("deleteToken", token.id);
             }
@@ -82,8 +89,8 @@ export default class TokenHud {
 
     /**
      * Construit un bouton de HUD de token : icône, tooltip, et action au clic. Un
-     * `action` de dataset est optionnel (utilisé par le sacrifice de squelette pour
-     * détecter sa propre présence, cf. `addSqueletonButton`).
+     * `action` de dataset est optionnel (utilisé par le sacrifice de sbire pour
+     * détecter sa propre présence, cf. `addSacrificeButton`).
      *
      * @param {object}   options
      * @param {string}   options.tooltipKey - La clé i18n du tooltip du bouton.
@@ -120,11 +127,11 @@ export default class TokenHud {
     }
 
     /**
-     * Retourne le score de sacrifice associé à un type de squelette, d'après son nom.
+     * Retourne le score de sacrifice associé à un sbire, d'après son nom.
      *
-     * @param {string} tokenName - Le nom du token squelette.
+     * @param {string} tokenName - Le nom du token du sbire.
      *
-     * @returns {number} Le score de sacrifice (1 par défaut).
+     * @returns {number} Le score de sacrifice (5 par défaut, pour tout sbire absent de la table).
      */
     static getSacrificedScore(tokenName) {
         // Le jeton d'un sbire porte le nom du sbire SUIVI d'un suffixe aléatoire
@@ -132,7 +139,7 @@ export default class TokenHud {
         // lit donc par préfixe, jamais par égalité.
         const name = String(tokenName ?? "");
         const entry = Object.entries(TokenHud.SACRIFICE_SCORES).find(([minion]) => name.startsWith(minion));
-        return entry ? entry[1] : 1;
+        return entry ? entry[1] : 5;
     }
 
     /**

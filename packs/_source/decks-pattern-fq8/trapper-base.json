@@ -3963,6 +3963,325 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntersWhis001"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.LoneHunter"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.LoneHunter",
+      "description": "",
+      "_id": "trLoneHunter0001",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "level": 13,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "name": "",
+              "action": "-9",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "3",
+              "maxReach": "10",
+              "nbTargets": "1",
+              "damage": "(2*@dex + 2d8 + XXX)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:FqCardEngineModule.cond.minionTokensOnScene(\"beast\").length ? 0 : 12",
+              "yvalue": "",
+              "replayable": "",
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.bullet.Snipe.blue",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 32,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788700000000,
+        "modifiedTime": 1788700000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trLoneHunter0001"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.BeastBleeding"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.BeastBleeding",
+      "description": "",
+      "_id": "trBeastBleeding1",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "level": 13,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "name": "",
+              "action": "-6",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "10",
+              "nbTargets": "1",
+              "damage": "(3*@cha + 3d8)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "executeEval": "const beast = FqCardEngineModule.cond.minionTokensOnScene(\"beast\")[0]?.actor;\nif (beast) {\nconst hp = Number(beast.system.attributes.hp.value) || 0;\nconst bonus = Number(beast.system.fq?.bonus?.damage) || 0;\nbeast.update({\"system.attributes.hp.value\": Math.max(1, hp - 10), \"system.fq.bonus.damage\": Math.max(0, bonus - 2)});\n}",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.explosion.01.orange",
+                "onTarget": true
+              },
+              "applyEffectsFormulas": [],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgBeastDrained",
+                  "arg": ""
+                }
+              ],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.minionTokensOnScene(\"beast\").length > 0",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoBeastOnScene",
+                      "arg": ""
+                    }
+                  ]
+                },
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 33,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788700000000,
+        "modifiedTime": 1788700000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trBeastBleeding1"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.WildOffering"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.WildOffering",
+      "description": "",
+      "_id": "trWildOffering01",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "level": 13,
+          "isInnate": false,
+          "class": "trapper",
+          "choices": [
+            {
+              "name": "",
+              "action": "-8",
+              "mana": "-2",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "12",
+              "nbTargets": "1",
+              "damage": "(4*@dex + 4d10)[piercing]",
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "5",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "fq.minions.sacrificedMinion",
+              "yvalue": "",
+              "replayable": "",
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.explosion.top_fracture.flask.01",
+                "onTarget": true
+              },
+              "applyEffectsFormulas": [],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgWildOffering",
+                  "arg": ""
+                }
+              ],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.minionsAtLeast(\"sacrificedMinion\",5)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoSacrificedMinion",
+                      "arg": ""
+                    }
+                  ]
+                },
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 34,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788700000000,
+        "modifiedTime": 1788700000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trWildOffering01"
     }
   ],
   "width": null,

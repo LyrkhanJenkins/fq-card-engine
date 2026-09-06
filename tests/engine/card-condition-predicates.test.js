@@ -416,12 +416,12 @@ describe("CardCondition — état du personnage", () => {
     });
 
     it("minionsAtLeast : compteur de sbires au minimum requis", () => {
-        mountScene({character: {id: "me", system: {fq: {minions: {sacrificedSkeleton: 2}}}}});
-        expect(CardCondition.minionsAtLeast("sacrificedSkeleton")).toBe(true);
-        expect(CardCondition.minionsAtLeast("sacrificedSkeleton", 3)).toBe(false);
+        mountScene({character: {id: "me", system: {fq: {minions: {sacrificedMinion: 2}}}}});
+        expect(CardCondition.minionsAtLeast("sacrificedMinion")).toBe(true);
+        expect(CardCondition.minionsAtLeast("sacrificedMinion", 3)).toBe(false);
 
         mountScene({character: {id: "me"}});
-        expect(CardCondition.minionsAtLeast("sacrificedSkeleton")).toBe(false);
+        expect(CardCondition.minionsAtLeast("sacrificedMinion")).toBe(false);
     });
 
     it("hasMana / missingMana : réserve de mana", () => {

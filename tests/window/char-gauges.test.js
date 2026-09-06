@@ -71,7 +71,7 @@ describe("CharGauges", () => {
                     zeal: {value: 0, max: 8},
                     attributes: {critical: 5, evasion: 3},
                     cards: {currentDrop: 2},
-                    minions: {sacrificedSkeleton: 0},
+                    minions: {sacrificedMinion: 0},
                     bonus: {range: 2, damage: "1d6", heal: "0"},
                 },
             };

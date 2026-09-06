@@ -841,7 +841,7 @@
         "currentDrop": 0
       },
       "minions": {
-        "sacrificedSkeleton": 1
+        "sacrificedMinion": 1
       }
     },
     "bastion": {

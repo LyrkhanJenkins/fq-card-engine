@@ -386,7 +386,7 @@ describe("hook/combat.hook.js", () => {
             expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.action.value": 7});
         });
 
-        it("premier round : resetAction + resetZeal + drawHand + resetCurrentDropCard + resetSacrificedSkeleton", async () => {
+        it("premier round : resetAction + resetZeal + drawHand + resetCurrentDropCard + resetSacrificedMinion", async () => {
             const activeCombatant = makeCombatant({
                 actorId: "active-actor",
                 fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 3}, cards: {hand: 4, pick: 1, currentDrop: 0}}
@@ -429,8 +429,8 @@ describe("hook/combat.hook.js", () => {
             expect(inactiveCombatant.actor.update).toHaveBeenCalledWith({"system.fq.zeal.value": 1});
             // resetCurrentDropCard
             expect(activeCombatant.actor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
-            // resetSacrificedSkeleton
-            expect(activeCombatant.actor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 0});
+            // resetSacrificedMinion
+            expect(activeCombatant.actor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedMinion": 0});
             // drawHand : utilisateur actif -> executeAsUser ; utilisateur inactif -> executeAsGM
             expect(socket.executeAsUser).toHaveBeenCalledWith("drawCard", "active-user", "hand-active", "deck-active", 4);
             expect(socket.executeAsGM).toHaveBeenCalledWith("drawCard", "hand-inactive", "deck-inactive", 2);
@@ -521,7 +521,7 @@ describe("hook/combat.hook.js", () => {
 
             await getHook("combatTurnChange")(combat, {}, {});
 
-            expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 0});
+            expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedMinion": 0});
             expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
             expect(socket.executeAsUser).toHaveBeenCalledWith("drawCard", "player-user", "hand-1", "deck-1", 2);
             expect(recallSpy).not.toHaveBeenCalled();

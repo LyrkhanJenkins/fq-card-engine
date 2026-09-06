@@ -66,7 +66,7 @@ export default {
         setChip("fq-cg-evasion", null, attributes?.evasion ?? 0);
         setChip("fq-cg-drop", null, character.system?.fq?.cards?.currentDrop ?? 0);
 
-        const sacrifice = character.system?.fq?.minions?.sacrificedSkeleton ?? 0;
+        const sacrifice = character.system?.fq?.minions?.sacrificedMinion ?? 0;
         setChip("fq-cg-sacrifice", "fq-cg-sacrifice-chip", sacrifice, sacrifice > 0);
 
         const range = bonus?.range ?? 0;

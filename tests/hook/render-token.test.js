@@ -10,6 +10,9 @@ import {socket} from "../../src/hook/integration/socketlib.hook.js";
 import TokenHud from "../../src/domain/interface/token-hud.js";
 import "../../src/hook/render-token.hook.js";
 
+// Le prédicat d'estampille de sbire lit le nom du module sur la façade globale.
+globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+
 function getHook(name) {
     const call = Hooks.on.mock.calls.find(c => c[0] === name);
     return call ? call[1] : undefined;
@@ -20,6 +23,17 @@ function getHook(name) {
  * avec deux colonnes ".col" (dont une ".col.left"), via jsdom (environment
  * "jsdom" déclaré dans vitest.config.js).
  */
+function minionHudObject({name = "Skeleton lvl 2", id = "token-2", type = "skeleton", summoner = "userCharacterId", hp = 10} = {}) {
+    return {
+        document: {name}, name, id,
+        actor: {
+            items: [], isOwner: true,
+            flags: {"fq-card-engine": {minionType: type, summonerId: summoner}},
+            system: {attributes: {hp: {value: hp}}}
+        }
+    };
+}
+
 function buildHudHtml() {
     const container = document.createElement("div");
     const colLeft = document.createElement("div");
@@ -122,7 +136,7 @@ describe("render-token", () => {
             expect(colLeft.children.length).toBe(0);
         });
 
-        it("ajoute les boutons de dégâts mêlée/distance (MJ + personnage) sans bouton squelette pour un token non-squelette", () => {
+        it("ajoute les boutons de dégâts mêlée/distance (MJ + personnage) sans bouton de sacrifice pour un token qui n'est pas un sbire", () => {
             const hook = getHook("renderTokenHUD");
             const {container, colLeft} = buildHudHtml();
             game.user.isGM = true;
@@ -132,56 +146,86 @@ describe("render-token", () => {
             hook({object: hudObject}, container, {});
 
             expect(colLeft.children.length).toBe(2);
-            expect(colLeft.querySelector("[data-action='skeleton-sacrificed']")).toBeNull();
+            expect(colLeft.querySelector("[data-action='minion-sacrificed']")).toBeNull();
         });
 
-        it("ajoute aussi le bouton squelette quand le nom du token contient 'Skeleton'", () => {
+        it("ajoute le bouton de sacrifice sur un sbire estampillé du personnage, quel que soit son type", () => {
+            const hook = getHook("renderTokenHUD");
+            game.user.isGM = true;
+
+            for (const type of ["skeleton", "beast"]) {
+                const {container, colLeft} = buildHudHtml();
+
+                hook({object: minionHudObject({type})}, container, {});
+
+                expect(colLeft.children.length).toBe(3);
+                expect(colLeft.querySelector("[data-action='minion-sacrificed']")).not.toBeNull();
+            }
+        });
+
+        it("n'ajoute pas le bouton de sacrifice sur le sbire d'un autre invocateur, ni sur un sbire mort", () => {
+            const hook = getHook("renderTokenHUD");
+            game.user.isGM = true;
+
+            for (const options of [{summoner: "someoneElse"}, {hp: 0}]) {
+                const {container, colLeft} = buildHudHtml();
+
+                hook({object: minionHudObject(options)}, container, {});
+
+                expect(colLeft.querySelector("[data-action='minion-sacrificed']")).toBeNull();
+            }
+        });
+
+        it("le clic sur le bouton de sacrifice publie le message, met à jour le score et supprime le token via socket", () => {
             const hook = getHook("renderTokenHUD");
             const {container, colLeft} = buildHudHtml();
             game.user.isGM = true;
-            const hudObject = {
-                document: {name: "Skeleton lvl 2"}, name: "Skeleton lvl 2", id: "token-2", actor: {items: [], isOwner: true}
-            };
+            game.user.character.system.fq.minions = {sacrificedMinion: 0};
 
-            hook({object: hudObject}, container, {});
-
-            expect(colLeft.children.length).toBe(3);
-            expect(colLeft.querySelector("[data-action='skeleton-sacrificed']")).not.toBeNull();
-        });
-
-        it("le clic sur le bouton squelette publie le message, met à jour le score et supprime le token via socket", () => {
-            const hook = getHook("renderTokenHUD");
-            const {container, colLeft} = buildHudHtml();
-            game.user.isGM = true;
-            game.user.character.system.fq.minions = {sacrificedSkeleton: 0};
-            const hudObject = {
-                document: {name: "Skeleton lvl 2"}, name: "Skeleton lvl 2", id: "token-2", actor: {items: [], isOwner: true}
-            };
-
-            hook({object: hudObject}, container, {});
-            const button = colLeft.querySelector("[data-action='skeleton-sacrificed']");
+            hook({object: minionHudObject()}, container, {});
+            const button = colLeft.querySelector("[data-action='minion-sacrificed']");
             button.click();
 
             expect(ChatMessage.create).toHaveBeenCalled();
-            // "Skeleton lvl 2" -> score de sacrifice 2 (getSacrificedScore)
-            expect(game.user.character.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedSkeleton": 2});
+            expect(game.user.character.update).toHaveBeenCalledWith({
+                "system.fq.minions.sacrificedMinion": TokenHud.SACRIFICE_SCORES["Skeleton lvl 2"]
+            });
             expect(socket.executeAsGM).toHaveBeenCalledWith("deleteToken", "token-2");
+        });
+
+        it("un familier suit le score par défaut : il est absent de la table des scores", () => {
+            const hook = getHook("renderTokenHUD");
+            const {container, colLeft} = buildHudHtml();
+            game.user.isGM = true;
+            game.user.character.system.fq.minions = {sacrificedMinion: 0};
+
+            hook({object: minionHudObject({name: "Tamed Wolf_4213", type: "beast"})}, container, {});
+            colLeft.querySelector("[data-action='minion-sacrificed']").click();
+
+            expect(game.user.character.update).toHaveBeenCalledWith({
+                "system.fq.minions.sacrificedMinion": TokenHud.getSacrificedScore("Créature hors table")
+            });
         });
     });
 
     describe("TokenHud.getSacrificedScore", () => {
 
+        // Les scores eux-mêmes sont de l'équilibrage : c'est la LECTURE de la
+        // table qui est vérifiée ici, jamais ses valeurs.
         it("lit la table par préfixe : le jeton d'un sbire porte un suffixe aléatoire", () => {
-            expect(TokenHud.getSacrificedScore("Skeleton lvl 3_428913")).toBe(3);
-            expect(TokenHud.getSacrificedScore("Skeleton lvl 4_1")).toBe(4);
-            expect(TokenHud.getSacrificedScore("Giant Skeleton_77")).toBe(5);
-            expect(TokenHud.getSacrificedScore("Skeleton Sorcerer_9")).toBe(6);
+            for (const [minion, score] of Object.entries(TokenHud.SACRIFICE_SCORES)) {
+                expect(TokenHud.getSacrificedScore(`${minion}_428913`)).toBe(score);
+            }
         });
 
-        it("vaut 1 pour un squelette absent de la table, et sans nom", () => {
-            expect(TokenHud.getSacrificedScore("Skeleton lvl 1_3")).toBe(1);
-            expect(TokenHud.getSacrificedScore("Squelette du MJ")).toBe(1);
-            expect(TokenHud.getSacrificedScore(undefined)).toBe(1);
+        it("retombe sur le score par défaut pour un sbire absent de la table (familiers compris), et sans nom", () => {
+            const byDefault = TokenHud.getSacrificedScore("Créature hors table");
+
+            expect(Object.values(TokenHud.SACRIFICE_SCORES)).not.toContain(undefined);
+            expect(TokenHud.getSacrificedScore("Tamed Wolf_4213")).toBe(byDefault);
+            expect(TokenHud.getSacrificedScore("Enraged Bear_88")).toBe(byDefault);
+            expect(TokenHud.getSacrificedScore("Squelette du MJ")).toBe(byDefault);
+            expect(TokenHud.getSacrificedScore(undefined)).toBe(byDefault);
         });
     });
 });

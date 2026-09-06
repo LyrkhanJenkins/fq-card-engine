@@ -21,8 +21,8 @@ Hooks.on("renderTokenHUD", (hud, html, _data) => {
         TokenHud.addDamageButtons(colLeft, hud.object);
     }
 
-    // Ajout des boutons de sacrifice de squelette si concernés
+    // Ajout du bouton de sacrifice si le token est un sbire du personnage
     if (Constants.actorCurrent) {
-        TokenHud.addSqueletonButton(colLeft, hud.object);
+        TokenHud.addSacrificeButton(colLeft, hud.object);
     }
 });
