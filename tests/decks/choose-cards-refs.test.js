@@ -51,10 +51,12 @@ describe("Références des encarts 🃏 des decks pattern fq8", () => {
 
             // Les filtres de niveaux laissent au moins autant de candidates
             // que de cartes à choisir (sinon le voile n'a rien à proposer).
-            const levels = (choice.chooseCardsLevels ?? "").split(",")
+            const levelParts = (choice.chooseCardsLevels ?? "").split(",")
                 .map(part => part.trim())
-                .filter(Boolean)
-                .map(Number);
+                .filter(Boolean);
+            const levels = levelParts.every(part => Number.isFinite(Number(part)))
+                ? levelParts.map(Number)
+                : [];
             const candidates = target.cards.filter(card =>
                 !levels.length || levels.includes(Number(card.system.fq.level)));
             const wanted = Number(choice.chooseCardsCount) || 1;

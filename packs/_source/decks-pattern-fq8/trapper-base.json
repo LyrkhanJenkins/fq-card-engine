@@ -194,7 +194,8 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!6b9vSzD4cZQZSYIu.gbW08JaE31eaVYY6"
-    },{
+    },
+    {
       "_id": "gbW08JaE32eaVYY7",
       "name": "FQCARDTITLE.PreciseShotII",
       "description": "",
@@ -3950,8 +3951,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trTrapStash00001",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trTrapStash00001"
     },
     {
       "faces": [
@@ -4145,8 +4146,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trLoneHunter0001",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trLoneHunter0001"
     },
     {
       "faces": [
@@ -4367,8 +4368,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trWildOffering01",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trWildOffering01"
     }
   ],
   "width": null,

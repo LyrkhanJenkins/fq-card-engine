@@ -75,6 +75,47 @@ describe("TradingCards", () => {
         expect(TradingCards.checkIfCanUpdateClasses({...document}, {isAdvancement: true})).toBe(true);
     });
 
+    it("refuse et avertit sans lever d'erreur quand la classe FQ n'a pas de parent", () => {
+        global.game = {users: [{character: {id: "parent-id"}}]};
+        const orphan = {system: {source: {label: "FQ"}}, type: "class"};
+        expect(TradingCards.checkIfCanUpdateClasses(orphan, {isAdvancement: true})).toBe(false);
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.NoUserForActor", {localize: true});
+    });
+
+    it("laisse passer sans lever d'erreur quand aucune option n'est fournie", () => {
+        expect(TradingCards.checkIfCanUpdateClasses(document, undefined)).toBe(true);
+    });
+
+    // ─── checkClassLevelCap ───────────────────────────────────────────────────
+
+    it("accepte une montée de niveau jusqu'au plafond de classe", () => {
+        expect(TradingCards.checkClassLevelCap(document, {system: {levels: 12}})).toBe(true);
+    });
+
+    it("refuse et avertit une montée de niveau au-delà du plafond de classe", () => {
+        expect(TradingCards.checkClassLevelCap(document, {system: {levels: 13}})).toBe(false);
+        expect(ui.notifications.warn).toHaveBeenCalledWith(
+            expect.stringContaining("FQCARDENGINE.MaxClassLevelReached"));
+    });
+
+    it("refuse un delta de niveau aplati au-delà du plafond", () => {
+        expect(TradingCards.checkClassLevelCap(document, {"system.levels": 13})).toBe(false);
+    });
+
+    it("laisse passer une mise à jour qui ne touche pas au niveau, même sur une classe hors plafond", () => {
+        const overCapped = {...document, system: {...document.system, levels: 15}};
+        expect(TradingCards.checkClassLevelCap(overCapped, {name: "Autre nom"})).toBe(true);
+    });
+
+    it("refuse la création d'une classe FQ déjà au-delà du plafond", () => {
+        const overCapped = {...document, system: {...document.system, levels: 13}};
+        expect(TradingCards.checkClassLevelCap(overCapped, overCapped)).toBe(false);
+    });
+
+    it("ignore les objets qui ne sont pas des classes FQ", () => {
+        expect(TradingCards.checkClassLevelCap({type: "weapon"}, {system: {levels: 99}})).toBe(true);
+    });
+
     // ─── updateDeckWhenChange ─────────────────────────────────────────────────
 
     it("should not trigger delete/create if not an advancement", () => {

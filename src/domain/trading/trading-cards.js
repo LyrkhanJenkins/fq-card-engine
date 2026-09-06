@@ -1,4 +1,4 @@
-import Constants from "../constants.js";
+import Constants, {MAX_CLASS_LEVEL} from "../constants.js";
 import {sampleItems} from "../../core/utils/random.utils.js";
 
 export const DECK_TYPE = "DECK";
@@ -57,12 +57,16 @@ export default class TradingCards {
 
     /**
      * Vérifie si un advancement de classe peut être appliqué pour le document donné.
-     * Contrôle que le personnage parent est bien possédé par un utilisateur connecté.
+     * Contrôle que le personnage parent est bien le personnage attitré d'un utilisateur :
+     * sans porteur, la reconstruction du deck qui suit l'advancement n'aurait aucune cible.
      * Affiche un warning si ce n'est pas le cas.
      *
+     * Une classe FQ sans parent (item du répertoire du monde) n'a par construction aucun
+     * porteur : elle est refusée plutôt que de faire lever une erreur au hook appelant.
+     *
      * @param {ItemData} document               - Le document item concerné par l'advancement.
-     * @param {object}   options                - Les options du Hook updateItem.
-     * @param {boolean}  options.isAdvancement  - True si la mise à jour est un advancement.
+     * @param {object}   [options]              - Les options du Hook appelant.
+     * @param {boolean}  [options.isAdvancement] - True si la mise à jour est un advancement.
      *
      * @returns {boolean} True si l'advancement peut être appliqué, false sinon.
      *
@@ -72,15 +76,48 @@ export default class TradingCards {
      * });
      */
     static checkIfCanUpdateClasses(document, options) {
-        if (options.isAdvancement && Constants.isFQClasses(document)) {
+        if (options?.isAdvancement && Constants.isFQClasses(document)) {
             const ownedCharacters = game.users.filter(u => !!u.character).map(u => u.character?.id);
-            if (ownedCharacters.includes(document.parent.id)) {
+            if (document.parent?.id && ownedCharacters.includes(document.parent.id)) {
                 return true;
             }
             ui.notifications.warn("FQCARDENGINE.NoUserForActor", {localize: true});
             return false;
         }
         return true;
+    }
+
+    /**
+     * Vérifie qu'une classe FQ ne dépasse pas le plafond de niveau du jeu
+     * ({@link MAX_CLASS_LEVEL}). Affiche un avertissement et refuse l'opération
+     * au-delà : la progression d'un personnage passe alors obligatoirement par
+     * une autre classe.
+     *
+     * Le niveau demandé n'est lu que sur le porteur fourni — jamais sur le
+     * document lui-même lors d'une mise à jour — pour qu'un personnage déjà
+     * au-delà du plafond (partie antérieure au plafond, correction du MJ) reste
+     * modifiable sur tout le reste de sa fiche.
+     *
+     * @param {ItemData} document - Le document item concerné.
+     * @param {object}   source   - Le porteur du niveau demandé : le delta de
+     *                              mise à jour, ou le document lui-même à la création.
+     *
+     * @returns {boolean} True si le niveau demandé est acceptable, false sinon.
+     *
+     * @example
+     * Hooks.on("preUpdateItem", (document, changed) => TradingCards.checkClassLevelCap(document, changed));
+     */
+    static checkClassLevelCap(document, source) {
+        if (!Constants.isFQClasses(document)) return true;
+
+        // Le delta d'une mise à jour Foundry arrive imbriqué ou aplati selon l'appelant.
+        const requested = source?.system?.levels ?? source?.["system.levels"];
+        if (requested === undefined || requested === null) return true;
+
+        if (Number(requested) <= MAX_CLASS_LEVEL) return true;
+
+        ui.notifications.warn(game.i18n.format("FQCARDENGINE.MaxClassLevelReached", {max: MAX_CLASS_LEVEL}));
+        return false;
     }
 
     /**

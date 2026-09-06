@@ -26,6 +26,14 @@ export const PREPARED_FLAG = "prepared";
 export const PREPARED_COLOR = "#5AAAE6";
 export const DEFAULT_MAX_ZEAL = 8;
 
+/**
+ * Niveau maximal atteignable par une classe FQ. La progression d'une classe est
+ * refusée au-delà : au-dessus de ce plafond, un personnage ne monte plus qu'en
+ * prenant une autre classe.
+ * @type {number}
+ */
+export const MAX_CLASS_LEVEL = 12;
+
 // Construit une apparence Dice So Nice « forcée » à partir d'une couleur de fond.
 // On force volontairement `colorset: "custom"`, `system: "standard"` et
 // `texture: "none"` pour que la couleur s'affiche de façon fiable quel que soit le
