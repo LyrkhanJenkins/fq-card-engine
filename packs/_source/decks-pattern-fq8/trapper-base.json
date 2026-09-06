@@ -2127,7 +2127,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/ViralMutation.png",
           "text": "FQCARDDESCRIPTION.ViralMutation"
         }
       ],
@@ -2273,17 +2273,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1788096374766,
+        "modifiedTime": 1788698296763,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1",
+      "cards": []
     },
     {
       "faces": [
@@ -2593,7 +2593,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/DeadlySnare.png",
           "text": "FQCARDDESCRIPTION.DeadlySnare"
         }
       ],
@@ -2682,17 +2682,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1788096374766,
+        "modifiedTime": 1788697777272,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trDeadlySnare001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trDeadlySnare001",
+      "cards": []
     },
     {
       "faces": [
@@ -2965,7 +2965,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/BeastPack.png",
           "text": "FQCARDDESCRIPTION.BeastPack"
         }
       ],
@@ -3086,26 +3086,26 @@
       "sort": 22,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1788000000000,
+        "modifiedTime": 1788698217498,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastPack01x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastPack01x",
+      "cards": []
     },
     {
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/BeastTraining.png",
           "text": "FQCARDDESCRIPTION.BeastTraining"
         }
       ],
@@ -3216,26 +3216,26 @@
       "sort": 23,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1788000000000,
+        "modifiedTime": 1788697853200,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastTrain1x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastTrain1x",
+      "cards": []
     },
     {
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/SharpenedFangs.png",
           "text": "FQCARDDESCRIPTION.SharpenedFangs"
         }
       ],
@@ -3346,26 +3346,26 @@
       "sort": 24,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1788000000000,
+        "modifiedTime": 1788697785064,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapSharpFangs1x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapSharpFangs1x",
+      "cards": []
     },
     {
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/HuntingInstinct.png",
           "text": "FQCARDDESCRIPTION.HuntingInstinct"
         }
       ],
@@ -3476,20 +3476,20 @@
       "sort": 25,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1788000000000,
+        "modifiedTime": 1788698153743,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapHuntInstin1x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapHuntInstin1x",
+      "cards": []
     },
     {
       "_id": "trAttackOrder001",
@@ -3709,8 +3709,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Q7xhCz2mNbT4vRoa",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Q7xhCz2mNbT4vRoa"
     },
     {
       "_id": "Yk3pLdW8sJfE6nHu",
@@ -3812,14 +3812,14 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Yk3pLdW8sJfE6nHu",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Yk3pLdW8sJfE6nHu"
     },
     {
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/HuntsEnd.png",
           "text": "FQCARDDESCRIPTION.HuntsEnd"
         }
       ],
@@ -3908,17 +3908,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788628636543,
-        "modifiedTime": 1788628636543,
+        "modifiedTime": 1788697929894,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntsEnd000001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntsEnd000001",
+      "cards": []
     },
     {
       "faces": [
@@ -4113,8 +4113,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntersWhis001",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntersWhis001"
     }
   ],
   "width": null,
