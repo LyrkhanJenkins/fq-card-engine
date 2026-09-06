@@ -383,7 +383,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/elementalist/fireball.PNG",
+          "img": "modules/fq-card-engine/images/cards/elementalist/firebolt.png",
           "text": "FQCARDDESCRIPTION.FireBolt"
         }
       ],
@@ -505,20 +505,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690796,
+        "modifiedTime": 1788693343254,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.VTHKHIaML2gmihrI"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.VTHKHIaML2gmihrI",
+      "cards": []
     },
     {
       "_id": "acQlsztKO3v9QLTn",
@@ -2864,7 +2864,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/elementalist/fireball.png",
           "text": "FQCARDDESCRIPTION.Fireball"
         }
       ],
@@ -2954,20 +2954,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690797,
+        "modifiedTime": 1788693362099,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemFireball01"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemFireball01",
+      "cards": []
     },
     {
       "_id": "FQelemBlaze00001",
@@ -2983,7 +2983,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/elementalist/burningtrail.png",
           "text": "FQCARDDESCRIPTION.Blaze"
         }
       ],
@@ -3147,20 +3147,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690797,
+        "modifiedTime": 1788693978339,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemBlaze00001"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemBlaze00001",
+      "cards": []
     },
     {
       "_id": "FQelemColossus01",
@@ -3176,7 +3176,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/elementalist/stonecolossus.png",
           "text": "FQCARDDESCRIPTION.StoneColossus"
         }
       ],
@@ -3265,20 +3265,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690797,
+        "modifiedTime": 1788694212234,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemColossus01"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemColossus01",
+      "cards": []
     },
     {
       "_id": "FQelemCyclone001",
@@ -4179,7 +4179,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/elementalist/repulsiongust.png",
           "text": "FQCARDDESCRIPTION.RepulsionGust"
         }
       ],
@@ -4308,20 +4308,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788685199085,
-        "modifiedTime": 1788685199085,
+        "modifiedTime": 1788693675458,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.fq13ElemGust01Az"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.fq13ElemGust01Az",
+      "cards": []
     },
     {
       "_id": "fq13ElemTrail02B",
@@ -4357,18 +4357,21 @@
           "choices": [
             {
               "name": "",
-              "action": "",
+              "action": "-6",
               "mana": "-2",
               "zeal": "-1",
-              "reactive": true,
+              "reactive": false,
               "hp": "",
               "draw": "",
               "drop": "",
-              "targetType": "Default",
-              "minReach": "7",
-              "maxReach": "999999",
-              "nbTargets": "1",
-              "damage": "",
+              "targetType": "Zone",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "",
+              "zoneShape": "cone",
+              "zoneSize": "3",
+              "zoneAngle": "70",
+              "damage": "(1d6)[fire]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -4385,7 +4388,33 @@
               "chooseCardsCount": "",
               "chooseCardsExcludeDeck": false,
               "chooseCardsPlayNow": false,
-              "applyEffectsFormulas": [],
+              "applyEffectsFormulas": [
+                {
+                  "title": "Burn",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "burn"
+                        },
+                        {
+                          "status": "burn"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageEffect",
+                          "arg": "{\"effectName\":\"Burn\",\"damage\":\"2\",\"turn\":\"3\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
               "messages": [
                 {
                   "key": "FQCARDENGINE.CardMsgBurningTrail",
@@ -4398,27 +4427,8 @@
               "retrieveFromDeck": "",
               "destroyFromDiscard": "",
               "duplicateFromHand": "",
-              "customEvals": [
-                {
-                  "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Burn\"])",
-                  "errorMessages": [
-                    {
-                      "key": "FQCARDENGINE.CardWarningMsgMissing1Effect",
-                      "arg": "{\"effectName\":\"Burn\"}"
-                    }
-                  ]
-                },
-                {
-                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
-                  "errorMessages": [
-                    {
-                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
-                      "arg": ""
-                    }
-                  ]
-                }
-              ],
-              "executeEval": "const target = FqCardEngineModule.cst.currentTargets[0]?.actor;\nif (target) {\nconst copies = target.effects.filter(e => e.name === \"Burn\").map(e => {\nconst data = e.toObject();\ndelete data._id;\nreturn data;\n});\nif (copies.length) target.createEmbeddedDocuments(\"ActiveEffect\", copies);\n}",
+              "customEvals": [],
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.flames.02.orange",
@@ -4432,20 +4442,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788685199085,
-        "modifiedTime": 1788685199085,
+        "modifiedTime": 1788693962294,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.fq13ElemTrail02B"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.fq13ElemTrail02B",
+      "cards": []
     }
   ],
   "width": null,

@@ -78,16 +78,17 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
   de carte à 0 
 
   **Dernière passe pour chaque sort :**
-- Verifier caracterisation des autres classes
-- Equilibrage de la classe manuel puis IA
+- Verifier caractérisation des autres classes
+- Équilibrage de la classe manuel puis IA
 - dégâts
 - couts
 - nb de cartes
 - synergie
-- Vérifier caracterisation abilities dnd
-- Verification cahque fonctionnalité du moteur pour cahque classe
+- Vérifier caractérisation abilities dnd
+- Verification chaque fonctionnalité du moteur pour chaque classes
 - Faire un inventaire des types de dégâts
 - Faire vérifier IA les descriptions
+- Compléter avec des sorts de rang 2 (juste des sorts plus fort exemple trait de feu II) pour les niveaus supérieurs OU les trous
 
 # Élémentaliste
 
