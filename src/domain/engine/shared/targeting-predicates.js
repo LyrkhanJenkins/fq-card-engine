@@ -192,6 +192,30 @@ export default class TargetingPredicates {
     }
 
     /**
+     * Filtre des tokens candidats à ceux compris dans l'anneau [minReach, maxReach]
+     * (en cases) autour du lanceur, bonus de portée de l'acteur inclus — la même
+     * géométrie que le moteur. Partagé entre `AdjacentTargeting` et
+     * `CombatTargeting`, qui ne diffèrent que par leur pré-filtre (tokens de la
+     * scène vs. combattants d'un camp) et leur borne haute par défaut.
+     *
+     * @param {object}   casterToken     - Le document token du lanceur.
+     * @param {object[]} candidates      - Les tokens déjà pré-filtrés à considérer.
+     * @param {number}   minReach        - La portée minimale résolue (falsy = 0).
+     * @param {number}   maxReach        - La portée maximale résolue (falsy = `fallbackMax`).
+     * @param {number}   [fallbackMax=1] - La borne haute par défaut quand `maxReach` est vide.
+     *
+     * @returns {object[]} Les tokens candidats dans l'anneau de portée.
+     */
+    static tokensWithinRange(casterToken, candidates, minReach, maxReach, fallbackMax = 1) {
+        const min = minReach || 0;
+        const max = (maxReach || fallbackMax) + Constants.rangeBonus;
+        return candidates.filter(token => {
+            const dist = Geometry.distanceBetweenTokens(casterToken, token);
+            return dist >= min && dist <= max;
+        });
+    }
+
+    /**
      * Indique si la carte vise autrui plutôt que son lanceur : vrai si elle a une portée
      * (`minReach`/`maxReach`), cible des squelettes, une zone, les tokens adjacents ou
      * des combattants. Sans portée, le sort est considéré comme se ciblant lui-même.

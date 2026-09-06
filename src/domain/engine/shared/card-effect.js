@@ -22,6 +22,7 @@ import TradingCards, {DECK_TYPE} from "../../trading/trading-cards.js";
 import CombatTurn from "../combat-turn.js";
 import TargetingPredicates from "./targeting-predicates.js";
 import StatusEffects from "../../system/effects/status-effects.js";
+import ObjectUtils from "../../../core/utils/object.utils.js";
 
 /**
  * Résolution et application des effets d'une carte : variables et bonus (X/Y,
@@ -374,21 +375,10 @@ export default class CardEffect {
         if (!toRetrieve) {
             return null;
         }
-        const moduleName = FqCardEngineModule.moduleName;
         const retrieved = [];
         // Un transfert par carte : `updateData` (face à révéler) est propre à chacune.
         for (const chosen of toRetrieve) {
-            const passed = await pile.pass(playedCard.parent, [chosen.id], {
-                action: "pass",
-                chatNotification: !CONFIG.FqCardEngine.options.hideMessages,
-                updateData: {
-                    face: chosen.face ?? 0,
-                    flags: {[moduleName]: {generatedAt: Date.now()}}
-                }
-            }).catch(err => {
-                ui.notifications.error(err.message);
-                return null;
-            });
+            const passed = await CardEffect.#passChosenCardToHand(pile, playedCard, chosen, "pass");
             if (Array.isArray(passed)) {
                 retrieved.push(...passed);
                 // Une carte sans deck d'origine (générée) se voit estampiller par
@@ -469,26 +459,44 @@ export default class CardEffect {
         if (!toRetrieve) {
             return null;
         }
-        const moduleName = FqCardEngineModule.moduleName;
         const retrieved = [];
         // Un transfert par carte : `updateData` (face à révéler) est propre à chacune.
         for (const chosen of toRetrieve) {
-            const passed = await deck.pass(playedCard.parent, [chosen.id], {
-                action: "draw",
-                chatNotification: !CONFIG.FqCardEngine.options.hideMessages,
-                updateData: {
-                    face: chosen.face ?? 0,
-                    flags: {[moduleName]: {generatedAt: Date.now()}}
-                }
-            }).catch(err => {
-                ui.notifications.error(err.message);
-                return null;
-            });
+            const passed = await CardEffect.#passChosenCardToHand(deck, playedCard, chosen, "draw");
             if (Array.isArray(passed)) {
                 retrieved.push(...passed);
             }
         }
         return retrieved;
+    }
+
+    /**
+     * Transfère une carte choisie (défausse ou deck) vers la main via `Cards#pass` :
+     * révèle la face choisie, estampille `generatedAt` (halo vert temporaire de la
+     * main, cf. hand-board.js), et avale l'erreur de transfert en notification plutôt
+     * que de la laisser remonter — factorisé entre {@link CardEffect.retrieveCardFromDiscard}
+     * et {@link CardEffect.retrieveCardFromDeck}, qui ne diffèrent que par la pile
+     * source et l'action Foundry (`pass`/`draw`).
+     *
+     * @param {Cards}  source     - La pile source (défausse ou deck).
+     * @param {Card}   playedCard - La carte jouée (dont le parent est la main destination).
+     * @param {Card}   chosen     - La carte choisie à transférer.
+     * @param {string} action     - L'action Foundry du transfert (`"pass"` ou `"draw"`).
+     *
+     * @returns {Promise<Card[]|null>} Les cartes transférées, ou null en cas d'échec.
+     */
+    static async #passChosenCardToHand(source, playedCard, chosen, action) {
+        return await source.pass(playedCard.parent, [chosen.id], {
+            action,
+            chatNotification: !CONFIG.FqCardEngine.options.hideMessages,
+            updateData: {
+                face: chosen.face ?? 0,
+                flags: {[FqCardEngineModule.moduleName]: {generatedAt: Date.now()}}
+            }
+        }).catch(err => {
+            ui.notifications.error(err.message);
+            return null;
+        });
     }
 
     /**
@@ -996,6 +1004,32 @@ export default class CardEffect {
      */
     static replaceCardContentAbilitiesBonus(cardContent) {
         CardEffect.#walkStringValues(cardContent, s => RollService.replaceAbilitiesBonus(s));
+    }
+
+    /**
+     * Résout une copie de travail d'un choix pour une vérification SILENCIEUSE
+     * (ressources, ciblage) hors du pipeline de jeu : bonus de caractéristiques,
+     * substitution X/Y si la carte en porte, puis données dérivées — les mêmes
+     * étapes de résolution qu'au jeu, pour que le verdict porte sur les mêmes
+     * nombres que ceux qui seront prélevés. Factorisé entre
+     * {@link AutoCard.canAfford} et {@link PreparedCard.canPlayNow}.
+     *
+     * @param {object}  cardContent          - Le choix non résolu.
+     * @param {object}  [options]
+     * @param {boolean} [options.hasVariables] - True si la carte porte des variables X/Y libres (omis : la carte n'en a pas).
+     * @param {number}  [options.xValue]       - La valeur X saisie, si `hasVariables`.
+     * @param {number}  [options.yValue]       - La valeur Y saisie, si `hasVariables`.
+     *
+     * @returns {object} La copie résolue du choix.
+     */
+    static resolveForSilentCheck(cardContent, {hasVariables, xValue, yValue} = {}) {
+        const resolved = ObjectUtils.deepCopy(cardContent);
+        CardEffect.replaceCardContentAbilitiesBonus(resolved);
+        if (hasVariables !== undefined) {
+            CardEffect.substituteXAndYValue(resolved, hasVariables, xValue, yValue);
+        }
+        CardEffect.prepareDataFromCard(resolved);
+        return resolved;
     }
 
     /**

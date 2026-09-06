@@ -97,16 +97,62 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     /* -------------------------------------------- */
 
     /**
+     * Ajoute un élément vierge à un tableau du formulaire courant et resoumet.
+     * Protocole commun à tous les handlers `#onAddX` : persiste l'état courant
+     * du formulaire (`render: false`), lit le tableau ciblé par `path` (chemin
+     * en points dans les données soumises), y ajoute `defaultItem`, puis
+     * resoumet.
+     *
+     * @this {CardConfig}
+     * @param {string} path        - Le chemin en points du tableau dans les données soumises.
+     * @param {object} defaultItem - L'élément vierge à ajouter.
+     *
+     * @returns {Promise<Document>} Le document mis à jour (retour de `submit`).
+     */
+    async #addArrayItem(path, defaultItem) {
+        await this.submit({operation: {render: false}});
+        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
+        const items = Object.values(foundry.utils.getProperty(submitData, path) ?? {});
+        items.push(defaultItem);
+        return this.submit({updateData: {[path]: items}});
+    }
+
+    /**
+     * Supprime, après confirmation, un élément d'un tableau du formulaire
+     * courant. Protocole commun à tous les handlers `#onRemoveX` : lit le
+     * tableau ciblé par `path` dans les données soumises, en retire l'élément
+     * à `index` après confirmation de l'utilisateur, puis resoumet.
+     *
+     * @this {CardConfig}
+     * @param {string} path     - Le chemin en points du tableau dans les données soumises.
+     * @param {number} index    - L'indice de l'élément à retirer.
+     * @param {string} titleKey - La clé i18n du titre de la boîte de confirmation.
+     *
+     * @returns {Promise<Document|null>} Le document mis à jour, ou null si annulé.
+     */
+    #removeArrayItem(path, index, titleKey) {
+        const question = game.i18n.localize("AreYouSure");
+        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
+        return foundry.applications.api.DialogV2.confirm({
+            window: {title: titleKey},
+            content: `<p><strong>${question}</strong></p>`,
+            yes: {
+                callback: () => {
+                    const items = Object.values(foundry.utils.getProperty(submitData, path) ?? {});
+                    items.splice(index, 1);
+                    return this.submit({updateData: {[path]: items}});
+                }
+            }
+        });
+    }
+
+    /**
      * Ajoute une nouvelle face à la carte (dupliqué de la base Foundry).
      * @this {CardConfig}
      * @type {ApplicationClickAction}
      */
     static async #onAddFace() {
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const faces = Object.values(submitData.faces ?? {});
-        faces.push({});
-        return this.submit({updateData: {faces}});
+        return this.#addArrayItem("faces", {});
     }
 
     /* -------------------------------------------- */
@@ -142,11 +188,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
      * @type {ApplicationClickAction}
      */
     static async #onAddChoice() {
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const choices = Object.values(submitData.system.fq.choices ?? {});
-        choices.push({});
-        return this.submit({updateData: {"system.fq.choices": choices}});
+        return this.#addArrayItem("system.fq.choices", {});
     }
 
     /* -------------------------------------------- */
@@ -159,20 +201,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
      * @param {HTMLElement}  button - Le bouton portant l'index du choix (`data-index`).
      */
     static async #onRemoveChoice(event, button) {
-        const index = button.dataset.index;
-        const question = game.i18n.localize("AreYouSure");
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        return foundry.applications.api.DialogV2.confirm({
-            window: {title: "FQCARDENGINE.DeleteChoice"},
-            content: `<p><strong>${question}</strong></p>`,
-            yes: {
-                callback: () => {
-                    const choices = Object.values(submitData.system.fq.choices ?? {});
-                    choices.splice(index, 1);
-                    return this.submit({updateData: {"system.fq.choices": choices}});
-                }
-            }
-        });
+        return this.#removeArrayItem("system.fq.choices", button.dataset.index, "FQCARDENGINE.DeleteChoice");
     }
 
     /**
@@ -184,11 +213,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
      */
     static async #onAddAdditionalMessage(event, button) {
         const index = button.dataset.index;
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const messages = Object.values(submitData.system.fq.choices[index].messages ?? {});
-        messages.push({});
-        this.submit({updateData: {[`system.fq.choices.${index}.messages`]: messages}});
+        return this.#addArrayItem(`system.fq.choices.${index}.messages`, {});
     }
 
     /**
@@ -201,19 +226,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     static async #onRemoveAdditionalMessage(event, button) {
         const index = button.dataset.index;
         const messageIndex = button.dataset.messageIndex;
-        const question = game.i18n.localize("AreYouSure");
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        return foundry.applications.api.DialogV2.confirm({
-            window: {title: "FQCARDENGINE.DeleteAdditionalMessage"},
-            content: `<p><strong>${question}</strong></p>`,
-            yes: {
-                callback: () => {
-                    const messages = Object.values(submitData.system.fq.choices[index].messages ?? {});
-                    messages.splice(messageIndex, 1);
-                    this.submit({updateData: {[`system.fq.choices.${index}.messages`]: messages}});
-                }
-            }
-        });
+        return this.#removeArrayItem(`system.fq.choices.${index}.messages`, messageIndex, "FQCARDENGINE.DeleteAdditionalMessage");
     }
 
 
@@ -226,11 +239,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
      */
     static async #onAddEffectsFormula(event, button) {
         const index = button.dataset.index;
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const applyEffectsFormulas = Object.values(submitData.system.fq.choices[index].applyEffectsFormulas ?? {});
-        applyEffectsFormulas.push(FqCardSheet.addEffectsFormula());
-        this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas`]: applyEffectsFormulas}});
+        return this.#addArrayItem(`system.fq.choices.${index}.applyEffectsFormulas`, FqCardSheet.addEffectsFormula());
     }
 
     /**
@@ -256,19 +265,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     static async #onRemoveEffectsFormula(event, button) {
         const index = button.dataset.index;
         const formulaIndex = button.dataset.formulaIndex;
-        const question = game.i18n.localize("AreYouSure");
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        return foundry.applications.api.DialogV2.confirm({
-            window: {title: "FQCARDENGINE.DeleteEffectsFormula"},
-            content: `<p><strong>${question}</strong></p>`,
-            yes: {
-                callback: () => {
-                    const applyEffectsFormulas = Object.values(submitData.system.fq.choices[index].applyEffectsFormulas ?? {});
-                    applyEffectsFormulas.splice(formulaIndex, 1);
-                    this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas`]: applyEffectsFormulas}});
-                }
-            }
-        });
+        return this.#removeArrayItem(`system.fq.choices.${index}.applyEffectsFormulas`, formulaIndex, "FQCARDENGINE.DeleteEffectsFormula");
     }
 
 
@@ -282,11 +279,8 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     static async #onAddFormulaEffect(event, button) {
         const index = button.dataset.index;
         const formulaIndex = button.dataset.formulaIndex;
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const effects = Object.values(submitData.system.fq.choices[index].applyEffectsFormulas[formulaIndex].effects ?? {});
-        effects.push(FqCardSheet.addFormulaEffect());
-        this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects`]: effects}});
+        return this.#addArrayItem(
+            `system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects`, FqCardSheet.addFormulaEffect());
     }
 
     /**
@@ -313,19 +307,8 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         const index = button.dataset.index;
         const formulaIndex = button.dataset.formulaIndex;
         const effectIndex = button.dataset.effectIndex;
-        const question = game.i18n.localize("AreYouSure");
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        return foundry.applications.api.DialogV2.confirm({
-            window: {title: "FQCARDENGINE.DeleteFormulaEffect"},
-            content: `<p><strong>${question}</strong></p>`,
-            yes: {
-                callback: () => {
-                    const effects = Object.values(submitData.system.fq.choices[index].applyEffectsFormulas[formulaIndex].effects ?? {});
-                    effects.splice(effectIndex, 1);
-                    this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects`]: effects}});
-                }
-            }
-        });
+        return this.#removeArrayItem(
+            `system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects`, effectIndex, "FQCARDENGINE.DeleteFormulaEffect");
     }
 
     /**
@@ -339,11 +322,8 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         const index = button.dataset.index;
         const formulaIndex = button.dataset.formulaIndex;
         const effectIndex = button.dataset.effectIndex;
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const data = Object.values(submitData.system.fq.choices[index].applyEffectsFormulas[formulaIndex].effects[effectIndex].data ?? {});
-        data.push(FqCardSheet.addDataEffect());
-        this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.data`]: data}});
+        return this.#addArrayItem(
+            `system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.data`, FqCardSheet.addDataEffect());
     }
 
     /**
@@ -378,20 +358,8 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         const formulaIndex = button.dataset.formulaIndex;
         const effectIndex = button.dataset.effectIndex;
         const dataIndex = button.dataset.dataIndex;
-        const question = game.i18n.localize("AreYouSure");
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-
-        return foundry.applications.api.DialogV2.confirm({
-            window: {title: "FQCARDENGINE.DeleteDataEffect"},
-            content: `<p><strong>${question}</strong></p>`,
-            yes: {
-                callback: () => {
-                    const data = Object.values(submitData.system.fq.choices[index].applyEffectsFormulas[formulaIndex].effects[effectIndex].data ?? {});
-                    data.splice(dataIndex, 1);
-                    this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.data`]: data}});
-                }
-            }
-        });
+        return this.#removeArrayItem(
+            `system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.data`, dataIndex, "FQCARDENGINE.DeleteDataEffect");
     }
     /**
      * Ajoute un message à un effet.
@@ -404,11 +372,8 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         const index = button.dataset.index;
         const formulaIndex = button.dataset.formulaIndex;
         const effectIndex = button.dataset.effectIndex;
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const messages = Object.values(submitData.system.fq.choices[index].applyEffectsFormulas[formulaIndex].effects[effectIndex].messages ?? {});
-        messages.push({});
-        this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.messages`]: messages}});
+        return this.#addArrayItem(
+            `system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.messages`, {});
     }
 
     /**
@@ -423,20 +388,9 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         const formulaIndex = button.dataset.formulaIndex;
         const effectIndex = button.dataset.effectIndex;
         const effectMessageIndex = button.dataset.effectMessageIndex;
-        const question = game.i18n.localize("AreYouSure");
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-
-        return foundry.applications.api.DialogV2.confirm({
-            window: {title: "FQCARDENGINE.DeleteAdditionalMessage"},
-            content: `<p><strong>${question}</strong></p>`,
-            yes: {
-                callback: () => {
-                    const messages = Object.values(submitData.system.fq.choices[index].applyEffectsFormulas[formulaIndex].effects[effectIndex].messages ?? {});
-                    messages.splice(effectMessageIndex, 1);
-                    this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.messages`]: messages}});
-                }
-            }
-        });
+        return this.#removeArrayItem(
+            `system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.messages`,
+            effectMessageIndex, "FQCARDENGINE.DeleteAdditionalMessage");
     }
 
     /**
@@ -451,11 +405,8 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         const formulaIndex = button.dataset.formulaIndex;
         const effectIndex = button.dataset.effectIndex;
         const dataIndex = button.dataset.dataIndex;
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const changes = Object.values(submitData.system.fq.choices[index].applyEffectsFormulas[formulaIndex].effects[effectIndex].data[dataIndex].changes ?? {});
-        changes.push({});
-        this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.data.${dataIndex}.changes`]: changes}});
+        return this.#addArrayItem(
+            `system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.data.${dataIndex}.changes`, {});
     }
 
     /**
@@ -471,19 +422,9 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         const effectIndex = button.dataset.effectIndex;
         const dataIndex = button.dataset.dataIndex;
         const changeIndex = button.dataset.changeIndex;
-        const question = game.i18n.localize("AreYouSure");
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        return foundry.applications.api.DialogV2.confirm({
-            window: {title: "FQCARDENGINE.DeleteChangeData"},
-            content: `<p><strong>${question}</strong></p>`,
-            yes: {
-                callback: () => {
-                    const changes = Object.values(submitData.system.fq.choices[index].applyEffectsFormulas[formulaIndex].effects[effectIndex].data[dataIndex].changes ?? {});
-                    changes.splice(changeIndex, 1);
-                    this.submit({updateData: {[`system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.data.${dataIndex}.changes`]: changes}});
-                }
-            }
-        });
+        return this.#removeArrayItem(
+            `system.fq.choices.${index}.applyEffectsFormulas.${formulaIndex}.effects.${effectIndex}.data.${dataIndex}.changes`,
+            changeIndex, "FQCARDENGINE.DeleteChangeData");
     }
 
 
@@ -496,11 +437,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
      */
     static async #onAddMinion(event, button) {
         const index = button.dataset.index;
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const minions = Object.values(submitData.system.fq.choices[index].minions ?? {});
-        minions.push({});
-        this.submit({updateData: {[`system.fq.choices.${index}.minions`]: minions}});
+        return this.#addArrayItem(`system.fq.choices.${index}.minions`, {});
     }
 
     /**
@@ -513,19 +450,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     static async #onRemoveMinion(event, button) {
         const index = button.dataset.index;
         const minionIndex = button.dataset.minionIndex;
-        const question = game.i18n.localize("AreYouSure");
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        return foundry.applications.api.DialogV2.confirm({
-            window: {title: "FQCARDENGINE.DeleteMinion"},
-            content: `<p><strong>${question}</strong></p>`,
-            yes: {
-                callback: () => {
-                    const minions = Object.values(submitData.system.fq.choices[index].minions ?? {});
-                    minions.splice(minionIndex, 1);
-                    this.submit({updateData: {[`system.fq.choices.${index}.minions`]: minions}});
-                }
-            }
-        });
+        return this.#removeArrayItem(`system.fq.choices.${index}.minions`, minionIndex, "FQCARDENGINE.DeleteMinion");
     }
 
 
@@ -539,11 +464,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
      */
     static async #onAddCustomEval(event, button) {
         const index = button.dataset.index;
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const customEvals = Object.values(submitData.system.fq.choices[index].customEvals ?? {});
-        customEvals.push(FqCardSheet.addCustomEval());
-        this.submit({updateData: {[`system.fq.choices.${index}.customEvals`]: customEvals}});
+        return this.#addArrayItem(`system.fq.choices.${index}.customEvals`, FqCardSheet.addCustomEval());
     }
 
 
@@ -569,19 +490,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     static async #onRemoveCustomEval(event, button) {
         const index = button.dataset.index;
         const customEvalIndex = button.dataset.customEvalIndex;
-        const question = game.i18n.localize("AreYouSure");
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        return foundry.applications.api.DialogV2.confirm({
-            window: {title: "FQCARDENGINE.DeleteCustomEval"},
-            content: `<p><strong>${question}</strong></p>`,
-            yes: {
-                callback: () => {
-                    const customEvals = Object.values(submitData.system.fq.choices[index].customEvals ?? {});
-                    customEvals.splice(customEvalIndex, 1);
-                    this.submit({updateData: {[`system.fq.choices.${index}.customEvals`]: customEvals}});
-                }
-            }
-        });
+        return this.#removeArrayItem(`system.fq.choices.${index}.customEvals`, customEvalIndex, "FQCARDENGINE.DeleteCustomEval");
     }
 
 
@@ -596,11 +505,7 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     static async #onAddCustomEvalErrorMessage(event, button) {
         const index = button.dataset.index;
         const customEvalIndex = button.dataset.customEvalIndex;
-        await this.submit({operation: {render: false}});
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        const errorMessages = Object.values(submitData.system.fq.choices[index].customEvals[customEvalIndex].errorMessages ?? {});
-        errorMessages.push({});
-        this.submit({updateData: {[`system.fq.choices.${index}.customEvals.${customEvalIndex}.errorMessages`]: errorMessages}});
+        return this.#addArrayItem(`system.fq.choices.${index}.customEvals.${customEvalIndex}.errorMessages`, {});
     }
 
     /**
@@ -614,19 +519,8 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         const index = button.dataset.index;
         const customEvalIndex = button.dataset.customEvalIndex;
         const errorMessageIndex = button.dataset.errorMessageIndex;
-        const question = game.i18n.localize("AreYouSure");
-        const submitData = this._processFormData(null, this.form, new foundry.applications.ux.FormDataExtended(this.form));
-        return foundry.applications.api.DialogV2.confirm({
-            window: {title: "FQCARDENGINE.DeleteAdditionalMessage"},
-            content: `<p><strong>${question}</strong></p>`,
-            yes: {
-                callback: () => {
-                    const errorMessages = Object.values(submitData.system.fq.choices[index].customEvals[customEvalIndex].errorMessages ?? {});
-                    errorMessages.splice(errorMessageIndex, 1);
-                    this.submit({updateData: {[`system.fq.choices.${index}.customEvals.${customEvalIndex}.errorMessages`]: errorMessages}});
-                }
-            }
-        });
+        return this.#removeArrayItem(
+            `system.fq.choices.${index}.customEvals.${customEvalIndex}.errorMessages`, errorMessageIndex, "FQCARDENGINE.DeleteAdditionalMessage");
     }
 
 

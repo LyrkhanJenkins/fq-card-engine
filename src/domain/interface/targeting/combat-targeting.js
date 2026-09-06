@@ -1,7 +1,6 @@
 import Constants from "../../constants.js";
 import RollService from "../../engine/roll/roll-service.js";
 import TargetingPredicates from "../../engine/shared/targeting-predicates.js";
-import Geometry from "../../engine/shared/geometry.js";
 import ZoneTargeting from "./zone-targeting.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 
@@ -51,16 +50,10 @@ export default class CombatTargeting {
             return {status: CombatTargeting.ACQUISITION.NO_COMBAT, count: 0};
         }
         const wantAllies = targetType === CardFqSystem.TARGET_TYPE_COMBAT_ALLIES;
-        const min = minReach || 0;
-        const max = (maxReach || Infinity) + Constants.rangeBonus;
-
-        const covered = [...(game.canvas?.scene?.tokens ?? [])]
+        const candidates = [...(game.canvas?.scene?.tokens ?? [])]
             .filter(token => token.actorId && combatantTokenIds.includes(token.id))
-            .filter(token => wantAllies === TargetingPredicates.areAllies(token, casterToken))
-            .filter(token => {
-                const dist = Geometry.distanceBetweenTokens(casterToken, token);
-                return dist >= min && dist <= max;
-            });
+            .filter(token => wantAllies === TargetingPredicates.areAllies(token, casterToken));
+        const covered = TargetingPredicates.tokensWithinRange(casterToken, candidates, minReach, maxReach, Infinity);
 
         ZoneTargeting.retargetTo(covered);
         return {status: CombatTargeting.ACQUISITION.OK, count: covered.length};

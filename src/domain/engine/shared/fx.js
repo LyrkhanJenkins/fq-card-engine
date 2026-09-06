@@ -1,5 +1,6 @@
 import TargetingPredicates from "./targeting-predicates.js";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
+import {visualEffectData} from "../../system/fx/visualEffectData.js";
 
 /**
  * Utilitaires d'effets audiovisuels lors du jeu des cartes, s'appuyant sur le
@@ -159,7 +160,24 @@ export default class Fx {
             return;
         }
         const seq = new Sequence();
+        Fx.#appendTargetOutcome(seq, target, cardContent, isEvade);
+        seq.play();
+    }
 
+    /**
+     * Ajoute à une séquence le retour visuel individuel d'une cible : clignotement
+     * si elle encaisse des dégâts, effet et son d'esquive sinon. Partagé entre le
+     * ciblage direct et le ciblage de zone, qui ne diffèrent que par la façon dont
+     * l'effet du sort lui-même est positionné.
+     *
+     * @param {object}  seq         - La séquence Sequencer à enrichir.
+     * @param {object}  target      - Le token cible.
+     * @param {object}  cardContent - Le contenu (choix) de la carte jouée.
+     * @param {boolean} isEvade     - True si la cible a esquivé l'effet.
+     *
+     * @returns {void}
+     */
+    static #appendTargetOutcome(seq, target, cardContent, isEvade) {
         if (cardContent.damage && !isEvade) {
             Fx.getBlinkAnimation(seq, target, 100, 8);
         }
@@ -167,7 +185,6 @@ export default class Fx {
             seq.effect().file(this.GENERIC_VISUAL_PATH + "other/evasion.webm").atLocation(target)
                 .size(2.5, {gridUnits: true}).sound().file(this.SOUND_PATH + "evasion/1.mp3");
         }
-        seq.play();
     }
 
     /**
@@ -216,14 +233,7 @@ export default class Fx {
                 .size(2, {gridUnits: true}).waitUntilFinished(-500);
         }
 
-        if (cardContent.damage && !isEvade) {
-            Fx.getBlinkAnimation(seq, target, 100, 8);
-        }
-
-        if (isEvade) {
-            seq.effect().file(this.GENERIC_VISUAL_PATH + "other/evasion.webm").atLocation(target)
-                .size(2.5, {gridUnits: true}).sound().file(this.SOUND_PATH + "evasion/1.mp3");
-        }
+        Fx.#appendTargetOutcome(seq, target, cardContent, isEvade);
         seq.play();
     }
 
@@ -339,24 +349,8 @@ export default class Fx {
      * @returns {string} Le chemin du fichier vidéo générique correspondant.
      */
     static getDamageGenericEffectPath(damageFormula, maxReach, typeEffect) {
-        const basePath = this.GENERIC_VISUAL_PATH + (maxReach > 2 ? "range/" : "melee/");
-
-        const visualMap = {
-            "acid": "acid.webm",
-            "bludgeoning": "bludgeoning.webm",
-            "cold": "cold.webm",
-            "fire": "fire.webm",
-            "force": "force.webm",
-            "lightning": "lightning.webm",
-            "necrotic": "necrotic.webm",
-            "piercing": "piercing.webm",
-            "poison": "poison.webm",
-            "psychic": "psychic.webm",
-            "radiant": "radiant.webm",
-            "slashing": "slashing.webm",
-            "thunder": "thunder.webm"
-        };
-        return basePath + (typeEffect ? visualMap[typeEffect] : "default.webm");
+        const category = maxReach > 2 ? visualEffectData.generics.range : visualEffectData.generics.melee;
+        return category[typeEffect ?? "default"];
     }
 
     /**

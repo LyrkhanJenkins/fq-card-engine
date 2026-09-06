@@ -5,7 +5,8 @@ import CardFqSystem from "../system/cards/card-fq-system.mjs";
 import ResourceHandler from "./shared/resource-handler.js";
 import TradingCards, {HAND_TYPE, PILE_TYPE} from "../trading/trading-cards.js";
 import ObjectUtils from "../../core/utils/object.utils.js";
-import {createStatus, createWarning} from "../../core/utils/chat.utils.js";
+import {createStatus} from "../../core/utils/chat.utils.js";
+import {invokePlayPipeline} from "./shared/card-replay.js";
 
 /**
  * Cartes réactives préparées : à son propre tour, un joueur ne peut pas jouer
@@ -198,17 +199,11 @@ export default class PreparedCard {
         }
 
         await PreparedCard.cancel(card);
-        try {
-            await globalThis.FqCardEngineModule.playValidatedCard(to, {...fd, to: to.id}, cardContent, {
-                firstChoice: cardContents[0], cardContents, hasVariables,
-                initCardContents, currentCards: hand, card
-            });
-        } catch (e) {
-            // Garde du pipeline (bornes X/Y, sbires…) : la carte n'est pas jouée et
-            // sa préparation est retombée ; le joueur est averti et peut la refaire.
-            console.error(e);
-            createWarning(e.message, {actor: Constants.actorCurrent});
-        }
+        // Une garde du pipeline (bornes X/Y, sbires…) laisse simplement la
+        // préparation retombée : le joueur est averti et peut la refaire
+        // (voir `invokePlayPipeline`).
+        await invokePlayPipeline(to, {...fd, to: to.id}, cardContent,
+            {cardContents, hasVariables, initCardContents, currentCards: hand, card});
     }
 
     /**
@@ -225,10 +220,7 @@ export default class PreparedCard {
      * @returns {boolean} True si la carte peut être jouée à cet instant.
      */
     static canPlayNow(cardContent, fd, hasVariables) {
-        const resolved = ObjectUtils.deepCopy(cardContent);
-        CardEffect.replaceCardContentAbilitiesBonus(resolved);
-        CardEffect.substituteXAndYValue(resolved, hasVariables, fd.XXX, fd.YYY);
-        CardEffect.prepareDataFromCard(resolved);
+        const resolved = CardEffect.resolveForSilentCheck(cardContent, {hasVariables, xValue: fd.XXX, yValue: fd.YYY});
 
         if (!ResourceHandler.checkResources(resolved, Constants.actorCurrent, {silent: true})) {
             return false;

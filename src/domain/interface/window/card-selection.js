@@ -226,23 +226,10 @@ export default class CardSelection {
      * @returns {object} Les données consommables par le template `card.hbs`.
      */
     static buildCardRenderData(c) {
-        const faceIndex = c.face ?? 0;
-        const img = DisplayCard.getImgFromCard(c, faceIndex);
-        const name = DisplayCard.getNameFromCard(c, faceIndex);
-        const cardContent = c.system.fq?.choices?.length ? c.system.fq.choices[0] : {};
-        const description = DisplayCard.getDescriptionFromCard(c, faceIndex);
         return {
-            id: c._id ?? c.id,
-            description: description,
-            descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
-            titleSize: DisplayCard.getTitleSizeForCardSvg(name),
-            ...DisplayCard.buildBubbleData(cardContent, c),
-            isFQInnate: c.system?.fq?.isInnate,
+            ...DisplayCard.buildBaseCardRenderData(c, c.face ?? 0),
             cardsid: "",
-            uuid: c.uuid,
             back: false,
-            img: img,
-            name: name,
         };
     }
 

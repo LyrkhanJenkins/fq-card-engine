@@ -37,50 +37,73 @@ export default class TokenHud {
     static addSqueletonButton(column, token) {
         if (!token.document.name.includes("Skeleton")) return;
         if (column.querySelector("[data-action='skeleton-sacrificed']")) return;
+        column.appendChild(TokenHud.#createHudButton({
+            tooltipKey: "FQCARDENGINE.SacrifySkeletonButton",
+            iconSrc: "icons/magic/death/skeleton-skull-soul-blue.webp",
+            action: "skeleton-sacrificed",
+            onClick: () => {
+                if (game.modules.get("sequencer")?.active) {
+                    new Sequence()
+                        .effect()
+                        .file("jb2a.explosion.04.blue")
+                        .atLocation(token)
+                        .scaleToObject(1.5)
+                        .fadeIn(300)
+                        .fadeOut(500)
+                        .duration(1500)
+                        .belowTokens()
+                        .effect()
+                        .file("jb2a.smoke.puff.centered.grey")
+                        .atLocation(token)
+                        .scaleToObject(1.5)
+                        .randomRotation()
+                        .fadeIn(100)
+                        .fadeOut(1000)
+                        .duration(1200)
+                        .effect()
+                        .file("jb2a.explosion.04.blue")
+                        .atLocation(token)
+                        .scaleToObject(1.5)
+                        .play();
+                }
+                ChatMessage.create({
+                    speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
+                    content: `<span>${game.i18n.format("FQCARDENGINE.SacrifySkeletonMsg")}, ${game.i18n.format("FQCARDENGINE.SacrificedScoreSkeletonMsg",
+                        {"sacrifice": Constants.actorCurrent.system.fq.minions.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)})}</span>`
+                });
+                Constants.actorCurrent.update({
+                    "system.fq.minions.sacrificedSkeleton":
+                        Constants.actorCurrent.system.fq.minions.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)
+                });
+                socket.executeAsGM("deleteToken", token.id);
+            }
+        }));
+    }
+
+    /**
+     * Construit un bouton de HUD de token : icône, tooltip, et action au clic. Un
+     * `action` de dataset est optionnel (utilisé par le sacrifice de squelette pour
+     * détecter sa propre présence, cf. `addSqueletonButton`).
+     *
+     * @param {object}   options
+     * @param {string}   options.tooltipKey - La clé i18n du tooltip du bouton.
+     * @param {string}   options.iconSrc    - Le chemin de l'icône (36×36).
+     * @param {string}   [options.action]   - La valeur `dataset.action` du bouton.
+     * @param {Function} options.onClick    - Le gestionnaire de clic.
+     *
+     * @returns {HTMLButtonElement} Le bouton, prêt à être inséré dans la colonne du HUD.
+     */
+    static #createHudButton({tooltipKey, iconSrc, action, onClick}) {
         const bouton = document.createElement("button");
         bouton.type = "button";
         bouton.classList.add("control-icon");
-        bouton.dataset.action = "skeleton-sacrificed";
-
-        bouton.dataset.tooltip = game.i18n.localize("FQCARDENGINE.SacrifySkeletonButton");
-        bouton.innerHTML = `<img src="icons/magic/death/skeleton-skull-soul-blue.webp" width="36" height="36"/>`;
-        bouton.addEventListener("click", () => {
-            if (game.modules.get("sequencer")?.active) {
-                new Sequence()
-                    .effect()
-                    .file("jb2a.explosion.04.blue")
-                    .atLocation(token)
-                    .scaleToObject(1.5)
-                    .fadeIn(300)
-                    .fadeOut(500)
-                    .duration(1500)
-                    .belowTokens()
-                    .effect()
-                    .file("jb2a.smoke.puff.centered.grey")
-                    .atLocation(token)
-                    .scaleToObject(1.5)
-                    .randomRotation()
-                    .fadeIn(100)
-                    .fadeOut(1000)
-                    .duration(1200)
-                    .effect()
-                    .file("jb2a.explosion.04.blue")
-                    .atLocation(token)
-                    .scaleToObject(1.5)
-                    .play();
-            }
-            ChatMessage.create({
-                speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-                content: `<span>${game.i18n.format("FQCARDENGINE.SacrifySkeletonMsg")}, ${game.i18n.format("FQCARDENGINE.SacrificedScoreSkeletonMsg",
-                    {"sacrifice": Constants.actorCurrent.system.fq.minions.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)})}</span>`
-            });
-            Constants.actorCurrent.update({
-                "system.fq.minions.sacrificedSkeleton":
-                    Constants.actorCurrent.system.fq.minions.sacrificedSkeleton + TokenHud.getSacrificedScore(token.name)
-            });
-            socket.executeAsGM("deleteToken", token.id);
-        });
-        column.appendChild(bouton);
+        if (action) {
+            bouton.dataset.action = action;
+        }
+        bouton.dataset.tooltip = game.i18n.localize(tooltipKey);
+        bouton.innerHTML = `<img src="${iconSrc}" width="36" height="36"/>`;
+        bouton.addEventListener("click", onClick);
+        return bouton;
     }
 
     /**
@@ -130,15 +153,11 @@ export default class TokenHud {
             {weaponToken: "@wpnR", icon: "icons/weapons/bows/shortbow-recurve-yellow.webp", tooltipKey: "FQCARDENGINE.TokenRangedDamageButton"}
         ];
         for (const {weaponToken, icon, tooltipKey} of configs) {
-            const bouton = document.createElement("button");
-            bouton.type = "button";
-            bouton.classList.add("control-icon");
-            bouton.dataset.tooltip = game.i18n.localize(tooltipKey);
-            bouton.innerHTML = `<img src="${icon}" width="36" height="36">`;
-            bouton.addEventListener("click", async () => {
-                WeaponDamage.useFirstEquippedWeapon(actor, weaponToken);
-            });
-            column.appendChild(bouton);
+            column.appendChild(TokenHud.#createHudButton({
+                tooltipKey,
+                iconSrc: icon,
+                onClick: () => WeaponDamage.useFirstEquippedWeapon(actor, weaponToken)
+            }));
         }
     }
 }

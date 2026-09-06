@@ -120,32 +120,20 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
 
     /**
      * Construit les données de rendu `card.hbs` d'une carte du grimoire, hors
-     * de toute pile — copie fidèle de `CardSelection.buildCardRenderData`,
-     * dupliquée ici plutôt qu'importée : `card-selection.js` porte une
-     * dépendance à `socketlib.hook.js` dont le grimoire n'a aucun besoin.
+     * de toute pile — le socle est partagé avec `CardSelection.buildCardRenderData`
+     * via `DisplayCard.buildBaseCardRenderData` ; seul ce socle est importé, jamais
+     * `card-selection.js` lui-même, qui porte une dépendance à `socketlib.hook.js`
+     * dont le grimoire n'a aucun besoin.
      *
      * @param {Card} card - La carte du grimoire à rendre.
      *
      * @returns {object} Les données consommables par le gabarit `card.hbs`.
      */
     static buildCardRenderData(card) {
-        const faceIndex = card.face ?? 0;
-        const img = DisplayCard.getImgFromCard(card, faceIndex);
-        const name = DisplayCard.getNameFromCard(card, faceIndex);
-        const cardContent = card.system.fq?.choices?.length ? card.system.fq.choices[0] : {};
-        const description = DisplayCard.getDescriptionFromCard(card, faceIndex);
         return {
-            id: card._id ?? card.id,
-            description,
-            descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
-            titleSize: DisplayCard.getTitleSizeForCardSvg(name),
-            ...DisplayCard.buildBubbleData(cardContent, card),
-            isFQInnate: card.system?.fq?.isInnate,
+            ...DisplayCard.buildBaseCardRenderData(card, card.face ?? 0),
             cardsid: "",
-            uuid: card.uuid,
             back: false,
-            img,
-            name
         };
     }
 

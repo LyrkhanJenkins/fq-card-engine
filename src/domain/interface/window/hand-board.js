@@ -190,19 +190,11 @@ export default class HandBoard {
      */
     buildCardRenderData(c, {forceFace = false} = {}) {
         const faceIndex = forceFace && c.face == null ? 0 : c.face;
-        const img = DisplayCard.getImgFromCard(c, faceIndex);
-        const name = DisplayCard.getNameFromCard(c, faceIndex);
         const cardContent = c.system.fq?.choices?.length ? c.system.fq?.choices[0] : {};
-        const description = DisplayCard.getDescriptionFromCard(c, faceIndex);
         return {
-            id: c._id,
-            description: description,
-            descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
-            titleSize: DisplayCard.getTitleSizeForCardSvg(name),
-            ...DisplayCard.buildBubbleData(cardContent, c),
+            ...DisplayCard.buildBaseCardRenderData(c, faceIndex),
             hasBeenPlayed: cardContent?.hasBeenPlayed,
             isPlayedThisRound: CardFqSystem.isPlayedThisRound(cardContent),
-            isFQInnate: c.system?.fq?.isInnate,
             isGenerated: Date.now() - (c.flags?.[FqCardEngineModule.moduleName]?.generatedAt ?? 0) < GENERATED_GLOW_DURATION_MS,
             // Le verdict s'évalue avec le personnage de l'utilisateur LOCAL : pas de
             // glow sur les barres qui affichent la main d'un autre joueur (vue MJ).
@@ -212,10 +204,7 @@ export default class HandBoard {
             // compris pendant le tour de son porteur — c'est là qu'il l'a posée.
             isPrepared: PreparedCard.isPrepared(c),
             cardsid: this.currentCards._id,
-            uuid: c.uuid,
             back: forceFace ? false : (c.face == null),
-            img: img,
-            name: name,
         };
     }
 

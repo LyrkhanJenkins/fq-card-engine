@@ -6,6 +6,7 @@ import ResourceHandler from "./shared/resource-handler.js";
 import TradingCards, {HAND_TYPE, PILE_TYPE} from "../trading/trading-cards.js";
 import ObjectUtils from "../../core/utils/object.utils.js";
 import {createWarning} from "../../core/utils/chat.utils.js";
+import {invokePlayPipeline} from "./shared/card-replay.js";
 
 /**
  * Cartes automatiques : celles dont un choix porte `replayable: "auto"`. Jouée
@@ -72,19 +73,10 @@ export default class AutoCard {
             return AutoCard.discardUnaffordable(card, hand, to);
         }
 
-        try {
-            await globalThis.FqCardEngineModule.playValidatedCard(
-                to, {to: to.id, nameContent: cardContent.name}, cardContent,
-                {
-                    firstChoice: cardContents[0], cardContents, hasVariables: false,
-                    initCardContents, currentCards: hand, card
-                });
-        } catch (e) {
-            // Garde du pipeline (ciblage, bornes…) : la carte passe simplement son
-            // tour, sans être défaussée ni rien facturer.
-            console.error(e);
-            createWarning(e.message, {actor: Constants.actorCurrent});
-        }
+        // Une garde du pipeline (ciblage, bornes…) fait simplement passer son tour à
+        // la carte, sans être défaussée ni rien facturer (voir `invokePlayPipeline`).
+        await invokePlayPipeline(to, {to: to.id, nameContent: cardContent.name}, cardContent,
+            {cardContents, hasVariables: false, initCardContents, currentCards: hand, card});
     }
 
     /**
@@ -98,9 +90,7 @@ export default class AutoCard {
      * @returns {boolean} True si toutes les ressources exigées sont disponibles.
      */
     static canAfford(cardContent) {
-        const cost = ObjectUtils.deepCopy(cardContent);
-        CardEffect.replaceCardContentAbilitiesBonus(cost);
-        CardEffect.prepareDataFromCard(cost);
+        const cost = CardEffect.resolveForSilentCheck(cardContent);
         return ResourceHandler.checkResources(cost, Constants.actorCurrent);
     }
 

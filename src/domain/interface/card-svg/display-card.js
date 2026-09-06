@@ -496,6 +496,11 @@ export default class DisplayCard {
             : CardFqSystem.isAutoChoice(choice) ? "A"
                 : CardFqSystem.isEphemeralChoice(choice) ? "E"
                     : !choice?.replayable ? null : DisplayCard.getNumberForBubbleCardSvg(choice?.replayable);
+        const actionMod = RollService.hasAbilitiesBonus(choice.action);
+        const manaMod = RollService.hasAbilitiesBonus(choice.mana);
+        const zealMod = RollService.hasAbilitiesBonus(choice.zeal);
+        const reachMod = RollService.hasAbilitiesBonus(choice.minReach) || RollService.hasAbilitiesBonus(choice.maxReach);
+        const replayableMod = RollService.hasAbilitiesBonus(choice.replayable);
         return {
             action,
             mana,
@@ -506,17 +511,57 @@ export default class DisplayCard {
             replayable,
             maxSameCard: card?.system?.fq?.maxSameCard,
             fqClass: card?.system?.fq?.class,
-            actionMod: RollService.hasAbilitiesBonus(choice.action),
-            manaMod: RollService.hasAbilitiesBonus(choice.mana),
-            zealMod: RollService.hasAbilitiesBonus(choice.zeal),
-            reachMod: RollService.hasAbilitiesBonus(choice.minReach) || RollService.hasAbilitiesBonus(choice.maxReach),
-            replayableMod: RollService.hasAbilitiesBonus(choice.replayable),
+            actionMod,
+            manaMod,
+            zealMod,
+            reachMod,
+            replayableMod,
+            // Couleur du texte des bulles : vert quand un bonus de caractéristique
+            // s'applique, noir sinon (cf. `card-svg.hbs`).
+            reachFill: reachMod ? "green" : "black",
+            actionFill: actionMod ? "green" : "black",
+            manaFill: manaMod ? "green" : "black",
+            zealFill: zealMod ? "green" : "black",
+            replayableFill: replayableMod ? "green" : "black",
             replayableTooltip: DisplayCard.getReplayableTooltipKey(replayable),
             actionSize: DisplayCard.getBubbleSizeForCardSvg(action),
             manaSize: DisplayCard.getBubbleSizeForCardSvg(mana),
             zealSize: DisplayCard.getBubbleSizeForCardSvg(zeal),
             replayableSize: DisplayCard.getBubbleSizeForCardSvg(replayable),
             reachSize: DisplayCard.getReachSizeForCardSvg(minReach, maxReach),
+        };
+    }
+
+    /**
+     * Construit le socle commun des données de rendu d'une carte pour le
+     * template `card.hbs` : image, nom, description (et sa taille), bulles de
+     * la carte, marque « innée » et uuid. Partagé par `HandBoard`,
+     * `SpellbookWindow` et `CardSelection`, qui y ajoutent chacun leurs champs
+     * propres (états de main, `cardsid`, `back`…) — les trois vues restent
+     * volontairement indépendantes les unes des autres (aucun import croisé
+     * entre fichiers de `interface/window/`), seul ce socle est partagé via
+     * `display-card.js`, déjà une dépendance commune aux trois.
+     *
+     * @param {Card}   card      - La carte à rendre.
+     * @param {number} faceIndex - L'indice de face déjà résolu par l'appelant.
+     *
+     * @returns {object} Le socle des données consommables par `card.hbs`.
+     */
+    static buildBaseCardRenderData(card, faceIndex) {
+        const img = DisplayCard.getImgFromCard(card, faceIndex);
+        const name = DisplayCard.getNameFromCard(card, faceIndex);
+        const cardContent = card.system.fq?.choices?.length ? card.system.fq.choices[0] : {};
+        const description = DisplayCard.getDescriptionFromCard(card, faceIndex);
+        return {
+            id: card._id ?? card.id,
+            description,
+            descriptionSize: DisplayCard.getDescriptionSizeForCardSvg(description),
+            titleSize: DisplayCard.getTitleSizeForCardSvg(name),
+            ...DisplayCard.buildBubbleData(cardContent, card),
+            isFQInnate: card.system?.fq?.isInnate,
+            uuid: card.uuid,
+            img,
+            name,
         };
     }
 
