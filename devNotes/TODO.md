@@ -1,6 +1,9 @@
 ## V2.x
 ### Fix Prioritaire
 
+### Fix mineure
+- Vérifier la localisation notamment pour les macros
+
 ### Fix à prioriser
 
 ### Versions prévues
