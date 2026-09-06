@@ -227,6 +227,18 @@
       "flags": {}
     },
     {
+      "label": "Macros FQ8 (legacy)",
+      "type": "Macro",
+      "name": "macros-fq8-legacy",
+      "path": "packs/macros-fq8-legacy",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "NONE",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    },
+    {
       "label": "Macros GM FQ8",
       "type": "Macro",
       "name": "macros-gm-fq8",
@@ -308,6 +320,7 @@
           "color": "#317d0e",
           "packs": [
             "macros-fq8",
+            "macros-fq8-legacy",
             "macros-gm-fq8",
             "macros-sequencer"
           ],
