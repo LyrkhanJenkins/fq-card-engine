@@ -81,7 +81,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - Verifier caractérisation des autres classes
 - Équilibrage de la classe manuel puis IA
 - dégâts
-- couts
+- couts (Si trop de sorts coutant cher, rajouter quelques sorts coutant peu)
 - nb de cartes
 - synergie
 - Vérifier caractérisation abilities dnd

@@ -2282,160 +2282,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1",
-      "cards": []
-    },
-    {
-      "faces": [
-        {
-          "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
-          "text": "FQCARDDESCRIPTION.JawTrap"
-        }
-      ],
-      "face": 0,
-      "name": "FQCARDTITLE.JawTrap",
-      "description": "",
-      "_id": "trJawTrap0000001",
-      "type": "base",
-      "system": {
-        "fq": {
-          "maxSameCard": 2,
-          "level": 13,
-          "isInnate": false,
-          "class": "trapper",
-          "choices": [
-            {
-              "action": "",
-              "mana": "-1",
-              "zeal": "-1",
-              "reactive": true,
-              "hp": "",
-              "draw": "",
-              "drop": "",
-              "targetType": "Default",
-              "minReach": "1",
-              "maxReach": "1",
-              "nbTargets": "",
-              "damage": "(2*@dex+1d8)[piercing]",
-              "heal": "",
-              "bonusCrit": "-99999",
-              "bonusEva": "",
-              "xmin": "",
-              "xmax": "",
-              "ymin": "",
-              "ymax": "",
-              "xvalue": "",
-              "yvalue": "",
-              "replayable": "",
-              "sound": "",
-              "visual": {
-                "path": "jb2a.spike_trap.05x05ft.top.holes.normal.01.01",
-                "onTarget": true
-              },
-              "name": "",
-              "applyEffectsFormulas": [
-                {
-                  "title": "Immobilization",
-                  "formula": "1",
-                  "effects": [
-                    {
-                      "result": "1",
-                      "self": false,
-                      "removeEffectName": "",
-                      "data": [
-                        {
-                          "name": "Immobilization",
-                          "img": "icons/magic/control/silhouette-grow-shrink-blue.webp",
-                          "changes": [
-                            {
-                              "key": "system.attributes.movement.walk",
-                              "value": "0",
-                              "type": "override",
-                              "priority": null
-                            },
-                            {
-                              "key": "macro.execute",
-                              "value": "PersistAura jb2a.entangle.02.loop.02.green",
-                              "type": "custom",
-                              "priority": null
-                            }
-                          ],
-                          "duration": {
-                            "value": "2",
-                            "units": "rounds"
-                          },
-                          "expireOnDamage": false
-                        }
-                      ],
-                      "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Immobilization\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
-                          "arg": "{\"effectName\": \"Immobilization\",\"turn\": \"2\"}"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "messages": [],
-              "minions": [],
-              "hasBeenPlayed": false,
-              "customEvals": [
-                {
-                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
-                  "errorMessages": [
-                    {
-                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
-                      "arg": ""
-                    }
-                  ]
-                },
-                {
-                  "script": "FqCardEngineModule.cond.attackerWithinReach(1)",
-                  "errorMessages": [
-                    {
-                      "key": "FQCARDENGINE.CardWarningMsgNoAttackerWithinReach",
-                      "arg": ""
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      },
-      "suit": "",
-      "value": null,
-      "back": {
-        "text": "",
-        "img": null,
-        "name": ""
-      },
-      "drawn": false,
-      "origin": null,
-      "rotation": 0,
-      "sort": 17,
-      "flags": {},
-      "_stats": {
-        "coreVersion": "14.367",
-        "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
-        "createdTime": 1786004430824,
-        "modifiedTime": 1788096374766,
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null
-      },
-      "width": null,
-      "height": null,
       "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trJawTrap0000001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1"
     },
     {
       "faces": [
@@ -2691,8 +2539,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trDeadlySnare001",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trDeadlySnare001"
     },
     {
       "faces": [
@@ -2803,7 +2651,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/PitTrap.png",
           "text": "FQCARDDESCRIPTION.PitTrap"
         }
       ],
@@ -2949,17 +2797,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788346961046,
-        "modifiedTime": 1788346961046,
+        "modifiedTime": 1788699060680,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trPitTrap0000001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trPitTrap0000001",
+      "cards": []
     },
     {
       "faces": [
@@ -3098,8 +2946,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastPack01x",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastPack01x"
     },
     {
       "faces": [
@@ -3228,8 +3076,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastTrain1x",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastTrain1x"
     },
     {
       "faces": [
@@ -3358,8 +3206,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapSharpFangs1x",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapSharpFangs1x"
     },
     {
       "faces": [
@@ -3488,8 +3336,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapHuntInstin1x",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapHuntInstin1x"
     },
     {
       "_id": "trAttackOrder001",
@@ -3505,7 +3353,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/AttackOrder.png",
           "text": "FQCARDDESCRIPTION.AttackOrder"
         }
       ],
@@ -3594,17 +3442,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788400000000,
-        "modifiedTime": 1788400000000,
+        "modifiedTime": 1788698856877,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trAttackOrder001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trAttackOrder001",
+      "cards": []
     },
     {
       "faces": [
@@ -3917,8 +3765,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntsEnd000001",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntsEnd000001"
     },
     {
       "faces": [
