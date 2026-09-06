@@ -1,3 +1,5 @@
+import {lockPlayMode, removeModeToggle} from "../sheet-play-mode.js";
+
 /**
  * Feuille de personnage FQ. Étend la feuille de personnage dnd5e en ajoutant
  * une barre latérale (« sidebar ») dédiée aux jauges FQ (action, mana, zeal) et
@@ -17,6 +19,31 @@ export default class FqCharacterSheet extends dnd5e.applications.actor.Character
             }
         }
     };
+
+    /**
+     * Force le mode « jeu » avant la préparation du contexte lorsque les droits
+     * du joueur sont limités : le contexte des parties est bâti depuis le mode
+     * courant, c'est donc ici — et non au rendu — qu'il faut le verrouiller pour
+     * que les champs restent en lecture seule.
+     *
+     * @override
+     * @param {object} options - Les options de rendu Foundry.
+     */
+    _configureRenderOptions(options) {
+        super._configureRenderOptions(options);
+        lockPlayMode(this);
+    }
+
+    /**
+     * Retire la bascule d'édition de l'en-tête de la fenêtre lorsque les droits
+     * du joueur sont limités.
+     *
+     * @override
+     */
+    _renderModeToggle() {
+        if (removeModeToggle(this)) return;
+        super._renderModeToggle();
+    }
 
     /**
      * Prépare le contexte de rendu de la barre latérale : ajoute les pourcentages

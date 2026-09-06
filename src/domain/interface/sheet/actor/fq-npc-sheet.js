@@ -1,4 +1,5 @@
 import FqCharacterSheet from "./fq-character-sheet.js";
+import {lockPlayMode, removeModeToggle} from "../sheet-play-mode.js";
 
 /**
  * Feuille de PNJ FQ. Étend la feuille de PNJ dnd5e en ajoutant un en-tête et une
@@ -22,6 +23,28 @@ export default class FqNpcSheet extends dnd5e.applications.actor.NPCActorSheet {
             }
         }
     };
+    /**
+     * Force le mode « jeu » lorsque les droits du joueur sont limités.
+     *
+     * @override
+     * @param {object} options - Les options de rendu Foundry.
+     */
+    _configureRenderOptions(options) {
+        super._configureRenderOptions(options);
+        lockPlayMode(this);
+    }
+
+    /**
+     * Retire la bascule d'édition de l'en-tête de la fenêtre lorsque les droits
+     * du joueur sont limités.
+     *
+     * @override
+     */
+    _renderModeToggle() {
+        if (removeModeToggle(this)) return;
+        super._renderModeToggle();
+    }
+
     /**
      * Prépare le contexte de rendu de l'en-tête : ajoute les pourcentages des
      * jauges FQ et le drapeau `canModifyFQ`.

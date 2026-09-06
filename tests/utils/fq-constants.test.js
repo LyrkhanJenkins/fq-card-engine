@@ -1,4 +1,4 @@
-import {beforeEach, describe, expect, it} from "vitest";
+import {afterEach, beforeEach, describe, expect, it} from "vitest";
 import Constants from "../../src/domain/constants.js";
 
 describe("Constants", () => {
@@ -66,6 +66,11 @@ describe("Constants", () => {
     });
 
     describe("logique métier", () => {
+
+        afterEach(() => {
+            CONFIG.FqCardEngine.options.playerLimitCardsRight = false;
+        });
+
         it("isFQClasses est true pour un document de classe FQ", () => {
             expect(Constants.isFQClasses({system: {source: {label: "FQ"}}, type: "class"})).toBe(true);
         });
@@ -80,6 +85,23 @@ describe("Constants", () => {
 
         it("isFQClasses est false pour un document null", () => {
             expect(Constants.isFQClasses(null)).toBe(false);
+        });
+
+        it("isPlayerRightsLimited est true pour un joueur quand la limitation est active", () => {
+            CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
+
+            expect(Constants.isPlayerRightsLimited).toBe(true);
+        });
+
+        it("isPlayerRightsLimited est false pour le MJ même quand la limitation est active", () => {
+            CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
+            game.user.isGM = true;
+
+            expect(Constants.isPlayerRightsLimited).toBe(false);
+        });
+
+        it("isPlayerRightsLimited est false quand la limitation est inactive", () => {
+            expect(Constants.isPlayerRightsLimited).toBe(false);
         });
 
         it("myTargets() (défaut) renvoie une copie de game.user.targets", () => {

@@ -6,7 +6,7 @@ Hooks.on("renderTokenHUD", (hud, html, _data) => {
     // limitation de leurs droits est activée. On leur conserve toutefois le
     // ciblage et le choix de l'action de mouvement (bouton + palette,
     // tous deux porteurs de data-palette="movementActions").
-    if (!game.user.isGM && CONFIG.FqCardEngine.options.playerLimitCardsRight) {
+    if (Constants.isPlayerRightsLimited) {
         const keptControls = "[data-action='target'], [data-palette='movementActions']";
         html.querySelectorAll(".col > *").forEach(el => {
             if (!el.matches(keptControls)) el.remove();

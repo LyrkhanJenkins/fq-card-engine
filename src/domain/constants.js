@@ -103,6 +103,17 @@ export default class Constants {
     }
 
     /**
+     * Indique si les droits de l'utilisateur courant sont limités au strict
+     * minimum pour les cartes : uniquement pour un joueur (jamais le MJ) et
+     * seulement quand le réglage « Limitation des droits du joueur » est actif.
+     *
+     * @returns {boolean} True si l'utilisateur est un joueur aux droits limités.
+     */
+    static get isPlayerRightsLimited() {
+        return !game.user?.isGM && CONFIG.FqCardEngine.options.playerLimitCardsRight === true;
+    }
+
+    /**
      * Détermine si un document est une classe FQ (source « FQ » et type « class »).
      *
      * @param {object} document - Le document Foundry à tester.
