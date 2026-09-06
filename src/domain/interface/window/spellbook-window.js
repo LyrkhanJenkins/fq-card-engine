@@ -858,10 +858,12 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      * `fitDescriptionSize` qu'APRÈS cette insertion, sur le fragment du
      * panneau.
      *
-     * Le panneau montre la carte NUE : ni badge d'exemplaires, ni pastille de
-     * niveau, ni halo d'état de distribution. Ces marques servent à balayer la
-     * grille du regard ; ici la carte est lue en grand, et tout ajout
-     * recouvrirait ce qu'on cherche justement à lire.
+     * Le panneau retire les marques propres au grimoire : ni badge
+     * d'exemplaires, ni pastille de niveau, ni halo d'état de distribution.
+     * Ces marques servent à balayer la grille du regard ; ici la carte est lue
+     * en grand, et tout ajout recouvrirait ce qu'on cherche justement à lire.
+     * La pastille « Innée » fait exception : elle appartient à la carte
+     * elle-même et non au grimoire, et c'est en grand qu'elle se lit le mieux.
      *
      * @param {Element} previewElement - L'élément `.fq-spellbook-preview-content` du rendu courant.
      * @param {Card}    card           - La carte du grimoire à afficher en grand.
@@ -880,7 +882,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         el.removeAttribute("draggable");
         el.removeAttribute("data-action");
         SpellbookWindow.applyNameTooltip(el);
-        el.querySelectorAll(".fq-card-badge").forEach(badge => badge.remove());
+        el.querySelectorAll(".fq-spellbook-card-badge, .fq-spellbook-card-level").forEach(badge => badge.remove());
         previewElement.replaceChildren(el);
         DisplayCard.fitDescriptionSize(el);
     }

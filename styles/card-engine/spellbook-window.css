@@ -195,6 +195,19 @@
     outline: none !important;
 }
 
+/* La pastille « Innée » est conservée dans le panneau, mais ses dimensions
+   fixes (10px) sont calibrées pour la carte de grille : sur le fragment
+   agrandi elle deviendrait un détail illisible. On la redimensionne en unités
+   de conteneur (`cqw`), comme la carte elle-même, pour qu'elle garde la même
+   proportion qu'en grille. */
+.fq-spellbook-preview-card .fq-card-badge--innate {
+    top: 2.2cqw;
+    left: 2.2cqw;
+    padding: 0.4cqw 1.6cqw;
+    border-radius: 0.7cqw;
+    font-size: 4.4cqw;
+}
+
 /* ============================================================
    ÉTAT « AUCUN RÉSULTAT » — distinct de l'état « grimoire vide » de la
    phase 1 (D3-08, UI-SPEC §5) : mêmes rôles typographiques, copie et action

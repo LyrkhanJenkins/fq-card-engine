@@ -1272,13 +1272,14 @@ describe("SpellbookWindow.toggleCardCopies / addOneCopy — patch de l'indicateu
  * `.fq-card-inner` (nécessaire à `applyCopyState`/`applyLevelBadge`) et un
  * `.fq-card-tooltip` frère.
  *
- * @param {{name?: string, id?: string}} [options] - Le nom et l'identifiant à porter.
+ * @param {{name?: string, id?: string, innate?: boolean}} [options] - Le nom, l'identifiant, et la présence de la pastille « Innée ».
  *
  * @returns {string} Le fragment HTML fabriqué.
  */
-function makeRenderedCardHtml({name = "Boule de feu", id = "card1"} = {}) {
+function makeRenderedCardHtml({name = "Boule de feu", id = "card1", innate = false} = {}) {
+    const innateBadge = innate ? "<span class=\"fq-card-badge fq-card-badge--innate\">Innée</span>" : "";
     return `<div class="fq-card fq-card-engine-card" data-card-id="${id}" title="${name}" draggable="true">`
-        + "<div class=\"fq-card-inner\"></div>"
+        + `<div class="fq-card-inner">${innateBadge}</div>`
         + `<span class="fq-card-tooltip">${name}</span>`
         + "</div>";
 }
@@ -1330,16 +1331,36 @@ describe("SpellbookWindow.renderPreviewCard — fragment du panneau, même chemi
         expect(el.hasAttribute("draggable")).toBe(false);
     });
 
-    test("le fragment ne porte aucun badge : ni exemplaires, ni niveau, ni « Innée » — la carte se lit nue", async () => {
+    test("le fragment ne porte aucune marque du grimoire : ni badge d'exemplaires, ni pastille de niveau", async () => {
         const previewElement = makePreviewElement();
         const card = makeFakeCard({name: "Boule de feu"});
 
         await SpellbookWindow.renderPreviewCard(previewElement, card);
 
         const el = previewElement.querySelector(".fq-spellbook-preview-card");
-        expect(el.querySelector(".fq-card-badge")).toBeNull();
         expect(el.querySelector(".fq-spellbook-card-badge")).toBeNull();
         expect(el.querySelector(".fq-spellbook-card-level")).toBeNull();
+    });
+
+    test("la pastille « Innée » de la carte est conservée dans le panneau", async () => {
+        renderTemplateSpy.mockResolvedValue(makeRenderedCardHtml({innate: true}));
+        const previewElement = makePreviewElement();
+        const card = makeFakeCard({name: "Boule de feu"});
+
+        await SpellbookWindow.renderPreviewCard(previewElement, card);
+
+        const el = previewElement.querySelector(".fq-spellbook-preview-card");
+        expect(el.querySelector(".fq-card-badge--innate")).not.toBeNull();
+    });
+
+    test("une carte non innée ne reçoit aucune pastille « Innée » dans le panneau", async () => {
+        const previewElement = makePreviewElement();
+        const card = makeFakeCard({name: "Boule de feu"});
+
+        await SpellbookWindow.renderPreviewCard(previewElement, card);
+
+        const el = previewElement.querySelector(".fq-spellbook-preview-card");
+        expect(el.querySelector(".fq-card-badge--innate")).toBeNull();
     });
 
     test("le fragment ne porte aucune classe d'état de distribution : aucun halo dans le panneau", async () => {
