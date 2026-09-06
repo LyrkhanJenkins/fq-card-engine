@@ -121,9 +121,10 @@ export default class Minion {
     static async createActorData(minion, location, position) {
         const minionPack = await game.packs.get(FqCardEngineModule.moduleName + ".minions-fq8").getDocuments();
 
-        let actorData = JSON.parse(JSON.stringify(minionPack.find(m => m.name === minion?.name)));
+        const foundMinion = minionPack.find(m => m.name === minion?.name);
 
-        if (actorData) {
+        if (foundMinion) {
+            let actorData = JSON.parse(JSON.stringify(foundMinion));
             actorData.folder = Minion.getTempActorFolder().id;
             actorData.name = actorData.name + "_" + Math.floor(Math.random() * 1000000);
             // Les bonus gagnés en combat s'ajoutent aux surcharges déclarées par la

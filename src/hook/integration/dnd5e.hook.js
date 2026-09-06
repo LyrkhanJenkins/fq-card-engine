@@ -174,7 +174,6 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     if (!opportunityTarget && ROLL_CONSUMING_TYPES.includes(subject.type)) {
         ResourceHandler.consumeResources(item.system?.fq, subject.actor);
     }
-    let resultArray = [];
     let cardContent = {heal: 0, damage: 0, minReach, maxReach, bonusCrit: 0, bonusEva: 0};
     if (opportunityTarget) {
         cardContent.forcedTargets = [opportunityTarget];
@@ -187,9 +186,10 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
             cardContent.forcedTargets = remembered;
         }
     }
-    const dsnAnimations = [];
     for (let roll of rolls) {
         if (item.actor) {
+            let resultArray = [];
+            const dsnAnimations = [];
             let fxType;
             let playFx = false;
             if (subject.type === "heal") {
