@@ -1,7 +1,7 @@
 {
   "name": "Hunting Falcon",
   "type": "character",
-  "img": "icons/creatures/birds/raptor-hawk-flying.webp",
+  "img": "modules/fq-card-engine/images/token/hunting_falcon.png",
   "items": [
     {
       "name": "Serres",
@@ -177,7 +177,8 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.4",
         "lastModifiedBy": "dnd5ebuilder0000",
-        "modifiedTime": 1757067346245
+        "modifiedTime": 1757067346245,
+        "createdTime": null
       },
       "ownership": {
         "default": 0
@@ -187,11 +188,7 @@
   ],
   "effects": [],
   "folder": null,
-  "flags": {
-    "dnd5e": {
-      "showTokenPortrait": true
-    }
-  },
+  "flags": {},
   "system": {
     "abilities": {
       "str": {
@@ -341,13 +338,14 @@
       },
       "hp": {
         "value": 18,
-        "max": 18,
+        "max": null,
         "temp": null,
         "tempmax": null,
         "bonuses": {
           "level": "",
-          "overall": ""
-        }
+          "overall": "18"
+        },
+        "dt": null
       },
       "init": {
         "bonus": "0",
@@ -919,15 +917,12 @@
     "appendNumber": false,
     "prependAdjective": false,
     "texture": {
-      "src": "icons/creatures/birds/raptor-hawk-flying.webp",
+      "src": "modules/fq-card-engine/images/token/hunting_falcon.png",
       "anchorX": 0.5,
       "anchorY": 0.5,
-      "offsetX": 0,
-      "offsetY": 0,
       "fit": "contain",
-      "scaleX": 1,
-      "scaleY": 1,
-      "rotation": 0,
+      "scaleX": 0.7,
+      "scaleY": 0.7,
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },
@@ -960,11 +955,11 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "5.1.4",
+    "systemVersion": "5.3.3",
     "createdTime": 1786500000000,
-    "modifiedTime": 1786500000000,
+    "modifiedTime": 1788696840697,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "ownership": {

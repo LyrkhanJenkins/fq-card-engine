@@ -3610,7 +3610,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/huntingfalcon.png",
           "text": "FQCARDDESCRIPTION.HuntingFalcon"
         }
       ],
@@ -3697,20 +3697,20 @@
       "sort": 27,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786500000000,
-        "modifiedTime": 1786500000000,
+        "modifiedTime": 1788695701199,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Q7xhCz2mNbT4vRoa"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Q7xhCz2mNbT4vRoa",
+      "cards": []
     },
     {
       "_id": "Yk3pLdW8sJfE6nHu",
@@ -3726,7 +3726,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/giantturtle.png",
           "text": "FQCARDDESCRIPTION.GiantTurtle"
         }
       ],
@@ -3800,20 +3800,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786500000000,
-        "modifiedTime": 1786500000000,
+        "modifiedTime": 1788695983477,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Yk3pLdW8sJfE6nHu"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Yk3pLdW8sJfE6nHu",
+      "cards": []
     },
     {
       "faces": [
@@ -4022,7 +4022,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/hunterswhistle.png",
           "text": "FQCARDDESCRIPTION.HuntersWhistle"
         }
       ],
@@ -4104,17 +4104,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788976800000,
-        "modifiedTime": 1788976800000,
+        "modifiedTime": 1788695502609,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntersWhis001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntersWhis001",
+      "cards": []
     }
   ],
   "width": null,

@@ -1,7 +1,7 @@
 {
   "name": "Giant Turtle",
   "type": "character",
-  "img": "icons/creatures/reptiles/turtle-shell-glowing-green.webp",
+  "img": "modules/fq-card-engine/images/token/giant_turtle.png",
   "items": [
     {
       "name": "Morsure",
@@ -177,7 +177,8 @@
         "systemId": "dnd5e",
         "systemVersion": "5.1.4",
         "lastModifiedBy": "dnd5ebuilder0000",
-        "modifiedTime": 1757067346245
+        "modifiedTime": 1757067346245,
+        "createdTime": null
       },
       "ownership": {
         "default": 0
@@ -187,11 +188,7 @@
   ],
   "effects": [],
   "folder": null,
-  "flags": {
-    "dnd5e": {
-      "showTokenPortrait": true
-    }
-  },
+  "flags": {},
   "system": {
     "abilities": {
       "str": {
@@ -340,14 +337,15 @@
         "formula": ""
       },
       "hp": {
-        "value": 70,
-        "max": 70,
+        "value": 60,
+        "max": null,
         "temp": null,
         "tempmax": null,
         "bonuses": {
           "level": "",
-          "overall": ""
-        }
+          "overall": "60"
+        },
+        "dt": null
       },
       "init": {
         "bonus": "0",
@@ -919,15 +917,12 @@
     "appendNumber": false,
     "prependAdjective": false,
     "texture": {
-      "src": "icons/creatures/reptiles/turtle-shell-glowing-green.webp",
+      "src": "modules/fq-card-engine/images/token/giant_turtle.png",
       "anchorX": 0.5,
       "anchorY": 0.5,
-      "offsetX": 0,
-      "offsetY": 0,
       "fit": "contain",
-      "scaleX": 1,
-      "scaleY": 1,
-      "rotation": 0,
+      "scaleX": 1.65,
+      "scaleY": 1.65,
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },
@@ -960,11 +955,11 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "5.1.4",
+    "systemVersion": "5.3.3",
     "createdTime": 1786500000000,
-    "modifiedTime": 1786500000000,
+    "modifiedTime": 1788696851378,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "ownership": {
