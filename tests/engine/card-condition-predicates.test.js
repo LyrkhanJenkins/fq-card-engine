@@ -1,4 +1,4 @@
-import {describe, expect, it} from "vitest";
+import {afterEach, beforeEach, describe, expect, it} from "vitest";
 import CardCondition from "../../src/domain/engine/shared/card-condition.js";
 
 /**
@@ -789,5 +789,83 @@ describe("CardCondition — effets portés par le camp adverse", () => {
         mountSides([caster(), combatToken({id: "tokFoe1", actorId: "foe1", disposition: -1, effects: [{name: "Curse"}]})]);
         game.combat = null;
         expect(CardCondition.combatEnemiesEffectCount(["Curse"])).toBe(0);
+    });
+});
+
+/**
+ * Construit un document de jeton de sbire estampillé, dont l'acteur porte (ou
+ * non) une arme de mêlée équipée exposant une activité de dégâts.
+ *
+ * @param {object}  [options]
+ * @param {string}  [options.formula]  - La formule de dégâts de l'activité.
+ * @param {string}  [options.type]     - Le type de sbire estampillé.
+ * @param {string}  [options.summoner] - L'id de l'invocateur estampillé.
+ * @param {number}  [options.hp]       - Les points de vie restants.
+ * @param {boolean} [options.weapon]   - False pour un sbire sans arme équipée.
+ *
+ * @returns {object} Le document de jeton.
+ */
+function minionToken({formula = "1d6", type = "beast", summoner = "me", hp = 10, weapon = true} = {}) {
+    const activity = {type: "damage", getDamageConfig: () => ({rolls: [{parts: [formula]}]})};
+    const items = weapon ? [{
+        type: "weapon",
+        system: {
+            equipped: true,
+            type: {value: "natural"},
+            activities: {getByType: t => (t === "damage" ? [activity] : [])}
+        }
+    }] : [];
+    return {
+        actor: {
+            items,
+            flags: {"fq-card-engine": {minionType: type, summonerId: summoner}},
+            system: {attributes: {hp: {value: hp}}}
+        }
+    };
+}
+
+describe("CardCondition — dé d'arme du sbire", () => {
+
+    beforeEach(() => {
+        globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+        game.user.character = {id: "me"};
+    });
+
+    afterEach(() => {
+        delete globalThis.FqCardEngineModule;
+    });
+
+    it("décompose le dé de l'arme du sbire vivant : 2d8 → 2 dés de 8 faces", () => {
+        game.canvas = {scene: {tokens: [minionToken({formula: "2d8"})]}};
+
+        expect(CardCondition.minionWeaponDamageDice("beast")).toEqual({number: 2, faces: 8});
+    });
+
+    it("compte un seul dé quand la formule n'en précise pas la quantité", () => {
+        game.canvas = {scene: {tokens: [minionToken({formula: "d10"})]}};
+
+        expect(CardCondition.minionWeaponDamageDice("beast")).toEqual({number: 1, faces: 10});
+    });
+
+    it("ignore un sbire mort, d'un autre type ou d'un autre invocateur", () => {
+        game.canvas = {scene: {tokens: [minionToken({hp: 0})]}};
+        expect(CardCondition.minionWeaponDamageDice("beast")).toEqual({number: 0, faces: 0});
+
+        game.canvas = {scene: {tokens: [minionToken({type: "skeleton"})]}};
+        expect(CardCondition.minionWeaponDamageDice("beast")).toEqual({number: 0, faces: 0});
+
+        game.canvas = {scene: {tokens: [minionToken({summoner: "someoneElse"})]}};
+        expect(CardCondition.minionWeaponDamageDice("beast")).toEqual({number: 0, faces: 0});
+    });
+
+    it("renvoie un dé nul sans sbire, sans arme équipée, ou sans dé dans la formule", () => {
+        game.canvas = {scene: {tokens: []}};
+        expect(CardCondition.minionWeaponDamageDice("beast")).toEqual({number: 0, faces: 0});
+
+        game.canvas = {scene: {tokens: [minionToken({weapon: false})]}};
+        expect(CardCondition.minionWeaponDamageDice("beast")).toEqual({number: 0, faces: 0});
+
+        game.canvas = {scene: {tokens: [minionToken({formula: "4"})]}};
+        expect(CardCondition.minionWeaponDamageDice("beast")).toEqual({number: 0, faces: 0});
     });
 });

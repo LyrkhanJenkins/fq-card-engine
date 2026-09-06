@@ -3386,7 +3386,7 @@
               "minReach": "1",
               "maxReach": "12",
               "nbTargets": "1",
-              "damage": "",
+              "damage": "(XXXdYYY)[slashing]",
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
@@ -3394,8 +3394,8 @@
               "xmax": "",
               "ymin": "",
               "ymax": "",
-              "xvalue": "",
-              "yvalue": "",
+              "xvalue": "SCRIPT:FqCardEngineModule.cond.minionWeaponDamageDice(\"beast\").number",
+              "yvalue": "SCRIPT:FqCardEngineModule.cond.minionWeaponDamageDice(\"beast\").faces",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -3427,11 +3427,11 @@
                   ]
                 }
               ],
-              "executeEval": "const prey = FqCardEngineModule.cst.currentTargets[0];\nconst beasts = FqCardEngineModule.cond.minionTokensOnScene(\"beast\");\nif (prey && beasts.length) {\nconst preyDoc = prey.document ?? prey;\nconst distance = t => Math.hypot(t.x - preyDoc.x, t.y - preyDoc.y);\nconst closest = beasts.sort((a, b) => distance(a) - distance(b))[0];\nFqCardEngineModule.wpn.triggerFirstEquippedWeapon(closest.actor, \"@wpnM\");\n}",
+              "executeEval": "",
               "sound": "",
               "visual": {
-                "path": "jb2a.bardic_inspiration.greenorange",
-                "onTarget": false
+                "path": "jb2a.melee_generic.creature_attack.fist.001",
+                "onTarget": true
               },
               "hasBeenPlayed": false
             }

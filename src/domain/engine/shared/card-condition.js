@@ -807,8 +807,8 @@ export default class CardCondition {
     /**
      * Les tokens des sbires vivants d'un type donné invoqués par le personnage
      * courant — le repérage que les cartes d'ORDRE consomment : la condition de
-     * jouabilité (« au moins un familier en vie ») comme le script d'exécution
-     * (« lequel attaque »). À ne pas confondre avec
+     * jouabilité (« au moins un familier en vie ») comme la lecture de son arme
+     * ({@link CardCondition.minionWeaponDamageDice}). À ne pas confondre avec
      * {@link CardCondition.minionsAtLeast}, qui lit les compteurs de BONUS
      * d'invocation et non les sbires réellement posés.
      *
@@ -818,6 +818,28 @@ export default class CardCondition {
      */
     static minionTokensOnScene(type) {
         return TargetingPredicates.livingMinionTokens(type);
+    }
+
+    /**
+     * Le dé de dégâts de l'arme de mêlée équipée du premier sbire vivant d'un
+     * type, décomposé en nombre de dés et nombre de faces — les deux valeurs que
+     * les cartes d'ORDRE reprennent dans `xvalue`/`yvalue` pour reconstruire
+     * `XXXdYYY` dans leurs dégâts. Seul le dé de l'arme est repris : la carte est
+     * jouée par l'invocateur, elle suit donc ses bonus et non ceux du sbire.
+     *
+     * Renvoie un dé nul si aucun sbire de ce type n'est en jeu, s'il ne porte pas
+     * d'arme de mêlée ou si sa formule n'expose aucun dé ; c'est le garde-fou de
+     * jouabilité de la carte (`minionTokensOnScene`) qui refuse le jeu dans ce cas.
+     *
+     * @param {string} type - Le type de sbire (`beast`, `skeleton`…).
+     *
+     * @returns {{number: number, faces: number}} Le nombre de dés et leur nombre de faces (0 et 0 si aucun dé exploitable).
+     */
+    static minionWeaponDamageDice(type) {
+        const actor = CardCondition.minionTokensOnScene(type)[0]?.actor;
+        const formula = WeaponDamage.getEquippedWeaponDamageFormula(actor, WEAPON_TOKENS["@wpnM"].categories);
+        const dice = /(\d*)d(\d+)/i.exec(formula);
+        return dice ? {number: Number(dice[1] || 1), faces: Number(dice[2])} : {number: 0, faces: 0};
     }
 
     /**
