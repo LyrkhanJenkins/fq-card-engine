@@ -22,8 +22,8 @@ export default class TokenHud {
         "Skeleton lvl 2": 2,
         "Skeleton lvl 3": 3,
         "Skeleton lvl 4": 4,
-        "Giant Skeleton": 6,
-        "Skeleton Sorcerer": 7
+        "Giant Skeleton": 3,
+        "Skeleton Sorcerer": 6
     });
 
     /**
