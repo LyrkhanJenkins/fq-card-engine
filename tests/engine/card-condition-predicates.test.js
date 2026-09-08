@@ -26,6 +26,17 @@ function mountScene({tokens = [], targets = [], logs = null, round = 2, characte
     game.combat = logs === null ? null : {round, flags: {fq: {logs}}};
 }
 
+/** Construit un token de sbire estampillé (type, invocateur) et vivant ou non. */
+function stampedMinionToken({id, type, summoner = "me", hp = 10}) {
+    const token = makeToken({id, actorId: id});
+    const actor = {
+        ...token.actor,
+        flags: {"fq-card-engine": {minionType: type, summonerId: summoner}},
+        system: {attributes: {hp: {value: hp}}}
+    };
+    return {...token, actor, document: {...token.document, actor}};
+}
+
 const me = () => makeToken({id: "tokMe", actorId: "me", x: 0, y: 0});
 const foe = (x = GRID, y = 0) => makeToken({id: "tokFoe", actorId: "foe", x, y});
 
@@ -413,6 +424,34 @@ describe("CardCondition — état du personnage", () => {
         mountScene({character: {id: "me"}});
         expect(CardCondition.counterWithinCap("bladeCharging", 12, 12)).toBe(true);
         expect(CardCondition.counterEquals("bladeCharging", 0)).toBe(true);
+    });
+
+    it("targetsAreMinionType : les cibles sont toutes des sbires vivants du type demandé", () => {
+        globalThis.FqCardEngineModule = {...globalThis.FqCardEngineModule, moduleName: "fq-card-engine"};
+        const giant = stampedMinionToken({id: "tokGiant", type: "giantSkeleton"});
+        const bones = stampedMinionToken({id: "tokBones", type: "skeleton"});
+        const dead = stampedMinionToken({id: "tokDead", type: "giantSkeleton", hp: 0});
+        const other = stampedMinionToken({id: "tokOther", type: "giantSkeleton", summoner: "someoneElse"});
+
+        mountScene({tokens: [giant, bones, dead, other], targets: [giant]});
+        expect(CardCondition.targetsAreMinionType("giantSkeleton")).toBe(true);
+
+        // Une cible de la mauvaise élite, morte, ou invoquée par autrui : la carte reste fermée.
+        mountScene({tokens: [giant, bones, dead, other], targets: [bones]});
+        expect(CardCondition.targetsAreMinionType("giantSkeleton")).toBe(false);
+
+        mountScene({tokens: [giant, bones, dead, other], targets: [dead]});
+        expect(CardCondition.targetsAreMinionType("giantSkeleton")).toBe(false);
+
+        mountScene({tokens: [giant, bones, dead, other], targets: [other]});
+        expect(CardCondition.targetsAreMinionType("giantSkeleton")).toBe(false);
+
+        // Une seule cible hors du lot suffit à refuser, et l'absence de cible aussi.
+        mountScene({tokens: [giant, bones, dead, other], targets: [giant, bones]});
+        expect(CardCondition.targetsAreMinionType("giantSkeleton")).toBe(false);
+
+        mountScene({tokens: [giant, bones, dead, other], targets: []});
+        expect(CardCondition.targetsAreMinionType("giantSkeleton")).toBe(false);
     });
 
     it("minionsAtLeast : compteur de sbires au minimum requis", () => {

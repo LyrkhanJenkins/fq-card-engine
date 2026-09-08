@@ -31,17 +31,49 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static MINION_TYPE_NONE = "";
     static MINION_TYPE_BEAST = "beast";
     static MINION_TYPE_SKELETON = "skeleton";
-    // Le Roi Squelette a son propre type — et non le type `skeleton` — pour deux
+    // Le Squelette Géant a son propre type — et non le type `skeleton` — pour deux
     // raisons : il ne consomme pas le plafond de la piétaille, et les bonus
-    // d'invocation stockés sur `system.fq.minions.skeletonKing` ne profitent
-    // qu'à lui (cf. `Minion.statBonus`).
-    static MINION_TYPE_SKELETON_KING = "skeletonKing";
+    // d'invocation stockés sur `system.fq.minions.giantSkeleton` ne profitent
+    // qu'à lui (cf. `Minion.statBonus`). C'est le type que les cartes de rituel
+    // (Couronne d'ossements, Sceptre de l'ossuaire…) dopent avant son invocation.
+    // Il reste un squelette pour tout le reste : voir `MINION_FAMILY`.
+    static MINION_TYPE_GIANT_SKELETON = "giantSkeleton";
     static MINION_TYPE_CHOICE = {
         "": "FQCARDENGINE.MinionTypeNone",
         "beast": "FQCARDENGINE.MinionTypeBeast",
         "skeleton": "FQCARDENGINE.MinionTypeSkeleton",
-        "skeletonKing": "FQCARDENGINE.MinionTypeSkeletonKing"
+        "giantSkeleton": "FQCARDENGINE.MinionTypeGiantSkeleton"
     };
+
+    /**
+     * La FAMILLE de chaque type de sbire — le GENRE de créature, là où le type
+     * est son emplacement d'invocation.
+     *
+     * Les deux notions ne se séparent aujourd'hui que sur une créature, et c'est
+     * tout l'objet de cette table : le Squelette Géant a son propre TYPE
+     * (plafond dédié, compteurs de rituel dédiés) mais reste un squelette pour
+     * qui le regarde — un sort qui dope « tous vos squelettes » doit le prendre,
+     * un comptage d'armée doit le compter. Un type absent de la table est sa
+     * propre famille.
+     * @type {Object<string, string>}
+     */
+    static MINION_FAMILY = Object.freeze({
+        "beast": "beast",
+        "skeleton": "skeleton",
+        "giantSkeleton": "skeleton"
+    });
+
+    /**
+     * La famille d'un type de sbire : le genre auquel s'adressent les cartes de
+     * masse et les comptages d'armée.
+     *
+     * @param {string} [type] - Le type de sbire estampillé à l'invocation.
+     *
+     * @returns {string} La famille du type (le type lui-même s'il n'en déclare pas).
+     */
+    static minionFamily(type) {
+        return CardFqSystem.MINION_FAMILY[type] ?? type;
+    }
 
     /**
      * Indique si un type de ciblage est un ciblage « combat » (ennemis ou alliés

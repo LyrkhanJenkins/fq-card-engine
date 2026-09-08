@@ -821,6 +821,43 @@ export default class CardCondition {
     }
 
     /**
+     * Les tokens des sbires vivants d'une FAMILLE invoqués par le personnage
+     * courant — le comptage d'ARMÉE des cartes qui se renforcent avec le nombre
+     * de sbires (Afflux d'Agilité, Afflux de Pouvoir, Rituel du Sang), là où
+     * {@link minionTokensOnScene} s'en tient au type exact.
+     *
+     * Compter par famille est ce qui range le Squelette Géant parmi les
+     * squelettes sans lui retirer son propre plafond d'invocation.
+     *
+     * @param {string} family - La famille de sbire (`beast`, `skeleton`…).
+     *
+     * @returns {object[]} Les tokens des sbires vivants de cette famille (vide si aucun).
+     */
+    static minionFamilyTokensOnScene(family) {
+        return TargetingPredicates.livingMinionFamilyTokens(family);
+    }
+
+    /**
+     * Indique si TOUTES les cibles courantes sont des sbires vivants d'un type
+     * donné, invoqués par le personnage courant — la garde des cartes qui ne
+     * s'adressent qu'à une élite précise (le Squelette Géant des rituels
+     * d'ossements, par exemple).
+     *
+     * Le verdict vient de l'estampille posée à l'invocation, jamais du nom du
+     * jeton : un jeton renommé, ou un homonyme invoqué par quelqu'un d'autre, ne
+     * doit pas ouvrir la carte.
+     *
+     * @param {string} type - Le type de sbire attendu (`beast`, `giantSkeleton`…).
+     *
+     * @returns {boolean} True si au moins une cible est visée et qu'elles sont toutes de ce type.
+     */
+    static targetsAreMinionType(type) {
+        const targets = Constants.myTargets();
+        const eligible = TargetingPredicates.livingMinionTokens(type);
+        return targets.length > 0 && targets.every(target => eligible.some(token => token.id === target.id));
+    }
+
+    /**
      * Le dé de dégâts de l'arme de mêlée équipée du premier sbire vivant d'un
      * type, décomposé en nombre de dés et nombre de faces — les deux valeurs que
      * les cartes d'ORDRE reprennent dans `xvalue`/`yvalue` pour reconstruire

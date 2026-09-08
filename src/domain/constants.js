@@ -1,4 +1,5 @@
 import CardFqSystem from "./system/cards/card-fq-system.mjs";
+import TargetingPredicates from "./engine/shared/targeting-predicates.js";
 
 export const CRITICAL_COLOR = "#C0392B";
 export const CRITICAL_HEAL_COLOR = "#c39f43";
@@ -173,8 +174,15 @@ export default class Constants {
 
     /**
      * Retourne les cibles courantes selon le type de ciblage demandé.
-     * Pour le type « squelette », renvoie tous les squelettes en combat de la scène active ;
-     * sinon renvoie les cibles actuellement sélectionnées par l'utilisateur.
+     * Pour le type « squelette », renvoie tous les squelettes VIVANTS que le
+     * personnage courant a invoqués ; sinon renvoie les cibles actuellement
+     * sélectionnées par l'utilisateur.
+     *
+     * Le recensement passe par la FAMILLE estampillée à l'invocation, et non par
+     * le nom du jeton : le Squelette Géant, de type `giantSkeleton`, est de
+     * famille `skeleton` et entre donc dans « tous vos squelettes » — sans que
+     * cela tienne au mot « Skeleton » dans son nom, et sans qu'un jeton renommé
+     * ou l'armée d'une autre sorcière puisse s'y glisser.
      *
      * @param {string} [targetType=CardFqSystem.TARGET_TYPE_DEFAULT] - Le type de ciblage FQ.
      *
@@ -182,9 +190,9 @@ export default class Constants {
      */
     static myTargets(targetType = CardFqSystem.TARGET_TYPE_DEFAULT) {
         if (targetType === CardFqSystem.TARGET_TYPE_SKELETON) {
-            // Récupère tous les squelettes de la scene active qui sont en combat
-            const combatantIds = Constants.combatantTokenIds;
-            return [...game.canvas?.scene?.tokens ?? []].map(t => t.object).filter(t => t?.name?.includes("Skeleton") && combatantIds.includes(t.id));
+            return TargetingPredicates
+                .livingMinionFamilyTokens(CardFqSystem.MINION_TYPE_SKELETON)
+                .map(token => token.object ?? token);
         }
         return Constants.currentTargets;
     }

@@ -197,13 +197,46 @@ export default class TargetingPredicates {
      * @returns {object[]} Les tokens des sbires vivants correspondants (vide si type ou invocateur manquant).
      */
     static livingMinionTokens(type, summonerId = Constants.myId) {
-        if (!type || !summonerId) {
+        return TargetingPredicates.#livingMinionsBy(type, summonerId, stamped => stamped);
+    }
+
+    /**
+     * Les tokens des sbires VIVANTS d'une FAMILLE donnée invoqués par un
+     * invocateur — le recensement des cartes de MASSE (« tous vos squelettes »)
+     * et des comptages d'armée, là où {@link livingMinionTokens} s'en tient au
+     * type exact (plafonds d'invocation, bonus de rituel).
+     *
+     * Tout l'écart entre les deux tient au Squelette Géant : type
+     * `giantSkeleton`, famille `skeleton`. Il échappe au plafond de la piétaille
+     * sans échapper aux sorts qui dopent l'armée entière.
+     *
+     * @param {string} family       - La famille de sbire (`beast`, `skeleton`…).
+     * @param {string} [summonerId] - L'id de l'invocateur (défaut : le personnage courant).
+     *
+     * @returns {object[]} Les tokens des sbires vivants de cette famille (vide si famille ou invocateur manquant).
+     */
+    static livingMinionFamilyTokens(family, summonerId = Constants.myId) {
+        return TargetingPredicates.#livingMinionsBy(family, summonerId, CardFqSystem.minionFamily);
+    }
+
+    /**
+     * Le recensement commun aux deux lectures d'estampille : les sbires vivants
+     * de l'invocateur dont le type, passé au crible de `asKey`, égale `key`.
+     *
+     * @param {string}   key                 - Le type ou la famille attendue.
+     * @param {string}   summonerId          - L'id de l'invocateur.
+     * @param {function(string): string} asKey - La projection du type estampillé (identité, ou famille).
+     *
+     * @returns {object[]} Les tokens correspondants (vide si clé ou invocateur manquant).
+     */
+    static #livingMinionsBy(key, summonerId, asKey) {
+        if (!key || !summonerId) {
             return [];
         }
         const tokens = game.canvas?.scene?.tokens ?? game.scenes?.active?.tokens ?? [];
         return [...tokens].filter(token =>
             TargetingPredicates.isLivingMinion(token, summonerId)
-            && token.actor.flags[FqCardEngineModule.moduleName].minionType === type);
+            && asKey(token.actor.flags[FqCardEngineModule.moduleName].minionType) === key);
     }
 
     /**

@@ -16,7 +16,7 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
 
 const BEAST = CardFqSystem.MINION_TYPE_BEAST;
 const SKELETON = CardFqSystem.MINION_TYPE_SKELETON;
-const SKELETON_KING = CardFqSystem.MINION_TYPE_SKELETON_KING;
+const GIANT_SKELETON = CardFqSystem.MINION_TYPE_GIANT_SKELETON;
 
 /**
  * Construit un document de jeton dont l'acteur porte (ou non) l'estampille de sbire.
@@ -53,7 +53,7 @@ function mountScene({tokens = [], minions = {}} = {}) {
         system: {fq: {minions: {
             beast: {max: 1, hp: 0, damage: 0, movement: 0, ...(minions.beast ?? {})},
             skeleton: {max: 6, hp: 0, damage: 0, movement: 0, ...(minions.skeleton ?? {})},
-            skeletonKing: {max: 1, hp: 0, damage: 0, movement: 0, ...(minions.skeletonKing ?? {})}
+            giantSkeleton: {max: 1, hp: 0, damage: 0, movement: 0, ...(minions.giantSkeleton ?? {})}
         }}}
     };
 }
@@ -67,20 +67,21 @@ describe("Minion — plafond par type", () => {
 
     describe("maxOf", () => {
 
-        it("applique les plafonds de base : une bête, six squelettes, un roi squelette", () => {
+        it("applique les plafonds de base : une bête, six squelettes, un squelette géant", () => {
             expect(Minion.maxOf(BEAST)).toBe(1);
             expect(Minion.maxOf(SKELETON)).toBe(6);
-            expect(Minion.maxOf(SKELETON_KING)).toBe(1);
+            expect(Minion.maxOf(GIANT_SKELETON)).toBe(1);
         });
 
-        it("le roi squelette a son propre plafond : la piétaille ne le consomme pas", () => {
+        it("le squelette géant a son propre plafond : la piétaille au complet ne le consomme pas", () => {
             mountScene({
                 tokens: Array.from({length: 6}, () => minionToken({type: SKELETON})),
                 minions: {}
             });
 
             expect(Minion.countOnScene(SKELETON)).toBe(6);
-            expect(Minion.countOnScene(SKELETON_KING)).toBe(0);
+            expect(Minion.countOnScene(GIANT_SKELETON)).toBe(0);
+            expect(Minion.capVerdict([{type: GIANT_SKELETON}])).toBeNull();
         });
 
         it("ajoute le bonus de plafond gagné en combat", () => {
