@@ -208,6 +208,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - Faible déplacement et esquive, doit rester à distance
 
 **Questionnement et TODO :**
+TROP DE SORT générés: A réduire?
 ---
 # Trapper
 

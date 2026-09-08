@@ -364,6 +364,27 @@ describe("CardCondition — effets actifs", () => {
         expect(CardCondition.targetsHaveEffect(["Curse"])).toBe(false);
     });
 
+    it("targetsHaveAllEffects : une même cible doit porter tous les effets nommés", () => {
+        const burning = makeToken({id: "a", actorId: "a", effects: [{name: "Burn"}]});
+        const earthed = makeToken({id: "b", actorId: "b", effects: [{name: "Earth Effect"}]});
+        mountScene({tokens: [burning, earthed], targets: [burning, earthed]});
+        // Les deux éléments sont présents dans la sélection, mais séparément :
+        // c'est précisément ce que la garde de combinaison doit refuser.
+        expect(CardCondition.targetsHaveAllEffects(["Burn", "Earth Effect"])).toBe(false);
+
+        const both = makeToken({id: "c", actorId: "c", effects: [{name: "Burn"}, {name: "Earth Effect"}]});
+        mountScene({tokens: [both], targets: [both]});
+        expect(CardCondition.targetsHaveAllEffects(["Burn", "Earth Effect"])).toBe(true);
+
+        // Un empilement du même élément ne remplace jamais l'élément manquant.
+        const twice = makeToken({id: "d", actorId: "d", effects: [{name: "Burn"}, {name: "Burn"}]});
+        mountScene({tokens: [twice], targets: [twice]});
+        expect(CardCondition.targetsHaveAllEffects(["Burn", "Earth Effect"])).toBe(false);
+
+        mountScene({tokens: [], targets: []});
+        expect(CardCondition.targetsHaveAllEffects(["Burn"])).toBe(false);
+    });
+
     it("targetsHaveEffect sans liste : n'importe quel effet porté par une cible", () => {
         const buffed = makeToken({id: "a", actorId: "a", effects: [{name: "Quelconque"}]});
         mountScene({tokens: [buffed], targets: [buffed]});

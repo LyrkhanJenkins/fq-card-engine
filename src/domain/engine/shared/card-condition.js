@@ -733,6 +733,23 @@ export default class CardCondition {
     }
 
     /**
+     * Indique si au moins une cible sélectionnée porte SIMULTANÉMENT chacun des
+     * effets nommés — la garde des cartes de combinaison, là où
+     * {@link CardCondition.targetsHaveEffect} se contente d'un effet PARMI la
+     * liste. La nuance sépare un sort « à deux éléments actifs » d'un sort « à
+     * l'un ou l'autre » : ici une même cible doit cumuler les éléments, et un
+     * empilement du même effet ne suffit jamais.
+     *
+     * @param {string[]} [names] - Les noms d'effets exigés en même temps.
+     *
+     * @returns {boolean} True si une cible porte chacun des effets nommés.
+     */
+    static targetsHaveAllEffects(names = []) {
+        return Constants.currentTargets
+            .some(t => names.every(name => CardCondition.#effectsNamed(t.actor, [name]).length > 0));
+    }
+
+    /**
      * Compte les effets actifs portés par TOUS les ennemis du combat en cours —
      * parmi les noms donnés si une liste est fournie, tous sinon. Le camp est
      * celui du ciblage « Combat » (`TargetingPredicates.areEnemies` sur la
