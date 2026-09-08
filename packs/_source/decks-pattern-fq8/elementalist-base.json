@@ -3282,7 +3282,7 @@
     },
     {
       "_id": "FQelemCyclone001",
-      "name": "FQCARDTITLE.Cyclone",
+      "name": "FQCARDTITLE.DamageGust",
       "description": "",
       "type": "base",
       "suit": "",
@@ -3294,8 +3294,8 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
-          "text": "FQCARDDESCRIPTION.Cyclone"
+          "img": "modules/fq-card-engine/images/cards/elementalist/DamageGust.png",
+          "text": "FQCARDDESCRIPTION.DamageGust"
         }
       ],
       "face": 0,
@@ -3313,7 +3313,6 @@
           "class": "elementalist",
           "choices": [
             {
-              "name": "",
               "action": "-7",
               "mana": "-1",
               "zeal": "",
@@ -3321,10 +3320,14 @@
               "hp": "",
               "draw": "",
               "drop": "-XXX",
-              "targetType": "Default",
+              "targetType": "Zone",
               "minReach": "2",
               "maxReach": "8",
               "nbTargets": "",
+              "zoneShape": "line",
+              "zoneSize": "4",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(@wis+1d6)[thunder]",
               "heal": "",
               "bonusCrit": "",
@@ -3335,6 +3338,18 @@
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Air Effect",
@@ -3343,9 +3358,19 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -3357,18 +3382,36 @@
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     },
                     {
                       "result": "2",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": []
                         },
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -3380,21 +3423,48 @@
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     },
                     {
                       "result": "3",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": []
                         },
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": []
                         },
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -3406,24 +3476,60 @@
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     },
                     {
                       "result": "4",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": []
                         },
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": []
                         },
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": []
                         },
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 1,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -3435,18 +3541,19 @@
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 }
               ],
-              "replayable": "",
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.whirlwind.bluegrey",
                 "onTarget": true
               },
+              "name": "",
               "messages": [],
               "minions": [],
               "customEvals": [],
@@ -3458,20 +3565,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690797,
+        "modifiedTime": 1788890204163,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCyclone001"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCyclone001",
+      "cards": []
     },
     {
       "_id": "FQelemAbsZero001",
@@ -3605,7 +3712,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/elementalist/AbsoluteImmolation.png",
           "text": "FQCARDDESCRIPTION.AbsoluteImmolation"
         }
       ],
@@ -3695,17 +3802,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788609600000,
-        "modifiedTime": 1788609600000,
+        "modifiedTime": 1788890055679,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemImmol00001"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemImmol00001",
+      "cards": []
     },
     {
       "_id": "FQelemGlacial001",
@@ -3721,7 +3828,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/elementalist/GlacialEternity.png",
           "text": "FQCARDDESCRIPTION.GlacialEternity"
         }
       ],
@@ -3847,17 +3954,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788609600000,
-        "modifiedTime": 1788609600000,
+        "modifiedTime": 1788890036775,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlacial001"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlacial001",
+      "cards": []
     },
     {
       "_id": "FQelemSepulcre01",
@@ -4025,7 +4132,7 @@
     },
     {
       "_id": "FQelemCycloneEy1",
-      "name": "FQCARDTITLE.CycloneEye",
+      "name": "FQCARDTITLE.Cyclone",
       "description": "",
       "type": "base",
       "suit": "",
@@ -4037,8 +4144,8 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
-          "text": "FQCARDDESCRIPTION.CycloneEye"
+          "img": "modules/fq-card-engine/images/cards/elementalist/Cyclone.png",
+          "text": "FQCARDDESCRIPTION.Cyclone"
         }
       ],
       "face": 0,
@@ -4153,17 +4260,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788609600000,
-        "modifiedTime": 1788609600000,
+        "modifiedTime": 1788890011866,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCycloneEy1"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCycloneEy1",
+      "cards": []
     },
     {
       "_id": "fq13ElemGust01Az",

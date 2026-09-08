@@ -262,6 +262,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 - Peu de point de vie
 
 **Questionnement et TODO :**
+- Une des cartes du géant squelette permet d'aller chercher la carte dans le deck en deuxième choix?
 ---
 
 # Maître d'Armes
