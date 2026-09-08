@@ -917,8 +917,6 @@
   "FQCARDDESCRIPTION.GraveRecall" : "Retrieves one card from your discard pile into your hand.",
   "FQCARDTITLE.AshOffering" : "Ash Offering",
   "FQCARDDESCRIPTION.AshOffering" : "Consumes the cards discarded during your turn: deals {0_damage} damage, higher the more you discarded (4 cards maximum).\nYour discard score drops back to 0.",
-  "FQCARDTITLE.CharnelRevived" : "Revived Charnel",
-  "FQCARDDESCRIPTION.CharnelRevived" : "At the cost of one card discarded during your turn, retrieve a card from your discard pile into your hand.",
   "FQCARDTITLE.Exhumation" : "Exhumation",
   "FQCARDDESCRIPTION.Exhumation" : "Two cards drawn at random from your discard pile return to your hand.",
   "FQCARDTITLE.BonePact" : "Bone Pact",
