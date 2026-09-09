@@ -708,6 +708,36 @@
         "title": "",
         "hint": "",
         "_id": "FfwEUbteK95ZFo4B"
+      },
+      {
+        "type": "Trait",
+        "_id": "FqProf16I58QR000",
+        "level": 1,
+        "title": "Armes simples",
+        "configuration": {
+          "allowReplacements": false,
+          "choices": [],
+          "grants": [
+            "weapon:sim"
+          ],
+          "mode": "default"
+        },
+        "value": {}
+      },
+      {
+        "type": "Trait",
+        "_id": "FqProf12IAFYS000",
+        "level": 1,
+        "title": "Armures légères",
+        "configuration": {
+          "allowReplacements": false,
+          "choices": [],
+          "grants": [
+            "armor:lgt"
+          ],
+          "mode": "default"
+        },
+        "value": {}
       }
     ],
     "spellcasting": {
@@ -723,7 +753,17 @@
       "spent": 0,
       "additional": ""
     },
-    "startingEquipment": [],
+    "startingEquipment": [
+      {
+        "type": "linked",
+        "count": null,
+        "key": "Compendium.dnd5e.equipment24.Item.phbarmLeatherArm",
+        "requiresProficiency": false,
+        "_id": "90spb3993ksk97tl",
+        "group": "",
+        "sort": 100000
+      }
+    ],
     "primaryAbility": {
       "value": [
         "dex",

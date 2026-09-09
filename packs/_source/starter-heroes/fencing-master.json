@@ -584,7 +584,9 @@
         "communication": {}
       },
       "weaponProf": {
-        "value": [],
+        "value": [
+          "sim"
+        ],
         "custom": "",
         "mastery": {
           "value": [],
@@ -592,7 +594,9 @@
         }
       },
       "armorProf": {
-        "value": [],
+        "value": [
+          "lgt"
+        ],
         "custom": ""
       }
     },
@@ -1461,6 +1465,89 @@
             "title": "",
             "hint": "",
             "_id": "O20JD8shyQmAfeH4"
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProfYZUCQA0000",
+            "level": 1,
+            "title": "Armes simples",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "weapon:sim"
+              ],
+              "mode": "default"
+            },
+            "value": {
+              "chosen": [
+                "weapon:sim"
+              ]
+            }
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProfYZU83D0000",
+            "level": 3,
+            "title": "Armes de guerre",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "weapon:mar"
+              ],
+              "mode": "default"
+            },
+            "value": {}
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProfOINDYB0000",
+            "level": 5,
+            "title": "Bouclier",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "armor:shl"
+              ],
+              "mode": "default"
+            },
+            "value": {}
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProfOIN8QT0000",
+            "level": 1,
+            "title": "Armures légères",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "armor:lgt"
+              ],
+              "mode": "default"
+            },
+            "value": {
+              "chosen": [
+                "armor:lgt"
+              ]
+            }
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProfOIN9FC0000",
+            "level": 3,
+            "title": "Armures intermédiaires",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "armor:med"
+              ],
+              "mode": "default"
+            },
+            "value": {}
           }
         ],
         "spellcasting": {
@@ -1476,7 +1563,17 @@
           "spent": 0,
           "additional": ""
         },
-        "startingEquipment": [],
+        "startingEquipment": [
+          {
+            "type": "linked",
+            "count": null,
+            "key": "Compendium.dnd5e.equipment24.Item.phbarmLeatherArm",
+            "requiresProficiency": false,
+            "_id": "w3b0660urpwprmn4",
+            "group": "",
+            "sort": 100000
+          }
+        ],
         "primaryAbility": {
           "value": [
             "str",
@@ -2101,6 +2198,106 @@
         "default": 0
       },
       "_key": "!actors.items!uJSNPmJQdrXlqAyK.RzEe4HDyVUpjfJuk"
+    },
+    {
+      "name": "Leather Armor",
+      "system": {
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "price": {
+          "value": 10,
+          "denomination": "gp"
+        },
+        "source": {
+          "custom": "",
+          "rules": "2024",
+          "license": "CC-BY-4.0",
+          "book": ""
+        },
+        "identified": true,
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "quantity": 1,
+        "weight": {
+          "value": 10,
+          "units": "lb"
+        },
+        "rarity": "",
+        "attunement": "",
+        "attuned": false,
+        "equipped": true,
+        "cover": null,
+        "crewed": false,
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "armor": {
+          "value": 11,
+          "magicalBonus": null,
+          "dex": null
+        },
+        "hp": {
+          "value": null,
+          "max": null,
+          "dt": null,
+          "conditions": ""
+        },
+        "type": {
+          "value": "light",
+          "baseItem": "leather"
+        },
+        "properties": [],
+        "speed": {
+          "value": null,
+          "conditions": ""
+        },
+        "strength": null,
+        "proficient": null,
+        "activities": {},
+        "identifier": "leather-armor",
+        "fq": {
+          "action": -10,
+          "mana": 0,
+          "zeal": 0,
+          "drop": 0,
+          "hp": 0
+        }
+      },
+      "_id": "hikrhpa8x5vz7opi",
+      "type": "equipment",
+      "folder": null,
+      "img": "icons/equipment/chest/breastplate-scale-leather.webp",
+      "effects": [],
+      "sort": 500000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "_stats": {
+        "duplicateSource": null,
+        "coreVersion": "13.344",
+        "systemId": "dnd5e",
+        "systemVersion": "4.4.0",
+        "createdTime": 1724425913928,
+        "modifiedTime": 1745431704598,
+        "lastModifiedBy": "dnd5ebuilder0000",
+        "exportSource": null,
+        "compendiumSource": "Compendium.dnd5e.equipment24.Item.phbarmLeatherArm"
+      },
+      "_key": "!actors.items!uJSNPmJQdrXlqAyK.hikrhpa8x5vz7opi"
     }
   ],
   "effects": [],

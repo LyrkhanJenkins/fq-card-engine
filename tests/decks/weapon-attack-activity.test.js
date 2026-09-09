@@ -1,6 +1,7 @@
 import {describe, expect, it} from "vitest";
 import fs from "fs";
 import path from "path";
+import {SOURCE_DIR, jsonFiles} from "./pack-source.js";
 
 /**
  * Toute arme doit porter une activité d'ATTAQUE.
@@ -16,22 +17,6 @@ import path from "path";
  * le jeu à moitié réparé — c'est arrivé deux fois. Ce test balaie donc tous les
  * paquets et tous les inventaires embarqués.
  */
-
-const SOURCE_DIR = path.join(process.cwd(), "packs", "_source");
-
-/**
- * Tous les fichiers JSON des paquets source, sous-dossiers compris.
- *
- * @param {string} dir - Le dossier à parcourir.
- *
- * @returns {string[]} Les chemins des fichiers JSON.
- */
-function jsonFiles(dir) {
-    return fs.readdirSync(dir, {withFileTypes: true}).flatMap(entry => {
-        const full = path.join(dir, entry.name);
-        return entry.isDirectory() ? jsonFiles(full) : entry.name.endsWith(".json") ? [full] : [];
-    });
-}
 
 /**
  * Toutes les armes d'un document : le document lui-même s'il en est une, et

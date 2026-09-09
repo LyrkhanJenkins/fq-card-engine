@@ -716,6 +716,44 @@
             "title": "",
             "hint": "",
             "_id": "FfwEUbteK95ZFo4B"
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProf16I58QR000",
+            "level": 1,
+            "title": "Armes simples",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "weapon:sim"
+              ],
+              "mode": "default"
+            },
+            "value": {
+              "chosen": [
+                "weapon:sim"
+              ]
+            }
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProf12IAFYS000",
+            "level": 1,
+            "title": "Armures légères",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "armor:lgt"
+              ],
+              "mode": "default"
+            },
+            "value": {
+              "chosen": [
+                "armor:lgt"
+              ]
+            }
           }
         ],
         "spellcasting": {
@@ -731,7 +769,17 @@
           "spent": 0,
           "additional": ""
         },
-        "startingEquipment": [],
+        "startingEquipment": [
+          {
+            "type": "linked",
+            "count": null,
+            "key": "Compendium.dnd5e.equipment24.Item.phbarmLeatherArm",
+            "requiresProficiency": false,
+            "_id": "90spb3993ksk97tl",
+            "group": "",
+            "sort": 100000
+          }
+        ],
         "primaryAbility": {
           "value": [
             "dex",
@@ -1153,6 +1201,106 @@
         "default": 0
       },
       "_key": "!actors.items!WNblzSeh6PnOMDNA.CLR4C1YOrO1YgkY3"
+    },
+    {
+      "name": "Leather Armor",
+      "system": {
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "price": {
+          "value": 10,
+          "denomination": "gp"
+        },
+        "source": {
+          "custom": "",
+          "rules": "2024",
+          "license": "CC-BY-4.0",
+          "book": ""
+        },
+        "identified": true,
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "quantity": 1,
+        "weight": {
+          "value": 10,
+          "units": "lb"
+        },
+        "rarity": "",
+        "attunement": "",
+        "attuned": false,
+        "equipped": true,
+        "cover": null,
+        "crewed": false,
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "armor": {
+          "value": 11,
+          "magicalBonus": null,
+          "dex": null
+        },
+        "hp": {
+          "value": null,
+          "max": null,
+          "dt": null,
+          "conditions": ""
+        },
+        "type": {
+          "value": "light",
+          "baseItem": "leather"
+        },
+        "properties": [],
+        "speed": {
+          "value": null,
+          "conditions": ""
+        },
+        "strength": null,
+        "proficient": null,
+        "activities": {},
+        "identifier": "leather-armor",
+        "fq": {
+          "action": -10,
+          "mana": 0,
+          "zeal": 0,
+          "drop": 0,
+          "hp": 0
+        }
+      },
+      "_id": "v2su6ob0ky2sn0oa",
+      "type": "equipment",
+      "folder": null,
+      "img": "icons/equipment/chest/breastplate-scale-leather.webp",
+      "effects": [],
+      "sort": 300000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "_stats": {
+        "duplicateSource": null,
+        "coreVersion": "13.344",
+        "systemId": "dnd5e",
+        "systemVersion": "4.4.0",
+        "createdTime": 1724425913928,
+        "modifiedTime": 1745431704598,
+        "lastModifiedBy": "dnd5ebuilder0000",
+        "exportSource": null,
+        "compendiumSource": "Compendium.dnd5e.equipment24.Item.phbarmLeatherArm"
+      },
+      "_key": "!actors.items!WNblzSeh6PnOMDNA.v2su6ob0ky2sn0oa"
     }
   ],
   "effects": [],
@@ -1348,11 +1496,15 @@
         "custom": ""
       },
       "weaponProf": {
-        "value": [],
+        "value": [
+          "sim"
+        ],
         "custom": ""
       },
       "armorProf": {
-        "value": [],
+        "value": [
+          "lgt"
+        ],
         "custom": ""
       },
       "toolProf": {

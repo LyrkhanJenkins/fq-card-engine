@@ -9,9 +9,11 @@
 - Un joueur peut encore amener des cartes de son deck vers sa main avec la limitation des droits des joueurs
 - Changer les valeurs par défaut de l'animations de la fenetre de résultats
 - Vérifier formulaire, certaines mise en forme ont sautés...
+- Jets de sauvegarde contre la mort optiona mettre à true par défaut dans les mondes générés 
 
 ### Versions prévues
 #### 3.0.0
+- Rajouter que les cartes de niveau 1 sont obligatoires dans les decks? OU deck minimum?
 - L'esquive fait demi-dégâts
 - Prise en compte la classe d'armure de DND5E, chaque sort demande soit une classe d'armure soit des jés de sauvegarde soit rien
   - Rajouter la classe d'armure Aux attaques -> La classe d'armure surpassant le jet d'attaque fait demi-dégâts?

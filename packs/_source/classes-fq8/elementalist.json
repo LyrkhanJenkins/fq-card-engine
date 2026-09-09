@@ -707,6 +707,21 @@
         "title": "",
         "hint": "",
         "_id": "fQeSE04pCLU5JTce"
+      },
+      {
+        "type": "Trait",
+        "_id": "FqProf7T8HZB0000",
+        "level": 4,
+        "title": "Armures légères",
+        "configuration": {
+          "allowReplacements": false,
+          "choices": [],
+          "grants": [
+            "armor:lgt"
+          ],
+          "mode": "default"
+        },
+        "value": {}
       }
     ],
     "spellcasting": {
@@ -722,7 +737,17 @@
       "spent": 0,
       "additional": ""
     },
-    "startingEquipment": [],
+    "startingEquipment": [
+      {
+        "type": "linked",
+        "count": null,
+        "key": "Compendium.dnd5e.equipment24.Item.phbagRobe0000000",
+        "requiresProficiency": false,
+        "_id": "t0gd3rtqyzcp3zo0",
+        "group": "",
+        "sort": 100000
+      }
+    ],
     "primaryAbility": {
       "value": [
         "int",

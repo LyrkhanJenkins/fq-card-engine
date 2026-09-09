@@ -584,7 +584,9 @@
         "communication": {}
       },
       "weaponProf": {
-        "value": [],
+        "value": [
+          "sim"
+        ],
         "custom": "",
         "mastery": {
           "value": [],
@@ -592,7 +594,9 @@
         }
       },
       "armorProf": {
-        "value": [],
+        "value": [
+          "lgt"
+        ],
         "custom": ""
       }
     },
@@ -1437,6 +1441,89 @@
             "title": "",
             "hint": "",
             "_id": "AubjkvPQAgeqdaUI"
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProf1DDPTCP000",
+            "level": 1,
+            "title": "Armes simples",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "weapon:sim"
+              ],
+              "mode": "default"
+            },
+            "value": {
+              "chosen": [
+                "weapon:sim"
+              ]
+            }
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProf1DDPOPS000",
+            "level": 3,
+            "title": "Armes de guerre",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "weapon:mar"
+              ],
+              "mode": "default"
+            },
+            "value": {}
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProf1IROXWC000",
+            "level": 3,
+            "title": "Bouclier",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "armor:shl"
+              ],
+              "mode": "default"
+            },
+            "value": {}
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProf1IROSOU000",
+            "level": 1,
+            "title": "Armures légères",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "armor:lgt"
+              ],
+              "mode": "default"
+            },
+            "value": {
+              "chosen": [
+                "armor:lgt"
+              ]
+            }
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProf1IROTDD000",
+            "level": 3,
+            "title": "Armures intermédiaires",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "armor:med"
+              ],
+              "mode": "default"
+            },
+            "value": {}
           }
         ],
         "spellcasting": {
@@ -1452,7 +1539,17 @@
           "spent": 0,
           "additional": ""
         },
-        "startingEquipment": [],
+        "startingEquipment": [
+          {
+            "type": "linked",
+            "count": null,
+            "key": "Compendium.dnd5e.equipment24.Item.phbarmLeatherArm",
+            "requiresProficiency": false,
+            "_id": "fmyrd1fliw58d8tv",
+            "group": "",
+            "sort": 100000
+          }
+        ],
         "primaryAbility": {
           "value": [
             "str",
@@ -1673,101 +1770,6 @@
       "_key": "!actors.items!gO3QaKtcQd3XwvYx.Wek96ZGaaPL0jE0y"
     },
     {
-      "name": "Bouclier",
-      "type": "equipment",
-      "img": "icons/equipment/shield/round-wooden-boss-steel-brown.webp",
-      "system": {
-        "description": {
-          "value": "<p>A shield is made from wood or metal and is carried in one hand. Wielding a shield increases your Armor Class by 2. You can benefit from only one shield at a time.</p>",
-          "chat": ""
-        },
-        "source": {
-          "custom": "",
-          "book": "SRD 5.1",
-          "page": "",
-          "license": "CC-BY-4.0",
-          "rules": "2014",
-          "revision": 1
-        },
-        "quantity": 1,
-        "weight": {
-          "value": 6,
-          "units": "lb"
-        },
-        "price": {
-          "value": 10,
-          "denomination": "gp"
-        },
-        "attunement": "",
-        "rarity": "",
-        "identified": true,
-        "cover": null,
-        "crewed": false,
-        "uses": {
-          "max": "",
-          "spent": 0,
-          "recovery": []
-        },
-        "armor": {
-          "value": 2,
-          "dex": null,
-          "magicalBonus": null
-        },
-        "hp": {
-          "value": 0,
-          "max": 0,
-          "dt": null,
-          "conditions": ""
-        },
-        "speed": {
-          "value": null,
-          "conditions": ""
-        },
-        "strength": null,
-        "proficient": null,
-        "type": {
-          "value": "shield",
-          "baseItem": "shield"
-        },
-        "unidentified": {
-          "description": ""
-        },
-        "container": null,
-        "properties": [],
-        "activities": {},
-        "identifier": "shield",
-        "fq": {
-          "action": -10,
-          "mana": 0,
-          "zeal": 0,
-          "drop": 0,
-          "hp": 0
-        },
-        "attuned": false,
-        "equipped": true
-      },
-      "effects": [],
-      "folder": null,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": "Compendium.fq-card-engine.items-fq8.Item.YppyuTbRpPV3jM3O",
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.353",
-        "systemId": "dnd5e",
-        "systemVersion": "5.1.4",
-        "createdTime": 1757092766998,
-        "modifiedTime": 1757092770133,
-        "lastModifiedBy": "dnd5ebuilder0000"
-      },
-      "_id": "Q6LJAtzA0QItAKaU",
-      "sort": 300000,
-      "ownership": {
-        "default": 0
-      },
-      "_key": "!actors.items!gO3QaKtcQd3XwvYx.Q6LJAtzA0QItAKaU"
-    },
-    {
       "name": "Mains nues",
       "type": "weapon",
       "img": "icons/skills/melee/unarmed-punch-fist-white.webp",
@@ -1969,6 +1971,106 @@
         "default": 0
       },
       "_key": "!actors.items!gO3QaKtcQd3XwvYx.KxJeFjKb1r7VLrqW"
+    },
+    {
+      "name": "Leather Armor",
+      "system": {
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "price": {
+          "value": 10,
+          "denomination": "gp"
+        },
+        "source": {
+          "custom": "",
+          "rules": "2024",
+          "license": "CC-BY-4.0",
+          "book": ""
+        },
+        "identified": true,
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "quantity": 1,
+        "weight": {
+          "value": 10,
+          "units": "lb"
+        },
+        "rarity": "",
+        "attunement": "",
+        "attuned": false,
+        "equipped": true,
+        "cover": null,
+        "crewed": false,
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "armor": {
+          "value": 11,
+          "magicalBonus": null,
+          "dex": null
+        },
+        "hp": {
+          "value": null,
+          "max": null,
+          "dt": null,
+          "conditions": ""
+        },
+        "type": {
+          "value": "light",
+          "baseItem": "leather"
+        },
+        "properties": [],
+        "speed": {
+          "value": null,
+          "conditions": ""
+        },
+        "strength": null,
+        "proficient": null,
+        "activities": {},
+        "identifier": "leather-armor",
+        "fq": {
+          "action": -10,
+          "mana": 0,
+          "zeal": 0,
+          "drop": 0,
+          "hp": 0
+        }
+      },
+      "_id": "0jmxmza6xeq99cun",
+      "type": "equipment",
+      "folder": null,
+      "img": "icons/equipment/chest/breastplate-scale-leather.webp",
+      "effects": [],
+      "sort": 500000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "_stats": {
+        "duplicateSource": null,
+        "coreVersion": "13.344",
+        "systemId": "dnd5e",
+        "systemVersion": "4.4.0",
+        "createdTime": 1724425913928,
+        "modifiedTime": 1745431704598,
+        "lastModifiedBy": "dnd5ebuilder0000",
+        "exportSource": null,
+        "compendiumSource": "Compendium.dnd5e.equipment24.Item.phbarmLeatherArm"
+      },
+      "_key": "!actors.items!gO3QaKtcQd3XwvYx.0jmxmza6xeq99cun"
     }
   ],
   "effects": [],

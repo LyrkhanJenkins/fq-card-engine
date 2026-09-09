@@ -448,8 +448,8 @@
         },
         "identifier": "elementalist",
         "levels": 1,
-        "advancement": {
-          "6nqriktupjcsj8wi": {
+        "advancement": [
+          {
             "_id": "6nqriktupjcsj8wi",
             "type": "HitPoints",
             "configuration": {},
@@ -459,7 +459,7 @@
             "flags": {},
             "hint": ""
           },
-          "lIRGnYWzEXPk0aOX": {
+          {
             "_id": "lIRGnYWzEXPk0aOX",
             "type": "AbilityScoreImprovement",
             "configuration": {
@@ -485,7 +485,7 @@
             "hint": "",
             "flags": {}
           },
-          "iur7gLzg2tdBDns1": {
+          {
             "_id": "iur7gLzg2tdBDns1",
             "type": "ItemChoice",
             "configuration": {
@@ -601,7 +601,7 @@
             "classRestriction": "primary",
             "flags": {}
           },
-          "RGP0bm4CVYiDuAA0": {
+          {
             "_id": "RGP0bm4CVYiDuAA0",
             "type": "AbilityScoreImprovement",
             "configuration": {
@@ -626,7 +626,7 @@
             "hint": "",
             "flags": {}
           },
-          "NhKjzy8iXLiN67gC": {
+          {
             "type": "AbilityScoreImprovement",
             "_id": "NhKjzy8iXLiN67gC",
             "configuration": {
@@ -652,7 +652,7 @@
             "hint": "",
             "flags": {}
           },
-          "15BWwAEqg26UxijB": {
+          {
             "type": "AbilityScoreImprovement",
             "_id": "15BWwAEqg26UxijB",
             "configuration": {
@@ -678,7 +678,7 @@
             "hint": "",
             "flags": {}
           },
-          "eyCgZb8XvPuXX8fg": {
+          {
             "type": "AbilityScoreImprovement",
             "_id": "eyCgZb8XvPuXX8fg",
             "configuration": {
@@ -704,7 +704,7 @@
             "hint": "",
             "flags": {}
           },
-          "pzv4T6K6xgJgMzZY": {
+          {
             "type": "AbilityScoreImprovement",
             "_id": "pzv4T6K6xgJgMzZY",
             "configuration": {
@@ -730,7 +730,7 @@
             "hint": "",
             "flags": {}
           },
-          "gdsRghnbrBggYhpZ": {
+          {
             "type": "AbilityScoreImprovement",
             "_id": "gdsRghnbrBggYhpZ",
             "configuration": {
@@ -756,7 +756,7 @@
             "hint": "",
             "flags": {}
           },
-          "ApVCGshoPp3brjg6": {
+          {
             "type": "AbilityScoreImprovement",
             "_id": "ApVCGshoPp3brjg6",
             "configuration": {
@@ -782,7 +782,7 @@
             "hint": "",
             "flags": {}
           },
-          "qJnwx2ABCAcWxgBm": {
+          {
             "type": "AbilityScoreImprovement",
             "_id": "qJnwx2ABCAcWxgBm",
             "configuration": {
@@ -808,7 +808,7 @@
             "hint": "",
             "flags": {}
           },
-          "i1pecfUJX1AJWFho": {
+          {
             "type": "AbilityScoreImprovement",
             "configuration": {
               "cap": 2,
@@ -834,7 +834,7 @@
             "_id": "i1pecfUJX1AJWFho",
             "flags": {}
           },
-          "qRLHx4Xf1Vzdjgtt": {
+          {
             "type": "ItemChoice",
             "_id": "qRLHx4Xf1Vzdjgtt",
             "configuration": {
@@ -976,7 +976,7 @@
             "classRestriction": "secondary",
             "flags": {}
           },
-          "fQeSE04pCLU5JTce": {
+          {
             "type": "ItemChoice",
             "configuration": {
               "allowDrops": false,
@@ -1140,8 +1140,23 @@
             "hint": "",
             "_id": "fQeSE04pCLU5JTce",
             "flags": {}
+          },
+          {
+            "type": "Trait",
+            "_id": "FqProf7T8HZB0000",
+            "level": 4,
+            "title": "Armures légères",
+            "configuration": {
+              "allowReplacements": false,
+              "choices": [],
+              "grants": [
+                "armor:lgt"
+              ],
+              "mode": "default"
+            },
+            "value": {}
           }
-        },
+        ],
         "spellcasting": {
           "progression": "none",
           "ability": "int",
@@ -1155,7 +1170,17 @@
           "spent": 0,
           "additional": ""
         },
-        "startingEquipment": [],
+        "startingEquipment": [
+          {
+            "type": "linked",
+            "count": null,
+            "key": "Compendium.dnd5e.equipment24.Item.phbagRobe0000000",
+            "requiresProficiency": false,
+            "_id": "t0gd3rtqyzcp3zo0",
+            "group": "",
+            "sort": 100000
+          }
+        ],
         "primaryAbility": {
           "value": [
             "int",
@@ -1171,6 +1196,106 @@
         "default": 0
       },
       "_key": "!actors.items!0KiJSNiOBCToN6IC.HbrXawntXz2o702s"
+    },
+    {
+      "name": "Robe",
+      "system": {
+        "description": {
+          "value": "<p>A Robe has vocational or ceremonial significance. Some events and locations admit only people wearing a Robe bearing certain colors or symbols.</p>",
+          "chat": ""
+        },
+        "price": {
+          "value": 1,
+          "denomination": "gp"
+        },
+        "source": {
+          "custom": "",
+          "rules": "2024",
+          "license": "CC-BY-4.0",
+          "book": ""
+        },
+        "identified": true,
+        "unidentified": {
+          "description": ""
+        },
+        "container": null,
+        "quantity": 1,
+        "weight": {
+          "value": 4,
+          "units": "lb"
+        },
+        "rarity": "",
+        "attunement": "",
+        "attuned": false,
+        "equipped": true,
+        "cover": null,
+        "crewed": false,
+        "uses": {
+          "max": "",
+          "spent": 0,
+          "recovery": []
+        },
+        "armor": {
+          "value": null,
+          "magicalBonus": null,
+          "dex": null
+        },
+        "hp": {
+          "value": null,
+          "max": null,
+          "dt": null,
+          "conditions": ""
+        },
+        "type": {
+          "value": "clothing",
+          "baseItem": ""
+        },
+        "properties": [],
+        "speed": {
+          "value": null,
+          "conditions": ""
+        },
+        "strength": null,
+        "proficient": null,
+        "activities": {},
+        "identifier": "robe",
+        "fq": {
+          "action": -10,
+          "mana": 0,
+          "zeal": 0,
+          "drop": 0,
+          "hp": 0
+        }
+      },
+      "_id": "xhkp7249sep18e8h",
+      "type": "equipment",
+      "folder": null,
+      "img": "icons/equipment/back/mantle-collared-black.webp",
+      "effects": [],
+      "sort": 203125,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {
+        "dnd5e": {
+          "riders": {
+            "activity": [],
+            "effect": []
+          }
+        }
+      },
+      "_stats": {
+        "duplicateSource": null,
+        "coreVersion": "13.344",
+        "systemId": "dnd5e",
+        "systemVersion": "4.4.0",
+        "createdTime": 1724425911597,
+        "modifiedTime": 1745256812762,
+        "lastModifiedBy": "dnd5ebuilder0000",
+        "exportSource": null,
+        "compendiumSource": "Compendium.dnd5e.equipment24.Item.phbagRobe0000000"
+      },
+      "_key": "!actors.items!0KiJSNiOBCToN6IC.xhkp7249sep18e8h"
     }
   ],
   "effects": [],

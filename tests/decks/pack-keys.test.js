@@ -1,6 +1,7 @@
 import {describe, expect, it} from "vitest";
 import fs from "fs";
 import path from "path";
+import {SOURCE_DIR, jsonFiles} from "./pack-source.js";
 
 /**
  * Intégrité des CLÉS des paquets source.
@@ -18,22 +19,6 @@ import path from "path";
  *
  * Ce test balaie donc TOUS les paquets source, pas seulement les decks.
  */
-
-const SOURCE_DIR = path.join(process.cwd(), "packs", "_source");
-
-/**
- * Tous les fichiers JSON des paquets source, en descendant les sous-dossiers.
- *
- * @param {string} dir - Le dossier à parcourir.
- *
- * @returns {string[]} Les chemins des fichiers JSON.
- */
-function jsonFiles(dir) {
-    return fs.readdirSync(dir, {withFileTypes: true}).flatMap(entry => {
-        const full = path.join(dir, entry.name);
-        return entry.isDirectory() ? jsonFiles(full) : entry.name.endsWith(".json") ? [full] : [];
-    });
-}
 
 /**
  * Les documents porteurs d'une clé d'un fichier de paquet : le document
