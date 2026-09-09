@@ -122,40 +122,114 @@ div.separator {
 }
 
 /* ============================================================
-   JETS INTERMÉDIAIRES (dégâts, soins, critique, esquive)
-   Volontairement discrets : ce ne sont que les étapes de calcul,
-   le récapitulatif final doit dominer visuellement le chat.
+   DÉTAIL DES JETS DANS LE MESSAGE DE RÉSULTAT
+   Une ligne par jet (dégâts/soins, critique, esquive par cible, jets
+   de formules d effets). Volontairement compact : le récapitulatif des
+   valeurs appliquées, plus bas, reste ce que l oeil doit trouver en premier.
    ============================================================ */
 
-.fq-roll-flavor {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 5px;
+.fq-result-source {
+    margin: -2px 0 6px;
     font-size: 11px;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    opacity: 0.85;
+    font-style: italic;
+    text-align: center;
+    color: var(--fq8-message-label);
 }
 
-.fq-roll-flavor .fq-roll-outcome {
+/* La mention qui distingue la résolution (attaque d'opportunité…) : orange du
+   module, la même couleur que ses avertissements, parce qu'elle signale elle
+   aussi quelque chose qui sort du déroulement ordinaire. */
+.fq-result-tag {
+    margin: -2px auto 7px;
+    padding: 2px 8px;
+    width: fit-content;
+    border: 1px solid rgba(var(--fq-warning-rgb), 0.6);
+    border-radius: 10px;
+    background: rgba(var(--fq-warning-rgb), 0.14);
     font-size: 10px;
     font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgb(var(--fq-warning-rgb));
 }
 
-/* Le total du jet, énorme par défaut, est ramené à une taille d'appoint : seul
-   le message de résultat final doit porter un grand nombre. */
-.chat-message:has(.fq-roll-flavor) .dice-roll .dice-total {
-    font-size: var(--font-size-16);
-    padding: 2px 4px;
-    line-height: 1.4;
+.fq-roll-lines {
+    list-style: none;
+    margin: 0 0 6px;
+    padding: 0 0 6px;
+    border-bottom: 1px solid color-mix(in srgb, var(--fq8-message-gold) 25%, transparent);
 }
 
-.chat-message:has(.fq-roll-flavor) .dice-roll .dice-formula {
-    font-size: var(--font-size-11);
-    margin: 0 0 2px;
+/* Grille et non flex : la barre latérale du chat est étroite, et un libellé
+   long (« Esquive de X », le titre d une formule d effets) y écrasait le détail
+   jusqu à le faire retomber caractère par caractère. Le placement est explicite —
+   libellé, total et verdict sur la première ligne, détail sur la seconde, pleine
+   largeur — pour ne dépendre ni de la longueur des textes ni de l ordre du DOM. */
+.fq-roll-line {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    column-gap: 6px;
+    align-items: baseline;
+    padding: 2px 6px;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.fq-roll-line .fq-roll-label {
+    grid-area: 1 / 1;
+    min-width: 0;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    color: var(--fq8-message-target);
+}
+
+.fq-roll-line .fq-roll-detail {
+    grid-area: 2 / 1 / auto / -1;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--fq8-message-label);
+}
+
+/* Le total du jet : lisible sans concurrencer la valeur appliquée. */
+.fq-roll-line .fq-roll-total {
+    grid-area: 1 / 2;
+    justify-self: end;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--fq8-message-gold);
+}
+
+.fq-roll-line--damage .fq-roll-total {
+    color: var(--fq8-message-damage);
+}
+
+.fq-roll-line--heal .fq-roll-total {
+    color: var(--fq8-message-heal);
+}
+
+.fq-roll-line--crit .fq-roll-label {
+    color: var(--fq8-color-critical);
+}
+
+.fq-roll-line--eva .fq-roll-label {
+    color: var(--fq8-color-evasion);
+}
+
+.fq-roll-line .fq-roll-outcome {
+    grid-area: 1 / 3;
+    white-space: nowrap;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.fq-roll-line .fq-roll-outcome--hit {
+    color: var(--fq8-message-heal);
+}
+
+.fq-roll-line .fq-roll-outcome--miss {
+    color: var(--fq8-message-label);
 }
 
 /* ============================================================

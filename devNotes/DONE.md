@@ -37,6 +37,7 @@ Feat :
 - Les cartes réactifs peuvent être "préparé" pendant son tour
 - Refonte totale de tous les decks de toutes les classes jusqu'au niveau 10 (ou 12) (en cours...)
 - Option: Lancer les dé automatiquement de death saving throw et supprime les tokens mort
+- Nouvelle Fenêtre de résultat de sort/cartes
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

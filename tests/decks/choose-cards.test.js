@@ -107,7 +107,7 @@ describe("chooseCards* — proposition de cartes au jeu de la carte", () => {
         expect(result.discardPile.createEmbeddedDocuments).not.toHaveBeenCalled();
         // Le jeu annonce les cartes ajoutées à la main dans le chat
         expect(result.chatMessages.some(m => m.content?.includes("FQCARDENGINE.InfoMsgCardsAddedToHand"))).toBe(true);
-        // Aucun message vide : displayResult ne publie rien sans résultat ni message manuel
+        // Aucun message vide : ResultChatLog ne publie rien sans jet, résultat ni message
         expect(result.chatMessages.some(m => m.content === "<div class=\"fq-card-engine-result\"></div>")).toBe(false);
     });
 

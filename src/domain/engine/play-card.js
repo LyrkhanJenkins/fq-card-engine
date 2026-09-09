@@ -220,9 +220,9 @@ export default class PlayCard {
      * (visuel de la carte, face visible ou dos selon `fd.down`) enrichi des choix
      * faits par l'utilisateur dans le dialogue de jeu — effet retenu, valeurs X/Y
      * saisies et cibles visées — uniquement si l'option `betterChatMessages` est
-     * active. Ce message absorbe l'ancien message séparé « Choix de l'effet ». Les
-     * jets de dés (Dice So Nice) et le récapitulatif des résultats restent des
-     * messages distincts.
+     * active. Ce message absorbe l'ancien message séparé « Choix de l'effet ». La
+     * résolution, elle, publie son propre message unique (`ResultChatLog`) : un jeu
+     * de carte laisse donc deux messages au fil, la carte puis son résultat.
      *
      * @param {Cards}  to          - La pile cible du transfert (contexte du message).
      * @param {object} fd          - Les données du formulaire (ex. `down` pour face cachée, `XXX`/`YYY`).

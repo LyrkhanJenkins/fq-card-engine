@@ -327,4 +327,29 @@ export default class TargetingPredicates {
         return TargetingPredicates.resolveTargets(cardContent, casterActor)
             .map(t => Constants.tokenActorId(t)).filter(Boolean);
     }
+
+    /**
+     * Les cibles réduites à ce qui se transmet : id de jeton et nom, jamais le jeton
+     * lui-même. Forme attendue par le rapport de jet, qui doit rester sérialisable.
+     *
+     * Certains types de cible (les squelettes, par exemple) supposent un contexte de
+     * scène complet : hors jeu, la résolution lève. On retombe alors sur une liste
+     * vide plutôt que d'interrompre la résolution en cours, comme le fait déjà le
+     * message de chat (`PlayCard.buildChoiceRenderData`).
+     *
+     * @param {object}  cardContent - Le contenu (choix) de la carte.
+     * @param {object} [casterActor=Constants.actorCurrent] - L'acteur lanceur.
+     *
+     * @returns {{tokenId: string, name: string}[]} Les cibles désignées par id et nom.
+     */
+    static resolveTargetLabels(cardContent, casterActor = Constants.actorCurrent) {
+        try {
+            return TargetingPredicates.resolveTargets(cardContent, casterActor).map(target => ({
+                tokenId: target.id,
+                name: Constants.tokenName(target) ?? ""
+            }));
+        } catch {
+            return [];
+        }
+    }
 }

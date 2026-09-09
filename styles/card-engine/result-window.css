@@ -1,0 +1,653 @@
+/* ============================================================
+   FQ CARD ENGINE — Fenêtre de résultat
+   Calque ancré en bas à droite, dégagé de la barre latérale du chat —
+   même côté que les dialogues de jet de dnd5e. Aucune hauteur n'est
+   réservée : chaque section apparaît à son tour et fait grandir le
+   panneau vers le haut depuis son ancrage bas.
+   ============================================================ */
+
+.fq-result-window {
+    position: fixed;
+    right: calc(var(--sidebar-width, 300px) + 18px);
+    bottom: 112px;
+    z-index: 70;
+    width: 470px;
+    max-height: calc(100vh - 150px);
+    overflow: auto;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+    transition: opacity 0.28s ease, transform 0.3s cubic-bezier(0.2, 1.3, 0.4, 1);
+}
+
+.fq-result-window.is-in {
+    opacity: 1;
+    transform: none;
+}
+
+.fq-result-window.is-out {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.fq-result-frame {
+    position: relative;
+    padding: 12px 14px 10px;
+    border: 1px solid rgba(var(--fq-gold-rgb), 0.55);
+    border-radius: 8px;
+    background: linear-gradient(160deg, rgba(var(--fq-panel-a-rgb), 0.985), rgba(var(--fq-panel-b-rgb), 0.985));
+    box-shadow: 0 0 0 1px rgba(var(--fq-black-rgb), 0.8),
+                0 14px 40px rgba(var(--fq-black-rgb), 0.8),
+                inset 0 0 40px rgba(var(--fq-gold-rgb), 0.06);
+}
+
+.fq-result-window--heal .fq-result-frame {
+    border-color: color-mix(in srgb, var(--fq8-message-heal) 50%, transparent);
+}
+
+/* ── Entête : la carte, son deck, l'effet retenu, les cibles ── */
+.fq-result-header {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid rgba(var(--fq-gold-rgb), 0.2);
+}
+
+.fq-result-thumb {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 64px;
+    overflow: hidden;
+    border: 1px solid rgba(var(--fq-gold-rgb), 0.5);
+    border-radius: 4px;
+    box-shadow: 0 3px 9px rgba(var(--fq-black-rgb), 0.7);
+}
+
+.fq-result-thumb img {
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: cover;
+}
+
+.fq-result-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.fq-result-actor {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fq8-message-label);
+}
+
+.fq-result-card {
+    margin: 1px 0 2px;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--fq8-message-gold);
+}
+
+.fq-result-deck {
+    font-size: 10px;
+    font-style: italic;
+    color: var(--fq8-message-label);
+}
+
+.fq-result-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 5px;
+}
+
+.fq-result-chip {
+    padding: 2px 7px;
+    border: 1px solid rgba(var(--fq-gold-rgb), 0.35);
+    border-radius: 10px;
+    background: rgba(var(--fq-black-rgb), 0.35);
+    font-size: 10px;
+    color: var(--fq8-message-target);
+}
+
+.fq-result-chip.is-choice {
+    border-color: rgba(var(--fq-gold-rgb), 0.55);
+    color: var(--fq8-message-gold);
+}
+
+/* La mention qui distingue la résolution (attaque d'opportunité…) : orange du
+   module, la même couleur que ses avertissements, parce qu'elle signale elle
+   aussi quelque chose qui sort du déroulement ordinaire. */
+.fq-result-chip.is-tag {
+    border-color: rgba(var(--fq-warning-rgb), 0.6);
+    background: rgba(var(--fq-warning-rgb), 0.14);
+    color: rgb(var(--fq-warning-rgb));
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.fq-result-targets-line {
+    margin-top: 5px;
+    font-size: 11px;
+    line-height: 1.35;
+    color: var(--fq8-message-target);
+}
+
+/* ── Corps : critique à gauche, jet au centre, esquives à droite ── */
+.fq-result-body {
+    display: grid;
+    grid-template-columns: 80px 1fr 134px;
+    gap: 8px;
+    align-items: start;
+}
+
+.fq-result-col {
+    padding: 6px 4px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: rgba(var(--fq-black-rgb), 0.28);
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.fq-result-col.is-active {
+    border-color: rgba(var(--fq-gold-rgb), 0.25);
+    background: rgba(var(--fq-black-rgb), 0.44);
+}
+
+.fq-result-col.is-empty {
+    opacity: 0.3;
+}
+
+.fq-result-col--center {
+    padding: 0;
+    border: none;
+    background: transparent;
+    text-align: center;
+}
+
+.fq-result-col-label {
+    margin-bottom: 6px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--fq8-message-label);
+    transition: color 0.3s ease;
+}
+
+.fq-result-col--crit.is-active .fq-result-col-label {
+    color: var(--fq8-color-critical);
+}
+
+.fq-result-col--eva.is-active .fq-result-col-label {
+    color: var(--fq8-color-evasion);
+}
+
+.fq-result-threshold {
+    font-size: 9px;
+    font-style: italic;
+    text-align: center;
+    color: var(--fq8-message-label);
+}
+
+.fq-result-verdict {
+    min-height: 13px;
+    margin-top: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fq-result-verdict.is-on {
+    opacity: 1;
+    animation: fq-result-pop 0.38s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+
+.fq-result-verdict.is-hit {
+    color: var(--fq8-color-critical);
+}
+
+.fq-result-verdict.is-miss {
+    color: var(--fq8-message-label);
+    font-weight: 600;
+}
+
+/* ── Le centre : les dés, puis le total ── */
+.fq-result-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+}
+
+.fq-result-total {
+    min-height: 58px;
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--fq8-message-damage);
+    text-shadow: 0 0 24px color-mix(in srgb, var(--fq8-message-damage) 45%, transparent),
+                 0 3px 10px rgba(var(--fq-black-rgb), 0.9);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.fq-result-window--heal .fq-result-total {
+    color: var(--fq8-message-heal);
+    text-shadow: 0 0 24px color-mix(in srgb, var(--fq8-message-heal) 45%, transparent),
+                 0 3px 10px rgba(var(--fq-black-rgb), 0.9);
+}
+
+.fq-result-total.is-crit {
+    color: var(--fq8-color-critical);
+    text-shadow: 0 0 32px rgba(var(--fq-danger-mid-rgb), 0.85),
+                 0 0 14px color-mix(in srgb, var(--fq8-color-critical) 70%, transparent);
+}
+
+.fq-result-total.is-pop {
+    animation: fq-result-pop 0.42s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+
+@keyframes fq-result-pop {
+    0% { transform: scale(0.6); opacity: 0.2; }
+    60% { transform: scale(1.14); }
+    100% { transform: scale(1); }
+}
+
+.fq-result-formula {
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--fq8-message-label);
+}
+
+.fq-result-bonus {
+    margin-top: 1px;
+    font-size: 10px;
+    font-style: italic;
+    color: var(--fq8-color-range);
+}
+
+.fq-result-crit-mark {
+    height: 15px;
+    margin-top: 2px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fq8-color-critical);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fq-result-crit-mark.is-on {
+    opacity: 1;
+    animation: fq-result-pop 0.4s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+
+/* ── Les dés 2D ── */
+.fq-result-die {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    background: var(--fq8-message-gold);
+    box-shadow: inset 0 -3px 0 rgba(var(--fq-black-rgb), 0.28),
+                0 3px 8px rgba(var(--fq-black-rgb), 0.6);
+    font-size: 16px;
+    font-weight: 800;
+    color: rgba(var(--fq-ink-rgb), 1);
+    transition: filter 0.25s ease;
+}
+
+/* ── Silhouettes par type de dé ──
+   La forme dit le dé, la couleur dit son rôle : un dé taillé ne doit jamais
+   changer de teinte selon ses faces, sous peine de brouiller les deux lectures.
+   Un dé hors de cette liste garde le carré arrondi. Les formes découpées perdent
+   de la surface utile, d'où les ajustements de taille et de fonte qui suivent. */
+.fq-result-die--d4,
+.fq-result-die--d8,
+.fq-result-die--d10,
+.fq-result-die--d12,
+.fq-result-die--d20 {
+    border-radius: 0;
+    box-shadow: 0 3px 8px rgba(var(--fq-black-rgb), 0.6);
+}
+
+/* Le triangle ne laisse de place qu'en bas : le chiffre y descend. */
+.fq-result-die--d4 {
+    align-items: end;
+    padding-bottom: 3px;
+    font-size: 13px;
+    clip-path: polygon(50% 6%, 97% 94%, 3% 94%);
+}
+
+.fq-result-die--d8 {
+    font-size: 14px;
+    clip-path: polygon(50% 2%, 96% 50%, 50% 98%, 4% 50%);
+}
+
+/* Cerf-volant : le plus large haut, pointe en bas — la face d'un vrai d10. */
+.fq-result-die--d10 {
+    font-size: 14px;
+    clip-path: polygon(50% 0, 95% 30%, 50% 100%, 5% 30%);
+}
+
+.fq-result-die--d12 {
+    font-size: 14px;
+    clip-path: polygon(50% 2%, 98% 38%, 80% 97%, 20% 97%, 2% 38%);
+}
+
+.fq-result-die--d20 {
+    clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+}
+
+.fq-result-die--crit {
+    background: var(--fq8-color-critical);
+}
+
+.fq-result-die--eva {
+    background: var(--fq8-color-evasion);
+}
+
+.fq-result-die--other {
+    background: var(--fq8-message-target);
+}
+
+.fq-result-window--heal .fq-result-pool .fq-result-die {
+    background: var(--fq8-message-heal);
+}
+
+/* Un dé pas encore lancé : sa forme se voit, sa valeur non.
+   Le fond teinté n'est pas décoratif — une bordure seule est rognée par le
+   `clip-path` des dés taillés, qui deviendraient invisibles avant leur jet. */
+.fq-result-die.is-blank {
+    border: 1px dashed rgba(var(--fq-gold-rgb), 0.28);
+    background: rgba(var(--fq-gold-rgb), 0.1);
+    box-shadow: none;
+    color: transparent;
+}
+
+.fq-result-die.is-rolling {
+    animation: fq-result-tumble 0.3s linear infinite;
+}
+
+@keyframes fq-result-tumble {
+    0% { transform: translateY(0) rotate(0); }
+    25% { transform: translateY(-8px) rotate(9deg); }
+    50% { transform: translateY(0) rotate(0); }
+    75% { transform: translateY(-5px) rotate(-8deg); }
+    100% { transform: translateY(0) rotate(0); }
+}
+
+.fq-result-die.is-landed {
+    animation: fq-result-land 0.34s cubic-bezier(0.2, 1.7, 0.4, 1);
+}
+
+@keyframes fq-result-land {
+    0% { transform: scale(1.3); }
+    60% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+/* Le maximum du dé : il mérite d'être vu sans avoir à lire le chiffre. */
+.fq-result-die.is-max {
+    filter: drop-shadow(0 0 9px rgba(var(--fq-gold-hi2-rgb), 0.95));
+}
+
+/* ── Les esquives, une ligne par cible ── */
+.fq-result-eva-row {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 2px 3px;
+    border-radius: 4px;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.fq-result-eva-row.is-live {
+    opacity: 1;
+}
+
+.fq-result-eva-row .fq-result-die {
+    width: 27px;
+    height: 27px;
+    font-size: 12px;
+}
+
+.fq-result-eva-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 10px;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--fq8-message-target);
+}
+
+.fq-result-eva-name span {
+    display: block;
+    opacity: 0.6;
+}
+
+.fq-result-eva-out {
+    flex: 0 0 auto;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.fq-result-eva-out.is-on {
+    opacity: 1;
+}
+
+.fq-result-eva-out.is-dodge {
+    color: var(--fq8-color-evasion);
+}
+
+.fq-result-eva-out.is-touched {
+    color: var(--fq8-message-label);
+}
+
+/* ── Les valeurs appliquées : masquées jusqu'à leur tour ── */
+.fq-result-targets,
+.fq-result-extra,
+.fq-result-messages {
+    display: none;
+    margin-top: 9px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(var(--fq-gold-rgb), 0.2);
+}
+
+.fq-result-targets.is-on,
+.fq-result-extra.is-on,
+.fq-result-messages.is-on {
+    display: block;
+    animation: fq-result-fade-up 0.35s ease;
+}
+
+@keyframes fq-result-fade-up {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+
+.fq-result-row {
+    display: none;
+    gap: 7px;
+    align-items: center;
+    padding: 3px 5px;
+    border-radius: 4px;
+}
+
+.fq-result-row.is-on {
+    display: flex;
+    animation: fq-result-fade-up 0.3s ease;
+}
+
+.fq-result-row:nth-child(odd) {
+    background: var(--fq8-message-zebra);
+}
+
+.fq-result-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--fq8-message-target);
+}
+
+.fq-result-badges {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 4px;
+}
+
+.fq-result-value {
+    min-width: 34px;
+    font-size: 17px;
+    font-weight: 800;
+    text-align: right;
+    color: var(--fq8-message-damage);
+}
+
+.fq-result-window--heal .fq-result-value {
+    color: var(--fq8-message-heal);
+}
+
+.fq-result-badge {
+    padding: 2px 5px;
+    border: 1px solid currentcolor;
+    border-radius: 3px;
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.fq-result-badge.is-crit {
+    color: var(--fq8-color-critical);
+}
+
+.fq-result-badge.is-eva {
+    color: var(--fq8-color-evasion);
+}
+
+/* ── Les jets de formules d'effets ── */
+.fq-result-extra-row {
+    display: none;
+    gap: 8px;
+    align-items: center;
+    padding: 3px 4px;
+    border-radius: 4px;
+}
+
+.fq-result-extra-row.is-live {
+    display: flex;
+    animation: fq-result-fade-up 0.3s ease;
+}
+
+.fq-result-extra-row .fq-result-die {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+}
+
+.fq-result-extra-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 11.5px;
+    line-height: 1.2;
+    color: var(--fq8-message-target);
+}
+
+.fq-result-extra-name span {
+    display: block;
+    font-size: 9.5px;
+    font-style: italic;
+    color: var(--fq8-message-label);
+}
+
+.fq-result-extra-out {
+    flex: 0 0 auto;
+    font-size: 9.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.fq-result-extra-out.is-on {
+    opacity: 1;
+}
+
+.fq-result-extra-out.is-hit {
+    color: var(--fq8-message-heal);
+}
+
+.fq-result-extra-out.is-miss {
+    color: var(--fq8-message-label);
+}
+
+/* ── Les messages de la carte ── */
+.fq-result-messages-label {
+    margin-bottom: 4px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fq8-message-label);
+}
+
+.fq-result-messages ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--fq8-message-target);
+}
+
+/* ── Le pied : la jauge de fermeture ── */
+.fq-result-foot {
+    margin-top: 8px;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(var(--fq-gold-rgb), 0.14);
+    overflow: hidden;
+}
+
+.fq-result-bar {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: rgba(var(--fq-gold-rgb), 0.65);
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+.fq-result-bar.is-draining {
+    animation-name: fq-result-drain;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fq-result-drain {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}

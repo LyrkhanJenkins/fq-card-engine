@@ -2,6 +2,43 @@ import {OPPORTUNITY_ATTACK_SETTING} from "../domain/engine/reaction/opportunity-
 import {DEATH_SAVE_SETTING} from "../domain/engine/death-save.js";
 
 /**
+ * Multiplicateurs de vitesse proposés pour la fenêtre de résultat. Une liste de
+ * choix plutôt qu'un curseur : ce sont des paliers que l'on compare entre séances,
+ * pas une valeur à ajuster au centième.
+ *
+ * @type {Readonly<object>}
+ */
+const RESULT_WINDOW_SPEEDS = Object.freeze({
+    0.1: "0,1×",
+    0.3: "0,3×",
+    0.6: "0,6×",
+    1: "1×",
+    1.6: "1,6×",
+    2.5: "2,5×"
+});
+
+/**
+ * Durées d'affichage de la fenêtre de résultat une fois l'animation terminée, en
+ * secondes. Le zéro vaut « jusqu'au clic » : la fenêtre attend alors indéfiniment,
+ * ce qui n'immobilise rien puisque plus personne ne l'attend à ce stade.
+ *
+ * Construites à l'appel et non au chargement du module : le libellé du zéro passe
+ * par `game.i18n`, qui n'existe pas encore à l'import.
+ *
+ * @returns {object} Les choix de durée d'affichage.
+ */
+function resultWindowLingers() {
+    return {
+        2: "2 s",
+        4: "4 s",
+        6: "6 s",
+        10: "10 s",
+        15: "15 s",
+        0: game.i18n.localize("FQCARDENGINE.ResultWindowLingerUntilClick")
+    };
+}
+
+/**
  * Enregistrement des réglages du module (`game.settings.register`).
  *
  * Extrait du hook `init` de `init-engine.js` : le comportement est inchangé,
@@ -145,6 +182,54 @@ export function registerSettings() {
     game.settings.register(FqCardEngineModule.moduleName, "ShowCharGauges", {
         scope: "client",
         config: false,
+        type: Boolean,
+        default: true,
+    });
+    // Réglages client : chacun règle le rythme auquel il regarde SES propres jets.
+    // La résolution attend la fin de cette animation avant d'appliquer quoi que
+    // ce soit, donc ces valeurs pèsent sur la durée du tour et non sur le seul décor.
+    //
+    // Deux réglages et non un : le temps que les dés mettent à se poser et le temps
+    // d'attente entre deux étapes ne se règlent pas pour les mêmes raisons. On peut
+    // vouloir des dés qui roulent longtemps mais s'enchaînent vite, ou l'inverse.
+    game.settings.register(FqCardEngineModule.moduleName, "ResultWindowSpeed", {
+        name: game.i18n.localize("FQCARDENGINE.ResultWindowSpeedSetting"),
+        hint: game.i18n.localize("FQCARDENGINE.ResultWindowSpeedSettingHint"),
+        scope: "client",
+        config: true,
+        type: Number,
+        choices: RESULT_WINDOW_SPEEDS,
+        default: 1,
+    });
+    game.settings.register(FqCardEngineModule.moduleName, "ResultWindowPauseSpeed", {
+        name: game.i18n.localize("FQCARDENGINE.ResultWindowPauseSpeedSetting"),
+        hint: game.i18n.localize("FQCARDENGINE.ResultWindowPauseSpeedSettingHint"),
+        scope: "client",
+        config: true,
+        type: Number,
+        choices: RESULT_WINDOW_SPEEDS,
+        default: 1,
+    });
+    // En secondes et non en multiplicateur : c'est un temps de lecture, que l'on
+    // choisit pour lui-même et non par rapport au rythme de l'animation. Il n'est
+    // pas transmis aux autres joueurs — plus personne n'attend la fenêtre à ce
+    // stade, chacun peut donc la garder à l'écran aussi longtemps qu'il veut.
+    game.settings.register(FqCardEngineModule.moduleName, "ResultWindowLinger", {
+        name: game.i18n.localize("FQCARDENGINE.ResultWindowLingerSetting"),
+        hint: game.i18n.localize("FQCARDENGINE.ResultWindowLingerSettingHint"),
+        scope: "client",
+        config: true,
+        type: Number,
+        choices: resultWindowLingers(),
+        default: 6,
+    });
+    // Actif par défaut : le moteur n'anime plus de dés en 3D, ce son est le seul
+    // retour sonore qu'un jet ait encore.
+    game.settings.register(FqCardEngineModule.moduleName, "ResultWindowDiceSound", {
+        name: game.i18n.localize("FQCARDENGINE.ResultWindowDiceSoundSetting"),
+        hint: game.i18n.localize("FQCARDENGINE.ResultWindowDiceSoundSettingHint"),
+        scope: "client",
+        config: true,
         type: Boolean,
         default: true,
     });

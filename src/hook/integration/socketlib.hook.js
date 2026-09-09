@@ -6,6 +6,8 @@ import ObjectUtils from "../../core/utils/object.utils.js";
 import TokenHud from "../../domain/interface/token-hud.js";
 import PlayCard from "../../domain/engine/play-card.js";
 import {showDeckShuffledAlert} from "../../core/utils/dialog.utils.js";
+import ResultWindow from "../../domain/interface/window/result-window.js";
+import {registerResultBroadcaster} from "../../domain/engine/roll/result-presenter.js";
 
 /**
  * Instance socketlib du module, initialisée au hook `socketlib.ready`.
@@ -31,4 +33,16 @@ Hooks.once("socketlib.ready", () => {
     socket.register("deleteToken", TokenHud.deleteToken);
     socket.register("deckShuffledAlert", showDeckShuffledAlert);
     socket.register("passCards", TradingCards.passCards);
+    // Le résultat s’affiche chez TOUT LE MONDE : sans chat animé ni dés 3D, un
+    // spectateur privé de cette fenêtre ne verrait plus rien du jet, seulement
+    // des barres de vie qui tombent sans explication.
+    socket.register("showResultWindow", report => {
+        // Pas d’attente : seul le client du lanceur retient l’application des
+        // dégâts sur son animation, les autres ne font que regarder.
+        ResultWindow.present(report);
+    });
+    registerResultBroadcaster(report => {
+        socket.executeForOthers("showResultWindow",
+            {...report, speed: ResultWindow.speed, pauseSpeed: ResultWindow.pauseSpeed});
+    });
 });

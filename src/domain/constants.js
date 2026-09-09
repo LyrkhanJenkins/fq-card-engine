@@ -1,12 +1,6 @@
 import CardFqSystem from "./system/cards/card-fq-system.mjs";
 import TargetingPredicates from "./engine/shared/targeting-predicates.js";
 
-export const CRITICAL_COLOR = "#C0392B";
-export const CRITICAL_HEAL_COLOR = "#c39f43";
-export const HEAL_COLOR = "#10911A";
-export const DAMAGES_COLOR = "#F1C40F";
-export const EVASION_COLOR = "#4B8AF1";
-export const OTHER_ROLL_COLOR = "#34CBE3";
 export const SUCCESS_COLOR = "green";
 export const FAIL_COLOR = "red";
 export const OriginFQEffectLabel = "FQ Effect";
@@ -34,29 +28,6 @@ export const DEFAULT_MAX_ZEAL = 8;
  * @type {number}
  */
 export const MAX_CLASS_LEVEL = 12;
-
-// Construit une apparence Dice So Nice « forcée » à partir d'une couleur de fond.
-// On force volontairement `colorset: "custom"`, `system: "standard"` et
-// `texture: "none"` pour que la couleur s'affiche de façon fiable quel que soit le
-// préréglage du joueur (ex. « Spectral », qui sinon écraserait la couleur). Le
-// compromis : les dés du module n'utilisent plus le modèle choisi par le joueur,
-// mais leur couleur est garantie.
-export function buildDiceAppearance(color) {
-    return {
-        colorset: "custom",
-        system: "standard",
-        texture: "none",
-        background: color,
-        edge: color,
-        foreground: "#FFFFFF",
-        outline: "#000000"
-    };
-}
-
-// Apparences forcées pour les jets spécifiques : critique = rouge, esquive = bleu.
-// Les autres dés du module utilisent la couleur du joueur (voir Damage.getPlayerDiceAppearance).
-export const CRITICAL_DICE_APPEARANCE = buildDiceAppearance(CRITICAL_COLOR);
-export const EVASION_DICE_APPEARANCE = buildDiceAppearance(EVASION_COLOR);
 
 /**
  * Regroupe des constantes de couleurs/labels et des accesseurs pratiques vers

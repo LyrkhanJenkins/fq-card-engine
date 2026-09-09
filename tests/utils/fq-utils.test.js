@@ -6,6 +6,9 @@ import ObjectUtils from "../../src/core/utils/object.utils.js";
 import Fx from "../../src/domain/engine/shared/fx.js";
 import ResourceHandler from "../../src/domain/engine/shared/resource-handler.js";
 import Damage from "../../src/domain/engine/roll/damage.js";
+import RollReport from "../../src/domain/engine/roll/roll-report.js";
+import ResultChatLog from "../../src/domain/engine/roll/result-chat-log.js";
+import {registerResultPresenter} from "../../src/domain/engine/roll/result-presenter.js";
 import Geometry from "../../src/domain/engine/shared/geometry.js";
 import {socket} from "../../src/hook/integration/socketlib.hook.js";
 import CombatTurn from "../../src/domain/engine/combat-turn.js";
@@ -33,10 +36,12 @@ vi.mock("../../src/domain/engine/roll/damage.js", () => ({
         buildDamageDiceLauncher: vi.fn(async () => ([])),
         buildHealDiceLauncher: vi.fn(async () => ([])),
         handleSoundEffect: vi.fn(),
-        addCriticalEvasionToDamage: vi.fn(),
-        applyDiceAppearance: vi.fn(),
-        displayResult: vi.fn()
+        addCriticalEvasionToDamage: vi.fn()
     }
+}));
+
+vi.mock("../../src/domain/engine/roll/result-chat-log.js", () => ({
+    default: {publish: vi.fn()}
 }));
 
 vi.mock("../../src/domain/engine/shared/fx.js", () => ({
@@ -120,7 +125,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         expect(ResourceHandler.consumeResources).toHaveBeenCalled();
         expect(Damage.buildDamageDiceLauncher).toHaveBeenCalled();
         expect(Damage.buildHealDiceLauncher).toHaveBeenCalled();
-        expect(Damage.displayResult).toHaveBeenCalled();
+        expect(ResultChatLog.publish).toHaveBeenCalled();
         expect(socket.executeAsGM).toHaveBeenCalledWith("logCardPlayed", expect.any(Array), cardContent,
             expect.any(String), expect.any(Array), card.name);
     });
@@ -704,15 +709,16 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
         });
 
         it("applyEffectsFormulas non vide : appelle playApplyEffectsFormulas et concatène les messages", async () => {
-            const spy = vi.spyOn(CardEffect, "playApplyEffectsFormulas").mockResolvedValue(["Message effet déclenché"]);
+            const spy = vi.spyOn(CardEffect, "playApplyEffectsFormulas")
+                .mockResolvedValue({messages: ["Message effet déclenché"], pending: null});
             const cardContent = makeChoice({applyEffectsFormulas: [{formula: "1d20", title: "T", effects: []}]});
 
             await CardEffect.applyCardEffect(cardContent, makeCard(), {});
 
-            expect(spy).toHaveBeenCalledWith(cardContent.applyEffectsFormulas[0], cardContent);
-            expect(Damage.displayResult).toHaveBeenCalledWith(
-                game.user.character, expect.any(Array), expect.arrayContaining(["Message effet déclenché"])
-            );
+            expect(spy).toHaveBeenCalledWith(cardContent.applyEffectsFormulas[0], cardContent,
+                expect.any(RollReport));
+            expect(ResultChatLog.publish).toHaveBeenCalledWith(game.user.character,
+                expect.objectContaining({messages: expect.arrayContaining(["Message effet déclenché"])}));
 
             spy.mockRestore();
         });
@@ -729,6 +735,57 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(socket.executeAsGM).toHaveBeenCalledWith("applyActorHpModification", "token1", 5, "damageFQ");
             expect(socket.executeAsGM).toHaveBeenCalledWith("applyActorHpModification", "token2", 3, "healFQ");
         });
+
+        it("les PV n'arrivent qu'une fois l'affichage du résultat terminé", async () => {
+            let presented = false;
+            let presentedWhenApplied;
+            registerResultPresenter(async () => {
+                await new Promise(resolve => setTimeout(resolve, 5));
+                presented = true;
+            });
+            socket.executeAsGM.mockImplementation((name) => {
+                if (name === "applyActorHpModification") {
+                    presentedWhenApplied = presented;
+                }
+            });
+            // Le vrai lanceur remplit le rapport EN MÊME TEMPS qu'il rend ses
+            // résultats : sans cela le rapport reste vide, et une résolution vide
+            // n'ouvre légitimement aucune fenêtre.
+            Damage.buildDamageDiceLauncher.mockImplementationOnce(async (actor, content, report) => {
+                report.addResult({
+                    targetTokenId: "token1", targetName: "Cible", value: 5,
+                    type: "damageFQ", critical: false, evasion: false
+                });
+                return [{targetTokenId: "token1", value: 5, type: "damageFQ"}];
+            });
+
+            await CardEffect.applyCardEffect(makeChoice({damage: "1d6"}), makeCard(), {});
+
+            expect(presentedWhenApplied).toBe(true);
+            registerResultPresenter(null);
+        });
+
+        it("un affichage défaillant ne retient pas les dégâts", async () => {
+            vi.spyOn(console, "error").mockImplementation(() => {});
+            registerResultPresenter(async () => {
+                throw new Error("le calque a explosé");
+            });
+            // Le vrai lanceur remplit le rapport EN MÊME TEMPS qu'il rend ses
+            // résultats : sans cela le rapport reste vide, et une résolution vide
+            // n'ouvre légitimement aucune fenêtre.
+            Damage.buildDamageDiceLauncher.mockImplementationOnce(async (actor, content, report) => {
+                report.addResult({
+                    targetTokenId: "token1", targetName: "Cible", value: 5,
+                    type: "damageFQ", critical: false, evasion: false
+                });
+                return [{targetTokenId: "token1", value: 5, type: "damageFQ"}];
+            });
+
+            await CardEffect.applyCardEffect(makeChoice({damage: "1d6"}), makeCard(), {});
+
+            expect(socket.executeAsGM).toHaveBeenCalledWith("applyActorHpModification", "token1", 5, "damageFQ");
+            registerResultPresenter(null);
+        });
     });
 
     describe("playApplyEffectsFormulas", () => {
@@ -742,7 +799,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             globalThis.ActiveEffect = undefined;
         });
 
-        it("match (self) : crée l'effet via ActiveEffect.implementation.create et renvoie les messages traduits", async () => {
+        it("match (self) : prépare l'effet sur le lanceur et rend ses messages, sans rien créer", async () => {
             const applyEffectsFormulas = {
                 formula: "1d20",
                 title: "Effet spécial",
@@ -753,14 +810,21 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
                 }]
             };
 
-            const messages = await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, makeChoice());
+            const {messages, pending} = await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, makeChoice());
+
+            // Rien n'est appliqué à la résolution : l'effet ne doit apparaître sur le
+            // jeton qu'une fois le dé qui le déclenche montré au joueur.
+            expect(ActiveEffect.implementation.create).not.toHaveBeenCalled();
+            expect(messages).toEqual(expect.arrayContaining([expect.stringContaining("FQCARDENGINE.SomeMsg")]));
+            expect(pending).not.toBeNull();
+
+            await CardEffect.applyPendingEffects(pending);
 
             expect(ActiveEffect.implementation.create).toHaveBeenCalled();
             expect(socket.executeAsGM).not.toHaveBeenCalledWith("addEffectForTarget", expect.anything(), expect.anything());
-            expect(messages).toEqual(expect.arrayContaining([expect.stringContaining("FQCARDENGINE.SomeMsg")]));
         });
 
-        it("match, cible (self=false + minReach défini) : crée l'effet pour chaque cible via socket addEffectForTarget", async () => {
+        it("match, cible (self=false + minReach défini) : applique l'effet à chaque cible via socket addEffectForTarget", async () => {
             const applyEffectsFormulas = {
                 formula: "1d20",
                 title: "T",
@@ -772,17 +836,36 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             };
             const cardContent = makeChoice({minReach: 1});
 
-            await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, cardContent);
+            const {pending} = await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, cardContent);
+            await CardEffect.applyPendingEffects(pending);
 
             expect(socket.executeAsGM).toHaveBeenCalledWith("addEffectForTarget", expect.any(Object), "token1");
             expect(ActiveEffect.implementation.create).not.toHaveBeenCalled();
         });
 
-        it("no match (aucun effet ne correspond au total du jet) : ne crée aucun effet et renvoie []", async () => {
+        it("les cibles sont figées à la résolution, jamais relues au moment d'appliquer", async () => {
+            const applyEffectsFormulas = {
+                formula: "1d20",
+                title: "T",
+                effects: [{result: "0", self: false, messages: [], data: [{label: "E", changes: []}]}]
+            };
+
+            const {pending} = await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, makeChoice({minReach: 1}));
+            // La sélection change pendant que l'animation tourne : elle ne doit plus peser.
+            vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "tokenSurvenu"}]);
+            await CardEffect.applyPendingEffects(pending);
+
+            expect(socket.executeAsGM).toHaveBeenCalledWith("addEffectForTarget", expect.any(Object), "token1");
+            expect(socket.executeAsGM).not.toHaveBeenCalledWith("addEffectForTarget", expect.anything(), "tokenSurvenu");
+        });
+
+        it("no match : aucun effet à appliquer, aucun message", async () => {
             const applyEffectsFormulas = {formula: "1d20", title: "T", effects: []};
 
-            const messages = await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, makeChoice());
+            const {messages, pending} = await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, makeChoice());
+            await CardEffect.applyPendingEffects(pending);
 
+            expect(pending).toBeNull();
             expect(ActiveEffect.implementation.create).not.toHaveBeenCalled();
             expect(socket.executeAsGM).not.toHaveBeenCalledWith("addEffectForTarget", expect.anything(), expect.anything());
             expect(messages).toEqual([]);

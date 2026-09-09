@@ -8,10 +8,14 @@
 
 ### Versions prévues
 #### 3.0.0
-- Est ce qu'on redivise pas en plusieurs modules : FX, Dégâts... avant de release?
-- L'esquive fait demi-dégâts? ( avoir quand on fera le moine) (Esquive critique? Double-critique?)
+- L'esquive fait demi-dégâts
+- Prise en compte la classe d'armure de DND5E, chaque sort demande soit une classe d'armure soit des jés de sauvegarde soit rien
+  - Rajouter la classe d'armure Aux attaques -> La classe d'armure surpassant le jet d'attaque fait demi-dégâts?
+  - Rajoute des dés de sauvegarde à ceux configurés dans les sorts ou les cartes : Prérequis: comment prendre 
+  - Le Raccourci pour ne pas lancer l'attaque à enlever
 
 #### 3.0.1
+  
 - faire bouger tornade effet magique
 - Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens (vérifier que c'est pas déjà fait)
 - J'ai l'impression que ya pas la bonne couleur de dé quand on fait le roll damage depuis une arme équipé (grave?)
@@ -25,7 +29,6 @@
 
 #### 3.1.x
 - Faire un générateur pour créer son propre start heroes? stats de base?
-- Prise en compte la classe d'armure de DND5E
 - Migrations objets dnd5e v FQ OU comment plus les mettre en avant?
 - Prise en compte des resistances, absorption des dégâts
 - Prise en compte des jet d'attaque (pour toucher les monstres)?

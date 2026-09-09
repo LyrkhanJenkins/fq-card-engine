@@ -3,6 +3,9 @@ import {makeActor} from "../factories.js";
 import ResourceHandler from "../../src/domain/engine/shared/resource-handler.js";
 import Constants from "../../src/domain/constants.js";
 import Damage from "../../src/domain/engine/roll/damage.js";
+import ResultChatLog from "../../src/domain/engine/roll/result-chat-log.js";
+import {registerResultPresenter} from "../../src/domain/engine/roll/result-presenter.js";
+import RollReport from "../../src/domain/engine/roll/roll-report.js";
 import Fx from "../../src/domain/engine/shared/fx.js";
 import OpportunityAttack from "../../src/domain/engine/reaction/opportunity-attack.js";
 
@@ -301,7 +304,7 @@ describe("integration/dnd5e", () => {
             vi.spyOn(Damage, "addCriticalToHeal").mockResolvedValue([
                 {targetTokenId: "token-1", value: 5, type: "healFQ"}
             ]);
-            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(ResultChatLog, "publish").mockImplementation(() => {});
             vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
 
             const actor = {id: "actor-1", system: {fq: {bonus: {heal: ""}}}};
@@ -315,11 +318,10 @@ describe("integration/dnd5e", () => {
             await hook([roll], {subject});
 
             expect(Damage.addCriticalToHeal)
-                .toHaveBeenCalledWith(actor, roll.total, expect.objectContaining({heal: "1d8"}), expect.any(Array));
+                .toHaveBeenCalledWith(actor, roll.total, expect.objectContaining({heal: "1d8"}), expect.any(RollReport));
             expect(Fx.handleSpecialEffect).toHaveBeenCalled();
             expect(socket.executeAsGM).toHaveBeenCalledWith("applyActorHpModification", "token-1", 5, "healFQ");
-            expect(Damage.displayResult)
-                .toHaveBeenCalledWith(actor, [{targetTokenId: "token-1", value: 5, type: "healFQ"}], null);
+            expect(ResultChatLog.publish).toHaveBeenCalledWith(actor, expect.any(RollReport));
             expect(socket.executeAsGM)
                 .toHaveBeenCalledWith("logCardPlayed", expect.any(Array), expect.objectContaining({heal: "1d8"}),
                     expect.any(String), expect.any(Array), null);
@@ -329,7 +331,7 @@ describe("integration/dnd5e", () => {
             const hook = getHook("dnd5e.rollDamageV2");
             vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
             vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
-            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(ResultChatLog, "publish").mockImplementation(() => {});
             vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
 
             const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
@@ -350,7 +352,7 @@ describe("integration/dnd5e", () => {
             const hook = getHook("dnd5e.rollDamageV2");
             vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
             vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
-            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(ResultChatLog, "publish").mockImplementation(() => {});
             vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
 
             const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
@@ -376,7 +378,7 @@ describe("integration/dnd5e", () => {
             vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
                 verdict: ResourceHandler.TARGETING_VERDICT.OK, targets: [], outOfReach: []});
             vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
-            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(ResultChatLog, "publish").mockImplementation(() => {});
             vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
 
             const ennemi = {id: "token-lyrkhan"};
@@ -398,7 +400,7 @@ describe("integration/dnd5e", () => {
             await rollDamage([{formula: "2d6", total: 7, options: {type: "slashing"}}], {subject});
 
             expect(Damage.addCriticalEvasionToDamage).toHaveBeenCalledWith(
-                actor, expect.any(Number), expect.objectContaining({forcedTargets: [ennemi]}), expect.any(Array));
+                actor, expect.any(Number), expect.objectContaining({forcedTargets: [ennemi]}), expect.any(RollReport));
         });
 
         it("le journal ne reçoit pas les cibles imposées : un Token est un graphe circulaire", async () => {
@@ -410,7 +412,7 @@ describe("integration/dnd5e", () => {
             vi.spyOn(ResourceHandler, "evaluateTargeting").mockReturnValue({
                 verdict: ResourceHandler.TARGETING_VERDICT.OK, targets: [], outOfReach: []});
             vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
-            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            vi.spyOn(ResultChatLog, "publish").mockImplementation(() => {});
             vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
 
             // Un Token de Foundry est un objet PIXI qui se référence lui-même par sa
@@ -434,7 +436,7 @@ describe("integration/dnd5e", () => {
 
             // La résolution locale, elle, garde bien les cibles figées.
             expect(Damage.addCriticalEvasionToDamage).toHaveBeenCalledWith(
-                actor, expect.any(Number), expect.objectContaining({forcedTargets: [cible]}), expect.any(Array));
+                actor, expect.any(Number), expect.objectContaining({forcedTargets: [cible]}), expect.any(RollReport));
 
             const logged = socket.executeAsGM.mock.calls.find(call => call[0] === "logCardPlayed")?.[2];
             expect(logged).toBeDefined();
@@ -454,7 +456,7 @@ describe("integration/dnd5e", () => {
             const hook = getHook("dnd5e.rollDamageV2");
             vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
             vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
-            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
+            const published = vi.spyOn(ResultChatLog, "publish").mockImplementation(() => {});
             vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
 
             const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
@@ -473,29 +475,28 @@ describe("integration/dnd5e", () => {
                 expect.objectContaining({forcedTargets: [fuyard]}), expect.any(Array), reactant, "slashing");
             // Une attaque d'opportunité est gratuite.
             expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
-            // …et le chat le dit, par un message à part : sans lui, une AO est
-            // indiscernable d'une attaque ordinaire dans le fil de discussion.
-            expect(ChatMessage.create).toHaveBeenCalledWith(expect.objectContaining({
-                content: expect.stringContaining("FQCARDENGINE.ChatMessagePartOpportunityAttack")}));
+            // …et le rapport porte la mention : sans elle, une AO serait
+            // indiscernable d'une attaque ordinaire, dans la fenêtre comme dans le
+            // message de chat, qui la rendent tous deux depuis ce seul champ.
+            const report = published.mock.calls[0][1];
+            expect(report.header.tag).toContain("FQCARDENGINE.ChatMessagePartOpportunityAttack");
         });
 
-        it("joue les FX seulement après la fin des animations de dés (Dice So Nice)", async () => {
+        it("joue les FX seulement une fois l'affichage du résultat terminé", async () => {
             const hook = getHook("dnd5e.rollDamageV2");
-            let diceDone = false;
-            let diceDoneWhenFxPlayed;
+            let presented = false;
+            let presentedWhenFxPlayed;
             vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
-            vi.spyOn(Damage, "displayResult").mockImplementation(() => {});
-            // Le jet dépose une animation de dés dans le collecteur ; elle se termine
-            // de façon asynchrone (setTimeout) après tout code synchrone.
-            vi.spyOn(Damage, "addCriticalEvasionToDamage").mockImplementation(async (a, t, c, dsn) => {
-                dsn.push(new Promise(resolve => setTimeout(() => {
-                    diceDone = true;
-                    resolve();
-                }, 5)));
-                return [];
+            vi.spyOn(ResultChatLog, "publish").mockImplementation(() => {});
+            // L'affichage se termine de façon asynchrone, après tout code
+            // synchrone : les FX ne doivent pas partir avant lui.
+            registerResultPresenter(async () => {
+                await new Promise(resolve => setTimeout(resolve, 5));
+                presented = true;
             });
+            vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
             vi.spyOn(Fx, "handleSpecialEffect").mockImplementation(async () => {
-                diceDoneWhenFxPlayed = diceDone;
+                presentedWhenFxPlayed = presented;
             });
 
             const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
@@ -509,7 +510,8 @@ describe("integration/dnd5e", () => {
             await hook([roll], {subject});
 
             expect(Fx.handleSpecialEffect).toHaveBeenCalled();
-            expect(diceDoneWhenFxPlayed).toBe(true);
+            expect(presentedWhenFxPlayed).toBe(true);
+            registerResultPresenter(null);
         });
 
     });

@@ -1,13 +1,13 @@
 import ResourceHandler from "./resource-handler.js";
 import Damage from "../roll/damage.js";
+import RollReport from "../roll/roll-report.js";
+import ResultChatLog from "../roll/result-chat-log.js";
+import {presentResult} from "../roll/result-presenter.js";
 import RollService from "../roll/roll-service.js";
 import WeaponDamage from "../roll/weapon-damage.js";
 import Minion from "./minion.js";
 import Geometry from "./geometry.js";
-import Constants, {
-    OriginFQEffectLabel,
-    OTHER_ROLL_COLOR
-} from "../../constants.js";
+import Constants, {OriginFQEffectLabel} from "../../constants.js";
 import Facing from "./facing.js";
 import Fx from "./fx.js";
 import {createInfo, createWarning} from "../../../core/utils/chat.utils.js";
@@ -48,12 +48,24 @@ export default class CardEffect {
      */
     static async applyCardEffect(cardContent, card, fd, to) {
         let resultArray = [];
-        // Collecteur local des animations Dice So Nice de ce jet de carte : créé à la
-        // volée et passé aux méthodes de jet. Chaque dé y dépose sa promesse d'animation
-        // sans l'attendre → tous les dés partent simultanément à l'écran.
-        const dsnAnimations = [];
+        // Rapport local de ce jet de carte : créé à la volée et passé aux méthodes de
+        // jet, il recueille le détail de chaque dé, les verdicts et les valeurs
+        // appliquées. Il est ensuite montré au joueur, puis publié au chat.
+        const report = new RollReport();
+        report.setHeader({
+            actorName: Constants.actorCurrent?.name ?? null,
+            cardName: card?.name ? game.i18n.localize(card.name) : null,
+            deckName: card?.origin?.name ?? null,
+            cardImg: CardEffect.cardFaceImage(card)
+        });
 
         if (cardContent) {
+            report.setHeader({
+                choiceName: cardContent.name ? game.i18n.localize(cardContent.name) : null,
+                xValue: fd?.XXX ?? null,
+                yValue: fd?.YYY ?? null,
+                targets: TargetingPredicates.resolveTargetLabels(cardContent)
+            });
             ResourceHandler.consumeResources(cardContent, Constants.actorCurrent);
             // Injection des dégâts de l'arme équipée (@wpnR/@wpnM)
             WeaponDamage.substituteInDamage(cardContent, Constants.actorCurrent);
@@ -70,10 +82,10 @@ export default class CardEffect {
                 }
             }
             if (cardContent.damage) {
-                resultArray.push(...await Damage.buildDamageDiceLauncher(Constants.actorCurrent, cardContent, dsnAnimations));
+                resultArray.push(...await Damage.buildDamageDiceLauncher(Constants.actorCurrent, cardContent, report));
             }
             if (cardContent.heal) {
-                resultArray.push(...await Damage.buildHealDiceLauncher(Constants.actorCurrent, cardContent, dsnAnimations));
+                resultArray.push(...await Damage.buildHealDiceLauncher(Constants.actorCurrent, cardContent, report));
             }
             if (cardContent.draw) {
                 // Même chemin que la pioche de début de tour, remélange de la défausse compris.
@@ -114,17 +126,26 @@ export default class CardEffect {
                 }
             }
             let cardMessages = CardEffect.translateMessages(cardContent.messages);
+            const pendingEffects = [];
             if (cardContent.applyEffectsFormulas) {
                 for (let i = 0; i < cardContent.applyEffectsFormulas.length; i++) {
                     const applyEffectsFormulas = cardContent.applyEffectsFormulas[i];
-                    const message = await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, cardContent);
-                    cardMessages = cardMessages.concat(message);
+                    const {messages, pending} =
+                        await CardEffect.playApplyEffectsFormulas(applyEffectsFormulas, cardContent, report);
+                    cardMessages = cardMessages.concat(messages);
+                    pendingEffects.push(pending);
                 }
             }
+            report.addMessages(cardMessages);
 
-            // On attend ICI, une seule fois, que TOUTES les animations Dice So Nice
-            // du jet soient terminées (les dés sont partis simultanément plus haut).
-            await Promise.all(dsnAnimations);
+            // Le rapport est complet : on le montre, et RIEN ne change dans la
+            // partie tant que le joueur ne l’a pas vu. Les effets, les points de
+            // vie et les FX attendent la fin de l’animation.
+            await presentResult(report);
+
+            for (const pending of pendingEffects) {
+                await CardEffect.applyPendingEffects(pending);
+            }
 
             // Orientation vers la cible, avant les FX : le lanceur regarde ce
             // qu'il vise. Les cibles se résolvent ici avec le type de ciblage de
@@ -138,7 +159,7 @@ export default class CardEffect {
                 await socket.executeAsGM("applyActorHpModification", res.targetTokenId, res.value, res.type);
             }
 
-            Damage.displayResult(Constants.actorCurrent, resultArray, cardMessages);
+            ResultChatLog.publish(Constants.actorCurrent, report);
             await socket.executeAsGM("logCardPlayed", resultArray, cardContent, Constants.actorCurrent?.id,
                 TargetingPredicates.resolveTargetActorIds(cardContent), card?.name);
         } else {
@@ -751,10 +772,11 @@ export default class CardEffect {
      *
      * @param {object} applyEffectsFormulas - La formule d'effets (`formula`, `title`, `effects`).
      * @param {object} cardContent          - Le contenu (choix) de la carte (portée, type de cible…).
+     * @param {RollReport} [report]         - Le rapport où consigner ce jet supplémentaire.
      *
      * @returns {Promise<string[]>} Les messages traduits de l'effet déclenché (vide si aucun).
      */
-    static async playApplyEffectsFormulas(applyEffectsFormulas, cardContent) {
+    static async playApplyEffectsFormulas(applyEffectsFormulas, cardContent, report = null) {
         // Formule purement numérique : pas de jet, on valide directement avec ce
         // nombre comme total (aucun dé lancé, aucun message de chat posté).
         const numeric = Number(applyEffectsFormulas.formula);
@@ -762,47 +784,60 @@ export default class CardEffect {
 
         const roll = isNumber ? null : await new Roll(applyEffectsFormulas.formula).evaluate();
         const total = isNumber ? numeric : roll.total;
-        if (roll) Damage.applyDiceAppearance(roll); // dés à la couleur du joueur
         for (let i = 0; i < applyEffectsFormulas.effects.length; i++) {
             applyEffectsFormulas.effects[i].result = RollService.rollResultSync(applyEffectsFormulas.effects[i].result);
         }
 
-        // On PRÉPARE ici l'effet déclenché (données + message) sans encore
-        // l'appliquer aux tokens : l'application effective est repoussée après
-        // l'animation des dés, plus bas.
         let effectMessages = null;
-        let currentEffectData = null;
         let effects = null;
-        let message = `<h2 style='color: ${OTHER_ROLL_COLOR}'>${game.i18n.format("FQCARDENGINE.CardMsgApplyEffectsFormulas",
-            {applyEffectsFormulasTitle: applyEffectsFormulas.title})}`;
-        currentEffectData = applyEffectsFormulas.effects?.find(effect => effect.result === total) ?? null;
+        const currentEffectData = applyEffectsFormulas.effects?.find(effect => effect.result === total) ?? null;
         if (currentEffectData) {
-            message += `: <b>${game.i18n.format("FQCARDENGINE.CardMsgApplyEffectsFormulasSuccess")}</b> `;
             effectMessages = CardEffect.translateMessages(currentEffectData.messages);
             effects = await CardEffect.createEffectsFromData(currentEffectData);
         }
 
-        message += `</h2>`;
+        report?.addExtraRoll({
+            title: applyEffectsFormulas.title,
+            formula: String(applyEffectsFormulas.formula),
+            dice: roll ? RollReport.diceOf(roll) : [],
+            total,
+            hit: !!currentEffectData
+        });
 
-        if (roll) {
-            const msg = await roll.toMessage({
-                speaker: ChatMessage.getSpeaker({actor: Constants.actorCurrent}),
-                flavor: message
-            });
-
-            if (game.dice3d && roll.isDeterministic === false) {
-                await game.dice3d.waitFor3DAnimationByMessageID(msg.id);
-            }
-        }
-
-        // Application des effets actifs sur soi ou les cibles UNIQUEMENT après la
-        // fin de l'animation des dés : sinon l'effet apparaît sur le token avant
-        // que le jet qui le déclenche ait fini de rouler.
         // Décision cible/soi + cibles résolues : calculées UNE seule fois et partagées par
         // l'ajout et le retrait d'effet de cet effet déclenché.
+        //
+        // Elles sont FIGÉES ICI, avant l'affichage du résultat, et non au moment
+        // d'appliquer l'effet : l'animation dure plusieurs secondes, pendant
+        // lesquelles la sélection de l'utilisateur peut avoir changé. Lire les
+        // cibles après coup, ce serait lire ce qu'elles sont devenues — la panne
+        // que `TargetingPredicates#targetsByActivity` documente déjà côté dnd5e.
         const toTargets = currentEffectData ? CardEffect.effectAppliesToTargets(currentEffectData, cardContent) : false;
         const targets = toTargets ? Constants.myTargets(cardContent.targetType) : [];
 
+        return {
+            messages: effectMessages ?? [],
+            pending: currentEffectData ? {effects, currentEffectData, toTargets, targets} : null
+        };
+    }
+
+    /**
+     * Applique les effets actifs préparés par `playApplyEffectsFormulas` : création
+     * sur soi ou sur chaque cible via le MJ, puis retrait éventuel.
+     *
+     * Séparé de la résolution parce qu'il n'a pas lieu au même moment : le jet et
+     * son verdict sont connus tout de suite, mais l'effet ne doit apparaître sur
+     * le jeton qu'une fois le dé qui le déclenche montré au joueur.
+     *
+     * @param {?object} pending - Les effets préparés, ou null si le jet n'a rien déclenché.
+     *
+     * @returns {Promise<void>}
+     */
+    static async applyPendingEffects(pending) {
+        if (!pending) {
+            return;
+        }
+        const {effects, currentEffectData, toTargets, targets} = pending;
         if (effects) {
             for (const effectData of effects) {
                 if (toTargets) {
@@ -818,8 +853,22 @@ export default class CardEffect {
         if (currentEffectData?.removeEffectName) {
             await CardEffect.removeEffectForApplyEffect(currentEffectData, toTargets, targets);
         }
+    }
 
-        return effectMessages ? effectMessages : [];
+    /**
+     * L'illustration à montrer pour une carte : la face exposée si la carte en a
+     * une, son dos sinon. Une carte résolue est toujours révélée à son lanceur,
+     * donc aucun besoin ici de la logique de face cachée du message de chat.
+     *
+     * @param {Card} card - La carte jouée.
+     *
+     * @returns {?string} Le chemin de l'image, ou null si la carte n'en a pas.
+     */
+    static cardFaceImage(card) {
+        if (card?.face !== null && card?.face !== undefined && card?.faces?.[card.face]?.img) {
+            return card.faces[card.face].img;
+        }
+        return card?.back?.img ?? null;
     }
 
     /**

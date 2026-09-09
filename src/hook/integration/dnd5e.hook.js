@@ -1,8 +1,10 @@
 import ResourceHandler from "../../domain/engine/shared/resource-handler.js";
 import Damage from "../../domain/engine/roll/damage.js";
+import RollReport, {ROLL_ROLE} from "../../domain/engine/roll/roll-report.js";
+import ResultChatLog from "../../domain/engine/roll/result-chat-log.js";
+import {presentResult} from "../../domain/engine/roll/result-presenter.js";
 import {socket} from "./socketlib.hook.js";
 import Constants from "../../domain/constants.js";
-import {createInfo} from "../../core/utils/chat.utils.js";
 import Facing from "../../domain/engine/shared/facing.js";
 import Fx from "../../domain/engine/shared/fx.js";
 import TargetingPredicates from "../../domain/engine/shared/targeting-predicates.js";
@@ -149,7 +151,29 @@ Hooks.on("dnd5e.preRollAttackV2", (config, _dialog, _message) => {
     return false;
 });
 
-Hooks.on("dnd5e.preRollDamageV2", (config, dialog, _message) => {
+/**
+ * Indique si la résolution FQ prendra ce jet de dégâts en charge, et publiera donc
+ * son propre message de résultat.
+ *
+ * Lecture unique, partagée par la suppression du message de dnd5e et par la
+ * résolution elle-même : deux conditions jumelles finiraient par diverger, et la
+ * divergence se paierait en jet muet — message supprimé sans rien pour le
+ * remplacer — ou en message publié deux fois.
+ *
+ * @param {object} activity - L'activité dnd5e dont les dégâts sont jetés.
+ *
+ * @returns {boolean} True si le moteur FQ publiera le résultat de ce jet.
+ */
+const fqPublishesDamageRoll = (activity) => !!activity?.item?.actor
+    && ROLL_CONSUMING_TYPES.includes(activity?.type);
+
+Hooks.on("dnd5e.preRollDamageV2", (config, dialog, message) => {
+    // Le message de dnd5e ferait doublon avec le message unique publié en fin de
+    // résolution, qui porte déjà le détail de ces dés — et ses jets seraient
+    // animés en 3D alors que le moteur affiche les siens dans sa propre fenêtre.
+    if (message && fqPublishesDamageRoll(config.subject)) {
+        message.create = false;
+    }
     if (!game.settings.get(FqCardEngineModule.moduleName, "BypassWeaponAttackRoll")) {
         return true;
     }
@@ -189,37 +213,48 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     for (let roll of rolls) {
         if (item.actor) {
             let resultArray = [];
-            const dsnAnimations = [];
+            const report = new RollReport();
+            report.setHeader({
+                actorName: item.actor?.name ?? null,
+                cardName: item.name ?? null,
+                // `opportunityTarget` n'est posé que par la résolution d'attaque
+                // d'opportunité : sans cette mention, une AO serait indiscernable
+                // d'une attaque ordinaire, dans la fenêtre comme dans le chat.
+                tag: opportunityTarget
+                    ? game.i18n.localize("FQCARDENGINE.ChatMessagePartOpportunityAttack") : null,
+                targets: TargetingPredicates.resolveTargetLabels(cardContent, item.actor)
+            });
             let fxType;
             let playFx = false;
             if (subject.type === "heal") {
                 cardContent.heal = roll.formula;
-                if (item.actor.system?.fq?.bonus?.heal) {
+                // Détail des dés relevé AVANT le jet de bonus : celui-ci repart du seul
+                // total et n'a plus de dés, alors que ce sont ceux de dnd5e qu'il faut montrer.
+                const rolled = {formula: roll.formula, dice: RollReport.diceOf(roll)};
+                const healBonus = item.actor.system?.fq?.bonus?.heal;
+                if (healBonus) {
                     roll = await new Roll(Damage.getHealWithBonus(item.actor, roll.total)).evaluate();
-                    Damage.applyDiceAppearance(roll); // dés à la couleur du joueur
-                    await roll.toMessage({
-                        speaker: ChatMessage.getSpeaker({actor: item.actor}),
-                        flavor: game.i18n.format("FQCARDENGINE.InfoMsgHealBonus", {heal: item.actor.system?.fq?.bonus?.heal})
-                    });
                 }
-                resultArray.push(...await Damage.addCriticalToHeal(item.actor, roll.total, cardContent, dsnAnimations));
+                report.setMainRoll({role: ROLL_ROLE.HEAL, ...rolled, total: roll.total, bonus: healBonus || null});
+                resultArray.push(...await Damage.addCriticalToHeal(item.actor, roll.total, cardContent, report));
                 fxType = roll.options.type;
                 playFx = true;
             } else if (subject.type === "damage" || subject.type === "attack") {
                 cardContent.damage = roll.formula;
-                if (item.actor.system?.fq?.bonus?.damage) {
+                const rolled = {formula: roll.formula, dice: RollReport.diceOf(roll)};
+                const damageBonus = item.actor.system?.fq?.bonus?.damage;
+                if (damageBonus) {
                     roll = await new Roll(Damage.getDamageWithBonus(item.actor, roll.total)).evaluate();
-                    Damage.applyDiceAppearance(roll); // dés à la couleur du joueur
-                    await roll.toMessage({
-                        speaker: ChatMessage.getSpeaker({actor: item.actor}),
-                        flavor: game.i18n.format("FQCARDENGINE.InfoMsgDamageBonus", {damage: item.actor.system?.fq?.bonus?.damage})
-                    });
                 }
-                resultArray.push(...await Damage.addCriticalEvasionToDamage(item.actor, roll.total, cardContent, dsnAnimations));
+                report.setMainRoll({role: ROLL_ROLE.DAMAGE, ...rolled, total: roll.total, bonus: damageBonus || null});
+                resultArray.push(...await Damage.addCriticalEvasionToDamage(item.actor, roll.total, cardContent, report));
                 fxType = roll.options.type;
                 playFx = true;
             }
-            await Promise.all(dsnAnimations);
+            // Le rapport est complet : on le montre, et RIEN ne change dans la
+            // partie tant que le joueur ne l’a pas vu. Les FX et les points de vie
+            // attendent la fin de l’animation.
+            await presentResult(report);
 
             if (token && playFx) {
                 await Fx.handleSpecialEffect(cardContent, resultArray, token, fxType);
@@ -235,13 +270,7 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
             // ne pas bouger du tout.
             Facing.faceTarget(token, (cardContent.forcedTargets ?? Constants.myTargets())?.[0]);
 
-            // `opportunityTarget` n'est posé que par la résolution d'attaque
-            // d'opportunité : sans ce message, une AO est indiscernable d'une
-            // attaque ordinaire dans le fil de discussion.
-            if (opportunityTarget) {
-                createInfo(game.i18n.localize("FQCARDENGINE.ChatMessagePartOpportunityAttack"), {actor: item.actor});
-            }
-            Damage.displayResult(item.actor, resultArray, null);
+            ResultChatLog.publish(item.actor, report);
             const {forcedTargets: _forcedTargets, ...loggedContent} = cardContent;
             // Nom de carte null : une attaque dnd5e n'est pas une carte, et le journal
             // ne doit pas la faire reconnaître comme telle par les conditions de carte.

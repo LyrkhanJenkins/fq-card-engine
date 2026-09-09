@@ -6,8 +6,15 @@ import FqItemSheet from "../domain/interface/sheet/items/fq-item-sheet.js";
 import FqCardsSheet from "../domain/interface/sheet/cards/fq-cards-sheet.js";
 import FqCardSheet from "../domain/interface/sheet/cards/fq-card-sheet.js";
 import DisplayCard from "../domain/interface/card-svg/display-card.js";
+import ResultWindow from "../domain/interface/window/result-window.js";
+import {registerResultPresenter} from "../domain/engine/roll/result-presenter.js";
 
 Hooks.on("setup", function () {
+    // La couche interface s’annonce au moteur : celui-ci attend la fin de
+    // l’affichage du résultat avant d’appliquer les effets, les PV et les FX,
+    // sans jamais importer la fenêtre qui l’assure.
+    registerResultPresenter(report => ResultWindow.present(report));
+
     // Helper de tooltips sur les emojis des cartes : la description devient du
     // HTML (échappé) où chaque emoji connu porte un data-tooltip localisé.
     Handlebars.registerHelper("fqEmojiTooltips",

@@ -1,6 +1,5 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 import Damage from "../../src/domain/engine/roll/damage.js";
-import {DAMAGES_COLOR} from "../../src/domain/constants.js";
 
 describe("Damage", () => {
     let actor;
@@ -53,39 +52,20 @@ describe("Damage", () => {
         expect(result[0].value >= 10).toBe(true);
     });
 
-    it("should roll with success value result", async () => {
-        const result = await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
-            color: DAMAGES_COLOR,
-            title: "Test"
-        });
-        expect(result).toBeGreaterThanOrEqual(1);
-        expect(result).toBeLessThanOrEqual(20);
-    });
+    // ─── rollTotalAsync ───────────────────────────────────────────────────────
 
-    it("should display roll result", () => {
-        Damage.displayResult(actor, [{key: "Test", value: 10}], ["Manual Action"]);
-        expect(ChatMessage.create).toHaveBeenCalledTimes(1);
-    });
-
-    // ─── rollWithSuccessValueResultAsync — succès/échec ────────────────────────
-
-    describe("Damage — rollWithSuccessValueResultAsync success/échec", () => {
-        it("should flag SUCCÈS when the deterministic roll (10) reaches the success threshold", async () => {
-            await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
-                color: DAMAGES_COLOR, title: "Test", success: 5
-            });
-            const instance = Roll.mock.instances[Roll.mock.instances.length - 1];
-            const flavor = instance.toMessage.mock.calls[0][0].flavor;
-            expect(flavor).toContain("SUCCÈS");
+    describe("Damage — rollTotalAsync", () => {
+        it("rend le total du jet", async () => {
+            const result = await Damage.rollTotalAsync("1d20");
+            expect(result).toBeGreaterThanOrEqual(1);
+            expect(result).toBeLessThanOrEqual(20);
         });
 
-        it("should flag échec when the deterministic roll (10) misses the success threshold", async () => {
-            await Damage.rollWithSuccessValueResultAsync(actor, "1d20", {
-                color: DAMAGES_COLOR, title: "Test", success: 15
-            });
+        it("ne publie aucun message : le chat est écrit une seule fois, en fin de résolution", async () => {
+            await Damage.rollTotalAsync("1d20");
             const instance = Roll.mock.instances[Roll.mock.instances.length - 1];
-            const flavor = instance.toMessage.mock.calls[0][0].flavor;
-            expect(flavor).toContain("échec");
+            expect(instance.toMessage).not.toHaveBeenCalled();
+            expect(ChatMessage.create).not.toHaveBeenCalled();
         });
     });
 
@@ -187,31 +167,6 @@ describe("Damage", () => {
             expect(result).toHaveLength(1);
             expect(result[0].targetTokenId).toBe("casterTokenId");
             expect(result[0].key).toContain("Lanceur");
-        });
-    });
-
-    // ─── displayResult — branches ────────────────────────────────────────────
-
-    describe("Damage — displayResult branches", () => {
-        it("should not post a chat message when resultArray is empty and manualActions is null", () => {
-            Damage.displayResult(actor, [], null);
-            expect(ChatMessage.create).not.toHaveBeenCalled();
-        });
-
-        it("should post a message with only the result section when manualActions is empty", () => {
-            Damage.displayResult(actor, [{key: "Dégâts", value: 5}], []);
-            expect(ChatMessage.create).toHaveBeenCalledTimes(1);
-            const content = ChatMessage.create.mock.calls[0][0].content;
-            expect(content).toContain("Dégâts");
-            expect(content).not.toContain("<h2>");
-        });
-
-        it("should post a message with only the manual actions section when resultArray is empty", () => {
-            Damage.displayResult(actor, [], ["Manual Action"]);
-            expect(ChatMessage.create).toHaveBeenCalledTimes(1);
-            const content = ChatMessage.create.mock.calls[0][0].content;
-            expect(content).not.toContain("<h1>");
-            expect(content).toContain("Manual Action");
         });
     });
 
