@@ -54,6 +54,13 @@ export default class RollReport {
         /** @type {object[]} Une entrée par cible : dé d'esquive, seuil, verdict. */
         this.evasions = [];
 
+        /**
+         * @type {object[]} Une entrée par cible pour le jet POUR TOUCHER, quand la
+         * carte en demande un : dé, modificateur, seuil (classe d'armure ou DD) et
+         * verdict de protection. Vide pour une carte sans jet pour toucher.
+         */
+        this.hits = [];
+
         /** @type {object[]} Les valeurs réellement appliquées, une par cible. */
         this.results = [];
 
@@ -151,6 +158,29 @@ export default class RollReport {
     }
 
     /**
+     * Enregistre le jet POUR TOUCHER contre une cible.
+     *
+     * Le `kind` dit qui a jeté : « ac » pour un jet d'attaque du lanceur contre
+     * la classe d'armure, « save » pour la sauvegarde de la cible contre un DD.
+     * Dans les deux cas, `defended` signifie que la cible s'est protégée.
+     *
+     * @param {object}  data               - Le jet pour toucher.
+     * @param {string}  data.targetTokenId - L'id du jeton ciblé.
+     * @param {string}  data.targetName    - Le nom du jeton ciblé.
+     * @param {string}  data.kind          - « ac » ou « save ».
+     * @param {number}  data.roll          - Le résultat du dé.
+     * @param {number}  data.modifier      - Le modificateur ajouté au dé.
+     * @param {number}  data.total         - Le total du jet.
+     * @param {number}  data.threshold     - La classe d'armure ou le DD.
+     * @param {boolean} data.defended      - True si la cible est protégée.
+     *
+     * @returns {void}
+     */
+    addHit({targetTokenId, targetName, kind, roll, modifier, total, threshold, defended}) {
+        this.hits.push({targetTokenId, targetName, kind, roll, modifier, total, threshold, defended});
+    }
+
+    /**
      * Enregistre la valeur réellement appliquée à une cible.
      *
      * @param {object}  data               - Le résultat pour cette cible.
@@ -160,11 +190,12 @@ export default class RollReport {
      * @param {string}  data.type          - Le type d'application (« damageFQ » ou « healFQ »).
      * @param {boolean} data.critical      - True si le jet était critique.
      * @param {boolean} data.evasion       - True si la cible a esquivé.
+     * @param {boolean} [data.defended]    - True si la cible s'est protégée (armure ou sauvegarde).
      *
      * @returns {void}
      */
-    addResult({targetTokenId, targetName, value, type, critical, evasion}) {
-        this.results.push({targetTokenId, targetName, value, type, critical, evasion});
+    addResult({targetTokenId, targetName, value, type, critical, evasion, defended = false}) {
+        this.results.push({targetTokenId, targetName, value, type, critical, evasion, defended});
     }
 
     /**
@@ -230,6 +261,7 @@ export default class RollReport {
             mainRoll: this.mainRoll ? {...this.mainRoll, dice: [...this.mainRoll.dice]} : null,
             critical: this.critical ? {...this.critical} : null,
             evasions: this.evasions.map(evasion => ({...evasion})),
+            hits: this.hits.map(hit => ({...hit})),
             results: this.results.map(result => ({...result})),
             extraRolls: this.extraRolls.map(extra => ({...extra, dice: [...extra.dice]})),
             messages: [...this.messages]

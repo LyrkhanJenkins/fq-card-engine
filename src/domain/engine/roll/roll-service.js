@@ -1,7 +1,9 @@
 import Constants from "../../constants.js";
+import {ABILITIES} from "../../abilities.js";
 
-/** Les six caractéristiques dnd5e, source unique des jetons `@<abi>` du module. */
-export const ABILITIES = Object.freeze(["str", "dex", "con", "int", "wis", "cha"]);
+// Réexporté pour les appelants historiques : la liste vit désormais dans un
+// module sans dépendance, que le schéma de carte peut importer sans cycle.
+export {ABILITIES};
 
 /**
  * Service de jets de dés et de substitution des bonus de caractéristiques dans

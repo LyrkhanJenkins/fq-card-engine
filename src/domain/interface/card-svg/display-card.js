@@ -3,6 +3,7 @@ import RollService from "../../engine/roll/roll-service.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import FormulaDisplay, {ABILITY_EMOJIS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, FORMULA_FIELDS} from "./formula-display.js";
 import {WEAPON_TOKENS} from "../../engine/roll/weapon-damage.js";
+import {ABILITY_SHORT} from "../../abilities.js";
 import {expandPills, makePill, PILL_SOURCE, sanitizePillInput, stripPills} from "./formula-pill.js";
 
 /** Seuils (longueur max → taille de police en px), triés par longueur croissante. */
@@ -474,6 +475,30 @@ export default class DisplayCard {
     }
 
     /**
+     * Ce qu'affiche la bulle de TOUCHER — la septième, après réactif et
+     * rejouabilité : ce que la carte oppose à sa cible.
+     *
+     * Une carte à jet d'attaque affiche « CA », ce contre quoi le jet est fait ;
+     * une carte à sauvegarde affiche la caractéristique que la cible doit jeter
+     * (« DEX »…). La SOURCE du modificateur (arme ou caractéristique du lanceur)
+     * n'entre pas dans la bulle : elle appartient au tooltip, comme le détail de
+     * la rejouabilité.
+     *
+     * @param {object} [choice] - Le choix (contenu) de la carte.
+     *
+     * @returns {?{label: string, tooltip: string}} Les clés de localisation du
+     *          texte et du tooltip, ou null si la carte n'a pas cette bulle.
+     */
+    static getHitBubble(choice) {
+        if (choice?.hitType === CardFqSystem.HIT_TYPE_ATTACK) {
+            return {label: "FQCARDENGINE.HitBubbleAttack", tooltip: "FQCARDENGINE.TooltipHitAttack"};
+        }
+        const short = choice?.hitType === CardFqSystem.HIT_TYPE_SAVE
+            ? ABILITY_SHORT[choice.saveAbility] : null;
+        return short ? {label: short, tooltip: "FQCARDENGINE.TooltipHitSave"} : null;
+    }
+
+    /**
      * Construit les données de bulle communes à toutes les vues d'une carte (main,
      * dialogue « Jouer la carte », voile plein écran) : coûts, portées, réactivité,
      * rejouabilité (« P » passif, « A » automatique, « E » éphémère, ou le nombre de charges),
@@ -501,6 +526,7 @@ export default class DisplayCard {
         const zealMod = RollService.hasAbilitiesBonus(choice.zeal);
         const reachMod = RollService.hasAbilitiesBonus(choice.minReach) || RollService.hasAbilitiesBonus(choice.maxReach);
         const replayableMod = RollService.hasAbilitiesBonus(choice.replayable);
+        const hit = DisplayCard.getHitBubble(choice);
         return {
             action,
             mana,
@@ -524,6 +550,8 @@ export default class DisplayCard {
             zealFill: zealMod ? "green" : "black",
             replayableFill: replayableMod ? "green" : "black",
             replayableTooltip: DisplayCard.getReplayableTooltipKey(replayable),
+            hit: hit?.label ?? null,
+            hitTooltip: hit?.tooltip ?? null,
             actionSize: DisplayCard.getBubbleSizeForCardSvg(action),
             manaSize: DisplayCard.getBubbleSizeForCardSvg(mana),
             zealSize: DisplayCard.getBubbleSizeForCardSvg(zeal),

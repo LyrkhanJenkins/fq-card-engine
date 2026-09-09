@@ -131,13 +131,6 @@
     letter-spacing: 0.06em;
 }
 
-.fq-result-targets-line {
-    margin-top: 5px;
-    font-size: 11px;
-    line-height: 1.35;
-    color: var(--fq8-message-target);
-}
-
 /* ── Corps : critique à gauche, jet au centre, esquives à droite ── */
 .fq-result-body {
     display: grid;
@@ -181,45 +174,11 @@
     transition: color 0.3s ease;
 }
 
-.fq-result-col--crit.is-active .fq-result-col-label {
-    color: var(--fq8-color-critical);
-}
-
-.fq-result-col--eva.is-active .fq-result-col-label {
-    color: var(--fq8-color-evasion);
-}
-
 .fq-result-threshold {
     font-size: 9px;
     font-style: italic;
     text-align: center;
     color: var(--fq8-message-label);
-}
-
-.fq-result-verdict {
-    min-height: 13px;
-    margin-top: 4px;
-    font-size: 10px;
-    font-weight: 800;
-    line-height: 1.2;
-    text-align: center;
-    text-transform: uppercase;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.fq-result-verdict.is-on {
-    opacity: 1;
-    animation: fq-result-pop 0.38s cubic-bezier(0.2, 1.6, 0.4, 1);
-}
-
-.fq-result-verdict.is-hit {
-    color: var(--fq8-color-critical);
-}
-
-.fq-result-verdict.is-miss {
-    color: var(--fq8-message-label);
-    font-weight: 600;
 }
 
 /* ── Le centre : les dés, puis le total ── */
@@ -357,10 +316,6 @@
     background: var(--fq8-color-critical);
 }
 
-.fq-result-die--eva {
-    background: var(--fq8-color-evasion);
-}
-
 .fq-result-die--other {
     background: var(--fq8-message-target);
 }
@@ -404,64 +359,6 @@
 /* Le maximum du dé : il mérite d'être vu sans avoir à lire le chiffre. */
 .fq-result-die.is-max {
     filter: drop-shadow(0 0 9px rgba(var(--fq-gold-hi2-rgb), 0.95));
-}
-
-/* ── Les esquives, une ligne par cible ── */
-.fq-result-eva-row {
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    padding: 2px 3px;
-    border-radius: 4px;
-    opacity: 0.3;
-    transition: opacity 0.3s ease;
-}
-
-.fq-result-eva-row.is-live {
-    opacity: 1;
-}
-
-.fq-result-eva-row .fq-result-die {
-    width: 27px;
-    height: 27px;
-    font-size: 12px;
-}
-
-.fq-result-eva-name {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    font-size: 10px;
-    line-height: 1.15;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: var(--fq8-message-target);
-}
-
-.fq-result-eva-name span {
-    display: block;
-    opacity: 0.6;
-}
-
-.fq-result-eva-out {
-    flex: 0 0 auto;
-    font-size: 9px;
-    font-weight: 800;
-    text-transform: uppercase;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-}
-
-.fq-result-eva-out.is-on {
-    opacity: 1;
-}
-
-.fq-result-eva-out.is-dodge {
-    color: var(--fq8-color-evasion);
-}
-
-.fq-result-eva-out.is-touched {
-    color: var(--fq8-message-label);
 }
 
 /* ── Les valeurs appliquées : masquées jusqu'à leur tour ── */
@@ -651,3 +548,156 @@
     from { transform: scaleX(1); }
     to { transform: scaleX(0); }
 }
+
+/* ══ Colonne d'ATTAQUE : deux encarts centrés ══════════════════════════
+   Le dé porte le total, la ligne du dessous la formule. Aucun verdict
+   écrit : il se lit sur la ligne de résultat, plus bas. */
+.fq-result-col--attack.is-active .fq-result-col-label {
+    color: var(--fq8-color-critical);
+}
+
+.fq-result-col--defense.is-active .fq-result-col-label {
+    color: var(--fq8-color-evasion);
+}
+
+.fq-result-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.fq-result-box + .fq-result-box {
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+.fq-result-box.is-empty { opacity: .4; }
+
+.fq-result-box-label {
+    margin-bottom: 4px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--fq8-message-label);
+}
+
+/* Le dé est centré par le flex de son encart, sans dépendre de sa marge :
+   une marge automatique lâche dès que le dé n'a pas de largeur explicite. */
+.fq-result-box .fq-result-die { margin: 0; }
+
+.fq-result-empty-note {
+    font-size: 9px;
+    font-style: italic;
+    line-height: 1.3;
+    opacity: .7;
+}
+
+/* ══ Colonne de DÉFENSE : une ligne par ennemi, rien que des symboles ══ */
+.fq-result-def-head,
+.fq-result-foe-line {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fq-result-def-head { margin-bottom: 2px; }
+
+.fq-result-foe-line {
+    padding: 2px 0;
+    opacity: .3;
+    transition: opacity .3s ease;
+}
+
+.fq-result-foe-line.is-live { opacity: 1; }
+
+.fq-result-foe-line + .fq-result-foe-line { border-top: 1px solid rgba(255, 255, 255, .07); }
+
+.fq-result-foe-name {
+    overflow: hidden;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--fq8-message-target);
+}
+
+/* Le libellé de colonne, calé sur la largeur d'un symbole. */
+.fq-result-key {
+    width: 26px;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .02em;
+    text-align: center;
+}
+
+.fq-result-key--armor { color: var(--fq8-message-gold); }
+.fq-result-key--save { color: var(--fq8-color-save); }
+.fq-result-key--eva { color: var(--fq8-color-evasion); }
+
+.fq-result-marks {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 4px;
+    align-items: flex-start;
+}
+
+.fq-result-mark-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Un symbole de défense : le chiffre, et la forme qui le porte. Sans verdict
+   encore posé, il reste neutre et estompé. */
+.fq-result-mark {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--fq8-message-label);
+    background: rgba(var(--fq-black-rgb), .45);
+    transition: background .25s ease, color .25s ease;
+}
+
+/* Le seuil, en tout petit sous le symbole. Toujours présent, même vide, pour
+   que les symboles d'une même ligne restent alignés sur leur haut. */
+.fq-result-mark-seuil {
+    min-height: 9px;
+    margin-top: 1px;
+    font-size: 8px;
+    line-height: 1;
+    opacity: .55;
+}
+
+.fq-result-mark--d20 {
+    clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+}
+
+/* L'écu : épaules arrondies, pointe en bas. Les segments du haut approchent
+   la courbe, que clip-path ne sait pas tracer autrement. */
+.fq-result-mark--shield {
+    clip-path: polygon(
+        50% 0%, 68% 1%, 84% 5%, 94% 12%, 100% 22%,
+        100% 55%, 82% 82%, 50% 100%, 18% 82%, 0% 55%,
+        0% 22%, 6% 12%, 16% 5%, 32% 1%
+    );
+}
+
+.fq-result-mark.is-success {
+    color: #0f1a12;
+    background: var(--fq8-message-heal);
+}
+
+.fq-result-mark.is-failure {
+    color: #1d0f0f;
+    background: var(--fq8-message-damage);
+}
+
+.fq-result-badge.is-protected { color: var(--fq8-message-gold); }

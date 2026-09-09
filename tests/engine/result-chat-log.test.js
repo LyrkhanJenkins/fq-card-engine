@@ -85,6 +85,75 @@ describe("ResultChatLog", () => {
         });
     });
 
+    describe("jet pour toucher", () => {
+
+        /**
+         * Rapport minimal portant un seul jet pour toucher.
+         *
+         * @param {object} hit - Le jet à consigner (voir `RollReport.addHit`).
+         *
+         * @returns {RollReport} Le rapport.
+         */
+        function reportWithHit(hit) {
+            const report = new RollReport();
+            report.setMainRoll({role: ROLL_ROLE.DAMAGE, formula: "1d6", dice: [{sides: 6, value: 4}], total: 4});
+            report.addHit(hit);
+            report.addResult({
+                targetTokenId: "t1", targetName: "Gobelin", value: 2,
+                type: "damageFQ", critical: false, evasion: false, defended: true
+            });
+            return report;
+        }
+
+        it("porte l'attaque avec la classe d'armure visée", () => {
+            ResultChatLog.publish(ACTOR, reportWithHit({
+                targetTokenId: "t1", targetName: "Gobelin", kind: "ac",
+                roll: 4, modifier: 5, total: 9, threshold: 15, defended: true
+            }));
+
+            const content = lastContent();
+            expect(content).toContain("fq-roll-line--hit");
+            expect(content).toContain("FQCARDENGINE.RollLabelAttackOn");
+            expect(content).toContain("FQCARDENGINE.RollAgainstAc");
+            // La cible s'est protégée : pour le lanceur, c'est un raté.
+            expect(content).toContain("FQCARDENGINE.RollAttackBlocked");
+        });
+
+        it("porte la sauvegarde avec son DD, et sa polarité propre", () => {
+            ResultChatLog.publish(ACTOR, reportWithHit({
+                targetTokenId: "t1", targetName: "Gobelin", kind: "save",
+                roll: 11, modifier: 3, total: 14, threshold: 13, defended: true
+            }));
+
+            const content = lastContent();
+            // Modificateur distinct de l'attaque : une sauvegarde réussie sert la
+            // cible, la feuille de style doit pouvoir le dire.
+            expect(content).toContain("fq-roll-line--save");
+            expect(content).toContain("FQCARDENGINE.RollLabelSaveOf");
+            expect(content).toContain("FQCARDENGINE.RollAgainstDc");
+            expect(content).toContain("FQCARDENGINE.RollSaveSuccess");
+        });
+
+        it("marque la cible protégée d'un badge, comme l'esquive", () => {
+            ResultChatLog.publish(ACTOR, reportWithHit({
+                targetTokenId: "t1", targetName: "Gobelin", kind: "ac",
+                roll: 4, modifier: 5, total: 9, threshold: 15, defended: true
+            }));
+
+            const content = lastContent();
+            expect(content).toContain("fq-result-badge--protected");
+            expect(content).toContain("FQCARDENGINE.ChatMessagePartProtected");
+        });
+
+        it("ne porte aucune ligne de toucher quand la carte n'en demande pas", () => {
+            ResultChatLog.publish(ACTOR, fullReport());
+
+            const content = lastContent();
+            expect(content).not.toContain("fq-roll-line--hit");
+            expect(content).not.toContain("fq-roll-line--save");
+        });
+    });
+
     describe("contenu", () => {
         beforeEach(() => {
             ResultChatLog.publish(ACTOR, fullReport());

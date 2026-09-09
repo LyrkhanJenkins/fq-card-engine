@@ -144,15 +144,6 @@ export function registerSettings() {
         },
         filePicker: false,  // set true with a String `type` to use a file picker input
     });
-    game.settings.register(FqCardEngineModule.moduleName, "BypassWeaponAttackRoll", {
-        name: game.i18n.localize("FQCARDENGINE.BypassWeaponAttackRollSetting"),
-        hint: game.i18n.localize("FQCARDENGINE.BypassWeaponAttackRollSettingHint"),
-        scope: "world",     // "world" = sync to db, "client" = local storage
-        config: true,       // false if you dont want it to show in module config
-        type: Boolean,       // Number, Boolean, String,
-        default: false,
-        filePicker: false,  // set true with a String `type` to use a file picker input
-    });
     game.settings.register(FqCardEngineModule.moduleName, OPPORTUNITY_ATTACK_SETTING, {
         name: game.i18n.localize("FQCARDENGINE.OpportunityAttackSetting"),
         hint: game.i18n.localize("FQCARDENGINE.OpportunityAttackSettingHint"),

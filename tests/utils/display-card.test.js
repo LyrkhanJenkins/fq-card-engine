@@ -532,6 +532,35 @@ describe("DisplayCard — périmètres exclus : non-régression (D-12, D-13, Tas
     });
 });
 
+describe("DisplayCard.buildBubbleData — bulle de toucher", () => {
+
+    it("affiche « CA » pour une carte à jet d'attaque", () => {
+        const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "@wpnM"});
+
+        expect(data.hit).toBe("FQCARDENGINE.HitBubbleAttack");
+        expect(data.hitTooltip).toBe("FQCARDENGINE.TooltipHitAttack");
+    });
+
+    it("affiche la caractéristique abrégée pour une carte à sauvegarde", () => {
+        const data = DisplayCard.buildBubbleData({hitType: "save", saveAbility: "dex"});
+
+        expect(data.hit).toBe("FQCARDENGINE.AbilityShortDex");
+        expect(data.hitTooltip).toBe("FQCARDENGINE.TooltipHitSave");
+    });
+
+    it("n'affiche aucune bulle quand la carte ne demande aucun jet pour toucher", () => {
+        expect(DisplayCard.buildBubbleData({}).hit).toBeNull();
+        expect(DisplayCard.buildBubbleData({hitType: ""}).hit).toBeNull();
+    });
+
+    it("n'affiche aucune bulle pour une sauvegarde sans caractéristique : rien à annoncer", () => {
+        const data = DisplayCard.buildBubbleData({hitType: "save", saveAbility: ""});
+
+        expect(data.hit).toBeNull();
+        expect(data.hitTooltip).toBeNull();
+    });
+});
+
 describe("DisplayCard.buildBubbleData — bulle de rejouabilité", () => {
 
     it("affiche « P » et le tooltip passif pour un choix passif", () => {

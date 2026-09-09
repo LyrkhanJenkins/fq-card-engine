@@ -179,7 +179,9 @@ div.separator {
     grid-area: 1 / 1;
     min-width: 0;
     font-weight: 600;
-    overflow-wrap: anywhere;
+    /* `break-word` et non `anywhere` : un nom ne se coupe qu'en dernier
+       recours, jamais au milieu quand la ligne peut se casser sur un espace. */
+    overflow-wrap: break-word;
     color: var(--fq8-message-target);
 }
 
@@ -240,6 +242,26 @@ div.separator {
 }
 
 .fq-roll-line--eva .fq-roll-outcome--miss {
+    color: var(--fq8-message-label);
+}
+
+/* Les mêmes couleurs que les colonnes de la fenêtre de résultat : l'or pour
+   l'attaque, le rose pour la sauvegarde, le bleu pour l'esquive. */
+.fq-roll-line--hit .fq-roll-label {
+    color: var(--fq8-message-gold);
+}
+
+.fq-roll-line--save .fq-roll-label {
+    color: var(--fq8-color-save);
+}
+
+/* Même raison que l'esquive : une sauvegarde RÉUSSIE sert la cible et non le
+   lanceur, elle ne peut donc pas prendre le vert de la réussite. */
+.fq-roll-line--save .fq-roll-outcome--hit {
+    color: var(--fq8-color-save);
+}
+
+.fq-roll-line--save .fq-roll-outcome--miss {
     color: var(--fq8-message-label);
 }
 
@@ -304,7 +326,16 @@ div.separator {
     background: var(--fq8-message-zebra);
 }
 
+/* Le nom de la cible prend la place restante et se casse aux espaces ; sans
+   `min-width: 0` un conteneur flex refuse de le rétrécir et il déborde. */
+.fq-card-engine-result-line .fq-result-key {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: break-word;
+}
+
 .fq-card-engine-result-line .fq-result-value {
+    flex: 0 0 auto;
     display: inline-flex;
     align-items: baseline;
     gap: 5px;
@@ -345,6 +376,14 @@ div.separator {
     background: color-mix(in srgb, var(--fq8-color-evasion) 20%, transparent);
     border: 1px solid color-mix(in srgb, var(--fq8-color-evasion) 55%, transparent);
     color: var(--fq8-color-evasion);
+}
+
+/* Protection par l'armure ou la sauvegarde : l'or du jet pour toucher, comme
+   sa ligne de jet plus haut dans le message. */
+.fq-result-badge--protected {
+    background: color-mix(in srgb, var(--fq8-message-gold) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--fq8-message-gold) 55%, transparent);
+    color: var(--fq8-message-gold);
 }
 
 .fq-card-engine-result-manual {

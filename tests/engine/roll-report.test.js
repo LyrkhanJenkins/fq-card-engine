@@ -2,6 +2,7 @@ import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 import RollReport, {ROLL_ROLE} from "../../src/domain/engine/roll/roll-report.js";
 import Damage from "../../src/domain/engine/roll/damage.js";
 import TargetingPredicates from "../../src/domain/engine/shared/targeting-predicates.js";
+import {makeTarget, stubRolls, targeting} from "./roll-fixtures.js";
 
 /**
  * Rapport de jet : ce que la résolution d'une carte consigne au passage. Les
@@ -12,44 +13,6 @@ import TargetingPredicates from "../../src/domain/engine/shared/targeting-predic
  */
 
 const originalRoll = globalThis.Roll;
-
-/**
- * Remplace le `Roll` global par une séquence imposée : le n-ième `new Roll(...)`
- * rend le n-ième élément de la séquence.
- *
- * @param {{total: number, dice?: {sides: number, values: number[]}[]}[]} sequence - Les jets à servir, dans l'ordre.
- *
- * @returns {void}
- */
-function stubRolls(sequence) {
-    let index = 0;
-    globalThis.Roll = vi.fn(function (formula) {
-        const spec = sequence[index++] ?? {total: 0, dice: []};
-        this.formula = formula;
-        this.total = spec.total;
-        this.options = {};
-        this.dice = (spec.dice ?? []).map(die => ({
-            faces: die.sides,
-            results: die.values.map(value => ({result: value, active: true})),
-            options: {}
-        }));
-        this.evaluate = async () => this;
-        this.toMessage = vi.fn(async () => ({id: "messageId"}));
-    });
-}
-
-/**
- * Jeton de cible minimal, tel que le moteur le manipule.
- *
- * @param {string} id      - L'id du jeton.
- * @param {string} name    - Le nom affiché.
- * @param {number} evasion - Le score d'esquive de son acteur.
- *
- * @returns {object} Le jeton.
- */
-function makeTarget(id, name, evasion) {
-    return {id, name, actor: {_id: `actor-${id}`, system: {fq: {attributes: {evasion}}}}};
-}
 
 const CASTER = {
     _id: "caster",
@@ -103,10 +66,10 @@ describe("RollReport", () => {
                 {total: 18},
                 {total: 12}
             ]);
-            vi.spyOn(TargetingPredicates, "resolveTargets").mockReturnValue([
+            targeting(
                 makeTarget("t1", "Gobelin", 5),
                 makeTarget("t2", "Rocher", 0)
-            ]);
+            );
             report = new RollReport();
             await Damage.buildDamageDiceLauncher(CASTER, cardContent, report);
         });
@@ -136,15 +99,15 @@ describe("RollReport", () => {
 
         it("consigne la valeur réellement appliquée à chaque cible", () => {
             expect(report.results).toEqual([
-                {targetTokenId: "t1", targetName: "Gobelin", value: 18, type: "damageFQ", critical: true, evasion: false},
-                {targetTokenId: "t2", targetName: "Rocher", value: 18, type: "damageFQ", critical: true, evasion: false}
+                {targetTokenId: "t1", targetName: "Gobelin", value: 18, type: "damageFQ", critical: true, evasion: false, defended: false},
+                {targetTokenId: "t2", targetName: "Rocher", value: 18, type: "damageFQ", critical: true, evasion: false, defended: false}
             ]);
         });
     });
 
     it("un soin ne produit aucune esquive et marque ses résultats comme non esquivés", async () => {
         stubRolls([{total: 6, dice: [{sides: 6, values: [6]}]}, {total: 3}]);
-        vi.spyOn(TargetingPredicates, "resolveTargets").mockReturnValue([makeTarget("a1", "Bruenor", 5)]);
+        targeting(makeTarget("a1", "Bruenor", 5));
         const report = new RollReport();
 
         await Damage.buildHealDiceLauncher(CASTER, {heal: "1d6", bonusCrit: 0, targetType: "Default"}, report);
@@ -153,7 +116,7 @@ describe("RollReport", () => {
         expect(report.evasions).toEqual([]);
         expect(report.critical).toEqual({roll: 3, threshold: 17, hit: false});
         expect(report.results).toEqual([
-            {targetTokenId: "a1", targetName: "Bruenor", value: 6, type: "healFQ", critical: false, evasion: false}
+            {targetTokenId: "a1", targetName: "Bruenor", value: 6, type: "healFQ", critical: false, evasion: false, defended: false}
         ]);
     });
 
@@ -173,7 +136,7 @@ describe("RollReport", () => {
             // sérialisation socketlib (voir tests/hook/dnd5e.test.js).
             const cible = {id: "token-cible", name: "Momie"};
             cible.scene = {tokens: [cible]};
-            vi.spyOn(TargetingPredicates, "resolveTargets").mockReturnValue([cible]);
+            targeting(cible);
 
             const report = new RollReport();
             report.setHeader({targets: TargetingPredicates.resolveTargetLabels({})});

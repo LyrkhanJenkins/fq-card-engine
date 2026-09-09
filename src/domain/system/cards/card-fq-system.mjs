@@ -1,4 +1,6 @@
 import StatusEffects from "../effects/status-effects.js";
+import {ABILITY_CHOICE} from "../../abilities.js";
+import {WEAPON_TOKEN_CHOICE} from "../../weapon-tokens.js";
 
 const {SchemaField, StringField, NumberField, BooleanField, ArrayField, FilePathField} = foundry.data.fields;
 
@@ -27,6 +29,50 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         "CombatEnemies": "FQCARDENGINE.TargetTypeCombatEnemies",
         "CombatAllies": "FQCARDENGINE.TargetTypeCombatAllies"
     };
+
+    /**
+     * Comment un choix TOUCHE sa cible. Vide : aucun jet pour toucher, la carte
+     * se résout comme avant l'introduction de la classe d'armure. Les deux
+     * autres s'excluent : un choix demande soit un jet d'attaque contre la
+     * classe d'armure, soit un jet de sauvegarde de la cible contre un DD.
+     */
+    static HIT_TYPE_NONE = "";
+    static HIT_TYPE_ATTACK = "attack";
+    static HIT_TYPE_SAVE = "save";
+    static HIT_TYPE_CHOICE = {
+        "": "FQCARDENGINE.HitTypeNone",
+        "attack": "FQCARDENGINE.HitTypeAttack",
+        "save": "FQCARDENGINE.HitTypeSave"
+    };
+
+    /**
+     * D'où vient la base du modificateur de toucher : une caractéristique du
+     * lanceur (plus son bonus de maîtrise, comme une attaque de sort), ou l'arme
+     * équipée du type demandé — dont dnd5e calcule déjà le modificateur complet.
+     * Les jetons d'arme sont ceux des formules de dégâts (`@wpnM`/`@wpnR`) : le
+     * choix de l'arme est EXPLICITE, jamais déduit du contenu de la carte.
+     */
+    static HIT_SOURCE_NONE = "";
+    static HIT_SOURCE_ABILITY = "ability";
+    static HIT_SOURCE_CHOICE = {
+        "": "FQCARDENGINE.HitSourceNone",
+        "ability": "FQCARDENGINE.HitSourceAbility",
+        ...WEAPON_TOKEN_CHOICE
+    };
+
+    /**
+     * Indique si un choix demande un jet pour toucher (attaque ou sauvegarde).
+     * Un `hitType` vide ou inconnu — le cas de toutes les cartes antérieures à
+     * la classe d'armure — répond faux.
+     *
+     * @param {object} [choice] - Le choix (contenu) d'une carte.
+     *
+     * @returns {boolean} True si le choix demande un jet pour toucher.
+     */
+    static hasHitRoll(choice) {
+        return choice?.hitType === CardFqSystem.HIT_TYPE_ATTACK
+            || choice?.hitType === CardFqSystem.HIT_TYPE_SAVE;
+    }
 
     static MINION_TYPE_NONE = "";
     static MINION_TYPE_BEAST = "beast";
@@ -291,6 +337,41 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             bonusCrit: new StringField({required: true, label: "FQCARDENGINE.BonusCrit"}),
             bonusEva: new StringField({required: true, label: "FQCARDENGINE.BonusEva"}),
 
+            // Jet pour toucher. Un seul modificateur sert aux deux cas : l'attaque
+            // jette `d20 + modificateur` contre la classe d'armure, la sauvegarde
+            // oppose à la cible un DD de `8 + modificateur` — la règle D&D, où le
+            // DD d'un sort vaut `8 + maîtrise + caractéristique`, soit exactement
+            // `8 + son modificateur d'attaque`.
+            hitType: new StringField({
+                required: true, blank: true, label: "FQCARDENGINE.HitType",
+                choices: this.HIT_TYPE_CHOICE,
+                localize: true,
+                initial: () => this.HIT_TYPE_NONE,
+            }),
+            hitSource: new StringField({
+                required: true, blank: true, label: "FQCARDENGINE.HitSource",
+                choices: this.HIT_SOURCE_CHOICE,
+                localize: true,
+                initial: () => this.HIT_SOURCE_NONE,
+            }),
+            // La caractéristique du LANCEUR, quand la source est `ability`.
+            hitAbility: new StringField({
+                required: true, blank: true, label: "FQCARDENGINE.HitAbility",
+                choices: ABILITY_CHOICE,
+                localize: true,
+                initial: () => "",
+            }),
+            // La sauvegarde que lance la CIBLE (`hitType` = « save » uniquement).
+            saveAbility: new StringField({
+                required: true, blank: true, label: "FQCARDENGINE.SaveAbility",
+                choices: ABILITY_CHOICE,
+                localize: true,
+                initial: () => "",
+            }),
+            hitBonus: new StringField({required: true, label: "FQCARDENGINE.HitBonus"}),
+            // Surcharge complète du DD ; vide, le DD vaut `8 + modificateur`.
+            saveDc: new StringField({required: true, label: "FQCARDENGINE.SaveDc"}),
+
             // Options avancées
             // Controle les valeurs 'XXX' et 'YYY' placés dans les champs textes
             xmin: new StringField({required: true, label: "FQCARDENGINE.Xmin"}),
@@ -321,8 +402,10 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                 // Le type décide du plafond d'invocations simultanées appliqué au sbire.
                 type: new StringField({
                     required: false,
+                    blank: true,
                     label: "FQCARDENGINE.MinionType",
                     choices: this.MINION_TYPE_CHOICE,
+                    localize: true,
                     initial: () => this.MINION_TYPE_NONE,
                 }),
                 // message to display if test false

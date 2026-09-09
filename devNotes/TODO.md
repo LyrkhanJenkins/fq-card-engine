@@ -5,6 +5,10 @@
 - Vérifier la localisation notamment pour les macros
 
 ### Fix à prioriser
+- Problème encore avec le clignotement
+- Un joueur peut encore amener des cartes de son deck vers sa main avec la limitation des droits des joueurs
+- Changer les valeurs par défaut de l'animations de la fenetre de résultats
+- Vérifier formulaire, certaines mise en forme ont sautés...
 
 ### Versions prévues
 #### 3.0.0
@@ -13,6 +17,15 @@
   - Rajouter la classe d'armure Aux attaques -> La classe d'armure surpassant le jet d'attaque fait demi-dégâts?
   - Rajoute des dés de sauvegarde à ceux configurés dans les sorts ou les cartes : Prérequis: comment prendre 
   - Le Raccourci pour ne pas lancer l'attaque à enlever
+  - Décidé : sur une défense réussie (esquive, sauvegarde, armure), les effets/statuts de la carte sont TOUJOURS appliqués. À revoir plus tard : rendre ça configurable carte par carte (drapeau "effets annulés sur défense réussie").
+  - Décidé : entraînement aux armures CONSERVÉ, sur le référentiel dnd5e (system.traits.armorProf : lgt/med/hvy/shl). Aucune mécanique nouvelle : dnd5e calcule déjà proficiencyMultiplier, le moteur applique la conséquence (désavantage For/Dex) que le système laisse non implémentée.
+  - Décidé : maîtrise des armes ET des armures à renseigner sur les 9 classes et les héros de départ (weaponProf + armorProf) + advancements de maîtrise à la montée de niveau.
+  - À discuter en fin de chantier : revue générale des advancements des classes.
+  - À REPRENDRE dans une phase à part : le DESIGN de la 7e bulle (bulle de toucher) sur la face
+    de carte. Elle fonctionne — « CA » pour une attaque, l'abrégé de la caractéristique pour une
+    sauvegarde, dans le trou déjà découpé du socle — mais son dessin reste à retravailler.
+  - À REPRENDRE : refonte de la fenêtre de résultat en colonnes Attaque / Défense (maquette
+    validée en discussion, pas encore implémentée).
 
 #### 3.0.1
   

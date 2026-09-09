@@ -44,7 +44,6 @@ const MODULE_CONFIGURATION_ID = "fqUatModules0001";
 const FORCED_SETTINGS = [
     {module: MODULE_ID, key: "PlayerLimitCardsRight", value: true, id: "fqUatSetting0001"},
     {module: MODULE_ID, key: "RollInitiative", value: true, id: "fqUatSetting0002"},
-    {module: MODULE_ID, key: "BypassWeaponAttackRoll", value: true, id: "fqUatSetting0003"},
     // fq-restrain-movement laisse le MJ hors restrictions par défaut ; en UAT on veut
     // au contraire qu'il soit soumis aux mêmes règles de déplacement que le joueur.
     {module: "fq-restrain-movement", key: "gmNotRestrained", value: false, id: "fqUatSetting0004"},

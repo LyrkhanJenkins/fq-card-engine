@@ -11,7 +11,7 @@
       "system": {
         "activities": {
           "mq1j4R4IIz7U3Crq": {
-            "type": "damage",
+            "type": "attack",
             "_id": "mq1j4R4IIz7U3Crq",
             "sort": 0,
             "activation": {
@@ -59,8 +59,9 @@
             },
             "damage": {
               "critical": {
-                "allow": false
+                "bonus": ""
               },
+              "includeBase": false,
               "parts": [
                 {
                   "custom": {
@@ -78,7 +79,19 @@
             },
             "name": "",
             "img": "",
-            "appliedEffects": []
+            "appliedEffects": [],
+            "attack": {
+              "ability": "",
+              "bonus": "",
+              "critical": {
+                "threshold": null
+              },
+              "flat": false,
+              "type": {
+                "value": "melee",
+                "classification": "weapon"
+              }
+            }
           }
         },
         "uses": {

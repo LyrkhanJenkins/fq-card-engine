@@ -6,7 +6,7 @@ const MAIN_DIE_DURATION = 520;
 /** Décalage entre deux dés du jet principal, pour qu'ils ne tombent pas d'un bloc. */
 const MAIN_DIE_STAGGER = 80;
 
-/** Durée de roulement d'un d20 (critique, esquive) et d'un dé de formule d'effets. */
+/** Durée de roulement d'un d20 (critique, toucher, esquive) et d'un dé de formule d'effets. */
 const D20_DURATION = 440;
 
 /** Durée du décompte du total au centre. */
@@ -32,9 +32,10 @@ const SHAPED_DICE = Object.freeze(new Set([4, 6, 8, 10, 12, 20]));
 
 /**
  * Fenêtre de résultat : le calque qui met en scène une résolution de carte ou
- * d'activité — les dés du jet principal au centre, le critique à gauche, les
- * esquives à droite, puis les valeurs appliquées, les jets de formules d'effets
- * et les messages de la carte.
+ * d'activité — les dés du jet principal au centre, ce que fait le lanceur à
+ * gauche (colonne ATTAQUE : le toucher puis le critique), ce que chaque ennemi
+ * oppose à droite (colonne DÉFENSE : armure ou sauvegarde, puis esquive), et
+ * enfin les valeurs appliquées, les jets de formules d'effets et les messages.
  *
  * Le panneau est ancré en bas à droite et ne réserve aucune hauteur : chaque
  * section apparaît quand son tour vient et fait grandir le panneau vers le haut.
@@ -251,32 +252,59 @@ export default class ResultWindow {
             await ResultWindow.#countUp(q("[data-total]"), report.mainRoll.total, TOTAL_COUNT_DURATION, mine);
         }
 
-        // 3. Le critique tranche.
+        // 3. Le jet pour toucher. Une attaque ne roule qu'une fois pour toute la
+        // carte : un seul dé, avant le critique, comme dans la résolution.
+        const attack = (report.hits ?? []).find(hit => hit.kind === "ac");
+        if (attack) {
+            await ResultWindow.#wait(160, mine);
+            q(".fq-result-col--attack")?.classList.add("is-active");
+            await ResultWindow.#rollDie(q("[data-hit-die]"), 20, attack.total, D20_DURATION, mine);
+            if (!alive()) return;
+            const formula = q("[data-hit-formula]");
+            if (formula) {
+                formula.textContent = ResultWindow.#hitFormula(attack);
+            }
+            await ResultWindow.#wait(90, mine);
+        }
+
+        // 4. Le critique tranche.
         if (report.critical) {
             await ResultWindow.#wait(160, mine);
-            q(".fq-result-col--crit")?.classList.add("is-active");
+            q(".fq-result-col--attack")?.classList.add("is-active");
             await ResultWindow.#rollDie(q("[data-crit]"), 20, report.critical.roll, D20_DURATION, mine);
             await ResultWindow.#wait(90, mine);
             if (!alive()) return;
             ResultWindow.#revealCrit(win, report);
         }
 
-        // 4. Les esquives, une par une.
-        const rolledEvasions = (report.evasions ?? []).filter(evasion => evasion.roll !== null);
-        if (rolledEvasions.length > 0) {
+        // 5. Les défenses, ennemi par ennemi. Chaque ligne révèle ses symboles :
+        // la classe d'armure est déjà écrite — elle n'est pas jetée — alors qu'une
+        // sauvegarde et une esquive roulent leur dé.
+        const evasions = report.evasions ?? [];
+        if (evasions.length > 0) {
             await ResultWindow.#wait(160, mine);
-            q(".fq-result-col--eva")?.classList.add("is-active");
-            for (const evasion of rolledEvasions) {
-                const index = report.evasions.indexOf(evasion);
-                q(`[data-eva-row="${index}"]`)?.classList.add("is-live");
-                await ResultWindow.#rollDie(q(`[data-eva="${index}"]`), 20, evasion.roll, D20_DURATION, mine);
+            q(".fq-result-col--defense")?.classList.add("is-active");
+            const hits = new Map((report.hits ?? []).map(hit => [hit.targetTokenId, hit]));
+            for (let index = 0; index < evasions.length; index++) {
+                const evasion = evasions[index];
+                q(`[data-def-line="${index}"]`)?.classList.add("is-live");
+                const hit = hits.get(evasion.targetTokenId);
+                if (hit) {
+                    // La classe d'armure est déjà écrite (elle n'est pas jetée) ;
+                    // une sauvegarde fait rouler son total. Dans les deux cas, la
+                    // défense a tenu quand la cible s'est protégée.
+                    await ResultWindow.#revealDefenseMark(q(`[data-def-mark="${index}-0"]`),
+                        hit.kind === "ac" ? null : hit.total, hit.defended, mine);
+                }
                 if (!alive()) return;
-                ResultWindow.#revealEvasion(win, index, evasion);
+                await ResultWindow.#revealDefenseMark(q(`[data-def-mark="${index}-1"]`),
+                    evasion.roll === null ? null : evasion.roll, evasion.evaded, mine);
+                if (!alive()) return;
                 await ResultWindow.#wait(100, mine);
             }
         }
 
-        // 5. Les valeurs appliquées.
+        // 6. Les valeurs appliquées.
         if ((report.results?.length ?? 0) > 0) {
             await ResultWindow.#wait(160, mine);
             q("[data-targets]")?.classList.add("is-on");
@@ -287,7 +315,7 @@ export default class ResultWindow {
             }
         }
 
-        // 6. Les jets de formules d'effets de la carte.
+        // 7. Les jets de formules d'effets de la carte.
         if ((report.extraRolls?.length ?? 0) > 0) {
             await ResultWindow.#wait(160, mine);
             q("[data-extra]")?.classList.add("is-on");
@@ -304,7 +332,7 @@ export default class ResultWindow {
             }
         }
 
-        // 7. Les messages de la carte.
+        // 8. Les messages de la carte.
         if ((report.messages?.length ?? 0) > 0) {
             await ResultWindow.#wait(120, mine);
             if (!alive()) return;
@@ -417,7 +445,11 @@ export default class ResultWindow {
     }
 
     /**
-     * Affiche le verdict du critique et, s'il tombe, marque le total.
+     * Marque le critique quand il tombe : le total du centre s'embrase et la
+     * mention de critique s'y allume.
+     *
+     * Aucun verdict écrit sous le dé — « réussite » et « échec » se lisaient deux
+     * fois, ici et sur la ligne de résultat.
      *
      * @param {HTMLElement} win    - Le calque.
      * @param {object}      report - Le rapport de la résolution.
@@ -425,12 +457,6 @@ export default class ResultWindow {
      * @returns {void}
      */
     static #revealCrit(win, report) {
-        const verdict = win.querySelector("[data-crit-verdict]");
-        if (verdict) {
-            verdict.textContent = game.i18n.localize(report.critical.hit
-                ? "FQCARDENGINE.RollOutcomeSuccess" : "FQCARDENGINE.RollOutcomeFail");
-            verdict.classList.add("is-on", report.critical.hit ? "is-hit" : "is-miss");
-        }
         if (report.critical.hit) {
             win.querySelector("[data-total]")?.classList.add("is-crit");
             win.querySelector("[data-crit-mark]")?.classList.add("is-on");
@@ -438,24 +464,46 @@ export default class ResultWindow {
     }
 
     /**
-     * Affiche le verdict d'esquive d'une cible.
+     * Révèle un symbole de défense : pose sa valeur si elle vient d'un dé, puis
+     * sa couleur — verte quand la défense a tenu, rouge quand elle a cédé.
      *
-     * @param {HTMLElement} win     - Le calque.
-     * @param {number}      index   - L'indice de la cible dans le rapport.
-     * @param {object}      evasion - La tentative d'esquive.
+     * Un symbole sans valeur (une cible sans score d'esquive) reste vide et muet :
+     * son emplacement demeure pour garder les lignes alignées, mais rien n'y est
+     * arrivé, et lui donner une couleur laisserait croire le contraire.
      *
-     * @returns {void}
+     * @param {?HTMLElement} element - Le symbole.
+     * @param {?number}      value   - La valeur à faire rouler, ou null si déjà écrite.
+     * @param {boolean}      held    - True si la défense a tenu.
+     * @param {number}       mine    - Le jeton de la mise en scène appelante.
+     *
+     * @returns {Promise<void>}
      */
-    static #revealEvasion(win, index, evasion) {
-        const out = win.querySelector(`[data-eva-out="${index}"]`);
-        if (!out) {
+    static async #revealDefenseMark(element, value, held, mine) {
+        if (!element) {
             return;
         }
-        // Verdict dit du point de vue du lanceur : une esquive ratée le sert, elle
-        // ne doit pas porter le même mot qu'un critique manqué, qui le dessert.
-        out.textContent = game.i18n.localize(evasion.evaded
-            ? "FQCARDENGINE.ChatMessagePartEvasion" : "FQCARDENGINE.RollEvasionTouched");
-        out.classList.add("is-on", evasion.evaded ? "is-dodge" : "is-touched");
+        if (value === null && !element.textContent.trim()) {
+            return;
+        }
+        if (value !== null) {
+            await ResultWindow.#rollDie(element, 20, value, D20_DURATION, mine);
+        }
+        element.classList.add(held ? "is-success" : "is-failure");
+    }
+
+    /**
+     * La formule d'un jet pour toucher : le dé, puis son modificateur signé.
+     * Elle se lit sous le total, qui est ce que le joueur regarde d'abord.
+     *
+     * @param {object} hit - Le jet pour toucher.
+     *
+     * @returns {string} La formule, par exemple « 14 + 5 ».
+     */
+    static #hitFormula(hit) {
+        if (!hit.modifier) {
+            return `${hit.roll}`;
+        }
+        return hit.modifier > 0 ? `${hit.roll} + ${hit.modifier}` : `${hit.roll} − ${-hit.modifier}`;
     }
 
     /**
@@ -538,9 +586,9 @@ export default class ResultWindow {
         win.innerHTML = `<div class="fq-result-frame">`
             + ResultWindow.#header(report)
             + `<div class="fq-result-body">`
-            + ResultWindow.#critColumn(report)
+            + ResultWindow.#attackColumn(report)
             + ResultWindow.#centerColumn(report, isHeal)
-            + ResultWindow.#evasionColumn(report)
+            + ResultWindow.#defenseColumn(report)
             + `</div>`
             + ResultWindow.#targets(report)
             + ResultWindow.#extraRolls(report)
@@ -562,7 +610,10 @@ export default class ResultWindow {
     }
 
     /**
-     * L'entête : la carte, son deck, l'effet retenu, les variables et les cibles.
+     * L'entête : la carte, son deck, l'effet retenu et les variables.
+     *
+     * Les CIBLES n'y figurent pas : la colonne de défense les nomme déjà une à
+     * une, et la ligne de résultat les reprend une troisième fois.
      *
      * @param {object} report - Le rapport de la résolution.
      *
@@ -582,7 +633,6 @@ export default class ResultWindow {
         if (header.yValue !== null && header.yValue !== undefined && header.yValue !== "") {
             chips.push(`<span class="fq-result-chip">Y = ${header.yValue}</span>`);
         }
-        const targets = (header.targets ?? []).map(target => target.name).filter(Boolean);
         return `<div class="fq-result-header">`
             + (header.cardImg ? `<div class="fq-result-thumb"><img src="${header.cardImg}" alt=""></div>` : "")
             + `<div class="fq-result-meta">`
@@ -590,30 +640,78 @@ export default class ResultWindow {
             + (header.cardName ? `<div class="fq-result-card">${header.cardName}</div>` : "")
             + (header.deckName ? `<div class="fq-result-deck">${header.deckName}</div>` : "")
             + (chips.length ? `<div class="fq-result-chips">${chips.join("")}</div>` : "")
-            + (targets.length ? `<div class="fq-result-targets-line">${targets.join(", ")}</div>` : "")
             + `</div></div>`;
     }
 
     /**
-     * La colonne du critique, vide et estompée quand aucun critique n'est possible.
+     * La colonne d'ATTAQUE : ce que fait le lanceur, en deux encarts centrés —
+     * le jet pour toucher, puis le critique.
+     *
+     * Le dé porte le TOTAL et la ligne du dessous la formule qui l'a produit :
+     * on lit le résultat d'abord, son calcul ensuite. Aucun verdict écrit, il se
+     * lit déjà sur la ligne de résultat, en bas de la fenêtre.
      *
      * @param {object} report - Le rapport de la résolution.
      *
      * @returns {string} Le HTML de la colonne.
      */
-    static #critColumn(report) {
+    static #attackColumn(report) {
+        return `<div class="fq-result-col fq-result-col--attack">`
+            + `<div class="fq-result-col-label">${game.i18n.localize("FQCARDENGINE.ColumnAttack")}</div>`
+            + ResultWindow.#hitBox(report)
+            + ResultWindow.#critBox(report)
+            + `</div>`;
+    }
+
+    /**
+     * L'encart du jet pour toucher. Une ATTAQUE ne roule qu'une fois pour toute
+     * la carte : c'est donc un seul dé, quel que soit le nombre de cibles. Une
+     * SAUVEGARDE appartient aux cibles — l'encart le dit et reste vide, ses dés
+     * roulant dans la colonne de défense.
+     *
+     * @param {object} report - Le rapport de la résolution.
+     *
+     * @returns {string} Le HTML de l'encart.
+     */
+    static #hitBox(report) {
+        const label = game.i18n.localize("FQCARDENGINE.RollLabelAttack");
+        const attack = (report.hits ?? []).find(hit => hit.kind === "ac");
+        if (!attack) {
+            const note = game.i18n.localize((report.hits ?? []).length
+                ? "FQCARDENGINE.HitBoxSaveNote" : "FQCARDENGINE.HitBoxNoneNote");
+            return `<div class="fq-result-box is-empty">`
+                + `<div class="fq-result-box-label">${label}</div>`
+                + `<div class="fq-result-empty-note">${note}</div></div>`;
+        }
+        return `<div class="fq-result-box">`
+            + `<div class="fq-result-box-label">${label}</div>`
+            + `<div class="fq-result-die fq-result-die--d20 fq-result-die--hit is-blank" data-hit-die></div>`
+            + `<div class="fq-result-threshold" data-hit-formula></div>`
+            + `</div>`;
+    }
+
+    /**
+     * L'encart du critique. Son dé EST son résultat : il n'a pas de total à part,
+     * seulement un seuil à atteindre.
+     *
+     * @param {object} report - Le rapport de la résolution.
+     *
+     * @returns {string} Le HTML de l'encart.
+     */
+    static #critBox(report) {
         const label = game.i18n.localize(report.kind === "heal"
             ? "FQCARDENGINE.RollLabelCriticalHeal" : "FQCARDENGINE.ChatMessagePartCritical");
         if (!report.critical) {
-            return `<div class="fq-result-col fq-result-col--crit is-empty">`
-                + `<div class="fq-result-col-label">${label}</div></div>`;
+            return `<div class="fq-result-box is-empty">`
+                + `<div class="fq-result-box-label">${label}</div>`
+                + `<div class="fq-result-empty-note">`
+                + `${game.i18n.localize("FQCARDENGINE.CritBoxNoneNote")}</div></div>`;
         }
-        return `<div class="fq-result-col fq-result-col--crit">`
-            + `<div class="fq-result-col-label">${label}</div>`
+        return `<div class="fq-result-box">`
+            + `<div class="fq-result-box-label">${label}</div>`
             + `<div class="fq-result-die fq-result-die--d20 fq-result-die--crit is-blank" data-crit></div>`
             + `<div class="fq-result-threshold">`
             + `${game.i18n.format("FQCARDENGINE.RollThreshold", {threshold: report.critical.threshold})}</div>`
-            + `<div class="fq-result-verdict" data-crit-verdict></div>`
             + `</div>`;
     }
 
@@ -647,25 +745,115 @@ export default class ResultWindow {
     }
 
     /**
-     * La colonne des esquives : une ligne par cible ayant lancé un dé.
+     * La colonne de DÉFENSE : ce que chaque ennemi oppose, une ligne par cible
+     * réduite à ses symboles.
+     *
+     * Trois colonnes possibles, coiffées d'un libellé : la classe d'armure face
+     * au jet d'attaque, la sauvegarde de la cible, et son esquive. Aucun texte de
+     * verdict — la couleur du symbole suffit, verte quand la défense a tenu,
+     * rouge quand elle a cédé — et le détail chiffré vit dans le tooltip.
      *
      * @param {object} report - Le rapport de la résolution.
      *
      * @returns {string} Le HTML de la colonne.
      */
-    static #evasionColumn(report) {
-        const label = game.i18n.localize("FQCARDENGINE.ChatMessagePartEvasion");
-        const rows = (report.evasions ?? [])
-            .map((evasion, index) => ({evasion, index}))
-            .filter(({evasion}) => evasion.roll !== null)
-            .map(({evasion, index}) => `<div class="fq-result-eva-row" data-eva-row="${index}">`
-                + `<div class="fq-result-die fq-result-die--d20 fq-result-die--eva is-blank" data-eva="${index}"></div>`
-                + `<div class="fq-result-eva-name">${evasion.targetName}`
-                + `<span>${game.i18n.format("FQCARDENGINE.RollThreshold", {threshold: evasion.threshold})}</span></div>`
-                + `<div class="fq-result-eva-out" data-eva-out="${index}"></div>`
-                + `</div>`).join("");
-        return `<div class="fq-result-col fq-result-col--eva${rows ? "" : " is-empty"}">`
-            + `<div class="fq-result-col-label">${label}</div>${rows}</div>`;
+    static #defenseColumn(report) {
+        const lines = ResultWindow.#defenseLines(report);
+        const label = game.i18n.localize("FQCARDENGINE.ColumnDefense");
+        return `<div class="fq-result-col fq-result-col--defense${lines ? "" : " is-empty"}">`
+            + `<div class="fq-result-col-label">${label}</div>`
+            + (lines ? ResultWindow.#defenseHead(report) + lines : "")
+            + `</div>`;
+    }
+
+    /**
+     * L'entête de la colonne de défense : un libellé par colonne de symboles,
+     * dans l'ordre où ils apparaissent.
+     *
+     * @param {object} report - Le rapport de la résolution.
+     *
+     * @returns {string} Le HTML de l'entête.
+     */
+    static #defenseHead(report) {
+        const kind = (report.hits ?? [])[0]?.kind;
+        const keys = [];
+        if (kind === "ac") {
+            keys.push(["armor", "FQCARDENGINE.ColumnKeyArmor", "FQCARDENGINE.TooltipColumnArmor"]);
+        } else if (kind === "save") {
+            keys.push(["save", "FQCARDENGINE.ColumnKeySave", "FQCARDENGINE.TooltipColumnSave"]);
+        }
+        keys.push(["eva", "FQCARDENGINE.ColumnKeyEvasion", "FQCARDENGINE.TooltipColumnEvasion"]);
+        const cells = keys.map(([modifier, key, tooltip]) =>
+            `<span class="fq-result-key fq-result-key--${modifier}" data-tooltip="${tooltip}">`
+            + `${game.i18n.localize(key)}</span>`).join("");
+        return `<div class="fq-result-def-head"><span class="fq-result-foe-name"></span>`
+            + `<span class="fq-result-marks">${cells}</span></div>`;
+    }
+
+    /**
+     * Une ligne par ennemi : son nom, puis ses symboles de défense.
+     *
+     * Les cibles sont prises dans l'ordre des esquives, qui les porte toutes —
+     * y compris celles qui n'ont aucun score d'esquive et n'ont donc pas lancé de
+     * dé. Leur emplacement reste alors vide plutôt que de disparaître, sans quoi
+     * les symboles d'une ligne à l'autre cesseraient d'être alignés.
+     *
+     * @param {object} report - Le rapport de la résolution.
+     *
+     * @returns {string} Le HTML des lignes, ou une chaîne vide s'il n'y a rien à montrer.
+     */
+    static #defenseLines(report) {
+        const evasions = report.evasions ?? [];
+        if (evasions.length === 0) {
+            return "";
+        }
+        const hits = new Map((report.hits ?? []).map(hit => [hit.targetTokenId, hit]));
+        return evasions.map((evasion, index) => {
+            const marks = [];
+            const hit = hits.get(evasion.targetTokenId);
+            if (hit) {
+                marks.push(ResultWindow.#defenseMark(index, 0, hit.kind === "ac" ? "shield" : "d20",
+                    hit.kind === "ac" ? hit.threshold : null,
+                    hit.kind === "ac" ? "" : ResultWindow.#thresholdLabel(hit.threshold)));
+            }
+            marks.push(ResultWindow.#defenseMark(index, 1, "d20", null,
+                evasion.roll === null ? "" : ResultWindow.#thresholdLabel(evasion.threshold)));
+            return `<div class="fq-result-foe-line" data-def-line="${index}">`
+                + `<span class="fq-result-foe-name">${evasion.targetName}</span>`
+                + `<span class="fq-result-marks">${marks.join("")}</span></div>`;
+        }).join("");
+    }
+
+    /**
+     * Un emplacement de symbole, vide jusqu'à ce que la mise en scène le révèle.
+     * La classe d'armure est connue d'avance — elle n'est pas jetée — et s'écrit
+     * donc tout de suite ; un dé attend son tour.
+     *
+     * @param {number}  line      - L'indice de la ligne d'ennemi.
+     * @param {number}  slot      - L'emplacement dans la ligne (0 défense de toucher, 1 esquive).
+     * @param {string}  shape     - La silhouette (« shield » ou « d20 »).
+     * @param {?number} value     - La valeur déjà connue, ou null si elle sera jetée.
+     * @param {string}  threshold - Le seuil affiché sous le symbole, ou une chaîne vide.
+     *
+     * @returns {string} Le HTML de l'emplacement.
+     */
+    static #defenseMark(line, slot, shape, value, threshold) {
+        return `<span class="fq-result-mark-wrap">`
+            + `<span class="fq-result-mark fq-result-mark--${shape}" data-def-mark="${line}-${slot}">`
+            + `${value ?? ""}</span>`
+            + `<span class="fq-result-mark-seuil">${threshold}</span></span>`;
+    }
+
+    /**
+     * Le seuil affiché sous un symbole : le DD d'une sauvegarde comme le score à
+     * atteindre d'une esquive s'écrivent de la même façon.
+     *
+     * @param {number} threshold - Le seuil.
+     *
+     * @returns {string} Le libellé, déjà localisé.
+     */
+    static #thresholdLabel(threshold) {
+        return game.i18n.format("FQCARDENGINE.ColumnSeuil", {threshold});
     }
 
     /**
@@ -685,7 +873,10 @@ export default class ResultWindow {
                 + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartCritical")}</span>` : "")
                 + (result.evasion
                     ? `<span class="fq-result-badge is-eva">`
-                    + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartEvasion")}</span>` : "");
+                    + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartEvasion")}</span>` : "")
+                + (result.defended
+                    ? `<span class="fq-result-badge is-protected">`
+                    + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartProtected")}</span>` : "");
             return `<div class="fq-result-row" data-result="${index}">`
                 + `<span class="fq-result-name">${result.targetName}</span>`
                 + `<span class="fq-result-badges">${badges}</span>`

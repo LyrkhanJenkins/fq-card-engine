@@ -561,57 +561,144 @@ describe("integration/dnd5e", () => {
 
     });
 
+    describe("dnd5e.preUseActivity — carte d'usage", () => {
+        beforeEach(() => {
+            globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+            game.system = {grid: {distance: 5}};
+        });
+
+        it("supprime la carte de dnd5e quand le moteur résout l'activité", () => {
+            const hook = getHook("dnd5e.preUseActivity");
+            const actor = {id: "actor-1"};
+            const activity = {
+                type: "save", actor, item: {type: "spell", actor, system: {fq: {}}},
+                range: {value: 30}, target: {}
+            };
+            const messageConfig = {create: true};
+
+            hook(activity, {}, {}, messageConfig);
+
+            // Ses boutons rejoueraient à la main des dés déjà lancés.
+            expect(messageConfig.create).toBe(false);
+        });
+
+        it("laisse la carte des activités que le moteur ne résout pas", () => {
+            const hook = getHook("dnd5e.preUseActivity");
+            const actor = {id: "actor-1"};
+            const activity = {
+                type: "utility", actor, item: {type: "spell", actor: null, system: {fq: {}}},
+                range: {value: 30}, target: {}
+            };
+            const messageConfig = {create: true};
+
+            hook(activity, {}, {}, messageConfig);
+
+            expect(messageConfig.create).toBe(true);
+        });
+    });
+
+    describe("dnd5e.postUseActivity", () => {
+        beforeEach(() => {
+            globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+        });
+
+        /**
+         * Activité dnd5e minimale, telle que le hook la reçoit après usage.
+         *
+         * @param {string} type - Le type d'activité.
+         *
+         * @returns {object} L'activité simulée.
+         */
+        function used(type) {
+            const actor = {id: "actor-1"};
+            return {type, actor, item: {type: "spell", actor}, rollDamage: vi.fn()};
+        }
+
+        it("déclenche le jet d'une sauvegarde, que dnd5e n'enchaîne pas seul", () => {
+            const hook = getHook("dnd5e.postUseActivity");
+            const activity = used("save");
+
+            hook(activity);
+
+            expect(activity.rollDamage).toHaveBeenCalledWith({}, {configure: false});
+        });
+
+        it("ne double pas les types que dnd5e enchaîne déjà", () => {
+            const hook = getHook("dnd5e.postUseActivity");
+            for (const type of ["attack", "damage", "heal"]) {
+                const activity = used(type);
+                hook(activity);
+                expect(activity.rollDamage).not.toHaveBeenCalled();
+            }
+        });
+
+        it("laisse tranquille une activité que le moteur ne résout pas", () => {
+            const hook = getHook("dnd5e.postUseActivity");
+            const activity = {type: "save", item: {type: "spell", actor: null}, rollDamage: vi.fn()};
+
+            hook(activity);
+
+            expect(activity.rollDamage).not.toHaveBeenCalled();
+        });
+    });
+
     describe("dnd5e.preRollAttackV2", () => {
         beforeEach(() => {
             globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
         });
 
-        function buildAttackConfig({itemType = "weapon", fq = {action: -1}} = {}) {
+        /**
+         * Activité dnd5e minimale. `item.actor` et le type décident à eux seuls si
+         * le moteur prend la résolution en charge : le type d'ITEM (arme ou sort)
+         * n'entre plus dans la décision.
+         *
+         * @param {object} [options] - Le type d'activité et la présence d'un acteur.
+         *
+         * @returns {object} Le contexte du hook.
+         */
+        function buildAttackConfig({type = "attack", withActor = true} = {}) {
             const actor = {id: "actor-1"};
             const activity = {
+                type,
                 actor,
-                item: {type: itemType, system: {fq}},
+                item: {type: "weapon", actor: withActor ? actor : null, system: {fq: {action: -1}}},
                 rollDamage: vi.fn()
             };
-            return {config: {subject: activity}, activity, actor, fq};
+            return {config: {subject: activity}, activity, actor};
         }
 
-        it("laisse passer le jet d'attaque quand le réglage de bypass est désactivé", () => {
+        it("écarte le jet d'attaque de dnd5e et enchaîne sur les dégâts", () => {
+            // Le moteur jette le toucher PAR CIBLE dans sa fenêtre : laisser dnd5e
+            // jeter une attaque unique en plus n'aurait aucun sens.
             const hook = getHook("dnd5e.preRollAttackV2");
-            game.settings.get.mockReturnValue(false);
-            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
-            const {config, activity} = buildAttackConfig();
-
-            const result = hook(config, {}, {});
-
-            expect(result).toBe(true);
-            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
-            expect(activity.rollDamage).not.toHaveBeenCalled();
-        });
-
-        it("bypass actif : lance directement les dégâts sans consommer ici (consommation dans rollDamageV2)", () => {
-            const hook = getHook("dnd5e.preRollAttackV2");
-            game.settings.get.mockReturnValue(true);
             vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
             const {config, activity} = buildAttackConfig();
 
             const result = hook(config, {}, {});
 
             expect(result).toBe(false);
+            // La consommation reste au jet de dés, comme avant.
             expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
             expect(activity.rollDamage).toHaveBeenCalledWith({}, {configure: false});
         });
 
-        it("bypass actif : ignore les activités qui ne viennent pas d'une arme", () => {
+        it("laisse passer une activité que le moteur ne résout pas", () => {
             const hook = getHook("dnd5e.preRollAttackV2");
-            game.settings.get.mockReturnValue(true);
-            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
-            const {config, activity} = buildAttackConfig({itemType: "spell"});
+            const {config, activity} = buildAttackConfig({withActor: false});
 
             const result = hook(config, {}, {});
 
             expect(result).toBe(true);
-            expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
+            expect(activity.rollDamage).not.toHaveBeenCalled();
+        });
+
+        it("laisse passer un type d'activité hors du périmètre du moteur", () => {
+            const hook = getHook("dnd5e.preRollAttackV2");
+            const {config, activity} = buildAttackConfig({type: "utility"});
+
+            const result = hook(config, {}, {});
+
+            expect(result).toBe(true);
             expect(activity.rollDamage).not.toHaveBeenCalled();
         });
     });
@@ -621,40 +708,50 @@ describe("integration/dnd5e", () => {
             globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
         });
 
-        it("laisse la modale de dégâts quand le réglage de bypass est désactivé", () => {
-            const hook = getHook("dnd5e.preRollDamageV2");
-            game.settings.get.mockReturnValue(false);
-            const config = {subject: {item: {type: "weapon"}}};
-            const dialog = {configure: true};
+        /**
+         * Contexte de jet de dégâts pour une activité résolue ou non par le moteur.
+         *
+         * @param {object} [options] - Le type d'activité et la présence d'un acteur.
+         *
+         * @returns {object} Le contexte du hook.
+         */
+        function damageConfig({type = "attack", withActor = true} = {}) {
+            const actor = {id: "actor-1"};
+            return {subject: {type, actor, item: {type: "weapon", actor: withActor ? actor : null}}};
+        }
 
-            const result = hook(config, dialog, {});
+        it("supprime le message de dnd5e et sa modale quand le moteur résout le jet", () => {
+            const hook = getHook("dnd5e.preRollDamageV2");
+            const dialog = {configure: true};
+            const message = {create: true};
+
+            const result = hook(damageConfig(), dialog, message);
 
             expect(result).toBe(true);
-            expect(dialog.configure).toBe(true);
+            expect(dialog.configure).toBe(false);
+            expect(message.create).toBe(false);
         });
 
-        it("bypass actif : supprime la modale de dégâts des armes (cas activité damage seule)", () => {
+        it("court-circuite aussi la modale d'une sauvegarde", () => {
             const hook = getHook("dnd5e.preRollDamageV2");
-            game.settings.get.mockReturnValue(true);
-            const config = {subject: {item: {type: "weapon"}}};
             const dialog = {configure: true};
 
-            const result = hook(config, dialog, {});
+            const result = hook(damageConfig({type: "save"}), dialog, {});
 
             expect(result).toBe(true);
             expect(dialog.configure).toBe(false);
         });
 
-        it("bypass actif : ne touche pas la modale des jets qui ne viennent pas d'une arme", () => {
+        it("ne touche à rien quand le moteur ne résout pas le jet", () => {
             const hook = getHook("dnd5e.preRollDamageV2");
-            game.settings.get.mockReturnValue(true);
-            const config = {subject: {item: {type: "spell"}}};
             const dialog = {configure: true};
+            const message = {create: true};
 
-            const result = hook(config, dialog, {});
+            const result = hook(damageConfig({withActor: false}), dialog, message);
 
             expect(result).toBe(true);
             expect(dialog.configure).toBe(true);
+            expect(message.create).toBe(true);
         });
     });
 });

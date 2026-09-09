@@ -2,6 +2,8 @@ import Constants from "../../constants.js";
 import Geometry from "../shared/geometry.js";
 import TargetingPredicates from "../shared/targeting-predicates.js";
 import RollReport, {ROLL_ROLE} from "./roll-report.js";
+import HitProfile from "./hit-profile.js";
+import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 
 /**
  * Utilitaires de calcul et d'application des dégâts et des soins FQ : jets de dés
@@ -127,15 +129,55 @@ export default class Damage {
     }
 
     /**
-     * Détermine si les dégâts sont critiques (jet 1d20) et, pour chaque cible,
-     * si elle esquive (jet 1d20 selon son score d'esquive + bonus). Construit le
-     * tableau des dégâts par cible : doublés si critique, annulés si esquive
-     * (sauf critique qui passe outre l'esquive). Aucune esquive n'est possible en
-     * cas d'auto-ciblage.
+     * L'échelle des dégâts : chaque défense réussie fait descendre d'un cran, le
+     * critique fait monter d'un cran.
+     *
+     * `0 → demi-dégâts → dégâts normaux → dégâts doublés`
+     *
+     * @type {ReadonlyArray<number>}
+     */
+    static DAMAGE_STEPS = Object.freeze([0, 0.5, 1, 2]);
+
+    /**
+     * Le multiplicateur de dégâts pour une cible, d'après le nombre de défenses
+     * qu'elle a réussies et le critique du lanceur.
+     *
+     * Une cible oppose DEUX défenses indépendantes : l'esquive FQ, et la
+     * protection — sauvegarde réussie, ou classe d'armure strictement au-dessus
+     * du jet d'attaque. Elles ne se multiplient jamais entre elles : chacune fait
+     * descendre d'UN cran sur l'échelle, si bien que les deux réunies annulent
+     * les dégâts sans jamais produire de quart.
+     *
+     * | Défenses réussies | Sans critique | Avec critique |
+     * |---|---|---|
+     * | 0 | normal | ×2 |
+     * | 1 | demi-dégâts | normal |
+     * | 2 | 0 | demi-dégâts |
+     *
+     * @param {number}  defenses - Le nombre de défenses réussies (0 à 2).
+     * @param {boolean} critical - True si le jet du lanceur est critique.
+     *
+     * @returns {number} Le multiplicateur à appliquer aux dégâts.
+     */
+    static damageMultiplier(defenses, critical) {
+        const index = 2 - defenses + (critical ? 1 : 0);
+        return Damage.DAMAGE_STEPS[Math.min(Math.max(index, 0), Damage.DAMAGE_STEPS.length - 1)];
+    }
+
+    /**
+     * Détermine si les dégâts sont critiques (jet 1d20), puis, pour chaque cible,
+     * combien de défenses elle réussit — son esquive, et la protection que lui
+     * donne sa classe d'armure ou sa sauvegarde quand la carte demande un jet
+     * pour toucher. Construit le tableau des dégâts par cible en appliquant
+     * {@link Damage.damageMultiplier}, arrondi à l'inférieur.
+     *
+     * Aucune défense n'est opposée en cas d'auto-ciblage : la cible est alors
+     * absente du résultat, comme avant l'introduction du jet pour toucher.
      *
      * @param {object} actor       - L'acteur lanceur.
      * @param {number} damages     - Le montant de dégâts de base (borné à 0 minimum).
-     * @param {object} cardContent - Le contenu (choix) de la carte (`bonusCrit`, `bonusEva`, `targetType`).
+     * @param {object} cardContent - Le contenu (choix) de la carte (`bonusCrit`, `bonusEva`,
+     *        `targetType`, et les champs de toucher lus par `HitProfile`).
      * @param {RollReport} [report] - Le rapport où consigner les jets et les résultats.
      *
      * @returns {Promise<object[]>} Le tableau des résultats de dégâts par cible.
@@ -147,22 +189,33 @@ export default class Damage {
         }
         let damagesArray = [];
         const critical = await Damage.#rollCritical(actor, cardContent, report);
+        // Profil calculé UNE fois pour toute la carte : le bonus de toucher ne
+        // doit pas varier d'une cible à l'autre. Null quand la carte ne demande
+        // aucun jet pour toucher — le cas de toutes les cartes antérieures.
+        //
+        // Une résolution d'ACTIVITÉ dnd5e pose son profil déjà construit dans
+        // `cardContent`, comme elle y pose déjà ses `forcedTargets` : son
+        // modificateur et son DD viennent de l'activité, pas de champs de carte.
+        const profile = cardContent.hitProfile ?? HitProfile.of(actor, cardContent);
+        // Le dé d'ATTAQUE est jeté UNE fois pour toute la carte, avant la boucle :
+        // c'est le même jet que chaque classe d'armure vient affronter. Une
+        // sauvegarde, elle, appartient à la cible et se jette dans la boucle.
+        const attackRoll = profile?.type === CardFqSystem.HIT_TYPE_ATTACK
+            ? await Damage.rollTotalAsync("1d20") : null;
         for (let i = 0; i < myTargets.length; i++) {
             const target = myTargets[i];
             const targetActor = target.actor;
-            let evaToReach = 21;
-            let evasionScore = 0;
 
             if (targetActor?._id !== actor?._id // no evasion is possible if self targeting
             ) {
-                if (targetActor?.system?.fq?.attributes.evasion + cardContent.bonusEva > 0) { // or no evasion from the target
-                    evaToReach = 21 - targetActor?.system?.fq?.attributes.evasion - cardContent.bonusEva;
-                    evasionScore = await Damage.rollTotalAsync("1d20");
-                }
-                const evaded = evasionScore >= evaToReach;
                 const targetName = Constants.tokenName(target);
-                // Le critique passe outre l'esquive (sans doubler) ; sinon esquive = 0.
-                const value = evaded ? (critical ? damages : 0) : (critical ? damages * 2 : damages);
+                // Le toucher AVANT l'esquive : le lanceur agit d'abord, la cible
+                // esquive ensuite. Le rapport, le chat et la fenêtre présentent les
+                // jets dans l'ordre où ils tombent.
+                const protection = await Damage.#rollHit(target, targetName, profile, attackRoll, report);
+                const evaded = await Damage.#rollEvasion(target, targetName, cardContent, report);
+                const value = Math.floor(
+                    damages * Damage.damageMultiplier((evaded ? 1 : 0) + protection, critical));
                 damagesArray.push({
                     key: `Dégâts totaux sur "${targetName}"`,
                     value,
@@ -171,21 +224,109 @@ export default class Damage {
                     type: "damageFQ",
                     targetTokenId: target.id
                 });
-                // Un seuil resté à 21 signale qu'aucun dé n'a été lancé : la cible
-                // n'a pas de score d'esquive, elle figure au rapport sans jet.
-                report?.addEvasion({
-                    targetTokenId: target.id, targetName,
-                    roll: evaToReach <= 20 ? evasionScore : null,
-                    threshold: evaToReach <= 20 ? evaToReach : null,
-                    evaded
-                });
                 report?.addResult({
                     targetTokenId: target.id, targetName, value,
-                    type: "damageFQ", critical, evasion: evaded
+                    type: "damageFQ", critical, evasion: evaded, defended: protection > 0
                 });
             }
         }
         return damagesArray;
+    }
+
+    /**
+     * Jette l'esquive d'une cible (1d20 contre `21 - esquive - bonusEva`) et la
+     * consigne au rapport. Aucun dé n'est lancé si la cible n'a aucun score
+     * d'esquive : elle figure quand même au rapport, sans jet, pour que l'absence
+     * d'esquive se lise.
+     *
+     * @param {object} target      - Le jeton ciblé.
+     * @param {string} targetName  - Le nom affiché du jeton.
+     * @param {object} cardContent - Le contenu (choix) de la carte (`bonusEva`).
+     * @param {RollReport} [report] - Le rapport où consigner le jet.
+     *
+     * @returns {Promise<boolean>} True si la cible esquive.
+     */
+    static async #rollEvasion(target, targetName, cardContent, report) {
+        const evaToReach = Damage.#scoreThreshold(
+            target.actor?.system?.fq?.attributes.evasion, cardContent.bonusEva);
+        const evasionScore = evaToReach === null ? 0 : await Damage.rollTotalAsync("1d20");
+        const evaded = evaToReach !== null && evasionScore >= evaToReach;
+        // Un seuil nul signale qu'aucun dé n'a été lancé : la cible n'a pas de
+        // score d'esquive, elle figure au rapport sans jet.
+        report?.addEvasion({
+            targetTokenId: target.id, targetName,
+            roll: evaToReach === null ? null : evasionScore,
+            threshold: evaToReach,
+            evaded
+        });
+        return evaded;
+    }
+
+    /**
+     * Le seuil qu'un score FQ (critique, esquive) impose au d20, ou `null` quand
+     * le score total est nul — aucun dé n'est alors lancé, et l'absence de seuil
+     * se lit comme « cet événement n'était pas possible ».
+     *
+     * Un score de 1 doit se gagner sur un 20, un score de 20 sur n'importe quel
+     * dé : le seuil est donc `21 - score`, et le 21 vaut « hors d'atteinte ».
+     *
+     * @param {number} score - Le score FQ de l'acteur (critique ou esquive).
+     * @param {number} bonus - Le bonus de la carte pour ce score.
+     *
+     * @returns {?number} Le seuil à atteindre au d20, ou null si l'événement est impossible.
+     */
+    static #scoreThreshold(score, bonus) {
+        const total = score + bonus;
+        return total > 0 ? 21 - total : null;
+    }
+
+    /**
+     * Jette le toucher contre une cible, et rend sa PROTECTION — la seconde
+     * défense, indépendante de l'esquive.
+     *
+     * - ATTAQUE : le lanceur jette `1d20 + modificateur`. La cible est protégée
+     *   si sa classe d'armure passe STRICTEMENT au-dessus du total : à égalité,
+     *   l'attaque touche, comme en D&D.
+     * - SAUVEGARDE : la cible jette `1d20 + sa sauvegarde` et se protège en
+     *   atteignant le DD.
+     *
+     * Le 1 et le 20 naturels n'ont aucun effet particulier — décision de règle
+     * du moteur, qui garde le critique sur son propre jet.
+     *
+     * Le jet est fait par le client du LANCEUR, y compris la sauvegarde de la
+     * cible : toute la résolution reste un bloc unique, sans attendre le joueur
+     * d'en face.
+     *
+     * @param {object}  target     - Le jeton ciblé.
+     * @param {string}  targetName - Le nom affiché du jeton.
+     * @param {?object} profile    - Le profil de toucher (voir `HitProfile.of`), ou null.
+     * @param {?number} attackRoll - Le dé d'attaque UNIQUE de la carte, déjà jeté, ou null
+     *        pour une sauvegarde (que chaque cible jette pour elle-même).
+     * @param {RollReport} [report] - Le rapport où consigner le jet.
+     *
+     * @returns {Promise<number>} Le nombre de crans de défense que la cible gagne :
+     *          0 si elle n'est pas protégée, 1 en général, et 2 quand une activité
+     *          dnd5e annonce ne rien infliger sur une sauvegarde réussie.
+     */
+    static async #rollHit(target, targetName, profile, attackRoll, report) {
+        const defense = HitProfile.defenseOf(target, profile);
+        if (!defense) {
+            return 0;
+        }
+        const attack = profile.type === CardFqSystem.HIT_TYPE_ATTACK;
+        const modifier = attack ? profile.modifier : defense.value;
+        const threshold = attack ? defense.value : profile.dc;
+        // Une ATTAQUE ne roule qu'une fois pour toute la carte : c'est le même dé
+        // qui est opposé à chaque classe d'armure. Une SAUVEGARDE, elle, est jetée
+        // par chaque cible — c'est sa défense, pas l'action du lanceur.
+        const roll = attack ? attackRoll : await Damage.rollTotalAsync("1d20");
+        const total = roll + modifier;
+        const defended = attack ? total < threshold : total >= threshold;
+        report?.addHit({
+            targetTokenId: target.id, targetName,
+            kind: defense.kind, roll, modifier, total, threshold, defended
+        });
+        return defended ? (profile.defensesOnSuccess ?? 1) : 0;
     }
 
     /**
@@ -200,10 +341,11 @@ export default class Damage {
      * @returns {Promise<boolean>} True si le jet atteint le seuil de critique.
      */
     static async #rollCritical(actor, cardContent, report) {
-        if (!(actor?.system?.fq.attributes.critical + cardContent.bonusCrit > 0)) {
+        const critToReach = Damage.#scoreThreshold(
+            actor?.system?.fq.attributes.critical, cardContent.bonusCrit);
+        if (critToReach === null) {
             return false;
         }
-        const critToReach = 21 - actor?.system?.fq.attributes.critical - cardContent.bonusCrit;
         const score = await Damage.rollTotalAsync("1d20");
         const hit = score >= critToReach;
         report?.setCritical({roll: score, threshold: critToReach, hit});

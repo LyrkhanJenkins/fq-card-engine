@@ -254,4 +254,17 @@
             </text>
         </g>
     {{/if}}
+
+    {{#if hit }}
+        <!-- Toucher : « CA » pour un jet d'attaque contre la classe d'armure,
+             l'abrégé de la caractéristique pour un jet de sauvegarde de la cible.
+             Le socle porte déjà son trou découpé à cet emplacement. -->
+        <g data-tooltip="{{ hitTooltip }}">
+            <circle cx="443" cy="358" r="42" fill="url(#whiteMana)" stroke="#1f1f1f" stroke-width="6"></circle>
+            <text x="441" y="370" text-anchor="middle" font-size="30" font-weight="700" font-family="Lucida Calligraphy"
+                  fill="black">
+                {{ localize hit }}
+            </text>
+        </g>
+    {{/if}}
 </svg>

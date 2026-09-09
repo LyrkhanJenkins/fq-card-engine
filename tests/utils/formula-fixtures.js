@@ -20,17 +20,20 @@ import {vi} from "vitest";
  * @param {string} typeValue - La catégorie d'arme (`system.type.value`, ex. `"martialM"`).
  * @param {object|null} attackActivity - L'activité d'attaque (voir `makeActivity`), ou `null` si aucune.
  * @param {string} [name] - Le nom de l'arme.
+ * @param {string} [activityType] - Le type sous lequel l'activité est exposée. Par défaut
+ *        `"attack"` ; `"damage"` sert à vérifier qu'un appelant qui EXIGE l'activité d'attaque
+ *        (le modificateur de `HitProfile`) ne se rabat pas sur celle de dégâts.
  *
  * @returns {object} Un item d'arme minimal, tel que consommé par `WeaponDamage`.
  */
-export function makeWeapon(typeValue, attackActivity, name = "Arme") {
+export function makeWeapon(typeValue, attackActivity, name = "Arme", activityType = "attack") {
     return {
         name,
         type: "weapon",
         system: {
             equipped: true,
             type: {value: typeValue},
-            activities: {getByType: t => (t === "attack" && attackActivity ? [attackActivity] : [])}
+            activities: {getByType: t => (t === activityType && attackActivity ? [attackActivity] : [])}
         }
     };
 }
@@ -44,6 +47,30 @@ export function makeWeapon(typeValue, attackActivity, name = "Arme") {
  */
 export function makeActivity(rolls) {
     return {type: "attack", use: vi.fn(), getDamageConfig: vi.fn(() => ({rolls}))};
+}
+
+/**
+ * Activité d'attaque minimale exposant `getAttackData` (jet POUR TOUCHER, là où
+ * `makeActivity` porte `getDamageConfig` pour les dégâts). Consommée par
+ * `HitProfile`, qui tire de dnd5e le modificateur d'attaque complet.
+ *
+ * @param {?{parts: string[], data: object}} attackData - La donnée d'attaque rendue,
+ *        ou `null` pour une activité qui n'en rend aucune.
+ * @param {Error} [throws] - Si fourni, `getAttackData` lève cette erreur (dnd5e refusant
+ *        de construire la donnée).
+ *
+ * @returns {object} Une activité d'attaque minimale.
+ */
+export function makeAttackActivity(attackData, throws = null) {
+    return {
+        type: "attack",
+        getAttackData: vi.fn(() => {
+            if (throws) {
+                throw throws;
+            }
+            return attackData;
+        })
+    };
 }
 
 /**

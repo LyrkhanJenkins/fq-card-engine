@@ -179,7 +179,7 @@ describe("Dégâts chiffrés : matrice critique/esquive (EXHA-02)", () => {
     });
 
     test.each(damageCandidates)(
-        "$deckFile :: $cardName :: choix $choiceIndex — critique double, esquive annule, critique+esquive repasse la valeur de base",
+        "$deckFile :: $cardName :: choix $choiceIndex — critique double, esquive fait demi-dégâts, critique+esquive repasse la valeur de base",
         async ({card, choiceIndex, choice}) => {
             const expectedBase = await resolveFormula(choice.damage);
             const {crit, eva} = damageThresholds(choice);
@@ -201,7 +201,9 @@ describe("Dégâts chiffrés : matrice critique/esquive (EXHA-02)", () => {
                 dice: [{faces: 20, value: Math.max(1, crit - 1)}, {faces: 20, value: eva}]
             });
             expect(evaOnly.hpCalls).toHaveLength(1);
-            expect(evaOnly.hpCalls[0].value).toBe(0);
+            // Une seule défense réussie fait descendre d'un cran sur l'échelle
+            // `0 → ½ → normal → ×2` : l'esquive protège, elle n'annule plus.
+            expect(evaOnly.hpCalls[0].value).toBe(Math.floor(expectedBase / 2));
 
             vi.clearAllMocks();
 

@@ -82,14 +82,16 @@ describe("Damage", () => {
             expect(result).toEqual([]);
         });
 
-        it("should cancel damages (value: 0) when the target's evasion succeeds and no critical", async () => {
+        it("should halve damages when the target's evasion succeeds and no critical", async () => {
+            // Une seule défense réussie fait descendre d'un cran sur l'échelle
+            // `0 → ½ → normal → ×2` : l'esquive protège, elle n'annule plus.
             game.user.targets = new Set([{
                 id: "token1",
                 actor: {_id: "otherActor", system: {fq: {attributes: {evasion: 15}}}},
                 document: {name: "Target1"}
             }]);
             const result = await Damage.addCriticalEvasionToDamage(actor, 10, {bonusCrit: -999, bonusEva: 0, minReach: 1, maxReach: 1});
-            expect(result).toEqual([expect.objectContaining({value: 0, critical: false, evasion: true})]);
+            expect(result).toEqual([expect.objectContaining({value: 5, critical: false, evasion: true})]);
         });
 
         it("should keep full damages when the target's evasion fails and no critical", async () => {

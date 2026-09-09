@@ -35,9 +35,12 @@ Feat :
 - Ajout de la distance d'une cible dans la dialog-play et dans le ciblage
 - Carte "Auto" jouée tous les tours (Auras de mage blanc)
 - Les cartes réactifs peuvent être "préparé" pendant son tour
-- Refonte totale de tous les decks de toutes les classes jusqu'au niveau 10 (ou 12) (en cours...)
 - Option: Lancer les dé automatiquement de death saving throw et supprime les tokens mort
-- Nouvelle Fenêtre de résultat de sort/cartes
+- Refonte totale de tous les decks de toutes les classes jusqu'au niveau 10 (ou 12) (en cours...)
+- Nouvelle Fenêtre de résultat de sort/cartes  (en cours...)
+- Gérer la classe d'Armure Dnd5e (modif de la réalité : demi-dégâts)  (en cours...)
+- Gérer les dés de sauvegarde  (en cours...)
+- Géré les resistances, les immunités et les absorptions.(en cours...)
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

@@ -72,8 +72,8 @@ export default class ResultChatLog {
     }
 
     /**
-     * Le détail des jets : jet principal, critique, esquive par cible, puis les
-     * jets des formules d'effets de la carte.
+     * Le détail des jets : jet principal, critique, jet pour toucher et esquive
+     * par cible, puis les jets des formules d'effets de la carte.
      *
      * @param {RollReport} report - Le rapport de la résolution.
      *
@@ -103,6 +103,31 @@ export default class ResultChatLog {
                 outcome: report.critical.hit
             }));
         }
+
+        // Le jet POUR TOUCHER, quand la carte en demande un. Les deux natures
+        // n'ont pas la même polarité : une attaque se lit du côté du lanceur
+        // (« touché » quand la cible n'est PAS protégée), une sauvegarde du côté
+        // de la cible (« réussie » quand elle l'est).
+        (report.hits ?? []).forEach(hit => {
+            const attack = hit.kind === "ac";
+            lines.push(ResultChatLog.#rollLine({
+                // Deux modificateurs et non un seul : la feuille de style doit
+                // pouvoir donner à la sauvegarde la polarité de l'esquive (une
+                // réussite y sert la cible, pas le lanceur).
+                modifier: attack ? "hit" : "save",
+                label: game.i18n.format(attack
+                    ? "FQCARDENGINE.RollLabelAttackOn" : "FQCARDENGINE.RollLabelSaveOf",
+                {target: hit.targetName}),
+                detail: game.i18n.format(attack
+                    ? "FQCARDENGINE.RollAgainstAc" : "FQCARDENGINE.RollAgainstDc",
+                {threshold: hit.threshold}),
+                total: hit.total,
+                outcome: attack ? !hit.defended : hit.defended,
+                outcomeKeys: attack
+                    ? {hit: "FQCARDENGINE.RollAttackTouched", miss: "FQCARDENGINE.RollAttackBlocked"}
+                    : {hit: "FQCARDENGINE.RollSaveSuccess", miss: "FQCARDENGINE.RollSaveFailure"}
+            }));
+        });
 
         // Une cible sans score d'esquive n'a pas lancé de dé : rien à montrer ici,
         // son sort se lit à la valeur qui lui est appliquée plus bas.
@@ -211,6 +236,10 @@ export default class ResultChatLog {
             if (result.evasion) {
                 badges += `<span class="fq-result-badge fq-result-badge--eva">`
                     + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartEvasion")}</span>`;
+            }
+            if (result.defended) {
+                badges += `<span class="fq-result-badge fq-result-badge--protected">`
+                    + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartProtected")}</span>`;
             }
             return `<li class="fq-card-engine-result-line ${modifier}">`
                 + `<span class="fq-result-key">${result.targetName}</span>`

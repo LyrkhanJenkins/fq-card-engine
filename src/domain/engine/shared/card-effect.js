@@ -5,6 +5,7 @@ import ResultChatLog from "../roll/result-chat-log.js";
 import {presentResult} from "../roll/result-presenter.js";
 import RollService from "../roll/roll-service.js";
 import WeaponDamage from "../roll/weapon-damage.js";
+import HitProfile from "../roll/hit-profile.js";
 import Minion from "./minion.js";
 import Geometry from "./geometry.js";
 import Constants, {OriginFQEffectLabel} from "../../constants.js";
@@ -907,8 +908,8 @@ export default class CardEffect {
     /**
      * Résout par des jets de dés toutes les valeurs dynamiques d'un contenu de
      * carte : portées (avec bonus de portée de l'acteur), nombre de cibles, coûts
-     * (hp, action, mana, zeal, pioche, défausse) et bonus (critique, esquive).
-     * Mute `cardContent` sur place.
+     * (hp, action, mana, zeal, pioche, défausse) et bonus (critique, esquive,
+     * toucher et DD de sauvegarde). Mute `cardContent` sur place.
      *
      * @param {object} cardContent - Le contenu (choix) de la carte à préparer.
      *
@@ -920,8 +921,9 @@ export default class CardEffect {
             cardContent.minReach = RollService.rollDiceSync(cardContent.minReach);
             cardContent.maxReach = RollService.rollDiceSync(cardContent.maxReach) + Constants.rangeBonus;
         }
-        // CIBLES, COÛTS (hp/action/mana/zeal/draw/drop) ET BONUS (crit/esquive)
-        for (const field of ["nbTargets", "hp", "action", "mana", "zeal", "draw", "drop", "bonusCrit", "bonusEva"]) {
+        // CIBLES, COÛTS (hp/action/mana/zeal/draw/drop) ET BONUS (crit/esquive/toucher)
+        for (const field of ["nbTargets", "hp", "action", "mana", "zeal", "draw", "drop",
+            "bonusCrit", "bonusEva", "hitBonus", "saveDc"]) {
             if (cardContent?.[field]) {
                 cardContent[field] = RollService.rollDiceSync(cardContent[field]);
             }
@@ -1012,7 +1014,10 @@ export default class CardEffect {
 
         // ARME : une carte exigeant un type d'arme (@wpnR/@wpnM) est injouable sans
         // l'arme équipée correspondante, au même titre qu'un manque de ressources.
-        const weaponWarningKey = WeaponDamage.getMissingWeaponWarningKey(cardContent, Constants.actorCurrent);
+        // Deux exigences possibles : les DÉGÂTS de la carte, et son MODIFICATEUR
+        // de toucher — une carte peut tirer l'un de l'arme sans l'autre.
+        const weaponWarningKey = WeaponDamage.getMissingWeaponWarningKey(cardContent, Constants.actorCurrent)
+            ?? HitProfile.missingWeaponWarningKey(cardContent, Constants.actorCurrent);
         if (weaponWarningKey) {
             ResourceHandler.createUserWarningMessage(game.i18n.localize(weaponWarningKey), Constants.actorCurrent);
             return false;

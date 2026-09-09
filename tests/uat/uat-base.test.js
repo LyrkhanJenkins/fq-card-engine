@@ -164,7 +164,6 @@ describe("template uat-base", () => {
         const expected = {
             "fq-card-engine.PlayerLimitCardsRight": true,
             "fq-card-engine.RollInitiative": true,
-            "fq-card-engine.BypassWeaponAttackRoll": true,
             "fq-restrain-movement.gmNotRestrained": false,
             "core.gridDiagonals": 3,
             "fq-npc-ai.enabled": true,

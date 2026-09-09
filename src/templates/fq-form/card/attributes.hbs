@@ -32,6 +32,40 @@
                 {{/if}}
             </legend>
             <fieldset>
+                <legend>🎲 <label>{{localize "FQCARDENGINE.CardHitLegend"}} </label></legend>
+                <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.HitType"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.hitType value=choice.hitType
+                                localize=true
+                                name=(concat "system.fq.choices." i ".hitType") rootId=../rootId}}
+
+                    <label>{{localize "FQCARDENGINE.HitSource"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.hitSource value=choice.hitSource
+                                localize=true
+                                name=(concat "system.fq.choices." i ".hitSource") rootId=../rootId}}
+                </div>
+                <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.HitAbility"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.hitAbility value=choice.hitAbility
+                                localize=true
+                                name=(concat "system.fq.choices." i ".hitAbility") rootId=../rootId}}
+
+                    <label>{{localize "FQCARDENGINE.SaveAbility"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.saveAbility value=choice.saveAbility
+                                localize=true
+                                name=(concat "system.fq.choices." i ".saveAbility") rootId=../rootId}}
+                </div>
+                <div class="form-fields">
+                    <label>{{localize "FQCARDENGINE.HitBonus"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.hitBonus value=choice.hitBonus
+                                name=(concat "system.fq.choices." i ".hitBonus") rootId=../rootId}}
+
+                    <label>{{localize "FQCARDENGINE.SaveDc"}}</label>
+                    {{formInput ../fields.fq.fields.choices.element.fields.saveDc value=choice.saveDc
+                                name=(concat "system.fq.choices." i ".saveDc") rootId=../rootId}}
+                </div>
+            </fieldset>
+            <fieldset>
                 <legend>🧪 <label>{{localize "FQCARDENGINE.CardResources"}} </label></legend>
                 <div class="form-fields">
                     <label>{{localize "FQCARDENGINE.ActionPoints"}}</label>
@@ -498,6 +532,7 @@
                             {{formInput
                                     ../../fields.fq.fields.choices.element.fields.minions.element.fields.type
                                     value=minion.type
+                                    localize=true
                                     name=(concat "system.fq.choices." i ".minions." minionIndex ".type")
                                     rootId=../../rootId
                             }}

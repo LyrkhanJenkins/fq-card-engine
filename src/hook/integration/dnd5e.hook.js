@@ -1,5 +1,6 @@
 import ResourceHandler from "../../domain/engine/shared/resource-handler.js";
 import Damage from "../../domain/engine/roll/damage.js";
+import HitProfile from "../../domain/engine/roll/hit-profile.js";
 import RollReport, {ROLL_ROLE} from "../../domain/engine/roll/roll-report.js";
 import ResultChatLog from "../../domain/engine/roll/result-chat-log.js";
 import {presentResult} from "../../domain/engine/roll/result-presenter.js";
@@ -13,14 +14,27 @@ import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../domain/trading/trad
 import SpellbookWindow from "../../domain/interface/window/spellbook-window.js";
 
 /**
+ * Types d'activité qui INFLIGENT des dégâts, et dont la résolution passe donc
+ * par l'échelle de dégâts du moteur — jet pour toucher, esquive, critique.
+ *
+ * La sauvegarde en fait partie : son jet est celui de la CIBLE contre le DD de
+ * l'activité, mais il se résout au même endroit et se lit dans la même fenêtre
+ * qu'une attaque. L'exclure laisserait tous les sorts à sauvegarde hors du
+ * moteur, avec leur propre message et sans demi-dégâts.
+ *
+ * @type {string[]}
+ */
+const DAMAGING_TYPES = Object.freeze(["attack", "damage", "save"]);
+
+/**
  * Types d'activité dont le coût FQ est prélevé au JET DE DÉS (`rollDamageV2`),
  * et non à l'usage.
  *
- * La distinction est délibérée : pour un soin, une attaque ou des dégâts, le
- * coût ne doit être payé qu'une fois tous les dés lancés — un usage abandonné en
- * cours de résolution ne coûte rien. Les autres types d'activité n'atteignent
- * jamais `rollDamageV2` : sans prélèvement à l'usage, leur coût ne serait jamais
- * payé et l'activité resterait indéfiniment jouable.
+ * La distinction est délibérée : pour un soin comme pour une activité qui
+ * inflige des dégâts, le coût ne doit être payé qu'une fois tous les dés lancés
+ * — un usage abandonné en cours de résolution ne coûte rien. Les autres types
+ * d'activité n'atteignent jamais `rollDamageV2` : sans prélèvement à l'usage,
+ * leur coût ne serait jamais payé et l'activité resterait indéfiniment jouable.
  *
  * Liste unique, partagée par les deux points de prélèvement : deux listes
  * jumelles finiraient par diverger, et la divergence se paierait en ressources
@@ -28,7 +42,7 @@ import SpellbookWindow from "../../domain/interface/window/spellbook-window.js";
  *
  * @type {string[]}
  */
-const ROLL_CONSUMING_TYPES = Object.freeze(["heal", "attack", "damage"]);
+const ROLL_CONSUMING_TYPES = Object.freeze(["heal", ...DAMAGING_TYPES]);
 
 /**
  * Indique si la logique FQ ne doit PAS s'appliquer à une activité dnd5e donnée :
@@ -89,6 +103,22 @@ const activityReachInCases = (range, actor) => {
     };
 };
 
+/**
+ * Indique si la résolution FQ prendra ce jet de dégâts en charge, et publiera donc
+ * son propre message de résultat.
+ *
+ * Lecture unique, partagée par la suppression du message de dnd5e et par la
+ * résolution elle-même : deux conditions jumelles finiraient par diverger, et la
+ * divergence se paierait en jet muet — message supprimé sans rien pour le
+ * remplacer — ou en message publié deux fois.
+ *
+ * @param {object} activity - L'activité dnd5e dont les dégâts sont jetés.
+ *
+ * @returns {boolean} True si le moteur FQ publiera le résultat de ce jet.
+ */
+const fqPublishesDamageRoll = (activity) => !!activity?.item?.actor
+    && ROLL_CONSUMING_TYPES.includes(activity?.type);
+
 Hooks.on("dnd5e.shortRest", (actor, _config) => {
     actor.update({"system.fq.action.value": actor.system.fq.action.max});
     actor.update({"system.fq.zeal.value": actor.system.fq.zeal.init});
@@ -106,10 +136,19 @@ Hooks.on("dnd5e.longRest", (actor, _config) => {
 });
 
 
-Hooks.on("dnd5e.preUseActivity", (activity, _usageConfig, _dialogConfig, _messageConfig) => {
+Hooks.on("dnd5e.preUseActivity", (activity, _usageConfig, _dialogConfig, messageConfig) => {
     // Filter Activities
     if (notApplyFQOnActivity(activity)) {
         return true;
+    }
+
+    // Carte d'usage de dnd5e supprimée pour tout ce que le moteur résout : ses
+    // boutons [Attaque], [Dégâts] et [Sauvegarde DD] rejoueraient à la main des
+    // dés déjà lancés — le moteur a résolu l'activité d'un seul tenant, par
+    // cible, et publie son propre message. Un usage refusé plus bas emporte
+    // cette configuration avec lui, il n'y a donc rien à défaire.
+    if (messageConfig && fqPublishesDamageRoll(activity)) {
+        messageConfig.create = false;
     }
 
     if (OpportunityAttack.rememberContextFor(activity)) {
@@ -139,47 +178,44 @@ Hooks.on("dnd5e.preUseActivity", (activity, _usageConfig, _dialogConfig, _messag
 
 });
 
-Hooks.on("dnd5e.preRollAttackV2", (config, _dialog, _message) => {
-    if (!game.settings.get(FqCardEngineModule.moduleName, "BypassWeaponAttackRoll")) {
-        return true;
+Hooks.on("dnd5e.postUseActivity", (activity) => {
+    // dnd5e enchaîne seul sur le jet après l'usage (`_triggerSubsequentActions`)
+    // pour une attaque, des dégâts ou un soin — mais PAS pour une sauvegarde,
+    // qui attend un clic sur le bouton [Dégâts] de sa carte d'usage. Cette carte
+    // n'étant plus publiée, le moteur déclenche le jet lui-même : sans quoi un
+    // sort à sauvegarde ne se résoudrait jamais.
+    if (activity?.type === "save" && fqPublishesDamageRoll(activity)) {
+        activity.rollDamage({}, {configure: false});
     }
+});
+
+Hooks.on("dnd5e.preRollAttackV2", (config, _dialog, _message) => {
+    // Le jet d'attaque de dnd5e est TOUJOURS écarté quand le moteur prend la
+    // résolution en charge : ce n'est plus une option. dnd5e ne jette qu'UNE
+    // fois pour toute la sélection, là où le moteur jette PAR CIBLE et présente
+    // le résultat dans sa fenêtre, avec l'esquive et l'échelle de dégâts. Deux
+    // jets d'attaque pour la même attaque n'auraient aucun sens.
     const activity = config.subject;
-    if (activity?.item?.type !== "weapon") {
+    if (!fqPublishesDamageRoll(activity)) {
         return true;
     }
     activity.rollDamage({}, {configure: false});
     return false;
 });
 
-/**
- * Indique si la résolution FQ prendra ce jet de dégâts en charge, et publiera donc
- * son propre message de résultat.
- *
- * Lecture unique, partagée par la suppression du message de dnd5e et par la
- * résolution elle-même : deux conditions jumelles finiraient par diverger, et la
- * divergence se paierait en jet muet — message supprimé sans rien pour le
- * remplacer — ou en message publié deux fois.
- *
- * @param {object} activity - L'activité dnd5e dont les dégâts sont jetés.
- *
- * @returns {boolean} True si le moteur FQ publiera le résultat de ce jet.
- */
-const fqPublishesDamageRoll = (activity) => !!activity?.item?.actor
-    && ROLL_CONSUMING_TYPES.includes(activity?.type);
 
 Hooks.on("dnd5e.preRollDamageV2", (config, dialog, message) => {
     // Le message de dnd5e ferait doublon avec le message unique publié en fin de
     // résolution, qui porte déjà le détail de ces dés — et ses jets seraient
     // animés en 3D alors que le moteur affiche les siens dans sa propre fenêtre.
-    if (message && fqPublishesDamageRoll(config.subject)) {
+    if (!fqPublishesDamageRoll(config.subject)) {
+        return true;
+    }
+    if (message) {
         message.create = false;
     }
-    if (!game.settings.get(FqCardEngineModule.moduleName, "BypassWeaponAttackRoll")) {
-        return true;
-    }
-    if (config.subject?.item?.type !== "weapon") {
-        return true;
-    }
+    // Résolution d'un seul tenant : aucun dialogue de configuration ne
+    // s'interpose entre le jeu de l'activité et son résultat.
     dialog.configure = false;
     return true;
 });
@@ -198,7 +234,13 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
     if (!opportunityTarget && ROLL_CONSUMING_TYPES.includes(subject.type)) {
         ResourceHandler.consumeResources(item.system?.fq, subject.actor);
     }
-    let cardContent = {heal: 0, damage: 0, minReach, maxReach, bonusCrit: 0, bonusEva: 0};
+    // Le profil de toucher de l'activité voyage avec le contenu, comme les
+    // cibles imposées : c'est l'activité qui porte le modificateur d'attaque ou
+    // le DD de sauvegarde, pas des champs de carte.
+    let cardContent = {
+        heal: 0, damage: 0, minReach, maxReach, bonusCrit: 0, bonusEva: 0,
+        hitProfile: HitProfile.ofActivity(subject)
+    };
     if (opportunityTarget) {
         cardContent.forcedTargets = [opportunityTarget];
     } else {
@@ -242,7 +284,7 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
                 report.setMainRoll({role: ROLL_ROLE.HEAL, ...rolled, total: roll.total, bonus: healBonus || null});
                 resultArray.push(...await Damage.addCriticalToHeal(item.actor, roll.total, cardContent, report));
                 playFx = true;
-            } else if (subject.type === "damage" || subject.type === "attack") {
+            } else if (DAMAGING_TYPES.includes(subject.type)) {
                 cardContent.damage = roll.formula;
                 const rolled = {formula: roll.formula, dice: RollReport.diceOf(roll)};
                 fxType = roll.options?.type;
@@ -288,7 +330,7 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
             Facing.faceTarget(token, frozenTargets?.[0]);
 
             ResultChatLog.publish(item.actor, report);
-            const {forcedTargets: _forcedTargets, ...loggedContent} = cardContent;
+            const {forcedTargets: _forcedTargets, hitProfile: _hitProfile, ...loggedContent} = cardContent;
             // Nom de carte null : une attaque dnd5e n'est pas une carte, et le journal
             // ne doit pas la faire reconnaître comme telle par les conditions de carte.
             await socket.executeAsGM("logCardPlayed", resultArray, loggedContent, item.actor.id,

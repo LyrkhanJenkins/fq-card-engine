@@ -212,14 +212,19 @@ describe("ResultWindow", () => {
             await ResultWindow.present(fullReport());
         });
 
-        it("porte l'entête : acteur, carte, deck, effet retenu, variable et cibles", () => {
+        it("porte l'entête : acteur, carte, deck, effet retenu et variable", () => {
             const html = windowEl().innerHTML;
             expect(html).toContain("Aeliana");
             expect(html).toContain("Nova de givre");
             expect(html).toContain("Élémentaliste");
             expect(html).toContain("Explosion glaciale");
             expect(html).toContain("X = 3");
-            expect(html).toContain("Gobelin, Rocher");
+        });
+
+        it("ne répète PAS la liste des cibles dans l'entête", () => {
+            // La colonne de défense les nomme déjà une à une, et la ligne de
+            // résultat les reprend une troisième fois.
+            expect(windowEl().querySelector(".fq-result-targets-line")).toBeNull();
         });
 
         it("pose chaque dé du jet principal sur sa valeur, et le total", () => {
@@ -233,10 +238,22 @@ describe("ResultWindow", () => {
             expect(windowEl().querySelector("[data-total]").classList).toContain("is-crit");
         });
 
-        it("ne montre une ligne d'esquive que pour la cible qui a lancé un dé", () => {
-            const rows = windowEl().querySelectorAll("[data-eva-row]");
-            expect(rows).toHaveLength(1);
-            expect(windowEl().querySelector("[data-eva=\"0\"]").textContent).toBe("19");
+        it("donne une ligne de défense à CHAQUE cible, même sans dé d'esquive", () => {
+            // « Rocher » n'a aucun score d'esquive : sa ligne existe pour garder
+            // les symboles alignés, mais son emplacement reste vide et incolore.
+            const lines = windowEl().querySelectorAll("[data-def-line]");
+            expect(lines).toHaveLength(2);
+            expect(windowEl().querySelector("[data-def-mark=\"0-1\"]").textContent).toBe("19");
+
+            const silent = windowEl().querySelector("[data-def-mark=\"1-1\"]");
+            expect(silent.textContent.trim()).toBe("");
+            expect(silent.classList.contains("is-success")).toBe(false);
+            expect(silent.classList.contains("is-failure")).toBe(false);
+        });
+
+        it("colore l'esquive réussie en défense qui a tenu", () => {
+            expect(windowEl().querySelector("[data-def-mark=\"0-1\"]").classList)
+                .toContain("is-success");
         });
 
         it("révèle toutes les valeurs appliquées", () => {
@@ -271,7 +288,7 @@ describe("ResultWindow", () => {
         expect(windowEl().querySelector(".fq-result-chip.is-tag")).toBeNull();
     });
 
-    it("montre un soin sans colonne d'esquive et sous son propre habillage", async () => {
+    it("montre un soin sans colonne de défense et sous son propre habillage", async () => {
         const report = new RollReport();
         report.setMainRoll({role: ROLL_ROLE.HEAL, formula: "1d6", dice: [{sides: 6, value: 4}], total: 4});
         report.addResult({targetTokenId: "a1", targetName: "Bruenor", value: 4, type: "healFQ", critical: false, evasion: false});
@@ -279,17 +296,111 @@ describe("ResultWindow", () => {
         await ResultWindow.present(report);
 
         expect(windowEl().classList).toContain("fq-result-window--heal");
-        expect(windowEl().querySelector(".fq-result-col--eva").classList).toContain("is-empty");
+        expect(windowEl().querySelector(".fq-result-col--defense").classList).toContain("is-empty");
     });
 
-    it("estompe la colonne du critique quand aucun critique n'est possible", async () => {
+    it("estompe les deux encarts d'attaque quand la carte ne jette ni toucher ni critique", async () => {
         const report = new RollReport();
         report.setMainRoll({role: ROLL_ROLE.DAMAGE, formula: "1d6", dice: [{sides: 6, value: 3}], total: 3});
 
         await ResultWindow.present(report);
 
-        expect(windowEl().querySelector(".fq-result-col--crit").classList).toContain("is-empty");
+        const boxes = windowEl().querySelectorAll(".fq-result-col--attack .fq-result-box");
+        expect(boxes).toHaveLength(2);
+        expect([...boxes].every(box => box.classList.contains("is-empty"))).toBe(true);
         expect(windowEl().querySelector("[data-crit]")).toBeNull();
+        expect(windowEl().querySelector("[data-hit-die]")).toBeNull();
+    });
+
+    describe("jet pour toucher", () => {
+
+        /**
+         * Rapport portant un jet pour toucher et l'esquive de chaque cible.
+         *
+         * @param {object[]} hits      - Les jets pour toucher (voir `RollReport.addHit`).
+         * @param {object[]} evasions  - Les esquives (voir `RollReport.addEvasion`).
+         *
+         * @returns {RollReport} Le rapport.
+         */
+        function reportWith(hits, evasions) {
+            const report = new RollReport();
+            report.setMainRoll({role: ROLL_ROLE.DAMAGE, formula: "1d6", dice: [{sides: 6, value: 4}], total: 4});
+            evasions.forEach(evasion => report.addEvasion(evasion));
+            hits.forEach(hit => report.addHit(hit));
+            report.addResult({
+                targetTokenId: "t1", targetName: "Gobelin", value: 2,
+                type: "damageFQ", critical: false, evasion: false, defended: true
+            });
+            return report;
+        }
+
+        /** Une esquive lancée, pour une cible donnée. */
+        const evasionOf = (id, name, roll, evaded) =>
+            ({targetTokenId: id, targetName: name, roll, threshold: 16, evaded});
+
+        it("un seul dé d'attaque, opposé à la classe d'armure de chaque cible", async () => {
+            // Une attaque ne roule qu'une fois : c'est le même total qui affronte
+            // les deux armures, et l'encart ne porte donc qu'un dé.
+            await ResultWindow.present(reportWith([
+                {targetTokenId: "t1", targetName: "Gobelin", kind: "ac", roll: 14, modifier: 5, total: 19, threshold: 15, defended: false},
+                {targetTokenId: "t2", targetName: "Troll", kind: "ac", roll: 14, modifier: 5, total: 19, threshold: 20, defended: true}
+            ], [evasionOf("t1", "Gobelin", 3, false), evasionOf("t2", "Troll", 19, true)]));
+
+            const win = windowEl();
+            expect(win.querySelectorAll("[data-hit-die]")).toHaveLength(1);
+            expect(win.querySelector("[data-hit-die]").textContent).toBe("19");
+        });
+
+        it("le dé porte le total et la ligne du dessous la formule", async () => {
+            await ResultWindow.present(reportWith([
+                {targetTokenId: "t1", targetName: "Gobelin", kind: "ac", roll: 14, modifier: 5, total: 19, threshold: 15, defended: false}
+            ], [evasionOf("t1", "Gobelin", 3, false)]));
+
+            const win = windowEl();
+            expect(win.querySelector("[data-hit-die]").textContent).toBe("19");
+            expect(win.querySelector("[data-hit-formula]").textContent).toBe("14 + 5");
+        });
+
+        it("l'écu porte la classe d'armure, vert quand elle a tenu", async () => {
+            await ResultWindow.present(reportWith([
+                {targetTokenId: "t1", targetName: "Gobelin", kind: "ac", roll: 14, modifier: 5, total: 19, threshold: 15, defended: false},
+                {targetTokenId: "t2", targetName: "Troll", kind: "ac", roll: 14, modifier: 5, total: 19, threshold: 20, defended: true}
+            ], [evasionOf("t1", "Gobelin", 3, false), evasionOf("t2", "Troll", 19, true)]));
+
+            const win = windowEl();
+            const beaten = win.querySelector("[data-def-mark=\"0-0\"]");
+            const held = win.querySelector("[data-def-mark=\"1-0\"]");
+            expect(beaten.textContent).toBe("15");
+            expect(beaten.classList).toContain("is-failure");
+            expect(held.textContent).toBe("20");
+            expect(held.classList).toContain("is-success");
+            expect(held.classList).toContain("fq-result-mark--shield");
+        });
+
+        it("une sauvegarde roule SON dé par cible, et coiffe sa colonne", async () => {
+            await ResultWindow.present(reportWith([
+                {targetTokenId: "t1", targetName: "Gobelin", kind: "save", roll: 11, modifier: 3, total: 14, threshold: 13, defended: true}
+            ], [evasionOf("t1", "Gobelin", 3, false)]));
+
+            const win = windowEl();
+            // Aucun dé d'attaque : la sauvegarde appartient à la cible.
+            expect(win.querySelector("[data-hit-die]")).toBeNull();
+            const save = win.querySelector("[data-def-mark=\"0-0\"]");
+            expect(save.textContent).toBe("14");
+            expect(save.classList).toContain("is-success");
+            expect(win.innerHTML).toContain("FQCARDENGINE.ColumnKeySave");
+        });
+
+        it("la colonne de défense se réduit à l'esquive quand rien ne demande de toucher", async () => {
+            await ResultWindow.present(reportWith([], [evasionOf("t1", "Gobelin", 18, true)]));
+
+            const win = windowEl();
+            expect(win.querySelector("[data-hit-die]")).toBeNull();
+            expect(win.querySelector("[data-def-mark=\"0-0\"]")).toBeNull();
+            expect(win.querySelector("[data-def-mark=\"0-1\"]").textContent).toBe("18");
+            expect(win.innerHTML).toContain("FQCARDENGINE.ColumnKeyEvasion");
+            expect(win.innerHTML).not.toContain("FQCARDENGINE.ColumnKeyArmor");
+        });
     });
 
     describe("silhouettes de dés", () => {

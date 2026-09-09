@@ -58,8 +58,8 @@ export default class OpportunityAttack {
      * Contextes d'attaque (`{source, target}`) imposés, indexés par ACTIVITÉ dnd5e.
      *
      * Le marqueur `pending` ne peut pas porter la cible jusqu'au jet de dégâts :
-     * quand le réglage `BypassWeaponAttackRoll` est actif, `preRollAttackV2`
-     * appelle `activity.rollDamage()` SANS l'attendre et annule le jet d'attaque.
+     * `preRollAttackV2` écarte systématiquement le jet d'attaque de dnd5e et
+     * appelle `activity.rollDamage()` SANS l'attendre.
      * `activity.use()` rend alors la main avant que `dnd5e.rollDamageV2` ne se
      * produise, et tout marqueur global serait déjà levé — la cible se perdrait,
      * la résolution ne trouverait personne, et aucun dégât ne serait appliqué.

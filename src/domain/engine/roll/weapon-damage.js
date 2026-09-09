@@ -1,24 +1,9 @@
 import ResourceHandler from "../shared/resource-handler.js";
+import {WEAPON_TOKENS} from "../../weapon-tokens.js";
 
-/**
- * Table des jetons d'arme : jeton → catégories dnd5e acceptées
- * (`weapon.system.type.value`), clé i18n de l'avertissement affiché si aucune
- * arme du type n'est équipée (garde-fou de cartes), et clé i18n de la
- * notification équivalente pour le bouton HUD / la macro.
- * @type {Object<string, {categories: string[], warningKey: string, hudWarningKey: string}>}
- */
-export const WEAPON_TOKENS = {
-    "@wpnR": {
-        categories: ["simpleR", "martialR"],
-        warningKey: "FQCARDENGINE.WarningMsgNoRangedWeapon",
-        hudWarningKey: "FQCARDENGINE.TokenDamageNoRangedWeaponWarningMsg"
-    },
-    "@wpnM": {
-        categories: ["simpleM", "martialM", "natural"],
-        warningKey: "FQCARDENGINE.WarningMsgNoMeleeWeapon",
-        hudWarningKey: "FQCARDENGINE.TokenDamageNoMeleeWeaponWarningMsg"
-    }
-};
+// Réexporté pour les appelants historiques : la table vit désormais dans un
+// module sans dépendance, que le schéma de carte peut importer sans cycle.
+export {WEAPON_TOKENS};
 
 /**
  * Extraction des dégâts de l'arme équipée d'un acteur, telle que dnd5e la calcule.
@@ -118,27 +103,38 @@ export default class WeaponDamage {
     }
 
     /**
-     * Résout l'activité porteuse de dégâts d'une arme : l'activité de dégâts en
-     * priorité, sinon l'activité d'attaque (certaines armes n'ont qu'une activité
-     * "damage", cf. `dnd5e.rollDamageV2` qui traite les deux types). Chemin
-     * principal : l'API dnd5e 5.x `activities.getByType`. Fallback itératif si
-     * `getByType` est absent.
+     * Résout une activité d'une arme, dans l'ordre de priorité demandé : par
+     * défaut l'activité de dégâts, sinon l'activité d'attaque (certaines armes
+     * n'ont qu'une activité "damage", cf. `dnd5e.rollDamageV2` qui traite les
+     * deux types). Chemin principal : l'API dnd5e 5.x `activities.getByType`.
+     * Fallback itératif si `getByType` est absent.
      *
-     * @param {object} weapon - L'item arme.
+     * L'ordre est paramétrable parce que les deux usages du moteur ne veulent
+     * pas la même activité : les DÉGÂTS acceptent l'une ou l'autre, alors que le
+     * MODIFICATEUR D'ATTAQUE (`HitProfile`) exige l'activité d'attaque, seule à
+     * porter `getAttackData`.
      *
-     * @returns {object|undefined} L'activité de dégâts ou d'attaque, ou undefined si absente.
+     * @param {object}   weapon  - L'item arme.
+     * @param {string[]} [types] - Les types d'activité, par ordre de priorité.
+     *
+     * @returns {object|undefined} La première activité trouvée, ou undefined si aucune.
      */
-    static getAttackActivity(weapon) {
+    static getAttackActivity(weapon, types = ["damage", "attack"]) {
         const activities = weapon.system?.activities;
-        for (const type of ["damage","attack"]) {
+        for (const type of types) {
             const byType = activities?.getByType?.(type)?.[0];
             if (byType) {
                 return byType;
             }
         }
         if (activities && typeof activities[Symbol.iterator] === "function") {
-            return [...activities].find(a => a?.type === "damage") ??
-                [...activities].find(a => a?.type === "attack");
+            const all = [...activities];
+            for (const type of types) {
+                const found = all.find(a => a?.type === type);
+                if (found) {
+                    return found;
+                }
+            }
         }
         return undefined;
     }
@@ -262,11 +258,37 @@ export default class WeaponDamage {
         if (typeof cardContent?.damage !== "string") {
             return null;
         }
-        for (const [token, {categories, warningKey}] of Object.entries(WEAPON_TOKENS)) {
-            if (cardContent.damage.includes(token) && !WeaponDamage.getEquippedWeapon(actor, categories)) {
-                return warningKey;
+        for (const token of Object.keys(WEAPON_TOKENS)) {
+            if (cardContent.damage.includes(token)) {
+                const warningKey = WeaponDamage.missingWeaponWarningKeyFor(token, actor);
+                if (warningKey) {
+                    return warningKey;
+                }
             }
         }
         return null;
+    }
+
+    /**
+     * Clé i18n d'avertissement si l'acteur n'a aucune arme équipée satisfaisant
+     * un jeton d'arme donné, sinon `null`. Un jeton inconnu ne contraint rien.
+     *
+     * Primitive partagée par les deux gardes de lançabilité qui dépendent d'une
+     * arme : celle des DÉGÂTS (`getMissingWeaponWarningKey`, qui balaie les
+     * jetons présents dans la formule) et celle du MODIFICATEUR D'ATTAQUE
+     * (`HitProfile.missingWeaponWarningKey`, qui n'en regarde qu'un, désigné par
+     * le choix). Le verdict « cette arme manque » ne vit qu'ici.
+     *
+     * @param {string} token - Le jeton d'arme (clé de `WEAPON_TOKENS`).
+     * @param {object} actor - L'acteur porteur.
+     *
+     * @returns {string|null} La clé i18n d'avertissement, ou null.
+     */
+    static missingWeaponWarningKeyFor(token, actor) {
+        const entry = WEAPON_TOKENS[token];
+        if (!entry) {
+            return null;
+        }
+        return WeaponDamage.getEquippedWeapon(actor, entry.categories) ? null : entry.warningKey;
     }
 }

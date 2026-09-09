@@ -1500,7 +1500,7 @@
       "system": {
         "activities": {
           "dqt77nczUd0g5RwZ": {
-            "type": "damage",
+            "type": "attack",
             "_id": "dqt77nczUd0g5RwZ",
             "sort": 0,
             "activation": {
@@ -1548,8 +1548,9 @@
             },
             "damage": {
               "critical": {
-                "allow": false
+                "bonus": ""
               },
+              "includeBase": false,
               "parts": [
                 {
                   "custom": {
@@ -1568,7 +1569,19 @@
                 }
               ]
             },
-            "name": ""
+            "name": "",
+            "attack": {
+              "ability": "",
+              "bonus": "",
+              "critical": {
+                "threshold": null
+              },
+              "flat": false,
+              "type": {
+                "value": "melee",
+                "classification": "weapon"
+              }
+            }
           }
         },
         "uses": {
@@ -1690,7 +1703,7 @@
       "system": {
         "activities": {
           "dqt77nczUd0g5RwZ": {
-            "type": "damage",
+            "type": "attack",
             "_id": "dqt77nczUd0g5RwZ",
             "sort": 0,
             "activation": {
@@ -1738,8 +1751,9 @@
             },
             "damage": {
               "critical": {
-                "allow": false
+                "bonus": ""
               },
+              "includeBase": false,
               "parts": [
                 {
                   "custom": {
@@ -1758,7 +1772,19 @@
                 }
               ]
             },
-            "name": ""
+            "name": "",
+            "attack": {
+              "ability": "",
+              "bonus": "",
+              "critical": {
+                "threshold": null
+              },
+              "flat": false,
+              "type": {
+                "value": "ranged",
+                "classification": "weapon"
+              }
+            }
           }
         },
         "uses": {
@@ -1880,7 +1906,7 @@
       "system": {
         "activities": {
           "dqt77nczUd0g5RwZ": {
-            "type": "damage",
+            "type": "attack",
             "_id": "dqt77nczUd0g5RwZ",
             "sort": 0,
             "activation": {
@@ -1928,8 +1954,9 @@
             },
             "damage": {
               "critical": {
-                "allow": false
+                "bonus": ""
               },
+              "includeBase": false,
               "parts": [
                 {
                   "custom": {
@@ -1948,7 +1975,19 @@
                 }
               ]
             },
-            "name": ""
+            "name": "",
+            "attack": {
+              "ability": "",
+              "bonus": "",
+              "critical": {
+                "threshold": null
+              },
+              "flat": false,
+              "type": {
+                "value": "melee",
+                "classification": "weapon"
+              }
+            }
           }
         },
         "uses": {
