@@ -111,6 +111,15 @@ describe("ResultChatLog", () => {
             expect(content.match(/fq-roll-line--eva/g)).toHaveLength(1);
         });
 
+        it("dit l'esquive avec les mots de la fenêtre, jamais « réussite » ni « échec »", () => {
+            // « Gobelin » a esquivé : le message doit le dire comme la fenêtre, sous
+            // peine de nommer « réussite » un jet qui dessert le lanceur.
+            const content = lastContent();
+            expect(content).toContain("FQCARDENGINE.ChatMessagePartEvasion");
+            const evaLine = content.match(/<li class="fq-roll-line fq-roll-line--eva">.*?<\/li>/)[0];
+            expect(evaLine).not.toContain("FQCARDENGINE.RollOutcomeSuccess");
+        });
+
         it("porte les jets supplémentaires de la carte", () => {
             expect(lastContent()).toContain("fq-roll-line--other");
         });
@@ -146,6 +155,17 @@ describe("ResultChatLog", () => {
 
         expect(lastContent()).toContain("Attaque d'opportunité");
         expect(lastContent()).toContain("fq-result-tag");
+    });
+
+    it("dit « touché » pour une esquive manquée, comme la fenêtre", () => {
+        const report = new RollReport();
+        report.setMainRoll({role: ROLL_ROLE.DAMAGE, formula: "1d6", dice: [{sides: 6, value: 4}], total: 4});
+        report.addEvasion({targetTokenId: "t1", targetName: "Orque", roll: 2, threshold: 18, evaded: false});
+
+        ResultChatLog.publish(ACTOR, report);
+
+        expect(lastContent()).toContain("FQCARDENGINE.RollEvasionTouched");
+        expect(lastContent()).not.toContain("FQCARDENGINE.RollOutcomeFail");
     });
 
     it("un soin prend le libellé des soins, pas celui des dégâts", () => {

@@ -232,6 +232,17 @@ div.separator {
     color: var(--fq8-message-label);
 }
 
+/* L'esquive ne se lit pas en réussite/échec mais en esquivé/touché : ses deux
+   verdicts prennent donc les couleurs de la fenêtre plutôt que le vert de la
+   réussite, qui désignerait ici un jet favorable à la cible. */
+.fq-roll-line--eva .fq-roll-outcome--hit {
+    color: var(--fq8-color-evasion);
+}
+
+.fq-roll-line--eva .fq-roll-outcome--miss {
+    color: var(--fq8-message-label);
+}
+
 /* ============================================================
    RÉCAP DES RÉSULTATS (dégâts / soins / actions manuelles)
    Message final : encadré et typographie renforcée pour trancher

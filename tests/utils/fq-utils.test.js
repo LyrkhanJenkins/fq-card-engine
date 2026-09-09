@@ -47,6 +47,7 @@ vi.mock("../../src/domain/engine/roll/result-chat-log.js", () => ({
 vi.mock("../../src/domain/engine/shared/fx.js", () => ({
     default: {
         handleSpecialEffect: vi.fn(),
+        preloadEffectAssets: vi.fn(),
         importMacroFromCompendium: vi.fn()
     }
 }));
@@ -113,7 +114,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             "actorId": "userCharacterId",
             "x": 5,
             "y": 5
-        }, null);
+        }, null, expect.any(Array));
     });
 
     it("applyCardEffect - cas nominal : applique les effets quand cardContent est présent", async () => {

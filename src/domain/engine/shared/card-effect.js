@@ -138,6 +138,20 @@ export default class CardEffect {
             }
             report.addMessages(cardMessages);
 
+            // Cibles FIGÉES avant l'animation, et pour la même raison que celles
+            // des formules d'effets : l'orientation et les FX se jouent après
+            // plusieurs secondes d'affichage, et relire la sélection à ce
+            // moment-là, ce serait viser ce qu'elle est devenue entre-temps. Les
+            // dégâts, eux, portent déjà leurs `targetTokenId` figés au jet.
+            const frozenTargets = cardContent.forcedTargets ?? Constants.myTargets(cardContent.targetType);
+
+            const match = cardContent.damage?.match(/\[([a-z]+)\]/i);
+            const effectType = match ? match[1] : null;
+            // Lancé avant l'animation, jamais attendu : la vidéo de l'effet se
+            // charge pendant que les dés roulent, et démarre donc sans retard une
+            // fois le résultat affiché.
+            Fx.preloadEffectAssets(cardContent, effectType);
+
             // Le rapport est complet : on le montre, et RIEN ne change dans la
             // partie tant que le joueur ne l’a pas vu. Les effets, les points de
             // vie et les FX attendent la fin de l’animation.
@@ -147,13 +161,11 @@ export default class CardEffect {
                 await CardEffect.applyPendingEffects(pending);
             }
 
-            // Orientation vers la cible, avant les FX : le lanceur regarde ce
-            // qu'il vise. Les cibles se résolvent ici avec le type de ciblage de
-            // la carte, comme partout ailleurs dans ce fichier.
-            Facing.faceTarget(Constants.myToken, (cardContent.forcedTargets ?? Constants.myTargets(cardContent.targetType))?.[0]);
+            // Orientation vers la cible, avant les FX : le lanceur regarde ce qu'il vise.
+            Facing.faceTarget(Constants.myToken, frozenTargets?.[0]);
 
-            const match = cardContent.damage?.match(/\[([a-z]+)\]/i);
-            await Fx.handleSpecialEffect(cardContent, resultArray, Constants.myToken, match ? match[1] : null);
+            await Fx.handleSpecialEffect(cardContent, resultArray, Constants.myToken,
+                effectType, frozenTargets);
 
             for (const res of resultArray) {
                 await socket.executeAsGM("applyActorHpModification", res.targetTokenId, res.value, res.type);

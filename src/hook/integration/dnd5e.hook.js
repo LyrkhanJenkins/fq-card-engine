@@ -231,33 +231,50 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
                 // Détail des dés relevé AVANT le jet de bonus : celui-ci repart du seul
                 // total et n'a plus de dés, alors que ce sont ceux de dnd5e qu'il faut montrer.
                 const rolled = {formula: roll.formula, dice: RollReport.diceOf(roll)};
+                // Type relevé AVANT le jet de bonus, comme le détail des dés : ce jet
+                // reconstruit ne repart que d'un total et a perdu les options de dnd5e,
+                // dont le type de dégâts qui choisit les FX.
+                fxType = roll.options?.type;
                 const healBonus = item.actor.system?.fq?.bonus?.heal;
                 if (healBonus) {
                     roll = await new Roll(Damage.getHealWithBonus(item.actor, roll.total)).evaluate();
                 }
                 report.setMainRoll({role: ROLL_ROLE.HEAL, ...rolled, total: roll.total, bonus: healBonus || null});
                 resultArray.push(...await Damage.addCriticalToHeal(item.actor, roll.total, cardContent, report));
-                fxType = roll.options.type;
                 playFx = true;
             } else if (subject.type === "damage" || subject.type === "attack") {
                 cardContent.damage = roll.formula;
                 const rolled = {formula: roll.formula, dice: RollReport.diceOf(roll)};
+                fxType = roll.options?.type;
                 const damageBonus = item.actor.system?.fq?.bonus?.damage;
                 if (damageBonus) {
                     roll = await new Roll(Damage.getDamageWithBonus(item.actor, roll.total)).evaluate();
                 }
                 report.setMainRoll({role: ROLL_ROLE.DAMAGE, ...rolled, total: roll.total, bonus: damageBonus || null});
                 resultArray.push(...await Damage.addCriticalEvasionToDamage(item.actor, roll.total, cardContent, report));
-                fxType = roll.options.type;
                 playFx = true;
             }
+            // Cibles figées avant l'animation. `forcedTargets` en porte déjà la
+            // plupart — sélection retenue à l'usage, cible d'une attaque
+            // d'opportunité — mais pas le cas d'un sort sans portée, qui retombe
+            // sur la sélection vivante : après plusieurs secondes d'affichage,
+            // celle-ci n'est plus forcément celle qui a été frappée.
+            const frozenTargets = cardContent.forcedTargets ?? Constants.myTargets();
+
+            // Lancé avant l'animation, jamais attendu : la vidéo de l'effet se
+            // charge pendant que les dés roulent, et démarre donc sans retard une
+            // fois le résultat affiché.
+            if (playFx) {
+                Fx.preloadEffectAssets(cardContent, fxType);
+            }
+
             // Le rapport est complet : on le montre, et RIEN ne change dans la
             // partie tant que le joueur ne l’a pas vu. Les FX et les points de vie
             // attendent la fin de l’animation.
             await presentResult(report);
 
             if (token && playFx) {
-                await Fx.handleSpecialEffect(cardContent, resultArray, token, fxType);
+                await Fx.handleSpecialEffect(cardContent, resultArray, token, fxType, frozenTargets);
             }
 
             for (const res of resultArray) {
@@ -268,7 +285,7 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
             // frappe. La première cible fait foi — une attaque de zone n'a pas
             // de direction unique, et suivre la première reste plus lisible que
             // ne pas bouger du tout.
-            Facing.faceTarget(token, (cardContent.forcedTargets ?? Constants.myTargets())?.[0]);
+            Facing.faceTarget(token, frozenTargets?.[0]);
 
             ResultChatLog.publish(item.actor, report);
             const {forcedTargets: _forcedTargets, ...loggedContent} = cardContent;

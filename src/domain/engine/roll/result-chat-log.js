@@ -112,7 +112,14 @@ export default class ResultChatLog {
                 label: game.i18n.format("FQCARDENGINE.RollLabelEvasionOf", {target: evasion.targetName}),
                 detail: game.i18n.format("FQCARDENGINE.RollThreshold", {threshold: evasion.threshold}),
                 total: evasion.roll,
-                outcome: evasion.evaded
+                outcome: evasion.evaded,
+                // Le même événement doit porter le même mot que dans la fenêtre.
+                // « Échec » y désignerait un jet manqué par le lanceur, alors qu'une
+                // esquive ratée le sert : ce sont deux polarités opposées.
+                outcomeKeys: {
+                    hit: "FQCARDENGINE.ChatMessagePartEvasion",
+                    miss: "FQCARDENGINE.RollEvasionTouched"
+                }
             }));
         });
 
@@ -140,15 +147,20 @@ export default class ResultChatLog {
      * @param {string}   line.detail   - Le détail affiché sous le libellé.
      * @param {number}   line.total    - Le total du jet.
      * @param {?boolean} [line.outcome] - La réussite du jet, ou undefined si la notion n'a pas de sens.
+     * @param {{hit: string, miss: string}} [line.outcomeKeys] - Les clés du verdict, quand
+     *        « réussite / échec » ne dit pas juste ce que le jet a produit.
      *
      * @returns {string} La ligne HTML.
      */
-    static #rollLine({modifier, label, detail, total, outcome}) {
+    static #rollLine({modifier, label, detail, total, outcome, outcomeKeys}) {
         let verdict = "";
         if (outcome !== undefined) {
+            const keys = outcomeKeys ?? {
+                hit: "FQCARDENGINE.RollOutcomeSuccess",
+                miss: "FQCARDENGINE.RollOutcomeFail"
+            };
             verdict = `<span class="fq-roll-outcome fq-roll-outcome--${outcome ? "hit" : "miss"}">`
-                + game.i18n.localize(outcome
-                    ? "FQCARDENGINE.RollOutcomeSuccess" : "FQCARDENGINE.RollOutcomeFail")
+                + game.i18n.localize(outcome ? keys.hit : keys.miss)
                 + `</span>`;
         }
         return `<li class="fq-roll-line fq-roll-line--${modifier}">`

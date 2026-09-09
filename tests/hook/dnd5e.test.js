@@ -472,7 +472,8 @@ describe("integration/dnd5e", () => {
             await hook([{formula: "2d6", total: 7, options: {type: "slashing"}}], {subject});
 
             expect(Fx.handleSpecialEffect).toHaveBeenCalledWith(
-                expect.objectContaining({forcedTargets: [fuyard]}), expect.any(Array), reactant, "slashing");
+                expect.objectContaining({forcedTargets: [fuyard]}), expect.any(Array), reactant, "slashing",
+                [fuyard]);
             // Une attaque d'opportunité est gratuite.
             expect(ResourceHandler.consumeResources).not.toHaveBeenCalled();
             // …et le rapport porte la mention : sans elle, une AO serait
@@ -480,6 +481,50 @@ describe("integration/dnd5e", () => {
             // message de chat, qui la rendent tous deux depuis ce seul champ.
             const report = published.mock.calls[0][1];
             expect(report.header.tag).toContain("FQCARDENGINE.ChatMessagePartOpportunityAttack");
+        });
+
+        it("garde le type de dégâts pour les FX même quand l'acteur a un bonus", async () => {
+            const hook = getHook("dnd5e.rollDamageV2");
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
+            vi.spyOn(ResultChatLog, "publish").mockImplementation(() => {});
+            vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
+
+            // Le bonus fait repartir un second jet, reconstruit à partir du seul
+            // total : il a perdu les options de dnd5e, dont le type de dégâts.
+            const actor = {id: "actor-1", system: {fq: {bonus: {damage: "+2"}}}};
+            const item = {actor, system: {fq: {}}};
+            const subject = {item, actor, type: "damage", range: {value: 0, reach: 0}};
+
+            await hook([{formula: "2d6", total: 7, options: {type: "fire"}}], {subject});
+
+            expect(Fx.handleSpecialEffect).toHaveBeenCalledWith(
+                expect.anything(), expect.any(Array), expect.anything(), "fire", expect.anything());
+        });
+
+        it("vise les cibles figées avant l'animation, pas celles d'après", async () => {
+            const hook = getHook("dnd5e.rollDamageV2");
+            const visee = {id: "token-vise"};
+            const survenue = {id: "token-survenu"};
+            vi.spyOn(ResourceHandler, "consumeResources").mockImplementation(() => {});
+            vi.spyOn(Damage, "addCriticalEvasionToDamage").mockResolvedValue([]);
+            vi.spyOn(ResultChatLog, "publish").mockImplementation(() => {});
+            vi.spyOn(Fx, "handleSpecialEffect").mockResolvedValue();
+            vi.spyOn(Constants, "myTargets").mockReturnValue([visee]);
+            // La sélection change PENDANT que la fenêtre déroule son animation.
+            registerResultPresenter(async () => {
+                Constants.myTargets.mockReturnValue([survenue]);
+            });
+
+            const actor = {id: "actor-1", system: {fq: {bonus: {damage: ""}}}};
+            const item = {actor, system: {fq: {}}};
+            const subject = {item, actor, type: "damage", range: {value: 0, reach: 0}};
+
+            await hook([{formula: "2d6", total: 7, options: {type: "fire"}}], {subject});
+
+            expect(Fx.handleSpecialEffect).toHaveBeenCalledWith(
+                expect.anything(), expect.any(Array), expect.anything(), expect.anything(), [visee]);
+            registerResultPresenter(null);
         });
 
         it("joue les FX seulement une fois l'affichage du résultat terminé", async () => {

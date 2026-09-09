@@ -50,21 +50,23 @@ export default class Fx {
      * Point d'entrée de la restitution audiovisuelle d'un effet de carte : joue
      * les effets Sequencer (si le module est actif) et le son associé.
      *
-     * Les cibles visuelles sont résolues par `TargetingPredicates.resolveTargets`,
-     * la même résolution que celle des dégâts et du log : les FX portent donc
-     * toujours sur les tokens réellement touchés, y compris quand l'appelant les
-     * impose (`forcedTargets` de l'attaque d'opportunité) au lieu de les lire dans
-     * la sélection de l'utilisateur.
+     * À défaut de cibles imposées, elles sont résolues par
+     * `TargetingPredicates.resolveTargets`, la même résolution que celle des dégâts
+     * et du log. Un appelant qui les a figées plus tôt DOIT les passer : la
+     * résolution d'une carte attend la fin de l'animation du résultat avant de
+     * jouer ses FX, et relire la sélection à cet instant, c'est lire ce qu'elle est
+     * devenue pendant ces quelques secondes — pas ce que la carte a frappé.
      *
      * @param {object}   cardContent - Le contenu (choix) de la carte jouée.
      * @param {object[]} resultArray - Les résultats de l'effet (dégâts, critiques, esquives…).
      * @param {object}   myToken     - Le token source (le lanceur).
      * @param {string}   typeEffect  - Le type d'effet/dégâts (fire, cold…) pilotant le visuel/son.
+     * @param {object[]} [targets]   - Les cibles figées, à défaut résolues à l'appel.
      *
      * @returns {Promise<void>}
      */
-    static async handleSpecialEffect(cardContent, resultArray, myToken, typeEffect) {
-        const targets = TargetingPredicates.resolveTargets(cardContent, myToken?.actor);
+    static async handleSpecialEffect(cardContent, resultArray, myToken, typeEffect,
+        targets = TargetingPredicates.resolveTargets(cardContent, myToken?.actor)) {
         const soundPath = await Fx.getSoundEffectPath(cardContent.damage, cardContent.heal, cardContent.sound, typeEffect);
 
         if (game.modules.get("sequencer")?.active) {
@@ -75,6 +77,39 @@ export default class Fx {
             setTimeout(_ => {
                 Fx._playAudioOnly(soundPath);
             }, 200);
+        }
+    }
+
+    /**
+     * Met en cache, chez tous les clients, le fichier visuel que l'effet jouera.
+     *
+     * À appeler AVANT l'affichage du résultat : sa mise en scène dure plusieurs
+     * secondes, largement de quoi charger la vidéo. Sans ce préchargement, elle
+     * n'est cherchée qu'au moment de la jouer et démarre donc en retard, tandis
+     * que le son, lui, part sur un délai fixe — d'où un son qui précède son image.
+     *
+     * Sans effet si Sequencer est absent : c'est lui qui joue et qui met en cache.
+     * L'échec du préchargement est sans conséquence — le fichier sera simplement
+     * chargé au moment de jouer, comme avant.
+     *
+     * @param {object} cardContent - Le contenu (choix) de la carte jouée.
+     * @param {string} typeEffect  - Le type d'effet/dégâts pilotant le fichier visuel.
+     *
+     * @returns {void}
+     */
+    static preloadEffectAssets(cardContent, typeEffect) {
+        if (!game.modules.get("sequencer")?.active) {
+            return;
+        }
+        try {
+            const effectFile = Fx._getEffectFile(cardContent, typeEffect);
+            if (effectFile) {
+                // Volontairement non attendu : le préchargement accompagne
+                // l'animation, il ne doit pas la retarder.
+                Sequencer.Preloader.preloadForClients(effectFile);
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 
