@@ -223,6 +223,56 @@ describe("HitProfile.ofActivity", () => {
         });
     });
 
+    describe("caractéristique d'attaque (celle que l'armure non maîtrisée pénalise)", () => {
+
+        it("activité d'attaque : celle que dnd5e choisit pour l'activité", () => {
+            const activity = {...makeAttackActivity({parts: ["@mod"], data: {mod: 2}}), ability: "dex"};
+
+            expect(HitProfile.ofActivity(activity).attackAbility).toBe("dex");
+        });
+
+        it("activité qui ne sait pas la dire : aucune, sans lever", () => {
+            const activity = makeAttackActivity({parts: ["@mod"], data: {mod: 2}});
+            Object.defineProperty(activity, "ability", {get: () => { throw new Error("pas d'acteur"); }});
+
+            expect(HitProfile.ofActivity(activity).attackAbility).toBeNull();
+        });
+
+        it("activité de sauvegarde : aucune — ce n'est pas le lanceur qui jette", () => {
+            const activity = {type: "save", save: {ability: new Set(["dex"]), dc: {value: 15}}, damage: {onSave: "half"}};
+
+            expect(HitProfile.ofActivity(activity).attackAbility).toBeNull();
+        });
+
+        it("carte en source caractéristique : la caractéristique de la carte", () => {
+            const actor = actorWithStats({abilities: {wis: 3}, prof: 2});
+
+            expect(HitProfile.of(actor, {hitType: "attack", hitSource: "ability", hitAbility: "wis"}).attackAbility)
+                .toBe("wis");
+        });
+
+        it("carte en source arme : celle de l'activité d'attaque de l'arme équipée", () => {
+            const activity = {...makeAttackActivity({parts: ["@mod"], data: {mod: 3}}), ability: "str"};
+            const actor = actorWithStats({items: [makeWeapon("simpleM", activity)]});
+
+            const profile = HitProfile.of(actor, {hitType: "attack", hitSource: "@wpnM"});
+
+            expect(profile.attackAbility).toBe("str");
+            expect(profile.modifier).toBe(3);
+        });
+
+        it("carte en source arme sans arme équipée : aucune", () => {
+            expect(HitProfile.of(actorWithStats(), {hitType: "attack", hitSource: "@wpnM"}).attackAbility).toBeNull();
+        });
+
+        it("carte à sauvegarde : aucune", () => {
+            const actor = actorWithStats({abilities: {wis: 3}, prof: 2});
+            const choice = {hitType: "save", hitSource: "ability", hitAbility: "wis", saveAbility: "dex"};
+
+            expect(HitProfile.of(actor, choice).attackAbility).toBeNull();
+        });
+    });
+
     it("activité de sauvegarde : le DD déjà calculé par dnd5e et la caractéristique visée", () => {
         const activity = {
             type: "save",

@@ -134,6 +134,91 @@ describe("ResultChatLog", () => {
             expect(content).toContain("FQCARDENGINE.RollSaveSuccess");
         });
 
+        it("avantage : le mode et les deux dés dans le détail, la raison en infobulle", () => {
+            ResultChatLog.publish(ACTOR, reportWithHit({
+                targetTokenId: "t1", targetName: "Gobelin", kind: "ac",
+                roll: 17, modifier: 5, total: 22, threshold: 15, defended: false,
+                dice: [4, 17], mode: 1, advantages: [{side: "target", cause: "restrained"}]
+            }));
+
+            const content = lastContent();
+            expect(content).toContain("FQCARDENGINE.RollModeAdvantage (4 | 17)");
+            expect(content).toMatch(/fq-roll-line--hit" data-tooltip="[^"]*FQCARDENGINE\.TooltipAdvantage/);
+            expect(content).toContain("<span class=\"fq-roll-total\">22</span>");
+        });
+
+        it("désavantage : même chose, avec le mot du désavantage", () => {
+            ResultChatLog.publish(ACTOR, reportWithHit({
+                targetTokenId: "t1", targetName: "Ombre", kind: "ac",
+                roll: 4, modifier: 5, total: 9, threshold: 15, defended: true,
+                dice: [17, 4], mode: -1, disadvantages: [{side: "caster", cause: "poisoned"}]
+            }));
+
+            const content = lastContent();
+            expect(content).toContain("FQCARDENGINE.RollModeDisadvantage (17 | 4)");
+            expect(content).toContain("FQCARDENGINE.TooltipDisadvantage");
+        });
+
+        it("cible visée normalement face à deux dés communs : ni mode ni dés, rien à expliquer", () => {
+            ResultChatLog.publish(ACTOR, reportWithHit({
+                targetTokenId: "t1", targetName: "Troll", kind: "ac",
+                roll: 4, modifier: 5, total: 9, threshold: 15, defended: true, dice: [4, 17], mode: 0
+            }));
+
+            const content = lastContent();
+            expect(content).not.toContain("FQCARDENGINE.RollModeAdvantage");
+            expect(content).not.toContain("(4 | 17)");
+            expect(content).not.toMatch(/fq-roll-line--hit" data-tooltip/);
+        });
+
+        it("sauvegarde ratée d'office : pas de total, verdict « ratée », cause en infobulle", () => {
+            ResultChatLog.publish(ACTOR, reportWithHit({
+                targetTokenId: "t1", targetName: "Étourdi", kind: "save",
+                roll: null, modifier: 20, total: null, threshold: 13, defended: false,
+                dice: [], mode: 0, auto: "fail", autoCauses: [{side: "target", cause: "stunned"}]
+            }));
+
+            const content = lastContent();
+            expect(content).toContain("FQCARDENGINE.RollAutoFail");
+            expect(content).toContain("<span class=\"fq-roll-total\">—</span>");
+            expect(content).toContain("FQCARDENGINE.RollSaveFailure");
+            expect(content).toContain("FQCARDENGINE.TooltipAutoFail");
+            expect(content).not.toContain("null");
+        });
+
+        it("cible sans défense : sa ligne d'esquive est dite, sans dé", () => {
+            const report = reportWithHit({
+                targetTokenId: "t1", targetName: "Paralysé", kind: "ac",
+                roll: 2, modifier: 5, total: 7, threshold: 30, defended: false,
+                dice: [2], mode: 0, auto: "defenseless", autoCauses: [{side: "target", cause: "paralyzed"}]
+            });
+            report.addEvasion({
+                targetTokenId: "t1", targetName: "Paralysé", roll: null, threshold: null, evaded: false,
+                defenseless: true, autoCauses: [{side: "target", cause: "paralyzed"}]
+            });
+
+            ResultChatLog.publish(ACTOR, report);
+
+            const content = lastContent();
+            expect(content).toContain("FQCARDENGINE.RollLabelEvasionOf");
+            expect(content).toContain("FQCARDENGINE.RollDefenseless");
+            expect(content).toContain("FQCARDENGINE.TooltipDefenseless");
+            // L'attaque touche : pour le lanceur, c'est « touché ».
+            expect(content).toContain("FQCARDENGINE.RollAttackTouched");
+        });
+
+        it("l'infobulle d'une ligne est échappée", () => {
+            ResultChatLog.publish(ACTOR, reportWithHit({
+                targetTokenId: "t1", targetName: "Gobelin", kind: "ac",
+                roll: 17, modifier: 5, total: 22, threshold: 15, defended: false,
+                dice: [4, 17], mode: 1, advantages: [{side: "target", cause: "<i>piège</i>"}]
+            }));
+
+            const content = lastContent();
+            expect(content).toContain("&lt;i&gt;piège&lt;/i&gt;");
+            expect(content).not.toContain("<i>piège</i>");
+        });
+
         it("marque la cible protégée d'un badge, comme l'esquive", () => {
             ResultChatLog.publish(ACTOR, reportWithHit({
                 targetTokenId: "t1", targetName: "Gobelin", kind: "ac",

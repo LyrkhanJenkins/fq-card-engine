@@ -401,6 +401,114 @@ describe("ResultWindow", () => {
             expect(win.innerHTML).toContain("FQCARDENGINE.ColumnKeyEvasion");
             expect(win.innerHTML).not.toContain("FQCARDENGINE.ColumnKeyArmor");
         });
+
+        /** Deux cibles face aux MÊMES deux d20 : la première à l'avantage, l'autre non. */
+        const pairHits = () => [
+            {targetTokenId: "t1", targetName: "Gobelin", kind: "ac", roll: 17, modifier: 5, total: 22,
+                threshold: 15, defended: false, dice: [4, 17], mode: 1,
+                advantages: [{side: "target", cause: "restrained"}], disadvantages: [], auto: null, autoCauses: []},
+            {targetTokenId: "t2", targetName: "Troll", kind: "ac", roll: 4, modifier: 5, total: 9,
+                threshold: 15, defended: true, dice: [4, 17], mode: 0,
+                advantages: [], disadvantages: [], auto: null, autoCauses: []}
+        ];
+
+        it("avec un mode : DEUX dés d'attaque, chacun montrant sa face, et la note qui l'explique", async () => {
+            await ResultWindow.present(reportWith(pairHits(),
+                [evasionOf("t1", "Gobelin", 3, false), evasionOf("t2", "Troll", 3, false)]));
+
+            const win = windowEl();
+            const dice = win.querySelectorAll("[data-hit-die]");
+            expect(dice).toHaveLength(2);
+            expect(dice[0].textContent).toBe("4");
+            expect(dice[1].textContent).toBe("17");
+            // Aucun total commun : seul le modificateur s'écrit sous les dés.
+            expect(win.querySelector("[data-hit-formula]").textContent).toBe("+ 5");
+            expect(win.innerHTML).toContain("FQCARDENGINE.HitBoxTwoDiceNote");
+        });
+
+        it("la flèche d'avantage ne marque que la cible visée avec avantage", async () => {
+            await ResultWindow.present(reportWith(pairHits(),
+                [evasionOf("t1", "Gobelin", 3, false), evasionOf("t2", "Troll", 3, false)]));
+
+            const wraps = windowEl().querySelectorAll("[data-def-line] .fq-result-mark-wrap");
+            // Ligne 0 : [armure, esquive] ; ligne 1 : [armure, esquive].
+            expect(wraps[0].classList).toContain("has-advantage");
+            expect(wraps[2].classList).not.toContain("has-advantage");
+            expect(wraps[2].classList).not.toContain("has-disadvantage");
+        });
+
+        it("l'infobulle dit les deux dés, celui retenu et pourquoi", async () => {
+            await ResultWindow.present(reportWith(pairHits(),
+                [evasionOf("t1", "Gobelin", 3, false), evasionOf("t2", "Troll", 3, false)]));
+
+            const wraps = windowEl().querySelectorAll("[data-def-line] .fq-result-mark-wrap");
+            const tooltip = wraps[0].getAttribute("data-tooltip");
+            expect(tooltip).toContain("d20 4 | 17 → 17");
+            expect(tooltip).toContain("FQCARDENGINE.TooltipAdvantage");
+            expect(tooltip).toContain("FQCARDENGINE.ConditionRestrained");
+            // Un jet ordinaire n'a rien à expliquer.
+            expect(wraps[2].hasAttribute("data-tooltip")).toBe(false);
+        });
+
+        it("désavantage : la flèche vers le bas", async () => {
+            await ResultWindow.present(reportWith([
+                {targetTokenId: "t1", targetName: "Ombre", kind: "ac", roll: 4, modifier: 5, total: 9,
+                    threshold: 15, defended: true, dice: [17, 4], mode: -1,
+                    advantages: [], disadvantages: [{side: "target", cause: "invisible"}], auto: null, autoCauses: []}
+            ], [evasionOf("t1", "Ombre", 3, false)]));
+
+            const wrap = windowEl().querySelector("[data-def-line] .fq-result-mark-wrap");
+            expect(wrap.classList).toContain("has-disadvantage");
+        });
+
+        it("sauvegarde ratée d'office : une croix rouge, sans dé ni total", async () => {
+            await ResultWindow.present(reportWith([
+                {targetTokenId: "t1", targetName: "Étourdi", kind: "save", roll: null, modifier: 20, total: null,
+                    threshold: 13, defended: false, dice: [], mode: 0, auto: "fail",
+                    advantages: [], disadvantages: [], autoCauses: [{side: "target", cause: "stunned"}]}
+            ], [evasionOf("t1", "Étourdi", 3, false)]));
+
+            const win = windowEl();
+            const save = win.querySelector("[data-def-mark=\"0-0\"]");
+            expect(save.textContent).toBe("✕");
+            expect(save.classList).toContain("is-failure");
+            expect(save.parentElement.getAttribute("data-tooltip")).toContain("FQCARDENGINE.TooltipAutoFail");
+        });
+
+        it("cible sans défense : l'esquive porte la même croix rouge", async () => {
+            await ResultWindow.present(reportWith([], [{
+                targetTokenId: "t1", targetName: "Paralysé", roll: null, threshold: null, evaded: false,
+                defenseless: true, autoCauses: [{side: "target", cause: "paralyzed"}]
+            }]));
+
+            const evasion = windowEl().querySelector("[data-def-mark=\"0-1\"]");
+            expect(evasion.textContent).toBe("✕");
+            expect(evasion.classList).toContain("is-failure");
+            expect(evasion.parentElement.getAttribute("data-tooltip")).toContain("FQCARDENGINE.TooltipDefenseless");
+        });
+
+        it("une cible sans score d'esquive reste un emplacement vide et neutre", async () => {
+            await ResultWindow.present(reportWith([],
+                [{targetTokenId: "t1", targetName: "Rocher", roll: null, threshold: null, evaded: false}]));
+
+            const evasion = windowEl().querySelector("[data-def-mark=\"0-1\"]");
+            expect(evasion.textContent).toBe("");
+            expect(evasion.classList).not.toContain("is-failure");
+        });
+
+        it("l'infobulle est échappée : une cause inconnue ne peut pas injecter de balise", async () => {
+            await ResultWindow.present(reportWith([
+                {targetTokenId: "t1", targetName: "Gobelin", kind: "ac", roll: 17, modifier: 5, total: 22,
+                    threshold: 15, defended: false, dice: [4, 17], mode: 1,
+                    advantages: [{side: "target", cause: "<b>piège</b>"}], disadvantages: [],
+                    auto: null, autoCauses: []}
+            ], [evasionOf("t1", "Gobelin", 3, false)]));
+
+            const wrap = windowEl().querySelector("[data-def-line] .fq-result-mark-wrap");
+            // Aucune balise créée, et le texte revient intact de l'attribut.
+            expect(wrap.querySelector("b")).toBeNull();
+            expect(wrap.getAttribute("data-tooltip")).toContain("<b>piège</b>");
+        });
     });
 
     describe("silhouettes de dés", () => {

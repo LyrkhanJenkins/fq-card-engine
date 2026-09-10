@@ -153,4 +153,66 @@ describe("RollReport", () => {
             expect(TargetingPredicates.resolveTargetLabels({})).toEqual([]);
         });
     });
+
+    describe("avantage, désavantage et défenses tombées", () => {
+
+        it("un jet pour toucher sans mode garde des valeurs par défaut explicites", () => {
+            const report = new RollReport();
+            report.addHit({targetTokenId: "t1", targetName: "Gobelin", kind: "ac",
+                roll: 12, modifier: 5, total: 17, threshold: 15, defended: false});
+
+            expect(report.hits[0]).toEqual({
+                targetTokenId: "t1", targetName: "Gobelin", kind: "ac",
+                roll: 12, modifier: 5, total: 17, threshold: 15, defended: false,
+                dice: [12], mode: 0, auto: null, advantages: [], disadvantages: [], autoCauses: []
+            });
+        });
+
+        it("un jet sans dé (échec d'office) n'invente aucun dé", () => {
+            const report = new RollReport();
+            report.addHit({targetTokenId: "t1", targetName: "Étourdi", kind: "save",
+                roll: null, modifier: 20, total: null, threshold: 13, defended: false, auto: "fail"});
+
+            expect(report.hits[0].dice).toEqual([]);
+            expect(report.hits[0].auto).toBe("fail");
+        });
+
+        it("une esquive ordinaire garde exactement sa forme de toujours", () => {
+            const report = new RollReport();
+            report.addEvasion({targetTokenId: "t1", targetName: "Gobelin", roll: 12, threshold: 16, evaded: false});
+
+            expect(report.evasions[0]).toEqual(
+                {targetTokenId: "t1", targetName: "Gobelin", roll: 12, threshold: 16, evaded: false});
+        });
+
+        it("une cible sans défense est marquée comme telle, avec sa cause", () => {
+            const report = new RollReport();
+            report.addEvasion({targetTokenId: "t1", targetName: "Paralysé", roll: null, threshold: null, evaded: false,
+                defenseless: true, autoCauses: [{side: "target", cause: "paralyzed"}]});
+
+            expect(report.evasions[0]).toEqual({
+                targetTokenId: "t1", targetName: "Paralysé", roll: null, threshold: null, evaded: false,
+                defenseless: true, autoCauses: [{side: "target", cause: "paralyzed"}]
+            });
+        });
+
+        it("toObject copie en profondeur les dés et les raisons", () => {
+            const report = new RollReport();
+            report.addHit({targetTokenId: "t1", targetName: "Gobelin", kind: "ac",
+                roll: 17, modifier: 5, total: 22, threshold: 15, defended: false,
+                dice: [4, 17], mode: 1, advantages: [{side: "target", cause: "restrained"}]});
+            report.addEvasion({targetTokenId: "t1", targetName: "Gobelin", roll: null, threshold: null, evaded: false,
+                defenseless: true, autoCauses: [{side: "target", cause: "paralyzed"}]});
+
+            const plain = report.toObject();
+            plain.hits[0].dice.push(99);
+            plain.hits[0].advantages[0].cause = "muté";
+            plain.evasions[0].autoCauses[0].cause = "muté";
+
+            expect(report.hits[0].dice).toEqual([4, 17]);
+            expect(report.hits[0].advantages[0].cause).toBe("restrained");
+            expect(report.evasions[0].autoCauses[0].cause).toBe("paralyzed");
+            expect(plain).toEqual(JSON.parse(JSON.stringify(plain)));
+        });
+    });
 });

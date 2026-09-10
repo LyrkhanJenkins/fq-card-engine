@@ -5,6 +5,7 @@ import FormulaDisplay, {ABILITY_EMOJIS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, 
 import {WEAPON_TOKENS} from "../../engine/roll/weapon-damage.js";
 import {ABILITY_SHORT} from "../../abilities.js";
 import {expandPills, makePill, PILL_SOURCE, sanitizePillInput, stripPills} from "./formula-pill.js";
+import {escapeHtml} from "../../../core/utils/html.utils.js";
 
 /** Seuils (longueur max → taille de police en px), triés par longueur croissante. */
 const DESCRIPTION_SIZE_STEPS = [[1, 40], [80, 36], [110, 34], [145, 30], [200, 26], [290, 22], [340, 20], [440, 18], [9999, 16]];
@@ -293,11 +294,7 @@ export default class DisplayCard {
         if (typeof text !== "string") {
             return text;
         }
-        const escaped = text
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;");
+        const escaped = escapeHtml(text);
         return expandPills(escaped, Object.keys(EMOJI_TOOLTIP_KEYS), chunk => {
             let result = chunk;
             for (const [emoji, key] of Object.entries(EMOJI_TOOLTIP_KEYS)) {

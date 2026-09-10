@@ -264,9 +264,11 @@ describe("Damage — ce que le rapport consigne", () => {
 
         await Damage.addCriticalEvasionToDamage(CASTER, 10, ATTACK_CHOICE, report);
 
+        // Sans condition ni armure en jeu : un seul dé, aucun mode, rien de forcé.
         expect(report.addHit).toHaveBeenCalledWith({
             targetTokenId: "t1", targetName: "Gobelin", kind: "ac",
-            roll: 4, modifier: 5, total: 9, threshold: 15, defended: true
+            roll: 4, modifier: 5, total: 9, threshold: 15, defended: true,
+            dice: [4], mode: 0, auto: null, advantages: [], disadvantages: [], autoCauses: []
         });
     });
 
@@ -279,7 +281,8 @@ describe("Damage — ce que le rapport consigne", () => {
 
         expect(report.addHit).toHaveBeenCalledWith({
             targetTokenId: "t1", targetName: "Gobelin", kind: "save",
-            roll: 11, modifier: 3, total: 14, threshold: 13, defended: true
+            roll: 11, modifier: 3, total: 14, threshold: 13, defended: true,
+            dice: [11], mode: 0, auto: null, advantages: [], disadvantages: [], autoCauses: []
         });
     });
 });

@@ -45,24 +45,44 @@ export function stubRolls(sequence) {
  * une cible sans elles n'oppose aucune protection, ce qui est le cas de toutes
  * les cibles des tests antérieurs à la classe d'armure.
  *
+ * Les conditions (`statuses`), les immunités (`immune`), le mode de sauvegarde
+ * que dnd5e aurait posé sur la feuille (`saveModes`) et l'armure non maîtrisée
+ * (`untrainedArmor`) servent aux règles d'avantage : sans dnd5e, la sonde des
+ * conditions lit la table du moteur, exactement comme en jeu.
+ *
  * @param {string} id        - L'id du jeton.
  * @param {string} name      - Le nom affiché.
  * @param {number} evasion   - Le score d'esquive de son acteur.
  * @param {object} [defense] - `ac` : la classe d'armure ; `saves` : les modificateurs
- *        de sauvegarde par caractéristique (ex. `{dex: 3}`).
+ *        de sauvegarde par caractéristique (ex. `{dex: 3}`) ; `statuses` : les
+ *        conditions portées ; `immune` : les immunités aux conditions ;
+ *        `saveModes` : le mode de sauvegarde par caractéristique (ex. `{dex: -1}`) ;
+ *        `untrainedArmor` : true pour une armure équipée non maîtrisée.
  *
  * @returns {object} Le jeton.
  */
-export function makeTarget(id, name, evasion, {ac, saves} = {}) {
+export function makeTarget(id, name, evasion, {ac, saves, statuses, immune, saveModes, untrainedArmor} = {}) {
     const system = {fq: {attributes: {evasion}}};
     if (ac !== undefined) {
         system.attributes = {ac: {value: ac}};
     }
-    if (saves) {
-        system.abilities = Object.fromEntries(
-            Object.entries(saves).map(([ability, value]) => [ability, {save: {value}}]));
+    if (untrainedArmor) {
+        system.attributes = {...system.attributes, ac: {
+            ...system.attributes?.ac, equippedArmor: {system: {proficiencyMultiplier: 0}}
+        }};
     }
-    return {id, name, actor: {_id: `actor-${id}`, system}};
+    if (saves) {
+        system.abilities = Object.fromEntries(Object.entries(saves).map(([ability, value]) =>
+            [ability, {save: {value, roll: {mode: saveModes?.[ability] ?? 0}}}]));
+    }
+    if (immune) {
+        system.traits = {ci: {value: new Set(immune)}};
+    }
+    const actor = {_id: `actor-${id}`, system};
+    if (statuses) {
+        actor.statuses = new Set(statuses);
+    }
+    return {id, name, actor};
 }
 
 /**

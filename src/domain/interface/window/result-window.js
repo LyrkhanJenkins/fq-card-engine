@@ -1,4 +1,6 @@
 import RollReport from "../../engine/roll/roll-report.js";
+import AdvantageLabels from "../../engine/roll/advantage-labels.js";
+import {escapeHtml} from "../../../core/utils/html.utils.js";
 
 /** Durée de roulement d'un dé du jet principal, en millisecondes. */
 const MAIN_DIE_DURATION = 520;
@@ -253,16 +255,25 @@ export default class ResultWindow {
         }
 
         // 3. Le jet pour toucher. Une attaque ne roule qu'une fois pour toute la
-        // carte : un seul dé, avant le critique, comme dans la résolution.
+        // carte, avant le critique, comme dans la résolution : un dé, ou deux
+        // quand une cible au moins est visée avec avantage ou désavantage.
         const attack = (report.hits ?? []).find(hit => hit.kind === "ac");
         if (attack) {
             await ResultWindow.#wait(160, mine);
             q(".fq-result-col--attack")?.classList.add("is-active");
-            await ResultWindow.#rollDie(q("[data-hit-die]"), 20, attack.total, D20_DURATION, mine);
+            const pair = (attack.dice ?? []).length > 1;
+            if (pair) {
+                // Chaque dé montre sa face : aucun total n'est commun, chaque
+                // cible ajoutant le modificateur au dé que son mode retient.
+                await Promise.all(attack.dice.map((value, index) =>
+                    ResultWindow.#rollDie(q(`[data-hit-die="${index}"]`), 20, value, D20_DURATION, mine)));
+            } else {
+                await ResultWindow.#rollDie(q("[data-hit-die]"), 20, attack.total, D20_DURATION, mine);
+            }
             if (!alive()) return;
             const formula = q("[data-hit-formula]");
             if (formula) {
-                formula.textContent = ResultWindow.#hitFormula(attack);
+                formula.textContent = pair ? ResultWindow.#signed(attack.modifier) : ResultWindow.#hitFormula(attack);
             }
             await ResultWindow.#wait(90, mine);
         }
@@ -500,10 +511,21 @@ export default class ResultWindow {
      * @returns {string} La formule, par exemple « 14 + 5 ».
      */
     static #hitFormula(hit) {
-        if (!hit.modifier) {
-            return `${hit.roll}`;
+        return hit.modifier ? `${hit.roll} ${ResultWindow.#signed(hit.modifier)}` : `${hit.roll}`;
+    }
+
+    /**
+     * Un modificateur signé, tel qu'il s'écrit après un dé : « + 5 », « − 2 ».
+     *
+     * @param {number} modifier - Le modificateur.
+     *
+     * @returns {string} Le modificateur signé, ou une chaîne vide s'il est nul.
+     */
+    static #signed(modifier) {
+        if (!modifier) {
+            return "";
         }
-        return hit.modifier > 0 ? `${hit.roll} + ${hit.modifier}` : `${hit.roll} − ${-hit.modifier}`;
+        return modifier > 0 ? `+ ${modifier}` : `− ${-modifier}`;
     }
 
     /**
@@ -665,9 +687,10 @@ export default class ResultWindow {
 
     /**
      * L'encart du jet pour toucher. Une ATTAQUE ne roule qu'une fois pour toute
-     * la carte : c'est donc un seul dé, quel que soit le nombre de cibles. Une
-     * SAUVEGARDE appartient aux cibles — l'encart le dit et reste vide, ses dés
-     * roulant dans la colonne de défense.
+     * la carte, quel que soit le nombre de cibles : un seul dé, ou deux dès
+     * qu'une cible est visée avec avantage ou désavantage — chacune retient
+     * alors celui que son mode lui vaut. Une SAUVEGARDE appartient aux cibles —
+     * l'encart le dit et reste vide, ses dés roulant dans la colonne de défense.
      *
      * @param {object} report - Le rapport de la résolution.
      *
@@ -682,6 +705,17 @@ export default class ResultWindow {
             return `<div class="fq-result-box is-empty">`
                 + `<div class="fq-result-box-label">${label}</div>`
                 + `<div class="fq-result-empty-note">${note}</div></div>`;
+        }
+        if ((attack.dice ?? []).length > 1) {
+            const dice = attack.dice.map((_, index) =>
+                `<div class="fq-result-die fq-result-die--d20 fq-result-die--hit is-blank" data-hit-die="${index}"></div>`)
+                .join("");
+            return `<div class="fq-result-box">`
+                + `<div class="fq-result-box-label">${label}</div>`
+                + `<div class="fq-result-dice-pair">${dice}</div>`
+                + `<div class="fq-result-threshold" data-hit-formula></div>`
+                + `<div class="fq-result-empty-note">${game.i18n.localize("FQCARDENGINE.HitBoxTwoDiceNote")}</div>`
+                + `</div>`;
         }
         return `<div class="fq-result-box">`
             + `<div class="fq-result-box-label">${label}</div>`
@@ -812,12 +846,19 @@ export default class ResultWindow {
             const marks = [];
             const hit = hits.get(evasion.targetTokenId);
             if (hit) {
-                marks.push(ResultWindow.#defenseMark(index, 0, hit.kind === "ac" ? "shield" : "d20",
-                    hit.kind === "ac" ? hit.threshold : null,
-                    hit.kind === "ac" ? "" : ResultWindow.#thresholdLabel(hit.threshold)));
+                const armour = hit.kind === "ac";
+                // La classe d'armure est connue d'avance ; une sauvegarde ratée
+                // d'office l'est aussi — aucun dé ne sera jeté, la croix s'écrit.
+                marks.push(ResultWindow.#defenseMark(index, 0, armour ? "shield" : "d20",
+                    armour ? hit.threshold : (hit.auto ? ResultWindow.#FORCED_MARK : null),
+                    armour ? "" : ResultWindow.#thresholdLabel(hit.threshold),
+                    {mode: hit.mode, why: ResultWindow.#hitWhy(hit)}));
             }
-            marks.push(ResultWindow.#defenseMark(index, 1, "d20", null,
-                evasion.roll === null ? "" : ResultWindow.#thresholdLabel(evasion.threshold)));
+            // Une cible sans défense n'esquive pas : même croix, dite d'avance.
+            marks.push(ResultWindow.#defenseMark(index, 1, "d20",
+                evasion.defenseless ? ResultWindow.#FORCED_MARK : null,
+                evasion.roll === null ? "" : ResultWindow.#thresholdLabel(evasion.threshold),
+                {why: evasion.defenseless ? AdvantageLabels.why(evasion) : ""}));
             return `<div class="fq-result-foe-line" data-def-line="${index}">`
                 + `<span class="fq-result-foe-name">${evasion.targetName}</span>`
                 + `<span class="fq-result-marks">${marks.join("")}</span></div>`;
@@ -829,19 +870,44 @@ export default class ResultWindow {
      * La classe d'armure est connue d'avance — elle n'est pas jetée — et s'écrit
      * donc tout de suite ; un dé attend son tour.
      *
+     * Une flèche au coin dit un jet fait avec avantage (▲) ou désavantage (▼) ;
+     * l'infobulle dit pourquoi.
+     *
      * @param {number}  line      - L'indice de la ligne d'ennemi.
      * @param {number}  slot      - L'emplacement dans la ligne (0 défense de toucher, 1 esquive).
      * @param {string}  shape     - La silhouette (« shield » ou « d20 »).
-     * @param {?number} value     - La valeur déjà connue, ou null si elle sera jetée.
+     * @param {?(number|string)} value - La valeur déjà connue, ou null si elle sera jetée.
      * @param {string}  threshold - Le seuil affiché sous le symbole, ou une chaîne vide.
+     * @param {object}  [options]      - Ce qui a décidé du jet.
+     * @param {number}  [options.mode] - Le mode du jet (1 avantage, -1 désavantage).
+     * @param {string}  [options.why]  - L'explication, en infobulle.
      *
      * @returns {string} Le HTML de l'emplacement.
      */
-    static #defenseMark(line, slot, shape, value, threshold) {
-        return `<span class="fq-result-mark-wrap">`
+    static #defenseMark(line, slot, shape, value, threshold, {mode = 0, why = ""} = {}) {
+        const modeClass = mode > 0 ? " has-advantage" : (mode < 0 ? " has-disadvantage" : "");
+        const tooltip = why ? ` data-tooltip="${escapeHtml(why)}"` : "";
+        return `<span class="fq-result-mark-wrap${modeClass}"${tooltip}>`
             + `<span class="fq-result-mark fq-result-mark--${shape}" data-def-mark="${line}-${slot}">`
             + `${value ?? ""}</span>`
             + `<span class="fq-result-mark-seuil">${threshold}</span></span>`;
+    }
+
+    /** Le symbole d'une défense tombée d'office : aucun dé ne l'a décidée. */
+    static #FORCED_MARK = "✕";
+
+    /**
+     * L'infobulle d'un jet pour toucher : les deux dés quand un mode les a
+     * départagés, puis ce qui a décidé du jet.
+     *
+     * @param {object} hit - Le jet pour toucher du rapport.
+     *
+     * @returns {string} L'explication, vide pour un jet ordinaire.
+     */
+    static #hitWhy(hit) {
+        const dice = !hit.auto && hit.mode !== 0 && (hit.dice ?? []).length > 1
+            ? `d20 ${hit.dice.join(" | ")} → ${hit.roll}` : "";
+        return [dice, AdvantageLabels.why(hit)].filter(Boolean).join(" · ");
     }
 
     /**

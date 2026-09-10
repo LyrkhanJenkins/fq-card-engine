@@ -1,4 +1,6 @@
 import RollReport from "./roll-report.js";
+import AdvantageLabels from "./advantage-labels.js";
+import {escapeHtml} from "../../../core/utils/html.utils.js";
 
 /**
  * Publication dans le chat d'une résolution de carte ou d'activité : un message
@@ -118,26 +120,35 @@ export default class ResultChatLog {
                 label: game.i18n.format(attack
                     ? "FQCARDENGINE.RollLabelAttackOn" : "FQCARDENGINE.RollLabelSaveOf",
                 {target: hit.targetName}),
-                detail: game.i18n.format(attack
-                    ? "FQCARDENGINE.RollAgainstAc" : "FQCARDENGINE.RollAgainstDc",
-                {threshold: hit.threshold}),
-                total: hit.total,
+                detail: [
+                    game.i18n.format(attack ? "FQCARDENGINE.RollAgainstAc" : "FQCARDENGINE.RollAgainstDc",
+                        {threshold: hit.threshold}),
+                    ResultChatLog.#hitMode(hit)
+                ].filter(Boolean).join(" · "),
+                // Une sauvegarde ratée d'office n'a jeté aucun dé : pas de total.
+                total: hit.total ?? "—",
                 outcome: attack ? !hit.defended : hit.defended,
                 outcomeKeys: attack
                     ? {hit: "FQCARDENGINE.RollAttackTouched", miss: "FQCARDENGINE.RollAttackBlocked"}
-                    : {hit: "FQCARDENGINE.RollSaveSuccess", miss: "FQCARDENGINE.RollSaveFailure"}
+                    : {hit: "FQCARDENGINE.RollSaveSuccess", miss: "FQCARDENGINE.RollSaveFailure"},
+                tooltip: AdvantageLabels.why(hit)
             }));
         });
 
         // Une cible sans score d'esquive n'a pas lancé de dé : rien à montrer ici,
-        // son sort se lit à la valeur qui lui est appliquée plus bas.
-        report.evasions.filter(evasion => evasion.roll !== null).forEach(evasion => {
+        // son sort se lit à la valeur qui lui est appliquée plus bas. Une cible
+        // SANS DÉFENSE n'en a pas lancé non plus, mais c'est une information :
+        // elle est dite.
+        report.evasions.filter(evasion => evasion.roll !== null || evasion.defenseless).forEach(evasion => {
             lines.push(ResultChatLog.#rollLine({
                 modifier: "eva",
                 label: game.i18n.format("FQCARDENGINE.RollLabelEvasionOf", {target: evasion.targetName}),
-                detail: game.i18n.format("FQCARDENGINE.RollThreshold", {threshold: evasion.threshold}),
-                total: evasion.roll,
+                detail: evasion.defenseless
+                    ? AdvantageLabels.auto("defenseless")
+                    : game.i18n.format("FQCARDENGINE.RollThreshold", {threshold: evasion.threshold}),
+                total: evasion.roll ?? "—",
                 outcome: evasion.evaded,
+                tooltip: evasion.defenseless ? AdvantageLabels.why(evasion) : "",
                 // Le même événement doit porter le même mot que dans la fenêtre.
                 // « Échec » y désignerait un jet manqué par le lanceur, alors qu'une
                 // esquive ratée le sert : ce sont deux polarités opposées.
@@ -174,10 +185,11 @@ export default class ResultChatLog {
      * @param {?boolean} [line.outcome] - La réussite du jet, ou undefined si la notion n'a pas de sens.
      * @param {{hit: string, miss: string}} [line.outcomeKeys] - Les clés du verdict, quand
      *        « réussite / échec » ne dit pas juste ce que le jet a produit.
+     * @param {string}   [line.tooltip] - Ce qui a décidé du jet, en infobulle de la ligne.
      *
      * @returns {string} La ligne HTML.
      */
-    static #rollLine({modifier, label, detail, total, outcome, outcomeKeys}) {
+    static #rollLine({modifier, label, detail, total, outcome, outcomeKeys, tooltip = ""}) {
         let verdict = "";
         if (outcome !== undefined) {
             const keys = outcomeKeys ?? {
@@ -188,12 +200,31 @@ export default class ResultChatLog {
                 + game.i18n.localize(outcome ? keys.hit : keys.miss)
                 + `</span>`;
         }
-        return `<li class="fq-roll-line fq-roll-line--${modifier}">`
+        const hint = tooltip ? ` data-tooltip="${escapeHtml(tooltip)}"` : "";
+        return `<li class="fq-roll-line fq-roll-line--${modifier}"${hint}>`
             + `<span class="fq-roll-label">${label}</span>`
             + (detail ? `<span class="fq-roll-detail">${detail}</span>` : "")
             + `<span class="fq-roll-total">${total}</span>`
             + verdict
             + `</li>`;
+    }
+
+    /**
+     * Comment le jet pour toucher s'est fait contre cette cible : « avantage
+     * (17 | 4) », « échec automatique », « sans défense », ou rien pour un jet
+     * ordinaire. Les deux dés ne sont montrés que quand le mode de LA cible les
+     * a départagés : une cible visée normalement garde le premier, sans histoire.
+     *
+     * @param {object} hit - Le jet pour toucher du rapport.
+     *
+     * @returns {string} Le mode, déjà localisé, ou une chaîne vide.
+     */
+    static #hitMode(hit) {
+        if (hit.auto) {
+            return AdvantageLabels.auto(hit.auto);
+        }
+        const mode = AdvantageLabels.mode(hit.mode);
+        return mode && (hit.dice ?? []).length > 1 ? `${mode} (${hit.dice.join(" | ")})` : mode;
     }
 
     /**

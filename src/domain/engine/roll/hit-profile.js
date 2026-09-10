@@ -54,10 +54,12 @@ export default class HitProfile {
      * @param {object} actor    - L'acteur qui joue la carte.
      * @param {object} [choice] - Le choix (contenu) de la carte.
      *
-     * @returns {?{type: string, source: string, ability: ?string, modifier: number,
-     *             dc: ?number, saveAbility: ?string}} Le profil, ou null si le choix
-     *          ne demande aucun jet pour toucher (le cas de toutes les cartes
-     *          antérieures) ou si sa configuration est incohérente.
+     * @returns {?{type: string, source: string, ability: ?string, attackAbility: ?string,
+     *             modifier: number, dc: ?number, saveAbility: ?string}} Le profil, ou
+     *          null si le choix ne demande aucun jet pour toucher (le cas de toutes
+     *          les cartes antérieures) ou si sa configuration est incohérente.
+     *          `attackAbility` est la caractéristique par laquelle passe une
+     *          ATTAQUE — celle que l'armure non maîtrisée pénalise.
      */
     static of(actor, choice) {
         if (!actor || !CardFqSystem.hasHitRoll(choice)) {
@@ -78,8 +80,8 @@ export default class HitProfile {
             return HitProfile.#incomplete(choice, "sauvegarde sans caractéristique de sauvegarde");
         }
 
-        const modifier = HitProfile.#baseModifier(actor, source, ability)
-            + HitProfile.#numberOf(choice.hitBonus);
+        const base = HitProfile.#baseAttack(actor, source, ability);
+        const modifier = base.modifier + HitProfile.#numberOf(choice.hitBonus);
         const dc = type === CardFqSystem.HIT_TYPE_SAVE
             ? (choice.saveDc ? HitProfile.#numberOf(choice.saveDc) : HitProfile.DC_BASE + modifier)
             : null;
@@ -88,6 +90,7 @@ export default class HitProfile {
             type,
             source,
             ability: source === CardFqSystem.HIT_SOURCE_ABILITY ? ability : null,
+            attackAbility: type === CardFqSystem.HIT_TYPE_ATTACK ? base.ability : null,
             modifier,
             dc,
             saveAbility: type === CardFqSystem.HIT_TYPE_SAVE ? saveAbility : null,
@@ -116,6 +119,7 @@ export default class HitProfile {
         if (activity?.type === "attack") {
             return {
                 type: CardFqSystem.HIT_TYPE_ATTACK, source: null, ability: null,
+                attackAbility: HitProfile.#abilityOf(activity),
                 modifier: HitProfile.#attackModifierOf(activity),
                 dc: null, saveAbility: null, defensesOnSuccess: 1
             };
@@ -131,7 +135,7 @@ export default class HitProfile {
             return HitProfile.#incomplete(activity, "activité de sauvegarde sans DD ni caractéristique");
         }
         return {
-            type: CardFqSystem.HIT_TYPE_SAVE, source: null, ability: null,
+            type: CardFqSystem.HIT_TYPE_SAVE, source: null, ability: null, attackAbility: null,
             modifier: 0, dc, saveAbility,
             defensesOnSuccess: HitProfile.DEFENSES_ON_SAVE[activity.damage?.onSave] ?? 1
         };
@@ -191,48 +195,54 @@ export default class HitProfile {
     }
 
     /**
-     * La base du modificateur, avant le bonus de carte.
+     * La base de l'attaque, avant le bonus de carte : son modificateur, et la
+     * caractéristique par laquelle elle passe.
      *
      * @param {object}  actor     - L'acteur qui joue la carte.
      * @param {string}  source    - La source du modificateur (`hitSource`).
      * @param {?string} [ability] - La caractéristique, pour la source `ability`.
      *
-     * @returns {number} La base du modificateur.
+     * @returns {{modifier: number, ability: ?string}} La base de l'attaque.
      */
-    static #baseModifier(actor, source, ability) {
+    static #baseAttack(actor, source, ability) {
         if (source === CardFqSystem.HIT_SOURCE_ABILITY) {
             const mod = Number(actor.system?.abilities?.[ability]?.mod ?? 0);
             const prof = Number(actor.system?.attributes?.prof ?? 0);
             // La maîtrise s'ajoute toujours : c'est la règle des attaques de sort.
-            return (Number.isFinite(mod) ? mod : 0) + (Number.isFinite(prof) ? prof : 0);
+            return {
+                modifier: (Number.isFinite(mod) ? mod : 0) + (Number.isFinite(prof) ? prof : 0),
+                ability
+            };
         }
-        return HitProfile.#weaponModifier(actor, source);
+        return HitProfile.#weaponAttack(actor, source);
     }
 
     /**
-     * Le modificateur d'attaque de la première arme équipée du type demandé :
-     * trouve l'arme et son activité d'attaque, puis délègue le calcul à
-     * {@link HitProfile.#attackModifierOf}.
+     * L'attaque de la première arme équipée du type demandé : trouve l'arme et
+     * son activité d'attaque, puis délègue le modificateur à
+     * {@link HitProfile.#attackModifierOf} et la caractéristique à
+     * {@link HitProfile.#abilityOf}.
      *
      * Seule l'activité d'ATTAQUE porte `getAttackData` : contrairement aux
      * dégâts, l'activité de dégâts ne peut pas servir de repli.
      *
-     * Renvoie 0 si aucune arme n'est équipée ou si l'arme n'a pas d'activité
-     * d'attaque.
+     * Rend un modificateur nul et aucune caractéristique si aucune arme n'est
+     * équipée ou si l'arme n'a pas d'activité d'attaque.
      *
      * @param {object} actor - L'acteur porteur.
      * @param {string} token - Le jeton d'arme (clé de `WEAPON_TOKENS`).
      *
-     * @returns {number} Le modificateur d'attaque, ou 0.
+     * @returns {{modifier: number, ability: ?string}} L'attaque de l'arme.
      */
-    static #weaponModifier(actor, token) {
+    static #weaponAttack(actor, token) {
+        const none = {modifier: 0, ability: null};
         const categories = WEAPON_TOKENS[token]?.categories;
         if (!categories) {
-            return 0;
+            return none;
         }
         const weapon = WeaponDamage.getEquippedWeapon(actor, categories);
         if (!weapon) {
-            return 0;
+            return none;
         }
         const activity = WeaponDamage.getAttackActivity(weapon, ["attack"]);
         if (typeof activity?.getAttackData !== "function") {
@@ -241,9 +251,28 @@ export default class HitProfile {
             // l'avertissement nommant l'arme fautive.
             console.warn(`fq-card-engine | « ${weapon.name} » n'a pas d'activité d'attaque :`
                 + " modificateur de toucher nul (ajouter l'activité d'attaque à l'arme).");
-            return 0;
+            return none;
         }
-        return HitProfile.#attackModifierOf(activity);
+        return {modifier: HitProfile.#attackModifierOf(activity), ability: HitProfile.#abilityOf(activity)};
+    }
+
+    /**
+     * La caractéristique d'une activité d'attaque, telle que dnd5e la choisit :
+     * celle de l'activité si elle en impose une, sinon la meilleure de celles que
+     * l'arme autorise (Force ou Dextérité pour une arme de finesse).
+     *
+     * Renvoie null — sans jamais lever — si l'activité ne sait pas la dire.
+     *
+     * @param {object} [activity] - L'activité d'attaque dnd5e.
+     *
+     * @returns {?string} La caractéristique, ou null.
+     */
+    static #abilityOf(activity) {
+        try {
+            return activity?.ability ?? null;
+        } catch {
+            return null;
+        }
     }
 
     /**

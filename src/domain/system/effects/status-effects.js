@@ -17,10 +17,19 @@
  * supprime le bloc duration mais pose l'origine FQ, donc l'effet persiste
  * jusqu'à la purge de fin de combat (hook `deleteCombat`).
  *
+ * Les 14 conditions dnd5e du PHB s'y ajoutent comme statuts à part entière :
+ * elles ne portent aucun changement, seulement leur identifiant dans `statuses`,
+ * qui suffit à dnd5e (`actor.statuses`, `hasConditionEffect`) comme aux règles
+ * d'avantage du moteur. Leur retrait n'est pas géré : posées sans durée, elles
+ * tombent avec la purge de fin de combat, comme les autres statuts illimités.
+ *
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  * Ce module ne doit importer AUCUN autre module du moteur (il est consommé à la
- * fois par le schéma de carte et par le pipeline de jeu).
+ * fois par le schéma de carte et par le pipeline de jeu) — hormis le module de
+ * données `conditions.js`, lui-même sans aucune dépendance.
  */
+
+import {DND5E_CONDITIONS} from "../../conditions.js";
 
 export default class StatusEffects {
 
@@ -36,6 +45,7 @@ export default class StatusEffects {
     /**
      * Choix du select « Statut normalisé » du formulaire de carte : la clé vide
      * est le mode « Personnalisé » (blob d'effet libre, comportement historique).
+     * Les statuts FQ viennent d'abord, les conditions dnd5e ensuite.
      */
     static STATUS_CHOICES = {
         "": "FQCARDENGINE.StatusCustom",
@@ -46,7 +56,8 @@ export default class StatusEffects {
         curse: "FQCARDENGINE.StatusCurse",
         virus: "FQCARDENGINE.StatusVirus",
         earth: "FQCARDENGINE.StatusEarth",
-        air: "FQCARDENGINE.StatusAir"
+        air: "FQCARDENGINE.StatusAir",
+        ...DND5E_CONDITIONS
     };
 
     /**
@@ -191,7 +202,20 @@ export default class StatusEffects {
      * @returns {boolean} True si la clé désigne un statut du registre.
      */
     static isStatusKey(key) {
-        return typeof key === "string" && key !== "" && Object.hasOwn(StatusEffects.#REGISTRY, key);
+        return typeof key === "string" && key !== ""
+            && (Object.hasOwn(StatusEffects.#REGISTRY, key) || StatusEffects.isCondition(key));
+    }
+
+    /**
+     * Indique si une clé de statut désigne une condition dnd5e plutôt qu'un
+     * statut FQ du registre.
+     *
+     * @param {string} [key] - La valeur du champ `status` d'une donnée d'effet.
+     *
+     * @returns {boolean} True pour une des 14 conditions du PHB.
+     */
+    static isCondition(key) {
+        return typeof key === "string" && Object.hasOwn(DND5E_CONDITIONS, key);
     }
 
     /**
@@ -207,6 +231,38 @@ export default class StatusEffects {
         if (!StatusEffects.isStatusKey(key)) {
             return null;
         }
+        if (StatusEffects.isCondition(key)) {
+            return [StatusEffects.#conditionData(key)];
+        }
         return JSON.parse(JSON.stringify(StatusEffects.#REGISTRY[key]));
+    }
+
+    /**
+     * Les données d'effet d'une condition dnd5e, lues À LA DEMANDE dans
+     * `CONFIG.statusEffects` : dnd5e y range son nom (déjà localisé), son icône
+     * et ses conditions induites (`riders` — paralysé entraîne neutralisé).
+     *
+     * Les conditions induites entrent dans les `statuses` du MÊME effet : dnd5e
+     * les poserait comme effets séparés, mais c'est la présence du statut qui
+     * compte pour `actor.statuses`, et un effet unique tombe d'un bloc.
+     *
+     * La durée vide vaut « illimitée » : `createEffectsFromData` pose alors
+     * l'origine FQ, et la purge de fin de combat la retire.
+     *
+     * @param {string} id - L'identifiant de la condition.
+     *
+     * @returns {object} Les données d'effet actif.
+     */
+    static #conditionData(id) {
+        const config = (globalThis.CONFIG?.statusEffects ?? []).find(effect => effect.id === id);
+        return {
+            name: config?.name ?? id,
+            img: config?.img ?? "icons/svg/aura.svg",
+            statuses: [...new Set([id, ...(config?.riders ?? [])])],
+            changes: [],
+            duration: {value: "", units: "rounds"},
+            expireOnDamage: false,
+            showIcon: 1
+        };
     }
 }

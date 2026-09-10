@@ -700,4 +700,33 @@
     background: var(--fq8-message-damage);
 }
 
+/* Avantage et désavantage : une flèche discrète au coin du symbole. Elle prend
+   l'or du jet pour toucher et non le vert ou le rouge, déjà pris par le verdict
+   de la défense : la flèche dit comment le dé a été jeté, pas qui l'a emporté. */
+.fq-result-mark-wrap {
+    position: relative;
+}
+
+.fq-result-mark-wrap.has-advantage::after,
+.fq-result-mark-wrap.has-disadvantage::after {
+    position: absolute;
+    top: -4px;
+    right: -3px;
+    font-size: 8px;
+    line-height: 1;
+    color: var(--fq8-message-gold);
+    text-shadow: 0 0 2px rgba(var(--fq-black-rgb), .9);
+}
+
+.fq-result-mark-wrap.has-advantage::after { content: "▲"; }
+.fq-result-mark-wrap.has-disadvantage::after { content: "▼"; }
+
+/* Les deux d20 d'une attaque jetée avec avantage ou désavantage, côte à côte :
+   ils sont communs à la carte, chaque cible retient le sien. */
+.fq-result-dice-pair {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+}
+
 .fq-result-badge.is-protected { color: var(--fq8-message-gold); }

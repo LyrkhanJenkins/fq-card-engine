@@ -1,4 +1,4 @@
-import {describe, expect, test} from "vitest";
+import {afterEach, describe, expect, test} from "vitest";
 import StatusEffects from "../../src/domain/system/effects/status-effects.js";
 
 /**
@@ -112,5 +112,90 @@ describe("StatusEffects — registre des statuts normalisés", () => {
         expect(StatusEffects.expand("air")[0].name).toBe("Air Effect");
         expect(StatusEffects.expand("poison")[0].name).toBe("Poison");
         expect(StatusEffects.expand("acid")[0].name).toBe("Acid");
+    });
+});
+
+describe("StatusEffects — conditions dnd5e", () => {
+
+    const CONDITIONS = ["blinded", "charmed", "deafened", "frightened", "grappled", "incapacitated",
+        "invisible", "paralyzed", "petrified", "poisoned", "prone", "restrained", "stunned", "unconscious"];
+
+    afterEach(() => {
+        delete globalThis.CONFIG.statusEffects;
+    });
+
+    test("les 14 conditions du PHB sont proposées au menu, avec leur libellé FQ, et SANS l'épuisement", () => {
+        for (const id of CONDITIONS) {
+            expect(StatusEffects.STATUS_CHOICES[id]).toMatch(/^FQCARDENGINE\.Condition/);
+            expect(StatusEffects.isCondition(id)).toBe(true);
+            expect(StatusEffects.isStatusKey(id)).toBe(true);
+        }
+        expect(StatusEffects.isCondition("exhaustion")).toBe(false);
+        expect(StatusEffects.STATUS_CHOICES.exhaustion).toBeUndefined();
+    });
+
+    test("les statuts FQ ne sont pas des conditions, et aucune clé ne se chevauche", () => {
+        for (const key of ["poison", "acid", "burn", "frost", "curse", "virus", "earth", "air"]) {
+            expect(StatusEffects.isCondition(key)).toBe(false);
+        }
+        expect(CONDITIONS.some(id => ["poison", "burn", "curse"].includes(id))).toBe(false);
+        expect(StatusEffects.isCondition("toString")).toBe(false);
+        expect(StatusEffects.isCondition(undefined)).toBe(false);
+    });
+
+    test("les statuts FQ restent en tête du menu, les conditions viennent après", () => {
+        const keys = Object.keys(StatusEffects.STATUS_CHOICES);
+        expect(keys.indexOf("air")).toBeLessThan(keys.indexOf("blinded"));
+        expect(keys[0]).toBe("");
+    });
+
+    test("expand d'une condition : un seul effet, porteur de son statut, sans changement ni durée", () => {
+        const effects = StatusEffects.expand("prone");
+
+        expect(effects).toHaveLength(1);
+        expect(effects[0]).toEqual(expect.objectContaining({
+            statuses: ["prone"], changes: [], expireOnDamage: false, showIcon: 1
+        }));
+        // Durée vide : illimitée, retirée par la purge de fin de combat.
+        expect(effects[0].duration).toEqual({value: "", units: "rounds"});
+    });
+
+    test("sans configuration de statut (hors Foundry) : l'identifiant sert de nom, une icône par défaut", () => {
+        const [effect] = StatusEffects.expand("blinded");
+
+        expect(effect.name).toBe("blinded");
+        expect(effect.img).toBe("icons/svg/aura.svg");
+    });
+
+    test("le nom et l'icône viennent de CONFIG.statusEffects, comme le reste de Foundry les montre", () => {
+        globalThis.CONFIG.statusEffects = [
+            {id: "blinded", name: "Blinded", img: "systems/dnd5e/icons/svg/statuses/blinded.svg"}
+        ];
+
+        const [effect] = StatusEffects.expand("blinded");
+
+        expect(effect.name).toBe("Blinded");
+        expect(effect.img).toBe("systems/dnd5e/icons/svg/statuses/blinded.svg");
+    });
+
+    test("les conditions induites entrent dans le MÊME effet : paralysé porte aussi neutralisé", () => {
+        globalThis.CONFIG.statusEffects = [
+            {id: "paralyzed", name: "Paralyzed", img: "p.svg", riders: ["incapacitated"]}
+        ];
+
+        expect(StatusEffects.expand("paralyzed")[0].statuses).toEqual(["paralyzed", "incapacitated"]);
+    });
+
+    test("une condition induite déjà présente n'est pas dupliquée", () => {
+        globalThis.CONFIG.statusEffects = [{id: "stunned", riders: ["stunned", "incapacitated"]}];
+
+        expect(StatusEffects.expand("stunned")[0].statuses).toEqual(["stunned", "incapacitated"]);
+    });
+
+    test("chaque appel rend un objet neuf", () => {
+        const first = StatusEffects.expand("prone");
+        first[0].statuses.push("hacked");
+
+        expect(StatusEffects.expand("prone")[0].statuses).toEqual(["prone"]);
     });
 });

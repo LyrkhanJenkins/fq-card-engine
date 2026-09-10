@@ -150,11 +150,19 @@ export default class RollReport {
      * @param {?number} data.roll          - Le résultat du dé, ou null.
      * @param {?number} data.threshold     - Le seuil à atteindre, ou null.
      * @param {boolean} data.evaded        - True si la cible esquive.
+     * @param {boolean} [data.defenseless] - True si la cible n'a plus aucune défense
+     *        (paralysée, inconsciente) : elle n'esquive pas, et aucun dé n'est lancé.
+     * @param {object[]} [data.autoCauses] - Les raisons `{side, cause}` de cette absence.
      *
      * @returns {void}
      */
-    addEvasion({targetTokenId, targetName, roll, threshold, evaded}) {
-        this.evasions.push({targetTokenId, targetName, roll, threshold, evaded});
+    addEvasion({targetTokenId, targetName, roll, threshold, evaded, defenseless = false, autoCauses = []}) {
+        // Les champs de la cible sans défense ne sont posés que pour elle : une
+        // esquive ordinaire garde exactement sa forme de toujours.
+        this.evasions.push({
+            targetTokenId, targetName, roll, threshold, evaded,
+            ...(defenseless ? {defenseless: true, autoCauses} : {})
+        });
     }
 
     /**
@@ -168,16 +176,29 @@ export default class RollReport {
      * @param {string}  data.targetTokenId - L'id du jeton ciblé.
      * @param {string}  data.targetName    - Le nom du jeton ciblé.
      * @param {string}  data.kind          - « ac » ou « save ».
-     * @param {number}  data.roll          - Le résultat du dé.
+     * @param {?number} data.roll          - Le d20 retenu, ou null quand aucun dé n'a compté.
      * @param {number}  data.modifier      - Le modificateur ajouté au dé.
-     * @param {number}  data.total         - Le total du jet.
+     * @param {?number} data.total         - Le total du jet, ou null sans dé.
      * @param {number}  data.threshold     - La classe d'armure ou le DD.
      * @param {boolean} data.defended      - True si la cible est protégée.
+     * @param {number[]} [data.dice]       - Les d20 jetés : deux en avantage ou désavantage.
+     *        Pour une attaque, ce sont les dés COMMUNS à toute la carte.
+     * @param {number}  [data.mode]        - Le mode du jet contre cette cible (1, -1, 0).
+     * @param {?string} [data.auto]        - « fail » (sauvegarde ratée d'office) ou
+     *        « defenseless » (cible sans défense), null pour un jet ordinaire.
+     * @param {object[]} [data.advantages]    - Les raisons `{side, cause}` d'avantage.
+     * @param {object[]} [data.disadvantages] - Les raisons `{side, cause}` de désavantage.
+     * @param {object[]} [data.autoCauses]    - Les raisons `{side, cause}` de l'issue forcée.
      *
      * @returns {void}
      */
-    addHit({targetTokenId, targetName, kind, roll, modifier, total, threshold, defended}) {
-        this.hits.push({targetTokenId, targetName, kind, roll, modifier, total, threshold, defended});
+    addHit({targetTokenId, targetName, kind, roll, modifier, total, threshold, defended,
+        dice = roll === null || roll === undefined ? [] : [roll], mode = 0, auto = null,
+        advantages = [], disadvantages = [], autoCauses = []}) {
+        this.hits.push({
+            targetTokenId, targetName, kind, roll, modifier, total, threshold, defended,
+            dice, mode, auto, advantages, disadvantages, autoCauses
+        });
     }
 
     /**
@@ -260,8 +281,17 @@ export default class RollReport {
             kind: this.kind,
             mainRoll: this.mainRoll ? {...this.mainRoll, dice: [...this.mainRoll.dice]} : null,
             critical: this.critical ? {...this.critical} : null,
-            evasions: this.evasions.map(evasion => ({...evasion})),
-            hits: this.hits.map(hit => ({...hit})),
+            evasions: this.evasions.map(evasion => ({
+                ...evasion,
+                ...(evasion.autoCauses ? {autoCauses: evasion.autoCauses.map(reason => ({...reason}))} : {})
+            })),
+            hits: this.hits.map(hit => ({
+                ...hit,
+                dice: [...hit.dice],
+                advantages: hit.advantages.map(reason => ({...reason})),
+                disadvantages: hit.disadvantages.map(reason => ({...reason})),
+                autoCauses: hit.autoCauses.map(reason => ({...reason}))
+            })),
             results: this.results.map(result => ({...result})),
             extraRolls: this.extraRolls.map(extra => ({...extra, dice: [...extra.dice]})),
             messages: [...this.messages]

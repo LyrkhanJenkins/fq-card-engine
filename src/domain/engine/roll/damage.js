@@ -3,6 +3,8 @@ import Geometry from "../shared/geometry.js";
 import TargetingPredicates from "../shared/targeting-predicates.js";
 import RollReport, {ROLL_ROLE} from "./roll-report.js";
 import HitProfile from "./hit-profile.js";
+import Advantage from "./advantage.js";
+import ConditionProbe from "./condition-probe.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 
 /**
@@ -197,56 +199,163 @@ export default class Damage {
         // `cardContent`, comme elle y pose déjà ses `forcedTargets` : son
         // modificateur et son DD viennent de l'activité, pas de champs de carte.
         const profile = cardContent.hitProfile ?? HitProfile.of(actor, cardContent);
+        // No evasion is possible if self targeting : le lanceur ne se défend pas
+        // contre sa propre carte.
+        const opponents = myTargets.filter(target => target.actor?._id !== actor?._id);
+        // Les défenses de chaque cible sont PRÉPARÉES avant tout jet : le dé
+        // d'attaque est commun à toute la carte, et il faut savoir si une seule
+        // cible y gagne un avantage ou un désavantage pour jeter le second d20.
+        const caster = ConditionProbe.of(actor);
+        // Le jeton PROPRE d'un acteur synthétique d'abord : un PNJ non lié (sbire,
+        // monstre en plusieurs exemplaires) partage son id d'acteur avec ses
+        // jumeaux, et la recherche par id rendrait le premier venu.
+        const casterToken = actor?.token ?? Constants.actorToken(actor?.id);
+        const plans = opponents.map(target => Damage.#planDefense(target, profile, caster, casterToken));
         // Le dé d'ATTAQUE est jeté UNE fois pour toute la carte, avant la boucle :
         // c'est le même jet que chaque classe d'armure vient affronter. Une
         // sauvegarde, elle, appartient à la cible et se jette dans la boucle.
-        const attackRoll = profile?.type === CardFqSystem.HIT_TYPE_ATTACK
-            ? await Damage.rollTotalAsync("1d20") : null;
-        for (let i = 0; i < myTargets.length; i++) {
-            const target = myTargets[i];
-            const targetActor = target.actor;
-
-            if (targetActor?._id !== actor?._id // no evasion is possible if self targeting
-            ) {
-                const targetName = Constants.tokenName(target);
-                // Le toucher AVANT l'esquive : le lanceur agit d'abord, la cible
-                // esquive ensuite. Le rapport, le chat et la fenêtre présentent les
-                // jets dans l'ordre où ils tombent.
-                const protection = await Damage.#rollHit(target, targetName, profile, attackRoll, report);
-                const evaded = await Damage.#rollEvasion(target, targetName, cardContent, report);
-                const value = Math.floor(
-                    damages * Damage.damageMultiplier((evaded ? 1 : 0) + protection, critical));
-                damagesArray.push({
-                    key: `Dégâts totaux sur "${targetName}"`,
-                    value,
-                    critical,
-                    evasion: evaded,
-                    type: "damageFQ",
-                    targetTokenId: target.id
-                });
-                report?.addResult({
-                    targetTokenId: target.id, targetName, value,
-                    type: "damageFQ", critical, evasion: evaded, defended: protection > 0
-                });
-            }
+        const attackDice = await Damage.#rollAttackDice(profile, plans);
+        for (let i = 0; i < opponents.length; i++) {
+            const target = opponents[i];
+            const targetName = Constants.tokenName(target);
+            // Le toucher AVANT l'esquive : le lanceur agit d'abord, la cible
+            // esquive ensuite. Le rapport, le chat et la fenêtre présentent les
+            // jets dans l'ordre où ils tombent.
+            const protection = await Damage.#rollHit(target, targetName, profile, attackDice, plans[i], report);
+            const evaded = await Damage.#rollEvasion(target, targetName, cardContent, plans[i], report);
+            const value = Math.floor(
+                damages * Damage.damageMultiplier((evaded ? 1 : 0) + protection, critical));
+            damagesArray.push({
+                key: `Dégâts totaux sur "${targetName}"`,
+                value,
+                critical,
+                evasion: evaded,
+                type: "damageFQ",
+                targetTokenId: target.id
+            });
+            report?.addResult({
+                targetTokenId: target.id, targetName, value,
+                type: "damageFQ", critical, evasion: evaded, defended: protection > 0
+            });
         }
         return damagesArray;
+    }
+
+    /**
+     * Prépare les défenses d'une cible AVANT tout jet : si elle en a encore, et
+     * avec quel mode le jet pour toucher la visera.
+     *
+     * Une cible sans défense (paralysée, inconsciente) le reste pour toute la
+     * résolution, jet pour toucher ou non : elle n'esquive pas non plus.
+     *
+     * @param {object}  target      - Le jeton ciblé.
+     * @param {?object} profile     - Le profil de toucher, ou null.
+     * @param {?object} caster      - La sonde du lanceur (voir `ConditionProbe`).
+     * @param {?object} casterToken - Le jeton du lanceur, pour le contact.
+     *
+     * @returns {{defenseless: boolean, defenselessCauses: object[], verdict: ?object}}
+     *          Le plan de défense ; `verdict` est celui d'`Advantage.attack` ou
+     *          d'`Advantage.save`, null sans jet pour toucher.
+     */
+    static #planDefense(target, profile, caster, casterToken) {
+        const probe = ConditionProbe.of(target.actor);
+        const defenselessCauses = Advantage.defenselessCauses(probe);
+        const plan = {defenseless: defenselessCauses.length > 0, defenselessCauses, verdict: null};
+        if (!profile) {
+            return plan;
+        }
+        if (profile.type === CardFqSystem.HIT_TYPE_ATTACK) {
+            plan.verdict = Advantage.attack(caster, probe, {
+                ability: profile.attackAbility ?? null,
+                adjacent: Damage.#isAdjacent(casterToken, target)
+            });
+        } else {
+            plan.verdict = Advantage.save(probe, {
+                ability: profile.saveAbility,
+                systemMode: ConditionProbe.saveMode(target.actor, profile.saveAbility)
+            });
+        }
+        return plan;
+    }
+
+    /**
+     * Le lanceur est-il au contact de la cible ? Une case d'écart au plus, comme
+     * les « 5 pieds » de D&D. Faute de jeton mesurable, la réponse est non.
+     *
+     * @param {?object} casterToken - Le jeton du lanceur.
+     * @param {?object} target      - Le jeton ciblé.
+     *
+     * @returns {boolean} True au contact.
+     */
+    static #isAdjacent(casterToken, target) {
+        if (!casterToken || !target) {
+            return false;
+        }
+        try {
+            return Geometry.distanceBetweenTokens(casterToken, target) <= 1;
+        } catch {
+            return false;
+        }
+    }
+
+    /**
+     * Jette le dé d'ATTAQUE de la carte : un d20, ou deux dès qu'une seule cible
+     * encore défendue est visée avec avantage ou désavantage. Les deux dés sont
+     * jetés UNE fois ; chaque cible garde ensuite celui que lui vaut son propre
+     * mode (voir `Advantage.keep`).
+     *
+     * @param {?object}  profile - Le profil de toucher, ou null.
+     * @param {object[]} plans   - Les plans de défense des cibles.
+     *
+     * @returns {Promise<?number[]>} Les d20 jetés, ou null sans jet d'attaque.
+     */
+    static async #rollAttackDice(profile, plans) {
+        if (profile?.type !== CardFqSystem.HIT_TYPE_ATTACK) {
+            return null;
+        }
+        const twoDice = plans.some(plan => !plan.defenseless && plan.verdict?.mode !== Advantage.NORMAL);
+        return Damage.#rollD20s(twoDice ? 2 : 1);
+    }
+
+    /**
+     * Jette des d20 un par un. Deux `1d20` plutôt qu'un `2d20` : chaque face doit
+     * rester lisible, pour que le rapport montre les deux dés et celui retenu.
+     *
+     * @param {number} count - Le nombre de d20.
+     *
+     * @returns {Promise<number[]>} Les d20 jetés, dans l'ordre.
+     */
+    static async #rollD20s(count) {
+        const dice = [];
+        for (let i = 0; i < count; i++) {
+            dice.push(await Damage.rollTotalAsync("1d20"));
+        }
+        return dice;
     }
 
     /**
      * Jette l'esquive d'une cible (1d20 contre `21 - esquive - bonusEva`) et la
      * consigne au rapport. Aucun dé n'est lancé si la cible n'a aucun score
      * d'esquive : elle figure quand même au rapport, sans jet, pour que l'absence
-     * d'esquive se lise.
+     * d'esquive se lise. Une cible sans défense n'esquive pas : elle figure au
+     * rapport comme telle.
      *
      * @param {object} target      - Le jeton ciblé.
      * @param {string} targetName  - Le nom affiché du jeton.
      * @param {object} cardContent - Le contenu (choix) de la carte (`bonusEva`).
+     * @param {object} plan        - Le plan de défense de la cible.
      * @param {RollReport} [report] - Le rapport où consigner le jet.
      *
      * @returns {Promise<boolean>} True si la cible esquive.
      */
-    static async #rollEvasion(target, targetName, cardContent, report) {
+    static async #rollEvasion(target, targetName, cardContent, plan, report) {
+        if (plan?.defenseless) {
+            report?.addEvasion({
+                targetTokenId: target.id, targetName, roll: null, threshold: null, evaded: false,
+                defenseless: true, autoCauses: plan.defenselessCauses
+            });
+            return false;
+        }
         const evaToReach = Damage.#scoreThreshold(
             target.actor?.system?.fq?.attributes.evasion, cardContent.bonusEva);
         const evasionScore = evaToReach === null ? 0 : await Damage.rollTotalAsync("1d20");
@@ -293,22 +402,27 @@ export default class Damage {
      * Le 1 et le 20 naturels n'ont aucun effet particulier — décision de règle
      * du moteur, qui garde le critique sur son propre jet.
      *
+     * Avec avantage ou désavantage, deux d20 comptent et le mode de LA cible
+     * choisit lequel (voir `Advantage.keep`). Une cible sans défense, ou qui rate
+     * d'office sa sauvegarde, n'est jamais protégée et ne jette aucun dé.
+     *
      * Le jet est fait par le client du LANCEUR, y compris la sauvegarde de la
      * cible : toute la résolution reste un bloc unique, sans attendre le joueur
      * d'en face.
      *
-     * @param {object}  target     - Le jeton ciblé.
-     * @param {string}  targetName - Le nom affiché du jeton.
-     * @param {?object} profile    - Le profil de toucher (voir `HitProfile.of`), ou null.
-     * @param {?number} attackRoll - Le dé d'attaque UNIQUE de la carte, déjà jeté, ou null
-     *        pour une sauvegarde (que chaque cible jette pour elle-même).
-     * @param {RollReport} [report] - Le rapport où consigner le jet.
+     * @param {object}    target     - Le jeton ciblé.
+     * @param {string}    targetName - Le nom affiché du jeton.
+     * @param {?object}   profile    - Le profil de toucher (voir `HitProfile.of`), ou null.
+     * @param {?number[]} attackDice - Les d20 d'attaque de la carte, déjà jetés une fois
+     *        pour toutes, ou null pour une sauvegarde (que chaque cible jette pour elle-même).
+     * @param {object}    plan       - Le plan de défense de la cible (voir `#planDefense`).
+     * @param {RollReport} [report]  - Le rapport où consigner le jet.
      *
      * @returns {Promise<number>} Le nombre de crans de défense que la cible gagne :
      *          0 si elle n'est pas protégée, 1 en général, et 2 quand une activité
      *          dnd5e annonce ne rien infliger sur une sauvegarde réussie.
      */
-    static async #rollHit(target, targetName, profile, attackRoll, report) {
+    static async #rollHit(target, targetName, profile, attackDice, plan, report) {
         const defense = HitProfile.defenseOf(target, profile);
         if (!defense) {
             return 0;
@@ -316,15 +430,24 @@ export default class Damage {
         const attack = profile.type === CardFqSystem.HIT_TYPE_ATTACK;
         const modifier = attack ? profile.modifier : defense.value;
         const threshold = attack ? defense.value : profile.dc;
-        // Une ATTAQUE ne roule qu'une fois pour toute la carte : c'est le même dé
-        // qui est opposé à chaque classe d'armure. Une SAUVEGARDE, elle, est jetée
-        // par chaque cible — c'est sa défense, pas l'action du lanceur.
-        const roll = attack ? attackRoll : await Damage.rollTotalAsync("1d20");
-        const total = roll + modifier;
-        const defended = attack ? total < threshold : total >= threshold;
+        const verdict = plan?.verdict ?? {mode: Advantage.NORMAL, advantages: [], disadvantages: []};
+        const auto = plan?.defenseless ? "defenseless" : (verdict.auto ?? null);
+        // Une ATTAQUE ne roule qu'une fois pour toute la carte : ce sont les mêmes
+        // dés qui sont opposés à chaque classe d'armure, et ils restent montrés
+        // même contre une cible qui ne se défend plus. Une SAUVEGARDE, elle, est
+        // jetée par chaque cible — sauf celle qui la rate d'office.
+        const mode = auto ? Advantage.NORMAL : verdict.mode;
+        const dice = attack ? attackDice : (auto ? [] : await Damage.#rollD20s(mode === Advantage.NORMAL ? 1 : 2));
+        const roll = dice.length ? Advantage.keep(dice, mode) : null;
+        const total = roll === null ? null : roll + modifier;
+        const defended = !auto && (attack ? total < threshold : total >= threshold);
         report?.addHit({
             targetTokenId: target.id, targetName,
-            kind: defense.kind, roll, modifier, total, threshold, defended
+            kind: defense.kind, roll, modifier, total, threshold, defended,
+            dice, mode, auto,
+            advantages: auto ? [] : verdict.advantages,
+            disadvantages: auto ? [] : verdict.disadvantages,
+            autoCauses: auto === "defenseless" ? plan.defenselessCauses : (verdict.autoCauses ?? [])
         });
         return defended ? (profile.defensesOnSuccess ?? 1) : 0;
     }
