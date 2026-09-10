@@ -22,6 +22,7 @@ Hooks.once("socketlib.ready", () => {
     socket = socketlib.registerModule(FqCardEngineModule.moduleName);
     socket.register("addEffectForTarget", Damage.addEffectForTarget);
     socket.register("removeEffectForTarget", Damage.removeEffectForTarget);
+    socket.register("consumeAttackEffects", Damage.consumeAttackEffects);
     socket.register("drawCard", TradingCards.drawCard);
     socket.register("applyActorHpModification", Damage.applyActorHpModification);
     socket.register("logCardPlayed", PlayCard.logCardPlayed);

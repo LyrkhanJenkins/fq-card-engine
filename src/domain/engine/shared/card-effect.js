@@ -158,6 +158,14 @@ export default class CardEffect {
             // vie et les FX attendent la fin de l’animation.
             await presentResult(report);
 
+            // Les effets « à la prochaine attaque » tombent AVANT que la carte ne
+            // pose les siens : une carte qui brise la garde de sa cible ne doit pas
+            // voir sa propre attaque consommer la brèche qu'elle vient d'ouvrir.
+            const consumption = Damage.attackConsumption(Constants.actorCurrent, report);
+            if (consumption) {
+                await socket.executeAsGM("consumeAttackEffects", ...consumption);
+            }
+
             for (const pending of pendingEffects) {
                 await CardEffect.applyPendingEffects(pending);
             }
@@ -688,7 +696,7 @@ export default class CardEffect {
      */
     static async createEffectsFromData(currentEffect) {
         const effectDataList = currentEffect.data.flatMap(effectData =>
-            StatusEffects.expand(effectData.status) ?? [effectData]);
+            StatusEffects.expand(effectData.status, effectData) ?? [effectData]);
         return Promise.all(effectDataList.map(async effect => {
             // Champ de référence du registre, pas un champ ActiveEffect.
             delete effect.status;
@@ -698,11 +706,20 @@ export default class CardEffect {
             // dans les flags du module — sinon Foundry le supprimerait à la création et le
             // retrait d'effet sur dégâts ne se déclencherait jamais (cf. Damage.applyActorHpModification).
             const moduleName = FqCardEngineModule.moduleName;
+            // `expireOnAttack` suit le même chemin : « made » (consommé au prochain
+            // jet d'attaque du porteur) ou « received » (au prochain jet qui le
+            // vise). Il n'est posé que lorsqu'il existe, pour ne rien changer aux
+            // effets qui l'ignorent.
             effect.flags = {
                 ...effect.flags,
-                [moduleName]: {...effect.flags?.[moduleName], expireOnDamage: !!effect.expireOnDamage}
+                [moduleName]: {
+                    ...effect.flags?.[moduleName],
+                    expireOnDamage: !!effect.expireOnDamage,
+                    ...(effect.expireOnAttack ? {expireOnAttack: effect.expireOnAttack} : {})
+                }
             };
             delete effect.expireOnDamage;
+            delete effect.expireOnAttack;
             if (effect.duration) {
                 const value = CardEffect.resolveDurationComponent(effect.duration.value);
                 if (value > 0) {

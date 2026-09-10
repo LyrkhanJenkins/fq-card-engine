@@ -206,10 +206,7 @@ export default class Damage {
         // d'attaque est commun à toute la carte, et il faut savoir si une seule
         // cible y gagne un avantage ou un désavantage pour jeter le second d20.
         const caster = ConditionProbe.of(actor);
-        // Le jeton PROPRE d'un acteur synthétique d'abord : un PNJ non lié (sbire,
-        // monstre en plusieurs exemplaires) partage son id d'acteur avec ses
-        // jumeaux, et la recherche par id rendrait le premier venu.
-        const casterToken = actor?.token ?? Constants.actorToken(actor?.id);
+        const casterToken = Damage.casterTokenOf(actor);
         const plans = opponents.map(target => Damage.#planDefense(target, profile, caster, casterToken));
         // Le dé d'ATTAQUE est jeté UNE fois pour toute la carte, avant la boucle :
         // c'est le même jet que chaque classe d'armure vient affronter. Une
@@ -523,6 +520,76 @@ export default class Damage {
         const actor = game.canvas.tokens.get(targetId)?.actor;
         if (actor && effectId) {
             await actor.deleteEmbeddedDocuments("ActiveEffect", [effectId]);
+        }
+    }
+
+    /**
+     * Le jeton du lanceur. Le jeton PROPRE d'un acteur synthétique d'abord : un
+     * PNJ non lié (sbire, monstre en plusieurs exemplaires) partage son id
+     * d'acteur avec ses jumeaux, et la recherche par id rendrait le premier venu.
+     *
+     * @param {?object} actor - L'acteur lanceur.
+     *
+     * @returns {?object} Le document de jeton, ou undefined s'il n'est pas sur la scène.
+     */
+    static casterTokenOf(actor) {
+        return actor?.token ?? Constants.actorToken(actor?.id);
+    }
+
+    /**
+     * Ce qu'une résolution doit consommer parmi les effets « à la prochaine
+     * attaque » : c'est le rapport qui le dit, puisqu'il consigne chaque jet
+     * d'attaque (genre « ac ») et la cible qu'il visait. Une sauvegarde, une
+     * carte sans jet pour toucher ou un soin ne consomment rien.
+     *
+     * Rendu sous la forme des arguments de {@link Damage.consumeAttackEffects},
+     * que l'appelant transmet au MJ par socket : ce module-ci ne peut pas importer
+     * le socket, qui l'importe lui-même.
+     *
+     * @param {?object}    actor  - L'acteur lanceur.
+     * @param {RollReport} report - Le rapport de la résolution.
+     *
+     * @returns {?Array} `[casterTokenId, attackedTokenIds]`, ou null si aucun jet
+     *          d'attaque n'a été fait.
+     */
+    static attackConsumption(actor, report) {
+        const attacked = [...new Set((report?.hits ?? [])
+            .filter(hit => hit.kind === "ac")
+            .map(hit => hit.targetTokenId))];
+        if (attacked.length === 0) {
+            return null;
+        }
+        return [Damage.casterTokenOf(actor)?.id ?? null, attacked];
+    }
+
+    /**
+     * Consomme les effets « à la prochaine attaque » après un jet d'attaque :
+     * ceux du lanceur marqués « made » (« En élan » : son prochain jet a eu
+     * lieu), et ceux de chaque cible visée marqués « received » (« Garde
+     * brisée » : le prochain jet contre elle a eu lieu), que ce jet ait touché ou
+     * non. Exécutée côté MJ via socket, les cibles pouvant appartenir à d'autres
+     * joueurs. Tolérante à l'absence de jeton, d'acteur ou d'effet.
+     *
+     * @param {?string}  casterTokenId    - L'id du jeton du lanceur.
+     * @param {string[]} attackedTokenIds - Les ids des jetons visés par le jet d'attaque.
+     *
+     * @returns {Promise<void>}
+     */
+    static async consumeAttackEffects(casterTokenId, attackedTokenIds = []) {
+        const consume = async (tokenId, side) => {
+            const actor = game.canvas.tokens.get(tokenId)?.actor;
+            const ids = [...(actor?.effects ?? [])]
+                .filter(effect => effect?.flags?.[FqCardEngineModule.moduleName]?.expireOnAttack === side)
+                .map(effect => effect.id);
+            if (ids.length) {
+                await actor.deleteEmbeddedDocuments("ActiveEffect", ids);
+            }
+        };
+        if (casterTokenId) {
+            await consume(casterTokenId, "made");
+        }
+        for (const tokenId of new Set(attackedTokenIds)) {
+            await consume(tokenId, "received");
         }
     }
 

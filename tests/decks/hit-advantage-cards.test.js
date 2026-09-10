@@ -199,6 +199,41 @@ describe("cartes d'attaque — conditions de la cible", () => {
         });
 });
 
+describe("cartes d'attaque — « Garde brisée » et « En élan »", () => {
+
+    test("cible en « Garde brisée » : avantage — les dés 4 puis 15, le 15 compte", async () => {
+        const {damage, chat} = await play(damageCard(ATTACK), {targetActor: target({statuses: ["fqExposed"]})}, d20(4, 15));
+
+        expect(damage).toBe(10);
+        expect(chat).toContain("FQCARDENGINE.StatusExposed");
+    });
+
+    test("lanceur « En élan » : avantage", async () => {
+        const {damage, chat} = await play(damageCard(ATTACK),
+            {character: {statuses: new Set(["fqEmpowered"])}, targetActor: target()}, d20(4, 15));
+
+        expect(damage).toBe(10);
+        expect(chat).toContain("FQCARDENGINE.StatusEmpowered");
+    });
+
+    test("le jet d'attaque demande au MJ de consommer ces effets, sur le lanceur et la cible visée", async () => {
+        const {result} = await play(damageCard(ATTACK), {targetActor: target({statuses: ["fqExposed"]})}, d20(4, 15));
+
+        const {socket} = await import("../../src/hook/integration/socketlib.hook.js");
+        const call = socket.executeAsGM.mock.calls.find(entry => entry[0] === "consumeAttackEffects");
+        expect(call).toBeDefined();
+        expect(call[2]).toHaveLength(1);
+        expect(result.threw).toBe(false);
+    });
+
+    test("une carte de SAUVEGARDE ne consomme rien : ce n'est pas un jet d'attaque", async () => {
+        await play(damageCard(DEX_SAVE), {targetActor: target({abilities: {dex: {save: {value: 2}}}})}, d20(9));
+
+        const {socket} = await import("../../src/hook/integration/socketlib.hook.js");
+        expect(socket.executeAsGM.mock.calls.map(entry => entry[0])).not.toContain("consumeAttackEffects");
+    });
+});
+
 describe("cartes d'attaque — conditions et équipement du lanceur", () => {
 
     test("lanceur empoisonné : désavantage", async () => {

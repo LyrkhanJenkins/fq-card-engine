@@ -128,6 +128,39 @@ describe("Advantage.attack — conditions de la CIBLE", () => {
     });
 });
 
+describe("Advantage.attack — statuts FQ « En élan » et « Garde brisée »", () => {
+
+    it("lanceur « En élan » : avantage, et la raison le nomme", () => {
+        const verdict = Advantage.attack(probe(["fqEmpowered"]), NONE);
+
+        expect(verdict.mode).toBe(Advantage.ADVANTAGE);
+        expect(verdict.advantages).toEqual([{side: "caster", cause: "fqEmpowered"}]);
+    });
+
+    it("cible en « Garde brisée » : avantage pour qui l'attaque", () => {
+        const verdict = Advantage.attack(NONE, probe(["fqExposed"]));
+
+        expect(verdict.mode).toBe(Advantage.ADVANTAGE);
+        expect(verdict.advantages).toEqual([{side: "target", cause: "fqExposed"}]);
+    });
+
+    it("« Garde brisée » sur le LANCEUR ne l'aide pas à attaquer", () => {
+        expect(Advantage.attack(probe(["fqExposed"]), NONE).mode).toBe(Advantage.NORMAL);
+    });
+
+    it("« En élan » sur la CIBLE n'aide pas qui l'attaque", () => {
+        expect(Advantage.attack(NONE, probe(["fqEmpowered"])).mode).toBe(Advantage.NORMAL);
+    });
+
+    it("lanceur « En élan » contre cible invisible : ils s'annulent", () => {
+        expect(Advantage.attack(probe(["fqEmpowered"]), probe(["invisible"])).mode).toBe(Advantage.NORMAL);
+    });
+
+    it("aucun des deux n'agit sur une sauvegarde", () => {
+        expect(Advantage.save(probe(["fqExposed", "fqEmpowered"]), {ability: "dex"}).mode).toBe(Advantage.NORMAL);
+    });
+});
+
 describe("Advantage.attack — armure non maîtrisée", () => {
 
     it.each(["str", "dex"])("attaque de %s en armure non maîtrisée : désavantage", ability => {

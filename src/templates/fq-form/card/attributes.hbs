@@ -410,30 +410,6 @@
                                             <div data-add-data-effect>
 
                                                 <div class="form-fields">
-                                                    <label>{{localize "FQCARDENGINE.EffectDurationValue"}}</label>
-                                                    {{formInput
-                                                            ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.duration.fields.value
-                                                            value=dat.duration.value
-                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".duration.value")
-                                                            rootId=../../../../rootId
-                                                    }}
-                                                    <label>{{localize "FQCARDENGINE.EffectDurationUnits"}}</label>
-                                                    {{formInput
-                                                            ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.duration.fields.units
-                                                            value=dat.duration.units
-                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".duration.units")
-                                                            localize=true
-                                                            rootId=../../../../rootId
-                                                    }}
-                                                    <label>{{localize "FQCARDENGINE.EffectExpireOnDamage"}}</label>
-                                                    {{formInput
-                                                            ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.expireOnDamage
-                                                            value=dat.expireOnDamage
-                                                            name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".expireOnDamage")
-                                                            rootId=../../../../rootId
-                                                    }}
-                                                </div>
-                                                <div class="form-fields">
                                                     <label>{{localize "FQCARDENGINE.EffectShowIcon"}}</label>
                                                     {{formInput
                                                             ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.showIcon
@@ -443,6 +419,36 @@
                                                             rootId=../../../../rootId
                                                     }}
                                                 </div>
+                                            </div>
+                                        </span>
+                                        {{!-- Hors des détails : la durée et le retrait sur dégâts restent
+                                              réglables pour une condition dnd5e ou « En élan » / « Garde
+                                              brisée ». La CSS ne les masque que pour les statuts FQ, dont
+                                              la durée est fixée par le registre. --}}
+                                        <span data-status-duration>
+                                            <div class="form-fields">
+                                                <label>{{localize "FQCARDENGINE.EffectDurationValue"}}</label>
+                                                {{formInput
+                                                        ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.duration.fields.value
+                                                        value=dat.duration.value
+                                                        name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".duration.value")
+                                                        rootId=../../../../rootId
+                                                }}
+                                                <label>{{localize "FQCARDENGINE.EffectDurationUnits"}}</label>
+                                                {{formInput
+                                                        ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.duration.fields.units
+                                                        value=dat.duration.units
+                                                        name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".duration.units")
+                                                        localize=true
+                                                        rootId=../../../../rootId
+                                                }}
+                                                <label>{{localize "FQCARDENGINE.EffectExpireOnDamage"}}</label>
+                                                {{formInput
+                                                        ../../../../fields.fq.fields.choices.element.fields.applyEffectsFormulas.element.fields.effects.element.fields.data.element.fields.expireOnDamage
+                                                        value=dat.expireOnDamage
+                                                        name=(concat "system.fq.choices." i ".applyEffectsFormulas." formulaIndex ".effects." effectIndex ".data." dataIndex ".expireOnDamage")
+                                                        rootId=../../../../rootId
+                                                }}
                                             </div>
                                         </span>
                                     </fieldset>

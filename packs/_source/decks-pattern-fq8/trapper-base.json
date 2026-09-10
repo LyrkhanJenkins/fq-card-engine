@@ -673,12 +673,24 @@
                             "units": "rounds"
                           },
                           "expireOnDamage": false
+                        },
+                        {
+                          "status": "restrained",
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
                         }
                       ],
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgApplyEffect",
                           "arg": "{\"effectName\": \"Immobilization\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Restrained\"}"
                         }
                       ]
                     }
@@ -882,12 +894,24 @@
                       "data": [
                         {
                           "status": "poison"
+                        },
+                        {
+                          "status": "poisoned",
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
                         }
                       ],
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgPoisonEffect",
                           "arg": ""
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Poisoned\"}"
                         }
                       ]
                     }
@@ -1873,12 +1897,24 @@
                       "data": [
                         {
                           "status": "poison"
+                        },
+                        {
+                          "status": "poisoned",
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
                         }
                       ],
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgPoisonEffect",
                           "arg": ""
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Poisoned\"}"
                         }
                       ]
                     }
@@ -2454,6 +2490,14 @@
                             "units": "rounds"
                           },
                           "expireOnDamage": false
+                        },
+                        {
+                          "status": "restrained",
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
                         }
                       ],
                       "messages": [
@@ -2464,6 +2508,10 @@
                         {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\": \"Immobilization\",\"turn\": \"1\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Restrained\"}"
                         }
                       ]
                     }
@@ -2811,12 +2859,24 @@
                             "units": "rounds"
                           },
                           "expireOnDamage": false
+                        },
+                        {
+                          "status": "prone",
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
                         }
                       ],
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgApplyEffect",
                           "arg": "{\"effectName\": \"Turn Ended\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Prone\"}"
                         }
                       ]
                     }

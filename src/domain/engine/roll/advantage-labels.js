@@ -1,4 +1,4 @@
-import {DND5E_CONDITIONS} from "../../conditions.js";
+import {DND5E_CONDITIONS, FQ_ADVANTAGE_STATUSES} from "../../conditions.js";
 import Advantage from "./advantage.js";
 
 /**
@@ -58,7 +58,7 @@ export default class AdvantageLabels {
      * @returns {string} La raison, déjà localisée.
      */
     static reason({side, cause}) {
-        const key = DND5E_CONDITIONS[cause] ?? AdvantageLabels.#CAUSES[cause];
+        const key = DND5E_CONDITIONS[cause] ?? FQ_ADVANTAGE_STATUSES[cause] ?? AdvantageLabels.#CAUSES[cause];
         const label = key ? game.i18n.localize(key) : cause;
         return game.i18n.format(side === "caster" ? "FQCARDENGINE.ReasonOnCaster" : "FQCARDENGINE.ReasonOnTarget",
             {reason: label});

@@ -199,3 +199,95 @@ describe("StatusEffects — conditions dnd5e", () => {
         expect(StatusEffects.expand("prone")[0].statuses).toEqual(["prone"]);
     });
 });
+
+describe("StatusEffects — « En élan » et « Garde brisée »", () => {
+
+    test("« En élan » : son porteur attaque avec avantage, jusqu'à SON prochain jet d'attaque", () => {
+        const [effect] = StatusEffects.expand("empowered");
+
+        expect(effect.statuses).toEqual(["fqEmpowered"]);
+        expect(effect.expireOnAttack).toBe("made");
+        expect(effect.changes).toEqual([]);
+        expect(effect.name).toBe("Empowered");
+    });
+
+    test("« Garde brisée » : on attaque son porteur avec avantage, jusqu'au prochain jet qui le vise", () => {
+        const [effect] = StatusEffects.expand("exposed");
+
+        expect(effect.statuses).toEqual(["fqExposed"]);
+        expect(effect.expireOnAttack).toBe("received");
+        expect(effect.name).toBe("Broken Guard");
+    });
+
+    test("les deux sont proposés au menu, après les statuts FQ et avant les conditions", () => {
+        const keys = Object.keys(StatusEffects.STATUS_CHOICES);
+
+        expect(StatusEffects.STATUS_CHOICES.empowered).toBe("FQCARDENGINE.StatusEmpowered");
+        expect(StatusEffects.STATUS_CHOICES.exposed).toBe("FQCARDENGINE.StatusExposed");
+        expect(keys.indexOf("air")).toBeLessThan(keys.indexOf("empowered"));
+        expect(keys.indexOf("exposed")).toBeLessThan(keys.indexOf("blinded"));
+    });
+
+    test("aucun autre statut du registre ne se consomme à l'attaque", () => {
+        for (const key of ["poison", "acid", "burn", "frost", "curse", "virus", "earth", "air"]) {
+            expect(StatusEffects.expand(key).every(effect => effect.expireOnAttack === undefined)).toBe(true);
+        }
+    });
+});
+
+describe("StatusEffects — durée réglée par la carte", () => {
+
+    test("réglés par la carte : les 14 conditions, « En élan » et « Garde brisée »", () => {
+        for (const key of ["prone", "paralyzed", "unconscious", "empowered", "exposed"]) {
+            expect(StatusEffects.isTimedByCard(key)).toBe(true);
+        }
+    });
+
+    test("fixés par le registre : les 8 statuts FQ, dont la durée fait partie de l'équilibre", () => {
+        expect(StatusEffects.fixedDurationKeys().sort())
+            .toEqual(["acid", "air", "burn", "curse", "earth", "frost", "poison", "virus"]);
+        expect(StatusEffects.isTimedByCard("burn")).toBe(false);
+        expect(StatusEffects.isTimedByCard("")).toBe(false);
+    });
+
+    test("une condition prend la durée saisie sur la carte", () => {
+        const [effect] = StatusEffects.expand("prone", {duration: {value: "2", units: "rounds"}});
+
+        expect(effect.duration).toEqual({value: "2", units: "rounds"});
+    });
+
+    test("une durée vide garde celle du registre : illimitée, jusqu'à la purge de fin de combat", () => {
+        const [effect] = StatusEffects.expand("prone", {duration: {value: "", units: "rounds"}});
+
+        expect(effect.duration).toEqual({value: "", units: "rounds"});
+    });
+
+    test("des unités absentes valent des rounds", () => {
+        expect(StatusEffects.expand("prone", {duration: {value: "1"}})[0].duration)
+            .toEqual({value: "1", units: "rounds"});
+    });
+
+    test("le retrait sur dégâts saisi sur la carte est repris (réveil d'un endormi)", () => {
+        const [effect] = StatusEffects.expand("unconscious", {duration: {value: "1"}, expireOnDamage: true});
+
+        expect(effect.expireOnDamage).toBe(true);
+    });
+
+    test("« Garde brisée » garde sa consommation à l'attaque même avec une durée de sûreté", () => {
+        const [effect] = StatusEffects.expand("exposed", {duration: {value: "2", units: "rounds"}});
+
+        expect(effect.duration).toEqual({value: "2", units: "rounds"});
+        expect(effect.expireOnAttack).toBe("received");
+    });
+
+    test("un statut FQ ignore la durée de la carte : le registre fait foi", () => {
+        const [burn] = StatusEffects.expand("burn", {duration: {value: "9", units: "rounds"}, expireOnDamage: true});
+
+        expect(burn.duration.value).toBe("3");
+        expect(burn.expireOnDamage).toBe(false);
+    });
+
+    test("sans donnée de carte, rien ne change", () => {
+        expect(StatusEffects.expand("prone")[0].duration).toEqual({value: "", units: "rounds"});
+    });
+});

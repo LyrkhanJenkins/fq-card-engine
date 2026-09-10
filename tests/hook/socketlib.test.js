@@ -1,12 +1,13 @@
 import {afterEach, describe, expect, it, vi} from "vitest";
 import {socket} from "../../src/hook/integration/socketlib.hook.js";
 
-// Les 14 handlers enregistrés côté MJ par socket-lib.js au hook "socketlib.ready".
+// Les 15 handlers enregistrés côté MJ par socket-lib.js au hook "socketlib.ready".
 // Cette liste sert aussi de verrou pour T-04-03 (surface exposée sans auth) :
 // tout ajout/retrait de handler doit être reflété ici consciemment.
 const HANDLER_NAMES = [
     "addEffectForTarget",
     "removeEffectForTarget",
+    "consumeAttackEffects",
     "drawCard",
     "applyActorHpModification",
     "logCardPlayed",
@@ -31,7 +32,7 @@ describe("socket-lib", () => {
         globalThis.FqCardEngineModule = undefined;
     });
 
-    it("enregistre les 14 handlers socket au hook socketlib.ready", () => {
+    it("enregistre les 15 handlers socket au hook socketlib.ready", () => {
         const registeredSocket = {register: vi.fn()};
         globalThis.socketlib = {registerModule: vi.fn(() => registeredSocket)};
         globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};

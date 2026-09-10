@@ -733,6 +733,37 @@
                       "removeEffectName": ""
                     }
                   ]
+                },
+                {
+                  "title": "Blinded",
+                  "formula": "1d4",
+                  "effects": [
+                    {
+                      "result": "4",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "blinded",
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Blinded\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Blinded\",\"turn\":\"1\"}"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ],
               "customEvals": [
@@ -2282,6 +2313,14 @@
                             "units": "rounds"
                           },
                           "expireOnDamage": false
+                        },
+                        {
+                          "status": "restrained",
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
                         }
                       ],
                       "messages": [
@@ -2292,6 +2331,10 @@
                         {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Restrained\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -3909,6 +3952,37 @@
                       "removeEffectName": ""
                     }
                   ]
+                },
+                {
+                  "title": "Paralyzed",
+                  "formula": "1d3",
+                  "effects": [
+                    {
+                      "result": "3",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "paralyzed",
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Paralyzed\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Paralyzed\",\"turn\":\"1\"}"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ],
               "messages": [],
@@ -4058,6 +4132,14 @@
                           },
                           "expireOnDamage": false,
                           "showIcon": 2
+                        },
+                        {
+                          "status": "petrified",
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
                         }
                       ],
                       "messages": [
@@ -4068,6 +4150,10 @@
                         {
                           "key": "FQCARDENGINE.CardMsgApplyEffect",
                           "arg": "{\"effectName\": \"Stone Sepulcher\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Petrified\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -5040,6 +5126,37 @@
                       "removeEffectName": "Frost"
                     }
                   ]
+                },
+                {
+                  "title": "Deafened",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "deafened",
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Deafened\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Deafened\",\"turn\":\"2\"}"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ],
               "messages": [],
@@ -5484,12 +5601,24 @@
                           },
                           "expireOnDamage": false,
                           "showIcon": 1
+                        },
+                        {
+                          "status": "incapacitated",
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
                         }
                       ],
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgSynapseFrost",
                           "arg": "{\"action\": \"@int\", \"range\": \"@wis\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Incapacitated\"}"
                         }
                       ],
                       "removeEffectName": ""

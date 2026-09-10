@@ -315,6 +315,13 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
             // attendent la fin de l’animation.
             await presentResult(report);
 
+            // Le jet d'attaque a eu lieu : les effets « à la prochaine attaque »
+            // du lanceur et des cibles visées tombent (voir Damage.consumeAttackEffects).
+            const consumption = Damage.attackConsumption(item.actor, report);
+            if (consumption) {
+                await socket.executeAsGM("consumeAttackEffects", ...consumption);
+            }
+
             if (token && playFx) {
                 await Fx.handleSpecialEffect(cardContent, resultArray, token, fxType, frozenTargets);
             }

@@ -34,6 +34,7 @@ vi.mock("../../src/domain/engine/shared/resource-handler.js", () => ({
 vi.mock("../../src/domain/engine/roll/damage.js", () => ({
     default: {
         buildDamageDiceLauncher: vi.fn(async () => ([])),
+        attackConsumption: vi.fn(() => null),
         buildHealDiceLauncher: vi.fn(async () => ([])),
         handleSoundEffect: vi.fn(),
         addCriticalEvasionToDamage: vi.fn()

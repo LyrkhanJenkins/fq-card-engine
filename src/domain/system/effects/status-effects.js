@@ -57,8 +57,18 @@ export default class StatusEffects {
         virus: "FQCARDENGINE.StatusVirus",
         earth: "FQCARDENGINE.StatusEarth",
         air: "FQCARDENGINE.StatusAir",
+        empowered: "FQCARDENGINE.StatusEmpowered",
+        exposed: "FQCARDENGINE.StatusExposed",
         ...DND5E_CONDITIONS
     };
+
+    /**
+     * Les statuts du registre dont la DURÉE et le retrait sur dégâts se règlent
+     * carte par carte, comme ceux des conditions : leur effet est le même d'une
+     * carte à l'autre, seul le temps qu'il dure est affaire de design. Les autres
+     * statuts FQ gardent la durée du registre, qui fait partie de leur équilibre.
+     */
+    static #TIMED_BY_CARD = new Set(["empowered", "exposed"]);
 
     /**
      * Données d'effets actifs canoniques par statut. Chaque entrée est un
@@ -179,6 +189,32 @@ export default class StatusEffects {
             expireOnDamage: false,
             showIcon: 1
         }],
+        // En élan : le porteur attaque avec avantage (règle `fqAttackAdvantage`),
+        // jusqu'à son PROCHAIN jet d'attaque, qui consomme l'effet. Sans durée
+        // saisie sur la carte, il attend ce jet jusqu'à la fin du combat.
+        empowered: [{
+            name: "Empowered",
+            img: "icons/skills/melee/hand-grip-sword-strike-orange.webp",
+            statuses: ["fqEmpowered"],
+            changes: [],
+            duration: {value: "", units: "rounds"},
+            expireOnDamage: false,
+            expireOnAttack: "made",
+            showIcon: 1
+        }],
+        // Garde brisée : on attaque le porteur avec avantage (règle
+        // `fqAttackedAdvantage`), jusqu'au PROCHAIN jet d'attaque qui le vise,
+        // de qui qu'il vienne : c'est ce jet qui consomme l'effet.
+        exposed: [{
+            name: "Broken Guard",
+            img: "icons/magic/defensive/shield-barrier-glowing-triangle-red.webp",
+            statuses: ["fqExposed"],
+            changes: [],
+            duration: {value: "", units: "rounds"},
+            expireOnDamage: false,
+            expireOnAttack: "received",
+            showIcon: 1
+        }],
         // Air : -5 de déplacement pendant 2 tours, aura de métal.
         air: [{
             name: "Air Effect",
@@ -219,22 +255,74 @@ export default class StatusEffects {
     }
 
     /**
+     * Indique si la durée et le retrait sur dégâts d'un statut se règlent sur la
+     * carte : vrai pour les conditions dnd5e et pour « En élan » / « Garde
+     * brisée », faux pour les statuts FQ dont la durée fait partie de l'équilibre.
+     *
+     * @param {string} [key] - La clé de statut.
+     *
+     * @returns {boolean} True si la carte peut régler sa durée.
+     */
+    static isTimedByCard(key) {
+        return StatusEffects.isCondition(key) || StatusEffects.#TIMED_BY_CARD.has(key);
+    }
+
+    /**
+     * Les statuts FQ dont la durée est FIXÉE par le registre. Le formulaire de
+     * carte en masque le champ durée, qui y serait sans effet ; un test garde la
+     * feuille de style d'accord avec cette liste.
+     *
+     * @returns {string[]} Les clés de statut.
+     */
+    static fixedDurationKeys() {
+        return Object.keys(StatusEffects.#REGISTRY).filter(key => !StatusEffects.isTimedByCard(key));
+    }
+
+    /**
      * Renvoie les données d'effets actifs d'un statut, en COPIE profonde à
      * chaque appel : le pipeline de jeu mute les données (numérisation des
      * valeurs, résolution de durée, flags) et ne doit jamais altérer le registre.
      *
-     * @param {string} [key] - La clé de statut à expanser.
+     * Pour un statut réglé par la carte (voir {@link StatusEffects.isTimedByCard}),
+     * la durée saisie sur la carte — quand elle n'est pas vide — et son retrait
+     * sur dégâts l'emportent sur ceux du registre.
+     *
+     * @param {string} [key]    - La clé de statut à expanser.
+     * @param {object} [source] - La donnée d'effet de la carte, dont on reprend la
+     *        durée et le retrait sur dégâts pour un statut réglé par la carte.
      *
      * @returns {object[]|null} Les données d'effets clonées, ou null si la clé n'est pas un statut.
      */
-    static expand(key) {
+    static expand(key, source = null) {
         if (!StatusEffects.isStatusKey(key)) {
             return null;
         }
-        if (StatusEffects.isCondition(key)) {
-            return [StatusEffects.#conditionData(key)];
+        const effects = StatusEffects.isCondition(key)
+            ? [StatusEffects.#conditionData(key)]
+            : JSON.parse(JSON.stringify(StatusEffects.#REGISTRY[key]));
+        if (source && StatusEffects.isTimedByCard(key)) {
+            effects.forEach(effect => StatusEffects.#applyCardTiming(effect, source));
         }
-        return JSON.parse(JSON.stringify(StatusEffects.#REGISTRY[key]));
+        return effects;
+    }
+
+    /**
+     * Reporte sur un effet la durée et le retrait sur dégâts saisis sur la carte.
+     * Une durée vide garde celle du registre (illimitée pour une condition).
+     *
+     * @param {object} effect - La donnée d'effet, déjà clonée.
+     * @param {object} source - La donnée d'effet de la carte.
+     *
+     * @returns {void}
+     */
+    static #applyCardTiming(effect, source) {
+        const value = String(source.duration?.value ?? "").trim();
+        if (value !== "") {
+            effect.duration = {value, units: source.duration?.units || "rounds"};
+        }
+        if (source.expireOnDamage !== undefined) {
+            effect.expireOnDamage = !!source.expireOnDamage;
+        }
     }
 
     /**

@@ -32,6 +32,22 @@ export const DND5E_CONDITIONS = Object.freeze({
 });
 
 /**
+ * Les statuts FQ qui jouent sur l'avantage, avec leur libellé. Ce ne sont pas
+ * des conditions dnd5e : aucune des 14 ne donne l'avantage sans contrepartie
+ * (l'invisible est aussi attaqué avec désavantage). Leur identifiant de statut
+ * porte le préfixe `fq` pour ne jamais croiser un statut de dnd5e.
+ *
+ * - `fqEmpowered` (« En élan ») : son porteur attaque avec avantage ;
+ * - `fqExposed` (« Garde brisée ») : on attaque son porteur avec avantage.
+ *
+ * @type {Object<string, string>}
+ */
+export const FQ_ADVANTAGE_STATUSES = Object.freeze({
+    fqEmpowered: "FQCARDENGINE.StatusEmpowered",
+    fqExposed: "FQCARDENGINE.StatusExposed"
+});
+
+/**
  * Les règles d'avantage et de défense, exprimées dans le format de
  * `CONFIG.DND5E.conditionEffects` : une clé de règle → les conditions qui la
  * déclenchent. Elles y sont versées au `init` (voir
@@ -55,9 +71,10 @@ export const CONDITION_EFFECTS = Object.freeze({
     /** Le LANCEUR attaque avec désavantage. */
     attackDisadvantage: Object.freeze(["blinded", "frightened", "poisoned", "prone", "restrained"]),
     /** Le LANCEUR attaque avec avantage. */
-    fqAttackAdvantage: Object.freeze(["invisible"]),
+    fqAttackAdvantage: Object.freeze(["invisible", "fqEmpowered"]),
     /** On attaque la CIBLE avec avantage. */
-    fqAttackedAdvantage: Object.freeze(["blinded", "paralyzed", "petrified", "restrained", "stunned", "unconscious"]),
+    fqAttackedAdvantage: Object.freeze(["blinded", "paralyzed", "petrified", "restrained", "stunned", "unconscious",
+        "fqExposed"]),
     /** On attaque la CIBLE avec désavantage. */
     fqAttackedDisadvantage: Object.freeze(["invisible"]),
     /** Cible à terre : avantage au contact, désavantage à distance. */
