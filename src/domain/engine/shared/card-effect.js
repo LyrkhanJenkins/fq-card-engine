@@ -822,7 +822,12 @@ export default class CardEffect {
         let effects = null;
         const currentEffectData = applyEffectsFormulas.effects?.find(effect => effect.result === total) ?? null;
         if (currentEffectData) {
-            effectMessages = CardEffect.translateMessages(currentEffectData.messages);
+            // Les messages des statuts sont lus AVANT la création des effets, qui
+            // consomme le champ `status` des données libres.
+            effectMessages = [
+                ...CardEffect.translateMessages(currentEffectData.messages),
+                ...CardEffect.#statusMessages(currentEffectData.data)
+            ];
             effects = await CardEffect.createEffectsFromData(currentEffectData);
         }
 
@@ -911,6 +916,29 @@ export default class CardEffect {
      *
      * @returns {string[]} Les messages traduits.
      */
+    /**
+     * Ce que le chat dit d'un statut posé par la carte : son nom, sa durée et ce
+     * qu'il fait en jeu (« À terre pendant 1 tour(s) : attaque avec désavantage… »).
+     *
+     * Généré par le moteur à partir du statut, et non recopié dans chaque carte :
+     * toute carte qui pose une condition dnd5e, « En élan » ou « Garde brisée »
+     * l'explique d'office. Les statuts FQ gardent les messages de leur carte.
+     *
+     * @param {object[]} [data] - Les données d'effet de l'effet déclenché.
+     *
+     * @returns {string[]} Les messages traduits, un par statut réglé par la carte.
+     */
+    static #statusMessages(data = []) {
+        return data.filter(entry => StatusEffects.ruleKey(entry?.status)).map(entry => {
+            const condition = game.i18n.localize(StatusEffects.STATUS_CHOICES[entry.status]);
+            const rule = game.i18n.localize(StatusEffects.ruleKey(entry.status));
+            const turns = CardEffect.resolveDurationComponent(entry.duration?.value);
+            return turns > 0
+                ? game.i18n.format("FQCARDENGINE.CardMsgConditionAppliedFor", {condition, turns, rule})
+                : game.i18n.format("FQCARDENGINE.CardMsgConditionApplied", {condition, rule});
+        });
+    }
+
     static translateMessages(messages) {
         let translations = [];
         if (messages) {

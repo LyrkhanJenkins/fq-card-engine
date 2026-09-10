@@ -687,10 +687,6 @@
                         {
                           "key": "FQCARDENGINE.CardMsgApplyEffect",
                           "arg": "{\"effectName\": \"Immobilization\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Restrained\"}"
                         }
                       ]
                     }
@@ -908,10 +904,6 @@
                         {
                           "key": "FQCARDENGINE.CardMsgPoisonEffect",
                           "arg": ""
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Poisoned\"}"
                         }
                       ]
                     }
@@ -1911,10 +1903,6 @@
                         {
                           "key": "FQCARDENGINE.CardMsgPoisonEffect",
                           "arg": ""
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Poisoned\"}"
                         }
                       ]
                     }
@@ -2508,10 +2496,6 @@
                         {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\": \"Immobilization\",\"turn\": \"1\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Restrained\"}"
                         }
                       ]
                     }
@@ -2873,10 +2857,6 @@
                         {
                           "key": "FQCARDENGINE.CardMsgApplyEffect",
                           "arg": "{\"effectName\": \"Turn Ended\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Prone\"}"
                         }
                       ]
                     }

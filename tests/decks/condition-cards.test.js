@@ -331,6 +331,60 @@ describe("Empoisonné — avec le poison FQ", () => {
     });
 });
 
+describe("Le chat explique la condition posée", () => {
+
+    /**
+     * Le texte de tous les messages de chat de la partie.
+     *
+     * @param {object} result - Le résultat de `playChoice`.
+     *
+     * @returns {string} Le contenu concaténé.
+     */
+    const chatOf = result => result.chatMessages.map(message => String(message.content ?? "")).join("\n");
+
+    test("Filet de rétiaire : « Entravé pendant 2 tour(s) : ce que ça fait »", async () => {
+        const chat = chatOf(await play("RetiariusNet8Fmt"));
+
+        expect(chat).toContain("FQCARDENGINE.CardMsgConditionAppliedFor");
+        expect(chat).toContain("FQCARDENGINE.ConditionRestrained");
+        expect(chat).toContain("FQCARDENGINE.RuleRestrained");
+        expect(chat).toMatch(/"turns":2/);
+    });
+
+    test("le vieux message générique, avec le nom anglais de la condition, a disparu", async () => {
+        const chat = chatOf(await play("RetiariusNet8Fmt"));
+
+        expect(chat).not.toContain("\"effectName\":\"Restrained\"");
+        // Le message propre au filet FQ, lui, reste.
+        expect(chat).toContain("\"effectName\":\"Net\"");
+    });
+
+    test("Brèche : « Garde brisée » s'explique aussi", async () => {
+        const chat = chatOf(await play("FqGuardBreach001", world({target: {system: {attributes: {ac: {value: 10}}}}}),
+            dice(20, 1, 15, 1)));
+
+        expect(chat).toContain("FQCARDENGINE.RuleExposed");
+    });
+
+    test("Tourbillon sur un 2 : aucune condition posée, aucune explication", async () => {
+        const chat = chatOf(await play("e9muLayxFRouooiW", world(), dice(4, 2)));
+
+        expect(chat).not.toContain("FQCARDENGINE.RuleRestrained");
+    });
+
+    test("aucune carte des paquets ne garde de message générique pour une condition", () => {
+        const names = ["Restrained", "Petrified", "Paralyzed", "Stunned", "Blinded", "Prone", "Grappled", "Poisoned",
+            "Frightened", "Invisible", "Incapacitated", "Deafened", "Unconscious", "Charmed", "Broken Guard"];
+        const leftovers = [...CARDS.values()].flatMap(card => card.system.fq.choices
+            .flatMap(choice => (choice.applyEffectsFormulas ?? []).flatMap(formula => formula.effects))
+            .flatMap(effect => effect.messages ?? [])
+            .filter(message => names.includes(JSON.parse(message.arg || "{}").effectName))
+            .map(message => `${card._id} : ${message.arg}`));
+
+        expect(leftovers).toEqual([]);
+    });
+});
+
 describe("Brouillard — tous les ennemis du combat", () => {
 
     const FOG = "wfkVjXjUGpI9ZdYq";

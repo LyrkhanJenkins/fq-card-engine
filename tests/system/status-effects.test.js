@@ -1,4 +1,6 @@
 import {afterEach, describe, expect, test} from "vitest";
+import fs from "fs";
+import path from "path";
 import StatusEffects from "../../src/domain/system/effects/status-effects.js";
 
 /**
@@ -289,5 +291,62 @@ describe("StatusEffects — durée réglée par la carte", () => {
 
     test("sans donnée de carte, rien ne change", () => {
         expect(StatusEffects.expand("prone")[0].duration).toEqual({value: "", units: "rounds"});
+    });
+});
+
+describe("StatusEffects — ce que fait chaque statut", () => {
+
+    const lang = file => JSON.parse(fs.readFileSync(path.join(process.cwd(), "lang", file), "utf8"));
+    const FR = lang("fr.json");
+    const EN = lang("en.json");
+    const TIMED = Object.keys(StatusEffects.STATUS_CHOICES).filter(key => StatusEffects.isTimedByCard(key));
+
+    afterEach(() => {
+        delete globalThis.CONFIG.statusEffects;
+    });
+
+    test("chaque statut réglé par la carte dit ce qu'il fait ; les statuts FQ, eux, gardent leurs messages de carte", () => {
+        expect(TIMED).toHaveLength(16);
+        for (const key of TIMED) {
+            expect(StatusEffects.ruleKey(key), key).toMatch(/^FQCARDENGINE\.Rule/);
+        }
+        for (const key of StatusEffects.fixedDurationKeys()) {
+            expect(StatusEffects.ruleKey(key), key).toBeNull();
+        }
+        expect(StatusEffects.ruleKey("")).toBeNull();
+        expect(StatusEffects.ruleKey("toString")).toBeNull();
+    });
+
+    test("chaque phrase et les deux gabarits de message existent en français ET en anglais", () => {
+        const keys = [...TIMED.map(key => StatusEffects.ruleKey(key)),
+            "FQCARDENGINE.CardMsgConditionApplied", "FQCARDENGINE.CardMsgConditionAppliedFor"];
+        for (const key of keys) {
+            expect(FR[key], `${key} (fr)`).toBeTruthy();
+            expect(EN[key], `${key} (en)`).toBeTruthy();
+        }
+    });
+
+    test("la description d'une condition porte ce qu'elle fait, sans règle officielle hors de dnd5e", () => {
+        const [effect] = StatusEffects.expand("prone");
+
+        expect(effect.description).toMatch(/^<p>.+<\/p>$/);
+        expect(effect.description).not.toContain("@Embed");
+    });
+
+    test("avec dnd5e, la règle officielle est intégrée APRÈS, comme dnd5e le fait lui-même", () => {
+        globalThis.CONFIG.statusEffects = [{id: "prone", name: "Prone", reference: "Compendium.dnd5e.content24.X"}];
+
+        const [effect] = StatusEffects.expand("prone");
+
+        expect(effect.description).toMatch(/^<p>.+<\/p>@Embed\[Compendium\.dnd5e\.content24\.X inline]$/);
+    });
+
+    test("« En élan » et « Garde brisée » portent aussi leur description", () => {
+        expect(StatusEffects.expand("empowered")[0].description).toMatch(/^<p>.+<\/p>$/);
+        expect(StatusEffects.expand("exposed")[0].description).toMatch(/^<p>.+<\/p>$/);
+    });
+
+    test("un statut FQ n'en reçoit aucune : sa carte parle pour lui", () => {
+        expect(StatusEffects.expand("burn")[0].description).toBeUndefined();
     });
 });

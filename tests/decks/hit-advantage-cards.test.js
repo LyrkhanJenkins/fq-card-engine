@@ -433,6 +433,15 @@ describe("cartes qui posent une condition dnd5e", () => {
         expect(result.effectsCreated[0].effect.statuses).toEqual(["paralyzed", "incapacitated"]);
     });
 
+    test("une condition posée SANS durée : le chat l'explique sans durée", async () => {
+        const result = await playChoice(effectCard([{status: "prone"}]), 0);
+
+        const chat = result.chatMessages.map(message => String(message.content ?? "")).join("\n");
+        expect(chat).toContain("FQCARDENGINE.CardMsgConditionApplied ");
+        expect(chat).not.toContain("FQCARDENGINE.CardMsgConditionAppliedFor");
+        expect(chat).toContain("FQCARDENGINE.RuleProne");
+    });
+
     test("une condition et un statut FQ sur la même carte : deux effets, chacun le sien", async () => {
         const result = await playChoice(effectCard([{status: "poisoned"}, {status: "burn"}]), 0);
 

@@ -752,16 +752,7 @@
                           "expireOnDamage": false
                         }
                       ],
-                      "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Blinded\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
-                          "arg": "{\"effectName\":\"Blinded\",\"turn\":\"1\"}"
-                        }
-                      ]
+                      "messages": []
                     }
                   ]
                 }
@@ -2331,10 +2322,6 @@
                         {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Restrained\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -3971,16 +3958,7 @@
                           "expireOnDamage": false
                         }
                       ],
-                      "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Paralyzed\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
-                          "arg": "{\"effectName\":\"Paralyzed\",\"turn\":\"1\"}"
-                        }
-                      ]
+                      "messages": []
                     }
                   ]
                 }
@@ -4150,10 +4128,6 @@
                         {
                           "key": "FQCARDENGINE.CardMsgApplyEffect",
                           "arg": "{\"effectName\": \"Stone Sepulcher\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Petrified\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -5145,16 +5119,7 @@
                           "expireOnDamage": false
                         }
                       ],
-                      "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Deafened\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
-                          "arg": "{\"effectName\":\"Deafened\",\"turn\":\"2\"}"
-                        }
-                      ]
+                      "messages": []
                     }
                   ]
                 }
@@ -5615,10 +5580,6 @@
                         {
                           "key": "FQCARDENGINE.CardMsgSynapseFrost",
                           "arg": "{\"action\": \"@int\", \"range\": \"@wis\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Incapacitated\"}"
                         }
                       ],
                       "removeEffectName": ""

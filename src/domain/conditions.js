@@ -32,6 +32,36 @@ export const DND5E_CONDITIONS = Object.freeze({
 });
 
 /**
+ * Ce que chaque statut réglé par la carte fait RÉELLEMENT en jeu, en une phrase,
+ * par clé de statut. C'est ce que le chat dit quand le statut est posé.
+ *
+ * Volontairement pas le texte de dnd5e : sa page de règles n'existe qu'en
+ * anglais, et elle décrit aussi ce que le moteur n'applique pas (un charmé ne
+ * peut pas attaquer son charmeur, un effrayé ne peut pas s'approcher…). La règle
+ * officielle reste jointe à la description de l'effet, comme dnd5e le fait.
+ *
+ * @type {Object<string, string>}
+ */
+export const STATUS_RULES = Object.freeze({
+    blinded: "FQCARDENGINE.RuleBlinded",
+    charmed: "FQCARDENGINE.RuleCharmed",
+    deafened: "FQCARDENGINE.RuleDeafened",
+    frightened: "FQCARDENGINE.RuleFrightened",
+    grappled: "FQCARDENGINE.RuleGrappled",
+    incapacitated: "FQCARDENGINE.RuleIncapacitated",
+    invisible: "FQCARDENGINE.RuleInvisible",
+    paralyzed: "FQCARDENGINE.RuleParalyzed",
+    petrified: "FQCARDENGINE.RulePetrified",
+    poisoned: "FQCARDENGINE.RulePoisoned",
+    prone: "FQCARDENGINE.RuleProne",
+    restrained: "FQCARDENGINE.RuleRestrained",
+    stunned: "FQCARDENGINE.RuleStunned",
+    unconscious: "FQCARDENGINE.RuleUnconscious",
+    empowered: "FQCARDENGINE.RuleEmpowered",
+    exposed: "FQCARDENGINE.RuleExposed"
+});
+
+/**
  * Les statuts FQ qui jouent sur l'avantage, avec leur libellé. Ce ne sont pas
  * des conditions dnd5e : aucune des 14 ne donne l'avantage sans contrepartie
  * (l'invisible est aussi attaqué avec désavantage). Leur identifiant de statut

@@ -29,7 +29,7 @@
  * données `conditions.js`, lui-même sans aucune dépendance.
  */
 
-import {DND5E_CONDITIONS} from "../../conditions.js";
+import {DND5E_CONDITIONS, STATUS_RULES} from "../../conditions.js";
 
 export default class StatusEffects {
 
@@ -300,10 +300,43 @@ export default class StatusEffects {
         const effects = StatusEffects.isCondition(key)
             ? [StatusEffects.#conditionData(key)]
             : JSON.parse(JSON.stringify(StatusEffects.#REGISTRY[key]));
+        if (StatusEffects.#TIMED_BY_CARD.has(key)) {
+            effects.forEach(effect => {
+                effect.description = StatusEffects.#description(key);
+            });
+        }
         if (source && StatusEffects.isTimedByCard(key)) {
             effects.forEach(effect => StatusEffects.#applyCardTiming(effect, source));
         }
         return effects;
+    }
+
+    /**
+     * La clé i18n de ce qu'un statut fait en jeu, pour les statuts réglés par la
+     * carte (conditions dnd5e, « En élan », « Garde brisée »).
+     *
+     * @param {string} [key] - La clé de statut.
+     *
+     * @returns {?string} La clé i18n de la règle, ou null.
+     */
+    static ruleKey(key) {
+        return (typeof key === "string" && Object.hasOwn(STATUS_RULES, key)) ? STATUS_RULES[key] : null;
+    }
+
+    /**
+     * La description d'un effet de statut : ce qu'il fait en jeu, puis, pour une
+     * condition dnd5e, sa règle officielle intégrée — exactement ce que dnd5e
+     * écrit lui-même quand il pose une condition (`@Embed[<référence> inline]`).
+     *
+     * @param {string}  key         - La clé de statut.
+     * @param {?string} [reference] - L'UUID de la page de règles de dnd5e.
+     *
+     * @returns {string} La description HTML.
+     */
+    static #description(key, reference = null) {
+        const rule = StatusEffects.ruleKey(key);
+        const text = rule ? `<p>${globalThis.game?.i18n?.localize?.(rule) ?? rule}</p>` : "";
+        return text + (reference ? `@Embed[${reference} inline]` : "");
     }
 
     /**
@@ -346,6 +379,7 @@ export default class StatusEffects {
         return {
             name: config?.name ?? id,
             img: config?.img ?? "icons/svg/aura.svg",
+            description: StatusEffects.#description(id, config?.reference ?? null),
             statuses: [...new Set([id, ...(config?.riders ?? [])])],
             changes: [],
             duration: {value: "", units: "rounds"},
