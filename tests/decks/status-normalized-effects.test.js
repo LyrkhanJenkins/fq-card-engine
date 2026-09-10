@@ -62,9 +62,10 @@ describe("statuts normalisés — pipeline réel via playChoice", () => {
         // posée (purge en fin de combat par le hook deleteCombat).
         expect(effect.duration).toBeUndefined();
         expect(effect.origin).toBe(OriginFQEffectLabel);
-        // Dégâts par tour : valeur numérisée par le pipeline.
+        // Dégâts par tour : une formule TYPÉE, ouverte sur son signe, que les effets
+        // concatènent et que les résistances de l'acteur jugeront en début de tour.
         const dotChange = effect.changes.find(c => c.key === "system.fq.bonus.dot");
-        expect(dotChange.value).toBe(1);
+        expect(dotChange.value).toBe("+1[poison]");
         // Propagation : macro conservée telle quelle + flag DAE de ré-exécution
         // en fin de tour, tous deux intacts après la pose des flags module.
         const macroChange = effect.changes.find(c => c.key === "macro.execute");
@@ -86,10 +87,10 @@ describe("statuts normalisés — pipeline réel via playChoice", () => {
         for (let i = 1; i < durations.length; i++) {
             expect(durations[i]).toBeGreaterThan(durations[i - 1]);
         }
-        // Le premier tour cumule le dot de TOUS les effets empilés.
-        const totalDot = effects
-            .flatMap(e => e.changes.filter(c => c.key === "system.fq.bonus.dot"))
-            .reduce((sum, c) => sum + Number(c.value), 0);
+        // Le premier tour cumule le dot de TOUS les effets empilés, tous d'acide.
+        const dots = effects.flatMap(e => e.changes.filter(c => c.key === "system.fq.bonus.dot"));
+        expect(dots.every(c => /^\+\d+\[acid\]$/.test(c.value))).toBe(true);
+        const totalDot = dots.reduce((sum, c) => sum + Number(String(c.value).replace(/\[[a-z]+\]$/, "")), 0);
         expect(totalDot).toBe(4);
     });
 
@@ -165,8 +166,30 @@ describe("statuts normalisés — pipeline réel via playChoice", () => {
         const effect = result.effectsCreated[0].effect;
         expect(effect.name).toBe("Mon Effet Libre");
         expect(effect.duration).toEqual({value: 2, units: "rounds"});
-        expect(effect.changes[0].value).toBe(2);
+        // Un dégât par tour libre s'ouvre sur son signe pour pouvoir être
+        // concaténé aux autres.
+        expect(effect.changes[0].value).toBe("+2");
         expect(effect.status).toBeUndefined();
+    });
+
+    test("dégât par tour libre : un dé reste une formule, tirée à chaque tour, et garde son type", async () => {
+        const result = await playChoice(cardWithEffectData([{
+            status: "", name: "Nuée", img: "icons/svg/aura.svg",
+            changes: [{key: "system.fq.bonus.dot", value: "3 + 1d8[piercing]", type: "add", priority: null}],
+            duration: {value: "2", units: "rounds"}, expireOnDamage: false
+        }]), 0);
+
+        expect(result.effectsCreated[0].effect.changes[0].value).toBe("+3 + 1d8[piercing]");
+    });
+
+    test("dégât par tour libre : un soin (valeur négative) garde son signe", async () => {
+        const result = await playChoice(cardWithEffectData([{
+            status: "", name: "Régénération", img: "icons/svg/aura.svg",
+            changes: [{key: "system.fq.bonus.dot", value: "-3", type: "add", priority: null}],
+            duration: {value: "2", units: "rounds"}, expireOnDamage: false
+        }]), 0);
+
+        expect(result.effectsCreated[0].effect.changes[0].value).toBe("-3");
     });
 
     test("mixte : un statut et un blob libre dans la même donnée d'effets coexistent", async () => {

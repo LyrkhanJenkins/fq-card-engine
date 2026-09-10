@@ -20,7 +20,7 @@ const {SchemaField, NumberField, StringField} = foundry.data.fields;
  * @property {number} fq.bonus.range                Bonus of range.
  * @property {string} fq.bonus.damage               Damage bonus formula.
  * @property {string} fq.bonus.heal                 Heal bonus formula.
- * @property {number} fq.bonus.dot                  DOT or HOT.
+ * @property {string} fq.bonus.dot                  Formule des dégâts (ou soins, négatifs) par tour.
  */
 export default class CreatureFQTemplate {
 
@@ -74,9 +74,11 @@ export default class CreatureFQTemplate {
                 }),
                 damage: new StringField({required: true, label: "FQCARDENGINE.DamageBonus"}),
                 heal: new StringField({required: true, label: "FQCARDENGINE.HealBonus"}),
-                dot: new NumberField({
-                    nullable: false, integer: true, initial: 0, label: "FQCARDENGINE.HitPointsOnTime"
-                }),
+                // Une FORMULE, comme les bonus de dégâts et de soin : les effets la
+                // concatènent (`+1[poison]`, `+1[fire]`, `-@con`), chaque partie garde
+                // son type, et les résistances de l'acteur s'y appliquent en début de
+                // tour. Une partie négative soigne.
+                dot: new StringField({required: true, label: "FQCARDENGINE.HitPointsOnTime"}),
             }, {label: "FQCARDENGINE.Bonuses"}),
         };
     }

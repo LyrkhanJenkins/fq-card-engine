@@ -3,6 +3,7 @@ import {socket} from "../../src/hook/integration/socketlib.hook.js";
 import TradingCards, {DECK_TYPE, HAND_TYPE} from "../../src/domain/trading/trading-cards.js";
 import {OriginFQEffectLabel} from "../../src/domain/constants.js";
 import {makeCard, makeDeck} from "../factories.js";
+import {dnd5eDamage, stubRolls} from "../engine/roll-fixtures.js";
 
 // ─── Mocks de modules ──────────────────────────────────────────────────────
 //
@@ -493,6 +494,68 @@ describe("hook/combat.hook.js", () => {
             await getHook("combatTurnChange")(combat, {}, {});
 
             expect(combatant.actor.update).toHaveBeenCalledWith({"system.attributes.hp.value": 7});
+        });
+
+        /**
+         * Un tour de combat pour un porteur de dégâts par tour typés, sans joueur associé.
+         *
+         * @param {string} dot      - La formule des dégâts par tour.
+         * @param {number} total    - Le total que son jet imposé rendra.
+         * @param {object} [traits] - Les traits dnd5e du porteur.
+         *
+         * @returns {Promise<object>} Le combattant, après le changement de tour.
+         */
+        async function typedDotTurn(dot, total, traits) {
+            const combatant = makeCombatant({
+                actorId: "dot-actor",
+                fq: {bonus: {range: 0, damage: "", heal: "", dot}},
+                attributes: {exhaustion: 0, hp: {value: 10, max: 10}}
+            });
+            if (traits) {
+                combatant.actor.calculateDamage = dnd5eDamage(traits);
+            }
+            const combat = {
+                round: 1, turn: 1,
+                previous: {round: 1, turn: 0},
+                current: {round: 1, turn: 1},
+                combatants: [combatant],
+                combatant
+            };
+            game.users = Object.assign([], {activeGM: {id: GM_ID}});
+
+            const originalRoll = globalThis.Roll;
+            stubRolls([{total}]);
+            try {
+                await getHook("combatTurnChange")(combat, {}, {});
+            } finally {
+                globalThis.Roll = originalRoll;
+            }
+            return combatant;
+        }
+
+        it("dégâts par tour typés : poison et brûlure sur un immunisé au poison font ×½", async () => {
+            const combatant = await typedDotTurn("+1[poison]+1[poison]+2[fire]", 4, {di: ["poison"]});
+
+            expect(combatant.actor.update).toHaveBeenCalledWith({"system.attributes.hp.value": 8});
+        });
+
+        it("dégâts par tour typés : la résistance divise la brûlure", async () => {
+            const combatant = await typedDotTurn("+4[fire]", 4, {dr: ["fire"]});
+
+            expect(combatant.actor.update).toHaveBeenCalledWith({"system.attributes.hp.value": 8});
+        });
+
+        it("un soin par tour (dot négatif) rend des points de vie", async () => {
+            const combatant = await typedDotTurn("-3", -3, {});
+
+            expect(combatant.actor.update).toHaveBeenCalledWith({"system.attributes.hp.value": 13});
+        });
+
+        it("tout effacé par une immunité : aucune écriture de points de vie", async () => {
+            const combatant = await typedDotTurn("+2[poison]", 2, {di: ["poison"]});
+
+            expect(combatant.actor.update).not.toHaveBeenCalledWith(
+                expect.objectContaining({"system.attributes.hp.value": expect.anything()}));
         });
 
         it("tour d'un joueur, deck suffisant : drawPick pioche pickScore cartes", async () => {

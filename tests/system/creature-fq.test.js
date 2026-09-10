@@ -53,16 +53,16 @@ describe("CreatureFQTemplate.common", () => {
     });
 
     describe("bonus", () => {
-        it("verrouille les défauts numériques range/dot", () => {
+        it("verrouille le défaut numérique de la portée", () => {
             expect(common.bonus.range.initial).toBe(0);
-            expect(common.bonus.dot.initial).toBe(0);
         });
 
-        it("expose damage/heal comme des champs sans défaut numérique (StringField)", () => {
-            expect(common.bonus).toHaveProperty("damage");
-            expect(common.bonus).toHaveProperty("heal");
-            expect(common.bonus.damage.required).toBe(true);
-            expect(common.bonus.heal.required).toBe(true);
+        it("expose damage/heal/dot comme des FORMULES (StringField) que les effets concatènent", () => {
+            for (const key of ["damage", "heal", "dot"]) {
+                expect(common.bonus, key).toHaveProperty(key);
+                expect(common.bonus[key].required, key).toBe(true);
+                expect(common.bonus[key].initial, key).toBeUndefined();
+            }
         });
     });
 });

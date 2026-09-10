@@ -86,6 +86,51 @@ export function makeTarget(id, name, evasion, {ac, saves, statuses, immune, save
 }
 
 /**
+ * Un `calculateDamage` fidèle à celui de dnd5e sur ce que le moteur en attend :
+ * l'immunité efface la partie (et rien d'autre ne s'y applique), puis le
+ * multiplicateur, puis la résistance (moitié tronquée), puis la vulnérabilité
+ * (double) ; les marques `active` disent ce qui s'est appliqué, et le total est
+ * tronqué. Le vrai reste celui de dnd5e : ce double ne sert qu'aux tests, pour
+ * vérifier ce que le moteur lui CONFIE et ce qu'il LIT en retour.
+ *
+ * @param {object}   [traits]    - Les traits de l'acteur, par liste de types.
+ * @param {string[]} [traits.dr] - Les résistances.
+ * @param {string[]} [traits.di] - Les immunités.
+ * @param {string[]} [traits.dv] - Les vulnérabilités.
+ * @param {string[]} [traits.bypasses] - Les propriétés qui passent outre les résistances
+ *        (`["mgc"]` : le loup-garou, résistant aux seules attaques non magiques).
+ *
+ * @returns {function} Le `calculateDamage` de l'acteur.
+ */
+export function dnd5eDamage({dr = [], di = [], dv = [], bypasses = []} = {}) {
+    return vi.fn((damages, {multiplier = 1} = {}) => {
+        const out = damages.map(damage => ({...damage, active: {}}));
+        out.amount = 0;
+        for (const damage of out) {
+            if (di.includes(damage.type)) {
+                damage.value = 0;
+                damage.active.type = {immunity: true};
+                continue;
+            }
+            let value = damage.value * multiplier;
+            const bypassed = bypasses.some(property => damage.properties?.has?.(property));
+            if (dr.includes(damage.type) && !bypassed) {
+                value = Math.trunc(value / 2);
+                (damage.active.type ??= {}).resistance = true;
+            }
+            if (dv.includes(damage.type)) {
+                value *= 2;
+                (damage.active.type ??= {}).vulnerability = true;
+            }
+            damage.value = value;
+            out.amount += value;
+        }
+        out.amount = Math.trunc(out.amount);
+        return out;
+    });
+}
+
+/**
  * Impose les cibles de la résolution, en court-circuitant l'acquisition réelle.
  *
  * @param {...object} targets - Les jetons ciblés.

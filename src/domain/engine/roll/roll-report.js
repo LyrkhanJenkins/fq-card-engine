@@ -215,8 +215,13 @@ export default class RollReport {
      *
      * @returns {void}
      */
-    addResult({targetTokenId, targetName, value, type, critical, evasion, defended = false}) {
-        this.results.push({targetTokenId, targetName, value, type, critical, evasion, defended});
+    addResult({targetTokenId, targetName, value, type, critical, evasion, defended = false, traits = []}) {
+        // Le détail des résistances n'est posé que s'il y en a : un résultat
+        // ordinaire garde exactement sa forme de toujours.
+        this.results.push({
+            targetTokenId, targetName, value, type, critical, evasion, defended,
+            ...(traits.length ? {traits} : {})
+        });
     }
 
     /**
@@ -292,7 +297,10 @@ export default class RollReport {
                 disadvantages: hit.disadvantages.map(reason => ({...reason})),
                 autoCauses: hit.autoCauses.map(reason => ({...reason}))
             })),
-            results: this.results.map(result => ({...result})),
+            results: this.results.map(result => ({
+                ...result,
+                ...(result.traits ? {traits: result.traits.map(part => ({...part, kinds: [...part.kinds]}))} : {})
+            })),
             extraRolls: this.extraRolls.map(extra => ({...extra, dice: [...extra.dice]})),
             messages: [...this.messages]
         };

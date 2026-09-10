@@ -1,5 +1,6 @@
 import RollReport from "./roll-report.js";
 import AdvantageLabels from "./advantage-labels.js";
+import DamageTraitLabels from "./damage-trait-labels.js";
 import {escapeHtml} from "../../../core/utils/html.utils.js";
 
 /**
@@ -272,6 +273,9 @@ export default class ResultChatLog {
                 badges += `<span class="fq-result-badge fq-result-badge--protected">`
                     + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartProtected")}</span>`;
             }
+            badges += DamageTraitLabels.chips(result.traits).map(chip =>
+                `<span class="fq-result-badge fq-result-badge--${chip.kind}" data-tooltip="${escapeHtml(chip.tooltip)}">`
+                + `${escapeHtml(chip.text)}</span>`).join("");
             return `<li class="fq-card-engine-result-line ${modifier}">`
                 + `<span class="fq-result-key">${result.targetName}</span>`
                 + `<span class="fq-result-value"><b>${result.value}</b>${badges}</span>`

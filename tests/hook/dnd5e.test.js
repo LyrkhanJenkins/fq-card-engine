@@ -399,8 +399,10 @@ describe("integration/dnd5e", () => {
 
             await rollDamage([{formula: "2d6", total: 7, options: {type: "slashing"}}], {subject});
 
+            // Le 5e argument : l'élément du jet dnd5e — le sien.
             expect(Damage.addCriticalEvasionToDamage).toHaveBeenCalledWith(
-                actor, expect.any(Number), expect.objectContaining({forcedTargets: [ennemi]}), expect.any(RollReport));
+                actor, expect.any(Number), expect.objectContaining({forcedTargets: [ennemi]}), expect.any(RollReport),
+                expect.objectContaining({types: ["slashing"]}));
         });
 
         it("le journal ne reçoit pas les cibles imposées : un Token est un graphe circulaire", async () => {
@@ -436,7 +438,8 @@ describe("integration/dnd5e", () => {
 
             // La résolution locale, elle, garde bien les cibles figées.
             expect(Damage.addCriticalEvasionToDamage).toHaveBeenCalledWith(
-                actor, expect.any(Number), expect.objectContaining({forcedTargets: [cible]}), expect.any(RollReport));
+                actor, expect.any(Number), expect.objectContaining({forcedTargets: [cible]}), expect.any(RollReport),
+                expect.any(Object));
 
             const logged = socket.executeAsGM.mock.calls.find(call => call[0] === "logCardPlayed")?.[2];
             expect(logged).toBeDefined();

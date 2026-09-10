@@ -730,3 +730,9 @@
 }
 
 .fq-result-badge.is-protected { color: var(--fq8-message-gold); }
+
+/* Résistance, immunité, vulnérabilité : même gabarit que l'esquive, une
+   couleur chacune. L'élément est dans la puce, le calcul au survol. */
+.fq-result-badge.is-resist { color: var(--fq8-color-resist); }
+.fq-result-badge.is-immune { color: var(--fq8-color-immune); }
+.fq-result-badge.is-vulnerable { color: var(--fq8-message-damage); }

@@ -386,6 +386,25 @@ div.separator {
     color: var(--fq8-message-gold);
 }
 
+/* Résistance, immunité, vulnérabilité : les couleurs de la fenêtre de résultat. */
+.fq-result-badge--resist {
+    background: color-mix(in srgb, var(--fq8-color-resist) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--fq8-color-resist) 55%, transparent);
+    color: var(--fq8-color-resist);
+}
+
+.fq-result-badge--immune {
+    background: color-mix(in srgb, var(--fq8-color-immune) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--fq8-color-immune) 55%, transparent);
+    color: var(--fq8-color-immune);
+}
+
+.fq-result-badge--vulnerable {
+    background: color-mix(in srgb, var(--fq8-message-damage) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--fq8-message-damage) 55%, transparent);
+    color: var(--fq8-message-damage);
+}
+
 .fq-card-engine-result-manual {
     margin: 2px 0 0;
     padding-left: 18px;

@@ -3,6 +3,7 @@ import TradingCards, {DECK_TYPE, HAND_TYPE} from "../domain/trading/trading-card
 import CombatTurn from "../domain/engine/combat-turn.js";
 import AutoCard from "../domain/engine/auto-card.js";
 import DeathSave from "../domain/engine/death-save.js";
+import Damage from "../domain/engine/roll/damage.js";
 
 Hooks.on("deleteCombat", async function (combat, _delta) {
     if (CombatTurn.isLocalUserFirstActiveGM()) {
@@ -72,7 +73,11 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
         const actor = combat.combatant?.actor;
         const user = game.users.find(user => user.character?.id === actor?.id);
         if (combat.previous.round !== 0 && actor?.system?.fq.bonus.dot) {
-            await actor.update({"system.attributes.hp.value": actor.system.attributes.hp.value - actor.system.fq.bonus.dot});
+            // Formule typée : chaque élément passe par les résistances de l'acteur.
+            const dot = await Damage.damageOverTime(actor);
+            if (dot) {
+                await actor.update({"system.attributes.hp.value": actor.system.attributes.hp.value - dot});
+            }
         }
         // Début de tour à 0 point de vie : jet de sauvegarde contre la mort pour un
         // personnage, dissipation pour un sbire. Le tour consommé ne se déroule pas.

@@ -333,6 +333,10 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
             zoneWidth: new StringField({required: true, label: "FQCARDENGINE.ZoneWidth"}),
 
             damage: new StringField({required: true, label: "FQCARDENGINE.Damage"}),
+            // Des dégâts magiques passent outre les résistances qui l'excluent (le
+            // loup-garou et ses « attaques non magiques »). Une carte est un sort,
+            // donc magique par défaut ; une technique d'arme ordinaire ne l'est pas.
+            magical: new BooleanField({required: true, initial: true, label: "FQCARDENGINE.MagicalDamage"}),
             heal: new StringField({required: true, label: "FQCARDENGINE.Heal"}),
             bonusCrit: new StringField({required: true, label: "FQCARDENGINE.BonusCrit"}),
             bonusEva: new StringField({required: true, label: "FQCARDENGINE.BonusEva"}),

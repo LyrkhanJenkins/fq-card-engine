@@ -86,7 +86,7 @@ export default class StatusEffects {
             name: "Poison",
             img: "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
             changes: [
-                {key: "system.fq.bonus.dot", value: "1", type: "add", priority: null},
+                {key: "system.fq.bonus.dot", value: "+1[poison]", type: "add", priority: null},
                 {key: "macro.execute", value: "FQPoisonSpread", type: "custom", priority: null}
             ],
             duration: {value: "", units: "rounds"},
@@ -101,7 +101,7 @@ export default class StatusEffects {
             {
                 name: "Acid",
                 img: "icons/magic/acid/dissolve-bone-white.webp",
-                changes: [{key: "system.fq.bonus.dot", value: "2", type: "add", priority: null}],
+                changes: [{key: "system.fq.bonus.dot", value: "+2[acid]", type: "add", priority: null}],
                 duration: {value: "1", units: "rounds"},
                 expireOnDamage: false,
                 showIcon: 0
@@ -109,7 +109,7 @@ export default class StatusEffects {
             {
                 name: "Acid",
                 img: "icons/magic/acid/dissolve-bone-white.webp",
-                changes: [{key: "system.fq.bonus.dot", value: "1", type: "add", priority: null}],
+                changes: [{key: "system.fq.bonus.dot", value: "+1[acid]", type: "add", priority: null}],
                 duration: {value: "2", units: "rounds"},
                 expireOnDamage: false,
                 showIcon: 0
@@ -117,7 +117,7 @@ export default class StatusEffects {
             {
                 name: "Acid",
                 img: "icons/magic/acid/dissolve-bone-white.webp",
-                changes: [{key: "system.fq.bonus.dot", value: "1", type: "add", priority: null}],
+                changes: [{key: "system.fq.bonus.dot", value: "+1[acid]", type: "add", priority: null}],
                 duration: {value: "3", units: "rounds"},
                 expireOnDamage: false,
                 showIcon: 1
@@ -128,7 +128,7 @@ export default class StatusEffects {
             name: "Burn",
             img: "icons/magic/fire/explosion-embers-evade-silhouette.webp",
             changes: [
-                {key: "system.fq.bonus.dot", value: "1", type: "add", priority: null},
+                {key: "system.fq.bonus.dot", value: "+1[fire]", type: "add", priority: null},
                 {key: "macro.execute", value: "PersistAura jb2a.fire_ring", type: "custom", priority: null}
             ],
             duration: {value: "3", units: "rounds"},

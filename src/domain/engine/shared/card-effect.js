@@ -730,6 +730,10 @@ export default class CardEffect {
                 effect.origin = OriginFQEffectLabel;
             }
             for (const change of effect.changes ?? []) {
+                if (change.key === "system.fq.bonus.dot") {
+                    change.value = CardEffect.#signDot(change.value);
+                    continue;
+                }
                 if (change.key === "macro.execute") {
                     await Fx.importMacroFromCompendium(change.value);
                 }
@@ -904,6 +908,24 @@ export default class CardEffect {
             return card.faces[card.face].img;
         }
         return card?.back?.img ?? null;
+    }
+
+    /**
+     * Prépare la valeur d'un changement de dégâts par tour (`fq.bonus.dot`) :
+     * les effets CONCATÈNENT ce champ texte, chaque morceau doit donc ouvrir sur
+     * son signe (`+1[poison]`, `-6`) — sans quoi `1` suivi de `1` ferait `11`.
+     *
+     * Rien n'y est figé : la formule, types et dés compris, est lancée à chaque
+     * début de tour du porteur (`Damage.damageOverTime`), et une référence `@`
+     * restante se résout sur lui.
+     *
+     * @param {string|number} value - La valeur saisie sur la carte.
+     *
+     * @returns {string} La valeur prête à être concaténée.
+     */
+    static #signDot(value) {
+        const text = String(value ?? "").trim();
+        return !text || /^[+-]/.test(text) ? text : `+${text}`;
     }
 
     /**

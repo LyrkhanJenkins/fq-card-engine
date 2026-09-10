@@ -154,7 +154,7 @@ describe("CardFqSystem.getChoiceSchema", () => {
             "action", "mana", "zeal", "reactive",
             "hp", "draw", "drop",
             "targetType", "minReach", "maxReach", "nbTargets",
-            "damage", "heal", "bonusCrit", "bonusEva",
+            "damage", "magical", "heal", "bonusCrit", "bonusEva",
             "xmin", "xmax", "ymin", "ymax", "xvalue", "yvalue",
             "applyEffectsFormulas", "messages", "minions",
             "replayable", "sound", "visual",

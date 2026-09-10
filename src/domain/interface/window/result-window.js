@@ -1,5 +1,6 @@
 import RollReport from "../../engine/roll/roll-report.js";
 import AdvantageLabels from "../../engine/roll/advantage-labels.js";
+import DamageTraitLabels from "../../engine/roll/damage-trait-labels.js";
 import {escapeHtml} from "../../../core/utils/html.utils.js";
 
 /** Durée de roulement d'un dé du jet principal, en millisecondes. */
@@ -942,7 +943,10 @@ export default class ResultWindow {
                     + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartEvasion")}</span>` : "")
                 + (result.defended
                     ? `<span class="fq-result-badge is-protected">`
-                    + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartProtected")}</span>` : "");
+                    + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartProtected")}</span>` : "")
+                + DamageTraitLabels.chips(result.traits).map(chip =>
+                    `<span class="fq-result-badge is-${chip.kind}" data-tooltip="${escapeHtml(chip.tooltip)}">`
+                    + `${escapeHtml(chip.text)}</span>`).join("");
             return `<div class="fq-result-row" data-result="${index}">`
                 + `<span class="fq-result-name">${result.targetName}</span>`
                 + `<span class="fq-result-badges">${badges}</span>`

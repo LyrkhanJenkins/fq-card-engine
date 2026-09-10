@@ -5,6 +5,7 @@ import RollReport, {ROLL_ROLE} from "./roll-report.js";
 import HitProfile from "./hit-profile.js";
 import Advantage from "./advantage.js";
 import ConditionProbe from "./condition-probe.js";
+import DamageTraits from "./damage-traits.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 
 /**
@@ -29,7 +30,34 @@ export default class Damage {
     static async buildDamageDiceLauncher(actor, cardContent, report = new RollReport()) {
         let damageFormula = Damage.getDamageWithBonus(actor, cardContent.damage);
         let damages = await Damage.rollTotalAsync(damageFormula, ROLL_ROLE.DAMAGE, report);
-        return Damage.addCriticalEvasionToDamage(actor, damages, cardContent, report);
+        return Damage.addCriticalEvasionToDamage(actor, damages, cardContent, report,
+            {types: DamageTraits.elementsOf(cardContent.damage), properties: DamageTraits.cardProperties(cardContent)});
+    }
+
+    /**
+     * Les dégâts par tour d'un acteur, en début de son tour : sa formule
+     * `fq.bonus.dot`, lancée d'un seul tenant, puis ses résistances, immunités et
+     * vulnérabilités aux éléments qu'elle porte. Un total négatif est un soin,
+     * qu'aucun trait ne réduit ; un total nul (la *Bombe à retardement* qui se
+     * compense) ne fait rien.
+     *
+     * Une référence `@` restante se résout sur les données de l'acteur porteur.
+     *
+     * @param {?object} actor - L'acteur dont le tour commence.
+     *
+     * @returns {Promise<number>} Les points de vie à retirer (négatifs pour un soin).
+     */
+    static async damageOverTime(actor) {
+        const dot = String(actor?.system?.fq?.bonus?.dot ?? "").trim();
+        if (!dot) {
+            return 0;
+        }
+        const numeric = Number(dot);
+        const total = Number.isFinite(numeric) ? numeric
+            : (await new Roll(dot.replace(/^\+/, ""), actor.getRollData?.() ?? {}).evaluate()).total;
+        return total > 0
+            ? DamageTraits.apply(actor, total, 1, {types: DamageTraits.elementsOf(dot), properties: []}).value
+            : total;
     }
 
     /**
@@ -181,10 +209,13 @@ export default class Damage {
      * @param {object} cardContent - Le contenu (choix) de la carte (`bonusCrit`, `bonusEva`,
      *        `targetType`, et les champs de toucher lus par `HitProfile`).
      * @param {RollReport} [report] - Le rapport où consigner les jets et les résultats.
+     * @param {object}   [typing]            - Les éléments des dégâts (`DamageTraits.apply`).
+     * @param {string[]} [typing.types]      - Les types de dégâts ; aucun : rien ne les réduit.
+     * @param {string[]} [typing.properties] - Leurs propriétés (magique, argenté…).
      *
      * @returns {Promise<object[]>} Le tableau des résultats de dégâts par cible.
      */
-    static async addCriticalEvasionToDamage(actor, damages, cardContent, report = new RollReport()) {
+    static async addCriticalEvasionToDamage(actor, damages, cardContent, report = new RollReport(), typing = {}) {
         const myTargets = TargetingPredicates.resolveTargets(cardContent, actor);
         if (damages < 0) {
             damages = 0;
@@ -220,8 +251,11 @@ export default class Damage {
             // jets dans l'ordre où ils tombent.
             const protection = await Damage.#rollHit(target, targetName, profile, attackDice, plans[i], report);
             const evaded = await Damage.#rollEvasion(target, targetName, cardContent, plans[i], report);
-            const value = Math.floor(
-                damages * Damage.damageMultiplier((evaded ? 1 : 0) + protection, critical));
+            // Le cran FQ, puis les traits de la cible.
+            const outcome = DamageTraits.apply(target.actor, damages,
+                Damage.damageMultiplier((evaded ? 1 : 0) + protection, critical), typing);
+            const value = Math.max(0, outcome.value);
+            const traits = outcome.traits;
             damagesArray.push({
                 key: `Dégâts totaux sur "${targetName}"`,
                 value,
@@ -232,7 +266,7 @@ export default class Damage {
             });
             report?.addResult({
                 targetTokenId: target.id, targetName, value,
-                type: "damageFQ", critical, evasion: evaded, defended: protection > 0
+                type: "damageFQ", critical, evasion: evaded, defended: protection > 0, traits
             });
         }
         return damagesArray;

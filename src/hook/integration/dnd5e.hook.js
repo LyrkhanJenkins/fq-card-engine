@@ -288,12 +288,18 @@ Hooks.on("dnd5e.rollDamageV2", async (rolls, {subject}) => {
                 cardContent.damage = roll.formula;
                 const rolled = {formula: roll.formula, dice: RollReport.diceOf(roll)};
                 fxType = roll.options?.type;
+                // Les propriétés (magique, argenté…) sont relevées, comme le type,
+                // AVANT le jet de bonus qui repart d'un simple total.
+                const properties = [...(roll.options?.properties ?? [])];
                 const damageBonus = item.actor.system?.fq?.bonus?.damage;
                 if (damageBonus) {
                     roll = await new Roll(Damage.getDamageWithBonus(item.actor, roll.total)).evaluate();
                 }
                 report.setMainRoll({role: ROLL_ROLE.DAMAGE, ...rolled, total: roll.total, bonus: damageBonus || null});
-                resultArray.push(...await Damage.addCriticalEvasionToDamage(item.actor, roll.total, cardContent, report));
+                // Un jet d'activité dnd5e porte un seul type : ses dégâts, bonus
+                // compris, sont de cet élément.
+                resultArray.push(...await Damage.addCriticalEvasionToDamage(item.actor, roll.total, cardContent, report,
+                    {types: fxType ? [fxType] : [], properties}));
                 playFx = true;
             }
             // Cibles figées avant l'animation. `forcedTargets` en porte déjà la
