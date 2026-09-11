@@ -58,6 +58,7 @@
   "FQCARDENGINE.Bar": "Barre",
   "FQCARDENGINE.DragDropError": "Impossible de faire un Drag and Drop",
   "FQCARDENGINE.DragDropUUIDError": "Impossible de Dropper Missing UUID",
+  "FQCARDENGINE.DragDropPlayerRightsLimited": "Vos droits sur les cartes sont limités : vous ne pouvez pas déposer de carte dans votre main.",
   "FQCARDENGINE.Draw": "Piocher",
   "FQCARDENGINE.Move": "déplacer",
   "FQCARDENGINE.DraggableBarPositionSettingY": "Position Y",

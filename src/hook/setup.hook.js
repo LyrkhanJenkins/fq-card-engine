@@ -69,6 +69,22 @@ Hooks.on("setup", function () {
         label: "FQCARDENGINE.FQCardConfig", makeDefault: true
     });
 
+    // Sous « Limitation des droits du joueur », un joueur ne fait passer aucune
+    // carte d'un jeu à un autre en la déposant sur une feuille de Cards (deck,
+    // main, défausse et FqCardsSheet héritent de ce _onDrop) ; le tri reste permis.
+    // Les pass du moteur appellent Cards#pass directement et ne passent pas par ici.
+    libWrapper.register(FqCardEngineModule.moduleName, "foundry.applications.sheets.CardsConfig.prototype._onDrop", function (wrapper, event, ...args) {
+        const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+        const fromThisStack = data.uuid
+            ? data.uuid.startsWith(`${this.document.uuid}.`)
+            : data.cardsId === this.document.id;
+        if (data.type === "Card" && Constants.isPlayerRightsLimited && !fromThisStack) {
+            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropPlayerRightsLimited"));
+            return;
+        }
+        return wrapper(event, ...args);
+    }, "MIXED");
+
     if (game.settings.get(FqCardEngineModule.moduleName, "PlayerLimitCardsRight")) {
         CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
     }

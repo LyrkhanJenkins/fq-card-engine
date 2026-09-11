@@ -1,3 +1,5 @@
+import Constants from "../../constants.js";
+
 /**
  * Glisser-déposer des cartes entre barres de main. Extrait de la façade
  * `FqCardEngineModule` ; réassemblé par spread dans `init-engine.js`.
@@ -66,6 +68,17 @@ export default {
         let cards = this.getCards();
         const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
         if (data.type !== "Card") return;
+
+        // Sous droits limités, un joueur peut encore réordonner sa main mais n'y
+        // fait entrer aucune carte venue d'ailleurs. Une carte de la main a une
+        // uuid préfixée par celle de la main, ou, sans uuid, le même jeu source.
+        const fromThisHand = data.uuid
+            ? data.uuid.startsWith(`${cards.uuid}.`)
+            : data.cardsId === cards.id;
+        if (Constants.isPlayerRightsLimited && !fromThisHand) {
+            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropPlayerRightsLimited"));
+            return;
+        }
 
         //SORT
         let sort = function (card) {

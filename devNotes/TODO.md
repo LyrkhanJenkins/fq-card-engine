@@ -9,15 +9,11 @@
 
 ### Fix à prioriser
 - Problème encore avec le clignotement
-- Un joueur peut encore amener des cartes de son deck vers sa main avec la limitation des droits des joueurs
 - Changer les valeurs par défaut de l'animations de la fenetre de résultats
 - Vérifier formulaire, certaines mise en forme ont sautés...
 - Jets de sauvegarde contre la mort optiona mettre à true par défaut dans les mondes générés 
 
 ### Versions prévues
-#### 3.0.0
-- Vérifier limitation droits utilisateurs (Ouvrir son deck? drag and drop? drag and drop depuis les compendiums?)
-
 #### 3.1.x
 - Rajouter des règles d'architectures
 - Valeurs sentinelles (`-9999`, `999999999`, `99999999`) utilisées comme drapeaux (pas de crit, cible inesquivable,
