@@ -183,6 +183,13 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 > « Allie des effets de feu, de givre, d'air et de terre pour infliger d'importants dégâts. Fragile mais possède les plus gros dégâts bruts du jeu. »
 
+A Revoir
+Élément ou statut	Sauvegarde
+feu, foudre, acide, force, radiant, tranchant, perforant ; brûlure	DEX
+froid, tonnerre, poison, nécrotique ; givre, virus, poison	CON
+psychique ; malédiction, charmé, inconscient	SAG
+contondant ; agrippé, marque d'air	FOR
+
 **Identité dnd5e** : d4 , INT + SAG (les deux requises).
 
 **Stats FQ** : mana écrasant (12/22 du pool primaire), puis points d'action. 

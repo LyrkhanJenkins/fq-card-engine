@@ -138,6 +138,26 @@ function damageThresholds(choice) {
 }
 
 /**
+ * Les d20 imposés d'un jeu de carte, dans l'ordre où le moteur les jette : le
+ * critique, puis le dé d'ATTAQUE d'un choix qui en demande un (jeté une seule
+ * fois pour la carte), puis l'esquive de la cible. La cible de la fixture n'a
+ * pas de classe d'armure : l'attaque ne la protège jamais, mais son dé est
+ * bien jeté et doit figurer dans la séquence, sans quoi il avalerait celui de
+ * l'esquive. Les sauvegardes n'entrent pas ici : un choix de zone ou à effets
+ * n'est pas éligible à la matrice.
+ *
+ * @param {object} choice - Le choix (contenu) de la carte.
+ * @param {number} crit   - Le d20 du critique.
+ * @param {number} eva    - Le d20 de l'esquive.
+ *
+ * @returns {Array<{faces: number, value: number}>} Les dés pilotés.
+ */
+function d20s(choice, crit, eva) {
+    const attack = choice.hitType === "attack" ? [{faces: 20, value: 20}] : [];
+    return [{faces: 20, value: crit}, ...attack, {faces: 20, value: eva}];
+}
+
+/**
  * Seuil de réussite (1d20) pour le critique de soin.
  *
  * @param {object} choice - Le choix (contenu) de la carte.
@@ -161,7 +181,7 @@ describe("Dégâts chiffrés : valeur de base exacte hors critique/esquive (EXHA
 
             const result = await playChoice(card, choiceIndex, {
                 world: abundantResourcesWorld(),
-                dice: [{faces: 20, value: Math.max(1, crit - 1)}, {faces: 20, value: Math.max(1, eva - 1)}]
+                dice: d20s(choice, Math.max(1, crit - 1), Math.max(1, eva - 1))
             });
 
             expect(result.threw).toBe(false);
@@ -186,7 +206,7 @@ describe("Dégâts chiffrés : matrice critique/esquive (EXHA-02)", () => {
 
             const critOnly = await playChoice(card, choiceIndex, {
                 world: abundantResourcesWorld(),
-                dice: [{faces: 20, value: crit}, {faces: 20, value: Math.max(1, eva - 1)}]
+                dice: d20s(choice, crit, Math.max(1, eva - 1))
             });
             expect(critOnly.hpCalls).toHaveLength(1);
             expect(critOnly.hpCalls[0].value).toBe(expectedBase * 2);
@@ -198,7 +218,7 @@ describe("Dégâts chiffrés : matrice critique/esquive (EXHA-02)", () => {
 
             const evaOnly = await playChoice(card, choiceIndex, {
                 world: abundantResourcesWorld(),
-                dice: [{faces: 20, value: Math.max(1, crit - 1)}, {faces: 20, value: eva}]
+                dice: d20s(choice, Math.max(1, crit - 1), eva)
             });
             expect(evaOnly.hpCalls).toHaveLength(1);
             // Une seule défense réussie fait descendre d'un cran sur l'échelle
@@ -209,7 +229,7 @@ describe("Dégâts chiffrés : matrice critique/esquive (EXHA-02)", () => {
 
             const critAndEva = await playChoice(card, choiceIndex, {
                 world: abundantResourcesWorld(),
-                dice: [{faces: 20, value: crit}, {faces: 20, value: eva}]
+                dice: d20s(choice, crit, eva)
             });
             expect(critAndEva.hpCalls).toHaveLength(1);
             expect(critAndEva.hpCalls[0].value).toBe(expectedBase);
