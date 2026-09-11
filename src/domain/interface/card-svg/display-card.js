@@ -475,24 +475,34 @@ export default class DisplayCard {
      * Ce qu'affiche la bulle de TOUCHER — la septième, après réactif et
      * rejouabilité : ce que la carte oppose à sa cible.
      *
-     * Une carte à jet d'attaque affiche « CA », ce contre quoi le jet est fait ;
-     * une carte à sauvegarde affiche la caractéristique que la cible doit jeter
-     * (« DEX »…). La SOURCE du modificateur (arme ou caractéristique du lanceur)
-     * n'entre pas dans la bulle : elle appartient au tooltip, comme le détail de
-     * la rejouabilité.
+     * Une carte à jet d'attaque affiche « CA » sur un écu, ce contre quoi le jet
+     * est fait ; une carte à sauvegarde affiche la caractéristique que la cible
+     * doit jeter (« DEX »…) sur un d20 ; une carte qui inflige des dégâts SANS
+     * jet pour toucher affiche une étoile d'impact : ni armure ni sauvegarde ne
+     * les réduisent. La SOURCE du modificateur (arme ou caractéristique du
+     * lanceur) n'entre pas dans la bulle : elle appartient au tooltip, comme le
+     * détail de la rejouabilité.
+     *
+     * Une sauvegarde sans caractéristique n'a pas de bulle : sa configuration est
+     * incomplète, et le moteur ne la jettera pas.
      *
      * @param {object} [choice] - Le choix (contenu) de la carte.
      *
-     * @returns {?{label: string, tooltip: string}} Les clés de localisation du
-     *          texte et du tooltip, ou null si la carte n'a pas cette bulle.
+     * @returns {?{kind: string, label: string, tooltip: string}} Le type de bulle
+     *          (« attack », « save », « raw ») et les clés de localisation du texte
+     *          et du tooltip, ou null si la carte n'a pas cette bulle.
      */
     static getHitBubble(choice) {
         if (choice?.hitType === CardFqSystem.HIT_TYPE_ATTACK) {
-            return {label: "FQCARDENGINE.HitBubbleAttack", tooltip: "FQCARDENGINE.TooltipHitAttack"};
+            return {kind: "attack", label: "FQCARDENGINE.HitBubbleAttack", tooltip: "FQCARDENGINE.TooltipHitAttack"};
         }
-        const short = choice?.hitType === CardFqSystem.HIT_TYPE_SAVE
-            ? ABILITY_SHORT[choice.saveAbility] : null;
-        return short ? {label: short, tooltip: "FQCARDENGINE.TooltipHitSave"} : null;
+        if (choice?.hitType === CardFqSystem.HIT_TYPE_SAVE) {
+            const short = ABILITY_SHORT[choice.saveAbility];
+            return short ? {kind: "save", label: short, tooltip: "FQCARDENGINE.TooltipHitSave"} : null;
+        }
+        return String(choice?.damage ?? "").trim()
+            ? {kind: "raw", label: "FQCARDENGINE.HitBubbleRaw", tooltip: "FQCARDENGINE.TooltipHitRaw"}
+            : null;
     }
 
     /**
@@ -549,6 +559,10 @@ export default class DisplayCard {
             replayableTooltip: DisplayCard.getReplayableTooltipKey(replayable),
             hit: hit?.label ?? null,
             hitTooltip: hit?.tooltip ?? null,
+            // La forme de la bulle de toucher (cf. `card-svg.hbs`) : écu, d20 ou étoile d'impact.
+            hitShield: hit?.kind === "attack",
+            hitDie: hit?.kind === "save",
+            hitBurst: hit?.kind === "raw",
             actionSize: DisplayCard.getBubbleSizeForCardSvg(action),
             manaSize: DisplayCard.getBubbleSizeForCardSvg(mana),
             zealSize: DisplayCard.getBubbleSizeForCardSvg(zeal),

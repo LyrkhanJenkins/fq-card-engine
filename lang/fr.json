@@ -153,6 +153,8 @@
   "FQCARDENGINE.HitBubbleAttack": "CA",
   "FQCARDENGINE.TooltipHitAttack": "Jet d'attaque contre la classe d'armure de la cible : si l'armure passe au-dessus, la cible ne subit que la moitié des dégâts",
   "FQCARDENGINE.TooltipHitSave": "La cible jette une sauvegarde : si elle réussit, elle ne subit que la moitié des dégâts",
+  "FQCARDENGINE.HitBubbleRaw": "!",
+  "FQCARDENGINE.TooltipHitRaw": "Dégâts bruts : aucun jet pour toucher, ni l'armure ni une sauvegarde ne les réduisent (seule l'esquive joue)",
   "FQCARDENGINE.Bonuses": "Bonus FQ",
   "FQCARDENGINE.TargetType": "Type de cible",
   "FQCARDENGINE.MinReach": "Portée Min",

@@ -153,6 +153,8 @@
   "FQCARDENGINE.HitBubbleAttack": "AC",
   "FQCARDENGINE.TooltipHitAttack": "Attack roll against the target's armor class: if the armor beats the roll, the target only takes half damage",
   "FQCARDENGINE.TooltipHitSave": "The target rolls a saving throw: on a success, it only takes half damage",
+  "FQCARDENGINE.HitBubbleRaw": "!",
+  "FQCARDENGINE.TooltipHitRaw": "Raw damage: no roll to hit, neither armor nor a saving throw reduces it (only evasion applies)",
   "FQCARDENGINE.Bonuses": "FQ Bonuses",
   "FQCARDENGINE.TargetType": "Target type",
   "FQCARDENGINE.MinReach": "Min Range",

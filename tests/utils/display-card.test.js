@@ -534,30 +534,69 @@ describe("DisplayCard — périmètres exclus : non-régression (D-12, D-13, Tas
 
 describe("DisplayCard.buildBubbleData — bulle de toucher", () => {
 
-    it("affiche « CA » pour une carte à jet d'attaque", () => {
-        const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "@wpnM"});
+    /** Les trois formes possibles, pour vérifier qu'une seule est posée à la fois. */
+    const shapes = data => ({shield: data.hitShield, die: data.hitDie, burst: data.hitBurst});
+
+    it("affiche « CA » sur un écu pour une carte à jet d'attaque", () => {
+        const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "@wpnM", damage: "@wpnM[slashing]"});
 
         expect(data.hit).toBe("FQCARDENGINE.HitBubbleAttack");
         expect(data.hitTooltip).toBe("FQCARDENGINE.TooltipHitAttack");
+        expect(shapes(data)).toEqual({shield: true, die: false, burst: false});
     });
 
-    it("affiche la caractéristique abrégée pour une carte à sauvegarde", () => {
-        const data = DisplayCard.buildBubbleData({hitType: "save", saveAbility: "dex"});
+    it("affiche la caractéristique abrégée sur un d20 pour une carte à sauvegarde", () => {
+        const data = DisplayCard.buildBubbleData({hitType: "save", saveAbility: "dex", damage: "2d8[fire]"});
 
         expect(data.hit).toBe("FQCARDENGINE.AbilityShortDex");
         expect(data.hitTooltip).toBe("FQCARDENGINE.TooltipHitSave");
+        expect(shapes(data)).toEqual({shield: false, die: true, burst: false});
     });
 
-    it("n'affiche aucune bulle quand la carte ne demande aucun jet pour toucher", () => {
-        expect(DisplayCard.buildBubbleData({}).hit).toBeNull();
-        expect(DisplayCard.buildBubbleData({hitType: ""}).hit).toBeNull();
+    it("des dégâts sans jet pour toucher : l'étoile d'impact des dégâts bruts", () => {
+        const data = DisplayCard.buildBubbleData({hitType: "", damage: "(4+@int+1d8)[fire]"});
+
+        expect(data.hit).toBe("FQCARDENGINE.HitBubbleRaw");
+        expect(data.hitTooltip).toBe("FQCARDENGINE.TooltipHitRaw");
+        expect(shapes(data)).toEqual({shield: false, die: false, burst: true});
     });
 
-    it("n'affiche aucune bulle pour une sauvegarde sans caractéristique : rien à annoncer", () => {
-        const data = DisplayCard.buildBubbleData({hitType: "save", saveAbility: ""});
+    it("un choix antérieur au champ de toucher, avec dégâts, est aussi en dégâts bruts", () => {
+        expect(DisplayCard.buildBubbleData({damage: "1d6[cold]"}).hitBurst).toBe(true);
+    });
+
+    it("n'affiche aucune bulle sans jet pour toucher ni dégâts : soin, bonus, pioche…", () => {
+        for (const choice of [{}, {hitType: ""}, {hitType: "", damage: ""}, {hitType: "", damage: "  ", heal: "2d4"}]) {
+            const data = DisplayCard.buildBubbleData(choice);
+            expect(data.hit, JSON.stringify(choice)).toBeNull();
+            expect(shapes(data), JSON.stringify(choice)).toEqual({shield: false, die: false, burst: false});
+        }
+    });
+
+    it("n'affiche aucune bulle pour une sauvegarde sans caractéristique, même avec des dégâts", () => {
+        const data = DisplayCard.buildBubbleData({hitType: "save", saveAbility: "", damage: "2d8[fire]"});
 
         expect(data.hit).toBeNull();
         expect(data.hitTooltip).toBeNull();
+        expect(data.hitBurst).toBe(false);
+    });
+});
+
+describe("card-svg.hbs — bulle de toucher", () => {
+
+    const template = fs.readFileSync(path.join(process.cwd(), "src", "templates", "partials", "card-svg.hbs"), "utf8");
+
+    it("dessine une forme pour chacun des trois types, sous leur drapeau", () => {
+        for (const flag of ["hitShield", "hitDie", "hitBurst"]) {
+            expect(template, flag).toContain(`{{#if ${flag} }}`);
+        }
+    });
+
+    it("déclare les dégradés de ses trois couleurs", () => {
+        for (const gradient of ["hitAttackMana", "hitSaveMana", "hitRawMana"]) {
+            expect(template, gradient).toContain(`id="${gradient}"`);
+            expect(template, gradient).toContain(`url(#${gradient})`);
+        }
     });
 });
 

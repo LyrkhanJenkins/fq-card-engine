@@ -579,8 +579,19 @@ describe("ResultWindow", () => {
 
     it("une seconde résolution remplace la première : un seul calque à l'écran", async () => {
         await ResultWindow.present(fullReport());
+        const first = windowEl();
         await ResultWindow.present(fullReport());
 
-        expect(document.querySelectorAll(".fq-result-window")).toHaveLength(1);
+        // L'ancien calque s'efface en fondu (340 ms) avant d'être retiré du
+        // document : selon la vitesse de la machine, la seconde résolution peut se
+        // terminer avant, et il y est encore. Il ne compte plus pour autant : il
+        // est marqué sortant, et un seul calque reste affiché.
+        const shown = [...document.querySelectorAll(".fq-result-window")]
+            .filter(el => !el.classList.contains("is-out"));
+        expect(shown).toHaveLength(1);
+        expect(shown[0]).not.toBe(first);
+        expect(first.classList.contains("is-out") || !first.isConnected).toBe(true);
+        // Et le fondu fini, il quitte bien le document : aucun calque ne s'accumule.
+        await vi.waitFor(() => expect(first.isConnected).toBe(false), {timeout: 1000});
     });
 });

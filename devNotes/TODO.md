@@ -14,7 +14,6 @@
 ### Versions prévues
 #### 3.0.0
 - Rajouter que les cartes de niveau 1 sont obligatoires dans les decks? OU deck minimum?
-- L'esquive fait demi-dégâts
 - Prise en compte la classe d'armure de DND5E, chaque sort demande soit une classe d'armure soit des jés de sauvegarde soit rien
   - Rajouter la classe d'armure Aux attaques -> La classe d'armure surpassant le jet d'attaque fait demi-dégâts?
   - Rajoute des dés de sauvegarde à ceux configurés dans les sorts ou les cartes : Prérequis: comment prendre 
