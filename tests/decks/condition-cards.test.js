@@ -70,6 +70,12 @@ const SHIELD = {type: "equipment", system: {equipped: true, type: {value: "shiel
 const WEALTHY = {fq: {action: {value: 20, max: 20}, zeal: {value: 8, max: 8}, mana: {value: 10, max: 10}}};
 
 /**
+ * Une sauvegarde de Constitution à +2 pour la cible : sans elle, la cible de la
+ * fixture n'a rien à opposer à un DD et rate toutes ses sauvegardes.
+ */
+const CON_SAVE = {system: {abilities: {con: {save: {value: 2}}}}};
+
+/**
  * Le monde de base : le lanceur armé, la cible de la fixture portant les effets
  * nommés que la carte exige.
  *
@@ -249,18 +255,29 @@ describe("Pétrifié, paralysé, étourdi — les conditions très fortes", () =
         expect(created(result).filter(effect => effect.name === "Frost")).toHaveLength(4);
     });
 
-    test("Interruption, un 4 sur 1d4 : étourdie 1 tour, en plus de la perte de PA", async () => {
-        const result = await play("1MOAMJjs8KTHDHEW", world(), dice(4, 4));
+    test("Interruption, sauvegarde ratée : entravée, étourdie 1 tour, et 1d6 PA en moins", async () => {
+        const result = await play("1MOAMJjs8KTHDHEW", world({target: CON_SAVE}), [...dice(20, 1), ...dice(6, 4)]);
 
+        expectCondition(result, "restrained", 1);
         expectCondition(result, "stunned", 1);
-        expect(created(result).some(effect => effect.name === "Interruption")).toBe(true);
+        const interruption = created(result).find(effect => effect.name === "Interruption");
+        expect(interruption.changes).toEqual([
+            expect.objectContaining({key: "system.fq.action.value", value: -4, type: "add"})
+        ]);
     });
 
-    test("Interruption, un 1 sur 1d4 : la perte de PA seule", async () => {
-        const result = await play("1MOAMJjs8KTHDHEW", world(), dice(4, 1));
+    test("Interruption, sauvegarde réussie : aucun effet", async () => {
+        const result = await play("1MOAMJjs8KTHDHEW", world({target: CON_SAVE}), dice(20, 20));
 
-        expect(withStatus(result, "stunned")).toEqual([]);
-        expect(created(result).some(effect => effect.name === "Interruption")).toBe(true);
+        expect(result.threw, result.error?.message).toBe(false);
+        expect(created(result)).toEqual([]);
+    });
+
+    test("Interruption, cible sans valeur de sauvegarde : elle ne peut rien opposer, tout s'applique", async () => {
+        const result = await play("1MOAMJjs8KTHDHEW", world(), dice(20, 20));
+
+        expectCondition(result, "restrained", 1);
+        expectCondition(result, "stunned", 1);
     });
 });
 

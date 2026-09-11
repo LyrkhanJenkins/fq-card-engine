@@ -273,6 +273,37 @@ export default class Damage {
     }
 
     /**
+     * Jette la sauvegarde de chaque cible pour un choix qui en demande une SANS
+     * dégâts à régler : une carte qui ne pose que des effets réservés aux cibles
+     * qui ratent leur sauvegarde. Les jets sont consignés au rapport exactement
+     * comme ceux d'une carte à dégâts, et c'est le rapport qui dit ensuite qui a
+     * sauvegardé.
+     *
+     * Ne jette rien si le choix ne demande pas de sauvegarde. Le lanceur ne
+     * sauvegarde pas contre sa propre carte.
+     *
+     * @param {object}     actor       - L'acteur lanceur.
+     * @param {object}     cardContent - Le contenu (choix) de la carte.
+     * @param {RollReport} report      - Le rapport où consigner les jets.
+     *
+     * @returns {Promise<void>}
+     */
+    static async rollSaves(actor, cardContent, report) {
+        const profile = cardContent.hitProfile ?? HitProfile.of(actor, cardContent);
+        if (profile?.type !== CardFqSystem.HIT_TYPE_SAVE) {
+            return;
+        }
+        const caster = ConditionProbe.of(actor);
+        const casterToken = Damage.casterTokenOf(actor);
+        const opponents = TargetingPredicates.resolveTargets(cardContent, actor)
+            .filter(target => target.actor?._id !== actor?._id);
+        for (const target of opponents) {
+            const plan = Damage.#planDefense(target, profile, caster, casterToken);
+            await Damage.#rollHit(target, Constants.tokenName(target), profile, null, plan, report);
+        }
+    }
+
+    /**
      * Prépare les défenses d'une cible AVANT tout jet : si elle en a encore, et
      * avec quel mode le jet pour toucher la visera.
      *

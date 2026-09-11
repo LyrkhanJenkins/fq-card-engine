@@ -120,6 +120,35 @@ describe("RollReport", () => {
         ]);
     });
 
+    describe("effets posés", () => {
+        it("cumule par cible les effets de plusieurs formules, et en compte les répétitions", () => {
+            const report = new RollReport();
+            report.addEffects([{targetTokenId: "t1", targetName: "Gobelin"}], [{label: "Brûlure", count: 2}]);
+            report.addEffects([{targetTokenId: "t1", targetName: "Gobelin"}, {targetTokenId: "t2", targetName: "Orc"}],
+                [{label: "Brûlure", count: 1}, {label: "Entravé", count: 1}]);
+
+            expect(report.effects).toEqual([
+                {targetTokenId: "t1", targetName: "Gobelin",
+                    effects: [{label: "Brûlure", count: 3}, {label: "Entravé", count: 1}]},
+                {targetTokenId: "t2", targetName: "Orc",
+                    effects: [{label: "Brûlure", count: 1}, {label: "Entravé", count: 1}]}
+            ]);
+            expect(RollReport.effectTag({label: "Brûlure", count: 3})).toBe("Brûlure ×3");
+            expect(RollReport.effectTag({label: "Entravé", count: 1})).toBe("Entravé");
+        });
+
+        it("traverse le socket : toObject copie les effets en profondeur", () => {
+            const report = new RollReport();
+            report.addEffects([{targetTokenId: "t1", targetName: "Gobelin"}], [{label: "Étourdi", count: 1}]);
+
+            const plain = report.toObject();
+
+            expect(plain.effects).toEqual(report.effects);
+            expect(plain.effects[0].effects).not.toBe(report.effects[0].effects);
+            expect(RollReport.hasContent({effects: plain.effects})).toBe(true);
+        });
+    });
+
     describe("toObject", () => {
         it("rend un objet strictement sérialisable", () => {
             const report = new RollReport();

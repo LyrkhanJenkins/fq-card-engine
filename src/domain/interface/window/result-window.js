@@ -292,15 +292,13 @@ export default class ResultWindow {
         // 5. Les défenses, ennemi par ennemi. Chaque ligne révèle ses symboles :
         // la classe d'armure est déjà écrite — elle n'est pas jetée — alors qu'une
         // sauvegarde et une esquive roulent leur dé.
-        const evasions = report.evasions ?? [];
-        if (evasions.length > 0) {
+        const defenders = ResultWindow.#defenders(report);
+        if (defenders.length > 0) {
             await ResultWindow.#wait(160, mine);
             q(".fq-result-col--defense")?.classList.add("is-active");
-            const hits = new Map((report.hits ?? []).map(hit => [hit.targetTokenId, hit]));
-            for (let index = 0; index < evasions.length; index++) {
-                const evasion = evasions[index];
+            for (let index = 0; index < defenders.length; index++) {
+                const {hit, evasion} = defenders[index];
                 q(`[data-def-line="${index}"]`)?.classList.add("is-live");
-                const hit = hits.get(evasion.targetTokenId);
                 if (hit) {
                     // La classe d'armure est déjà écrite (elle n'est pas jetée) ;
                     // une sauvegarde fait rouler son total. Dans les deux cas, la
@@ -309,25 +307,17 @@ export default class ResultWindow {
                         hit.kind === "ac" ? null : hit.total, hit.defended, mine);
                 }
                 if (!alive()) return;
-                await ResultWindow.#revealDefenseMark(q(`[data-def-mark="${index}-1"]`),
-                    evasion.roll === null ? null : evasion.roll, evasion.evaded, mine);
-                if (!alive()) return;
+                if (evasion) {
+                    await ResultWindow.#revealDefenseMark(q(`[data-def-mark="${index}-1"]`),
+                        evasion.roll === null ? null : evasion.roll, evasion.evaded, mine);
+                    if (!alive()) return;
+                }
                 await ResultWindow.#wait(100, mine);
             }
         }
 
-        // 6. Les valeurs appliquées.
-        if ((report.results?.length ?? 0) > 0) {
-            await ResultWindow.#wait(160, mine);
-            q("[data-targets]")?.classList.add("is-on");
-            for (let index = 0; index < report.results.length; index++) {
-                if (!alive()) return;
-                q(`[data-result="${index}"]`)?.classList.add("is-on");
-                await ResultWindow.#wait(90, mine);
-            }
-        }
-
-        // 7. Les jets de formules d'effets de la carte.
+        // 6. Les jets de formules d'effets de la carte : ils décident des effets
+        // que la bande des cibles montre ensuite.
         if ((report.extraRolls?.length ?? 0) > 0) {
             await ResultWindow.#wait(160, mine);
             q("[data-extra]")?.classList.add("is-on");
@@ -341,6 +331,18 @@ export default class ResultWindow {
                 if (!alive()) return;
                 ResultWindow.#revealExtra(win, index, extra);
                 await ResultWindow.#wait(100, mine);
+            }
+        }
+
+        // 7. Ce que chaque cible subit : valeur appliquée et effets posés.
+        const rows = [...win.querySelectorAll("[data-result]")];
+        if (rows.length > 0) {
+            await ResultWindow.#wait(160, mine);
+            q("[data-targets]")?.classList.add("is-on");
+            for (const row of rows) {
+                if (!alive()) return;
+                row.classList.add("is-on");
+                await ResultWindow.#wait(90, mine);
             }
         }
 
@@ -613,8 +615,8 @@ export default class ResultWindow {
             + ResultWindow.#centerColumn(report, isHeal)
             + ResultWindow.#defenseColumn(report)
             + `</div>`
-            + ResultWindow.#targets(report)
             + ResultWindow.#extraRolls(report)
+            + ResultWindow.#targets(report)
             + ResultWindow.#messages(report)
             + `<div class="fq-result-foot"><i class="fq-result-bar" data-bar></i></div>`
             + `</div>`;
@@ -817,7 +819,9 @@ export default class ResultWindow {
         } else if (kind === "save") {
             keys.push(["save", "FQCARDENGINE.ColumnKeySave", "FQCARDENGINE.TooltipColumnSave"]);
         }
-        keys.push(["eva", "FQCARDENGINE.ColumnKeyEvasion", "FQCARDENGINE.TooltipColumnEvasion"]);
+        if ((report.evasions ?? []).length > 0) {
+            keys.push(["eva", "FQCARDENGINE.ColumnKeyEvasion", "FQCARDENGINE.TooltipColumnEvasion"]);
+        }
         const cells = keys.map(([modifier, key, tooltip]) =>
             `<span class="fq-result-key fq-result-key--${modifier}" data-tooltip="${tooltip}">`
             + `${game.i18n.localize(key)}</span>`).join("");
@@ -828,24 +832,24 @@ export default class ResultWindow {
     /**
      * Une ligne par ennemi : son nom, puis ses symboles de défense.
      *
-     * Les cibles sont prises dans l'ordre des esquives, qui les porte toutes —
-     * y compris celles qui n'ont aucun score d'esquive et n'ont donc pas lancé de
-     * dé. Leur emplacement reste alors vide plutôt que de disparaître, sans quoi
-     * les symboles d'une ligne à l'autre cesseraient d'être alignés.
+     * Les cibles viennent de {@link ResultWindow.#defenders} : dans l'ordre des
+     * esquives, qui les portent toutes — y compris celles qui n'ont aucun score
+     * d'esquive et n'ont donc pas lancé de dé. Leur emplacement reste alors vide
+     * plutôt que de disparaître, sans quoi les symboles d'une ligne à l'autre
+     * cesseraient d'être alignés. Une carte sans dégâts n'a que ses sauvegardes,
+     * et aucun emplacement d'esquive.
      *
      * @param {object} report - Le rapport de la résolution.
      *
      * @returns {string} Le HTML des lignes, ou une chaîne vide s'il n'y a rien à montrer.
      */
     static #defenseLines(report) {
-        const evasions = report.evasions ?? [];
-        if (evasions.length === 0) {
+        const defenders = ResultWindow.#defenders(report);
+        if (defenders.length === 0) {
             return "";
         }
-        const hits = new Map((report.hits ?? []).map(hit => [hit.targetTokenId, hit]));
-        return evasions.map((evasion, index) => {
+        return defenders.map(({targetName, hit, evasion}, index) => {
             const marks = [];
-            const hit = hits.get(evasion.targetTokenId);
             if (hit) {
                 const armour = hit.kind === "ac";
                 // La classe d'armure est connue d'avance ; une sauvegarde ratée
@@ -856,14 +860,41 @@ export default class ResultWindow {
                     {mode: hit.mode, why: ResultWindow.#hitWhy(hit)}));
             }
             // Une cible sans défense n'esquive pas : même croix, dite d'avance.
-            marks.push(ResultWindow.#defenseMark(index, 1, "d20",
-                evasion.defenseless ? ResultWindow.#FORCED_MARK : null,
-                evasion.roll === null ? "" : ResultWindow.#thresholdLabel(evasion.threshold),
-                {why: evasion.defenseless ? AdvantageLabels.why(evasion) : ""}));
+            if (evasion) {
+                marks.push(ResultWindow.#defenseMark(index, 1, "d20",
+                    evasion.defenseless ? ResultWindow.#FORCED_MARK : null,
+                    evasion.roll === null ? "" : ResultWindow.#thresholdLabel(evasion.threshold),
+                    {why: evasion.defenseless ? AdvantageLabels.why(evasion) : ""}));
+            }
             return `<div class="fq-result-foe-line" data-def-line="${index}">`
-                + `<span class="fq-result-foe-name">${evasion.targetName}</span>`
+                + `<span class="fq-result-foe-name">${targetName}</span>`
                 + `<span class="fq-result-marks">${marks.join("")}</span></div>`;
         }).join("");
+    }
+
+    /**
+     * Les ennemis de la colonne de défense, une entrée par ligne.
+     *
+     * Une carte à dégâts les prend dans l'ordre des esquives, qui les portent
+     * toutes. Une carte SANS dégâts n'a pas d'esquive : ce sont alors ses jets de
+     * sauvegarde seuls qui font les lignes.
+     *
+     * @param {object} report - Le rapport de la résolution.
+     *
+     * @returns {{targetName: string, hit: ?object, evasion: ?object}[]} Les ennemis, dans l'ordre.
+     */
+    static #defenders(report) {
+        const evasions = report.evasions ?? [];
+        const hits = report.hits ?? [];
+        if (evasions.length === 0) {
+            return hits.map(hit => ({targetName: hit.targetName, hit, evasion: null}));
+        }
+        const byTarget = new Map(hits.map(hit => [hit.targetTokenId, hit]));
+        return evasions.map(evasion => ({
+            targetName: evasion.targetName,
+            hit: byTarget.get(evasion.targetTokenId) ?? null,
+            evasion
+        }));
     }
 
     /**
@@ -924,17 +955,17 @@ export default class ResultWindow {
     }
 
     /**
-     * La bande des valeurs appliquées, une ligne par cible.
+     * La bande des cibles, une ligne par cible : la valeur appliquée et ses
+     * mentions, puis les effets posés sur elle. Une cible qui ne subit que des
+     * effets (carte sans dégâts) a sa ligne, sans valeur.
      *
      * @param {object} report - Le rapport de la résolution.
      *
-     * @returns {string} Le HTML de la bande, ou une chaîne vide s'il n'y a aucun résultat.
+     * @returns {string} Le HTML de la bande, ou une chaîne vide s'il n'y a rien à montrer.
      */
     static #targets(report) {
-        if ((report.results?.length ?? 0) === 0) {
-            return "";
-        }
-        const rows = report.results.map((result, index) => {
+        const effects = new Map((report.effects ?? []).map(entry => [entry.targetTokenId, entry]));
+        const rows = (report.results ?? []).map(result => {
             const badges = (result.critical
                 ? `<span class="fq-result-badge is-crit">`
                 + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartCritical")}</span>` : "")
@@ -946,14 +977,36 @@ export default class ResultWindow {
                     + `${game.i18n.localize("FQCARDENGINE.ChatMessagePartProtected")}</span>` : "")
                 + DamageTraitLabels.chips(result.traits).map(chip =>
                     `<span class="fq-result-badge is-${chip.kind}" data-tooltip="${escapeHtml(chip.tooltip)}">`
-                    + `${escapeHtml(chip.text)}</span>`).join("");
-            return `<div class="fq-result-row" data-result="${index}">`
-                + `<span class="fq-result-name">${result.targetName}</span>`
-                + `<span class="fq-result-badges">${badges}</span>`
-                + `<span class="fq-result-value">${result.value}</span>`
-                + `</div>`;
-        }).join("");
-        return `<div class="fq-result-targets" data-targets>${rows}</div>`;
+                    + `${escapeHtml(chip.text)}</span>`).join("")
+                + ResultWindow.#effectBadges(effects.get(result.targetTokenId));
+            effects.delete(result.targetTokenId);
+            return {name: result.targetName, badges, value: `<span class="fq-result-value">${result.value}</span>`};
+        });
+        for (const entry of effects.values()) {
+            rows.push({name: entry.targetName, badges: ResultWindow.#effectBadges(entry),
+                value: `<span class="fq-result-value is-none">—</span>`});
+        }
+        if (rows.length === 0) {
+            return "";
+        }
+        const html = rows.map((row, index) => `<div class="fq-result-row" data-result="${index}">`
+            + `<span class="fq-result-name">${row.name}</span>`
+            + `<span class="fq-result-badges">${row.badges}</span>`
+            + row.value
+            + `</div>`).join("");
+        return `<div class="fq-result-targets" data-targets>${html}</div>`;
+    }
+
+    /**
+     * Les pastilles des effets posés sur une cible.
+     *
+     * @param {?object} [entry] - L'entrée d'effets du rapport pour cette cible.
+     *
+     * @returns {string} Le HTML des pastilles, vide si la cible n'a rien subi.
+     */
+    static #effectBadges(entry) {
+        return (entry?.effects ?? []).map(effect => `<span class="fq-result-badge is-effect">`
+            + `${escapeHtml(RollReport.effectTag(effect))}</span>`).join("");
     }
 
     /**

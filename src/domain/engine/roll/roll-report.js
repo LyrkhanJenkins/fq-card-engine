@@ -67,6 +67,13 @@ export default class RollReport {
         /** @type {object[]} Les jets des formules d'effets de la carte. */
         this.extraRolls = [];
 
+        /**
+         * @type {object[]} Une entrée par cible touchée par un effet de la carte :
+         * `{targetTokenId, targetName, effects: [{label, count}]}`, les libellés
+         * déjà localisés. Une cible qui n'a rien subi n'y figure pas.
+         */
+        this.effects = [];
+
         /** @type {string[]} Les messages de la carte, déjà localisés. */
         this.messages = [];
     }
@@ -254,6 +261,49 @@ export default class RollReport {
     }
 
     /**
+     * Enregistre les effets posés sur des cibles par une formule d'effets. Une
+     * cible déjà touchée par une autre formule de la carte cumule ses effets, et
+     * un même effet voit son compte s'additionner.
+     *
+     * @param {{targetTokenId: string, targetName: string}[]} targets - Les cibles qui subissent les effets.
+     * @param {{label: string, count: number}[]} effects - Les effets, libellés déjà localisés.
+     *
+     * @returns {void}
+     */
+    addEffects(targets, effects) {
+        if (!effects?.length) {
+            return;
+        }
+        for (const {targetTokenId, targetName} of targets ?? []) {
+            let entry = this.effects.find(known => known.targetTokenId === targetTokenId);
+            if (!entry) {
+                entry = {targetTokenId, targetName, effects: []};
+                this.effects.push(entry);
+            }
+            for (const {label, count} of effects) {
+                const known = entry.effects.find(effect => effect.label === label);
+                if (known) {
+                    known.count += count;
+                } else {
+                    entry.effects.push({label, count});
+                }
+            }
+        }
+    }
+
+    /**
+     * Le libellé d'un effet tel que la fenêtre et le chat l'affichent : son nom,
+     * suivi du nombre de cumuls quand il y en a plusieurs (« Brûlure ×3 »).
+     *
+     * @param {{label: string, count: number}} effect - L'effet du rapport.
+     *
+     * @returns {string} Le libellé affiché.
+     */
+    static effectTag({label, count}) {
+        return count > 1 ? `${label} ×${count}` : label;
+    }
+
+    /**
      * Le rapport porte-t-il quoi que ce soit à montrer ? Une carte purement
      * utilitaire — pioche, défausse, récupération — n'a ni jet ni résultat à
      * annoncer, et ne doit donc ni ouvrir de fenêtre, ni publier de message, ni
@@ -271,6 +321,7 @@ export default class RollReport {
         return !!report?.mainRoll
             || (report?.results?.length ?? 0) > 0
             || (report?.extraRolls?.length ?? 0) > 0
+            || (report?.effects?.length ?? 0) > 0
             || (report?.messages?.length ?? 0) > 0;
     }
 
@@ -302,6 +353,7 @@ export default class RollReport {
                 ...(result.traits ? {traits: result.traits.map(part => ({...part, kinds: [...part.kinds]}))} : {})
             })),
             extraRolls: this.extraRolls.map(extra => ({...extra, dice: [...extra.dice]})),
+            effects: this.effects.map(entry => ({...entry, effects: entry.effects.map(effect => ({...effect}))})),
             messages: [...this.messages]
         };
     }

@@ -77,12 +77,7 @@
                           "status": "earth"
                         }
                       ],
-                      "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{ \"effectName\": \"Earth Effect\" }"
-                        }
-                      ],
+                      "messages": [],
                       "removeEffectName": ""
                     }
                   ]
@@ -342,10 +337,6 @@
                         }
                       ],
                       "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{ \"effectName\": \"Frost\"}"
-                        },
                         {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"
@@ -1418,10 +1409,6 @@
                       ],
                       "messages": [
                         {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Magic Plastron\"}"
-                        },
-                        {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\": \"Magic Plastron\",\"turn\": \"3\"}"
                         }
@@ -2052,10 +2039,6 @@
                       ],
                       "messages": [
                         {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{ \"effectName\": \"Frost\"}"
-                        },
-                        {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"
                         }
@@ -2211,12 +2194,7 @@
                           "status": "earth"
                         }
                       ],
-                      "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{ \"effectName\": \"Earth Effect\" }"
-                        }
-                      ],
+                      "messages": [],
                       "removeEffectName": ""
                     }
                   ]
@@ -2425,10 +2403,6 @@
                       ],
                       "messages": [
                         {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{ \"effectName\": \"Air Effect\" }"
-                        },
-                        {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
                         }
@@ -2563,12 +2537,7 @@
                           "expireOnDamage": false
                         }
                       ],
-                      "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{ \"effectName\": \"Earth Effect\" }"
-                        }
-                      ],
+                      "messages": [],
                       "removeEffectName": ""
                     }
                   ]
@@ -2857,10 +2826,6 @@
                         }
                       ],
                       "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{ \"effectName\": \"Frost\"}"
-                        },
                         {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"4\"}"
@@ -4317,10 +4282,6 @@
                         {
                           "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
                           "arg": "{\"effectName\":\"Earth Effect\",\"count\":\"2\"}"
-                        },
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Stone Sepulcher\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -7149,10 +7110,6 @@
                         }
                       ],
                       "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{ \"effectName\": \"Frost\"}"
-                        },
                         {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"

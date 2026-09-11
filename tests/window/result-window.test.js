@@ -207,6 +207,42 @@ describe("ResultWindow", () => {
         expect(windowEl()).toBeNull();
     });
 
+    it("une carte SANS dégâts montre la sauvegarde de chaque cible, sans colonne d'esquive", async () => {
+        const report = new RollReport();
+        report.addHit({targetTokenId: "t1", targetName: "Gobelin", kind: "save", roll: 4, modifier: 1,
+            total: 5, threshold: 12, defended: false});
+        report.addExtraRoll({title: "Étourdi", formula: "1", dice: [], total: 1, hit: true});
+
+        await ResultWindow.present(report);
+
+        const lines = windowEl().querySelectorAll("[data-def-line]");
+        expect(lines).toHaveLength(1);
+        expect(lines[0].textContent).toContain("Gobelin");
+        const save = windowEl().querySelector("[data-def-mark=\"0-0\"]");
+        expect(save.textContent).toBe("5");
+        expect(save.classList).toContain("is-failure");
+        expect(windowEl().querySelector("[data-def-mark=\"0-1\"]")).toBeNull();
+        expect(windowEl().querySelector(".fq-result-key--eva")).toBeNull();
+    });
+
+    it("après les jets d'effets, chaque cible porte les effets qu'elle a subis", async () => {
+        const report = new RollReport();
+        report.addExtraRoll({title: "Interruption", formula: "1", dice: [], total: 1, hit: true});
+        report.addEffects([{targetTokenId: "t1", targetName: "Gobelin"}],
+            [{label: "Entravé", count: 1}, {label: "Brûlure", count: 3}]);
+
+        await ResultWindow.present(report);
+
+        const band = windowEl().querySelector("[data-targets]");
+        const extra = windowEl().querySelector("[data-extra]");
+        expect(extra.compareDocumentPosition(band) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+        const row = band.querySelector("[data-result=\"0\"]");
+        expect(row.classList).toContain("is-on");
+        expect([...row.querySelectorAll(".fq-result-badge.is-effect")].map(badge => badge.textContent))
+            .toEqual(["Entravé", "Brûlure ×3"]);
+        expect(row.querySelector(".fq-result-value").textContent).toBe("—");
+    });
+
     describe("une fois la mise en scène terminée", () => {
         beforeEach(async () => {
             await ResultWindow.present(fullReport());

@@ -239,6 +239,24 @@ describe("ResultChatLog", () => {
         });
     });
 
+    describe("effets posés", () => {
+        it("ajoute les effets à la ligne de la cible, et nomme la cible qui n'a subi que des effets", () => {
+            const report = new RollReport();
+            report.addResult({targetTokenId: "t1", targetName: "Gobelin", value: 9, type: "damageFQ",
+                critical: false, evasion: false});
+            report.addEffects([{targetTokenId: "t1", targetName: "Gobelin"}], [{label: "Brûlure", count: 3}]);
+            report.addEffects([{targetTokenId: "t2", targetName: "Orc"}], [{label: "Entravé", count: 1}]);
+
+            const doc = new DOMParser().parseFromString(ResultChatLog.buildContent(report), "text/html");
+            const lines = [...doc.querySelectorAll(".fq-card-engine-result-line")];
+
+            expect(lines).toHaveLength(2);
+            expect(lines[0].querySelector(".fq-result-badge--effect").textContent).toBe("Brûlure ×3");
+            expect(lines[1].textContent).toContain("Orc");
+            expect(lines[1].querySelector(".fq-result-badge--effect").textContent).toBe("Entravé");
+        });
+    });
+
     describe("contenu", () => {
         beforeEach(() => {
             ResultChatLog.publish(ACTOR, fullReport());

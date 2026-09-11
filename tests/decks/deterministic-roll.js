@@ -196,7 +196,8 @@ const FUNCTIONS = {
 // expr := add
 // add  := mul (('+' | '-') mul)*
 // mul  := dice (('*' | '/') dice)*
-// dice := unary ('d' unary)?     (compte par défaut 1 si 'd' immédiat, ex. "d20")
+// dice := ('+' | '-')* unary ('d' unary)?  (compte par défaut 1 si 'd' immédiat, ex. "d20") ;
+//         le signe de tête porte sur tout le terme, comme chez Foundry : "-1d6" vaut -(1d6)
 // unary:= ('+' | '-') unary | primary
 // primary := NUMBER | '(' expr ')' | IDENT '(' expr (',' expr)* ')'
 
@@ -244,6 +245,12 @@ class Parser {
     }
 
     parseDice() {
+        let sign = 1;
+        while (this.peek().type === "PLUS" || this.peek().type === "MINUS") {
+            if (this.next().type === "MINUS") {
+                sign = -sign;
+            }
+        }
         const hasCount = this.peek().type !== "DICE";
         const count = hasCount ? this.parseUnary() : 1;
         if (this.peek().type === "DICE") {
@@ -256,9 +263,9 @@ class Parser {
                 total += nextDieValue(f);
                 this.diceEntries.push({options: {}});
             }
-            return total;
+            return sign * total;
         }
-        return count;
+        return sign * count;
     }
 
     parseUnary() {

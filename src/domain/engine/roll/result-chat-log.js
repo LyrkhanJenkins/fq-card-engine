@@ -254,9 +254,7 @@ export default class ResultChatLog {
      * @returns {string} La liste des résultats, ou une chaîne vide s'il n'y en a aucun.
      */
     static #resultLines(report) {
-        if (report.results.length === 0) {
-            return "";
-        }
+        const effects = new Map((report.effects ?? []).map(entry => [entry.targetTokenId, entry]));
         const lines = report.results.map(result => {
             const modifier = result.type === "healFQ" ? "fq-result--heal"
                 : result.type === "damageFQ" ? "fq-result--damage" : "";
@@ -276,12 +274,37 @@ export default class ResultChatLog {
             badges += DamageTraitLabels.chips(result.traits).map(chip =>
                 `<span class="fq-result-badge fq-result-badge--${chip.kind}" data-tooltip="${escapeHtml(chip.tooltip)}">`
                 + `${escapeHtml(chip.text)}</span>`).join("");
+            badges += ResultChatLog.#effectBadges(effects.get(result.targetTokenId));
+            effects.delete(result.targetTokenId);
             return `<li class="fq-card-engine-result-line ${modifier}">`
                 + `<span class="fq-result-key">${result.targetName}</span>`
                 + `<span class="fq-result-value"><b>${result.value}</b>${badges}</span>`
                 + `</li>`;
         });
+        // Une cible qui ne subit que des effets (carte sans dégâts) n'a pas de
+        // valeur : sa ligne ne porte que ses effets.
+        for (const entry of effects.values()) {
+            lines.push(`<li class="fq-card-engine-result-line fq-result--effect">`
+                + `<span class="fq-result-key">${entry.targetName}</span>`
+                + `<span class="fq-result-value">${ResultChatLog.#effectBadges(entry)}</span>`
+                + `</li>`);
+        }
+        if (lines.length === 0) {
+            return "";
+        }
         return `<ul class="fq-card-engine-result-list">${lines.join("")}</ul>`;
+    }
+
+    /**
+     * Les pastilles des effets posés sur une cible.
+     *
+     * @param {?object} [entry] - L'entrée d'effets du rapport pour cette cible.
+     *
+     * @returns {string} Le HTML des pastilles, vide si la cible n'a rien subi.
+     */
+    static #effectBadges(entry) {
+        return (entry?.effects ?? []).map(effect => `<span class="fq-result-badge fq-result-badge--effect">`
+            + `${escapeHtml(RollReport.effectTag(effect))}</span>`).join("");
     }
 
     /**

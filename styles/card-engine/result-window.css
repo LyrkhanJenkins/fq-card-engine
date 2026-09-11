@@ -446,6 +446,17 @@
     color: var(--fq8-color-evasion);
 }
 
+.fq-result-badge.is-effect {
+    color: #c7b6ff;
+}
+
+/* Cible touchée par un effet sans rien subir en points de vie. */
+.fq-result-value.is-none {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fq8-message-label);
+}
+
 /* ── Les jets de formules d'effets ── */
 .fq-result-extra-row {
     display: none;

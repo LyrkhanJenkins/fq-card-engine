@@ -380,6 +380,12 @@ div.separator {
 
 /* Protection par l'armure ou la sauvegarde : l'or du jet pour toucher, comme
    sa ligne de jet plus haut dans le message. */
+.fq-result-badge--effect {
+    background: color-mix(in srgb, #c7b6ff 18%, transparent);
+    border: 1px solid color-mix(in srgb, #c7b6ff 55%, transparent);
+    color: #c7b6ff;
+}
+
 .fq-result-badge--protected {
     background: color-mix(in srgb, var(--fq8-message-gold) 20%, transparent);
     border: 1px solid color-mix(in srgb, var(--fq8-message-gold) 55%, transparent);

@@ -872,6 +872,97 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
             expect(socket.executeAsGM).not.toHaveBeenCalledWith("addEffectForTarget", expect.anything(), expect.anything());
             expect(messages).toEqual([]);
         });
+
+        describe("choix à sauvegarde : effets réservés aux cibles qui la ratent", () => {
+            /**
+             * Un rapport où « tA » a réussi sa sauvegarde et « tB » l'a ratée.
+             *
+             * @returns {RollReport} Le rapport.
+             */
+            function savesReport() {
+                const report = new RollReport();
+                report.addHit({targetTokenId: "tA", targetName: "A", kind: "save", roll: 18, modifier: 0,
+                    total: 18, threshold: 12, defended: true});
+                report.addHit({targetTokenId: "tB", targetName: "B", kind: "save", roll: 3, modifier: 0,
+                    total: 3, threshold: 12, defended: false});
+                return report;
+            }
+
+            const formula = ({self = false, messages = []} = {}) => ({
+                formula: "1d20", title: "T",
+                effects: [{result: "0", self, messages, data: [{label: "E", changes: []}]}]
+            });
+
+            /** Un choix qui vise autrui et demande une sauvegarde. */
+            const saveChoice = () => makeChoice({minReach: 1, hitType: "save"});
+
+            it("ne vise que les cibles qui ont raté leur sauvegarde", async () => {
+                vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "tA"}, {id: "tB"}]);
+
+                const {pending} = await CardEffect.playApplyEffectsFormulas(formula(), saveChoice(), savesReport());
+                await CardEffect.applyPendingEffects(pending);
+
+                expect(socket.executeAsGM).toHaveBeenCalledWith("addEffectForTarget", expect.any(Object), "tB");
+                expect(socket.executeAsGM).not.toHaveBeenCalledWith("addEffectForTarget", expect.anything(), "tA");
+            });
+
+            it("une cible sans sauvegarde consignée n'a rien pu opposer : elle subit l'effet", async () => {
+                vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "tC"}]);
+
+                const {pending} = await CardEffect.playApplyEffectsFormulas(formula(), saveChoice(), savesReport());
+                await CardEffect.applyPendingEffects(pending);
+
+                expect(socket.executeAsGM).toHaveBeenCalledWith("addEffectForTarget", expect.any(Object), "tC");
+            });
+
+            it("toutes les cibles ont sauvegardé : ni effet, ni message, et le jet est dit sans effet", async () => {
+                vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "tA"}]);
+                const report = savesReport();
+
+                const {messages, pending} = await CardEffect.playApplyEffectsFormulas(
+                    formula({messages: [{key: "FQCARDENGINE.SomeMsg"}]}), saveChoice(), report);
+
+                expect(pending).toBeNull();
+                expect(messages).toEqual([]);
+                expect(report.extraRolls[0].hit).toBe(false);
+            });
+
+            it("un choix sans sauvegarde applique ses effets à toutes ses cibles", async () => {
+                vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "tA"}, {id: "tB"}]);
+
+                const {pending} = await CardEffect.playApplyEffectsFormulas(formula(), makeChoice({minReach: 1}),
+                    savesReport());
+                await CardEffect.applyPendingEffects(pending);
+
+                expect(socket.executeAsGM).toHaveBeenCalledWith("addEffectForTarget", expect.any(Object), "tA");
+                expect(socket.executeAsGM).toHaveBeenCalledWith("addEffectForTarget", expect.any(Object), "tB");
+            });
+
+            it("un effet sur le lanceur n'attend aucune sauvegarde", async () => {
+                vi.spyOn(Constants, "myTargets").mockReturnValue([{id: "tA"}]);
+
+                const {pending} = await CardEffect.playApplyEffectsFormulas(formula({self: true}), saveChoice(),
+                    savesReport());
+                await CardEffect.applyPendingEffects(pending);
+
+                expect(ActiveEffect.implementation.create).toHaveBeenCalled();
+            });
+
+            it("consigne au rapport les effets posés sur chaque cible qui a raté, répétitions comptées", async () => {
+                vi.spyOn(Constants, "myTargets").mockReturnValue([
+                    {id: "tA", name: "A", document: {name: "A"}}, {id: "tB", name: "B", document: {name: "B"}}
+                ]);
+                const report = savesReport();
+                const repeated = {formula: "1d20", title: "T", effects: [{result: "0", self: false, messages: [],
+                    data: [{name: "Interruption", changes: []}, {name: "Interruption", changes: []}]}]};
+
+                await CardEffect.playApplyEffectsFormulas(repeated, saveChoice(), report);
+
+                expect(report.effects).toEqual([expect.objectContaining({
+                    targetTokenId: "tB", effects: [{label: "Interruption", count: 2}]
+                })]);
+            });
+        });
     });
 
     describe("prepareDataFromCard — coûts et bonus restants", () => {

@@ -720,12 +720,7 @@
                           "expireOnDamage": false
                         }
                       ],
-                      "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Immobilization\"}"
-                        }
-                      ]
+                      "messages": []
                     }
                   ]
                 }
@@ -2278,10 +2273,6 @@
                       ],
                       "messages": [
                         {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Critical -2*XXX\"}"
-                        },
-                        {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\": \"Critical -2*XXX\", \"turn\":\"2\"}"
                         }
@@ -2436,10 +2427,6 @@
                         }
                       ],
                       "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\":\"Virus\"}"
-                        },
                         {
                           "key": "FQCARDENGINE.CardMsgPermanentEffect",
                           "arg": "{\"effectName\":\"Virus\"}"
@@ -2601,10 +2588,6 @@
                         }
                       ],
                       "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Immobilization\"}"
-                        },
                         {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\": \"Immobilization\",\"turn\": \"1\"}"
@@ -2986,12 +2969,7 @@
                           "expireOnDamage": false
                         }
                       ],
-                      "messages": [
-                        {
-                          "key": "FQCARDENGINE.CardMsgApplyEffect",
-                          "arg": "{\"effectName\": \"Turn Ended\"}"
-                        }
-                      ]
+                      "messages": []
                     }
                   ]
                 }

@@ -128,6 +128,13 @@ export default class CardEffect {
             }
             let cardMessages = CardEffect.translateMessages(cardContent.messages);
             const pendingEffects = [];
+            // Les effets d'un choix à sauvegarde attendent la sauvegarde de chaque
+            // cible. Une carte à dégâts l'a déjà jetée et consignée ; une carte sans
+            // dégâts la jette ici.
+            if (CardEffect.#isSaveChoice(cardContent) && (cardContent.applyEffectsFormulas ?? []).length > 0
+                && report.hits.length === 0) {
+                await Damage.rollSaves(Constants.actorCurrent, cardContent, report);
+            }
             if (cardContent.applyEffectsFormulas) {
                 for (let i = 0; i < cardContent.applyEffectsFormulas.length; i++) {
                     const applyEffectsFormulas = cardContent.applyEffectsFormulas[i];
@@ -749,8 +756,10 @@ export default class CardEffect {
                 // `@attributes.hp.value` du statut virus — la numériser la détruirait).
                 if (!["system.fq.bonus.damage", "system.fq.bonus.heal", "macro.execute"].includes(change.key)
                     && !String(change.value).includes("@")) {
+                    // `rollDiceSync` et non `rollResultSync` : une valeur peut porter un
+                    // dé (« -1d6 » points d'action), que Foundry refuse d'évaluer en synchrone.
                     try {
-                        value = Number(RollService.rollResultSync(change.value));
+                        value = Number(RollService.rollDiceSync(change.value));
                     } catch {
                         value = change.value;
                     }
@@ -803,15 +812,22 @@ export default class CardEffect {
     //Display damage dices and manual actions
     /**
      * Évalue la formule d'une « formule d'effets » : si le résultat du jet
-     * correspond à un effet, crée les effets actifs associés (sur soi ou sur les
-     * cibles via socket MJ) et publie le message de succès. Retourne les messages
-     * traduits de l'effet déclenché.
+     * correspond à un effet, prépare les effets actifs associés (sur soi ou sur
+     * les cibles) et rend les messages traduits de l'effet déclenché. Rien n'est
+     * créé ici : voir {@link CardEffect.applyPendingEffects}.
+     *
+     * Pour un choix à sauvegarde (`hitType` « save »), un effet sur autrui ne vise
+     * que les cibles qui ont RATÉ leur sauvegarde, d'après les jets déjà consignés
+     * au rapport. Si toutes l'ont réussie, il ne se déclenche pas : ni effet, ni
+     * message. Un effet sur le lanceur n'attend aucune sauvegarde.
      *
      * @param {object} applyEffectsFormulas - La formule d'effets (`formula`, `title`, `effects`).
      * @param {object} cardContent          - Le contenu (choix) de la carte (portée, type de cible…).
-     * @param {RollReport} [report]         - Le rapport où consigner ce jet supplémentaire.
+     * @param {RollReport} [report]         - Le rapport où consigner ce jet supplémentaire, et
+     *        où lire les sauvegardes des cibles.
      *
-     * @returns {Promise<string[]>} Les messages traduits de l'effet déclenché (vide si aucun).
+     * @returns {Promise<{messages: string[], pending: ?object}>} Les messages traduits de l'effet
+     *          déclenché (vide si aucun), et les effets à appliquer une fois le résultat montré.
      */
     static async playApplyEffectsFormulas(applyEffectsFormulas, cardContent, report = null) {
         // Formule purement numérique : pas de jet, on valide directement avec ce
@@ -825,9 +841,34 @@ export default class CardEffect {
             applyEffectsFormulas.effects[i].result = RollService.rollResultSync(applyEffectsFormulas.effects[i].result);
         }
 
+        let currentEffectData = applyEffectsFormulas.effects?.find(effect => effect.result === total) ?? null;
+
+        // Décision cible/soi + cibles résolues : calculées UNE seule fois et partagées par
+        // l'ajout et le retrait d'effet de cet effet déclenché.
+        //
+        // Elles sont FIGÉES ICI, avant l'affichage du résultat, et non au moment
+        // d'appliquer l'effet : l'animation dure plusieurs secondes, pendant
+        // lesquelles la sélection de l'utilisateur peut avoir changé. Lire les
+        // cibles après coup, ce serait lire ce qu'elles sont devenues — la panne
+        // que `TargetingPredicates#targetsByActivity` documente déjà côté dnd5e.
+        const toTargets = currentEffectData ? CardEffect.effectAppliesToTargets(currentEffectData, cardContent) : false;
+        let targets = toTargets ? Constants.myTargets(cardContent.targetType) : [];
+        if (toTargets && CardEffect.#isSaveChoice(cardContent)) {
+            targets = CardEffect.#failedSaveTargets(targets, report);
+            // Toutes les cibles ont sauvegardé : l'effet ne se déclenche pas, et
+            // ses messages n'annoncent pas ce qui n'a pas eu lieu.
+            if (targets.length === 0) {
+                currentEffectData = null;
+            }
+        }
+        if (currentEffectData && toTargets) {
+            // Libellés lus AVANT la création des effets, qui consomme le champ `status`.
+            report?.addEffects(targets.map(target => ({targetTokenId: target.id, targetName: Constants.tokenName(target)})),
+                CardEffect.#effectLabels(currentEffectData.data));
+        }
+
         let effectMessages = null;
         let effects = null;
-        const currentEffectData = applyEffectsFormulas.effects?.find(effect => effect.result === total) ?? null;
         if (currentEffectData) {
             // Les messages des statuts sont lus AVANT la création des effets, qui
             // consomme le champ `status` des données libres.
@@ -846,21 +887,70 @@ export default class CardEffect {
             hit: !!currentEffectData
         });
 
-        // Décision cible/soi + cibles résolues : calculées UNE seule fois et partagées par
-        // l'ajout et le retrait d'effet de cet effet déclenché.
-        //
-        // Elles sont FIGÉES ICI, avant l'affichage du résultat, et non au moment
-        // d'appliquer l'effet : l'animation dure plusieurs secondes, pendant
-        // lesquelles la sélection de l'utilisateur peut avoir changé. Lire les
-        // cibles après coup, ce serait lire ce qu'elles sont devenues — la panne
-        // que `TargetingPredicates#targetsByActivity` documente déjà côté dnd5e.
-        const toTargets = currentEffectData ? CardEffect.effectAppliesToTargets(currentEffectData, cardContent) : false;
-        const targets = toTargets ? Constants.myTargets(cardContent.targetType) : [];
-
         return {
             messages: effectMessages ?? [],
             pending: currentEffectData ? {effects, currentEffectData, toTargets, targets} : null
         };
+    }
+
+    /**
+     * Les cibles qui n'ont PAS sauvegardé : celles dont le rapport consigne une
+     * sauvegarde ratée, et celles qui n'ont rien pu opposer — aucune sauvegarde
+     * consignée, faute de valeur de sauvegarde sur la cible ou de sauvegarde
+     * demandée par le choix. C'est la même lecture que les dégâts, où une cible
+     * sans défense consignée n'est jamais protégée.
+     *
+     * @param {object[]}    targets  - Les cibles résolues.
+     * @param {?RollReport} [report] - Le rapport portant les jets de sauvegarde.
+     *
+     * @returns {object[]} Les cibles qui subissent l'effet.
+     */
+    static #failedSaveTargets(targets, report) {
+        const saved = new Set((report?.hits ?? [])
+            .filter(hit => hit.kind === "save" && hit.defended)
+            .map(hit => hit.targetTokenId));
+        return targets.filter(target => !saved.has(target.id));
+    }
+
+    /**
+     * Le choix demande-t-il une sauvegarde à ses cibles ? Ses effets sur autrui
+     * sont alors réservés à celles qui la ratent ; ses effets sur le lanceur
+     * n'attendent aucune sauvegarde.
+     *
+     * @param {object} cardContent - Le contenu (choix) de la carte.
+     *
+     * @returns {boolean} True pour un choix de type « save ».
+     */
+    static #isSaveChoice(cardContent) {
+        return cardContent?.hitType === CardFqSystem.HIT_TYPE_SAVE;
+    }
+
+    /**
+     * Les libellés des effets qu'une formule pose, pour le rapport : le nom du
+     * statut dans la langue du joueur, ou le nom saisi sur la carte. Un effet
+     * répété (trois « Brûlure ») n'en fait qu'un, avec son compte.
+     *
+     * @param {object[]} [data] - Les données d'effet de l'effet déclenché.
+     *
+     * @returns {{label: string, count: number}[]} Les effets, dans l'ordre de la carte.
+     */
+    static #effectLabels(data = []) {
+        const labels = [];
+        for (const entry of data) {
+            const statusKey = entry?.status ? StatusEffects.STATUS_CHOICES[entry.status] : null;
+            const label = statusKey ? game.i18n.localize(statusKey)
+                : (entry?.name ? game.i18n.localize(entry.name) : "");
+            if (!label) {
+                continue;
+            }
+            const known = labels.find(effect => effect.label === label);
+            if (known) {
+                known.count++;
+            } else {
+                labels.push({label, count: 1});
+            }
+        }
+        return labels;
     }
 
     /**
