@@ -757,4 +757,27 @@ describe("integration/dnd5e", () => {
             expect(message.create).toBe(true);
         });
     });
+
+    describe("menus contextuels des feuilles", () => {
+        afterEach(() => {
+            CONFIG.FqCardEngine.options.playerLimitCardsRight = false;
+        });
+
+        it("retirent l'édition des objets, effets et activités pour un joueur aux droits limités", () => {
+            CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
+            game.user.isGM = false;
+            const menu = () => [{name: "DND5E.ItemView"}, {name: "DND5E.ContextMenuActionEdit"}];
+            const itemMenu = menu();
+            const effectMenu = menu();
+            const activityMenu = menu();
+
+            getHook("dnd5e.getItemContextOptions")({}, itemMenu);
+            getHook("dnd5e.getActiveEffectContextOptions")({}, effectMenu);
+            getHook("dnd5e.getItemActivityContext")({}, null, activityMenu);
+
+            for (const menuItems of [itemMenu, effectMenu, activityMenu]) {
+                expect(menuItems.map(e => e.name)).toEqual(["DND5E.ItemView"]);
+            }
+        });
+    });
 });

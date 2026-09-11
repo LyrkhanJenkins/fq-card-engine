@@ -12,6 +12,7 @@ import TargetingPredicates from "../../domain/engine/shared/targeting-predicates
 import OpportunityAttack from "../../domain/engine/reaction/opportunity-attack.js";
 import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../domain/trading/trading-cards.js";
 import SpellbookWindow from "../../domain/interface/window/spellbook-window.js";
+import {stripEditingContextOptions} from "../../domain/interface/sheet/sheet-play-mode.js";
 
 /**
  * Types d'activité qui INFLIGENT des dégâts, et dont la résolution passe donc
@@ -118,6 +119,13 @@ const activityReachInCases = (range, actor) => {
  */
 const fqPublishesDamageRoll = (activity) => !!activity?.item?.actor
     && ROLL_CONSUMING_TYPES.includes(activity?.type);
+
+// Sous « Limitation des droits du joueur », les menus contextuels des feuilles
+// ne proposent plus ce que le mode jeu verrouillé interdit déjà : modifier,
+// dupliquer ou supprimer un objet, un effet ou une activité.
+Hooks.on("dnd5e.getItemContextOptions", (_item, menuItems) => stripEditingContextOptions(menuItems));
+Hooks.on("dnd5e.getActiveEffectContextOptions", (_effect, menuItems) => stripEditingContextOptions(menuItems));
+Hooks.on("dnd5e.getItemActivityContext", (_activity, _target, menuItems) => stripEditingContextOptions(menuItems));
 
 Hooks.on("dnd5e.shortRest", (actor, _config) => {
     actor.update({"system.fq.action.value": actor.system.fq.action.max});

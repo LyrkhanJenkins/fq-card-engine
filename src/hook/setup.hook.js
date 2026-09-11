@@ -36,6 +36,7 @@ Hooks.on("setup", function () {
         "modules/fq-card-engine/src/templates/actors/fq-character-sidebar.hbs",
         "modules/fq-card-engine/src/templates/actors/fq-npc-header.hbs",
         "modules/fq-card-engine/src/templates/actors/fq-npc-sidebar.hbs",
+        "modules/fq-card-engine/src/templates/actors/parts/fq-cost-column.hbs",
         "modules/fq-card-engine/src/templates/items/fq-item-tabs.hbs",
         "modules/fq-card-engine/src/templates/board/card.hbs",
         "modules/fq-card-engine/src/templates/board/hand-container.hbs",

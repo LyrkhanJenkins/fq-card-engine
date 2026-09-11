@@ -1,4 +1,5 @@
 import {lockPlayMode, removeModeToggle} from "../sheet-play-mode.js";
+import {fqCostEntries, withFqCostColumn} from "./fq-cost-column.js";
 
 /**
  * Feuille de personnage FQ. Étend la feuille de personnage dnd5e en ajoutant
@@ -43,6 +44,47 @@ export default class FqCharacterSheet extends dnd5e.applications.actor.Character
     _renderModeToggle() {
         if (removeModeToggle(this)) return;
         super._renderModeToggle();
+    }
+
+    /**
+     * Ajoute la colonne « Coût FQ » à chaque section de l'inventaire.
+     *
+     * @override
+     * @param {object[]} sections - Les sections de l'inventaire, mutées sur place.
+     */
+    async _configureInventorySections(sections) {
+        await super._configureInventorySections(sections);
+        for (const section of sections) {
+            section.columns = withFqCostColumn(section.columns);
+        }
+    }
+
+    /**
+     * Ajoute la colonne « Coût FQ » à chaque section du grimoire dnd5e (onglet des sorts).
+     *
+     * @override
+     * @param {object} context - Le contexte de rendu de la feuille.
+     *
+     * @returns {object} Les sections du grimoire, indexées par clé.
+     */
+    _prepareSpellbook(context) {
+        const spellbook = super._prepareSpellbook(context);
+        for (const section of Object.values(spellbook)) {
+            section.columns = withFqCostColumn(section.columns);
+        }
+        return spellbook;
+    }
+
+    /**
+     * Prépare les coûts FQ de chaque objet, lus par la colonne « Coût FQ ».
+     *
+     * @override
+     * @param {object} item - L'objet à préparer.
+     * @param {object} ctx  - Le contexte de rendu de l'objet, muté sur place.
+     */
+    _prepareItem(item, ctx) {
+        super._prepareItem(item, ctx);
+        ctx.fqCosts = fqCostEntries(item);
     }
 
     /**

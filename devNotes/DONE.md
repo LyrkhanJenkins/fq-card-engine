@@ -43,7 +43,8 @@ Feat :
 - Géré les resistances, les immunités et les absorptions.(en cours...)
 - Cartes de niveau 0 obligatoire dans les spellbooks et decks (lutte contre les tous petits decks)
 - Cartes peuvent créer des tiles avec des walls (Mur de givre)
-- Les joueurs ne peuvent pas faire bouger manuellement des cartes avec la restriction des droits
+- Restriction des droits au minium (drag and drop de cartes, édition d'items, récupération depuis un compendium)
+- Ajout des coûts FQ sur les items et les spells
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

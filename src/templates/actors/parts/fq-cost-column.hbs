@@ -1,0 +1,5 @@
+<div class="item-detail item-fqCost {{#unless ctx.fqCosts.length}}empty{{/unless}}" data-column-id="{{ id }}">
+    {{#each ctx.fqCosts}}
+    <span class="fq-cost-tag {{ cssClass }}" data-tooltip="{{ label }}" aria-label="{{ label }}">{{ value }}&nbsp;{{ short }}</span>
+    {{/each}}
+</div>
