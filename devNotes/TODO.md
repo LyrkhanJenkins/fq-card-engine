@@ -17,7 +17,6 @@
 ### Versions prévues
 #### 3.0.0
 - Vérifier limitation droits utilisateurs (Ouvrir son deck? drag and drop? drag and drop depuis les compendiums?)
-- Est ce qu'on peut faire des cartes qui construisent des tiles infranchissables?
 
 #### 3.1.x
 - Rajouter des règles d'architectures

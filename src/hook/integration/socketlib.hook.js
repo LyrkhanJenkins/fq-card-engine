@@ -8,6 +8,7 @@ import PlayCard from "../../domain/engine/play-card.js";
 import {showDeckShuffledAlert} from "../../core/utils/dialog.utils.js";
 import ResultWindow from "../../domain/interface/window/result-window.js";
 import {registerResultBroadcaster} from "../../domain/engine/roll/result-presenter.js";
+import ZoneWall from "../../domain/engine/shared/zone-wall.js";
 
 /**
  * Instance socketlib du module, initialisée au hook `socketlib.ready`.
@@ -34,6 +35,7 @@ Hooks.once("socketlib.ready", () => {
     socket.register("deleteToken", TokenHud.deleteToken);
     socket.register("deckShuffledAlert", showDeckShuffledAlert);
     socket.register("passCards", TradingCards.passCards);
+    socket.register("createZoneWalls", ZoneWall.createZoneWalls);
     // Le résultat s’affiche chez TOUT LE MONDE : sans chat animé ni dés 3D, un
     // spectateur privé de cette fenêtre ne verrait plus rien du jet, seulement
     // des barres de vie qui tombent sans explication.

@@ -8,6 +8,8 @@ import CardActions from "./domain/interface/window/card-actions.js";
 import DragDrop from "./domain/interface/window/drag-drop.js";
 import WeaponDamage from "./domain/engine/roll/weapon-damage.js";
 import CardCondition from "./domain/engine/shared/card-condition.js";
+import ZoneWall from "./domain/engine/shared/zone-wall.js";
+import {socket} from "./hook/integration/socketlib.hook.js";
 
 CONFIG.FqCardEngine = {
     options: {
@@ -26,6 +28,15 @@ CONFIG.FqCardEngine = {
 window.FqCardEngineModule = {
     cst: Constants,
     cond: CardCondition,
+    /**
+     * Entrée des scripts de carte pour les ouvrages permanents :
+     * `FqCardEngineModule.walls.fromZone(cardContent, {strokeColor, fillColor, fillAlpha})`
+     * dresse des murs (déplacement + vue) sur la zone posée, avec un dessin.
+     * Pas d'`await` dans un `executeEval` : l'appel part sans être attendu.
+     */
+    walls: {
+        fromZone: (cardContent, style) => ZoneWall.requestFromZone(socket, cardContent, style)
+    },
     handMiniBarList: new Array(),
     moduleName: "fq-card-engine",
     eventName: "module.fq-card-engine",

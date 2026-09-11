@@ -427,6 +427,7 @@
   "FQCARDENGINE.WarningSpellBookMissingForPlayer": "Le joueur n'a pas de bibliothèque configurée",
   "FQCARDENGINE.WarningOnlyCopyCardFromSpellBookToDeck": "On ne peut copier des cartes que de la bibliothèque vers son deck",
   "FQCARDENGINE.WarningReachMaxCardsForDeck": "Impossible d'ajouter la carte, Nombre maximum atteint",
+  "FQCARDENGINE.WarningZoneWallNoZone": "Aucune zone exploitable pour dresser le mur (ligne, rectangle ou cercle attendu).",
   "FQCARDENGINE.WarningCombattantsWithNoActor": "Certains combattants n'ont pas d'acteur lié",
   "FQCARDENGINE.NoOwnedCharacter": "Le joueur n'a pas de personnage configuré",
   "FQCARDENGINE.NoUserForActor": "Le personnage n'est utilisé par aucun joueur",
@@ -1705,8 +1706,10 @@
   "FQCARDDESCRIPTION.ThermalSeal": "Nécessite un effet de brûlure ET un effet de gel actifs sur la même cible\nLe sceau fige la cible à l'instant du coup : le sort ne peut pas être esquivé\nInflige {0_damage} dégâts\nApplique 2 effets de gel",
   "FQCARDTITLE.TelluricConvergence": "Convergence Tellurique",
   "FQCARDDESCRIPTION.TelluricConvergence": "Nécessite un effet de terre ET un effet d'air actifs sur la même cible\nPosez un cercle de 2 cases de rayon\nTous les éléments semés sur le champ de bataille convergent : inflige {0_damage} dégâts aux cibles couvertes, d'autant plus que le camp adverse porte d'effets élémentaires\nApplique à chacune 1 effet de terre et 1 effet d'air",
-  "FQCARDTITLE.PackIceShards": "Éclats De Banquise",
-  "FQCARDDESCRIPTION.PackIceShards": "Nécessite un effet de terre ET un effet de gel actifs sur la même cible\nLa banquise se fend en deux éclats : la carte se joue 2 fois, y compris dans le même tour\nInflige {0_damage} dégâts\nApplique 1 effet de terre",
+  "FQCARDTITLE.IceWall": "Mur De Givre",
+  "FQCARDDESCRIPTION.IceWall": "Posez une ligne de 4 cases\nUn mur de glace s'élève : infranchissable, il bloque aussi la vue jusqu'à ce que le MJ le dissipe\nInflige {0_damage} dégâts aux cibles couvertes\nApplique 1 effet de gel",
+  "FQCARDTITLE.ImpassableIllusion": "Illusion Infranchissable",
+  "FQCARDDESCRIPTION.ImpassableIllusion": "Posez un carré de 3 cases de côté\nUne illusion en dessine les contours : nul ne peut la franchir ni voir au travers, jusqu'à ce que le MJ la dissipe",
   "FQCARDTITLE.WhiteNecrosis": "Nécrose Blanche",
   "FQCARDDESCRIPTION.WhiteNecrosis": "Nécessite un effet de gel ET un effet d'air actifs sur la même cible\nInflige {0_damage} dégâts\nLes chairs gelées ne se referment plus : la cible ne peut plus regagner de points de vie jusqu'à la fin du combat\nApplique 1 effet de gel"
 }

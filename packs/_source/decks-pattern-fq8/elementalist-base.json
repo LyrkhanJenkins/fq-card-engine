@@ -7065,8 +7065,8 @@
       "cards": []
     },
     {
-      "_id": "FQelemPackIce415",
-      "name": "FQCARDTITLE.PackIceShards",
+      "_id": "FQelemIceWall415",
+      "name": "FQCARDTITLE.IceWall",
       "description": "",
       "type": "base",
       "suit": "",
@@ -7079,7 +7079,7 @@
         {
           "name": "",
           "img": "modules/fq-card-engine/images/cards/in_progress.png",
-          "text": "FQCARDDESCRIPTION.PackIceShards"
+          "text": "FQCARDDESCRIPTION.IceWall"
         }
       ],
       "face": 0,
@@ -7091,35 +7091,35 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 1,
           "class": "elementalist",
           "choices": [
             {
               "name": "",
-              "action": "-5",
-              "mana": "-1",
-              "zeal": "1",
+              "action": "-6",
+              "mana": "-2",
+              "zeal": "",
               "reactive": false,
               "hp": "",
               "draw": "",
               "drop": "",
-              "targetType": "Default",
+              "targetType": "Zone",
               "minReach": "1",
-              "maxReach": "7",
+              "maxReach": "6",
               "nbTargets": "",
-              "zoneShape": "circle",
-              "zoneSize": "",
+              "zoneShape": "line",
+              "zoneSize": "4",
               "zoneAngle": "",
-              "zoneWidth": "",
-              "damage": "(@int + @wis + 1d6)[cold]",
+              "zoneWidth": "1",
+              "damage": "(@int + 1d6)[cold]",
               "magical": true,
               "heal": "",
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
+              "hitType": "save",
               "hitSource": "ability",
               "hitAbility": "int",
-              "saveAbility": "",
+              "saveAbility": "dex",
               "hitBonus": "",
               "saveDc": "",
               "xmin": "",
@@ -7137,7 +7137,7 @@
               "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
-                  "title": "Earth Effect",
+                  "title": "Frost",
                   "formula": "1",
                   "effects": [
                     {
@@ -7145,17 +7145,17 @@
                       "self": false,
                       "data": [
                         {
-                          "status": "earth"
+                          "status": "frost"
                         }
                       ],
                       "messages": [
                         {
-                          "key": "FQCARDENGINE.CardMsgApplyEffectStacks",
-                          "arg": "{\"effectName\":\"Earth Effect\",\"count\":\"1\"}"
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{ \"effectName\": \"Frost\"}"
                         },
                         {
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
-                          "arg": "{\"effectName\":\"Earth Effect\",\"turn\":\"4\"}"
+                          "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"
                         }
                       ],
                       "removeEffectName": ""
@@ -7166,32 +7166,13 @@
               "messages": [],
               "minions": [],
               "minionsOnZone": false,
-              "replayable": "2",
+              "replayable": "",
               "retrieveFromDiscard": "",
               "retrieveFromDeck": "",
               "destroyFromDiscard": "",
               "duplicateFromHand": "",
-              "customEvals": [
-                {
-                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
-                  "errorMessages": [
-                    {
-                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
-                      "arg": ""
-                    }
-                  ]
-                },
-                {
-                  "script": "FqCardEngineModule.cond.targetsHaveAllEffects([\"Earth Effect\", \"Frost\"])",
-                  "errorMessages": [
-                    {
-                      "key": "FQCARDENGINE.CardWarningMsgMissingBothEffects",
-                      "arg": "{\"effectName1\": \"Earth Effect\", \"effectName2\": \"Frost\"}"
-                    }
-                  ]
-                }
-              ],
-              "executeEval": "",
+              "customEvals": [],
+              "executeEval": "FqCardEngineModule.walls.fromZone(cardContent, {strokeColor: \"#bfe9ff\"});",
               "sound": "",
               "visual": {
                 "path": "jb2a.ice_spikes.radial.burst.white",
@@ -7217,7 +7198,7 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemPackIce415",
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemIceWall415",
       "cards": []
     },
     {

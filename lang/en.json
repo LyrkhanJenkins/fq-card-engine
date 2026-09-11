@@ -427,6 +427,7 @@
   "FQCARDENGINE.WarningSpellBookMissingForPlayer": "Player has no spellbook",
   "FQCARDENGINE.WarningOnlyCopyCardFromSpellBookToDeck": "Cards can only be copied from the SpellBook to your Deck.",
   "FQCARDENGINE.WarningReachMaxCardsForDeck": "Unable to add the card, Maximum reached.",
+  "FQCARDENGINE.WarningZoneWallNoZone": "No usable zone to raise the wall (a line, rectangle or circle is expected).",
   "FQCARDENGINE.WarningCombattantsWithNoActor": "Some combatants have no actor linked",
   "FQCARDENGINE.NoOwnedCharacter": "Player has no owned character",
   "FQCARDENGINE.NoUserForActor": "Actor is not used by any player",
@@ -1704,8 +1705,10 @@
   "FQCARDDESCRIPTION.ThermalSeal": "Requires an active burn effect AND an active freeze effect on the same target.\nThe seal pins the target at the moment of impact: the spell cannot be dodged.\nDeals {0_damage} damage.\nApplies 2 freeze effects.",
   "FQCARDTITLE.TelluricConvergence": "Telluric Convergence",
   "FQCARDDESCRIPTION.TelluricConvergence": "Requires an active earth effect AND an active air effect on the same target.\nPlace a 2-tile radius circle.\nEvery element sown across the battlefield converges: deals {0_damage} damage to covered targets, more for every elemental effect the enemy side carries.\nApplies to each 1 earth effect and 1 air effect.",
-  "FQCARDTITLE.PackIceShards": "Pack Ice Shards",
-  "FQCARDDESCRIPTION.PackIceShards": "Requires an active earth effect AND an active freeze effect on the same target.\nThe pack ice splits into two shards: the card is played twice, even within the same turn.\nDeals {0_damage} damage.\nApplies 1 earth effect.",
+  "FQCARDTITLE.IceWall": "Ice Wall",
+  "FQCARDDESCRIPTION.IceWall": "Place a 4-square line.\nA wall of ice rises: impassable, it also blocks sight until the GM dispels it.\nDeals {0_damage} damage to covered targets.\nApplies 1 freeze effect.",
+  "FQCARDTITLE.ImpassableIllusion": "Impassable Illusion",
+  "FQCARDDESCRIPTION.ImpassableIllusion": "Place a square of 3 squares per side.\nAn illusion draws its outline: no one can cross it or see through it until the GM dispels it.",
   "FQCARDTITLE.WhiteNecrosis": "White Necrosis",
   "FQCARDDESCRIPTION.WhiteNecrosis": "Requires an active freeze effect AND an active air effect on the same target.\nDeals {0_damage} damage.\nThe frozen flesh no longer knits: the target can no longer regain hit points until the end of the combat.\nApplies 1 freeze effect."
 }
