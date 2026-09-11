@@ -1,11 +1,33 @@
 import Constants from "../../constants.js";
 import RollService from "../../engine/roll/roll-service.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
-import FormulaDisplay, {ABILITY_EMOJIS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, FORMULA_FIELDS} from "./formula-display.js";
+import FormulaDisplay, {
+    ABILITY_EMOJIS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, FORMULA_FIELDS, WEAPON_EMOJIS
+} from "./formula-display.js";
 import {WEAPON_TOKENS} from "../../engine/roll/weapon-damage.js";
-import {ABILITY_SHORT} from "../../abilities.js";
+import HitProfile from "../../engine/roll/hit-profile.js";
 import {expandPills, makePill, PILL_SOURCE, sanitizePillInput, stripPills} from "./formula-pill.js";
 import {escapeHtml} from "../../../core/utils/html.utils.js";
+
+/**
+ * La caractéristique d'un jet pour toucher telle que l'infobulle de la bulle la
+ * nomme (« sur la Force ») : l'article change d'une caractéristique à l'autre,
+ * d'où une clé par caractéristique.
+ * @type {Object<string, string>}
+ */
+const HIT_ON_KEYS = Object.freeze({
+    str: "FQCARDENGINE.HitOnStr", dex: "FQCARDENGINE.HitOnDex", con: "FQCARDENGINE.HitOnCon",
+    int: "FQCARDENGINE.HitOnInt", wis: "FQCARDENGINE.HitOnWis", cha: "FQCARDENGINE.HitOnCha"
+});
+
+/**
+ * L'arme d'une attaque dont la caractéristique n'est pas connue — aucun acteur,
+ * ou aucune arme équipée du bon type.
+ * @type {Object<string, string>}
+ */
+const HIT_WITH_WEAPON_KEYS = Object.freeze({
+    "@wpnM": "FQCARDENGINE.HitWithMeleeWeapon", "@wpnR": "FQCARDENGINE.HitWithRangedWeapon"
+});
 
 /** Seuils (longueur max → taille de police en px), triés par longueur croissante. */
 const DESCRIPTION_SIZE_STEPS = [[1, 40], [80, 36], [110, 34], [145, 30], [200, 26], [290, 22], [340, 20], [440, 18], [9999, 16]];
@@ -473,36 +495,86 @@ export default class DisplayCard {
 
     /**
      * Ce qu'affiche la bulle de TOUCHER — la septième, après réactif et
-     * rejouabilité : ce que la carte oppose à sa cible.
+     * rejouabilité : ce que la carte oppose à sa cible, pour l'acteur qui la tient.
      *
-     * Une carte à jet d'attaque affiche « CA » sur un écu, ce contre quoi le jet
-     * est fait ; une carte à sauvegarde affiche la caractéristique que la cible
-     * doit jeter (« DEX »…) sur un d20 ; une carte qui inflige des dégâts SANS
-     * jet pour toucher affiche une étoile d'impact : ni armure ni sauvegarde ne
-     * les réduisent. La SOURCE du modificateur (arme ou caractéristique du
-     * lanceur) n'entre pas dans la bulle : elle appartient au tooltip, comme le
-     * détail de la rejouabilité.
+     * Sa FORME dit le type : un écu pour un jet d'attaque, un d20 pour une
+     * sauvegarde, une étoile d'impact pour des dégâts SANS jet pour toucher — ni
+     * armure ni sauvegarde ne les réduisent. Dans l'écu : l'icône de la
+     * caractéristique par laquelle passe l'attaque — celle de l'arme équipée pour
+     * une carte d'arme, qui change donc avec l'arme — et le bonus d'attaque. Dans
+     * le d20 : l'icône de la caractéristique que la CIBLE jette, et le DD. Sans
+     * acteur, ou sans arme équipée du bon type, l'écu d'une carte d'arme montre
+     * l'icône de l'arme et aucun chiffre : rien ne permet de les connaître.
      *
      * Une sauvegarde sans caractéristique n'a pas de bulle : sa configuration est
      * incomplète, et le moteur ne la jettera pas.
      *
-     * @param {object} [choice] - Le choix (contenu) de la carte.
+     * @param {object}  [choice] - Le choix (contenu) de la carte.
+     * @param {?object} [actor]  - L'acteur qui tient la carte.
      *
-     * @returns {?{kind: string, label: string, tooltip: string}} Le type de bulle
-     *          (« attack », « save », « raw ») et les clés de localisation du texte
-     *          et du tooltip, ou null si la carte n'a pas cette bulle.
+     * @returns {?{kind: string, icon: string, number: ?string, tooltip: string}} Le type
+     *          de bulle (« attack », « save », « raw »), l'icône (le « ! » des dégâts
+     *          bruts), le chiffre éventuel et le tooltip (texte, ou clé pour les
+     *          dégâts bruts) ; null si la carte n'a pas cette bulle.
      */
-    static getHitBubble(choice) {
+    static getHitBubble(choice, actor = null) {
         if (choice?.hitType === CardFqSystem.HIT_TYPE_ATTACK) {
-            return {kind: "attack", label: "FQCARDENGINE.HitBubbleAttack", tooltip: "FQCARDENGINE.TooltipHitAttack"};
+            const profile = HitProfile.preview(actor, choice);
+            const ability = profile?.attackAbility
+                ?? (choice.hitSource === CardFqSystem.HIT_SOURCE_ABILITY ? choice.hitAbility : null);
+            const icon = ABILITY_EMOJIS[ability] ?? WEAPON_EMOJIS[choice.hitSource];
+            if (!icon) {
+                return null;
+            }
+            const number = profile && ABILITY_EMOJIS[ability] ? DisplayCard.#signed(profile.modifier) : null;
+            const how = ABILITY_EMOJIS[ability]
+                ? DisplayCard.#hitOn(ability, [number, profile?.weapon])
+                : game.i18n.localize(HIT_WITH_WEAPON_KEYS[choice.hitSource]);
+            return {kind: "attack", icon, number, tooltip: game.i18n.format("FQCARDENGINE.TooltipHitAttack", {how})};
         }
         if (choice?.hitType === CardFqSystem.HIT_TYPE_SAVE) {
-            const short = ABILITY_SHORT[choice.saveAbility];
-            return short ? {kind: "save", label: short, tooltip: "FQCARDENGINE.TooltipHitSave"} : null;
+            const icon = ABILITY_EMOJIS[choice.saveAbility];
+            if (!icon) {
+                return null;
+            }
+            const dc = HitProfile.preview(actor, choice)?.dc ?? null;
+            const how = DisplayCard.#hitOn(choice.saveAbility,
+                [dc === null ? null : game.i18n.format("FQCARDENGINE.HitDc", {dc})]);
+            return {
+                kind: "save", icon, number: dc === null ? null : String(dc),
+                tooltip: game.i18n.format("FQCARDENGINE.TooltipHitSave", {how})
+            };
         }
         return String(choice?.damage ?? "").trim()
-            ? {kind: "raw", label: "FQCARDENGINE.HitBubbleRaw", tooltip: "FQCARDENGINE.TooltipHitRaw"}
+            ? {
+                kind: "raw", icon: game.i18n.localize("FQCARDENGINE.HitBubbleRaw"), number: null,
+                tooltip: "FQCARDENGINE.TooltipHitRaw"
+            }
             : null;
+    }
+
+    /**
+     * La caractéristique d'un jet pour toucher, suivie de ses précisions entre
+     * parenthèses : « sur la Force (+5, Épée longue) », « sur la Dextérité (DD 13) ».
+     *
+     * @param {string}           ability - La caractéristique.
+     * @param {Array<?string>}   details - Les précisions ; les absentes sont omises.
+     *
+     * @returns {string} Le texte localisé.
+     */
+    static #hitOn(ability, details) {
+        const on = game.i18n.localize(HIT_ON_KEYS[ability]);
+        const shown = details.filter(detail => detail !== null && detail !== undefined && detail !== "");
+        return shown.length ? `${on} (${shown.join(", ")})` : on;
+    }
+
+    /**
+     * @param {number} value - Un modificateur.
+     *
+     * @returns {string} Le modificateur signé : « +5 », « -1 », « +0 ».
+     */
+    static #signed(value) {
+        return value < 0 ? String(value) : `+${value}`;
     }
 
     /**
@@ -513,12 +585,14 @@ export default class DisplayCard {
      * (`*Mod`) signalant qu'un coût/portée dépend d'une caractéristique (@str, @int…).
      * Le voile plein écran ignore simplement les `*Mod` qu'il n'affiche pas.
      *
-     * @param {object} [choice={}] - Le choix (contenu) de la carte.
-     * @param {Card}   [card=null] - La carte (pour `maxSameCard`/`class`).
+     * @param {object}  [choice={}] - Le choix (contenu) de la carte.
+     * @param {Card}    [card=null] - La carte (pour `maxSameCard`/`class`).
+     * @param {?object} [actor]     - L'acteur qui tient la carte, pour la bulle de toucher ;
+     *        le personnage de l'utilisateur par défaut, comme les descriptions.
      *
      * @returns {object} Les données de bulle communes.
      */
-    static buildBubbleData(choice = {}, card = null) {
+    static buildBubbleData(choice = {}, card = null, actor = Constants.actorCurrent) {
         const action = DisplayCard.getNumberForBubbleCardSvg(choice.action);
         const mana = DisplayCard.getNumberForBubbleCardSvg(choice.mana);
         const zeal = DisplayCard.getNumberForBubbleCardSvg(choice.zeal);
@@ -533,7 +607,7 @@ export default class DisplayCard {
         const zealMod = RollService.hasAbilitiesBonus(choice.zeal);
         const reachMod = RollService.hasAbilitiesBonus(choice.minReach) || RollService.hasAbilitiesBonus(choice.maxReach);
         const replayableMod = RollService.hasAbilitiesBonus(choice.replayable);
-        const hit = DisplayCard.getHitBubble(choice);
+        const hit = DisplayCard.getHitBubble(choice, actor);
         return {
             action,
             mana,
@@ -557,9 +631,11 @@ export default class DisplayCard {
             zealFill: zealMod ? "green" : "black",
             replayableFill: replayableMod ? "green" : "black",
             replayableTooltip: DisplayCard.getReplayableTooltipKey(replayable),
-            hit: hit?.label ?? null,
+            // La bulle de toucher (cf. `card-svg.hbs`) : son icône, son chiffre (bonus
+            // d'attaque ou DD), son tooltip, et sa forme — écu, d20 ou étoile d'impact.
+            hit: hit?.icon ?? null,
+            hitNumber: hit?.number ?? null,
             hitTooltip: hit?.tooltip ?? null,
-            // La forme de la bulle de toucher (cf. `card-svg.hbs`) : écu, d20 ou étoile d'impact.
             hitShield: hit?.kind === "attack",
             hitDie: hit?.kind === "save",
             hitBurst: hit?.kind === "raw",

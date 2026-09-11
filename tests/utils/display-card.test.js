@@ -1,4 +1,4 @@
-import {beforeEach, describe, expect, it, vi} from "vitest";
+import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 import fs from "fs";
 import path from "path";
 import DisplayCard from "../../src/domain/interface/card-svg/display-card.js";
@@ -6,7 +6,9 @@ import FormulaDisplay, {
     ABILITY_EMOJIS, CAP_LABEL_KEYS, DAMAGE_TYPE_EMOJIS, EMOJI_TOOLTIP_KEYS, SOURCE_LABEL_KEYS, WEAPON_EMOJIS
 } from "../../src/domain/interface/card-svg/formula-display.js";
 import {expandPills, makePill, PILL_SOURCE, PILL_TYPE, stripPills} from "../../src/domain/interface/card-svg/formula-pill.js";
-import {actorWith, makeReferenceActor, NEUTRAL_ABILITIES, REFERENCE_ABILITIES} from "./formula-fixtures.js";
+import {
+    actorWith, makeAttackActivity, makeReferenceActor, makeWeapon, NEUTRAL_ABILITIES, REFERENCE_ABILITIES
+} from "./formula-fixtures.js";
 
 describe("DisplayCard.simplifyExpression", () => {
 
@@ -534,51 +536,208 @@ describe("DisplayCard — périmètres exclus : non-régression (D-12, D-13, Tas
 
 describe("DisplayCard.buildBubbleData — bulle de toucher", () => {
 
-    /** Les trois formes possibles, pour vérifier qu'une seule est posée à la fois. */
-    const shapes = data => ({shield: data.hitShield, die: data.hitDie, burst: data.hitBurst});
+    const realRoll = globalThis.Roll;
 
-    it("affiche « CA » sur un écu pour une carte à jet d'attaque", () => {
-        const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "@wpnM", damage: "@wpnM[slashing]"});
+    /**
+     * Roll minimal qui substitue les données `@` puis évalue l'arithmétique : le
+     * bonus d'une arme n'est juste que si la formule de dnd5e est réellement
+     * évaluée, ce que le `Roll` constant du harnais ne dirait pas.
+     */
+    class DataRoll {
+        constructor(formula, data = {}) {
+            this.formula = String(formula).replace(/@([\w.]+)/g, (match, key) =>
+                String(key.split(".").reduce((acc, part) => acc?.[part], data) ?? 0));
+        }
 
-        expect(data.hit).toBe("FQCARDENGINE.HitBubbleAttack");
-        expect(data.hitTooltip).toBe("FQCARDENGINE.TooltipHitAttack");
-        expect(shapes(data)).toEqual({shield: true, die: false, burst: false});
+        evaluateSync() {
+            this.total = Function(`"use strict"; return (${this.formula});`)();
+            return this;
+        }
+    }
+
+    beforeEach(() => {
+        globalThis.Roll = DataRoll;
     });
 
-    it("affiche la caractéristique abrégée sur un d20 pour une carte à sauvegarde", () => {
-        const data = DisplayCard.buildBubbleData({hitType: "save", saveAbility: "dex", damage: "2d8[fire]"});
-
-        expect(data.hit).toBe("FQCARDENGINE.AbilityShortDex");
-        expect(data.hitTooltip).toBe("FQCARDENGINE.TooltipHitSave");
-        expect(shapes(data)).toEqual({shield: false, die: true, burst: false});
+    afterEach(() => {
+        globalThis.Roll = realRoll;
     });
 
-    it("des dégâts sans jet pour toucher : l'étoile d'impact des dégâts bruts", () => {
-        const data = DisplayCard.buildBubbleData({hitType: "", damage: "(4+@int+1d8)[fire]"});
-
-        expect(data.hit).toBe("FQCARDENGINE.HitBubbleRaw");
-        expect(data.hitTooltip).toBe("FQCARDENGINE.TooltipHitRaw");
-        expect(shapes(data)).toEqual({shield: false, die: false, burst: true});
-    });
-
-    it("un choix antérieur au champ de toucher, avec dégâts, est aussi en dégâts bruts", () => {
-        expect(DisplayCard.buildBubbleData({damage: "1d6[cold]"}).hitBurst).toBe(true);
-    });
-
-    it("n'affiche aucune bulle sans jet pour toucher ni dégâts : soin, bonus, pioche…", () => {
-        for (const choice of [{}, {hitType: ""}, {hitType: "", damage: ""}, {hitType: "", damage: "  ", heal: "2d4"}]) {
-            const data = DisplayCard.buildBubbleData(choice);
-            expect(data.hit, JSON.stringify(choice)).toBeNull();
-            expect(shapes(data), JSON.stringify(choice)).toEqual({shield: false, die: false, burst: false});
+    /**
+     * Un personnage : ses modificateurs, sa maîtrise et ses armes.
+     *
+     * @param {object} [options] - `abilities` (modificateurs), `prof`, `items`.
+     *
+     * @returns {object} Le personnage simulé.
+     */
+    const hero = ({abilities = {}, prof = 2, items = []} = {}) => ({
+        items,
+        system: {
+            abilities: Object.fromEntries(Object.entries(abilities).map(([key, mod]) => [key, {mod}])),
+            attributes: {prof}
         }
     });
 
-    it("n'affiche aucune bulle pour une sauvegarde sans caractéristique, même avec des dégâts", () => {
-        const data = DisplayCard.buildBubbleData({hitType: "save", saveAbility: "", damage: "2d8[fire]"});
+    /**
+     * Une arme de mêlée équipée : son activité d'attaque passe par `ability` et rend +3 +2.
+     *
+     * @param {string} ability - La caractéristique de l'activité (celle que dnd5e choisit).
+     * @param {string} name    - Le nom de l'arme.
+     *
+     * @returns {object} L'arme.
+     */
+    const sword = (ability, name) => makeWeapon("martialM",
+        Object.assign(makeAttackActivity({parts: ["@mod", "@prof"], data: {mod: 3, prof: 2}}), {ability}), name);
 
-        expect(data.hit).toBeNull();
-        expect(data.hitTooltip).toBeNull();
-        expect(data.hitBurst).toBe(false);
+    /** Les trois formes possibles, pour vérifier qu'une seule est posée à la fois. */
+    const shapes = data => ({shield: data.hitShield, die: data.hitDie, burst: data.hitBurst});
+
+    /** Le tooltip tel que le `format` du harnais le rend. */
+    const tooltip = (key, how) => key + JSON.stringify({how});
+
+    describe("jet d'attaque : l'écu", () => {
+
+        it("attaque de sort : l'icône de la caractéristique, et le bonus = modificateur + maîtrise", () => {
+            const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "ability", hitAbility: "int"},
+                null, hero({abilities: {int: 3}}));
+
+            expect(data.hit).toBe("🧠");
+            expect(data.hitNumber).toBe("+5");
+            expect(data.hitTooltip).toBe(tooltip("FQCARDENGINE.TooltipHitAttack", "FQCARDENGINE.HitOnInt (+5)"));
+            expect(shapes(data)).toEqual({shield: true, die: false, burst: false});
+        });
+
+        it("le bonus de carte s'ajoute ; une référence de caractéristique se lit sur le personnage", () => {
+            const choice = {hitType: "attack", hitSource: "ability", hitAbility: "int", hitBonus: "@dex"};
+
+            expect(DisplayCard.buildBubbleData(choice, null, hero({abilities: {int: 3, dex: 4}})).hitNumber)
+                .toBe("+9");
+        });
+
+        it("un bonus de carte à dé n'est pas jeté pour dessiner la carte : il ne compte pas", () => {
+            const choice = {hitType: "attack", hitSource: "ability", hitAbility: "int", hitBonus: "1d4"};
+
+            expect(DisplayCard.buildBubbleData(choice, null, hero({abilities: {int: 3}})).hitNumber).toBe("+5");
+        });
+
+        it("un modificateur négatif garde son signe", () => {
+            const choice = {hitType: "attack", hitSource: "ability", hitAbility: "str"};
+
+            expect(DisplayCard.buildBubbleData(choice, null, hero({abilities: {str: -3}})).hitNumber).toBe("-1");
+        });
+
+        it("carte d'arme : l'icône et le bonus de l'arme ÉQUIPÉE, son nom dans le tooltip", () => {
+            const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "@wpnM"},
+                null, hero({items: [sword("str", "Épée longue")]}));
+
+            expect(data.hit).toBe("💪");
+            expect(data.hitNumber).toBe("+5");
+            expect(data.hitTooltip)
+                .toBe(tooltip("FQCARDENGINE.TooltipHitAttack", "FQCARDENGINE.HitOnStr (+5, Épée longue)"));
+        });
+
+        it("la même carte avec une arme de finesse : l'icône suit l'arme", () => {
+            const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "@wpnM"},
+                null, hero({items: [sword("dex", "Dague")]}));
+
+            expect(data.hit).toBe("🎯");
+        });
+
+        it("carte d'arme sans personnage : l'icône de l'arme, aucun chiffre", () => {
+            const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "@wpnR"}, null, null);
+
+            expect(data.hit).toBe("🏹");
+            expect(data.hitNumber).toBeNull();
+            expect(data.hitTooltip).toBe(tooltip("FQCARDENGINE.TooltipHitAttack", "FQCARDENGINE.HitWithRangedWeapon"));
+        });
+
+        it("carte d'arme, personnage sans arme du bon type : l'icône de l'arme, aucun chiffre", () => {
+            const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "@wpnM"}, null, hero());
+
+            expect(data.hit).toBe("⚔️");
+            expect(data.hitNumber).toBeNull();
+        });
+
+        it("attaque de sort sans personnage : l'icône de la caractéristique, aucun chiffre", () => {
+            const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "ability", hitAbility: "wis"},
+                null, null);
+
+            expect(data.hit).toBe("🦉");
+            expect(data.hitNumber).toBeNull();
+            expect(data.hitTooltip).toBe(tooltip("FQCARDENGINE.TooltipHitAttack", "FQCARDENGINE.HitOnWis"));
+        });
+    });
+
+    describe("jet de sauvegarde : le d20", () => {
+
+        const FIREBALL = {hitType: "save", hitSource: "ability", hitAbility: "int", saveAbility: "dex", damage: "2d8[fire]"};
+
+        it("l'icône de la caractéristique que la CIBLE jette, et le DD = 8 + modificateur du lanceur", () => {
+            const data = DisplayCard.buildBubbleData(FIREBALL, null, hero({abilities: {int: 3}}));
+
+            expect(data.hit).toBe("🎯");
+            expect(data.hitNumber).toBe("13");
+            expect(data.hitTooltip).toBe(tooltip("FQCARDENGINE.TooltipHitSave",
+                `FQCARDENGINE.HitOnDex (FQCARDENGINE.HitDc${JSON.stringify({dc: 13})})`));
+            expect(shapes(data)).toEqual({shield: false, die: true, burst: false});
+        });
+
+        it("un DD imposé par la carte l'emporte", () => {
+            expect(DisplayCard.buildBubbleData({...FIREBALL, saveDc: "15"}, null, hero({abilities: {int: 3}})).hitNumber)
+                .toBe("15");
+        });
+
+        it("sans personnage : l'icône, aucun DD", () => {
+            const data = DisplayCard.buildBubbleData(FIREBALL, null, null);
+
+            expect(data.hit).toBe("🎯");
+            expect(data.hitNumber).toBeNull();
+            expect(data.hitTooltip).toBe(tooltip("FQCARDENGINE.TooltipHitSave", "FQCARDENGINE.HitOnDex"));
+        });
+
+        it("une sauvegarde sans caractéristique n'a aucune bulle, même avec des dégâts", () => {
+            const data = DisplayCard.buildBubbleData({hitType: "save", saveAbility: "", damage: "2d8[fire]"}, null, null);
+
+            expect(data.hit).toBeNull();
+            expect(data.hitTooltip).toBeNull();
+            expect(data.hitBurst).toBe(false);
+        });
+    });
+
+    describe("dégâts bruts : l'étoile d'impact", () => {
+
+        it("des dégâts sans jet pour toucher : l'étoile, son « ! », aucun chiffre", () => {
+            const data = DisplayCard.buildBubbleData({hitType: "", damage: "(4+@int+1d8)[fire]"}, null, hero());
+
+            expect(data.hit).toBe("FQCARDENGINE.HitBubbleRaw");
+            expect(data.hitNumber).toBeNull();
+            expect(data.hitTooltip).toBe("FQCARDENGINE.TooltipHitRaw");
+            expect(shapes(data)).toEqual({shield: false, die: false, burst: true});
+        });
+
+        it("un choix antérieur au champ de toucher, avec dégâts, est aussi en dégâts bruts", () => {
+            expect(DisplayCard.buildBubbleData({damage: "1d6[cold]"}, null, null).hitBurst).toBe(true);
+        });
+
+        it("aucune bulle sans jet pour toucher ni dégâts : soin, bonus, pioche…", () => {
+            for (const choice of [{}, {hitType: ""}, {hitType: "", damage: ""}, {hitType: "", damage: "  ", heal: "2d4"}]) {
+                const data = DisplayCard.buildBubbleData(choice, null, null);
+                expect(data.hit, JSON.stringify(choice)).toBeNull();
+                expect(shapes(data), JSON.stringify(choice)).toEqual({shield: false, die: false, burst: false});
+            }
+        });
+    });
+
+    it("sans personnage passé, celui de l'utilisateur est pris, comme pour les descriptions", () => {
+        const previous = game.user;
+        game.user = {...previous, character: hero({abilities: {int: 1}})};
+        try {
+            const data = DisplayCard.buildBubbleData({hitType: "attack", hitSource: "ability", hitAbility: "int"});
+
+            expect(data.hitNumber).toBe("+3");
+        } finally {
+            game.user = previous;
+        }
     });
 });
 

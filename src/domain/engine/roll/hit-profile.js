@@ -99,6 +99,51 @@ export default class HitProfile {
     }
 
     /**
+     * Le profil de toucher à AFFICHER sur la face d'une carte, pour l'acteur qui
+     * la tient : la caractéristique par laquelle passe l'attaque — celle de
+     * l'arme équipée pour une carte d'arme —, le modificateur d'attaque et le DD.
+     *
+     * Même calcul que {@link HitProfile.of}, sans rien jeter ni rien journaliser :
+     * la carte se redessine à chaque rendu de la main. Un bonus de carte qui
+     * porte un dé ne compte donc pas ici — il n'est connu qu'au jeu —, et une
+     * référence de caractéristique (`@dex`) s'y lit sur l'acteur passé.
+     *
+     * @param {?object} actor    - L'acteur qui tient la carte.
+     * @param {object}  [choice] - Le choix (contenu) de la carte.
+     *
+     * @returns {?{type: string, attackAbility: ?string, weapon: ?string, modifier: number,
+     *             dc: ?number, saveAbility: ?string}} Le profil affiché, ou null sans
+     *          acteur, sans jet pour toucher, ou pour une configuration incomplète.
+     */
+    static preview(actor, choice) {
+        if (!actor || !CardFqSystem.hasHitRoll(choice)) {
+            return null;
+        }
+        const type = choice.hitType;
+        const source = choice.hitSource ?? CardFqSystem.HIT_SOURCE_NONE;
+        const ability = choice.hitAbility || null;
+        const saveAbility = choice.saveAbility || null;
+        const save = type === CardFqSystem.HIT_TYPE_SAVE;
+        if (source === CardFqSystem.HIT_SOURCE_NONE
+            || (source === CardFqSystem.HIT_SOURCE_ABILITY && !ability)
+            || (save && !saveAbility)) {
+            return null;
+        }
+        const base = HitProfile.#baseAttack(actor, source, ability);
+        const modifier = base.modifier + HitProfile.#fixedNumberOf(choice.hitBonus, actor);
+        return {
+            type,
+            attackAbility: save ? null : base.ability,
+            weapon: base.weapon ?? null,
+            modifier,
+            dc: save
+                ? (choice.saveDc ? HitProfile.#fixedNumberOf(choice.saveDc, actor) : HitProfile.DC_BASE + modifier)
+                : null,
+            saveAbility: save ? saveAbility : null
+        };
+    }
+
+    /**
      * Construit le profil de toucher d'une ACTIVITÉ dnd5e, pour que la résolution
      * d'une activité passe par la même échelle de dégâts qu'une carte.
      *
@@ -202,7 +247,8 @@ export default class HitProfile {
      * @param {string}  source    - La source du modificateur (`hitSource`).
      * @param {?string} [ability] - La caractéristique, pour la source `ability`.
      *
-     * @returns {{modifier: number, ability: ?string}} La base de l'attaque.
+     * @returns {{modifier: number, ability: ?string, weapon?: ?string}} La base de
+     *          l'attaque, et le nom de l'arme pour une attaque à l'arme.
      */
     static #baseAttack(actor, source, ability) {
         if (source === CardFqSystem.HIT_SOURCE_ABILITY) {
@@ -232,10 +278,11 @@ export default class HitProfile {
      * @param {object} actor - L'acteur porteur.
      * @param {string} token - Le jeton d'arme (clé de `WEAPON_TOKENS`).
      *
-     * @returns {{modifier: number, ability: ?string}} L'attaque de l'arme.
+     * @returns {{modifier: number, ability: ?string, weapon: ?string}} L'attaque de l'arme,
+     *          et son nom.
      */
     static #weaponAttack(actor, token) {
-        const none = {modifier: 0, ability: null};
+        const none = {modifier: 0, ability: null, weapon: null};
         const categories = WEAPON_TOKENS[token]?.categories;
         if (!categories) {
             return none;
@@ -253,7 +300,11 @@ export default class HitProfile {
                 + " modificateur de toucher nul (ajouter l'activité d'attaque à l'arme).");
             return none;
         }
-        return {modifier: HitProfile.#attackModifierOf(activity), ability: HitProfile.#abilityOf(activity)};
+        return {
+            modifier: HitProfile.#attackModifierOf(activity),
+            ability: HitProfile.#abilityOf(activity),
+            weapon: weapon.name ?? null
+        };
     }
 
     /**
@@ -332,6 +383,36 @@ export default class HitProfile {
         try {
             const rolled = Number(RollService.rollDiceSync(value));
             return Number.isFinite(rolled) ? rolled : 0;
+        } catch {
+            return 0;
+        }
+    }
+
+    /**
+     * Réduit une valeur de champ de carte à un nombre SANS rien jeter, pour
+     * l'affichage : une valeur numérique telle quelle, une expression évaluée
+     * avec les modificateurs de caractéristique de l'acteur (`@dex`), et 0 pour
+     * ce qui porte un dé ou ne s'évalue pas.
+     *
+     * @param {string|number} [value] - La valeur brute du champ.
+     * @param {object}        actor   - L'acteur dont les caractéristiques sont lues.
+     *
+     * @returns {number} La valeur numérique, ou 0.
+     */
+    static #fixedNumberOf(value, actor) {
+        const direct = Number(value ?? 0);
+        if (Number.isFinite(direct)) {
+            return direct;
+        }
+        const text = String(value);
+        if (/\d*d\d/i.test(text)) {
+            return 0;
+        }
+        const mods = Object.fromEntries(Object.entries(actor.system?.abilities ?? {})
+            .map(([key, entry]) => [key, Number(entry?.mod ?? 0)]));
+        try {
+            const total = Number(new Roll(text, {...(actor.getRollData?.() ?? {}), ...mods}).evaluateSync().total);
+            return Number.isFinite(total) ? total : 0;
         } catch {
             return 0;
         }

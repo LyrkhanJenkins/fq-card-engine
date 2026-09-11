@@ -25,20 +25,6 @@ export const ABILITIES = Object.freeze(["str", "dex", "con", "int", "wis", "cha"
  * ressemblent mais ne servent pas au même endroit.
  * @type {Object<string, string>}
  */
-/**
- * Les caractéristiques en abrégé (trois lettres), pour les emplacements qui
- * n'ont pas la place du nom complet — la bulle de toucher de la face de carte.
- * @type {Object<string, string>}
- */
-export const ABILITY_SHORT = Object.freeze({
-    str: "FQCARDENGINE.AbilityShortStr",
-    dex: "FQCARDENGINE.AbilityShortDex",
-    con: "FQCARDENGINE.AbilityShortCon",
-    int: "FQCARDENGINE.AbilityShortInt",
-    wis: "FQCARDENGINE.AbilityShortWis",
-    cha: "FQCARDENGINE.AbilityShortCha"
-});
-
 export const ABILITY_CHOICE = Object.freeze({
     "": "FQCARDENGINE.AbilityNone",
     str: "FQCARDENGINE.AbilityStr",

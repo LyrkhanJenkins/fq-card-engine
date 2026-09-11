@@ -273,38 +273,41 @@
     {{/if}}
 
     {{#if hit }}
-        <!-- Toucher : la forme dit le type — un écu « CA » pour un jet d'attaque
-             contre la classe d'armure, un d20 portant l'abrégé de la caractéristique
-             pour une sauvegarde de la cible, une étoile d'impact pour des dégâts
-             bruts. Le socle a un trou ROND à cet emplacement : un disque noir le
-             bouche d'abord, pour que l'illustration ne dépasse pas autour d'une
-             forme qui n'est pas ronde. -->
+        <!-- Toucher : la forme dit le type — un écu pour un jet d'attaque contre la
+             classe d'armure, un d20 pour une sauvegarde de la cible, une étoile
+             d'impact pour des dégâts bruts. Dans l'écu et le d20 : l'icône de la
+             caractéristique et, quand l'acteur est connu, le bonus d'attaque ou le
+             DD en petit dessous. Le socle a un trou ROND à cet emplacement : un
+             disque noir le bouche d'abord, pour que l'illustration ne dépasse pas
+             autour d'une forme qui n'est pas ronde. -->
         <g data-tooltip="{{ hitTooltip }}">
             <circle cx="443" cy="358" r="42" fill="black"></circle>
             {{#if hitShield }}
                 <path d="M 443 314 Q 473 314 483 324 L 483 364 Q 477 392 443 406 Q 409 392 403 364 L 403 324 Q 413 314 443 314 Z"
                       fill="url(#hitAttackMana)" stroke="#1f1f1f" stroke-width="6"></path>
-                <text x="441" y="366" text-anchor="middle" font-size="28" font-weight="700" font-family="Lucida Calligraphy"
-                      fill="black">
-                    {{ localize hit }}
-                </text>
             {{/if}}
             {{#if hitDie }}
                 <polygon points="443,312 483,335 483,381 443,404 403,381 403,335"
                          fill="url(#hitSaveMana)" stroke="#1f1f1f" stroke-width="6"></polygon>
-                <polygon points="443,332 467,374 419,374" fill="none" stroke="rgba(0,0,0,.3)" stroke-width="2"></polygon>
-                <text x="441" y="370" text-anchor="middle" font-size="26" font-weight="700" font-family="Lucida Calligraphy"
-                      fill="black">
-                    {{ localize hit }}
-                </text>
+                <polygon points="443,332 467,374 419,374" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"></polygon>
             {{/if}}
             {{#if hitBurst }}
                 <polygon points="443.0,310.0 454.5,330.3 476.9,324.1 470.7,346.5 491.0,358.0 470.7,369.5 476.9,391.9 454.5,385.7 443.0,406.0 431.5,385.7 409.1,391.9 415.3,369.5 395.0,358.0 415.3,346.5 409.1,324.1 431.5,330.3"
                          fill="url(#hitRawMana)" stroke="#1f1f1f" stroke-width="5" stroke-linejoin="round"></polygon>
                 <text x="441" y="372" text-anchor="middle" font-size="40" font-weight="700" font-family="Lucida Calligraphy"
                       fill="black">
-                    {{ localize hit }}
+                    {{ hit }}
                 </text>
+            {{else}}
+                {{#if hitNumber }}
+                    <text x="443" y="364" text-anchor="middle" font-size="30"
+                          font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">{{ hit }}</text>
+                    <text x="443" y="391" text-anchor="middle" font-size="17" font-weight="700" font-family="Lucida Calligraphy"
+                          fill="black">{{ hitNumber }}</text>
+                {{else}}
+                    <text x="443" y="371" text-anchor="middle" font-size="38"
+                          font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">{{ hit }}</text>
+                {{/if}}
             {{/if}}
         </g>
     {{/if}}

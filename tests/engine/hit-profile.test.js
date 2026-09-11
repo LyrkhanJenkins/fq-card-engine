@@ -378,6 +378,88 @@ describe("HitProfile.missingWeaponWarningKey", () => {
     });
 });
 
+describe("HitProfile.preview — le toucher affiché sur la carte", () => {
+
+    beforeEach(() => {
+        globalThis.Roll = DataRoll;
+    });
+
+    afterEach(() => {
+        globalThis.Roll = realRoll;
+        vi.restoreAllMocks();
+    });
+
+    /**
+     * Une arme de mêlée équipée dont l'activité d'attaque passe par `ability`.
+     *
+     * @param {string} ability - La caractéristique de l'activité.
+     * @param {string} name    - Le nom de l'arme.
+     *
+     * @returns {object} L'arme.
+     */
+    const meleeWeapon = (ability, name) => makeWeapon("martialM",
+        Object.assign(makeAttackActivity({parts: ["@mod", "@prof"], data: {mod: 4, prof: 2}}), {ability}), name);
+
+    it("aucun jet, aucun acteur ou une configuration incomplète : rien — et rien au journal", () => {
+        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+        const actor = actorWithStats({abilities: {str: 3}, prof: 2});
+
+        expect(HitProfile.preview(actor, {})).toBeNull();
+        expect(HitProfile.preview(null, {hitType: "attack", hitSource: "ability", hitAbility: "str"})).toBeNull();
+        expect(HitProfile.preview(actor, {hitType: "attack", hitSource: ""})).toBeNull();
+        expect(HitProfile.preview(actor, {hitType: "attack", hitSource: "ability", hitAbility: ""})).toBeNull();
+        expect(HitProfile.preview(actor,
+            {hitType: "save", hitSource: "ability", hitAbility: "int", saveAbility: ""})).toBeNull();
+        // Une carte se redessine à chaque rendu : l'aperçu ne doit pas inonder la console.
+        expect(warn).not.toHaveBeenCalled();
+    });
+
+    it("même modificateur et même DD que le profil de jeu, pour un choix sans dé", () => {
+        const actor = actorWithStats({abilities: {int: 3, dex: 1}, prof: 2});
+        const choice = {hitType: "save", hitSource: "ability", hitAbility: "int", saveAbility: "dex", hitBonus: "1"};
+        const played = HitProfile.of(actor, choice);
+
+        expect(HitProfile.preview(actor, choice))
+            .toMatchObject({type: "save", modifier: played.modifier, dc: played.dc, saveAbility: "dex", attackAbility: null});
+    });
+
+    it("un bonus de carte à dé ne compte pas : rien n'est jeté pour dessiner une carte", () => {
+        const actor = actorWithStats({abilities: {int: 3}, prof: 2});
+
+        expect(HitProfile.preview(actor, {hitType: "attack", hitSource: "ability", hitAbility: "int", hitBonus: "1d4"}))
+            .toMatchObject({modifier: 5, attackAbility: "int"});
+    });
+
+    it("une référence de caractéristique du bonus se lit sur l'acteur PASSÉ", () => {
+        const actor = actorWithStats({abilities: {int: 3, dex: 1}, prof: 2});
+
+        expect(HitProfile.preview(actor,
+            {hitType: "attack", hitSource: "ability", hitAbility: "int", hitBonus: "@dex"}).modifier).toBe(6);
+    });
+
+    it("un DD imposé par la carte l'emporte, chiffré ou lu sur l'acteur", () => {
+        const actor = actorWithStats({abilities: {int: 3}, prof: 2});
+        const choice = {hitType: "save", hitSource: "ability", hitAbility: "int", saveAbility: "wis"};
+
+        expect(HitProfile.preview(actor, {...choice, saveDc: "15"}).dc).toBe(15);
+        expect(HitProfile.preview(actor, {...choice, saveDc: "@int + 10"}).dc).toBe(13);
+    });
+
+    it("carte d'arme : la caractéristique, le modificateur et le nom de l'arme équipée", () => {
+        const actor = actorWithStats({items: [meleeWeapon("dex", "Rapière")]});
+
+        expect(HitProfile.preview(actor, {hitType: "attack", hitSource: "@wpnM"}))
+            .toMatchObject({attackAbility: "dex", modifier: 6, weapon: "Rapière"});
+    });
+
+    it("carte d'arme sans arme équipée du bon type : ni caractéristique ni nom", () => {
+        const actor = actorWithStats({items: [meleeWeapon("str", "Épée")]});
+
+        expect(HitProfile.preview(actor, {hitType: "attack", hitSource: "@wpnR"}))
+            .toMatchObject({attackAbility: null, weapon: null});
+    });
+});
+
 describe("Non-régression du corpus", () => {
 
     it("un choix des cartes existantes ne déclare aucun jet et rend un profil nul", () => {
