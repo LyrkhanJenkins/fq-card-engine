@@ -41,6 +41,7 @@ Feat :
 - Gérer la classe d'Armure Dnd5e (modif de la réalité : demi-dégâts)  (en cours...)
 - Gérer les dés de sauvegarde  (en cours...)
 - Géré les resistances, les immunités et les absorptions.(en cours...)
+- Cartes de niveau 0 obligatoire dans les spellbooks et decks (lutte contre les tous petits decks)
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur

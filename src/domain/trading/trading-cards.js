@@ -13,6 +13,13 @@ export const SPELLBOOK_TYPE = "SPELLBOOK";
  */
 export const NEUTRAL_PATTERN_DECK_NAME = "Neutral Base";
 
+/**
+ * Niveau des cartes obligatoires : une carte de ce niveau est débloquée dès
+ * que le personnage possède sa classe (ou, pour le deck neutre, dès qu'il a
+ * une classe FQ), et le deck de combat en porte toujours tous les exemplaires.
+ */
+export const MANDATORY_CARD_LEVEL = 0;
+
 export default class TradingCards {
 
     /**
@@ -270,8 +277,9 @@ export default class TradingCards {
         await TradingCards.createCardsForDeck(spellBook, allCards);
 
         // --- Calcul du delta des cartes perdues par classe (D4-01/D4-02 : le
-        // deck de combat n'est plus jamais peuplé automatiquement, seul le
-        // retrait des cartes devenues indisponibles reste nécessaire) ---
+        // deck de combat n'est jamais peuplé automatiquement, hors cartes
+        // obligatoires ; le retrait des cartes devenues indisponibles reste
+        // nécessaire) ---
         let cardsToRemove = [];
 
         const allClassNames = new Set([...Object.keys(oldClassLevels), ...Object.keys(newClassLevels)]);
@@ -286,9 +294,11 @@ export default class TradingCards {
             const classeCards = [...deckCompendium.cards];
 
             if (newLevel < oldLevel) {
-                // Classe rétrogradée ou disparue : cartes perdues entre le nouveau niveau (exclu) et l'ancien (inclus)
+                // Classe rétrogradée : cartes perdues entre le nouveau niveau (exclu) et l'ancien (inclus).
+                // Classe disparue : ses cartes obligatoires partent aussi, d'où la borne sous le niveau 0.
+                const lowerBound = className in newClassLevels ? newLevel : MANDATORY_CARD_LEVEL - 1;
                 cardsToRemove = cardsToRemove.concat(
-                    classeCards.filter(c => c.system.fq.level > newLevel && c.system.fq.level <= oldLevel)
+                    classeCards.filter(c => c.system.fq.level > lowerBound && c.system.fq.level <= oldLevel)
                 );
             }
         }
@@ -322,6 +332,57 @@ export default class TradingCards {
             const removeInDeck = deck.cards.filter(c => removeNames.has(c.name));
             await TradingCards.deleteCardsForDeck(deck, removeInDeck);
         }
+
+        // Seul peuplement automatique du deck : les cartes obligatoires.
+        await TradingCards.syncMandatoryCards(deck, allCards);
+    }
+
+    /**
+     * Indique si une carte est obligatoire : de niveau {@link MANDATORY_CARD_LEVEL}
+     * et non générée en cours de partie (une carte générée a son propre cycle de
+     * vie, détruite en fin de combat quel que soit son niveau).
+     *
+     * @param {Card|object} card - La carte inspectée.
+     *
+     * @returns {boolean} Vrai si la carte est obligatoire.
+     */
+    static isMandatoryCard(card) {
+        const moduleName = globalThis.FqCardEngineModule?.moduleName;
+        return card?.system?.fq?.level === MANDATORY_CARD_LEVEL && !card.flags?.[moduleName]?.generated;
+    }
+
+    /**
+     * Complète le deck avec les exemplaires manquants de chaque carte obligatoire
+     * parmi les cartes sources (le grimoire), jusqu'à `maxSameCard` exemplaires,
+     * en un seul appel de création. Le compte se lit sur le deck seul, exemplaires
+     * piochés compris, comme le badge du grimoire. Rien n'est fait pendant un
+     * combat : une carte obligatoire éphémère détruite ne doit pas revenir avant
+     * la fin de l'affrontement.
+     *
+     * @param {Cards}           deck        - Le deck de combat du joueur.
+     * @param {Card[]|object[]} sourceCards - Les cartes débloquées (grimoire).
+     *
+     * @returns {Promise<number>} Le nombre d'exemplaires ajoutés.
+     */
+    static async syncMandatoryCards(deck, sourceCards) {
+        if (!deck || game.combat) return 0;
+
+        const seen = new Set();
+        const toCreate = [];
+        for (const card of sourceCards ?? []) {
+            if (!TradingCards.isMandatoryCard(card) || seen.has(card.name)) continue;
+            seen.add(card.name);
+            const rawMax = card.system.fq.maxSameCard;
+            const max = Number.isFinite(rawMax) ? rawMax : 1;
+            const count = deck.cards.filter(c => c.name === card.name).length;
+            for (let i = count; i < max; i++) {
+                toCreate.push(card);
+            }
+        }
+        if (!toCreate.length) return 0;
+
+        await TradingCards.createCardsForDeck(deck, toCreate);
+        return toCreate.length;
     }
 
     /**
@@ -377,15 +438,36 @@ export default class TradingCards {
     }
 
     /**
-     * Supprime les carte d'un deck via `deleteEmbeddedDocuments`
+     * Supprime les cartes d'un deck via `deleteEmbeddedDocuments`. Chemin
+     * interne au moteur : il lève le verrou des cartes obligatoires (option
+     * `fqAllowMandatory`, lue par le hook `preDeleteCard`), les appelants
+     * d'interface filtrant eux-mêmes ce que le joueur a le droit de retirer.
      *
-     * @param {Cards}    deck     - Le deck Foundry dans lequel créer les cartes.
+     * @param {Cards}    deck     - Le deck Foundry dont on retire les cartes.
      * @param {object[]} cards    - Les cartes à supprimer.
      *
      * @returns {Promise<Cards>}
      */
     static async deleteCardsForDeck(deck, cards) {
-        return await deck.deleteEmbeddedDocuments("Card", cards.map(c => c.id), {});
+        return await deck.deleteEmbeddedDocuments("Card", cards.map(c => c.id), {fqAllowMandatory: true});
+    }
+
+    /**
+     * Garde de suppression d'une carte obligatoire : refuse (et avertit) toute
+     * suppression d'une carte obligatoire d'un deck de combat qui ne passe pas
+     * par un chemin interne du moteur (option `fqAllowMandatory`). Couvre la
+     * feuille du deck, y compris le bouton natif du MJ.
+     *
+     * @param {Card}   card      - La carte en cours de suppression.
+     * @param {object} [options] - Les options de suppression Foundry.
+     *
+     * @returns {boolean} False pour bloquer la suppression, true sinon.
+     */
+    static canDeleteDeckCard(card, options) {
+        if (options?.fqAllowMandatory) return true;
+        if (card?.parent?.system?.fq?.type !== DECK_TYPE || !TradingCards.isMandatoryCard(card)) return true;
+        ui.notifications.warn(game.i18n.localize("FQCARDENGINE.WarningCantRemoveMandatoryCard"));
+        return false;
     }
 
     /**

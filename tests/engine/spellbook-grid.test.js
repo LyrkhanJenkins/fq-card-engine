@@ -71,14 +71,14 @@ describe("computeCopyState", () => {
         const card = makeCard({name: "FQCARDTITLE.Card", maxSameCard: 3});
         const deck = makeDeck([]);
 
-        expect(computeCopyState(card, deck)).toEqual({count: 0, max: 3, state: "none"});
+        expect(computeCopyState(card, deck)).toEqual({count: 0, max: 3, state: "none", mandatory: false});
     });
 
     it("1 exemplaire sur maxSameCard 3 : state partial", () => {
         const card = makeCard({name: "FQCARDTITLE.Card", maxSameCard: 3});
         const deck = makeDeck([{name: "FQCARDTITLE.Card"}]);
 
-        expect(computeCopyState(card, deck)).toEqual({count: 1, max: 3, state: "partial"});
+        expect(computeCopyState(card, deck)).toEqual({count: 1, max: 3, state: "partial", mandatory: false});
     });
 
     it("3 exemplaires sur maxSameCard 3 : state full", () => {
@@ -87,7 +87,7 @@ describe("computeCopyState", () => {
             {name: "FQCARDTITLE.Card"}, {name: "FQCARDTITLE.Card"}, {name: "FQCARDTITLE.Card"}
         ]);
 
-        expect(computeCopyState(card, deck)).toEqual({count: 3, max: 3, state: "full"});
+        expect(computeCopyState(card, deck)).toEqual({count: 3, max: 3, state: "full", mandatory: false});
     });
 
     it("4 exemplaires sur maxSameCard 3 (deck hérité incohérent) : full, compte réel affiché sans écrêtage", () => {
@@ -97,7 +97,7 @@ describe("computeCopyState", () => {
             {name: "FQCARDTITLE.Card"}, {name: "FQCARDTITLE.Card"}
         ]);
 
-        expect(computeCopyState(card, deck)).toEqual({count: 4, max: 3, state: "full"});
+        expect(computeCopyState(card, deck)).toEqual({count: 4, max: 3, state: "full", mandatory: false});
     });
 
     it("sans maxSameCard, ou valeur non finie : max vaut 1 (COPY-05)", () => {
@@ -112,7 +112,7 @@ describe("computeCopyState", () => {
     it("deck absent : count 0, state none, sans lever", () => {
         const card = makeCard({name: "FQCARDTITLE.Card", maxSameCard: 3});
 
-        expect(computeCopyState(card, undefined)).toEqual({count: 0, max: 3, state: "none"});
+        expect(computeCopyState(card, undefined)).toEqual({count: 0, max: 3, state: "none", mandatory: false});
     });
 
     it("BOOK-07 : une carte marquée drawn reste comptée (aucun filtre sur l'état de pioche)", () => {
@@ -129,6 +129,28 @@ describe("computeCopyState", () => {
         const deck = makeDeck([{name: "FQCARDTITLE.Card"}, {name: "FQCARDTITLE.OtherCard"}]);
 
         expect(computeCopyState(card, deck).count).toBe(1);
+    });
+});
+
+describe("cartes obligatoires (niveau 0)", () => {
+    it("computeCopyState marque obligatoire une carte de niveau 0, pas une carte sans niveau", () => {
+        const mandatory = makeCard({name: "FQCARDTITLE.Basic", level: 0, maxSameCard: 2});
+        const withoutLevel = makeCard({name: "FQCARDTITLE.NoLevel", maxSameCard: 2});
+        const nullLevel = makeCard({name: "FQCARDTITLE.NullLevel", level: null, maxSameCard: 2});
+
+        expect(computeCopyState(mandatory, makeDeck([])).mandatory).toBe(true);
+        expect(computeCopyState(withoutLevel, makeDeck([])).mandatory).toBe(false);
+        expect(computeCopyState(nullLevel, makeDeck([])).mandatory).toBe(false);
+    });
+
+    it("computeToggleAction verrouille le retrait d'une carte obligatoire complète", () => {
+        expect(computeToggleAction({count: 2, max: 2, state: "full", mandatory: true}))
+            .toEqual({action: "locked", count: 0});
+    });
+
+    it("computeToggleAction complète une carte obligatoire partielle", () => {
+        expect(computeToggleAction({count: 1, max: 3, state: "partial", mandatory: true}))
+            .toEqual({action: "create", count: 2});
     });
 });
 
@@ -262,10 +284,10 @@ describe("buildSpellbookGroups", () => {
         expect(result.groups.map(g => g.classLabel)).toEqual(["Alpha", "Beta"]);
         expect(result.groups[0].count).toBe(1);
         expect(result.groups[0].entries).toEqual([
-            {card: elementalistCard, copies: {count: 1, max: 2, state: "partial"}}
+            {card: elementalistCard, copies: {count: 1, max: 2, state: "partial", mandatory: false}}
         ]);
         expect(result.groups[1].entries).toEqual([
-            {card: monkCard, copies: {count: 0, max: 1, state: "none"}}
+            {card: monkCard, copies: {count: 0, max: 1, state: "none", mandatory: false}}
         ]);
     });
 

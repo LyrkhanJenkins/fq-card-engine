@@ -262,6 +262,60 @@ describe("SpellbookWindow.patchCopyState — nettoyage avant re-application (RES
     });
 });
 
+describe("SpellbookWindow — cartes obligatoires (niveau 0)", () => {
+    function makeMandatoryCard({name = "Frappe de base", maxSameCard = 2} = {}) {
+        const card = makeFakeCard({name, maxSameCard});
+        card.system.fq.level = 0;
+        return card;
+    }
+
+    test("clic sur une carte obligatoire complète : aucun retrait, avertissement dédié", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Frappe de base"});
+        const card = makeMandatoryCard();
+        const deck = makeFakeDeck([{id: "c1", name: "Frappe de base"}, {id: "c2", name: "Frappe de base"}]);
+
+        await SpellbookWindow.toggleCardCopies(el, card, deck);
+
+        expect(deck.deleteEmbeddedDocuments).not.toHaveBeenCalled();
+        expect(deck.cards).toHaveLength(2);
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningCantRemoveMandatoryCard");
+    });
+
+    test("clic sur une carte obligatoire partielle : complète jusqu'au maximum", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Frappe de base"});
+        const card = makeMandatoryCard({maxSameCard: 3});
+        const deck = makeFakeDeck([{id: "c1", name: "Frappe de base"}]);
+
+        await SpellbookWindow.toggleCardCopies(el, card, deck);
+
+        expect(deck.createEmbeddedDocuments.mock.calls[0][1]).toHaveLength(2);
+        expect(el.classList.contains("fq-spellbook-card--mandatory")).toBe(true);
+    });
+
+    test("applyCopyState : cadenas et classe obligatoire, tooltip dédié", () => {
+        const el = makeCardElement({name: "Frappe de base"});
+
+        SpellbookWindow.applyCopyState(el, {count: 2, max: 2, state: "full", mandatory: true});
+
+        const badge = el.querySelector(".fq-spellbook-card-badge");
+        expect(el.classList.contains("fq-spellbook-card--mandatory")).toBe(true);
+        expect(badge.classList.contains("fq-spellbook-card-badge--mandatory")).toBe(true);
+        expect(badge.querySelector("i").className).toContain("fa-lock");
+        expect(badge.dataset.tooltip).toContain("FQCARDENGINE.SpellBookMandatoryTooltip");
+    });
+
+    test("applyCopyState : une carte optionnelle ne porte ni cadenas ni classe obligatoire", () => {
+        const el = makeCardElement({name: "Boule de feu"});
+
+        SpellbookWindow.applyCopyState(el, {count: 3, max: 3, state: "full", mandatory: false});
+
+        expect(el.classList.contains("fq-spellbook-card--mandatory")).toBe(false);
+        expect(el.querySelector(".fq-spellbook-card-badge i").className).toContain("fa-circle-check");
+    });
+});
+
 describe("SpellbookWindow.toggleCardCopies — geste de bascule au clic (COPY-01..05, BOOK-04)", () => {
     test("hors combat, carte à 0/3 : création groupée en un seul appel, badge 3/3, classe complète", async () => {
         game.combat = null;

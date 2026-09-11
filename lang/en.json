@@ -199,6 +199,8 @@
   "FQCARDENGINE.SpellBookCombatLockedBanner": "Distribution locked: a combat is in progress. You can still browse your spellbook; deck composition resumes once combat ends.",
   "FQCARDENGINE.SpellBookHelpLine": "Click: give or take all copies · Right-click: one more copy",
   "FQCARDENGINE.SpellBookMaxReached": "All copies already distributed ({max}).",
+  "FQCARDENGINE.SpellBookMandatoryTooltip": "Mandatory card ({n}/{total}): always in the deck",
+  "FQCARDENGINE.WarningCantRemoveMandatoryCard": "This card is mandatory: it cannot be removed from the deck.",
   "FQCARDENGINE.SpellBookFilterClassLabel": "Filter by class",
   "FQCARDENGINE.SpellBookFilterClassAll": "All classes",
   "FQCARDENGINE.SpellBookFilterLevelLabel": "Filter by level",

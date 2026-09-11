@@ -199,6 +199,8 @@
   "FQCARDENGINE.SpellBookCombatLockedBanner": "Distribution verrouillée : un combat est en cours. Vous pouvez consulter votre grimoire ; la composition du deck reprend une fois le combat terminé.",
   "FQCARDENGINE.SpellBookHelpLine": "Clic : distribuer ou retirer tout · Clic droit : un exemplaire de plus",
   "FQCARDENGINE.SpellBookMaxReached": "Maximum d'exemplaires déjà distribué ({max}).",
+  "FQCARDENGINE.SpellBookMandatoryTooltip": "Carte obligatoire ({n}/{total}) : toujours présente dans le deck",
+  "FQCARDENGINE.WarningCantRemoveMandatoryCard": "Cette carte est obligatoire : elle ne peut pas être retirée du deck.",
   "FQCARDENGINE.SpellBookFilterClassLabel": "Filtrer par classe",
   "FQCARDENGINE.SpellBookFilterClassAll": "Toutes les classes",
   "FQCARDENGINE.SpellBookFilterLevelLabel": "Filtrer par niveau",

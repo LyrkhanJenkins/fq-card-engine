@@ -18,7 +18,9 @@ Hooks.on("passCards", (from, to, action) => {
     return true;
 });
 
-Hooks.on("preCreateCard", (card, data, _options, _userId) => {
+Hooks.on("preDeleteCard", (card, options, _userId) => TradingCards.canDeleteDeckCard(card, options));
+
+Hooks.on("preCreateCard",(card, data, _options, _userId) => {
     const faces = foundry.utils.deepClone(data.faces ?? []);
 
     if (faces[0]?.img === foundry.documents.BaseCard.DEFAULT_ICON) {

@@ -114,7 +114,14 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         }
         const app = new SpellbookWindow(spellBook, deck);
         SpellbookWindow.#instances.set(spellBook.id, app);
-        app.render(true);
+        // Les cartes obligatoires manquantes sont remises AVANT le premier
+        // rendu, pour que les badges affichent d'emblée le deck complété.
+        // Seul un propriétaire du deck (le joueur, ou le MJ) peut le compléter.
+        const sync = deck.isOwner
+            ? TradingCards.syncMandatoryCards(deck, spellBook.cards.contents)
+            : Promise.resolve();
+        sync.catch(err => ui.notifications.error(err.message))
+            .finally(() => app.render(true));
         return app;
     }
 
@@ -347,16 +354,18 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      * affectation de HTML brut (T-01-02). N'ADD/n'APPEND jamais après un
      * nettoyage : un second appel sur une carte déjà peuplée empile classe
      * d'état et badge (voir `patchCopyState`, qui nettoie avant de rappeler
-     * cette méthode).
+     * cette méthode). Une carte obligatoire porte en plus la classe
+     * `fq-spellbook-card--mandatory` et un cadenas à la place de l'icône d'état.
      *
      * @param {Element} cardElement - L'élément racine de la carte rendue.
-     * @param {{count: number, max: number, state: string}} copies - L'état de distribution déjà calculé.
+     * @param {{count: number, max: number, state: string, mandatory?: boolean}} copies - L'état de distribution déjà calculé.
      *
      * @returns {void}
      */
     static applyCopyState(cardElement, copies) {
-        const {count, max, state} = copies;
+        const {count, max, state, mandatory} = copies;
         cardElement.classList.add(`fq-spellbook-card--${state}`);
+        cardElement.classList.toggle("fq-spellbook-card--mandatory", !!mandatory);
 
         const inner = cardElement.querySelector(".fq-card-inner");
         if (!inner) {
@@ -364,7 +373,10 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         }
         const badge = document.createElement("span");
         badge.className = `fq-card-badge fq-spellbook-card-badge fq-spellbook-card-badge--${state}`;
-        const iconClass = COPY_STATE_ICONS[state];
+        if (mandatory) {
+            badge.classList.add("fq-spellbook-card-badge--mandatory");
+        }
+        const iconClass = mandatory ? "fa-lock" : COPY_STATE_ICONS[state];
         if (iconClass) {
             const icon = document.createElement("i");
             icon.className = `fa-solid ${iconClass}`;
@@ -373,11 +385,13 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         const text = document.createElement("span");
         text.textContent = `${count}/${max}`;
         badge.appendChild(text);
-        badge.dataset.tooltip = state === "none"
-            ? game.i18n.localize(COPY_STATE_TOOLTIP_KEYS.none)
-            : state === "partial"
-                ? game.i18n.format(COPY_STATE_TOOLTIP_KEYS.partial, {n: count, total: max})
-                : game.i18n.format(COPY_STATE_TOOLTIP_KEYS.full, {total: max});
+        badge.dataset.tooltip = mandatory
+            ? game.i18n.format("FQCARDENGINE.SpellBookMandatoryTooltip", {n: count, total: max})
+            : state === "none"
+                ? game.i18n.localize(COPY_STATE_TOOLTIP_KEYS.none)
+                : state === "partial"
+                    ? game.i18n.format(COPY_STATE_TOOLTIP_KEYS.partial, {n: count, total: max})
+                    : game.i18n.format(COPY_STATE_TOOLTIP_KEYS.full, {total: max});
         inner.appendChild(badge);
     }
 
@@ -438,6 +452,10 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         }
 
         const {action, count} = computeToggleAction(computeCopyState(card, deck));
+        if (action === "locked") {
+            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.WarningCantRemoveMandatoryCard"));
+            return;
+        }
         if (count <= 0) {
             return;
         }

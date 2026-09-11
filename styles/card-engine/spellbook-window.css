@@ -387,6 +387,16 @@
     border: 1px solid rgba(var(--fq-success-hi-rgb), 0.7);
 }
 
+/* Carte obligatoire : le cadenas se lit en or quel que soit l'état, le
+   compte n/N garde la couleur de son état de distribution. */
+.fq-spellbook-card-badge--mandatory i {
+    color: var(--fq-gold-bright);
+}
+
+.fq-spellbook-card--mandatory.fq-spellbook-card--full {
+    cursor: not-allowed;
+}
+
 /* ============================================================
    PASTILLE DE NIVEAU — coin supérieur droit, immédiatement à gauche du
    badge n/N. Apparence neutre (mêmes couleurs que .fq-spellbook-card-badge--

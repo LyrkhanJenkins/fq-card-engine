@@ -208,7 +208,9 @@ export default class PlayCard {
         try {
             await currentCards?.deleteEmbeddedDocuments("Card", [cardId]);
             if (deck?.cards?.get?.(cardId)) {
-                await deck.deleteEmbeddedDocuments("Card", [cardId]);
+                // Une carte obligatoire éphémère est détruite comme les autres ;
+                // elle reviendra à la prochaine synchronisation hors combat.
+                await deck.deleteEmbeddedDocuments("Card", [cardId], {fqAllowMandatory: true});
             }
         } catch (err) {
             ui.notifications.error(err.message);

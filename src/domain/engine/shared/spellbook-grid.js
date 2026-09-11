@@ -1,4 +1,5 @@
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
+import TradingCards from "../../trading/trading-cards.js";
 
 /**
  * Fonctions pures de préparation de la grille du grimoire : tri, groupement
@@ -34,19 +35,20 @@ export function sortCardsByLevelThenName(cards) {
  * l'état de pioche des cartes du deck : Foundry laisse l'originale dans le
  * deck (marquée `drawn`) à la pioche, le compte reste donc juste en combat
  * (BOOK-07). N'est jamais appelée comme critère de tri — toujours APRÈS le
- * tri, en pure annotation (D-14).
+ * tri, en pure annotation (D-14). `mandatory` signale une carte obligatoire,
+ * que le joueur ne peut pas retirer du deck.
  *
  * @param {Card}   card    - La carte du grimoire.
  * @param {Cards}  [deck]  - Le deck du joueur (absent = 0 exemplaire).
  *
- * @returns {{count: number, max: number, state: "none"|"partial"|"full"}} L'état de distribution.
+ * @returns {{count: number, max: number, state: "none"|"partial"|"full", mandatory: boolean}} L'état de distribution.
  */
 export function computeCopyState(card, deck) {
     const rawMax = card.system?.fq?.maxSameCard;
     const max = Number.isFinite(rawMax) ? rawMax : 1;
     const count = deck ? deck.cards.filter(c => c.name === card.name).length : 0;
     const state = count === 0 ? "none" : count >= max ? "full" : "partial";
-    return {count, max, state};
+    return {count, max, state, mandatory: TradingCards.isMandatoryCard(card)};
 }
 
 /**
@@ -54,17 +56,17 @@ export function computeCopyState(card, deck) {
  * calculé par `computeCopyState` : aucune → crée les exemplaires manquants
  * (`max - count`, qui vaut `max` quand `count` est 0, COPY-01) ; partielle →
  * même calcul (COPY-03, COPY-04, ne dépasse jamais) ; pleine → retire tout
- * (COPY-02). Ne lit jamais directement le deck ou la carte : reçoit l'état
- * déjà annoté, pour rester composable avec `computeCopyState` sans
- * dépendance circulaire.
+ * (COPY-02), sauf pour une carte obligatoire, qui ne se retire jamais. Ne
+ * lit jamais directement le deck ou la carte : reçoit l'état déjà annoté,
+ * pour rester composable avec `computeCopyState` sans dépendance circulaire.
  *
- * @param {{count: number, max: number, state: "none"|"partial"|"full"}} copies - L'état de distribution.
+ * @param {{count: number, max: number, state: "none"|"partial"|"full", mandatory?: boolean}} copies - L'état de distribution.
  *
- * @returns {{action: "create"|"remove", count: number}} L'action à effectuer et le nombre d'exemplaires concernés.
+ * @returns {{action: "create"|"remove"|"locked", count: number}} L'action à effectuer et le nombre d'exemplaires concernés.
  */
 export function computeToggleAction(copies) {
     if (copies.state === "full") {
-        return {action: "remove", count: copies.count};
+        return copies.mandatory ? {action: "locked", count: 0} : {action: "remove", count: copies.count};
     }
     return {action: "create", count: copies.max - copies.count};
 }
