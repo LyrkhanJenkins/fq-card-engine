@@ -9,9 +9,6 @@
 
 ### Fix à prioriser
 - Problème encore avec le clignotement
-- Changer les valeurs par défaut de l'animations de la fenetre de résultats
-- Vérifier formulaire, certaines mise en forme ont sautés...
-- Jets de sauvegarde contre la mort optiona mettre à true par défaut dans les mondes générés 
 
 ### Versions prévues
 #### 3.1.x

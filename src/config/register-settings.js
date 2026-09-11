@@ -176,13 +176,6 @@ export function registerSettings() {
         type: Boolean,
         default: true,
     });
-    // Réglages client : chacun règle le rythme auquel il regarde SES propres jets.
-    // La résolution attend la fin de cette animation avant d'appliquer quoi que
-    // ce soit, donc ces valeurs pèsent sur la durée du tour et non sur le seul décor.
-    //
-    // Deux réglages et non un : le temps que les dés mettent à se poser et le temps
-    // d'attente entre deux étapes ne se règlent pas pour les mêmes raisons. On peut
-    // vouloir des dés qui roulent longtemps mais s'enchaînent vite, ou l'inverse.
     game.settings.register(FqCardEngineModule.moduleName, "ResultWindowSpeed", {
         name: game.i18n.localize("FQCARDENGINE.ResultWindowSpeedSetting"),
         hint: game.i18n.localize("FQCARDENGINE.ResultWindowSpeedSettingHint"),
@@ -190,7 +183,7 @@ export function registerSettings() {
         config: true,
         type: Number,
         choices: RESULT_WINDOW_SPEEDS,
-        default: 1,
+        default: 0.6,
     });
     game.settings.register(FqCardEngineModule.moduleName, "ResultWindowPauseSpeed", {
         name: game.i18n.localize("FQCARDENGINE.ResultWindowPauseSpeedSetting"),
@@ -199,7 +192,7 @@ export function registerSettings() {
         config: true,
         type: Number,
         choices: RESULT_WINDOW_SPEEDS,
-        default: 1,
+        default: 0.6,
     });
     // En secondes et non en multiplicateur : c'est un temps de lecture, que l'on
     // choisit pour lui-même et non par rapport au rythme de l'animation. Il n'est
@@ -212,7 +205,7 @@ export function registerSettings() {
         config: true,
         type: Number,
         choices: resultWindowLingers(),
-        default: 6,
+        default: 15,
     });
     // Actif par défaut : le moteur n'anime plus de dés en 3D, ce son est le seul
     // retour sonore qu'un jet ait encore.
