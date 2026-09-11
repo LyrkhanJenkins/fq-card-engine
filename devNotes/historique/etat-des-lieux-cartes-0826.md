@@ -1,6 +1,6 @@
 # État des lieux des cartes par classe
 
-Topo chiffré établi à partir des données réelles (`packs/_source/decks-pattern-fq8`, `classes-fq8`, `classes-stats-fq8`) au 2026-08-28, en préparation du travail « cartes jusqu'au niveau 10 + spécialisations » (voir [caracterisation.md](../caracterisation.md)).
+Topo chiffré établi à partir des données réelles (`packs/_source/decks-pattern-fq8`, `classes-fq8`, `classes-stats-fq8`) au 2026-08-28, en préparation du travail « cartes jusqu'au niveau 10 + spécialisations » (voir [caracterisation.md](../CLASSES.md)).
 
 Lecture des chiffres : **distinctes** = nombre de cartes différentes dans le pattern ; **avec dup.** = somme des `maxSameCard` (nombre maximum d'exemplaires jouables de chaque carte).
 

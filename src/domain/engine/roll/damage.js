@@ -571,10 +571,10 @@ export default class Damage {
     }
 
     /**
-     * Ce qu'une résolution doit consommer parmi les effets « à la prochaine
-     * attaque » : c'est le rapport qui le dit, puisqu'il consigne chaque jet
-     * d'attaque (genre « ac ») et la cible qu'il visait. Une sauvegarde, une
-     * carte sans jet pour toucher ou un soin ne consomment rien.
+     * Ce qu'une résolution doit consommer parmi les effets « au prochain jet » :
+     * c'est le rapport qui le dit, puisqu'il consigne chaque jet pour toucher —
+     * attaque (genre « ac ») ou sauvegarde (genre « save ») — et la cible
+     * concernée. Une carte sans jet pour toucher ou un soin ne consomment rien.
      *
      * Rendu sous la forme des arguments de {@link Damage.consumeAttackEffects},
      * que l'appelant transmet au MJ par socket : ce module-ci ne peut pas importer
@@ -583,47 +583,57 @@ export default class Damage {
      * @param {?object}    actor  - L'acteur lanceur.
      * @param {RollReport} report - Le rapport de la résolution.
      *
-     * @returns {?Array} `[casterTokenId, attackedTokenIds]`, ou null si aucun jet
-     *          d'attaque n'a été fait.
+     * @returns {?Array} `[casterTokenId, attackedTokenIds, savingTokenIds]`, ou
+     *          null si aucun jet d'attaque ni de sauvegarde n'a été fait.
      */
     static attackConsumption(actor, report) {
-        const attacked = [...new Set((report?.hits ?? [])
-            .filter(hit => hit.kind === "ac")
+        const targetsOf = kind => [...new Set((report?.hits ?? [])
+            .filter(hit => hit.kind === kind)
             .map(hit => hit.targetTokenId))];
-        if (attacked.length === 0) {
+        const attacked = targetsOf("ac");
+        const saving = targetsOf("save");
+        if (attacked.length === 0 && saving.length === 0) {
             return null;
         }
-        return [Damage.casterTokenOf(actor)?.id ?? null, attacked];
+        // Le lanceur ne consomme son « En élan » que s'il a vraiment attaqué.
+        const casterTokenId = attacked.length ? (Damage.casterTokenOf(actor)?.id ?? null) : null;
+        return [casterTokenId, attacked, saving];
     }
 
     /**
-     * Consomme les effets « à la prochaine attaque » après un jet d'attaque :
-     * ceux du lanceur marqués « made » (« En élan » : son prochain jet a eu
-     * lieu), et ceux de chaque cible visée marqués « received » (« Garde
-     * brisée » : le prochain jet contre elle a eu lieu), que ce jet ait touché ou
-     * non. Exécutée côté MJ via socket, les cibles pouvant appartenir à d'autres
-     * joueurs. Tolérante à l'absence de jeton, d'acteur ou d'effet.
+     * Consomme les effets « au prochain jet » après un jet pour toucher : ceux
+     * du lanceur marqués « made » (« En élan » : son prochain jet a eu lieu),
+     * ceux de chaque cible visée par une attaque marqués « received » (« Garde
+     * brisée » : le prochain jet contre elle a eu lieu), et ceux de chaque cible
+     * qui a sauvegardé marqués `expireOnSave` (« Ébranlé »), que le jet ait
+     * réussi ou non. Exécutée côté MJ via socket, les cibles pouvant appartenir à
+     * d'autres joueurs. Tolérante à l'absence de jeton, d'acteur ou d'effet.
      *
      * @param {?string}  casterTokenId    - L'id du jeton du lanceur.
      * @param {string[]} attackedTokenIds - Les ids des jetons visés par le jet d'attaque.
+     * @param {string[]} [savingTokenIds] - Les ids des jetons qui ont jeté une sauvegarde.
      *
      * @returns {Promise<void>}
      */
-    static async consumeAttackEffects(casterTokenId, attackedTokenIds = []) {
-        const consume = async (tokenId, side) => {
+    static async consumeAttackEffects(casterTokenId, attackedTokenIds = [], savingTokenIds = []) {
+        const moduleName = FqCardEngineModule.moduleName;
+        const consume = async (tokenId, expires) => {
             const actor = game.canvas.tokens.get(tokenId)?.actor;
             const ids = [...(actor?.effects ?? [])]
-                .filter(effect => effect?.flags?.[FqCardEngineModule.moduleName]?.expireOnAttack === side)
+                .filter(effect => expires(effect?.flags?.[moduleName] ?? {}))
                 .map(effect => effect.id);
             if (ids.length) {
                 await actor.deleteEmbeddedDocuments("ActiveEffect", ids);
             }
         };
         if (casterTokenId) {
-            await consume(casterTokenId, "made");
+            await consume(casterTokenId, flags => flags.expireOnAttack === "made");
         }
         for (const tokenId of new Set(attackedTokenIds)) {
-            await consume(tokenId, "received");
+            await consume(tokenId, flags => flags.expireOnAttack === "received");
+        }
+        for (const tokenId of new Set(savingTokenIds)) {
+            await consume(tokenId, flags => flags.expireOnSave === true);
         }
     }
 

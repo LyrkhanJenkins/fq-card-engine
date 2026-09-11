@@ -3,12 +3,14 @@ import Damage from "../../src/domain/engine/roll/damage.js";
 import RollReport from "../../src/domain/engine/roll/roll-report.js";
 
 /**
- * Les effets « à la prochaine attaque » : « En élan » (le porteur attaque avec
- * avantage jusqu'à son prochain jet) et « Garde brisée » (on l'attaque avec
- * avantage jusqu'au prochain jet qui le vise).
+ * Les effets « au prochain jet » : « En élan » (le porteur attaque avec
+ * avantage jusqu'à son prochain jet), « Garde brisée » (on l'attaque avec
+ * avantage jusqu'au prochain jet qui le vise) et « Ébranlé » (le porteur
+ * sauvegarde avec désavantage jusqu'à sa prochaine sauvegarde).
  *
- * `attackConsumption` lit dans le rapport QUI a été visé par un jet d'attaque ;
- * `consumeAttackEffects`, exécutée chez le MJ, retire ce qui doit tomber.
+ * `attackConsumption` lit dans le rapport QUI a été visé par un jet d'attaque
+ * ou a jeté une sauvegarde ; `consumeAttackEffects`, exécutée chez le MJ,
+ * retire ce qui doit tomber.
  */
 
 const MODULE = "fq-card-engine";
@@ -16,14 +18,19 @@ let originalCanvas;
 let originalModule;
 
 /**
- * Un effet actif, marqué ou non pour la prochaine attaque.
+ * Un effet actif, marqué ou non pour le prochain jet.
  *
  * @param {string}  id     - Son id.
- * @param {?string} [side] - « made », « received », ou rien.
+ * @param {?string} [side] - « made », « received », « save », ou rien.
  *
  * @returns {object} L'effet.
  */
-const effect = (id, side) => ({id, flags: side ? {[MODULE]: {expireOnAttack: side}} : {[MODULE]: {expireOnDamage: false}}});
+const effect = (id, side) => {
+    if (side === "save") {
+        return {id, flags: {[MODULE]: {expireOnDamage: false, expireOnSave: true}}};
+    }
+    return {id, flags: side ? {[MODULE]: {expireOnAttack: side}} : {[MODULE]: {expireOnDamage: false}}};
+};
 
 /**
  * Un acteur porteur d'effets, qui enregistre ce qu'on lui retire.
@@ -67,30 +74,31 @@ describe("Damage.attackConsumption", () => {
         expect(Damage.attackConsumption({token: {id: "me"}}, new RollReport())).toBeNull();
     });
 
-    it("une SAUVEGARDE n'est pas un jet d'attaque : rien à consommer", () => {
-        expect(Damage.attackConsumption({token: {id: "me"}}, reportWith({targetTokenId: "t1", kind: "save"})))
-            .toBeNull();
+    it("une SAUVEGARDE : les cibles qui l'ont jetée, sans le lanceur, qui n'a pas attaqué", () => {
+        const report = reportWith({targetTokenId: "t1", kind: "save"}, {targetTokenId: "t1", kind: "save"});
+
+        expect(Damage.attackConsumption({token: {id: "me"}}, report)).toEqual([null, [], ["t1"]]);
     });
 
     it("un jet d'attaque : le jeton du lanceur et ceux des cibles visées, sans doublon", () => {
         const report = reportWith(
             {targetTokenId: "t1", kind: "ac"}, {targetTokenId: "t2", kind: "ac"}, {targetTokenId: "t1", kind: "ac"});
 
-        expect(Damage.attackConsumption({token: {id: "me"}}, report)).toEqual(["me", ["t1", "t2"]]);
+        expect(Damage.attackConsumption({token: {id: "me"}}, report)).toEqual(["me", ["t1", "t2"], []]);
     });
 
     it("le jeton du lanceur est retrouvé sur la scène quand l'acteur est lié", () => {
         globalThis.game.canvas = {scene: {tokens: [{id: "hero-token", actorId: "hero"}]}};
 
         expect(Damage.attackConsumption({id: "hero"}, reportWith({targetTokenId: "t1", kind: "ac"})))
-            .toEqual(["hero-token", ["t1"]]);
+            .toEqual(["hero-token", ["t1"], []]);
     });
 
     it("un lanceur sans jeton : les cibles sont tout de même consommées", () => {
         globalThis.game.canvas = {scene: {tokens: []}};
 
         expect(Damage.attackConsumption({id: "ghost"}, reportWith({targetTokenId: "t1", kind: "ac"})))
-            .toEqual([null, ["t1"]]);
+            .toEqual([null, ["t1"], []]);
     });
 });
 
@@ -123,6 +131,24 @@ describe("Damage.consumeAttackEffects (côté MJ)", () => {
 
         expect(first.deleteEmbeddedDocuments).toHaveBeenCalledWith("ActiveEffect", ["breche-1"]);
         expect(second.deleteEmbeddedDocuments).toHaveBeenCalledWith("ActiveEffect", ["breche-2"]);
+    });
+
+    it("chaque cible qui a sauvegardé perd son « Ébranlé », et lui seul", async () => {
+        const target = bearer(effect("ebranle", "save"), effect("breche", "received"), effect("autre"));
+        canvasWith({t1: target});
+
+        await Damage.consumeAttackEffects(null, [], ["t1"]);
+
+        expect(target.deleteEmbeddedDocuments).toHaveBeenCalledWith("ActiveEffect", ["ebranle"]);
+    });
+
+    it("une cible attaquée garde son « Ébranlé » : seule une sauvegarde le consomme", async () => {
+        const target = bearer(effect("ebranle", "save"));
+        canvasWith({t1: target});
+
+        await Damage.consumeAttackEffects("absent", ["t1"], []);
+
+        expect(target.deleteEmbeddedDocuments).not.toHaveBeenCalled();
     });
 
     it("rien à retirer : aucune suppression demandée", async () => {

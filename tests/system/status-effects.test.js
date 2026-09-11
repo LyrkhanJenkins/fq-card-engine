@@ -231,16 +231,51 @@ describe("StatusEffects — « En élan » et « Garde brisée »", () => {
     });
 
     test("aucun autre statut du registre ne se consomme à l'attaque", () => {
-        for (const key of ["poison", "acid", "burn", "frost", "curse", "virus", "earth", "air"]) {
+        for (const key of ["poison", "acid", "burn", "frost", "curse", "virus", "earth", "air", "warded", "shaken"]) {
             expect(StatusEffects.expand(key).every(effect => effect.expireOnAttack === undefined)).toBe(true);
         }
     });
 });
 
+describe("StatusEffects — « Sous égide » et « Ébranlé »", () => {
+
+    test("« Sous égide » : on attaque son porteur avec désavantage, pendant toute sa durée", () => {
+        const [effect] = StatusEffects.expand("warded", {duration: {value: "1", units: "rounds"}});
+
+        expect(effect.statuses).toEqual(["fqWarded"]);
+        expect(effect.expireOnAttack).toBeUndefined();
+        expect(effect.expireOnSave).toBeUndefined();
+        expect(effect.duration).toEqual({value: "1", units: "rounds"});
+    });
+
+    test("« Ébranlé » : son porteur sauvegarde avec désavantage, jusqu'à SA prochaine sauvegarde", () => {
+        const [effect] = StatusEffects.expand("shaken", {duration: {value: "3", units: "rounds"}});
+
+        expect(effect.statuses).toEqual(["fqShaken"]);
+        expect(effect.expireOnSave).toBe(true);
+        expect(effect.duration).toEqual({value: "3", units: "rounds"});
+    });
+
+    test("seul « Ébranlé » se consomme à la sauvegarde", () => {
+        const others = Object.keys(StatusEffects.STATUS_CHOICES).filter(key => key !== "" && key !== "shaken");
+        for (const key of others) {
+            expect(StatusEffects.expand(key).every(effect => effect.expireOnSave === undefined), key).toBe(true);
+        }
+    });
+
+    test("les deux sont proposés au menu, avant les conditions", () => {
+        const keys = Object.keys(StatusEffects.STATUS_CHOICES);
+
+        expect(StatusEffects.STATUS_CHOICES.warded).toBe("FQCARDENGINE.StatusWarded");
+        expect(StatusEffects.STATUS_CHOICES.shaken).toBe("FQCARDENGINE.StatusShaken");
+        expect(keys.indexOf("shaken")).toBeLessThan(keys.indexOf("blinded"));
+    });
+});
+
 describe("StatusEffects — durée réglée par la carte", () => {
 
-    test("réglés par la carte : les 14 conditions, « En élan » et « Garde brisée »", () => {
-        for (const key of ["prone", "paralyzed", "unconscious", "empowered", "exposed"]) {
+    test("réglés par la carte : les 14 conditions et les statuts FQ d'avantage", () => {
+        for (const key of ["prone", "paralyzed", "unconscious", "empowered", "exposed", "warded", "shaken"]) {
             expect(StatusEffects.isTimedByCard(key)).toBe(true);
         }
     });
@@ -306,7 +341,7 @@ describe("StatusEffects — ce que fait chaque statut", () => {
     });
 
     test("chaque statut réglé par la carte dit ce qu'il fait ; les statuts FQ, eux, gardent leurs messages de carte", () => {
-        expect(TIMED).toHaveLength(16);
+        expect(TIMED).toHaveLength(18);
         for (const key of TIMED) {
             expect(StatusEffects.ruleKey(key), key).toMatch(/^FQCARDENGINE\.Rule/);
         }

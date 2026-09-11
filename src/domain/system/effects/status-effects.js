@@ -59,6 +59,8 @@ export default class StatusEffects {
         air: "FQCARDENGINE.StatusAir",
         empowered: "FQCARDENGINE.StatusEmpowered",
         exposed: "FQCARDENGINE.StatusExposed",
+        warded: "FQCARDENGINE.StatusWarded",
+        shaken: "FQCARDENGINE.StatusShaken",
         ...DND5E_CONDITIONS
     };
 
@@ -68,7 +70,7 @@ export default class StatusEffects {
      * carte à l'autre, seul le temps qu'il dure est affaire de design. Les autres
      * statuts FQ gardent la durée du registre, qui fait partie de leur équilibre.
      */
-    static #TIMED_BY_CARD = new Set(["empowered", "exposed"]);
+    static #TIMED_BY_CARD = new Set(["empowered", "exposed", "warded", "shaken"]);
 
     /**
      * Données d'effets actifs canoniques par statut. Chaque entrée est un
@@ -213,6 +215,30 @@ export default class StatusEffects {
             duration: {value: "", units: "rounds"},
             expireOnDamage: false,
             expireOnAttack: "received",
+            showIcon: 1
+        }],
+        // Sous égide : on attaque le porteur avec désavantage (règle
+        // `fqAttackedDisadvantage`). Aucun jet ne le consomme : il protège de
+        // TOUTES les attaques pendant la durée saisie sur la carte.
+        warded: [{
+            name: "Warded",
+            img: "icons/magic/defensive/shield-barrier-glowing-blue.webp",
+            statuses: ["fqWarded"],
+            changes: [],
+            duration: {value: "", units: "rounds"},
+            expireOnDamage: false,
+            showIcon: 1
+        }],
+        // Ébranlé : le porteur jette sa PROCHAINE sauvegarde avec désavantage
+        // (règle `fqSaveDisadvantage`) ; c'est ce jet qui consomme l'effet.
+        shaken: [{
+            name: "Shaken",
+            img: "icons/magic/control/debuff-energy-snare-purple-blue.webp",
+            statuses: ["fqShaken"],
+            changes: [],
+            duration: {value: "", units: "rounds"},
+            expireOnDamage: false,
+            expireOnSave: true,
             showIcon: 1
         }],
         // Air : -5 de déplacement pendant 2 tours, aura de métal.

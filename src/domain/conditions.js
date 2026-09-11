@@ -58,23 +58,30 @@ export const STATUS_RULES = Object.freeze({
     stunned: "FQCARDENGINE.RuleStunned",
     unconscious: "FQCARDENGINE.RuleUnconscious",
     empowered: "FQCARDENGINE.RuleEmpowered",
-    exposed: "FQCARDENGINE.RuleExposed"
+    exposed: "FQCARDENGINE.RuleExposed",
+    warded: "FQCARDENGINE.RuleWarded",
+    shaken: "FQCARDENGINE.RuleShaken"
 });
 
 /**
- * Les statuts FQ qui jouent sur l'avantage, avec leur libellé. Ce ne sont pas
- * des conditions dnd5e : aucune des 14 ne donne l'avantage sans contrepartie
- * (l'invisible est aussi attaqué avec désavantage). Leur identifiant de statut
- * porte le préfixe `fq` pour ne jamais croiser un statut de dnd5e.
+ * Les statuts FQ qui jouent sur l'avantage ou le désavantage, avec leur
+ * libellé. Ce ne sont pas des conditions dnd5e : aucune des 14 ne donne
+ * l'avantage sans contrepartie (l'invisible est aussi attaqué avec
+ * désavantage). Leur identifiant de statut porte le préfixe `fq` pour ne jamais
+ * croiser un statut de dnd5e.
  *
  * - `fqEmpowered` (« En élan ») : son porteur attaque avec avantage ;
- * - `fqExposed` (« Garde brisée ») : on attaque son porteur avec avantage.
+ * - `fqExposed` (« Garde brisée ») : on attaque son porteur avec avantage ;
+ * - `fqWarded` (« Sous égide ») : on attaque son porteur avec désavantage ;
+ * - `fqShaken` (« Ébranlé ») : son porteur sauvegarde avec désavantage.
  *
  * @type {Object<string, string>}
  */
 export const FQ_ADVANTAGE_STATUSES = Object.freeze({
     fqEmpowered: "FQCARDENGINE.StatusEmpowered",
-    fqExposed: "FQCARDENGINE.StatusExposed"
+    fqExposed: "FQCARDENGINE.StatusExposed",
+    fqWarded: "FQCARDENGINE.StatusWarded",
+    fqShaken: "FQCARDENGINE.StatusShaken"
 });
 
 /**
@@ -106,7 +113,9 @@ export const CONDITION_EFFECTS = Object.freeze({
     fqAttackedAdvantage: Object.freeze(["blinded", "paralyzed", "petrified", "restrained", "stunned", "unconscious",
         "fqExposed"]),
     /** On attaque la CIBLE avec désavantage. */
-    fqAttackedDisadvantage: Object.freeze(["invisible"]),
+    fqAttackedDisadvantage: Object.freeze(["invisible", "fqWarded"]),
+    /** La CIBLE jette ses sauvegardes avec désavantage, quelle que soit la caractéristique. */
+    fqSaveDisadvantage: Object.freeze(["fqShaken"]),
     /** Cible à terre : avantage au contact, désavantage à distance. */
     fqProneTarget: Object.freeze(["prone"]),
     /** La cible rate d'office ses sauvegardes de Force et de Dextérité. */

@@ -226,11 +226,40 @@ describe("cartes d'attaque — « Garde brisée » et « En élan »", () => {
         expect(result.threw).toBe(false);
     });
 
-    test("une carte de SAUVEGARDE ne consomme rien : ce n'est pas un jet d'attaque", async () => {
+    test("une carte de SAUVEGARDE ne consomme que les effets de sauvegarde de la cible, rien du lanceur", async () => {
         await play(damageCard(DEX_SAVE), {targetActor: target({abilities: {dex: {save: {value: 2}}}})}, d20(9));
 
         const {socket} = await import("../../src/hook/integration/socketlib.hook.js");
-        expect(socket.executeAsGM.mock.calls.map(entry => entry[0])).not.toContain("consumeAttackEffects");
+        const call = socket.executeAsGM.mock.calls.find(entry => entry[0] === "consumeAttackEffects");
+        expect(call[1]).toBeNull();
+        expect(call[2]).toEqual([]);
+        expect(call[3]).toHaveLength(1);
+    });
+});
+
+describe("« Sous égide » et « Ébranlé »", () => {
+
+    test("cible « Sous égide » : désavantage — les dés 15 puis 4, le 4 compte", async () => {
+        const {damage, chat} = await play(damageCard(ATTACK), {targetActor: target({statuses: ["fqWarded"]})}, d20(15, 4));
+
+        expect(damage).toBe(5);
+        expect(chat).toContain("FQCARDENGINE.RollModeDisadvantage (15 | 4)");
+        expect(chat).toContain("FQCARDENGINE.StatusWarded");
+    });
+
+    test("cible « Ébranlée » : désavantage à sa sauvegarde — 18 puis 4, le 4 compte", async () => {
+        const {damage, chat} = await play(damageCard(DEX_SAVE),
+            {targetActor: target({statuses: ["fqShaken"], abilities: {dex: {save: {value: 2}}}})}, d20(18, 4));
+
+        expect(damage).toBe(10);
+        expect(chat).toContain("FQCARDENGINE.RollModeDisadvantage (18 | 4)");
+        expect(chat).toContain("FQCARDENGINE.StatusShaken");
+    });
+
+    test("« Ébranlé » ne gêne pas une cible visée par une ATTAQUE : un seul d20", async () => {
+        const {damage} = await play(damageCard(ATTACK), {targetActor: target({statuses: ["fqShaken"]})}, d20(15, 4));
+
+        expect(damage).toBe(10);
     });
 });
 

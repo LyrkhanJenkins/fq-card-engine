@@ -90,7 +90,8 @@ export default class Advantage {
      * Le mode que dnd5e calcule déjà sur la feuille (`save.roll.mode`, qui
      * intègre entravé → désavantage de Dextérité, l'épuisement et les effets
      * actifs) est repris tel quel ; le moteur n'y ajoute que l'armure non
-     * maîtrisée, que dnd5e ne consomme nulle part.
+     * maîtrisée, que dnd5e ne consomme nulle part, et ses propres statuts de
+     * désavantage (« Ébranlé »), que dnd5e ignore.
      *
      * Une cible sans défense (paralysée, inconsciente) ne jette rien. Une cible
      * pétrifiée ou étourdie rate d'office ses sauvegardes de Force et de
@@ -123,6 +124,7 @@ export default class Advantage {
         if (Advantage.#isPhysical(ability) && target?.untrainedArmor) {
             disadvantages.push({side: "target", cause: "armor"});
         }
+        disadvantages.push(...Advantage.#reasons(target, "fqSaveDisadvantage", "target"));
         return {mode: Advantage.combine(advantages, disadvantages), auto: null, advantages, disadvantages, autoCauses: []};
     }
 

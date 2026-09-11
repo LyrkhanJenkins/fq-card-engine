@@ -506,7 +506,7 @@ describe("Les nouvelles cartes", () => {
         expect(consumed).toBeGreaterThan(-1);
         expect(posed).toBeGreaterThan(consumed);
         expect(socket.executeAsGM.mock.calls[consumed].slice(1))
-            .toEqual(["world-my-token", [worldFixture.target.tokenId]]);
+            .toEqual(["world-my-token", [worldFixture.target.tokenId], []]);
         expect(result.threw).toBe(false);
     });
 
@@ -515,5 +515,30 @@ describe("Les nouvelles cartes", () => {
 
         const {socket} = await import("../../src/hook/integration/socketlib.hook.js");
         expect(socket.executeAsGM.mock.calls.map(call => call[0])).not.toContain("consumeAttackEffects");
+    });
+
+    test("Égide : « Sous égide » 1 tour, qu'aucun jet ne consomme", async () => {
+        const result = await play("FqGuardAegis0001");
+
+        const effect = expectCondition(result, "fqWarded", 1);
+        expect(effect.flags[MODULE].expireOnAttack).toBeUndefined();
+        expect(effect.flags[MODULE].expireOnSave).toBeUndefined();
+        expect(result.hpCalls).toEqual([]);
+    });
+
+    test("Lumière Révélatrice : « Ébranlé » 3 tours au plus, consommé à la prochaine sauvegarde", async () => {
+        const result = await play("FqWMageReveal001");
+
+        const effect = expectCondition(result, "fqShaken", 3);
+        expect(effect.flags[MODULE].expireOnSave).toBe(true);
+        expect(result.hpCalls).toEqual([]);
+    });
+
+    test("Mauvais Œil : des dégâts psychiques, puis « Ébranlé » 3 tours au plus", async () => {
+        const result = await play("FqWitchEvilEye01", targetAt(3));
+
+        const effect = expectCondition(result, "fqShaken", 3);
+        expect(effect.flags[MODULE].expireOnSave).toBe(true);
+        expect(result.hpCalls.some(call => call.type === "damageFQ")).toBe(true);
     });
 });

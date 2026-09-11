@@ -1,7 +1,24 @@
 # Caractérisation des classes
 
 Document de référence design : ce qui définit chaque classe (identité dnd5e, stats FQ, rôle, mécaniques signature), établi à partir des données réelles (`packs/_source/classes-fq8`, `decks-pattern-fq8`, `classes-stats-fq8`, `lang/fr.json`) et du code (`src/domain`).
+--
+**Questionnement et TODO Générique :**
+- Combos: si réussi certaines actions -> redonnes tous les points d'actions pour jouer d'autre carte ou réduit le coup
+  de carte à 0
 
+**Dernière passe pour chaque classe :**
+- Environ 40 cartes par classe 7 niveau 0 et 1, environ 3 cartes par niveau pour chaque spécialisation
+- Verifier caractérisation des autres classes
+- Équilibrage de la classe manuel puis IA
+- dégâts
+- couts (Si trop de sorts coutant cher, rajouter quelques sorts coutant peu)
+- nb de cartes
+- synergie
+- Vérifier caractérisation abilities dnd
+- Verification chaque fonctionnalité du moteur pour chaque classes
+- Faire un inventaire des types de dégâts
+- Faire vérifier IA les descriptions
+- Compléter avec des sorts de rang 2 (juste des sorts plus fort exemple trait de feu II) pour les niveaus supérieurs OU les trous
 ---
 
 ## Rappel système
@@ -70,26 +87,9 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 ### Règles générales sur les cartes
 - Les dégâts de zone ne font pas beaucoup moins de dégâts que les sorts monocibles (ne divise pas les dégâts entre les cibles)
 
-**Questionnement et TODO Générique :** 
-- Combos: si réussi certaines actions -> redonnes tous les points d'actions pour jouer d'autre carte ou réduit le coup
-  de carte à 0 
-
-  **Dernière passe pour chaque sort :**
-- Verifier caractérisation des autres classes
-- Équilibrage de la classe manuel puis IA
-- dégâts
-- couts (Si trop de sorts coutant cher, rajouter quelques sorts coutant peu)
-- nb de cartes
-- synergie
-- Vérifier caractérisation abilities dnd
-- Verification chaque fonctionnalité du moteur pour chaque classes
-- Faire un inventaire des types de dégâts
-- Faire vérifier IA les descriptions
-- Compléter avec des sorts de rang 2 (juste des sorts plus fort exemple trait de feu II) pour les niveaus supérieurs OU les trous
-
 ---
 
-# Moine
+## Moine
 
 > « Adepte d'un jeu très dynamique : joue beaucoup de cartes différentes pour monter rapidement son zèle. Robuste, score d'esquive élevé. »
 
@@ -120,9 +120,8 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 **Questionnement et TODO :**
 
 ---
----
 
-# Gardien
+## Gardien
 
 > « Le plus grand nombre de points de vie du jeu. Peut puiser dans ses points de vie pour améliorer ses dégâts. »
 
@@ -151,7 +150,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Questionnement et TODO :**
 ---
-# Mage Blanc
+## Mage Blanc
 
 > « Le meilleur soigneur et protecteur, mais ses malédictions peuvent infliger d'importants dégâts également. »
 
@@ -179,7 +178,7 @@ Stats absentes notables : **critique** jamais montable pour Moine, Sorcière et 
 
 **Questionnement et TODO :**
 ---
-# Élémentaliste
+## Élémentaliste
 
 > « Allie des effets de feu, de givre, d'air et de terre pour infliger d'importants dégâts. Fragile mais possède les plus gros dégâts bruts du jeu. »
 
@@ -217,7 +216,7 @@ contondant ; agrippé, marque d'air	FOR
 **Questionnement et TODO :**
 TROP DE SORT générés: A réduire?
 ---
-# Trapper
+## Trapper
 
 > « Classe à distance spécialisée dans les attaques critiques, accompagnée de son familier, ou qui peut poser des pièges redoutables. »
 
@@ -243,7 +242,7 @@ TROP DE SORT générés: A réduire?
 
 **Questionnement et TODO :**
 ---
-# Sorcière
+## Sorcière
 
 > « Un mage puissant. Sa force réside dans le nombre de squelettes qu'elle ranime pour détruire ses adversaires. »
 
@@ -273,7 +272,7 @@ TROP DE SORT générés: A réduire?
 - Une des cartes du géant squelette permet d'aller chercher la carte dans le deck en deuxième choix?
 ---
 
-# Maître d'Armes
+## Maître d'Armes
 
 > « Expert de tout l'arsenal : ses cartes frappent avec l'arme du moment, au corps à corps comme à distance. »
 
@@ -300,7 +299,7 @@ TROP DE SORT générés: A réduire?
 **Questionnement et TODO :**
 ---
 
-# Illusionniste
+## Illusionniste
 
 > « Un combattant et soutien/healeur qui ne cesse d'augmenter sa portée au cours du combat. »
 
@@ -343,7 +342,7 @@ TROP DE SORT générés: A réduire?
   o Peut se téléporter vers une case adjacente d’un allié (2 de portée), lui rend 1d4 point de vie.
 
 ---
-# Guerrier Runique
+## Guerrier Runique
 
 > « DeckBuilder: entre en combat avec très peu de cartes ; ses runes en génèrent de nouvelles au fil de l'affrontement, rendant son deck de plus en plus puissant. »
 

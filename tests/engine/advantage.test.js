@@ -161,6 +161,45 @@ describe("Advantage.attack — statuts FQ « En élan » et « Garde brisée »"
     });
 });
 
+describe("Advantage — statuts FQ « Sous égide » et « Ébranlé »", () => {
+
+    it("cible « Sous égide » : désavantage pour qui l'attaque, et la raison le nomme", () => {
+        const verdict = Advantage.attack(NONE, probe(["fqWarded"]));
+
+        expect(verdict.mode).toBe(Advantage.DISADVANTAGE);
+        expect(verdict.disadvantages).toEqual([{side: "target", cause: "fqWarded"}]);
+    });
+
+    it("« Sous égide » contre « Garde brisée » sur la même cible : ils s'annulent", () => {
+        expect(Advantage.attack(NONE, probe(["fqWarded", "fqExposed"])).mode).toBe(Advantage.NORMAL);
+    });
+
+    it("« Sous égide » sur le LANCEUR ne le gêne pas pour attaquer", () => {
+        expect(Advantage.attack(probe(["fqWarded"]), NONE).mode).toBe(Advantage.NORMAL);
+    });
+
+    it.each(["str", "dex", "con", "int", "wis", "cha"])("cible « Ébranlée » : désavantage à sa sauvegarde de %s", ability => {
+        const verdict = Advantage.save(probe(["fqShaken"]), {ability});
+
+        expect(verdict.mode).toBe(Advantage.DISADVANTAGE);
+        expect(verdict.disadvantages).toEqual([{side: "target", cause: "fqShaken"}]);
+    });
+
+    it("« Ébranlé » et un avantage posé sur la feuille : ils s'annulent", () => {
+        expect(Advantage.save(probe(["fqShaken"]), {ability: "wis", systemMode: Advantage.ADVANTAGE}).mode)
+            .toBe(Advantage.NORMAL);
+    });
+
+    it("« Ébranlé » n'agit pas sur une attaque", () => {
+        expect(Advantage.attack(NONE, probe(["fqShaken"])).mode).toBe(Advantage.NORMAL);
+        expect(Advantage.attack(probe(["fqShaken"]), NONE).mode).toBe(Advantage.NORMAL);
+    });
+
+    it("une cible « Ébranlée » et sans défense ne jette toujours rien", () => {
+        expect(Advantage.save(probe(["fqShaken", "unconscious"]), {ability: "wis"}).auto).toBe("defenseless");
+    });
+});
+
 describe("Advantage.attack — armure non maîtrisée", () => {
 
     it.each(["str", "dex"])("attaque de %s en armure non maîtrisée : désavantage", ability => {
