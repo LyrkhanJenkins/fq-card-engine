@@ -75,6 +75,10 @@ Hooks.on("setup", function () {
     // Les pass du moteur appellent Cards#pass directement et ne passent pas par ici.
     libWrapper.register(FqCardEngineModule.moduleName, "foundry.applications.sheets.CardsConfig.prototype._onDrop", function (wrapper, event, ...args) {
         const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+        if (Constants.isPlayerRightsLimited && (data.uuid?.startsWith("Compendium.") || data.pack)) {
+            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropCompendiumRefused"));
+            return;
+        }
         const fromThisStack = data.uuid
             ? data.uuid.startsWith(`${this.document.uuid}.`)
             : data.cardsId === this.document.id;

@@ -67,6 +67,13 @@ export default {
     drop: function (event) {
         let cards = this.getCards();
         const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+
+        // Sous droits limités, rien de ce qui vient d'un compendium ne se dépose,
+        // quel que soit le type de données glissées.
+        if (Constants.isPlayerRightsLimited && (data.uuid?.startsWith("Compendium.") || data.pack)) {
+            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropCompendiumRefused"));
+            return;
+        }
         if (data.type !== "Card") return;
 
         // Sous droits limités, un joueur peut encore réordonner sa main mais n'y

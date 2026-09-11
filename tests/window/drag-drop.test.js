@@ -114,6 +114,40 @@ describe("drop sous droits limités", () => {
         expect(deck.cards.get("x").pass).toHaveBeenCalled();
     });
 
+    it("refuse une carte venue d'un compendium sans même la résoudre", () => {
+        const hand = makeStack("hand", ["a"]);
+        const fromUuid = vi.fn();
+        vi.stubGlobal("fromUuid", fromUuid);
+
+        DragDrop.drop.call({getCards: () => hand},
+            makeEvent({type: "Card", uuid: "Compendium.fq.cards.Cards.deck.Card.x"}));
+
+        expect(fromUuid).not.toHaveBeenCalled();
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.DragDropCompendiumRefused");
+    });
+
+    it("refuse tout autre type de données venu d'un compendium", () => {
+        const hand = makeStack("hand", ["a"]);
+
+        DragDrop.drop.call({getCards: () => hand},
+            makeEvent({type: "Item", uuid: "Compendium.fq.items.Item.i"}));
+
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.DragDropCompendiumRefused");
+    });
+
+    it("laisse le MJ déposer une carte venue d'un compendium", () => {
+        game.user.isGM = true;
+        const hand = makeStack("hand", ["a"]);
+        const fromUuid = vi.fn(() => Promise.resolve(null));
+        vi.stubGlobal("fromUuid", fromUuid);
+
+        DragDrop.drop.call({getCards: () => hand},
+            makeEvent({type: "Card", uuid: "Compendium.fq.cards.Cards.deck.Card.x"}));
+
+        expect(fromUuid).toHaveBeenCalled();
+        expect(ui.notifications.warn).not.toHaveBeenCalledWith("FQCARDENGINE.DragDropCompendiumRefused");
+    });
+
     it("ne bride pas un joueur quand le réglage est désactivé", () => {
         CONFIG.FqCardEngine.options.playerLimitCardsRight = false;
         const hand = makeStack("hand", ["a"]);
