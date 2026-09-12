@@ -20,6 +20,8 @@ Hooks.on("passCards", (from, to, action) => {
 
 Hooks.on("preDeleteCard", (card, options, _userId) => TradingCards.canDeleteDeckCard(card, options));
 
+Hooks.on("updateUser", (user, changed, _options, userId) => TradingCards.updateDeckWhenAssigned(user, changed, userId));
+
 Hooks.on("preCreateCard",(card, data, _options, _userId) => {
     const faces = foundry.utils.deepClone(data.faces ?? []);
 

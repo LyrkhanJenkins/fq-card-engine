@@ -7,9 +7,9 @@ import {SOURCE_DIR, documents} from "./pack-source.js";
  *
  * Une maîtrise vit à DEUX endroits : l'advancement de la classe, qui l'accorde à
  * un niveau donné, et les traits de l'acteur, qui la portent une fois acquise.
- * Les advancements ne s'appliquent qu'à la MONTÉE de niveau : un héros livré
- * niveau 1 doit donc porter lui-même ce que sa classe accorde au niveau 1, sans
- * quoi il arrive dans le monde sans rien maîtriser — et sans que rien ne le dise.
+ * Les héros de départ sont livrés vierges, SANS classe : c'est l'ajout de leur
+ * classe (du même nom) qui joue les advancements et leur accorde stats de
+ * départ et maîtrises. Un héros qui porterait déjà une maîtrise la cumulerait.
  *
  * L'échelonnement est délibéré (armes simples au 1, armes de guerre au 3, le
  * bouclier plus tard selon la classe) : un passage d'un seul niveau dans une
@@ -18,6 +18,8 @@ import {SOURCE_DIR, documents} from "./pack-source.js";
  */
 
 const CLASSES_DIR = path.join(SOURCE_DIR, "classes-fq8");
+/** Le titre de l'octroi de niveau 1 qui porte armure et armes de départ. */
+const STARTING_EQUIPMENT_TITLE = "Équipement de départ";
 const HEROES_DIR = path.join(SOURCE_DIR, "starter-heroes");
 
 /** La maîtrise qu'exige chaque catégorie d'armure. L'étoffe n'en exige aucune. */
@@ -71,57 +73,49 @@ describe("Maîtrises des classes et des héros de départ", () => {
         expect(heroes.length).toBe(9);
     });
 
-    it("chaque héros porte exactement ce que sa classe accorde à son niveau", () => {
-        const mismatches = heroes.flatMap(hero => {
-            const classItem = (hero.items ?? []).find(i => i.type === "class");
-            if (!classItem) {
-                return [`${hero.name} : aucun item de classe`];
+    it("les héros de départ sont livrés sans classe ni maîtrise", () => {
+        const loaded = heroes.flatMap(hero => {
+            const issues = [];
+            if ((hero.items ?? []).some(i => i.type === "class")) {
+                issues.push(`${hero.name} porte déjà une classe`);
             }
-            const level = Number(classItem.system?.levels ?? 1);
-            const granted = grantedUpTo(classItem, level);
-            const carried = {
-                weapon: [...(hero.system?.traits?.weaponProf?.value ?? [])].sort(),
-                armor: [...(hero.system?.traits?.armorProf?.value ?? [])].sort()
-            };
-            return ["weapon", "armor"].flatMap(family =>
-                JSON.stringify(granted[family]) === JSON.stringify(carried[family]) ? []
-                    : [`${hero.name} (niveau ${level}) — ${family} : la classe accorde `
-                        + `[${granted[family]}] mais le héros porte [${carried[family]}]`]);
+            const carried = [
+                ...(hero.system?.traits?.weaponProf?.value ?? []),
+                ...(hero.system?.traits?.armorProf?.value ?? [])
+            ];
+            if (carried.length > 0) {
+                issues.push(`${hero.name} porte déjà les maîtrises [${carried}]`);
+            }
+            return issues;
         });
 
-        expect(mismatches).toEqual([]);
+        expect(loaded).toEqual([]);
     });
 
-    it("la classe embarquée d'un héros accorde la même chose que sa classe de référence", () => {
-        // Deux copies de la même classe : celle du compendium et celle que porte
-        // le héros. Les faire diverger donnerait deux personnages différents selon
-        // qu'on part du héros tout fait ou qu'on crée le sien.
-        const divergences = heroes.flatMap(hero => {
-            const embedded = (hero.items ?? []).find(i => i.type === "class");
-            const reference = classes.get(embedded?.name);
-            if (!embedded || !reference) {
-                return [];
-            }
-            const of = item => advancements(item)
-                .filter(a => a.type === "Trait")
-                .map(a => `${a.level}:${(a.configuration?.grants ?? []).join("+")}`)
-                .sort();
-            const left = of(embedded);
-            const right = of(reference);
-            return JSON.stringify(left) === JSON.stringify(right) ? []
-                : [`${hero.name} : le héros porte [${left}] et la classe de référence [${right}]`];
-        });
+    it("les héros de départ ne portent ni arme ni équipement : ils viennent de l'octroi de départ de leur classe", () => {
+        const carried = heroes.flatMap(hero => (hero.items ?? [])
+            .filter(i => ["weapon", "equipment", "clothing"].includes(i.type))
+            .map(i => `${hero.name} porte « ${i.name} »`));
 
-        expect(divergences).toEqual([]);
+        expect(carried).toEqual([]);
     });
 
-    it("aucun héros ne porte une armure sans l'entraînement correspondant", () => {
+    it("chaque héros a une classe de référence du même nom", () => {
+        const orphans = heroes.filter(hero => !classes.has(hero.name)).map(hero => hero.name);
+
+        expect(orphans).toEqual([]);
+    });
+
+    it("une fois sa classe ajoutée, aucun héros ne porte une armure sans l'entraînement correspondant", () => {
         // Porter une armure qu'on ne maîtrise pas n'est pas neutre dans dnd5e :
         // désavantage sur tout ce qui touche à la Force et à la Dextérité, et
-        // interdiction d'incanter. Un héros livré ainsi serait handicapé sans
-        // que rien sur sa feuille ne l'explique.
+        // interdiction d'incanter. Le héros vierge reçoit l'entraînement de sa
+        // classe au niveau 1 : l'équipement qu'il porte doit s'y conformer.
         const untrained = heroes.flatMap(hero => {
-            const trained = hero.system?.traits?.armorProf?.value ?? [];
+            const trained = [
+                ...(hero.system?.traits?.armorProf?.value ?? []),
+                ...grantedUpTo(classes.get(hero.name), 1).armor
+            ];
             return (hero.items ?? [])
                 .filter(i => i.type === "equipment" && ARMOR_PROFICIENCY[i.system?.type?.value])
                 .filter(i => !trained.includes(ARMOR_PROFICIENCY[i.system.type.value]))
@@ -132,24 +126,24 @@ describe("Maîtrises des classes et des héros de départ", () => {
         expect(untrained).toEqual([]);
     });
 
-    it("chaque héros porte une armure ou une étoffe de base", () => {
-        const bare = heroes
-            .filter(hero => !(hero.items ?? [])
-                .some(i => ["equipment", "clothing"].includes(i.type)))
-            .map(hero => `${hero.name} n'a rien sur le dos`);
+    it("chaque classe octroie un équipement de départ à sa classe principale, dès le niveau 1", () => {
+        const bare = [...classes.values()]
+            .filter(classItem => !advancements(classItem).some(a => a.type === "ItemGrant"
+                && a.title === STARTING_EQUIPMENT_TITLE && Number(a.level) === 1
+                && a.classRestriction === "primary" && (a.configuration?.items ?? []).length > 0))
+            .map(classItem => `${classItem.name} n'octroie aucun équipement de départ`);
 
         expect(bare).toEqual([]);
     });
 
-    it("tout l'équipement vient des compendiums dnd5e", () => {
-        // Les armes portent une mécanique FQ maison et restent donc dans
-        // `items-fq8` ; l'équipement, lui, n'est que de la donnée SRD, et en
-        // garder des copies locales revenait à entretenir une divergence.
-        const local = heroes.flatMap(hero => (hero.items ?? [])
-            .filter(i => ["equipment", "clothing"].includes(i.type))
-            .filter(i => !(i._stats?.compendiumSource ?? "").startsWith("Compendium.dnd5e."))
-            .map(i => `${hero.name} porte « ${i.name} » venu de `
-                + `${i._stats?.compendiumSource || "nulle part"}`));
+    it("tout l'équipement de départ octroyé vient des compendiums dnd5e", () => {
+        // L'équipement n'est que de la donnée SRD : en garder des copies locales
+        // revenait à entretenir une divergence.
+        const local = [...classes.values()].flatMap(classItem => advancements(classItem)
+            .filter(a => a.type === "ItemGrant" && a.title === STARTING_EQUIPMENT_TITLE)
+            .flatMap(a => a.configuration?.items ?? [])
+            .filter(entry => !(entry.uuid ?? "").startsWith("Compendium.dnd5e."))
+            .map(entry => `${classItem.name} octroie ${entry.uuid || "rien"}`));
 
         expect(local).toEqual([]);
     });

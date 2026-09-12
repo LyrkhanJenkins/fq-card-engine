@@ -1,0 +1,216 @@
+{
+  "name": "Start stats (Trapper)",
+  "type": "feat",
+  "img": "icons/sundries/gaming/playing-cards-grey.webp",
+  "effects": [
+    {
+      "_id": "WkgKcepUma4YyKEl",
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "origin": null,
+      "transfer": true,
+      "flags": {
+        "dae": {
+          "selfTarget": false,
+          "stackable": "multi",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [],
+          "transfer": true
+        }
+      },
+      "tint": "#ffffff",
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "14.353",
+        "systemId": "dnd5e",
+        "systemVersion": "3.3.1",
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "exportSource": null
+      },
+      "name": "Stats de départ",
+      "img": "icons/sundries/gaming/playing-cards-grey.webp",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.fq.action.max",
+            "value": 3,
+            "priority": null,
+            "type": "add"
+          },
+          {
+            "key": "system.fq.mana.max",
+            "value": 1,
+            "priority": null,
+            "type": "add"
+          },
+          {
+            "key": "system.fq.attributes.critical",
+            "value": 2,
+            "priority": null,
+            "type": "add"
+          },
+          {
+            "key": "system.attributes.movement.walk",
+            "value": 5,
+            "priority": null,
+            "type": "add"
+          },
+          {
+            "key": "system.abilities.str.value",
+            "value": -4,
+            "priority": null,
+            "type": "add"
+          },
+          {
+            "key": "system.abilities.dex.value",
+            "value": 6,
+            "priority": null,
+            "type": "add"
+          },
+          {
+            "key": "system.abilities.int.value",
+            "value": 2,
+            "priority": null,
+            "type": "add"
+          },
+          {
+            "key": "system.abilities.wis.value",
+            "value": 4,
+            "priority": null,
+            "type": "add"
+          },
+          {
+            "key": "system.abilities.cha.value",
+            "value": -4,
+            "priority": null,
+            "type": "add"
+          }
+        ]
+      },
+      "description": "",
+      "statuses": [],
+      "sort": 0,
+      "start": null,
+      "showIcon": 1,
+      "folder": null,
+      "_key": "!items.effects!KjysfOK9p7gIJiUb.WkgKcepUma4YyKEl"
+    }
+  ],
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "14.353",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": 1724140566041,
+    "modifiedTime": 1756552300744,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "exportSource": null
+  },
+  "ownership": {
+    "default": 0
+  },
+  "system": {
+    "description": {
+      "value": "<p>Stats de départ de la classe principale : Points d'action +3, Mana +1, Critique +2, Déplacement (ft) +5, For -4, Dex +6, Int +2, Sag +4, Cha -4.</p>",
+      "chat": ""
+    },
+    "source": {
+      "custom": ""
+    },
+    "activation": {
+      "type": "",
+      "cost": null,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "target": {
+      "value": "",
+      "width": null,
+      "units": "",
+      "type": "",
+      "prompt": true
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": ""
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null,
+      "recovery": "",
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null,
+      "scale": false
+    },
+    "ability": null,
+    "actionType": "",
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "requirements": "",
+    "recharge": {
+      "value": null,
+      "charged": false
+    },
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "cover": null,
+    "crewed": false,
+    "enchantment": null,
+    "summons": null,
+    "fq": {
+      "action": 0,
+      "mana": 0,
+      "zeal": 0,
+      "drop": 0,
+      "hp": 0
+    },
+    "type": {
+      "value": "",
+      "subtype": ""
+    },
+    "prerequisites": {
+      "level": null
+    },
+    "properties": []
+  },
+  "_id": "KjysfOK9p7gIJiUb",
+  "sort": 0,
+  "_key": "!items!KjysfOK9p7gIJiUb"
+}

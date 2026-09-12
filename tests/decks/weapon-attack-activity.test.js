@@ -12,8 +12,8 @@ import {SOURCE_DIR, jsonFiles} from "./pack-source.js";
  * fait à `1d20 + 0` contre la classe d'armure, et personne ne touche plus rien.
  *
  * Le piège de ce dépôt est que les armes existent en PLUSIEURS exemplaires : la
- * référence dans `items-fq8`, les copies embarquées dans l'inventaire des héros
- * de départ, et celles des sbires. Convertir la référence sans ses copies laisse
+ * référence dans `items-fq8` et les copies embarquées dans l'inventaire des
+ * sbires. Convertir la référence sans ses copies laisse
  * le jeu à moitié réparé — c'est arrivé deux fois. Ce test balaie donc tous les
  * paquets et tous les inventaires embarqués.
  */
@@ -48,7 +48,7 @@ describe("Armes des paquets source", () => {
 
     it("balaie effectivement des armes", () => {
         // Garde du garde : un chemin cassé rendrait le test suivant vert à vide.
-        expect(weapons.length).toBeGreaterThan(20);
+        expect(weapons.length).toBeGreaterThan(10);
     });
 
     it("chaque arme porte une activité d'attaque", () => {

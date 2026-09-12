@@ -1,4 +1,4 @@
-import {readFile} from "node:fs/promises";
+import {readdir, readFile} from "node:fs/promises";
 import path from "node:path";
 
 /**
@@ -11,6 +11,7 @@ import path from "node:path";
 const MODULE_ID = "fq-card-engine";
 const CLASSES_PACK = "classes-fq8";
 const HEROES_PACK = "starter-heroes";
+const STATS_PACK = "classes-stats-fq8";
 
 /**
  * Les neuf identifiants de classe FQ, présents à la fois dans
@@ -47,6 +48,39 @@ function parseHitDieFaces(denomination) {
 }
 
 /**
+ * Les modificateurs de caractéristiques des stats de départ qu'une classe
+ * octroie à la classe principale (advancements `ItemGrant` de niveau 1), lus
+ * dans les effets des items de `classes-stats-fq8`.
+ *
+ * @param {string} repoRoot  - La racine du dépôt.
+ * @param {object} classData - L'item de classe source.
+ *
+ * @returns {Promise<Object<string, number>>} Le modificateur total par caractéristique.
+ */
+async function startingAbilityChanges(repoRoot, classData) {
+    const grantedIds = (classData.system.advancement ?? [])
+        .filter(a => a.type === "ItemGrant" && Number(a.level) <= 1 && a.classRestriction !== "secondary")
+        .flatMap(a => a.configuration?.items ?? [])
+        .map(entry => entry.uuid.split(".").pop());
+    const changes = {};
+    if (grantedIds.length === 0) {
+        return changes;
+    }
+    const statsDir = path.join(repoRoot, "packs", "_source", STATS_PACK);
+    for (const file of (await readdir(statsDir)).filter(name => name.endsWith(".json"))) {
+        const item = JSON.parse(await readFile(path.join(statsDir, file), "utf8"));
+        if (!grantedIds.includes(item._id)) continue;
+        for (const change of (item.effects ?? []).flatMap(effect => effect.system?.changes ?? [])) {
+            const match = /^system\.abilities\.(\w+)\.value$/.exec(change.key);
+            if (match && change.type === "add") {
+                changes[match[1]] = (changes[match[1]] ?? 0) + Number(change.value);
+            }
+        }
+    }
+    return changes;
+}
+
+/**
  * Charge le catalogue des neuf classes FQ depuis les sources de packs
  * committées, hors ligne (aucune ouverture de Foundry, key_links du plan 19-02).
  *
@@ -68,10 +102,16 @@ export async function loadClassCatalog(repoRoot = process.cwd()) {
         const heroData = JSON.parse(await readFile(heroPath, "utf8"));
 
         const advancement = classData.system.advancement ?? [];
+        // Les starters sont livrés sans classe : leurs caractéristiques de niveau 1
+        // sont celles du héros vierge plus les stats de départ de sa classe.
+        const startingChanges = await startingAbilityChanges(repoRoot, classData);
         const baseAbilities = {};
         for (const key of ABILITY_KEYS) {
-            baseAbilities[key] = heroData.system.abilities?.[key]?.value ?? null;
+            const value = heroData.system.abilities?.[key]?.value;
+            baseAbilities[key] = value === undefined || value === null ? null : Number(value) + (startingChanges[key] ?? 0);
         }
+        const hitDieFaces = parseHitDieFaces(classData.system.hd?.denomination);
+        const heroHitPoints = heroData.system.attributes?.hp?.max ?? heroData.system.attributes?.hp?.value ?? null;
 
         catalog[slug] = {
             slug,
@@ -80,10 +120,10 @@ export async function loadClassCatalog(repoRoot = process.cwd()) {
             classUuid: `Compendium.${MODULE_ID}.${CLASSES_PACK}.Item.${classData._id}`,
             heroActorId: heroData._id,
             heroUuid: `Compendium.${MODULE_ID}.${HEROES_PACK}.Actor.${heroData._id}`,
-            hitDieFaces: parseHitDieFaces(classData.system.hd?.denomination),
-            // Les starters posent leurs PV de niveau 1 dans `hp.value` ; `hp.max`
-            // reste null pour laisser l'override de max s'appliquer en jeu.
-            baseHitPoints: heroData.system.attributes?.hp?.max ?? heroData.system.attributes?.hp?.value ?? null,
+            hitDieFaces,
+            // PV de niveau 1 : ceux du héros vierge (sans classe) plus le dé de vie
+            // maximal de la classe principale.
+            baseHitPoints: heroHitPoints === null ? null : Number(heroHitPoints) + (hitDieFaces ?? 0),
             baseAbilities,
             advancement: {
                 itemChoices: advancement.filter(a => a.type === "ItemChoice"),
@@ -206,9 +246,9 @@ export function resolveAbilityScoreImprovements(classEntry, level, rng) {
 
 /**
  * Calcule les PV du héros. Règle propre à FQ (à ne pas confondre avec la
- * règle 5e du modificateur de Constitution, sans rapport ici) : les PV des
- * héros de départ sont posés à la main par classe (`baseHitPoints`, ses PV de
- * niveau 1) ; chaque niveau au-delà du premier ajoute un jet du dé de vie de
+ * règle 5e du modificateur de Constitution, sans rapport ici) : les PV de
+ * niveau 1 valent ceux du héros vierge plus le dé de vie maximal de la classe
+ * principale (`baseHitPoints`) ; chaque niveau au-delà du premier ajoute un jet du dé de vie de
  * la classe qui gagne ce niveau. La classe principale (première entrée de
  * `classEntries`) gagne ses niveaux 2..N en premier, puis chaque classe
  * secondaire ses niveaux 1..N (ce sont, pour elle, des niveaux neufs).

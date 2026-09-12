@@ -98,11 +98,64 @@ export async function seedUatWorld({force = false} = {}) {
 }
 
 /**
- * Importe le héros depuis `starter-heroes` et porte son item de classe
- * principale au niveau du plan. Les classes secondaires (multi-classe) sont
- * ajoutées SANS jamais toucher à `system.details.originalClass` : la classe
- * principale reste celle de l'acteur importé, condition dont dépend
- * `isOriginalClass` (dnd5e) puis `updateDeckForUser` (D-05).
+ * Ajoute une classe au héros au niveau demandé. `createEmbeddedDocuments` ne
+ * joue pas les advancements : pour la classe principale, les items octroyés
+ * (`ItemGrant` : stats et armes de départ) et les maîtrises (`Trait`) atteints
+ * sont donc posés ici, comme l'aurait fait la montée de niveau.
+ *
+ * @param {object}  actor             - L'acteur héros.
+ * @param {{classUuid: string, level: number}} classEntry - La classe et son niveau.
+ * @param {object}  options
+ * @param {boolean} options.primary   - Vrai pour la classe principale.
+ *
+ * @returns {Promise<object>} L'item de classe créé.
+ */
+async function addHeroClass(actor, classEntry, {primary}) {
+    const classSource = await fromUuid(classEntry.classUuid);
+    if (!classSource) {
+        throw new Error(`Classe introuvable: ${classEntry.classUuid}`);
+    }
+    const classData = classSource.toObject();
+    delete classData._id;
+    classData.system.levels = classEntry.level;
+    const [classItem] = await actor.createEmbeddedDocuments("Item", [classData]);
+    if (!primary) {
+        return classItem;
+    }
+
+    const reached = (classData.system.advancement ?? []).filter(a => Number(a.level) <= classEntry.level);
+    const grantedUuids = reached
+        .filter(a => a.type === "ItemGrant" && a.classRestriction !== "secondary")
+        .flatMap(a => a.configuration?.items ?? [])
+        .map(entry => entry.uuid);
+    const grantedSources = await Promise.all(grantedUuids.map(uuid => fromUuid(uuid)));
+    const grantedData = grantedSources.filter(Boolean).map(source => {
+        const data = source.toObject();
+        delete data._id;
+        return data;
+    });
+    if (grantedData.length > 0) {
+        await actor.createEmbeddedDocuments("Item", grantedData);
+    }
+
+    const traitKeys = reached.filter(a => a.type === "Trait").flatMap(a => a.configuration?.grants ?? []);
+    const proficiencies = family => [...new Set([
+        ...(actor._source.system.traits?.[`${family}Prof`]?.value ?? []),
+        ...traitKeys.filter(key => key.startsWith(`${family}:`)).map(key => key.split(":")[1])
+    ])];
+    await actor.update({
+        "system.details.originalClass": classItem.id,
+        "system.traits.weaponProf.value": proficiencies("weapon"),
+        "system.traits.armorProf.value": proficiencies("armor")
+    });
+    return classItem;
+}
+
+/**
+ * Importe le héros depuis `starter-heroes` (livré sans classe) et lui ajoute
+ * sa classe principale, puis ses classes secondaires, aux niveaux du plan.
+ * Seule la classe principale fixe `system.details.originalClass`, condition
+ * dont dépend `isOriginalClass` (dnd5e) puis `updateDeckForUser` (D-05).
  *
  * @param {object} heroPlan          - La section `hero` du plan.
  * @param {string} heroPlan.sourceUuid - L'UUID de l'acteur starter à importer.
@@ -129,23 +182,9 @@ async function importHeroActor(heroPlan, playerUser) {
     const actor = await Actor.create(actorData);
 
     const [mainClassEntry, ...secondaryClassEntries] = heroPlan.classes;
-    const mainClassItem = actor.items.find(item => item.type === "class");
-    if (!mainClassItem) {
-        throw new Error(`Item de classe introuvable sur le héros importé (${heroPlan.name}).`);
-    }
-    if (Number(mainClassItem.system.levels) !== Number(mainClassEntry.level)) {
-        await mainClassItem.update({"system.levels": mainClassEntry.level});
-    }
-
+    await addHeroClass(actor, mainClassEntry, {primary: true});
     for (const secondaryEntry of secondaryClassEntries) {
-        const classSource = await fromUuid(secondaryEntry.classUuid);
-        if (!classSource) {
-            throw new Error(`Classe secondaire introuvable: ${secondaryEntry.classUuid}`);
-        }
-        const classData = classSource.toObject();
-        delete classData._id;
-        classData.system.levels = secondaryEntry.level;
-        await actor.createEmbeddedDocuments("Item", [classData]);
+        await addHeroClass(actor, secondaryEntry, {primary: false});
     }
 
     return actor;
@@ -194,7 +233,9 @@ async function applyHeroPicksAndAttributes(actor, heroPlan) {
         "system.attributes.hp.value": heroPlan.hitPoints.max
     };
     for (const [key, delta] of Object.entries(abilityDelta)) {
-        const current = Number(actor.system.abilities[key]?.value ?? 0);
+        // Valeur SOURCE : la valeur préparée inclut les effets (stats de départ),
+        // qui s'ajouteraient une seconde fois une fois réécrits dans la source.
+        const current = Number(actor._source.system.abilities[key]?.value ?? 0);
         update[`system.abilities.${key}.value`] = Math.min(20, current + delta);
     }
     // Un unique update par acteur.

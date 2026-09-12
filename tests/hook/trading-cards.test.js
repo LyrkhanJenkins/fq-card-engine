@@ -19,6 +19,18 @@ afterEach(() => {
 
 describe("trading-cards", () => {
 
+    describe("updateUser", () => {
+        it("délègue à TradingCards.updateDeckWhenAssigned(user, changed, userId)", () => {
+            vi.spyOn(TradingCards, "updateDeckWhenAssigned").mockResolvedValue(undefined);
+            const user = {id: "player-1"};
+            const changed = {character: "actor-1"};
+
+            getHook("updateUser")(user, changed, {}, "gm-1");
+
+            expect(TradingCards.updateDeckWhenAssigned).toHaveBeenCalledWith(user, changed, "gm-1");
+        });
+    });
+
     describe("passCards", () => {
         it("avertit et bloque le passage d'une carte du spellbook hors deck", () => {
             const hook = getHook("passCards");

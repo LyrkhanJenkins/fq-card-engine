@@ -40,6 +40,48 @@
         "value": {}
       },
       {
+        "_id": "ygUhWJ31Mhxy79oS",
+        "type": "ItemGrant",
+        "level": 1,
+        "title": "Stats de départ",
+        "hint": "",
+        "classRestriction": "primary",
+        "configuration": {
+          "items": [
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.oOAxwjGlt8VoaXt7",
+              "optional": false
+            }
+          ],
+          "optional": false,
+          "spell": null
+        },
+        "value": {}
+      },
+      {
+        "_id": "UUVF6lm8VjT68cov",
+        "type": "ItemGrant",
+        "level": 1,
+        "title": "Équipement de départ",
+        "hint": "",
+        "classRestriction": "primary",
+        "configuration": {
+          "items": [
+            {
+              "uuid": "Compendium.dnd5e.equipment24.Item.phbagRobe0000000",
+              "optional": false
+            },
+            {
+              "uuid": "Compendium.dnd5e.equipment24.Item.phbwepQuartersta",
+              "optional": false
+            }
+          ],
+          "optional": false,
+          "spell": null
+        },
+        "value": {}
+      },
+      {
         "_id": "lIRGnYWzEXPk0aOX",
         "type": "AbilityScoreImprovement",
         "configuration": {
@@ -69,12 +111,16 @@
         "type": "ItemChoice",
         "configuration": {
           "choices": {
+            "1": {
+              "count": 2,
+              "replacement": false
+            },
             "2": {
               "count": 3,
               "replacement": false
             },
             "3": {
-              "count": 3,
+              "count": 2,
               "replacement": false
             },
             "4": {
@@ -86,53 +132,69 @@
               "replacement": false
             },
             "6": {
-              "count": 2,
+              "count": 3,
               "replacement": false
             },
             "7": {
               "count": 2,
+              "replacement": false
+            },
+            "8": {
+              "count": 3,
+              "replacement": false
+            },
+            "9": {
+              "count": 2,
+              "replacement": false
+            },
+            "10": {
+              "count": 3,
+              "replacement": false
+            },
+            "11": {
+              "count": 2,
+              "replacement": false
+            },
+            "12": {
+              "count": 3,
+              "replacement": false
+            },
+            "13": {
+              "count": 2,
+              "replacement": false
+            },
+            "14": {
+              "count": 3,
+              "replacement": false
+            },
+            "15": {
+              "count": 2,
+              "replacement": false
+            },
+            "16": {
+              "count": 3,
+              "replacement": false
+            },
+            "17": {
+              "count": 2,
+              "replacement": false
+            },
+            "18": {
+              "count": 3,
+              "replacement": false
+            },
+            "19": {
+              "count": 2,
+              "replacement": false
+            },
+            "20": {
+              "count": 3,
               "replacement": false
             }
           },
           "allowDrops": false,
           "type": "feat",
           "pool": [
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.n7zQGe2I1VbkDVRF"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0yBINX3UH0BmEstg"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.O29XCkFWL3RV5Cyc"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.xRaP0WhdwpbI2OR6"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.CV0d8g7fNssbB2rU"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.hqQ9NfbZRJzXoUuI"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.yBBdFKHxqJY3AgkW"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.1lb8TZ3uQoyVmENi"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Egca7jSQLqR0G4MB"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2K2aJ2fuoABOtFKg"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AZWIkbaogSC7VszC"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.9skVpJ7u4B5P2Ddi"
-            },
             {
               "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.phV1tmxN2JUdz1Po"
             },
@@ -146,10 +208,136 @@
               "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cG5Vrwv6NP5ifChp"
             },
             {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.kxqmlP2SSyqufLbl"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.9cACcsdbSdfp5sjq"
             },
             {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.nFxrUC4iiOJC8kpk"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.ZKSXug2gnAE2luhh"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.wlv4O3k3mnd0mVBv"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.EsykJcnLC6eNwU8Z"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0NL73PtlsL6sPZwn"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.pl28LFHBL1IvPmOA"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.b0NtKuwtI0giJlq1"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.s2VyJFUbedDJ1rTc"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.tTJ2piR9WJ1dy2fJ"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.6VXD4LYLNjWXDd3E"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.GVKZiJK1m1v6WZdb"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.YlWICWTAVlsIhvqk"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.3tEL1LRorRaIIVnu"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.QXDYUg5PA537MpDP"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Rn6c8EPebcNyksi3"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.BcUrjy6bPHrRhogV"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.mWQXof3FN0r6Nwnx"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Ynj5Ij9RpGnHlg7P"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.EbjHnIfr2hKNo9k0"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.xb5ermePDnXE9Wrq"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0yBINX3UH0BmEstg"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.1lb8TZ3uQoyVmENi"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2K2aJ2fuoABOtFKg"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AZWIkbaogSC7VszC"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.CV0d8g7fNssbB2rU"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Egca7jSQLqR0G4MB"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.O29XCkFWL3RV5Cyc"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.hqQ9NfbZRJzXoUuI"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.n7zQGe2I1VbkDVRF"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.xRaP0WhdwpbI2OR6"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.yBBdFKHxqJY3AgkW"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.9skVpJ7u4B5P2Ddi"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.IpIUOTKHqwoc0QiE"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AueSPbCtPL1nTO4L"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cyZhMIyEwL29fYqg"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TUqVNrtRQmoOqx0F"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0t6uhrhyysxPmkoB"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.RAOpoyEANC5a2MUh"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.tV0SF4kNL1lrRARy"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2RDku776Ds6m3Imx"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.fHi7TCQweUM9bjDS"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Wwf2VWxGPZngUkZC"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Z6FvnUTsdFaAyBZh"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.e60FIeJF09JFMstB"
             },
             {
               "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.3Z6b6N6RcrFXMFF1"
@@ -158,10 +346,139 @@
               "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.g3WWPMnrflZSKFLv"
             },
             {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TFLGzRHDabJIfYfW"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.r0eAl4WDCfzpyzOA"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.uSL3hFUygS2zOS34"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.CAgvv3YP5HrcjF2A"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.ImUWHWiudZDO6gmR"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.lgVAINp270hxLUno"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.G5CjNCQI1od6xrE1"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.kxqmlP2SSyqufLbl"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.nFxrUC4iiOJC8kpk"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.YTzbOJ4hapcLFzcu"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.P2E7DOnfG0AHscR8"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.B7dzwbJXYSLKFmpv"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.UDEbYZpX1RyQeRFy"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Oq8yTrEfuuwxu8SI"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTtJPRZRuIJmmtHM"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.8RGlg1wK2Hl2wAjW"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.x5x0TMtBexnRBz6B"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.l3WCtgcBKhz3AmO8"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cpPASiKB18TueYut"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.dga4opkQp6eRrjds"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.KSCYy8w0O9QO1btC"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.xWBaR7H08l5th4nv"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.i1o7CxEmX16BsV4b"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTwJ88F0oJUQvuhS"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.R63FEsMi4wGxeyxu"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AXZXW2BkIhG1AqRJ"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.H2pIYRtbq5zP91Td"
             },
             {
               "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.m7gUDIzZ1YIi0XAk"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TYRgZdwa8kCog06t"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.OcFuz49XCTP2DiUy"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.1e4C1Hso0p23NxGq"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.GmHyxsmMjVKcB1ru"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Nrf2zOlpTVyczRUE"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.h8HCqm0GVy04obwE"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TFLGzRHDabJIfYfW"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.6uqGnVGQrRJ67yyz"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.oZlLtsPZhx3nRNIR"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.KTPzRHNpeb9HbFth"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.o2IgHEIEdELHmZRr"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.g4sukxARWGqRWS53"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.un8K9ZZRXxZqaWSm"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.OTabgA0bLJcJEOsD"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.52rj98jVQYX29WsI"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.ZTP8M7MTawuzhvkp"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.lfF8k2YFrG1Q2R2D"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.SLmcJglD3XghslOJ"
             }
           ],
           "spell": null,
@@ -176,8 +493,7 @@
           "replaced": {}
         },
         "title": "",
-        "hint": "",
-        "classRestriction": "primary"
+        "hint": ""
       },
       {
         "_id": "RGP0bm4CVYiDuAA0",
@@ -402,311 +718,6 @@
         "title": "",
         "hint": "",
         "_id": "i1pecfUJX1AJWFho"
-      },
-      {
-        "type": "ItemChoice",
-        "_id": "qRLHx4Xf1Vzdjgtt",
-        "configuration": {
-          "allowDrops": false,
-          "choices": {
-            "1": {
-              "count": 2,
-              "replacement": false
-            },
-            "2": {
-              "count": 2,
-              "replacement": false
-            },
-            "3": {
-              "count": 2,
-              "replacement": false
-            },
-            "4": {
-              "count": 2,
-              "replacement": false
-            },
-            "5": {
-              "count": 2,
-              "replacement": false
-            },
-            "6": {
-              "count": 2,
-              "replacement": false
-            },
-            "7": {
-              "count": 2,
-              "replacement": false
-            }
-          },
-          "pool": [
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0NL73PtlsL6sPZwn"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.pl28LFHBL1IvPmOA"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.b0NtKuwtI0giJlq1"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.s2VyJFUbedDJ1rTc"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.tTJ2piR9WJ1dy2fJ"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.6VXD4LYLNjWXDd3E"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Oq8yTrEfuuwxu8SI"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTtJPRZRuIJmmtHM"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.8RGlg1wK2Hl2wAjW"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.x5x0TMtBexnRBz6B"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTwJ88F0oJUQvuhS"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.R63FEsMi4wGxeyxu"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.GmHyxsmMjVKcB1ru"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Nrf2zOlpTVyczRUE"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.IpIUOTKHqwoc0QiE"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AueSPbCtPL1nTO4L"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cyZhMIyEwL29fYqg"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TUqVNrtRQmoOqx0F"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0t6uhrhyysxPmkoB"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.RAOpoyEANC5a2MUh"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.tV0SF4kNL1lrRARy"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2RDku776Ds6m3Imx"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.fHi7TCQweUM9bjDS"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Wwf2VWxGPZngUkZC"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Z6FvnUTsdFaAyBZh"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.e60FIeJF09JFMstB"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.52rj98jVQYX29WsI"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.oZlLtsPZhx3nRNIR"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.CAgvv3YP5HrcjF2A"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.ImUWHWiudZDO6gmR"
-            }
-          ],
-          "restriction": {
-            "list": []
-          },
-          "spell": null,
-          "type": null
-        },
-        "value": {
-          "added": {},
-          "replaced": {}
-        },
-        "title": "",
-        "hint": "",
-        "classRestriction": "secondary"
-      },
-      {
-        "type": "ItemChoice",
-        "configuration": {
-          "allowDrops": false,
-          "choices": {
-            "8": {
-              "count": 2,
-              "replacement": false
-            },
-            "9": {
-              "count": 2,
-              "replacement": false
-            },
-            "10": {
-              "count": 2,
-              "replacement": false
-            },
-            "11": {
-              "count": 2,
-              "replacement": false
-            },
-            "12": {
-              "count": 2,
-              "replacement": false
-            },
-            "13": {
-              "count": 2,
-              "replacement": false
-            },
-            "14": {
-              "count": 2,
-              "replacement": false
-            },
-            "15": {
-              "count": 2,
-              "replacement": false
-            },
-            "16": {
-              "count": 2,
-              "replacement": false
-            },
-            "17": {
-              "count": 2,
-              "replacement": false
-            },
-            "18": {
-              "count": 2,
-              "replacement": false
-            },
-            "19": {
-              "count": 2,
-              "replacement": false
-            },
-            "20": {
-              "count": 2,
-              "replacement": false
-            }
-          },
-          "pool": [
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0NL73PtlsL6sPZwn"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.pl28LFHBL1IvPmOA"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.b0NtKuwtI0giJlq1"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.s2VyJFUbedDJ1rTc"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.tTJ2piR9WJ1dy2fJ"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.6VXD4LYLNjWXDd3E"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Oq8yTrEfuuwxu8SI"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTtJPRZRuIJmmtHM"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.8RGlg1wK2Hl2wAjW"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.x5x0TMtBexnRBz6B"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.LTwJ88F0oJUQvuhS"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.R63FEsMi4wGxeyxu"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.GmHyxsmMjVKcB1ru"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Nrf2zOlpTVyczRUE"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.IpIUOTKHqwoc0QiE"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AueSPbCtPL1nTO4L"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.cyZhMIyEwL29fYqg"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.TUqVNrtRQmoOqx0F"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.0t6uhrhyysxPmkoB"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.RAOpoyEANC5a2MUh"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.tV0SF4kNL1lrRARy"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.2RDku776Ds6m3Imx"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.fHi7TCQweUM9bjDS"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Wwf2VWxGPZngUkZC"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.Z6FvnUTsdFaAyBZh"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.e60FIeJF09JFMstB"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.52rj98jVQYX29WsI"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.oZlLtsPZhx3nRNIR"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.CAgvv3YP5HrcjF2A"
-            },
-            {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.ImUWHWiudZDO6gmR"
-            }
-          ],
-          "restriction": {
-            "list": []
-          },
-          "spell": null,
-          "type": null
-        },
-        "value": {
-          "added": {},
-          "replaced": {}
-        },
-        "title": "",
-        "hint": "",
-        "_id": "fQeSE04pCLU5JTce"
       },
       {
         "type": "Trait",

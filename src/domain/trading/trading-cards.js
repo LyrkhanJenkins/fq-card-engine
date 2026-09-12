@@ -64,12 +64,12 @@ export default class TradingCards {
 
     /**
      * Vérifie si un advancement de classe peut être appliqué pour le document donné.
-     * Contrôle que le personnage parent est bien le personnage attitré d'un utilisateur :
-     * sans porteur, la reconstruction du deck qui suit l'advancement n'aurait aucune cible.
-     * Affiche un warning si ce n'est pas le cas.
      *
      * Une classe FQ sans parent (item du répertoire du monde) n'a par construction aucun
-     * porteur : elle est refusée plutôt que de faire lever une erreur au hook appelant.
+     * porteur : elle est refusée, avec un warning, plutôt que de faire lever une erreur
+     * au hook appelant. Un personnage attitré d'aucun utilisateur est en revanche
+     * accepté : la reconstruction du deck, faute de cible, est reportée au moment où le
+     * personnage est attribué à un utilisateur (cf. {@link TradingCards.updateDeckWhenAssigned}).
      *
      * @param {ItemData} document               - Le document item concerné par l'advancement.
      * @param {object}   [options]              - Les options du Hook appelant.
@@ -83,11 +83,7 @@ export default class TradingCards {
      * });
      */
     static checkIfCanUpdateClasses(document, options) {
-        if (options?.isAdvancement && Constants.isFQClasses(document)) {
-            const ownedCharacters = game.users.filter(u => !!u.character).map(u => u.character?.id);
-            if (document.parent?.id && ownedCharacters.includes(document.parent.id)) {
-                return true;
-            }
+        if (options?.isAdvancement && Constants.isFQClasses(document) && !document.parent?.id) {
             ui.notifications.warn("FQCARDENGINE.NoUserForActor", {localize: true});
             return false;
         }
@@ -178,6 +174,35 @@ export default class TradingCards {
         }
 
         TradingCards.debouncedUpdateDeckByUser[user.id](user.id);
+    }
+
+    /**
+     * Reconstruit le deck d'un utilisateur quand on lui attribue un personnage portant
+     * une classe FQ. Complète {@link TradingCards.checkIfCanUpdateClasses}, qui laisse
+     * monter de niveau un personnage attitré d'aucun utilisateur : son deck, sans cible
+     * jusque-là, n'a pas pu être construit. `updateUser` se déclenchant sur tous les
+     * clients, seul celui à l'origine de l'attribution reconstruit.
+     *
+     * @example
+     * Hooks.on("updateUser", (user, changed, _options, userId) => {
+     *     TradingCards.updateDeckWhenAssigned(user, changed, userId);
+     * });
+     *
+     * @param {User}   user    - L'utilisateur mis à jour.
+     * @param {object} changed - Le delta de la mise à jour.
+     * @param {string} userId  - L'id de l'utilisateur à l'origine de la mise à jour.
+     *
+     * @returns {Promise<void>}
+     */
+    static async updateDeckWhenAssigned(user, changed, userId) {
+        if (userId !== game.user?.id || !changed?.character || !user?.character) return;
+        if (Constants.userFQClasses(user).length === 0) return;
+
+        try {
+            await TradingCards.updateDeckForUser(user.id);
+        } catch (err) {
+            ui.notifications.error(err.message);
+        }
     }
 
     /**

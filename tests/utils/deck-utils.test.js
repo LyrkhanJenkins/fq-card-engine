@@ -60,11 +60,10 @@ describe("TradingCards", () => {
         expect(TradingCards.checkIfCanUpdateClasses(document, {isAdvancement: true})).toBe(true);
     });
 
-    it("should show warning and return false if the character is not owned by a user", () => {
+    it("accepte sans avertir un personnage attitré d'aucun utilisateur (deck reconstruit à l'attribution)", () => {
         global.game = {users: [{character: {id: "other-id"}}]};
-        const result = TradingCards.checkIfCanUpdateClasses(document, {isAdvancement: true});
-        expect(result).toBe(false);
-        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.NoUserForActor", {localize: true});
+        expect(TradingCards.checkIfCanUpdateClasses(document, {isAdvancement: true})).toBe(true);
+        expect(ui.notifications.warn).not.toHaveBeenCalled();
     });
 
     it("should return true if not an advancement", () => {
@@ -84,6 +83,43 @@ describe("TradingCards", () => {
 
     it("laisse passer sans lever d'erreur quand aucune option n'est fournie", () => {
         expect(TradingCards.checkIfCanUpdateClasses(document, undefined)).toBe(true);
+    });
+
+    // ─── updateDeckWhenAssigned ───────────────────────────────────────────────
+
+    const fqClass = {system: {source: {label: "FQ"}}, type: "class"};
+    const assignedUser = {id: "player-1", character: {classes: {witch: fqClass}}};
+
+    it("reconstruit le deck quand ce client attribue un personnage portant une classe FQ", async () => {
+        global.game = {user: {id: "gm-1"}};
+        const spy = vi.spyOn(TradingCards, "updateDeckForUser").mockResolvedValue(undefined);
+
+        await TradingCards.updateDeckWhenAssigned(assignedUser, {character: "actor-1"}, "gm-1");
+
+        expect(spy).toHaveBeenCalledWith("player-1");
+        spy.mockRestore();
+    });
+
+    it("ne reconstruit rien sur un autre client que celui de l'attribution", async () => {
+        global.game = {user: {id: "other-client"}};
+        const spy = vi.spyOn(TradingCards, "updateDeckForUser").mockResolvedValue(undefined);
+
+        await TradingCards.updateDeckWhenAssigned(assignedUser, {character: "actor-1"}, "gm-1");
+
+        expect(spy).not.toHaveBeenCalled();
+        spy.mockRestore();
+    });
+
+    it("ne reconstruit rien sans attribution de personnage, ni pour un personnage sans classe FQ", async () => {
+        global.game = {user: {id: "gm-1"}};
+        const spy = vi.spyOn(TradingCards, "updateDeckForUser").mockResolvedValue(undefined);
+
+        await TradingCards.updateDeckWhenAssigned(assignedUser, {name: "Renommé"}, "gm-1");
+        await TradingCards.updateDeckWhenAssigned(assignedUser, {character: null}, "gm-1");
+        await TradingCards.updateDeckWhenAssigned({id: "player-1", character: {classes: {}}}, {character: "actor-2"}, "gm-1");
+
+        expect(spy).not.toHaveBeenCalled();
+        spy.mockRestore();
     });
 
     // ─── checkClassLevelCap ───────────────────────────────────────────────────

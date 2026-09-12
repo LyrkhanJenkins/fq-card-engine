@@ -33,26 +33,35 @@ describe("loadClassCatalog", () => {
         }
     });
 
-    it("hitDieFaces de witch vaut 6 et baseHitPoints vaut 20", async () => {
+    it("hitDieFaces de witch vaut 6 et baseHitPoints vaut 21 (15 du héros vierge + d6 maximal)", async () => {
         const catalog = await loadClassCatalog(REPO_ROOT);
 
         expect(catalog.witch.hitDieFaces).toBe(6);
-        expect(catalog.witch.baseHitPoints).toBe(20);
+        expect(catalog.witch.baseHitPoints).toBe(21);
+    });
+
+    it("baseAbilities ajoute les stats de départ de la classe au héros vierge", async () => {
+        const catalog = await loadClassCatalog(REPO_ROOT);
+
+        // Héros vierge à 10 partout ; la Sorcière apporte Cha +6 et Con -4.
+        expect(catalog.witch.baseAbilities.cha).toBe(16);
+        expect(catalog.witch.baseAbilities.con).toBe(6);
     });
 });
 
 describe("resolvePicks", () => {
-    it("au niveau 1, rend exactement 2 UUID pour runic-warrior (seul l'ItemChoice couvrant le niveau 1 s'applique)", async () => {
+    it("au niveau 1, rend exactement 2 UUID pour runic-warrior ; les niveaux pairs en rendent 3", async () => {
         const catalog = await loadClassCatalog(REPO_ROOT);
-        const rng = createRng(4242);
 
-        const picks = resolvePicks(catalog["runic-warrior"], 1, rng);
-
+        const picks = resolvePicks(catalog["runic-warrior"], 1, createRng(4242));
         expect(picks).toHaveLength(2);
         for (const pick of picks) {
             expect(pick.uuid).toMatch(/^Compendium\.fq-card-engine\.classes-stats-fq8\.Item\./);
             expect(pick.level).toBe(1);
         }
+
+        const atLevelTwo = resolvePicks(catalog["runic-warrior"], 2, createRng(4242));
+        expect(atLevelTwo.filter(pick => pick.level === 2)).toHaveLength(3);
     });
 
     it("au niveau 20, le total de picks égale la somme des count atteints, sans doublon par advancement", async () => {
@@ -83,17 +92,23 @@ describe("resolvePicks", () => {
         }
     });
 
-    it("rend zéro pick pour un advancement ne couvrant pas le niveau demandé (cas d'entrée vide)", async () => {
+    it("ne sert que les paliers inférieurs ou égaux au niveau demandé", async () => {
         const catalog = await loadClassCatalog(REPO_ROOT);
         const rng = createRng(4242);
         const classEntry = catalog["runic-warrior"];
 
-        // Le deuxième ItemChoice (niveaux 8-20) ne couvre aucun palier <= 5.
+        // L'ItemChoice unique couvre les niveaux 1 à 20 : au niveau 5, seuls les
+        // paliers 1 à 5 sont servis.
         const picks = resolvePicks(classEntry, 5, rng);
-        const secondAdvancementId = classEntry.advancement.itemChoices[2]._id;
 
-        expect(() => picks.forEach(() => {})).not.toThrow();
-        expect(picks.some(p => p.advancementId === secondAdvancementId)).toBe(false);
+        let expectedTotal = 0;
+        for (const itemChoice of classEntry.advancement.itemChoices) {
+            for (const [levelKey, config] of Object.entries(itemChoice.configuration?.choices ?? {})) {
+                if (Number(levelKey) <= 5) expectedTotal += config.count;
+            }
+        }
+        expect(picks).toHaveLength(expectedTotal);
+        expect(picks.every(p => p.level <= 5)).toBe(true);
     });
 });
 
