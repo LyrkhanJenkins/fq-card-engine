@@ -2493,7 +2493,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/ChainTrap.png",
           "text": "FQCARDDESCRIPTION.ChainTrap"
         }
       ],
@@ -2640,17 +2640,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1788096374766,
+        "modifiedTime": 1789290057398,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trChainTrap00001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trChainTrap00001",
+      "cards": []
     },
     {
       "faces": [
@@ -2768,7 +2768,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/StakeoutTrap.png",
           "text": "FQCARDDESCRIPTION.StakeoutTrap"
         }
       ],
@@ -2864,17 +2864,17 @@
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1788096374766,
+        "modifiedTime": 1789289925609,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trStakeoutTrap01"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trStakeoutTrap01",
+      "cards": []
     },
     {
       "faces": [
@@ -4333,7 +4333,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/BeastBleeding.png",
           "text": "FQCARDDESCRIPTION.BeastBleeding"
         }
       ],
@@ -4437,15 +4437,15 @@
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788700000000,
-        "modifiedTime": 1788700000000,
+        "modifiedTime": 1789290084475,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trBeastBleeding1"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trBeastBleeding1",
+      "cards": []
     },
     {
       "faces": [
