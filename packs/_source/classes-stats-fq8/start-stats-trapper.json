@@ -1,7 +1,7 @@
 {
   "name": "Start stats (Trapper)",
   "type": "feat",
-  "img": "icons/sundries/gaming/playing-cards-grey.webp",
+  "img": "modules/fq-card-engine/images/classes/trapper_class.png",
   "effects": [
     {
       "_id": "WkgKcepUma4YyKEl",
@@ -12,7 +12,7 @@
         "expiry": null,
         "expired": false
       },
-      "origin": null,
+      "origin": "Compendium.fq-card-engine.classes-stats-fq8.Item.KjysfOK9p7gIJiUb",
       "transfer": true,
       "flags": {
         "dae": {
@@ -21,23 +21,34 @@
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
-          "transfer": true
+          "transfer": true,
+          "disableCondition": "",
+          "expiryMode": "default",
+          "phaseStamped": true
+        },
+        "dnd5e": {
+          "riders": {
+            "statuses": []
+          }
+        },
+        "core": {
+          "overlay": false
         }
       },
       "tint": "#ffffff",
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "14.353",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
-        "systemVersion": "3.3.1",
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "systemVersion": "5.3.3",
+        "createdTime": 1789287643756,
+        "modifiedTime": 1789287643756,
+        "lastModifiedBy": "dnd5ebuilder0000",
         "exportSource": null
       },
       "name": "Stats de départ",
-      "img": "icons/sundries/gaming/playing-cards-grey.webp",
+      "img": "modules/fq-card-engine/images/classes/trapper_class.png",
       "type": "base",
       "system": {
         "changes": [
@@ -111,11 +122,11 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "dnd5e",
     "systemVersion": "3.3.1",
     "createdTime": 1724140566041,
-    "modifiedTime": 1756552300744,
+    "modifiedTime": 1789287634005,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
