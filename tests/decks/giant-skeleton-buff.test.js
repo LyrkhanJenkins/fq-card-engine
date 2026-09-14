@@ -149,7 +149,7 @@ describe("Éclats d'os → Squelette Géant — la chaîne complète", () => {
                 name: "Giant Skeleton",
                 ownership: {},
                 system: {
-                    attributes: {hp: {max: 25, value: 25}, movement: {walk: 20}},
+                    attributes: {hp: {max: 25, value: 25}, movement: {speeds: {walk: 20}}},
                     fq: {
                         attributes: {critical: 2, evasion: 1},
                         action: {max: 10, value: 10},
@@ -168,7 +168,7 @@ describe("Éclats d'os → Squelette Géant — la chaîne complète", () => {
         // seuls comptent ici les +8 / +3 / +5 rendus par les compteurs du rituel.
         expect(summoned.system.attributes.hp).toEqual({max: 18, value: 18});
         expect(summoned.system.fq.bonus.damage).toBe(13);
-        expect(summoned.system.attributes.movement.walk).toBe(15);
+        expect(summoned.system.attributes.movement.speeds.walk).toBe(15);
         expect(summoned.flags["fq-card-engine"].minionType).toBe("giantSkeleton");
 
         Minion.getTempActorFolder.mockRestore();

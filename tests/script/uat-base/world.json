@@ -7,7 +7,7 @@
     "minimum": "14",
     "verified": "14.367"
   },
-  "systemVersion": "5.3.3",
+  "systemVersion": "6.0.1",
   "playtime": 0,
   "safeMode": false,
   "description": "Template UAT minimal : 1 MJ + 1 joueur sans personnage, arène vide, macro « Seed UAT » en hotbar. Fabriqué par tests/script/build-uat-base.mjs.",

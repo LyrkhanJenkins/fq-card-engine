@@ -246,7 +246,7 @@ export default class StatusEffects {
             name: "Air Effect",
             img: "icons/magic/air/wind-tornado-spiral-teal-green.webp",
             changes: [
-                {key: "system.attributes.movement.walk", value: "-5", type: "add", priority: null},
+                {key: "system.attributes.movement.speeds.walk", value: "-5", type: "add", priority: null},
                 {key: "macro.execute", value: "PersistAura jb2a.aura_themed.01.orbit.loop.metal", type: "custom", priority: null}
             ],
             duration: {value: "2", units: "rounds"},
@@ -401,7 +401,9 @@ export default class StatusEffects {
      * @returns {object} Les données d'effet actif.
      */
     static #conditionData(id) {
-        const config = (globalThis.CONFIG?.statusEffects ?? []).find(effect => effect.id === id);
+        // dnd5e range `CONFIG.statusEffects` en objet indexé par identifiant, et
+        // non en tableau comme le cœur : `Object.values` lit les deux formes.
+        const config = Object.values(globalThis.CONFIG?.statusEffects ?? {}).find(effect => effect.id === id);
         return {
             name: config?.name ?? id,
             img: config?.img ?? "icons/svg/aura.svg",

@@ -34,8 +34,8 @@ export function lockPlayMode(sheet) {
 export const RIGHTS_LIMITED_CLASS = "fq-rights-limited";
 
 /**
- * Entrées des menus contextuels dnd5e (objets, effets, activités) qui créent,
- * modifient ou suppriment un document.
+ * Libellés (`label`) des entrées des menus contextuels dnd5e (objets, effets,
+ * activités) qui créent, modifient ou suppriment un document.
  *
  * @type {string[]}
  */
@@ -77,6 +77,6 @@ export function removeModeToggle(sheet) {
 export function stripEditingContextOptions(menuItems) {
     if (!Constants.isPlayerRightsLimited) return;
     for (let i = menuItems.length - 1; i >= 0; i--) {
-        if (EDITING_CONTEXT_ENTRIES.includes(menuItems[i]?.name)) menuItems.splice(i, 1);
+        if (EDITING_CONTEXT_ENTRIES.includes(menuItems[i]?.label)) menuItems.splice(i, 1);
     }
 }

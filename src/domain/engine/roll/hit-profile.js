@@ -332,7 +332,7 @@ export default class HitProfile {
      * Tout vient de `activity.getAttackData()` : caractéristique, bonus de
      * maîtrise (VIDE si l'arme n'est pas maîtrisée — la règle D&D fait perdre le
      * bonus, elle n'inflige pas de désavantage), bonus magique de l'arme et des
-     * munitions, `system.bonuses.mwak|rwak|msak|rsak.attack`, et la réduction
+     * munitions, `system.rolls.attack.mwak|rwak|msak|rsak.bonus`, et la réduction
      * d'épuisement 2024. Rien n'est réécrit ici.
      *
      * Renvoie 0 — sans jamais lever — si l'activité ne sait pas construire sa

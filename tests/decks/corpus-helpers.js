@@ -144,7 +144,7 @@ export function minionDocFor(minion) {
     return {
         name: minion.name,
         system: {
-            attributes: {hp: {max: 1, value: 1}, movement: {walk: 0}},
+            attributes: {hp: {max: 1, value: 1}, movement: {speeds: {walk: 0}}},
             fq: {
                 attributes: {critical: 1, evasion: 1},
                 action: {max: 1, value: 1},

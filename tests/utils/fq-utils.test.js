@@ -548,7 +548,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
                         name: "minionName",
                         ownership: {},
                         system: {
-                            attributes: {hp: {max: 10, value: 10}, movement: {walk: 0}},
+                            attributes: {hp: {max: 10, value: 10}, movement: {speeds: {walk: 0}}},
                             fq: {
                                 attributes: {critical: 1, evasion: 1},
                                 action: {max: 1, value: 1},
@@ -585,7 +585,7 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
                         system: expect.objectContaining({
                             attributes: expect.objectContaining({
                                 hp: {max: 10, value: 10},
-                                movement: {walk: 10}
+                                movement: {speeds: {walk: 10}}
                             }),
                             fq: expect.objectContaining({
                                 attributes: {critical: 10, evasion: 10},

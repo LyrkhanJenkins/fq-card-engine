@@ -146,9 +146,10 @@ export default class Minion {
                     : actorData.system.fq.bonus.damage) + bonus.damageBonus;
             }
             if (minion.data?.movement || bonus.movement) {
-                actorData.system.attributes.movement.walk = Number(minion.data?.movement
+                const speeds = actorData.system.attributes.movement.speeds;
+                speeds.walk = Number(minion.data?.movement
                     ? RollService.rollResultSync(minion.data.movement)
-                    : actorData.system.attributes.movement.walk) + bonus.movement;
+                    : speeds.walk) + bonus.movement;
             }
             if (minion.data) {
                 if (minion.data.critical) {

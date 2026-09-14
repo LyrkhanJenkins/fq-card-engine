@@ -205,7 +205,7 @@ describe("Minion — bonus de caractéristiques à l'invocation", () => {
                 name: "Tamed Wolf",
                 ownership: {},
                 system: {
-                    attributes: {hp: {max: 12, value: 12}, movement: {walk: 30}},
+                    attributes: {hp: {max: 12, value: 12}, movement: {speeds: {walk: 30}}},
                     fq: {
                         attributes: {critical: 1, evasion: 1},
                         action: {max: 1, value: 1},
@@ -250,7 +250,7 @@ describe("Minion — bonus de caractéristiques à l'invocation", () => {
         // Les formules sont résolues à 10 par le Roll déterministe des tests.
         expect(actorData.system.attributes.hp).toEqual({max: 15, value: 15});
         expect(actorData.system.fq.bonus.damage).toBe(12);
-        expect(actorData.system.attributes.movement.walk).toBe(15);
+        expect(actorData.system.attributes.movement.speeds.walk).toBe(15);
     });
 
     it("applique les bonus de combat même quand la carte ne surcharge rien : la base est celle du compendium", async () => {
@@ -261,7 +261,7 @@ describe("Minion — bonus de caractéristiques à l'invocation", () => {
         const actorData = sentActorData();
         expect(actorData.system.attributes.hp).toEqual({max: 17, value: 17});
         expect(actorData.system.fq.bonus.damage).toBe(5);
-        expect(actorData.system.attributes.movement.walk).toBe(35);
+        expect(actorData.system.attributes.movement.speeds.walk).toBe(35);
     });
 
     it("n'applique aucun bonus au sbire d'un autre type", async () => {

@@ -11,6 +11,9 @@
 - Problème encore avec le clignotement
 
 ### Versions prévues
+#### 3.0.0
+- Utiliser la portée des armes pour certaines cartes?
+
 #### 3.1.x
 - Rajouter des règles d'architectures
 - Valeurs sentinelles (`-9999`, `999999999`, `99999999`) utilisées comme drapeaux (pas de crit, cible inesquivable,

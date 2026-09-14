@@ -1383,7 +1383,7 @@
                           "img": "icons/magic/perception/shadow-stealth-eyes-purple.webp",
                           "changes": [
                             {
-                              "key": "system.attributes.movement.walk",
+                              "key": "system.attributes.movement.speeds.walk",
                               "value": "20",
                               "type": "add",
                               "priority": null

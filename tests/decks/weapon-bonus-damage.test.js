@@ -14,7 +14,7 @@ globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 const {playChoice, makeEquippedWeapon} = await import("./play-harness.js");
 
 /**
- * Bonus d'arme de l'acteur (`system.bonuses.mwak/rwak.damage`) sur les cartes
+ * Bonus d'arme de l'acteur (`system.rolls.damage.mwak/rwak.bonus`) sur les cartes
  * `@wpnM`/`@wpnR`, via le VRAI `playValidatedCard`. Les armes FQ portent des
  * activités de type « damage », pour lesquelles dnd5e n'injecte JAMAIS ces
  * bonus (`BaseActivityData.actionType` vaut « damage ») : c'est
@@ -38,9 +38,21 @@ function makeCard(damage) {
     };
 }
 
+/**
+ * Bonus de dégâts d'arme de l'acteur, rangé comme dnd5e le prépare.
+ *
+ * @param {string} actionType - Le type d'attaque (`mwak` ou `rwak`).
+ * @param {string} bonus      - La formule du bonus.
+ *
+ * @returns {object} Le fragment `system` de l'acteur.
+ */
+function weaponDamageBonus(actionType, bonus) {
+    return {rolls: {damage: {[actionType]: {bonus}}}};
+}
+
 const DICE = [{faces: 8, value: 5}, {faces: 20, value: 19}, {faces: 20, value: 19}];
 
-describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (bout en bout)", () => {
+describe("system.rolls.damage.mwak/rwak.bonus — bonus d'arme sur les cartes @wpn (bout en bout)", () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
@@ -50,7 +62,7 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
             world: {
                 character: {
                     items: [makeWeapon({category: "simpleM", activityType: "damage"})],
-                    system: {bonuses: {mwak: {damage: "2"}}}
+                    system: weaponDamageBonus("mwak", "2")
                 }
             },
             dice: DICE
@@ -67,7 +79,7 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
             world: {
                 character: {
                     items: [makeWeapon({category: "simpleM", activityType: "damage"})],
-                    system: {bonuses: {rwak: {damage: "2"}}}
+                    system: weaponDamageBonus("rwak", "2")
                 }
             },
             dice: DICE
@@ -83,7 +95,7 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
             world: {
                 character: {
                     items: [makeWeapon({category: "simpleR", activityType: "damage"})],
-                    system: {bonuses: {rwak: {damage: "2"}}}
+                    system: weaponDamageBonus("rwak", "2")
                 }
             },
             dice: DICE
@@ -99,7 +111,7 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
             world: {
                 character: {
                     items: [makeWeapon({category: "natural", activityType: "damage"})],
-                    system: {bonuses: {mwak: {damage: "2"}}}
+                    system: weaponDamageBonus("mwak", "2")
                 }
             },
             dice: DICE
@@ -116,7 +128,7 @@ describe("system.bonuses.mwak/rwak.damage — bonus d'arme sur les cartes @wpn (
             world: {
                 character: {
                     items: [makeWeapon({category: "simpleM", activityType: "attack"})],
-                    system: {bonuses: {mwak: {damage: "2"}}}
+                    system: weaponDamageBonus("mwak", "2")
                 }
             },
             dice: DICE

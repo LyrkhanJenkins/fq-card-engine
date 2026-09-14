@@ -2374,7 +2374,7 @@
                           "img": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
                           "changes": [
                             {
-                              "key": "system.attributes.movement.walk",
+                              "key": "system.attributes.movement.speeds.walk",
                               "value": "0",
                               "type": "override",
                               "priority": null
@@ -4256,7 +4256,7 @@
                           "img": "icons/magic/earth/strike-body-stone-crumble.webp",
                           "changes": [
                             {
-                              "key": "system.attributes.movement.walk",
+                              "key": "system.attributes.movement.speeds.walk",
                               "value": "0",
                               "type": "override",
                               "priority": 20
@@ -6194,7 +6194,7 @@
                           "img": "icons/magic/air/wind-tornado-spiral-blue.webp",
                           "changes": [
                             {
-                              "key": "system.attributes.movement.walk",
+                              "key": "system.attributes.movement.speeds.walk",
                               "value": "@wis",
                               "type": "add",
                               "priority": null

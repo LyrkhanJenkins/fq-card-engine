@@ -243,6 +243,19 @@ describe("hook/combat.hook.js", () => {
             expect(otherEffect.delete).not.toHaveBeenCalled();
         });
 
+        it("MJ : laisse à dnd5e les effets FQ déjà expirés, qu'il retire lui-même à la sortie du combat", async () => {
+            game.cards = [];
+            const expiredEffect = {origin: OriginFQEffectLabel, duration: {expired: true}, delete: vi.fn()};
+            const activeEffect = {origin: OriginFQEffectLabel, duration: {expired: false}, delete: vi.fn()};
+            const effects = Object.assign([expiredEffect, activeEffect], {size: 2});
+            const combatant = makeCombatant({actorId: "c1", effects});
+
+            await getHook("deleteCombat")({combatants: [combatant]}, {});
+
+            expect(expiredEffect.delete).not.toHaveBeenCalled();
+            expect(activeEffect.delete).toHaveBeenCalled();
+        });
+
         it("non-MJ : n'effectue aucune mise à jour", async () => {
             const deck = {system: {fq: {type: DECK_TYPE}}, recall: vi.fn().mockResolvedValue(undefined)};
             game.cards = [deck];

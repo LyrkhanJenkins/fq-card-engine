@@ -12,8 +12,10 @@ Hooks.on("deleteCombat", async function (combat, _delta) {
             if (!combatant.actor) return;
             combatant.actor.update({"system.attributes.exhaustion": 0});
             if (combatant.actor.effects && combatant.actor.effects.size > 0) {
+                // Un effet déjà expiré est retiré par dnd5e lui-même à la sortie du
+                // combat (`_onExit`) : le supprimer ici aussi le ferait supprimer deux fois.
                 combatant.actor.effects.filter(
-                    effect => effect.origin === OriginFQEffectLabel
+                    effect => effect.origin === OriginFQEffectLabel && !effect.duration?.expired
                 ).forEach(effect => {
                     effect.delete();
                 });

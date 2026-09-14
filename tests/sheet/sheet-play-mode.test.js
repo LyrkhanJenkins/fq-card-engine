@@ -95,12 +95,12 @@ describe("sheet-play-mode", () => {
 
     describe("stripEditingContextOptions", () => {
         const menu = () => [
-            {name: "DND5E.ItemView"},
-            {name: "DND5E.ContextMenuActionEdit"},
-            {name: "DND5E.ContextMenuActionDuplicate"},
-            {name: "DND5E.ContextMenuActionDelete"},
-            {name: "DND5E.Scroll.CreateScroll"},
-            {name: "DND5E.ContextMenuActionEquip"}
+            {label: "DND5E.ItemView"},
+            {label: "DND5E.ContextMenuActionEdit"},
+            {label: "DND5E.ContextMenuActionDuplicate"},
+            {label: "DND5E.ContextMenuActionDelete"},
+            {label: "DND5E.Scroll.CreateScroll"},
+            {label: "DND5E.ContextMenuActionEquip"}
         ];
 
         test("retire sur place les entrées d'édition pour un joueur aux droits limités", () => {
@@ -109,7 +109,7 @@ describe("sheet-play-mode", () => {
 
             stripEditingContextOptions(menuItems);
 
-            expect(menuItems.map(e => e.name)).toEqual(["DND5E.ItemView", "DND5E.ContextMenuActionEquip"]);
+            expect(menuItems.map(e => e.label)).toEqual(["DND5E.ItemView", "DND5E.ContextMenuActionEquip"]);
         });
 
         test("laisse le menu intact quand la limitation est inactive", () => {

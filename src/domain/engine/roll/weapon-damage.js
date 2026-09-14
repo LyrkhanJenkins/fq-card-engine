@@ -70,10 +70,10 @@ export default class WeaponDamage {
         if (!formula) {
             return "0";
         }
-        // dnd5e n'injecte `system.bonuses.mwak/rwak.damage` que pour les
+        // dnd5e n'injecte `system.rolls.damage.mwak/rwak.bonus` que pour les
         // activités d'ATTAQUE (`BaseActivityData.actionType` vaut le type de
         // l'activité — "damage" pour les armes FQ — et `_processDamagePart`
-        // lit alors `system.bonuses.damage.damage`, qui n'existe pas). Le
+        // lit alors `system.rolls.damage.damage.bonus`, qui n'existe pas). Le
         // bonus d'arme de l'acteur est donc ajouté ici pour ces activités.
         if (activity.type !== "attack") {
             const bonus = WeaponDamage.getActorWeaponDamageBonus(actor, weapon);
@@ -87,7 +87,7 @@ export default class WeaponDamage {
     /**
      * Bonus de dégâts d'arme de l'acteur applicable à une arme : `mwak` pour
      * une arme de mêlée (`simpleM`/`martialM`/`natural`), `rwak` pour une arme à distance
-     * (`system.bonuses.<type>.damage`, alimenté notamment par des effets de
+     * (`system.rolls.damage.<type>.bonus`, alimenté notamment par des effets de
      * cartes). Renvoie `""` si le bonus est vide ou nul.
      *
      * @param {object} actor  - L'acteur porteur.
@@ -98,7 +98,7 @@ export default class WeaponDamage {
     static getActorWeaponDamageBonus(actor, weapon) {
         const category = weapon?.system?.type?.value ?? "";
         const actionType = category.endsWith("R") ? "rwak" : "mwak";
-        const bonus = actor?.system?.bonuses?.[actionType]?.damage;
+        const bonus = actor?.system?.rolls?.damage?.[actionType]?.bonus;
         return (bonus && !/^0+$/.test(String(bonus).trim())) ? String(bonus) : "";
     }
 

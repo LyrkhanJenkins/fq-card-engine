@@ -180,6 +180,17 @@ describe("StatusEffects — conditions dnd5e", () => {
         expect(effect.img).toBe("systems/dnd5e/icons/svg/statuses/blinded.svg");
     });
 
+    test("CONFIG.statusEffects indexé par identifiant, comme dnd5e le range, est lu de la même façon", () => {
+        globalThis.CONFIG.statusEffects = {
+            paralyzed: {id: "paralyzed", name: "Paralyzed", img: "p.svg", riders: ["incapacitated"]}
+        };
+
+        const [effect] = StatusEffects.expand("paralyzed");
+
+        expect(effect.name).toBe("Paralyzed");
+        expect(effect.statuses).toEqual(["paralyzed", "incapacitated"]);
+    });
+
     test("les conditions induites entrent dans le MÊME effet : paralysé porte aussi neutralisé", () => {
         globalThis.CONFIG.statusEffects = [
             {id: "paralyzed", name: "Paralyzed", img: "p.svg", riders: ["incapacitated"]}

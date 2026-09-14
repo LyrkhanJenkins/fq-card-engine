@@ -766,7 +766,7 @@ describe("integration/dnd5e", () => {
         it("retirent l'édition des objets, effets et activités pour un joueur aux droits limités", () => {
             CONFIG.FqCardEngine.options.playerLimitCardsRight = true;
             game.user.isGM = false;
-            const menu = () => [{name: "DND5E.ItemView"}, {name: "DND5E.ContextMenuActionEdit"}];
+            const menu = () => [{label: "DND5E.ItemView"}, {label: "DND5E.ContextMenuActionEdit"}];
             const itemMenu = menu();
             const effectMenu = menu();
             const activityMenu = menu();
@@ -776,7 +776,7 @@ describe("integration/dnd5e", () => {
             getHook("dnd5e.getItemActivityContext")({}, null, activityMenu);
 
             for (const menuItems of [itemMenu, effectMenu, activityMenu]) {
-                expect(menuItems.map(e => e.name)).toEqual(["DND5E.ItemView"]);
+                expect(menuItems.map(e => e.label)).toEqual(["DND5E.ItemView"]);
             }
         });
     });

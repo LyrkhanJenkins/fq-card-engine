@@ -2127,7 +2127,7 @@
                           "showIcon": 2,
                           "changes": [
                             {
-                              "key": "system.attributes.movement.walk",
+                              "key": "system.attributes.movement.speeds.walk",
                               "value": "(+@cha*XXX)*5",
                               "type": "add",
                               "priority": null

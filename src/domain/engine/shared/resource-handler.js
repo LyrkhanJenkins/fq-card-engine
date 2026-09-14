@@ -308,7 +308,7 @@ export default class ResourceHandler {
     static determineNbTargets(target) {
         const singleTargets = ["self", "enemy", "creature", "ally", "object", "creatureOrObject", "willing", "any", "space"];
 
-        const areaTargets = ["cone", "cube", "cylinder", "line", "radius", "sphere", "square", "wall"];
+        const areaTargets = ["cone", "cube", "cylinder", "line", "radius", "ring", "sphere", "square", "wall"];
 
         if (singleTargets.includes(target?.template?.type)) {
             return target?.value ?? 1;

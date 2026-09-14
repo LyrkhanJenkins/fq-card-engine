@@ -15,7 +15,7 @@
                                    data-dtype="Number">
                         {{else}}
                             <span class="value"
-                                  {{#if @root.editable}}data-tooltip="DND5E.ActiveEffectOverrideWarning"{{/if}}>{{ critical }}</span>
+                                  {{#if @root.editable}}data-tooltip="FQCARDENGINE.ActiveEffectOverrideWarning"{{/if}}>{{ critical }}</span>
                         {{/if}}
                     </span>
                 </li>
@@ -29,7 +29,7 @@
                                    data-dtype="Number">
                         {{else}}
                             <span class="value"
-                                  {{#if @root.editable}}data-tooltip="DND5E.ActiveEffectOverrideWarning"{{/if}}>{{ evasion }}</span>
+                                  {{#if @root.editable}}data-tooltip="FQCARDENGINE.ActiveEffectOverrideWarning"{{/if}}>{{ evasion }}</span>
                         {{/if}}
                     </span>
                 </li>
@@ -92,13 +92,13 @@
     {{!-- Immunities --}}
     {{#if editable}}
         {{> "dnd5e.actor-trait-pills" values=traits.di key="di" color="green" icon="fas fa-shield"
-            label="DND5E.DamImm" }}
+            label="DND5E.TRAIT.Damage.Immunity.title" }}
     {{else}}
         {{> "dnd5e.actor-trait-pills" values=traits.di key="di" color="green" icon="fas fa-shield"
             label="DND5E.Immunities" }}
     {{/if}}
     {{> "dnd5e.actor-trait-pills" values=traits.ci key="ci" color="green" svg="rosa-shield"
-        label="DND5E.ConImm" }}
+        label="DND5E.TRAIT.Condition.Immunity.title" }}
 
     {{!-- Vulnerabilities --}}
     {{> "dnd5e.actor-trait-pills" values=traits.dv key="dv" color="maroon" icon="fas fa-heart-crack"

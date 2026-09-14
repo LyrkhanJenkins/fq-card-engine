@@ -97,7 +97,7 @@ function buildStats(overrides = {}) {
     return {
         coreVersion: "14.367",
         systemId: "dnd5e",
-        systemVersion: "5.3.3",
+        systemVersion: "6.0.1",
         createdTime: FIXED_STATS_TIME,
         modifiedTime: FIXED_STATS_TIME,
         lastModifiedBy: GM_USER_ID,

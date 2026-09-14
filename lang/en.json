@@ -114,6 +114,7 @@
   "FQCARDENGINE.ShortZealPoints": "ZP",
   "FQCARDENGINE.ShortLife": "HP",
   "FQCARDENGINE.FqCostColumn": "FQ Cost",
+  "FQCARDENGINE.ActiveEffectOverrideWarning": "This value is being modified by an Active Effect and cannot be edited. Disable the effect to edit it.",
   "FQCARDENGINE.ActionPoints": "Action Points",
   "FQCARDENGINE.ActionPointsCurrent": "Current Action Points",
   "FQCARDENGINE.ActionPointsMax": "Maximum Action Points",

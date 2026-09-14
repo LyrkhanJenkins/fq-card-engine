@@ -834,7 +834,7 @@
                           "img": "modules/fq-card-engine/images/cards/in_progress.png",
                           "changes": [
                             {
-                              "key": "system.attributes.movement.walk",
+                              "key": "system.attributes.movement.speeds.walk",
                               "value": "2",
                               "type": "multiply",
                               "priority": null
