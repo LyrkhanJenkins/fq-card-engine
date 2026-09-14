@@ -12,7 +12,7 @@
         "expiry": null,
         "expired": false
       },
-      "origin": "Compendium.fq-card-engine.classes-stats-fq8.Item.KjysfOK9p7gIJiUb",
+      "origin": null,
       "transfer": true,
       "flags": {
         "dae": {
@@ -41,9 +41,9 @@
         "duplicateSource": null,
         "coreVersion": "14.367",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.1",
         "createdTime": 1789287643756,
-        "modifiedTime": 1789287643756,
+        "modifiedTime": 1789381773138,
         "lastModifiedBy": "dnd5ebuilder0000",
         "exportSource": null
       },
@@ -56,57 +56,96 @@
             "key": "system.fq.action.max",
             "value": 3,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "W3s29JpRmZBUTf0h",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.fq.mana.max",
             "value": 1,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "8Re3YLFZoamTg3E0",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.fq.attributes.critical",
             "value": 2,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "MJGZU3KmvNmaIEN6",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.attributes.movement.speeds.walk",
             "value": 5,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "cIyLKUGQeelTepjJ",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.str.value",
             "value": -4,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "lPyL7UJMiYLniwkL",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.dex.value",
             "value": 6,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "o2OSMp2yiJSCA4VI",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.int.value",
             "value": 2,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "DmkJfU3J7vZI4n73",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.wis.value",
             "value": 4,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "uhxPqIeuCiHGopTF",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.cha.value",
             "value": -4,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "Ba0asCIfMmL1Lk5P",
+            "conditions": "{}",
+            "replacement": ""
           }
-        ]
+        ],
+        "origin": {
+          "item": "Compendium.fq-card-engine.classes-stats-fq8.Item.KjysfOK9p7gIJiUb"
+        }
       },
       "description": "",
       "statuses": [],
@@ -124,9 +163,9 @@
     "duplicateSource": null,
     "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "6.0.1",
     "createdTime": 1724140566041,
-    "modifiedTime": 1789287634005,
+    "modifiedTime": 1789381773138,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
@@ -139,7 +178,8 @@
       "chat": ""
     },
     "source": {
-      "custom": ""
+      "custom": "",
+      "rules": "2014"
     },
     "activation": {
       "type": "",
@@ -219,7 +259,8 @@
     "prerequisites": {
       "level": null
     },
-    "properties": []
+    "properties": [],
+    "identifier": "start-stats-trapper"
   },
   "_id": "KjysfOK9p7gIJiUb",
   "sort": 0,

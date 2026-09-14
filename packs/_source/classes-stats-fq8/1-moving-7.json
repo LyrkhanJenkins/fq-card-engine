@@ -12,7 +12,7 @@
         "expiry": null,
         "expired": false
       },
-      "origin": "Item.oSfpFdarEM0Sll9K",
+      "origin": null,
       "transfer": true,
       "flags": {
         "dae": {
@@ -31,12 +31,12 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "14.353",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
-        "systemVersion": "3.3.1",
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "systemVersion": "6.0.1",
+        "createdTime": 1789381773725,
+        "modifiedTime": 1789381773725,
+        "lastModifiedBy": "dnd5ebuilder0000",
         "exportSource": null
       },
       "name": "+1 déplacement",
@@ -48,9 +48,16 @@
             "key": "system.attributes.movement.speeds.walk",
             "value": 5,
             "priority": 20,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "8sjMzVr9Z4QmRFEY",
+            "conditions": "{}",
+            "replacement": ""
           }
-        ]
+        ],
+        "origin": {
+          "item": "Item.oSfpFdarEM0Sll9K"
+        }
       },
       "description": "",
       "statuses": [],
@@ -70,11 +77,11 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "6.0.1",
     "createdTime": 1724140557025,
-    "modifiedTime": 1756552369686,
+    "modifiedTime": 1789381773724,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
@@ -87,7 +94,8 @@
       "chat": ""
     },
     "source": {
-      "custom": ""
+      "custom": "",
+      "rules": "2014"
     },
     "activation": {
       "type": "",
@@ -167,7 +175,8 @@
     "prerequisites": {
       "level": 9
     },
-    "properties": []
+    "properties": [],
+    "identifier": "1-moving-7"
   },
   "_id": "lfF8k2YFrG1Q2R2D",
   "sort": 3000000,

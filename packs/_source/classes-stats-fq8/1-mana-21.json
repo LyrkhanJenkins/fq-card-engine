@@ -12,7 +12,7 @@
         "expiry": null,
         "expired": false
       },
-      "origin": "Item.oSfpFdarEM0Sll9K",
+      "origin": null,
       "transfer": true,
       "flags": {
         "dae": {
@@ -28,12 +28,12 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "14.353",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
-        "systemVersion": "3.3.1",
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "systemVersion": "6.0.1",
+        "createdTime": 1789381773602,
+        "modifiedTime": 1789381773602,
+        "lastModifiedBy": "dnd5ebuilder0000",
         "exportSource": null
       },
       "name": "+1 mana",
@@ -45,9 +45,16 @@
             "key": "system.fq.mana.max",
             "value": 1,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "I6VmgLCeaVcpINUI",
+            "conditions": "{}",
+            "replacement": ""
           }
-        ]
+        ],
+        "origin": {
+          "item": "Item.oSfpFdarEM0Sll9K"
+        }
       },
       "description": "",
       "statuses": [],
@@ -67,11 +74,11 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "6.0.1",
     "createdTime": 1724140540596,
-    "modifiedTime": 1756552300744,
+    "modifiedTime": 1789381773602,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
@@ -84,7 +91,8 @@
       "chat": ""
     },
     "source": {
-      "custom": ""
+      "custom": "",
+      "rules": "2014"
     },
     "activation": {
       "type": "",
@@ -164,7 +172,8 @@
     "prerequisites": {
       "level": 9
     },
-    "properties": []
+    "properties": [],
+    "identifier": "1-mana-21"
   },
   "_id": "fHi7TCQweUM9bjDS",
   "sort": 2700000,

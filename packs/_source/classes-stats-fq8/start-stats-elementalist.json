@@ -12,7 +12,7 @@
         "expiry": null,
         "expired": false
       },
-      "origin": "Compendium.fq-card-engine.classes-stats-fq8.Item.oOAxwjGlt8VoaXt7",
+      "origin": null,
       "transfer": true,
       "flags": {
         "dae": {
@@ -41,9 +41,9 @@
         "duplicateSource": null,
         "coreVersion": "14.367",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.1",
         "createdTime": 1789287403164,
-        "modifiedTime": 1789287403164,
+        "modifiedTime": 1789381773850,
         "lastModifiedBy": "dnd5ebuilder0000",
         "exportSource": null
       },
@@ -56,75 +56,126 @@
             "key": "system.fq.action.max",
             "value": 2,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "3WdOGWHWkaeAas0N",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.fq.mana.max",
             "value": 4,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "Xtzix3Gg1a2JK67L",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.fq.attributes.critical",
             "value": 3,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "CDq2N47DjdmbxfH8",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.fq.attributes.evasion",
             "value": 1,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "2NFsQFMLjqiqJo2G",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.fq.cards.hand",
             "value": 1,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "lzcn8UF4D6ekQHMM",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.attributes.movement.speeds.walk",
             "value": 5,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "FU2FoOjy60O9Xjdg",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.str.value",
             "value": -4,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "vrQf8avGXYAu3B6X",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.dex.value",
             "value": 2,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "pttDAbpaP1AVoOZ6",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.con.value",
             "value": -2,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "CzDDvo5hFc50hhKQ",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.int.value",
             "value": 6,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "9KVILxe8k1GrKDkV",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.wis.value",
             "value": 4,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "R5iyTjGi9FPH2z0Q",
+            "conditions": "{}",
+            "replacement": ""
           },
           {
             "key": "system.abilities.cha.value",
             "value": -2,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "PwnABp5p3w2YLEL0",
+            "conditions": "{}",
+            "replacement": ""
           }
-        ]
+        ],
+        "origin": {
+          "item": "Compendium.fq-card-engine.classes-stats-fq8.Item.oOAxwjGlt8VoaXt7"
+        }
       },
       "description": "",
       "statuses": [],
@@ -142,9 +193,9 @@
     "duplicateSource": null,
     "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "6.0.1",
     "createdTime": 1724140566041,
-    "modifiedTime": 1789287376155,
+    "modifiedTime": 1789381773850,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
@@ -157,7 +208,8 @@
       "chat": ""
     },
     "source": {
-      "custom": ""
+      "custom": "",
+      "rules": "2014"
     },
     "activation": {
       "type": "",
@@ -237,7 +289,8 @@
     "prerequisites": {
       "level": null
     },
-    "properties": []
+    "properties": [],
+    "identifier": "start-stats-elementalist"
   },
   "_id": "oOAxwjGlt8VoaXt7",
   "sort": 0,

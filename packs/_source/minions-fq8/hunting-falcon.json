@@ -913,6 +913,9 @@
       },
       "wall-height": {
         "tokenHeight": 0
+      },
+      "dnd5e": {
+        "lockScale": true
       }
     },
     "randomImg": false,
@@ -972,7 +975,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.3.3",
     "createdTime": 1786500000000,
-    "modifiedTime": 1788696840697,
+    "modifiedTime": 1789381775178,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "ownership": {

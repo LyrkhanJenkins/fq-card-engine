@@ -12,7 +12,7 @@
         "expiry": null,
         "expired": false
       },
-      "origin": "Item.oSfpFdarEM0Sll9K",
+      "origin": null,
       "transfer": true,
       "flags": {
         "dae": {
@@ -29,10 +29,12 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "14.353",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
-        "systemVersion": "5.1.2",
-        "lastModifiedBy": null
+        "systemVersion": "6.0.1",
+        "lastModifiedBy": "dnd5ebuilder0000",
+        "createdTime": 1789381773467,
+        "modifiedTime": 1789381773467
       },
       "name": "+1 point d'action",
       "img": "icons/magic/light/explosion-star-glow-orange.webp",
@@ -43,9 +45,16 @@
             "key": "system.fq.action.max",
             "value": 1,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "K9uRBcpmp9r8pKls",
+            "conditions": "{}",
+            "replacement": ""
           }
-        ]
+        ],
+        "origin": {
+          "item": "Item.oSfpFdarEM0Sll9K"
+        }
       },
       "description": "",
       "statuses": [],
@@ -66,11 +75,11 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "dnd5e",
     "systemVersion": "5.1.2",
     "createdTime": 1756552335989,
-    "modifiedTime": 1756552336027,
+    "modifiedTime": 1789381773467,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "system": {

@@ -12,7 +12,7 @@
         "expiry": null,
         "expired": false
       },
-      "origin": "Item.oSfpFdarEM0Sll9K",
+      "origin": null,
       "transfer": true,
       "flags": {
         "dae": {
@@ -28,12 +28,12 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "14.353",
+        "coreVersion": "14.367",
         "systemId": "dnd5e",
-        "systemVersion": "3.3.1",
-        "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "systemVersion": "6.0.1",
+        "createdTime": 1789381773053,
+        "modifiedTime": 1789381773053,
+        "lastModifiedBy": "dnd5ebuilder0000",
         "exportSource": null
       },
       "name": "+1 esquive",
@@ -45,9 +45,16 @@
             "key": "system.fq.attributes.evasion",
             "value": 1,
             "priority": null,
-            "type": "add"
+            "type": "add",
+            "phase": "initial",
+            "_id": "r4LNvGhyt7MtHmto",
+            "conditions": "{}",
+            "replacement": ""
           }
-        ]
+        ],
+        "origin": {
+          "item": "Item.oSfpFdarEM0Sll9K"
+        }
       },
       "description": "",
       "statuses": [],
@@ -67,11 +74,11 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "6.0.1",
     "createdTime": 1724140515080,
-    "modifiedTime": 1756552300744,
+    "modifiedTime": 1789381773053,
     "lastModifiedBy": "dnd5ebuilder0000",
     "exportSource": null
   },
@@ -84,7 +91,8 @@
       "chat": ""
     },
     "source": {
-      "custom": ""
+      "custom": "",
+      "rules": "2014"
     },
     "activation": {
       "type": "",
@@ -164,7 +172,8 @@
     "prerequisites": {
       "level": 10
     },
-    "properties": []
+    "properties": [],
+    "identifier": "1-evasion-10"
   },
   "_id": "H2pIYRtbq5zP91Td",
   "sort": 4600000,
