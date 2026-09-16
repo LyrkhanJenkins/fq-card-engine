@@ -3,6 +3,7 @@
     "build": "npm run build:db",
     "build:db": "node ./utils/packs.mjs package pack",
     "build:json": "node ./utils/packs.mjs package unpack",
+    "report:classes": "node ./utils/class-report.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
