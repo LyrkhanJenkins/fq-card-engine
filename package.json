@@ -11,6 +11,7 @@
     "testWorlds": "npm run testWorld:test",
     "testWorld:test": "node tests/script/copy-world.mjs test-world",
     "testWorld:base": "node tests/script/build-uat-base.mjs",
+    "testWorld:afterCopyTestWorld": "node tests/script/build-uat-base.mjs --force",
     "testWorld:random": "node tests/script/generate-world.mjs",
     "testWorld:monsters": "node tests/script/build-monster-index.mjs",
     "testWorld:clean": "node tests/script/clean-worlds.mjs",

@@ -54,7 +54,7 @@ Fix :
 - Le scintillement des dégâts rend des fois le token invisible
 
 Chore :
-- Support de la version 14.366, 14.367
+- Support de la version 14.366, 14.367, 14.368
 
 v2.0.2:
 Feat :

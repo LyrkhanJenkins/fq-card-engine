@@ -406,16 +406,20 @@ Coût moyen et cartes peu chères calculés sur les cartes N1‑N12 à coût fix
 
 ## Gardien
 
-> « Le plus grand nombre de points de vie du jeu. Peut puiser dans ses points de vie pour améliorer ses dégâts. »
+> « Le plus grand nombre de points de vie du jeu. Peut puiser dans ses points de vie pour améliorer ses dégâts ou soutenir ses alliés. »
 
 **Identité dnd5e** : d12, FOR + CON. CHA sert aux cartes de provocation, au Coup de bouclier et à l'Affûtage.
 
-**Stats FQ** : la **plus grosse main du jeu** (4 au départ), action 2, **aucun mana de départ** (2,5 en moyenne au N1, à égalité avec la Sorcière pour le plus bas). Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés** (164 PV au N12, CA 18).
+**Stats FQ** : la **plus grosse main du jeu, pioche très faible**, peu de mana.
+Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés** (164 PV au N12, CA 18).
 
-**Rôle** :
-- Tank qui fait moins de dégâts
-- Soutien
-- DPS consommant des PV pour faire plus de dégâts
+**Spécialisations** :
+
+| Spécialisation | Principe | Nombres de cartes |
+|---|---|---|
+| Berzerker (dps) | utilise ses pvs pour devenir un dps redoutable |---|
+| Sac à PV temp (tank) | A besoin de pas trop sacrifier ses pvs, Gros tank qui taunt ses ennemis |---|
+| Ange Gardien (soutien) | Utilise surtout ses PVs pour buff ses alliés, fais plus de dégâts si ses alliés réussissent |---|
 
 **Mécaniques signature** :
 - **PV comme monnaie** : Frappe Héroïque (−(6−@con) PV au lieu du mana), Frappe provocatrice, Tourbillon de Lame, Montée de la rage (PV → mana), Offrande de Sang, Fureur Sacrificielle.
@@ -429,6 +433,7 @@ Coût moyen et cartes peu chères calculés sur les cartes N1‑N12 à coût fix
 
 **Faiblesses** :
 - Le moins de points de mana
+- Tank qui ne se soigne pas (uniquement PV temporaires), les pv perdus sont perdus.
 - A du mal à arriver au contact d'une cible (pas de sort pour augmenter le déplacement, uniquement pour agripper des ennemis)
 
 ### Constat des cartes (données)
@@ -445,8 +450,9 @@ Coût moyen et cartes peu chères calculés sur les cartes N1‑N12 à coût fix
 | **Geôlier** (provocation, contrôle au contact) | Frappe Provocatrice, Chaîne de Fer, Brèche, Onde de Choc | Presque tout : grappin, repousser, attirer |
 | Transverse | Chargement des Lames, Tourbillon de Lame, Changement de Posture, Affûtage, Coup Puissant, Montée de Mana | |
 
+
 ### Redondances à trancher
-- HOT : Renfort d'Armure / Chair de Titan.
+- HOT : Renfort d'Armure / Chair de Titan. --> Ne plus soigner de pv ne faire que des pv temporaires
 - Bonus de dégâts contre auto-dégâts : Posture de Berzerker / Chair de Berzerker / Rage Ultime / Soif de Sang.
 - Payer en PV : Offrande de Sang / choix PV de Frappe Héroïque.
 
@@ -454,13 +460,12 @@ Coût moyen et cartes peu chères calculés sur les cartes N1‑N12 à coût fix
 - Frappe Provocatrice : le choix « -4 PV » coûte aussi 1 mana.
 - Essor Vital coûte 16 PA : injouable avant le N6‑N7 en moyenne.
 
-### À définir à la main
-- **Spécificités** :
-- **Spécialisations** :
-- **Contraintes** :
-
 **Questionnement et TODO :**
-
+- Faire des sorts pour donner aux alliés des points non utilisés
+- Faire des sorts pour doper des alliées et si il réussissent fais plus de dégâts?
+- Berzerker utilise des pv pour s'approcher d'une cible?
+- Lui rajouter des PVs dans les stats FQ?
+- Sorts de tank plus fort si PV élevés? bouclier temporaire automatiques?
 ---
 
 ## Mage Blanc
