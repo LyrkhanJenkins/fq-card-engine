@@ -56,6 +56,15 @@ const KNOWN_ISSUES = new Set([
 
 const readJson = file => JSON.parse(fs.readFileSync(file, "utf8"));
 
+/**
+ * Un identifiant Foundry valide : EXACTEMENT 16 caractères alphanumériques
+ * (`foundry.data.validators.isValidId`). Un `_id` d'une autre longueur est
+ * silencieusement rejeté à l'import : le document se charge sans `id`, et le
+ * premier `update()` de sa feuille échoue sur « You must provide an _id for
+ * every object in the update data Array » — sans jamais nommer le coupable.
+ */
+const VALID_ID = /^[a-zA-Z0-9]{16}$/;
+
 /** La classe attendue d'un deck pattern, déduite de son nom de fichier. */
 const deckClass = file => file.replace(/-(base|generated|blue-runes|red-runes|yellow-runes)\.json$/, "");
 
@@ -97,8 +106,14 @@ function detectIssues() {
         if (deck.img && !existsWithCase(deck.img)) {
             issues.push(`image :: ${file} :: (dos du deck)`);
         }
+        if (!VALID_ID.test(deck._id ?? "")) {
+            issues.push(`identifiant :: ${file} :: (deck) :: ${deck._id}`);
+        }
         const seen = new Set();
         for (const card of deck.cards ?? []) {
+            if (!VALID_ID.test(card._id ?? "")) {
+                issues.push(`identifiant :: ${file} :: ${card.name} :: ${card._id}`);
+            }
             const fq = card.system?.fq ?? {};
             const label = `${file} :: ${card.name}`;
             const expectedClass = deckClass(file);

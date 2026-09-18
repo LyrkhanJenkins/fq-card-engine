@@ -161,7 +161,14 @@ describe("generateWorld", () => {
 
         await rm(worldsDir, {recursive: true, force: true});
     });
-});
+    // Chaque test de cette suite génère un monde COMPLET : copie récursive du
+    // gabarit `uat-base` (LevelDB inclus) dans un dossier temporaire. Seul, c'est
+    // 1 à 3 s ; en exécution parallèle des ~136 fichiers de tests, la contention
+    // disque multiplie ce coût par plusieurs et dépasse le `testTimeout` global
+    // de 20 s — sans qu'aucune assertion ne soit en cause. La suite porte donc
+    // son propre délai, comme le `beforeAll` de `uat-base.test.js`. Les trois
+    // autres suites du fichier ne touchent pas au disque et gardent le défaut.
+}, 60000);
 
 describe("assertSafeWorldName", () => {
     it("accepte un nom conforme", () => {

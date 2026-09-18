@@ -408,64 +408,68 @@ Coût moyen et cartes peu chères calculés sur les cartes N1‑N12 à coût fix
 
 > « Le plus grand nombre de points de vie du jeu. Peut puiser dans ses points de vie pour améliorer ses dégâts ou soutenir ses alliés. »
 
-**Identité dnd5e** : d12, FOR + CON. CHA sert aux cartes de provocation, au Coup de bouclier et à l'Affûtage.
+**Identité dnd5e** : d12, FOR + CON. CHA sert aux cartes de provocation, au Coup de bouclier, à Garde Absolue et au Cri de Ralliement — elle reste plate à 12 (+1), jamais montée par les ASI : à trancher (basculer sur CON, ou l'assumer).
 
 **Stats FQ** : la **plus grosse main du jeu, pioche très faible**, peu de mana.
 Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés** (164 PV au N12, CA 18).
 
-**Spécialisations** :
+**Spécialisations validées** :
 
 | Spécialisation | Principe | Nombres de cartes |
 |---|---|---|
-| Berzerker (dps) | utilise ses pvs pour devenir un dps redoutable |---|
-| Sac à PV temp (tank) | A besoin de pas trop sacrifier ses pvs, Gros tank qui taunt ses ennemis |---|
-| Ange Gardien (soutien) | Utilise surtout ses PVs pour buff ses alliés, fais plus de dégâts si ses alliés réussissent |---|
+| Berzerker (dps) | utilise ses pvs pour devenir un dps redoutable | 16 |
+| Sac à PV temp (tank) | A besoin de pas trop sacrifier ses pvs, Gros tank qui taunt ses ennemis | 16 |
+| Ange Gardien (soutien) | Utilise surtout ses PVs pour buff ses alliés, Fais plus de dégâts si ses alliés réussissent | 11 |
+| *(transverse)* | Changement de Posture, la seule innée | 1 |
 
 **Mécaniques signature** :
-- **PV comme monnaie** : Frappe Héroïque (−(6−@con) PV au lieu du mana), Frappe provocatrice, Tourbillon de Lame, Montée de la rage (PV → mana), Offrande de Sang, Fureur Sacrificielle.
-- **Compétences pour agripper des alliés ou des ennemis** (pas de déplacement supplémentaire, plutôt des choses pour attraper) : aujourd'hui seulement Chaîne de Fer (ennemi, N13).
-- **Charges de lame** : Chargement Des Lames (cap 12 → dégâts ×2) et Tourbillon De Lame (cap 8 → AoE adjacente), via compteurs `flags.fq` + `counterWithinCap`/`counterEquals`.
-- **Réactions défensives** : Coup de bouclier (contre-charge), Intervention (prend les dégâts d'un allié à sa place), Levée De Bouclier (récupère la moitié des dégâts subis), Garde Absolue.
-- **Postures et trade-off crit ↔ esquive** : Changement De Posture (innée, rejouable à l'infini), Posture De Berzerker et Rage Ultime (puissance contre auto-DoT), Chair de Titan / Chair de Berzerker.
-- **Taunt** : Frappe provocatrice, Onde de Choc (et hors classe : Uppercut du Moine, runes bleues du Guerrier Runique).
+- **PV comme monnaie** : Frappe Héroïque (−(6−@con) PV au lieu du mana), Frappe provocatrice, Montée de la rage (PV → mana), Offrande de Sang, Fureur Sacrificielle, et tout le versant Ange Gardien (Cri de Ralliement, Chœur de Guerre, Transmission de Rage, Sacrifice du Gardien, Aura du Gardien).
+- **Chargement** : trois cartes à compteur, une par spécialisation, toutes bâties sur le même patron — un seul choix, `replayable: "99999999"` (rechargeable **plusieurs fois par tour**, contrairement à `passif`), compteur dans `flags.fq`, et au cap le script **défausse la carte** et **génère une carte éphémère** du deck `Guardian Generated`. Le surplus de charge est perdu.
+  - Chargement Des Lames — charge en **PA**, cap 12 → *Lame Chargée* (grosse frappe au contact).
+  - Tourbillon De Lame — charge en **PA**, cap 8 → *Tourbillon Déchaîné* (AoE adjacente).
+  - Serment de Sang — charge en **points de vie**, cap 20 → *Bénédiction du Rempart* (PV temporaires à tous les alliés).
+- **Avantage plutôt que critique** : Affûtage (sur soi) et Élan Partagé (sur un allié qui vient de frapper), via le statut `empowered`.
+- **PV temporaires, et rien d'autre** : Renfort d'Armure, Chair de Titan, Intervention, Levée de Bouclier, Rempart Magique, Vigueur Intacte, Essor Vital, Baroud d'Honneur, Frappe d'Ancrage, Agrippe Salvatrice, Bouclier Partagé, Sacrifice du Gardien, Bénédiction du Rempart. Les deux formules à dé (Essor Vital, Baroud d'Honneur) tirent leur dé **une seule fois** dans l'`executeEval`, qui écrit le même total dans le soin et dans le `tempmax` — sans quoi les deux se désynchronisent.
+- **Agripper des alliés ou des ennemis** (pas de déplacement supplémentaire, plutôt des choses pour attraper) : Chaîne de Fer (ennemi) et Agrippe Salvatrice (allié), toutes deux via la macro `IronChain`.
+- **Écho des alliés** : le Gardien tire sa puissance des réussites de son équipe. Réactifs déclenchés pendant les tours des autres — Écho du Sang (`targetsDealtDamageThisRound`), Élan Partagé, Bouclier Partagé (`targetsTookDamageThisRound`), Intervention : ce sont eux qui redressent l'économie de zèle de la classe. Et **Frappe Inspirée**, la seule carte à dégâts de la classe dont la puissance dépend des autres : `xvalue` compte, dans les logs du round, les combattants **de votre camp** (le lanceur exclu) ayant infligé des dégâts FQ effectifs, et ajoute 3 par allié.
+- **Réactions défensives** : Coup de bouclier (contre-charge), Intervention (prend les dégâts d'un allié à sa place), Levée De Bouclier (récupère la moitié des dégâts subis), Bouclier Partagé (prend la moitié à la place d'un allié), Garde Absolue.
+- **Sous égide / garde brisée** : `warded` (Égide, Agrippe Salvatrice, Sacrifice du Gardien, Aura du Gardien) et `exposed` (Brèche).
+- **Postures et trade-off crit ↔ esquive** : Changement De Posture (innée, rejouable à l'infini) — **la seule carte de la classe qui touche encore au critique ou à l'esquive**. Posture De Berzerker et Rage Ultime (puissance contre auto-DoT), Chair de Titan / Chair de Berzerker.
+- **Taunt** : Frappe provocatrice, Onde de Choc (et hors classe : Uppercut du Moine, runes bleues du Guerrier Runique). ⚠️ Le taunt n'est aujourd'hui **qu'un message de chat** (`FQCARDENGINE.CardMsgTaunting`) : aucune contrainte mécanique, c'est le MJ qui l'applique.
 
 **Boucle de jeu** : frapper pour générer du zèle, payer en PV ce que le mana ne couvre pas, encaisser/réagir hors tour, basculer protecteur (Rempart Magique, Intervention, Essor Vital) en fin de combat.
 
 **Faiblesses** :
 - Le moins de points de mana
+- Pas de critique ou d'esquive bonus dans les cartes hormis le trade-off de *Changement de Posture*
 - Tank qui ne se soigne pas (uniquement PV temporaires), les pv perdus sont perdus.
 - A du mal à arriver au contact d'une cible (pas de sort pour augmenter le déplacement, uniquement pour agripper des ennemis)
 
 ### Constat des cartes (données)
-- 30 cartes : 20 débloquables (N1‑N7), 10 au N13, rien aux N8‑N12. **La classe la plus courte** : il manque 10 à 20 cartes.
-- N2 n'a qu'une carte, N3 en a 7.
-- Seulement 6 générateurs de zèle pour 15 consommateurs.
+- **41 cartes, toutes au niveau 13** : le deck entier est en réserve, aucune carte n'est débloquable tant que les niveaux N1‑N12 n'ont pas été réattribués. `npm run report:classes -- --check` signale donc le Gardien à 0 carte jouable : c'est voulu, pas une régression.
+- 3 cartes **générées** dans `guardian-generated.json` (Lame Chargée, Tourbillon Déchaîné, Bénédiction du Rempart), toutes éphémères.
+- Exemplaires : 75 au total, plus 32 exemplaires générés.
+- Zèle : 13 générateurs pour 17 consommateurs (contre 6/15 avant le lot), grâce aux réactifs de l'Ange Gardien et aux petites frappes.
+- Aucun soin réel ni HOT dans le deck : les 11 cartes qui rendent des PV les rendent toutes en **temporaires**.
 - Beaucoup de cartes coûtent 1 mana (Frappe Héroïque ×6, Hémorragie ×4, Brèche, Égide, Coup Puissant…) : l'alternative PV est indispensable avec 2,5 mana au N1.
 
-### Spécialisations proposées (à valider)
-| Spé | Cartes existantes | Manques |
-|---|---|---|
-| **Sang** (PV → puissance, berserker) | Frappe Héroïque, Offrande de Sang, Fureur Sacrificielle, Montée de la Rage, Rage Ultime, Posture de Berzerker, Chair de Berzerker, Soif de Sang, Baroud d'Honneur, Hémorragie | Générateurs de zèle |
-| **Rempart** (bouclier, protection) | Égide, Intervention, Levée de Bouclier, Coup de Bouclier, Rempart Magique, Onde de Choc, Garde Absolue, Vigueur Intacte, Chair de Titan, Renfort d'Armure, Essor Vital | Agripper un allié pour le protéger |
-| **Geôlier** (provocation, contrôle au contact) | Frappe Provocatrice, Chaîne de Fer, Brèche, Onde de Choc | Presque tout : grappin, repousser, attirer |
-| Transverse | Chargement des Lames, Tourbillon de Lame, Changement de Posture, Affûtage, Coup Puissant, Montée de Mana | |
-
+### Cartes N13 à placer (lot du 2026-09-18)
+**Tout le deck est au niveau 13** : il reste à donner un niveau N1‑N12 aux 41 cartes et à équilibrer les `maxSameCard`. 11 cartes ont été écrites dans ce lot.
 
 ### Redondances à trancher
-- HOT : Renfort d'Armure / Chair de Titan. --> Ne plus soigner de pv ne faire que des pv temporaires
 - Bonus de dégâts contre auto-dégâts : Posture de Berzerker / Chair de Berzerker / Rage Ultime / Soif de Sang.
 - Payer en PV : Offrande de Sang / choix PV de Frappe Héroïque.
 
 ### Incohérences relevées
-- Frappe Provocatrice : le choix « -4 PV » coûte aussi 1 mana.
-- Essor Vital coûte 16 PA : injouable avant le N6‑N7 en moyenne.
+- Essor Vital coûte 16 PA : injouable avant le N6‑N7 en moyenne (le soin est devenu temporaire, le coût reste à revoir).
+- L'image d'Essor Vital est référencée avec une casse qui ne correspond pas au fichier (`KNOWN_ISSUES`).
 
 **Questionnement et TODO :**
-- Faire des sorts pour donner aux alliés des points non utilisés
-- Faire des sorts pour doper des alliées et si il réussissent fais plus de dégâts?
 - Berzerker utilise des pv pour s'approcher d'une cible?
 - Lui rajouter des PVs dans les stats FQ?
 - Sorts de tank plus fort si PV élevés? bouclier temporaire automatiques?
+- **Donner un niveau N1‑N12 aux 41 cartes** (tout le deck est au N13) et fixer les `maxSameCard` (cible proposée : 14 exemplaires au N1, ~40 au N6, ~58 au N12 — incompatible avec `TARGETS.copies = {12: [48,55]}`, qu'il faudra relever).
+- Illustrations des cartes nouvelles restées sur `in_progress.png`.
 ---
 
 ## Mage Blanc

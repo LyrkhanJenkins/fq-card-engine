@@ -77,7 +77,9 @@ describe("findGeneratedWorlds", () => {
         const found = await findGeneratedWorlds(path.join(worldsDir, "does-not-exist"));
         expect(found).toEqual([]);
     });
-});
+    // `seedRepresentativeWorldsDir` génère de vrais mondes : même contention
+    // disque, même délai propre que la suite `generateWorld`.
+}, 60000);
 
 describe("cleanGeneratedWorlds", () => {
     it("supprime les mondes de l outil (courant et antérieur) ; les autres entrées survivent, contenu inclus", async () => {
@@ -121,4 +123,4 @@ describe("cleanGeneratedWorlds", () => {
         const cleaned = await cleanGeneratedWorlds({worldsDir: missingDir});
         expect(cleaned).toEqual([]);
     });
-});
+}, 60000);
