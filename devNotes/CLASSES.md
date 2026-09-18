@@ -341,69 +341,6 @@ Coût moyen et cartes peu chères calculés sur les cartes N1‑N12 à coût fix
 
 ---
 
-## Moine
-
-> « Adepte d'un jeu très dynamique : joue beaucoup de cartes différentes pour monter rapidement son zèle. Robuste, score d'esquive élevé. »
-
-**Identité dnd5e** : d8, FOR + DEX. CON alimente les soins et coûts, SAG/CHA les plafonds de X.
-
-**Stats FQ** : le plus gros budget de départ (14) : **meilleur déplacement** (8 cases au N1), la seule classe avec du **zèle initial**, esquive de départ à égalité avec l'Illusionniste (2), bonne main (2). **Aucun critique de départ** — il joue le volume, pas le burst (le critique reste montable via le pool commun).
-
-**Rôle** : bruiser mobile à tempo, duelliste corps à corps, avec appoints tank (taunt Uppercut, Interruption) et soins (Vive-Esquive, Méditation Zen, Paume Curative).
-- Healeur fort mais corps à corps
-- Duelliste corps à corps ultra mobile
-- Tank spé esquive
-
-**Mécaniques signature** :
-- **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume Curative).
-  - Poing Rouge est la seule carte du jeu qui monte `zeal.max` (+5, permanent).
-- **Flux de cartes** : Souffle de Ki (zèle → X cartes **et** 2X actions), Maître Du Chi (carte innée passive bidirectionnelle : défausse ↔ zèle ↔ pioche), Armes Secrètes (monétise la défausse en dégâts inesquivables).
-- **Rejouable conditionnel scripté** (unique au Moine) : Coup Droit/Gauche rejouables **une fois** seulement si assez de PA ont déjà été dépensés ce tour (4 / 5) — récompense l'**ordonnancement** des cartes.
-- **Défense réactive** : 4 réactives (Bouclier Zélé sur sort subi, Vive-Esquive sur dégâts, Armes Secrètes, Interruption qui retire 1d6 PA et entrave) + Dissimulation (intouchable 1 tour au prix de dégâts nuls, puis fenêtre offensive).
-- **Déplacement améliorable** : dégâts et déplacement (Déplacement Éclair, Pas du vide, Charge) (le seul avec le Gardien ? Enlever le gardien ?)
-  - Le seul à faire plus de dégâts avec toutes les cartes en main
-  - Le seul à pouvoir augmenter son zèle max
-- Les heals uniquement pour les autres (comme l'illusionniste ?)
-
-**Boucle de jeu** : enchaîner les petites frappes → zèle → convertir en cartes/actions/burst ; l'ordre de jeu dans le tour est la compétence clé.
-
-**Faiblesses** :
-- Aucun critique de départ
-
-### Constat des cartes (données)
-- 36 cartes : 19 débloquables (N1‑N7), **17 en attente au N13**, rien aux N8‑N12.
-- Économie de zèle saine (17 générateurs / 13 consommateurs). Coût moyen 5,9 PA.
-- Deux axes opposés apparaissent dans les cartes N13 : « **main pleine** » (X = cartes en main) et « **cadence** » (X = cartes déjà jouées ce round).
-- `maxSameCard` lourds : Coup Droit ×6, Uppercut ×6, Coup Gauche ×5, Paume Curative ×4.
-- Mana : 5,5 au N1 alors que Coup Gauche, Combo, Uppercut, Lame Fantôme, Dissimulation coûtent du mana.
-
-### Spécialisations proposées (à valider)
-| Spé | Cartes existantes | Manques |
-|---|---|---|
-| **Enchaînement** (cadence, frappes) | Coup Droit, Coup Gauche, Combo, Combo 2, Lame Fantôme, Uppercut, Cadence, Élan Martial, Cycle du Souffle, Vacuité, Gant de Fer | Finisher N10‑12 |
-| **Main pleine** (garde les cartes) | Poings des Cent Formes, Paume des Mille Feuilles, Sérénité Pleine, Ferveur Intérieure, Hyperactivité, Lecture du Souffle, Second Souffle, Maître du Chi | Carte défensive qui scale sur la main |
-| **Paume / soins au contact** | Paume Curative, Bague de Soins, Transfert de Soins, Méditation Zen, Vive-Esquive | Soin de groupe au contact, N8+ |
-| **Tank esquive / mobilité** (transverse) | Dissimulation, Bouclier Zélé, Interruption, Déplacement Éclair, Pas du Vide, Charge, Souffle de Ki, Poing Rouge, Souffle Perpétuel, Armes Secrètes, Cape Inhibitrice, Conversion | Provocation + buff d'esquive (la spé « tank esquive » annoncée n'a presque aucune carte dédiée) |
-
-### Redondances à trancher
-- Gain de PA : Hyperactivité / Vacuité / Souffle de Ki.
-- Gain de zèle : Ferveur Intérieure / Élan Martial / Maître du Chi / Souffle Perpétuel (+ Montée de Zèle générée).
-- Soin personnel : Sérénité Pleine / Méditation Zen / Vive-Esquive.
-- Pioche : Cycle du Souffle / Second Souffle / Lecture du Souffle / Souffle de Ki.
-
-### Incohérences relevées
-- Uppercut : « piochez une carte » absent des données.
-- Poing Rouge coûte 14 PA : injouable avant le N6 en moyenne.
-
-### À définir à la main
-- **Spécificités** :
-- **Spécialisations** :
-- **Contraintes** :
-
-**Questionnement et TODO :**
-
----
-
 ## Gardien
 
 > « Le plus grand nombre de points de vie du jeu. Peut puiser dans ses points de vie pour améliorer ses dégâts ou soutenir ses alliés. »
@@ -480,18 +417,19 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 
 **Stats FQ** : **mana le plus haut** (4 de départ, à égalité avec l'Élémentaliste), action 3. **Déplacement le plus faible** (5 cases), aucun critique ni esquive de départ, CA 8. Zèle généré en jeu par la moitié du deck.
 
-**Rôle** : soigneur-protecteur **réactif** doublé d'un contrôleur DoT — sa valeur se mesure pendant les tours adverses.
-- Soutien : Aura
-- DPS avec malédictions (gros dégâts quand beaucoup de stacks)
-- Healeur (pas de HOT), bouclier
+**Spécialisations validées** :
+
+| Spécialisation | Principe | Nombres de cartes |
+|---|---|---|
+| Mage Blanc (healeur et soutien) | Fais des soins et utilise des aura pour soigner et buffé ces alliés |  |
+| Malédictions (dps) | utilise des stacks de malédictions pour faire d'importants dégâts |  |
+| Hanteur (dps spécial) | Consomme les malédictions et/ou réduits ses stats de dégâts et de heal pour contrôler d'autres tokens dans un tour bonus  |  |
 
 **Mécaniques signature** :
 - **Malédiction (`Curse`)** : pose plusieurs stacks sur des cibles, permet d'utiliser d'autres sorts efficaces avec beaucoup de stacks. Tue une cible ayant suffisamment de malédictions (Jugement Dernier).
-- Le pendant positif `Bless` (DoT négatif = régénération) — **aucune carte ne l'implémente aujourd'hui**.
 - **Suite de boucliers réactifs** : 8 cartes réactives (Bouclier de Mana, Divin, Vengeur, Empathique, Réprouver, Soins d'Urgence, Ange Gardien, Absorption de Sort), Bouclier de Mana avec `replayable: @wis`. Trois modèles de mitigation distincts : PV temporaires, soin réactif répété, invulnérabilité + restauration (Bouclier Divin).
 - **Transmutation de ressources** : Sang Bleu (2 PV → 1 mana), Le Bien Et Le Mal (transfert de PV à portée quasi illimitée), Soins d'Urgence (défausse → soin), Infusion de Mana (source de mana passive permanente), Absorption de Sort.
-- **Cartes génératives** : Infusion de Mana et Frappe de Lumière (AoE ennemis qui débloque un soin de groupe gratuit).
-- **Auto-sabotage assumé** : Frappe Solaire neutralise CON et SAG 3 tours après le nuke.
+- **Générateur de mana** : Infusion de Mana.
 - **Beaucoup de cartes automatiques** : les auras qui coûtent 1 mana par tour, à combiner avec les infusions de mana.
 
 **Boucle de jeu** : maudire tôt → laisser tourner les DoT en soignant/réagissant → détoner ; alimenter le tout par conversion de ressources.
@@ -503,14 +441,6 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - 31 cartes : 20 débloquables (N1‑N6), **aucune au N7**, rien aux N8‑N12, 11 au N13 (dont les 4 auras et la moitié des malédictions).
 - Seulement 2 cartes à 1‑4 PA.
 - Soin direct faible : Soin (innée), Énergie Lumineuse, Soins d'Urgence ; le reste est réactif ou bouclier.
-
-### Spécialisations proposées (à valider)
-| Spé | Cartes existantes | Manques |
-|---|---|---|
-| **Malédiction** | Maudire, Réprouver, Explosion d'Arcanes, Châtiments, Pacte Maudit, Sentence Maudite, Jugement Dernier, Virulence, Aura de Malédiction, Aura de Mort, Effet Ange et Démon | Cartes N7‑N12 débloquées (tout est au N13) |
-| **Bouclier / réaction** | Bouclier Magique, Bouclier Vengeur, Bouclier Empathique, Bouclier Divin, Bouclier de Mana, Ange Gardien, Absorption de Sort, Soins d'Urgence, Lumière Révélatrice | Bouclier de groupe haut niveau |
-| **Sanctuaire** (auras, soins, mana) | Énergie Lumineuse, Soin, Infusion de Mana, Aura de Vie, Aura de Force, Sang Bleu, Épiphanie, Frappe de Lumière, Le Bien et le Mal, Exorcisme | `Bless` / régénération, soin direct fort |
-| Transverse | Frappe Solaire | |
 
 ### Redondances à trancher
 - Bouclier Vengeur / Bouclier Empathique (même déclencheur, dégâts ou soin) : fusionner en une carte à deux choix ?
@@ -529,6 +459,69 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 
 **Questionnement et TODO :**
 
+
+---
+
+## Moine
+
+> « Adepte d'un jeu très dynamique : joue beaucoup de cartes différentes pour monter rapidement son zèle. Robuste, score d'esquive élevé. »
+
+**Identité dnd5e** : d8, FOR + DEX. CON alimente les soins et coûts, SAG/CHA les plafonds de X.
+
+**Stats FQ** : le plus gros budget de départ (14) : **meilleur déplacement** (8 cases au N1), la seule classe avec du **zèle initial**, esquive de départ à égalité avec l'Illusionniste (2), bonne main (2). **Aucun critique de départ** — il joue le volume, pas le burst (le critique reste montable via le pool commun).
+
+**Rôle** : bruiser mobile à tempo, duelliste corps à corps, avec appoints tank (taunt Uppercut, Interruption) et soins (Vive-Esquive, Méditation Zen, Paume Curative).
+- Healeur fort mais corps à corps
+- Duelliste corps à corps ultra mobile
+- Tank spé esquive
+
+**Mécaniques signature** :
+- **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume Curative).
+  - Poing Rouge est la seule carte du jeu qui monte `zeal.max` (+5, permanent).
+- **Flux de cartes** : Souffle de Ki (zèle → X cartes **et** 2X actions), Maître Du Chi (carte innée passive bidirectionnelle : défausse ↔ zèle ↔ pioche), Armes Secrètes (monétise la défausse en dégâts inesquivables).
+- **Rejouable conditionnel scripté** (unique au Moine) : Coup Droit/Gauche rejouables **une fois** seulement si assez de PA ont déjà été dépensés ce tour (4 / 5) — récompense l'**ordonnancement** des cartes.
+- **Défense réactive** : 4 réactives (Bouclier Zélé sur sort subi, Vive-Esquive sur dégâts, Armes Secrètes, Interruption qui retire 1d6 PA et entrave) + Dissimulation (intouchable 1 tour au prix de dégâts nuls, puis fenêtre offensive).
+- **Déplacement améliorable** : dégâts et déplacement (Déplacement Éclair, Pas du vide, Charge) (le seul avec le Gardien ? Enlever le gardien ?)
+  - Le seul à faire plus de dégâts avec toutes les cartes en main
+  - Le seul à pouvoir augmenter son zèle max
+- Les heals uniquement pour les autres (comme l'illusionniste ?)
+
+**Boucle de jeu** : enchaîner les petites frappes → zèle → convertir en cartes/actions/burst ; l'ordre de jeu dans le tour est la compétence clé.
+
+**Faiblesses** :
+- Aucun critique de départ
+
+### Constat des cartes (données)
+- 36 cartes : 19 débloquables (N1‑N7), **17 en attente au N13**, rien aux N8‑N12.
+- Économie de zèle saine (17 générateurs / 13 consommateurs). Coût moyen 5,9 PA.
+- Deux axes opposés apparaissent dans les cartes N13 : « **main pleine** » (X = cartes en main) et « **cadence** » (X = cartes déjà jouées ce round).
+- `maxSameCard` lourds : Coup Droit ×6, Uppercut ×6, Coup Gauche ×5, Paume Curative ×4.
+- Mana : 5,5 au N1 alors que Coup Gauche, Combo, Uppercut, Lame Fantôme, Dissimulation coûtent du mana.
+
+### Spécialisations proposées (à valider)
+| Spé | Cartes existantes | Manques |
+|---|---|---|
+| **Enchaînement** (cadence, frappes) | Coup Droit, Coup Gauche, Combo, Combo 2, Lame Fantôme, Uppercut, Cadence, Élan Martial, Cycle du Souffle, Vacuité, Gant de Fer | Finisher N10‑12 |
+| **Main pleine** (garde les cartes) | Poings des Cent Formes, Paume des Mille Feuilles, Sérénité Pleine, Ferveur Intérieure, Hyperactivité, Lecture du Souffle, Second Souffle, Maître du Chi | Carte défensive qui scale sur la main |
+| **Paume / soins au contact** | Paume Curative, Bague de Soins, Transfert de Soins, Méditation Zen, Vive-Esquive | Soin de groupe au contact, N8+ |
+| **Tank esquive / mobilité** (transverse) | Dissimulation, Bouclier Zélé, Interruption, Déplacement Éclair, Pas du Vide, Charge, Souffle de Ki, Poing Rouge, Souffle Perpétuel, Armes Secrètes, Cape Inhibitrice, Conversion | Provocation + buff d'esquive (la spé « tank esquive » annoncée n'a presque aucune carte dédiée) |
+
+### Redondances à trancher
+- Gain de PA : Hyperactivité / Vacuité / Souffle de Ki.
+- Gain de zèle : Ferveur Intérieure / Élan Martial / Maître du Chi / Souffle Perpétuel (+ Montée de Zèle générée).
+- Soin personnel : Sérénité Pleine / Méditation Zen / Vive-Esquive.
+- Pioche : Cycle du Souffle / Second Souffle / Lecture du Souffle / Souffle de Ki.
+
+### Incohérences relevées
+- Uppercut : « piochez une carte » absent des données.
+- Poing Rouge coûte 14 PA : injouable avant le N6 en moyenne.
+
+### À définir à la main
+- **Spécificités** :
+- **Spécialisations** :
+- **Contraintes** :
+
+**Questionnement et TODO :**
 ---
 
 ## Élémentaliste
