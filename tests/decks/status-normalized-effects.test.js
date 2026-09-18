@@ -192,6 +192,28 @@ describe("statuts normalisés — pipeline réel via playChoice", () => {
         expect(result.effectsCreated[0].effect.changes[0].value).toBe("-3");
     });
 
+    test("status disengaged : le marqueur que lit la détection d'attaque d'opportunité, à la durée de la carte", async () => {
+        const result = await playChoice(cardWithEffectData([
+            {status: "disengaged", duration: {value: "1", units: "turns"}, expireOnDamage: false}
+        ]), 0);
+
+        expect(result.threw).toBe(false);
+        expect(result.effectsCreated).toHaveLength(1);
+        const effect = result.effectsCreated[0].effect;
+        expect(effect.name).toBe("Disengaged");
+        // C'est ce statut, et lui seul, que `OpportunityAttack.isDisengaged` lit
+        // par la règle `fqNoOpportunity` : s'il ne survit pas au pipeline, la
+        // carte se joue sans rien dispenser du tout.
+        expect(effect.statuses).toEqual(["fqDisengaged"]);
+        // Aucun change : la règle ne modifie aucune valeur de fiche.
+        expect(effect.changes).toEqual([]);
+        // La durée saisie sur la carte l'emporte (statut réglé par la carte).
+        expect(effect.duration).toEqual({value: 1, units: "turns"});
+        const moduleName = globalThis.FqCardEngineModule.moduleName;
+        expect(effect.flags[moduleName].expireOnAttack).toBeUndefined();
+        expect(effect.flags[moduleName].expireOnSave).toBeUndefined();
+    });
+
     test("mixte : un statut et un blob libre dans la même donnée d'effets coexistent", async () => {
         const result = await playChoice(cardWithEffectData([
             {status: "poison"},

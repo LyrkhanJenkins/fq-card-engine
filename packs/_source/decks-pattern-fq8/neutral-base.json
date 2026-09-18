@@ -85,25 +85,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 3,
+          "level": 9,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1788638323291,
+        "modifiedTime": 1789746579541,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cqd8EUF2UiCp50Q3"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cqd8EUF2UiCp50Q3",
+      "cards": []
     },
     {
       "_id": "cr3aAPUkov25LMOY",
@@ -179,25 +179,25 @@
             }
           ],
           "maxSameCard": 1,
-          "level": 8,
+          "level": 16,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1788638251123,
+        "modifiedTime": 1789746516491,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cr3aAPUkov25LMOY"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cr3aAPUkov25LMOY",
+      "cards": []
     },
     {
       "faces": [
@@ -255,7 +255,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 2
+          "level": 3
         }
       },
       "suit": "",
@@ -271,20 +271,20 @@
       "sort": 300000,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004418439,
-        "modifiedTime": 1788638182504,
+        "modifiedTime": 1789746309780,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.VHloVz6yx7n42QiR"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.VHloVz6yx7n42QiR",
+      "cards": []
     },
     {
       "_id": "qB1Pxiy7tDXmB34R",
@@ -360,25 +360,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 4,
+          "level": 10,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1788638196316,
+        "modifiedTime": 1789746538298,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.qB1Pxiy7tDXmB34R"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.qB1Pxiy7tDXmB34R",
+      "cards": []
     },
     {
       "_id": "c4ziF2usM3lTpLkx",
@@ -454,25 +454,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 7,
+          "level": 18,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1788638204761,
+        "modifiedTime": 1789746895962,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.c4ziF2usM3lTpLkx"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.c4ziF2usM3lTpLkx",
+      "cards": []
     },
     {
       "_id": "SU0jUmTib8tJ4CFv",
@@ -548,25 +548,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 1,
+          "level": 2,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1788638844604,
+        "modifiedTime": 1789746302715,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.SU0jUmTib8tJ4CFv"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.SU0jUmTib8tJ4CFv",
+      "cards": []
     },
     {
       "_id": "PpyIs63PW9KpgvKs",
@@ -642,25 +642,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 6,
+          "level": 7,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004435185,
-        "modifiedTime": 1788638856274,
+        "modifiedTime": 1789746652975,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.PpyIs63PW9KpgvKs"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.PpyIs63PW9KpgvKs",
+      "cards": []
     },
     {
       "_id": "n7QpKz3RxWm2VbTd",
@@ -734,25 +734,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 9,
+          "level": 12,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788368400000,
-        "modifiedTime": 1788638865877,
+        "modifiedTime": 1789746844032,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.n7QpKz3RxWm2VbTd"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.n7QpKz3RxWm2VbTd",
+      "cards": []
     },
     {
       "_id": "aH5uYc9LqNe4Zt1P",
@@ -860,25 +860,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 5,
+          "level": 4,
           "isInnate": true
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788368400000,
-        "modifiedTime": 1788639007156,
+        "modifiedTime": 1789746477326,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.aH5uYc9LqNe4Zt1P"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.aH5uYc9LqNe4Zt1P",
+      "cards": []
     },
     {
       "_id": "R8mXvJ2sBkQ7wLdF",
@@ -948,25 +948,1091 @@
               "retrieveFromDeck": "*"
             }
           ],
-          "level": 10,
+          "level": 17,
           "isInnate": true
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788368400000,
-        "modifiedTime": 1788639153523,
+        "modifiedTime": 1789746888641,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.R8mXvJ2sBkQ7wLdF"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.R8mXvJ2sBkQ7wLdF",
+      "cards": []
+    },
+    {
+      "_id": "Qv7bTm4xKd9sLpEa",
+      "name": "FQCARDTITLE.Disengage",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Disengage"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1100000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgDisengage",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Disengage",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "status": "disengaged",
+                          "duration": {
+                            "value": "1",
+                            "units": "turns"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "removeEffectName": "",
+                      "messages": []
+                    }
+                  ]
+                }
+              ],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 5,
+          "isInnate": true
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1789000000000,
+        "modifiedTime": 1789746658281,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Qv7bTm4xKd9sLpEa",
+      "cards": []
+    },
+    {
+      "_id": "Hj5nWc8rZt2yUbXq",
+      "name": "FQCARDTITLE.Help",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Help"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1200000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-5",
+              "mana": "",
+              "zeal": "",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "0",
+              "maxReach": "6",
+              "nbTargets": "1",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgHelp",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Help",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "status": "empowered",
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        },
+                        {
+                          "status": "",
+                          "name": "Helped",
+                          "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+                          "showIcon": 1,
+                          "expireOnDamage": false,
+                          "changes": [
+                            {
+                              "key": "system.abilities.str.save.roll.mode",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.abilities.dex.save.roll.mode",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.abilities.con.save.roll.mode",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.abilities.int.save.roll.mode",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.abilities.wis.save.roll.mode",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.abilities.cha.save.roll.mode",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          }
+                        }
+                      ],
+                      "removeEffectName": "",
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgApplyEffect",
+                          "arg": "{\"effectName\":\"Empowered\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "targetType": "Default"
+            }
+          ],
+          "level": 11,
+          "isInnate": true
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1789000000000,
+        "modifiedTime": 1789746746020,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Hj5nWc8rZt2yUbXq",
+      "cards": []
+    },
+    {
+      "_id": "Rc4vNp7hTs1kGmZo",
+      "name": "FQCARDTITLE.Recycling",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Recycling"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1300000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "1",
+              "drop": "-1",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 1,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1789000000000,
+        "modifiedTime": 1789746490570,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Rc4vNp7hTs1kGmZo",
+      "cards": []
+    },
+    {
+      "_id": "Rd9wQx3jVb6nHyTu",
+      "name": "FQCARDTITLE.RecyclingII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.RecyclingII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1400000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "2",
+              "drop": "-2",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 6,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1789000000000,
+        "modifiedTime": 1789746663797,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Rd9wQx3jVb6nHyTu",
+      "cards": []
+    },
+    {
+      "_id": "Rf2zMk8pCt5rJdWs",
+      "name": "FQCARDTITLE.RecyclingIII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.RecyclingIII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1500000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "3",
+              "drop": "-3",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 13,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1789000000000,
+        "modifiedTime": 1789746851818,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Rf2zMk8pCt5rJdWs",
+      "cards": []
+    },
+    {
+      "_id": "Pu6hBn2qYw4tLgVc",
+      "name": "FQCARDTITLE.Caution",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Caution"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1600000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgCaution",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Caution",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "status": "warded",
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "removeEffectName": "",
+                      "messages": []
+                    }
+                  ]
+                }
+              ],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 14,
+          "isInnate": true
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1789000000000,
+        "modifiedTime": 1789746870056,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Pu6hBn2qYw4tLgVc",
+      "cards": []
+    },
+    {
+      "_id": "Bk3rDs9mXv7fNqTe",
+      "name": "FQCARDTITLE.Barricade",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Barricade"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1700000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "4",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgBarricade",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Zone",
+              "zoneShape": "rectangle",
+              "zoneSize": "2",
+              "zoneAngle": "",
+              "zoneWidth": "1",
+              "executeEval": "FqCardEngineModule.walls.fromZone(cardContent, {strokeColor: \"#8d6e4a\", fillColor: \"#5d4425\", fillAlpha: 0.45});"
+            }
+          ],
+          "level": 15,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1789000000000,
+        "modifiedTime": 1789746879214,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Bk3rDs9mXv7fNqTe",
+      "cards": []
+    },
+    {
+      "_id": "Cn8tYw5jRp3bKfMd",
+      "name": "FQCARDTITLE.Concentration",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Concentration"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1800000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgConcentration",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 8,
+          "isInnate": true
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788368400000,
+        "modifiedTime": 1789746685972,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Cn8tYw5jRp3bKfMd",
+      "cards": []
+    },
+    {
+      "_id": "Tb6xLq2vHn9wSdRk",
+      "name": "FQCARDTITLE.TurnBoosterXII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.TurnBoosterXII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1900000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "12",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgActionRecover",
+                  "arg": "{\"action\": \"12\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 19,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1789000000000,
+        "modifiedTime": 1789746904346,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Tb6xLq2vHn9wSdRk",
+      "cards": []
+    },
+    {
+      "_id": "Ds4mHq7yTx2vBnWr",
+      "name": "FQCARDTITLE.DisengageII",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.DisengageII"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2000000,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "neutral",
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgDisengage",
+                  "arg": ""
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Disengage II",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "status": "disengaged",
+                          "duration": {
+                            "value": "1",
+                            "units": "turns"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "removeEffectName": "",
+                      "messages": []
+                    }
+                  ]
+                }
+              ],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 20,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1789000000000,
+        "modifiedTime": 1789746658281,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Ds4mHq7yTx2vBnWr",
+      "cards": []
     }
   ],
   "rotation": 0,

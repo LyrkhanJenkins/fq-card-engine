@@ -26,18 +26,26 @@ const melee = (reach) => ({
  * `hp` est optionnel : omis, l'acteur ne porte aucune donnée de points de vie —
  * le cas permissif attendu par `isStanding`.
  *
- * @param {object} data - `id`, `cx`, `cy`, `disposition`, `items`, `spent`, `hp`.
+ * `statuses` l'est aussi : omis, l'acteur ne porte aucun statut. L'acteur n'a
+ * volontairement pas de `hasConditionEffect` — `ConditionProbe` retombe alors
+ * sur la table de `conditions.js`, ce qui est exactement ce que l'on veut
+ * éprouver ici : la règle, pas l'implémentation de dnd5e.
+ *
+ * @param {object} data - `id`, `cx`, `cy`, `disposition`, `items`, `spent`, `hp`, `statuses`.
  *
  * @returns {object} Le TokenDocument.
  */
-function makeToken({id, cx = 0, cy = 0, disposition = HOSTILE, items = [melee(5)], spent, hp}) {
+function makeToken({id, cx = 0, cy = 0, disposition = HOSTILE, items = [melee(5)], spent, hp, statuses = []}) {
     const token = {
         id,
         actorId: `actor-${id}`,
         x: cx * SIZE, y: cy * SIZE, width: 1, height: 1,
         disposition,
         flags: spent ? {[MODULE]: {[ReactionBudget.FLAG_KEY]: spent}} : {},
-        actor: {id: `actor-${id}`, items, system: hp === undefined ? {} : {attributes: {hp: {value: hp}}}},
+        actor: {
+            id: `actor-${id}`, items, statuses: new Set(statuses),
+            system: hp === undefined ? {} : {attributes: {hp: {value: hp}}}
+        },
         setFlag: vi.fn(async (scope, key, value) => {
             token.flags[scope] = {...(token.flags[scope] ?? {}), [key]: value};
         }),
@@ -381,6 +389,62 @@ describe("OpportunityAttack.onMoveToken", () => {
         mover.actorId = null;
         await OpportunityAttack.onMoveToken(mover, movement);
         expect(trigger).not.toHaveBeenCalled();
+    });
+
+    test("un mobile désengagé ne provoque personne", async () => {
+        const observer = makeToken({id: "obs", cx: 0, disposition: HOSTILE});
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY, statuses: ["fqDisengaged"]});
+        mockWorld([observer, mover]);
+
+        await OpportunityAttack.onMoveToken(mover, movementOf(at(1, 0), at(2, 0)));
+
+        expect(trigger).not.toHaveBeenCalled();
+    });
+
+    test("la dispense vaut contre TOUS ceux qui le tiennent, et ne leur coûte pas leur réaction", async () => {
+        // La garde est posée avant la détection : personne ne consomme rien, et
+        // les deux observateurs gardent leur réaction pour le mobile suivant.
+        const premier = makeToken({id: "obs1", cx: 0, disposition: HOSTILE});
+        const second = makeToken({id: "obs2", cx: 2, disposition: HOSTILE});
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY, statuses: ["fqDisengaged"]});
+        mockWorld([premier, second, mover]);
+
+        await OpportunityAttack.onMoveToken(mover, movementOf(at(1, 0), at(1, 3)));
+
+        expect(trigger).not.toHaveBeenCalled();
+        expect(premier.setFlag).not.toHaveBeenCalled();
+        expect(second.setFlag).not.toHaveBeenCalled();
+    });
+
+    test("un statut sans rapport ne dispense de rien", async () => {
+        const observer = makeToken({id: "obs", cx: 0, disposition: HOSTILE});
+        const mover = makeToken({id: "mover", cx: 1, disposition: FRIENDLY, statuses: ["fqEmpowered"]});
+        mockWorld([observer, mover]);
+
+        await OpportunityAttack.onMoveToken(mover, movementOf(at(1, 0), at(2, 0)));
+
+        expect(trigger).toHaveBeenCalledOnce();
+    });
+});
+
+describe("OpportunityAttack.isDisengaged", () => {
+    afterEach(() => {
+        delete globalThis.game;
+        delete globalThis.FqCardEngineModule;
+    });
+
+    test("ne reconnaît que le statut « Désengagé », et tolère un token sans acteur", () => {
+        expect(OpportunityAttack.isDisengaged(makeToken({id: "a", statuses: ["fqDisengaged"]}))).toBe(true);
+        expect(OpportunityAttack.isDisengaged(makeToken({id: "b"}))).toBe(false);
+        expect(OpportunityAttack.isDisengaged({})).toBe(false);
+        expect(OpportunityAttack.isDisengaged(undefined)).toBe(false);
+    });
+
+    test("une immunité à la condition retire la dispense, comme pour toute règle de condition", () => {
+        const immunise = makeToken({id: "c", statuses: ["fqDisengaged"]});
+        immunise.actor.system = {traits: {ci: {value: ["fqDisengaged"]}}};
+
+        expect(OpportunityAttack.isDisengaged(immunise)).toBe(false);
     });
 });
 

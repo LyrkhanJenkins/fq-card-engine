@@ -62,6 +62,7 @@ export default class StatusEffects {
         exposed: "FQCARDENGINE.StatusExposed",
         warded: "FQCARDENGINE.StatusWarded",
         shaken: "FQCARDENGINE.StatusShaken",
+        disengaged: "FQCARDENGINE.StatusDisengaged",
         ...DND5E_CONDITIONS
     };
 
@@ -71,7 +72,7 @@ export default class StatusEffects {
      * carte à l'autre, seul le temps qu'il dure est affaire de design. Les autres
      * statuts FQ gardent la durée du registre, qui fait partie de leur équilibre.
      */
-    static #TIMED_BY_CARD = new Set(["empowered", "exposed", "warded", "shaken"]);
+    static #TIMED_BY_CARD = new Set(["empowered", "exposed", "warded", "shaken", "disengaged"]);
 
     /**
      * Données d'effets actifs canoniques par statut. Chaque entrée est un
@@ -256,6 +257,21 @@ export default class StatusEffects {
             duration: {value: "", units: "rounds"},
             expireOnDamage: false,
             expireOnSave: true,
+            showIcon: 1
+        }],
+        // Désengagé : le porteur ne provoque aucune attaque d'opportunité en se
+        // déplaçant (règle `fqNoOpportunity`, lue par `OpportunityAttack.onMoveToken`).
+        // Aucun changement : le statut SEUL porte la règle, comme « Sous égide ».
+        // La durée se règle sur la carte — « jusqu'à la fin de son tour » s'écrit
+        // `1` en unité `turns` ; sans durée saisie, il tient jusqu'à la purge de
+        // fin de combat, ce qu'aucun jet ne vient consommer.
+        disengaged: [{
+            name: "Disengaged",
+            img: "icons/skills/movement/feet-spurred-boots-brown.webp",
+            statuses: ["fqDisengaged"],
+            changes: [],
+            duration: {value: "", units: "rounds"},
+            expireOnDamage: false,
             showIcon: 1
         }],
         // Air : -5 de déplacement pendant 2 tours, aura de métal.

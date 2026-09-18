@@ -14,6 +14,7 @@
 #### 3.0.0
 - Utiliser la portée des armes pour certaines cartes?
 - Ne plus faire de score de défausse mais UI pour défausser des cartes?
+- 
 
 #### 3.1.x
 - Rajouter des règles d'architectures

@@ -60,7 +60,8 @@ export const STATUS_RULES = Object.freeze({
     empowered: "FQCARDENGINE.RuleEmpowered",
     exposed: "FQCARDENGINE.RuleExposed",
     warded: "FQCARDENGINE.RuleWarded",
-    shaken: "FQCARDENGINE.RuleShaken"
+    shaken: "FQCARDENGINE.RuleShaken",
+    disengaged: "FQCARDENGINE.RuleDisengaged"
 });
 
 /**
@@ -74,6 +75,12 @@ export const STATUS_RULES = Object.freeze({
  * - `fqExposed` (« Garde brisée ») : on attaque son porteur avec avantage ;
  * - `fqWarded` (« Sous égide ») : on attaque son porteur avec désavantage ;
  * - `fqShaken` (« Ébranlé ») : son porteur sauvegarde avec désavantage.
+ *
+ * `fqDisengaged` (« Désengagé ») n'y figure pas : il ne joue sur aucun jet, il
+ * dispense son porteur des attaques d'opportunité qu'il provoquerait (règle
+ * `fqNoOpportunity`). Cette table ne sert qu'à NOMMER les causes d'un avantage
+ * ou d'un désavantage dans l'infobulle du jet ; l'y ranger ferait apparaître
+ * « Désengagé » comme raison d'un mode de jet qu'il ne produit jamais.
  *
  * @type {Object<string, string>}
  */
@@ -121,5 +128,15 @@ export const CONDITION_EFFECTS = Object.freeze({
     /** La cible rate d'office ses sauvegardes de Force et de Dextérité. */
     fqStrDexSaveFail: Object.freeze(["paralyzed", "petrified", "stunned", "unconscious"]),
     /** La cible n'oppose plus AUCUNE défense : ni esquive, ni armure, ni sauvegarde. */
-    fqDefenseless: Object.freeze(["paralyzed", "unconscious"])
+    fqDefenseless: Object.freeze(["paralyzed", "unconscious"]),
+    /**
+     * Le porteur ne provoque AUCUNE attaque d'opportunité en se déplaçant.
+     *
+     * Exprimée comme les autres règles plutôt qu'en test de statut direct :
+     * `OpportunityAttack` la lit par la même sonde que les règles d'avantage,
+     * donc les immunités aux conditions (`traits.ci`) s'y appliquent, et une
+     * condition future qui dispenserait des attaques d'opportunité s'ajoute ici
+     * sans toucher à la détection.
+     */
+    fqNoOpportunity: Object.freeze(["fqDisengaged"])
 });

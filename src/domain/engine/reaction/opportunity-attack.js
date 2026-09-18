@@ -1,6 +1,7 @@
 import ReachProfile from "./reach-profile.js";
 import ReachRules from "./reach-rules.js";
 import ReactionBudget from "./reaction-budget.js";
+import ConditionProbe from "../roll/condition-probe.js";
 import WeaponDamage from "../roll/weapon-damage.js";
 import TargetingPredicates from "../shared/targeting-predicates.js";
 
@@ -30,6 +31,11 @@ export const OPPORTUNITY_ATTACK_SETTING = "OpportunityAttack";
  *
  * L'attaque est AUTOMATIQUE : aucun prompt, aucun refus possible. Tout se joue
  * sur le client du MJ désigné, qui est le seul à détecter et à résoudre.
+ *
+ * La seule dispense est le DÉSENGAGEMENT : un mobile qui porte la règle
+ * `fqNoOpportunity` (statut « Désengagé », posé par une carte) ne provoque
+ * personne. Elle est lue par la même sonde que les règles d'avantage, si bien
+ * qu'une immunité de condition la neutralise comme n'importe quelle autre.
  *
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
@@ -314,6 +320,28 @@ export default class OpportunityAttack {
     }
 
     /**
+     * Ce token s'est-il désengagé ?
+     *
+     * La garde porte sur le MOBILE et non sur l'observateur : le désengagement
+     * est la manœuvre de celui qui rompt le contact, pas une cécité de ceux qui
+     * le tiennent — il vaut donc contre TOUS les observateurs à la fois, et un
+     * seul test suffit pour tout un déplacement.
+     *
+     * La règle est lue par `ConditionProbe`, comme les règles d'avantage : les
+     * immunités aux conditions s'y appliquent, et un acteur réduit (tests,
+     * véhicule, token sans données exploitables) rend simplement `false` — le
+     * cas permissif, cohérent avec `isStanding` : une fiche inhabituelle perd
+     * une dispense plutôt que d'être silencieusement exclue de la règle.
+     *
+     * @param {object} token - Le TokenDocument qui se déplace.
+     *
+     * @returns {boolean} `true` si le mobile ne provoque aucune attaque d'opportunité.
+     */
+    static isDisengaged(token) {
+        return ConditionProbe.of(token?.actor)?.has("fqNoOpportunity") === true;
+    }
+
+    /**
      * La fonctionnalité est-elle activée dans ce monde ?
      *
      * Lecture défensive : ce prédicat est évalué à CHAQUE déplacement de token.
@@ -374,6 +402,13 @@ export default class OpportunityAttack {
         // mort qu'on range comme pour un personnage inconscient qu'un allié tire
         // hors de portée.
         if (!OpportunityAttack.isStanding(mover)) {
+            return;
+        }
+        // Désengagement : le mobile rompt le contact en sûreté. La garde est
+        // posée AVANT la détection, pas après : un désengagé ne consomme la
+        // réaction de personne, et son déplacement ne coûte donc rien à ceux
+        // qui le tenaient — ils gardent leur réaction pour le suivant.
+        if (OpportunityAttack.isDisengaged(mover)) {
             return;
         }
         const provoked = OpportunityAttack.findProvokers(movement, mover, combat);

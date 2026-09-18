@@ -31,6 +31,16 @@ const STATS_DIR = path.join(SOURCE_DIR, "classes-stats-fq8");
 const MODULE_PREFIX = "modules/fq-card-engine/";
 /** Niveau des cartes « en attente » (hors campagne), toléré pendant la passe. */
 const PENDING_LEVEL = 13;
+/**
+ * Niveau maximum admis pour une carte : celui d'un personnage dnd5e au plafond.
+ *
+ * Distinct de {@link PENDING_LEVEL}, qui reste le niveau de PARKING des cartes
+ * de classe non encore rangées : le deck neutre, lui, monte délibérément
+ * jusqu'à N20 — une carte par niveau de personnage — et ses cartes N14 à N20 ne
+ * sont donc pas des anomalies. Au-delà de 20, un niveau reste hors de toute
+ * progression jouable et continue d'être signalé (cf. `PreciseShotII :: 21`).
+ */
+const MAX_LEVEL = 20;
 /** Decks de test, hors des patterns livrés. */
 const IGNORED_DECKS = new Set(["draft.json"]);
 
@@ -120,7 +130,7 @@ function detectIssues() {
             if (fq.class !== expectedClass) {
                 issues.push(`classe :: ${label} :: ${fq.class} (attendu ${expectedClass})`);
             }
-            if (!Number.isInteger(fq.level) || fq.level < 0 || fq.level > PENDING_LEVEL) {
+            if (!Number.isInteger(fq.level) || fq.level < 0 || fq.level > MAX_LEVEL) {
                 issues.push(`niveau :: ${label} :: ${fq.level}`);
             }
             const copies = Number(fq.maxSameCard);

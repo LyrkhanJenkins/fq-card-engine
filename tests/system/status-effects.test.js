@@ -2,6 +2,7 @@ import {afterEach, describe, expect, test} from "vitest";
 import fs from "fs";
 import path from "path";
 import StatusEffects from "../../src/domain/system/effects/status-effects.js";
+import {CONDITION_EFFECTS} from "../../src/domain/conditions.js";
 
 /**
  * Registre des effets de statut normalisés : garde le MÉCANISME (clés, clonage,
@@ -294,10 +295,38 @@ describe("StatusEffects — « Sous égide » et « Ébranlé »", () => {
     });
 });
 
+describe("StatusEffects — « Désengagé »", () => {
+
+    test("« Désengagé » : son porteur ne provoque aucune attaque d'opportunité, pendant toute sa durée", () => {
+        const [effect] = StatusEffects.expand("disengaged", {duration: {value: "1", units: "turns"}});
+
+        expect(effect.name).toBe("Disengaged");
+        expect(effect.statuses).toEqual(["fqDisengaged"]);
+        // Le statut SEUL porte la règle : aucun changement de fiche à appliquer.
+        expect(effect.changes).toEqual([]);
+        expect(effect.duration).toEqual({value: "1", units: "turns"});
+        // Aucun jet ne le consomme : il tient le temps que la carte lui donne.
+        expect(effect.expireOnAttack).toBeUndefined();
+        expect(effect.expireOnSave).toBeUndefined();
+    });
+
+    test("le statut déclenche la règle que lit la détection d'attaque d'opportunité", () => {
+        expect(CONDITION_EFFECTS.fqNoOpportunity).toContain("fqDisengaged");
+    });
+
+    test("il est proposé au menu, avant les conditions", () => {
+        const keys = Object.keys(StatusEffects.STATUS_CHOICES);
+
+        expect(StatusEffects.STATUS_CHOICES.disengaged).toBe("FQCARDENGINE.StatusDisengaged");
+        expect(keys.indexOf("disengaged")).toBeLessThan(keys.indexOf("blinded"));
+    });
+});
+
 describe("StatusEffects — durée réglée par la carte", () => {
 
     test("réglés par la carte : les 14 conditions et les statuts FQ d'avantage", () => {
-        for (const key of ["prone", "paralyzed", "unconscious", "empowered", "exposed", "warded", "shaken"]) {
+        for (const key of ["prone", "paralyzed", "unconscious", "empowered", "exposed", "warded", "shaken",
+            "disengaged"]) {
             expect(StatusEffects.isTimedByCard(key)).toBe(true);
         }
     });
@@ -363,7 +392,7 @@ describe("StatusEffects — ce que fait chaque statut", () => {
     });
 
     test("chaque statut réglé par la carte dit ce qu'il fait ; les statuts FQ, eux, gardent leurs messages de carte", () => {
-        expect(TIMED).toHaveLength(18);
+        expect(TIMED).toHaveLength(19);
         for (const key of TIMED) {
             expect(StatusEffects.ruleKey(key), key).toMatch(/^FQCARDENGINE\.Rule/);
         }
