@@ -727,10 +727,13 @@ export default class Damage {
      * @param {string} location      - La direction d'apparition adjacente (« left », « right », « up », « down »).
      * @param {object} [position]    - La position absolue (px) imposée (invocation dans une zone posée) ;
      *                                 à défaut, la case adjacente au personnage.
+     * @param {number} [initiative]  - L'initiative à poser sur le combattant créé
+     *                                 (calculée par l'appelant, cf. `Minion.summonedInitiative`) ;
+     *                                 à défaut, le combattant naît sans initiative.
      *
      * @returns {Promise<void>}
      */
-    static async createActorFromData(actorData, currentUserId, location, position) {
+    static async createActorFromData(actorData, currentUserId, location, position, initiative = null) {
         const currentUser = game.users.get(currentUserId);
         await Actor.create(actorData).then(async newActor => {
             // Ajouter le jeton à la scène active
@@ -747,8 +750,14 @@ export default class Damage {
             await scene.createEmbeddedDocuments("Token", [tokenData]).then(async t => {
                 const token = t[0];
                 if (game.combat) {
+                    // La créature invoquée s'inscrit JUSTE APRÈS son invocateur dans
+                    // l'ordre du combat, avec l'initiative que l'appelant a déduite
+                    // de la sienne : elle agit dans la foulée du sort qui l'a
+                    // appelée. Sans initiative fournie, le combattant naît sans, et
+                    // le jet automatique du module lui en donnera une.
                     await game.combat.createEmbeddedDocuments("Combatant", [{
-                        tokenId: token?.id, sceneId: scene.id, actorId: token?.actorId, hidden: false
+                        tokenId: token?.id, sceneId: scene.id, actorId: token?.actorId, hidden: false,
+                        initiative
                     }]);
                 }
             });

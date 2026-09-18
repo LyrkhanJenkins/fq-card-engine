@@ -84,12 +84,33 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     // (Couronne d'ossements, Sceptre de l'ossuaire…) dopent avant son invocation.
     // Il reste un squelette pour tout le reste : voir `MINION_FAMILY`.
     static MINION_TYPE_GIANT_SKELETON = "giantSkeleton";
+    // Le Fantôme n'est pas invoqué depuis le compendium des sbires comme les
+    // autres types : c'est une COPIE de la cible visée (acteur et jeton), posée
+    // sur sa case et confiée au lanceur. Il n'en reste pas moins un sbire pour
+    // tout le reste — plafond d'invocations, estampille d'invocateur, comptage
+    // sur la scène — d'où un type à part entière plutôt qu'un chemin parallèle.
+    static MINION_TYPE_GHOST = "ghost";
     static MINION_TYPE_CHOICE = {
         "": "FQCARDENGINE.MinionTypeNone",
         "beast": "FQCARDENGINE.MinionTypeBeast",
         "skeleton": "FQCARDENGINE.MinionTypeSkeleton",
-        "giantSkeleton": "FQCARDENGINE.MinionTypeGiantSkeleton"
+        "giantSkeleton": "FQCARDENGINE.MinionTypeGiantSkeleton",
+        "ghost": "FQCARDENGINE.MinionTypeGhost"
     };
+
+    /**
+     * Indique si un type de sbire désigne un fantôme — la COPIE d'une cible, par
+     * opposition aux sbires tirés du compendium. La question se pose partout où
+     * l'invocation lit sa source : le chemin de création, et les gardes qui
+     * exigent une cible.
+     *
+     * @param {string} [type] - Le type de sbire déclaré par le choix.
+     *
+     * @returns {boolean} True si le type est celui du fantôme.
+     */
+    static isGhostType(type) {
+        return type === CardFqSystem.MINION_TYPE_GHOST;
+    }
 
     /**
      * La FAMILLE de chaque type de sbire — le GENRE de créature, là où le type

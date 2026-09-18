@@ -109,9 +109,16 @@ export default class CardEffect {
                 await CardSelection.playCardSelection(cardContent, card.parent);
             }
             if (cardContent.minions && Array.isArray(cardContent.minions)) {
+                // Les fantômes n'ont pas d'emplacement à recevoir : chacun naît sur la
+                // case de la cible visée. Ils sont donc invoqués à part, AVANT le
+                // partage des emplacements — qui ne concerne que les autres sbires.
+                for (const ghost of Minion.ghostMinions(cardContent.minions)) {
+                    await Minion.createActor(ghost, null);
+                }
+                const placedMinions = Minion.placedMinions(cardContent.minions);
                 if (cardContent.minionsOnZone) {
                     // La zone posée tient lieu d'emplacement : un sbire par case couverte.
-                    await Minion.createActorsOnZone(cardContent.minions, cardContent.zonePlacement);
+                    await Minion.createActorsOnZone(placedMinions, cardContent.zonePlacement);
                 } else {
                     const selectedLocations = [];
                     if (fd.minionLeft) selectedLocations.push("left");
@@ -119,7 +126,7 @@ export default class CardEffect {
                     if (fd.minionRight) selectedLocations.push("right");
                     if (fd.minionDown) selectedLocations.push("down");
                     for (let i = 0; i < selectedLocations.length; i++) {
-                        const minion = cardContent.minions[i];
+                        const minion = placedMinions[i];
                         if (minion) {
                             await Minion.createActor(minion, selectedLocations[i]);
                         }

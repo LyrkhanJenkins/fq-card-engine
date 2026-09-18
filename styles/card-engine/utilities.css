@@ -42,7 +42,7 @@
 
 .fq-form-attributes fieldset[data-add-data-effect]:has(select[name$=".status"] option:checked:is(
     [value="poison"], [value="acid"], [value="burn"], [value="frost"],
-    [value="curse"], [value="virus"], [value="earth"], [value="air"]
+    [value="curse"], [value="haunt"], [value="virus"], [value="earth"], [value="air"]
 )) [data-status-duration] {
     display: none;
 }

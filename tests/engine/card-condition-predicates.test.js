@@ -431,6 +431,27 @@ describe("CardCondition — seuil de PV des cibles (exécution)", () => {
         mountScene({targets: [{id: "x", actor: {id: "x"}}]});
         expect(CardCondition.targetsHpBelow(999)).toBe(false);
     });
+
+    it("targetsHpAtMost : vrai si CHAQUE cible est descendue AU NIVEAU du seuil, égalité comprise", () => {
+        mountScene({targets: [targetWithHp("a", 5)]});
+        // Toute la différence avec le prédicat d'exécution tient dans cette ligne :
+        // une cible pile au seuil satisfait un seuil, jamais une exécution.
+        expect(CardCondition.targetsHpAtMost(5)).toBe(true);
+        expect(CardCondition.targetsHpBelow(5)).toBe(false);
+        expect(CardCondition.targetsHpAtMost(4)).toBe(false);
+
+        mountScene({targets: [targetWithHp("a", 5), targetWithHp("b", 10)]});
+        expect(CardCondition.targetsHpAtMost(5)).toBe(false);
+        expect(CardCondition.targetsHpAtMost(10)).toBe(true);
+    });
+
+    it("targetsHpAtMost : faux sans cible sélectionnée ou sans PV lisibles", () => {
+        mountScene({targets: []});
+        expect(CardCondition.targetsHpAtMost(999)).toBe(false);
+
+        mountScene({targets: [{id: "x", actor: {id: "x"}}]});
+        expect(CardCondition.targetsHpAtMost(999)).toBe(false);
+    });
 });
 
 describe("CardCondition — état du personnage", () => {

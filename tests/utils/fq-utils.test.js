@@ -598,7 +598,10 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
                     }),
                     "userCharacterId",
                     "left",
-                    undefined
+                    undefined,
+                    // L'invocateur n'est pas inscrit au combat du bac à sable :
+                    // aucune initiative n'est déductible pour son sbire.
+                    null
                 );
             });
 
@@ -616,7 +619,8 @@ describe("CardEffect / RollService / Minion / ObjectUtils", () => {
                     }),
                     "userCharacterId",
                     "up",
-                    undefined
+                    undefined,
+                    null
                 );
             });
         });

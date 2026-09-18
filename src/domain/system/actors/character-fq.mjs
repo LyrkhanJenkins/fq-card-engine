@@ -70,6 +70,7 @@ export default class CharacterDataFQ {
                     beast: new SchemaField(CharacterDataFQ.minionType(1), {label: "FQCARDENGINE.MinionTypeBeast"}),
                     skeleton: new SchemaField(CharacterDataFQ.minionType(6), {label: "FQCARDENGINE.MinionTypeSkeleton"}),
                     giantSkeleton: new SchemaField(CharacterDataFQ.minionType(1), {label: "FQCARDENGINE.MinionTypeGiantSkeleton"}),
+                    ghost: new SchemaField(CharacterDataFQ.minionType(1), {label: "FQCARDENGINE.MinionTypeGhost"}),
                     sacrificedMinion: new NumberField({
                         nullable: false, integer: true, min: 0, initial: 1, label: "FQCARDENGINE.SacrificedMinion"
                     }),

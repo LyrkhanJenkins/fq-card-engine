@@ -719,6 +719,28 @@ export default class CardCondition {
     }
 
     /**
+     * Indique si TOUTES les cibles sélectionnées ont des points de vie restants
+     * inférieurs OU ÉGAUX au seuil. Faux sans cible sélectionnée ou si une cible
+     * n'expose pas ses points de vie.
+     *
+     * La nuance avec {@link CardCondition.targetsHpBelow} n'est pas cosmétique :
+     * une carte d'exécution demande « mes dégâts la tueraient-ils ? » (strict),
+     * une carte de SEUIL demande « est-elle descendue au niveau que j'exige ? »
+     * (large). Écrire la seconde avec la première obligerait chaque carte à
+     * ajouter un `+ 1` à son seuil, où l'erreur se glisse sans se voir.
+     *
+     * @param {number} threshold - Le seuil comparé aux PV restants.
+     *
+     * @returns {boolean} True si chaque cible est au plus à `threshold` PV.
+     */
+    static targetsHpAtMost(threshold) {
+        return CardCondition.#everyTarget(t => {
+            const hp = t.actor?.system?.attributes?.hp?.value;
+            return Number.isFinite(hp) && hp <= threshold;
+        });
+    }
+
+    /**
      * Indique si au moins une cible sélectionnée porte `minCount` effets actifs
      * ou plus parmi les noms donnés (liste vide = n'importe quel effet).
      *
@@ -730,6 +752,28 @@ export default class CardCondition {
     static targetsHaveEffect(names = [], minCount = 1) {
         return Constants.currentTargets
             .some(t => CardCondition.#effectsNamed(t.actor, names).length >= minCount);
+    }
+
+    /**
+     * Compte les effets actifs portés par la PREMIÈRE cible sélectionnée — parmi
+     * les noms donnés si une liste est fournie, tous sinon.
+     *
+     * C'est le comptage des cartes dont la PUISSANCE se mesure sur la cible visée
+     * et non sur le lanceur : le DD d'une prise de contrôle qui monte avec les
+     * hantises accumulées sur elle, typiquement via un `xvalue`
+     * `SCRIPT:FqCardEngineModule.cond.targetEffectCount(["Haunt"])` dont le
+     * résultat se réinjecte dans `saveDc`.
+     *
+     * La PREMIÈRE cible, et non le maximum des cibles : une carte dont le seuil
+     * dépend d'une cible en vise une seule. Un ciblage multiple lirait la première
+     * acquise, ce que la carte n'a aucune raison de faire.
+     *
+     * @param {string[]} [names] - Les noms d'effets comptés (vide = tous).
+     *
+     * @returns {number} Le nombre d'effets correspondants (0 sans cible).
+     */
+    static targetEffectCount(names = []) {
+        return CardCondition.#effectsNamed(Constants.currentTargets[0]?.actor, names).length;
     }
 
     /**

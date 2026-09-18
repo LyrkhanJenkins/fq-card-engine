@@ -287,8 +287,11 @@ describe("Damage", () => {
             expect(createTokenMock).toHaveBeenCalledWith("Token", [expect.objectContaining({
                 actorId: "newActorId", x: 15, y: 10
             })]);
+            // Aucune initiative transmise par l'appelant : le combattant naît sans,
+            // et le jet automatique du module lui en donnera une.
             expect(createCombatantMock).toHaveBeenCalledWith("Combatant", [{
-                tokenId: "tokenId", sceneId: "sceneId", actorId: "newActorId", hidden: false
+                tokenId: "tokenId", sceneId: "sceneId", actorId: "newActorId", hidden: false,
+                initiative: null
             }]);
         });
 

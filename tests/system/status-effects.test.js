@@ -94,6 +94,17 @@ describe("StatusEffects — registre des statuts normalisés", () => {
         expect(curse.name).toBe("Curse");
     });
 
+    test("hantise : marque de combo distincte de la malédiction, sans dégât ni durée", () => {
+        const [haunt] = StatusEffects.expand("haunt");
+        expect(haunt.name).toBe("Haunt");
+        expect(haunt.duration.value).toBe("");
+        expect(haunt.changes.some(c => c.key === "system.fq.bonus.dot")).toBe(false);
+        // Les deux marques coexistent : un comptage par nom ne doit jamais
+        // confondre une hantise avec une malédiction, sans quoi les cartes de
+        // conversion et les seuils de la spécialisation deviennent faux.
+        expect(haunt.name).not.toBe(StatusEffects.expand("curse")[0].name);
+    });
+
     test("virus : override des PV max par les PV restants (résolu par DAE), aucun dégât, durée illimitée", () => {
         const [virus] = StatusEffects.expand("virus");
         expect(virus.name).toBe("Virus");
@@ -291,9 +302,9 @@ describe("StatusEffects — durée réglée par la carte", () => {
         }
     });
 
-    test("fixés par le registre : les 8 statuts FQ, dont la durée fait partie de l'équilibre", () => {
+    test("fixés par le registre : les 9 statuts FQ, dont la durée fait partie de l'équilibre", () => {
         expect(StatusEffects.fixedDurationKeys().sort())
-            .toEqual(["acid", "air", "burn", "curse", "earth", "frost", "poison", "virus"]);
+            .toEqual(["acid", "air", "burn", "curse", "earth", "frost", "haunt", "poison", "virus"]);
         expect(StatusEffects.isTimedByCard("burn")).toBe(false);
         expect(StatusEffects.isTimedByCard("")).toBe(false);
     });

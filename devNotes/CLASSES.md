@@ -427,6 +427,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 
 **Mécaniques signature** :
 - **Malédiction (`Curse`)** : pose plusieurs stacks sur des cibles, permet d'utiliser d'autres sorts efficaces avec beaucoup de stacks. Tue une cible ayant suffisamment de malédictions (Jugement Dernier).
+- **Hantise (`Haunt`)** : seconde marque empilable, distincte de la malédiction et qui ne se confond jamais avec elle. Elle ne fait aucun dégât : elle ouvre la **prise de contrôle**. À 5 hantises, le *Fantôme* — une COPIE de la cible, sur sa case, jouée par le Mage Blanc le temps d'un seul tour puis dissipée. *Profanation* convertit les malédictions en hantises, une pour une, ce qui relie les deux spécialisations.
 - **Suite de boucliers réactifs** : 8 cartes réactives (Bouclier de Mana, Divin, Vengeur, Empathique, Réprouver, Soins d'Urgence, Ange Gardien, Absorption de Sort), Bouclier de Mana avec `replayable: @wis`. Trois modèles de mitigation distincts : PV temporaires, soin réactif répété, invulnérabilité + restauration (Bouclier Divin).
 - **Transmutation de ressources** : Sang Bleu (2 PV → 1 mana), Le Bien Et Le Mal (transfert de PV à portée quasi illimitée), Soins d'Urgence (défausse → soin), Infusion de Mana (source de mana passive permanente), Absorption de Sort.
 - **Générateur de mana** : Infusion de Mana.
@@ -438,7 +439,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - Lent (5 cases), fragile au contact (CA 8)
 
 ### Constat des cartes (données)
-- 31 cartes : 20 débloquables (N1‑N6), **aucune au N7**, rien aux N8‑N12, 11 au N13 (dont les 4 auras et la moitié des malédictions).
+- 39 cartes : 20 débloquables (N1‑N6), **aucune au N7**, rien aux N8‑N12, 19 au N13 (dont les 5 auras, la moitié des malédictions et **toute la spécialisation Hantise**).
 - Seulement 2 cartes à 1‑4 PA.
 - Soin direct faible : Soin (innée), Énergie Lumineuse, Soins d'Urgence ; le reste est réactif ou bouclier.
 

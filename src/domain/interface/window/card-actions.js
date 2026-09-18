@@ -480,9 +480,13 @@ export default {
 
         // Sbires posés dans la zone : c'est la pose de la zone qui fixe l'emplacement,
         // la croix directionnelle n'est ni affichée ni exigée.
-        if (firstChoice.minions?.length && !firstChoice.minionsOnZone &&
+        // Les fantômes non plus n'ont pas d'emplacement à choisir — ils naissent sur
+        // la case de leur cible : une carte qui n'invoque qu'eux ne doit rien exiger
+        // de la croix directionnelle, sous peine d'être injouable.
+        const placedMinions = Minion.placedMinions(firstChoice.minions);
+        if (placedMinions.length && !firstChoice.minionsOnZone &&
             ((nbSelectedMinionLocations === 0) ||
-                (firstChoice.minions?.length < nbValideMinionLocations) ||
+                (placedMinions.length < nbValideMinionLocations) ||
                 (nbSelectedMinionLocations !== nbValideMinionLocations))) {
             throw new FormError(game.i18n.localize("FQCARDENGINE.DialogPlayFormErrorMinionLocation"));
         }

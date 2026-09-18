@@ -4,9 +4,14 @@ import CombatTurn from "../domain/engine/combat-turn.js";
 import AutoCard from "../domain/engine/auto-card.js";
 import DeathSave from "../domain/engine/death-save.js";
 import Damage from "../domain/engine/roll/damage.js";
+import Minion from "../domain/engine/shared/minion.js";
 
 Hooks.on("deleteCombat", async function (combat, _delta) {
     if (CombatTurn.isLocalUserFirstActiveGM()) {
+        // Filet pour les fantômes que la fin de leur tour n'a pas emportés : celui
+        // créé dans le dernier tour du combat, ou celui dont le tour n'est jamais
+        // venu. Aucun ne doit survivre au combat qui l'a vu naître.
+        await Minion.dismissAllGhosts();
         await CombatTurn.resetCards();
         combat.combatants.forEach(combatant => {
             if (!combatant.actor) return;
@@ -51,7 +56,7 @@ Hooks.on("userConnected", function (_user, _connected) {
  * current: CombatHistoryData
  * The new turn state
  */
-Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
+Hooks.on("combatTurnChange", async function (combat, prior, _current) {
     if (combat.round < combat.previous?.round || (combat.round === combat.previous?.round && combat.turn < combat.previous?.turn)) {
         // Si on revient en arrière il ne se passe rien
         return;
@@ -61,6 +66,11 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
         ui.notifications.warn("FQCARDENGINE.WarningCombattantsWithNoActor", {localize: true});
     }
     if (CombatTurn.isLocalUserFirstActiveGM()) {
+        // Le fantôme ne survit pas au tour qu'on lui a volé : sa copie quitte la
+        // scène dès que son tour s'achève. Dissipé AVANT tout le reste — un fantôme
+        // encore en jeu fausserait les réinitialisations de ressources du tour qui
+        // commence comme les plafonds d'invocation de son invocateur.
+        await Minion.dismissGhostOfTurn(prior?.tokenId ?? combat.previous?.tokenId);
         // Suppression des effets expirés de l'acteur dont le tour COMMENCE (combattant
         // courant) : l'effet disparaît au début du tour de l'acteur affecté, pas au round.
         if (combat.current.round !== combat.previous.round) { // It's a new round

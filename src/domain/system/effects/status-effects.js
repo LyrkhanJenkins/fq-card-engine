@@ -1,6 +1,6 @@
 /**
  * Registre central des effets de statut normalisés (poison, acide, brûlure,
- * gel, malédiction, terre, air) : pour chaque clé, les données d'effets actifs
+ * gel, malédiction, hantise, terre, air) : pour chaque clé, les données d'effets actifs
  * canoniques (nom, icône, changements, durée, flags) prêtes à être consommées
  * par `CardEffect.createEffectsFromData`. Une carte référence un statut par le
  * champ `status` d'une donnée d'effet (`applyEffectsFormulas[].effects[].data[]`)
@@ -54,6 +54,7 @@ export default class StatusEffects {
         burn: "FQCARDENGINE.StatusBurn",
         frost: "FQCARDENGINE.StatusFrost",
         curse: "FQCARDENGINE.StatusCurse",
+        haunt: "FQCARDENGINE.StatusHaunt",
         virus: "FQCARDENGINE.StatusVirus",
         earth: "FQCARDENGINE.StatusEarth",
         air: "FQCARDENGINE.StatusAir",
@@ -156,6 +157,22 @@ export default class StatusEffects {
             img: "icons/magic/death/skull-energy-light-purple.webp",
             changes: [
                 {key: "macro.execute", value: "PersistAura jb2a.condition.curse.01", type: "custom", priority: null}
+            ],
+            duration: {value: "", units: "rounds"},
+            expireOnDamage: false,
+            showIcon: 1
+        }],
+        // Hantise : aucun effet mécanique direct — une marque persistante (durée
+        // illimitée) que les cartes de la spécialisation du Mage Blanc comptent
+        // par son nom, sur le modèle de la malédiction. Les deux marques
+        // COEXISTENT sans jamais se confondre : un comptage de « Curse » ignore
+        // « Haunt », et inversement — c'est ce qui permet à une carte de
+        // convertir les unes en les autres.
+        haunt: [{
+            name: "Haunt",
+            img: "icons/magic/death/skeleton-skull-soul-blue.webp",
+            changes: [
+                {key: "macro.execute", value: "PersistAura jb2a.aura_themed.01.orbit.loop.dark", type: "custom", priority: null}
             ],
             duration: {value: "", units: "rounds"},
             expireOnDamage: false,
