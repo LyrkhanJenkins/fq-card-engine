@@ -9,7 +9,6 @@ const {SchemaField, NumberField, ObjectField} = foundry.data.fields;
  * @property {object} fq.cards
  * @property {number} fq.cards.hand                 Start Hand.
  * @property {number} fq.cards.pick                 Pick card score.
- * @property {number} fq.cards.currentDrop          Current discard card score.
  * @property {object} fq.cardBonus                  Named card bonuses.
  * @property {object} fq.minions                    Minion caps and summoning bonuses, by type.
  * @property {number} fq.minions.sacrificedMinion Sacrificed skeletons count.
@@ -60,9 +59,6 @@ export default class CharacterDataFQ {
                     }),
                     pick: new NumberField({
                         nullable: false, integer: true, min: 0, initial: 1, label: "FQCARDENGINE.Pick"
-                    }),
-                    currentDrop: new NumberField({
-                        nullable: false, integer: true, min: 0, initial: 0, label: "FQCARDENGINE.CurrentDrop"
                     }),
                 }, {label: "FQCARDENGINE.Cards"}),
                 cardBonus: new ObjectField({label: "FQCARDENGINE.CardDamageBonus"}),

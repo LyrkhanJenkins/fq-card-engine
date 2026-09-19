@@ -13,7 +13,7 @@ describe("factories", () => {
             expect(actor.system.fq.mana.value).toBe(5);
             expect(actor.system.fq.zeal.max).toBe(8);
             expect(actor.system.fq.attributes.critical).toBe(1);
-            expect(actor.system.fq.cards.currentDrop).toBe(0);
+            expect(actor.system.fq.cards.pick).toBe(1);
         });
 
         it("applies a shallow override on name while preserving other defaults", () => {

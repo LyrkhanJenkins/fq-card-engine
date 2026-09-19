@@ -171,8 +171,8 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
 
     /**
      * Indique si une carte porte au moins un choix éphémère. Une telle carte ne
-     * peut pas être défaussée volontairement : sa seule sortie de la main est le
-     * jeu, qui la détruit.
+     * peut pas servir à payer le coût en défausse d'une autre : sa seule sortie
+     * de la main est le jeu, qui la détruit.
      *
      * @param {Card} [card] - La carte.
      *

@@ -4,14 +4,13 @@
  * @property {number} fq.action          Action cost for using item.
  * @property {number} fq.mana            Mana cost for using item.
  * @property {number} fq.zeal            Zeal cost for using item.
- * @property {number} fq.drop            CurrentDrop cost for using item.
  * @property {number} fq.hp              Life cost for using item.
  * @mixin
  */
 export default class ActionFQTemplate {
     /**
      * Définit le schéma de données FQ greffé sur les actions d'objet : les coûts
-     * d'utilisation en points d'action, mana, zèle, défausse et points de vie.
+     * d'utilisation en points d'action, mana, zèle et points de vie.
      *
      * @inheritdoc
      * @returns {object} Le schéma de données FQ des actions d'objet.
@@ -27,9 +26,6 @@ export default class ActionFQTemplate {
                 }),
                 zeal: new foundry.data.fields.NumberField({
                     nullable: false, integer: true, initial: 0, label: "FQCARDENGINE.ZealPoints"
-                }),
-                drop: new foundry.data.fields.NumberField({
-                    nullable: false, integer: true, initial: 0, label: "FQCARDENGINE.Drop"
                 }),
                 hp: new foundry.data.fields.NumberField({
                     nullable: false, integer: true, initial: 0, label: "FQCARDENGINE.Life"

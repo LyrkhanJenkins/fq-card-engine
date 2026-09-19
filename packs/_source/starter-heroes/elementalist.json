@@ -133,7 +133,6 @@
       "DOT": 0,
       "critical": 3,
       "evasion": 1,
-      "currentDropCard": 0,
       "hand": 1,
       "pick": 1,
       "death": {
@@ -472,8 +471,7 @@
       },
       "cards": {
         "pick": 1,
-        "hand": 0,
-        "currentDrop": 0
+        "hand": 0
       },
       "zeal": {
         "value": 0,

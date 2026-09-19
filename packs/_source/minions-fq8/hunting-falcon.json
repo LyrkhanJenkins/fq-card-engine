@@ -850,8 +850,7 @@
       },
       "cards": {
         "hand": 0,
-        "pick": 0,
-        "currentDrop": 0
+        "pick": 0
       },
       "minions": {
         "sacrificedMinion": 1

@@ -25,10 +25,13 @@ describe("CharacterDataFQ.defineSchema", () => {
     });
 
     describe("cards", () => {
-        it("verrouille les défauts hand/pick/currentDrop", () => {
+        it("verrouille les défauts hand/pick", () => {
             expect(fq.cards.hand.initial).toBe(1);
             expect(fq.cards.pick.initial).toBe(1);
-            expect(fq.cards.currentDrop.initial).toBe(0);
+        });
+
+        it("ne porte plus de score de défausse : le coût `drop` se paie en cartes", () => {
+            expect(fq.cards).not.toHaveProperty("currentDrop");
         });
     });
 

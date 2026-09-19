@@ -21,7 +21,6 @@ const COSTS = Object.freeze([
     {field: "action", short: "FQCARDENGINE.ShortActionPoints", label: "FQCARDENGINE.ActionPoints", cssClass: "action-cost"},
     {field: "mana", short: "FQCARDENGINE.ShortManaPoints", label: "FQCARDENGINE.ManaPoints", cssClass: "mana-cost"},
     {field: "zeal", short: "FQCARDENGINE.ShortZealPoints", label: "FQCARDENGINE.ZealPoints", cssClass: "zeal-cost"},
-    {field: "drop", short: "FQCARDENGINE.ShortDrop", label: "FQCARDENGINE.Drop", cssClass: "drop-cost"},
     {field: "hp", short: "FQCARDENGINE.ShortLife", label: "FQCARDENGINE.Life", cssClass: "hp-cost"},
 ]);
 

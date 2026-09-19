@@ -245,16 +245,17 @@ export default class CardSelection {
      * @param {number}  count                       - Le nombre exact de cartes à sélectionner.
      * @param {object}  [options]                   - Options du voile.
      * @param {boolean} [options.cancellable=true]  - Si false, l'annulation est impossible.
+     * @param {string}  [options.title]             - Le bandeau du voile (défaut : « choisissez N cartes »).
      *
      * @returns {Promise<Card[]|null>} Les cartes choisies, ou null si annulé.
      */
-    static async openSelectionVeil(cards, count, {cancellable = true} = {}) {
+    static async openSelectionVeil(cards, count, {cancellable = true, title} = {}) {
         const overlay = document.createElement("div");
         overlay.className = "fq-card-selection-overlay";
 
         const banner = document.createElement("div");
         banner.className = "fq-card-selection-banner";
-        banner.textContent = game.i18n.format("FQCARDENGINE.CardSelectionTitle", {count});
+        banner.textContent = title ?? game.i18n.format("FQCARDENGINE.CardSelectionTitle", {count});
         overlay.appendChild(banner);
 
         const stage = document.createElement("div");

@@ -9,24 +9,24 @@ function makeItem(fq, activityCount = 1) {
 describe("fq-cost-column", () => {
 
     describe("fqCostEntries", () => {
-        test("affiche les coûts sans signe, dans l'ordre action, mana, zèle, défausse, vie", () => {
-            const entries = fqCostEntries(makeItem({action: -3, mana: -2, zeal: -1, drop: -1, hp: -5}));
+        test("affiche les coûts sans signe, dans l'ordre action, mana, zèle, vie", () => {
+            const entries = fqCostEntries(makeItem({action: -3, mana: -2, zeal: -1, hp: -5}));
 
             expect(entries.map(e => [e.cssClass, e.value])).toEqual([
-                ["action-cost", "3"], ["mana-cost", "2"], ["zeal-cost", "1"], ["drop-cost", "1"], ["hp-cost", "5"]
+                ["action-cost", "3"], ["mana-cost", "2"], ["zeal-cost", "1"], ["hp-cost", "5"]
             ]);
             expect(entries[0].short).toBe("FQCARDENGINE.ShortActionPoints");
             expect(entries[0].label).toBe("FQCARDENGINE.ActionPoints");
         });
 
         test("omet les valeurs nulles", () => {
-            const entries = fqCostEntries(makeItem({action: -10, mana: 0, zeal: 0, drop: 0, hp: 0}));
+            const entries = fqCostEntries(makeItem({action: -10, mana: 0, zeal: 0, hp: 0}));
 
             expect(entries.map(e => e.cssClass)).toEqual(["action-cost"]);
         });
 
         test("préfixe un gain de « + »", () => {
-            const entries = fqCostEntries(makeItem({action: 0, mana: 0, zeal: 2, drop: 0, hp: 0}));
+            const entries = fqCostEntries(makeItem({action: 0, mana: 0, zeal: 2, hp: 0}));
 
             expect(entries).toHaveLength(1);
             expect(entries[0].value).toBe("+2");

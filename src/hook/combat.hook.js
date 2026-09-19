@@ -78,7 +78,6 @@ Hooks.on("combatTurnChange", async function (combat, prior, _current) {
             if (combat.previous.round === 0) { // It's the first round
                 CombatTurn.resetZeal(combatants);
                 await CombatTurn.drawHand(combatants);
-                CombatTurn.resetCurrentDropCard(combatants);
                 CombatTurn.resetSacrificedMinion(combatants);
             }
         }
@@ -96,7 +95,6 @@ Hooks.on("combatTurnChange", async function (combat, prior, _current) {
         const turnConsumed = await DeathSave.resolveTurnStart(combat);
         if (!turnConsumed && combat.previous.round !== 0 && user) { // C'est le tour d'un joueur !
             CombatTurn.resetSacrificedMinion(combatants);
-            CombatTurn.resetCurrentDropCard(combatants);
             // Un utilisateur ne devrait avoir qu'une main, une pile et un deck (FQ)
             const deck = TradingCards.getFirstDeck(user?.id, DECK_TYPE);
             const hand = TradingCards.getFirstDeck(user?.id, HAND_TYPE);

@@ -46,7 +46,7 @@ export default {
         set("fq-cg-mana", "fq-cg-mana-val", mana?.value ?? 0, mana?.max ?? 1);
         set("fq-cg-zeal", "fq-cg-zeal-val", zeal?.value ?? 0, zeal?.max ?? 1);
 
-        // Pastilles secondaires : critique / esquive / défausse (toujours) ; sacrifice,
+        // Pastilles secondaires : critique / esquive (toujours) ; sacrifice,
         // bonus de portée, de dégâts et de soin (seulement si supérieurs à 0).
         const attributes = character.system?.fq?.attributes;
         const bonus = character.system?.fq?.bonus;
@@ -64,7 +64,6 @@ export default {
 
         setChip("fq-cg-critical", null, attributes?.critical ?? 0);
         setChip("fq-cg-evasion", null, attributes?.evasion ?? 0);
-        setChip("fq-cg-drop", null, character.system?.fq?.cards?.currentDrop ?? 0);
 
         const sacrifice = character.system?.fq?.minions?.sacrificedMinion ?? 0;
         setChip("fq-cg-sacrifice", "fq-cg-sacrifice-chip", sacrifice, sacrifice > 0);

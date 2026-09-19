@@ -1,4 +1,4 @@
-import {beforeEach, describe, expect, test, vi} from "vitest";
+import {afterEach, beforeEach, describe, expect, test, vi} from "vitest";
 import PlayCard from "../../src/domain/engine/play-card.js";
 import {makeCard} from "../factories.js";
 
@@ -8,6 +8,7 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     }
 }));
 
+import DiscardCost from "../../src/domain/engine/shared/discard-cost.js";
 import CardEffect from "../../src/domain/engine/shared/card-effect.js";
 vi.mock("../../src/domain/engine/shared/card-effect.js", () => ({
     default: {
@@ -27,7 +28,6 @@ global.game = {
     user: {
         character: {
             name: "Test Character",
-            system: {fq: {cards: {currentDrop: 0}}},
             update: vi.fn()
         },
         isGM: false,
@@ -64,13 +64,13 @@ describe("PlayCard", () => {
         vi.clearAllMocks();
     });
 
+    // Défausse à la main : le geste d'arbitrage du MJ (le dialogue ne lui propose
+    // le bouton qu'à lui, cf. play-dialog.test.js) — jamais un paiement de coût.
     describe("discardCard", () => {
-        test("should warn and not discard the card if card has been played", async () => {
-            const cardContent = {hasBeenPlayed: true};
-            const card = {};
+        test("avertit et ne défausse pas une carte déjà jouée", async () => {
             const currentCards = {pass: vi.fn().mockResolvedValue()};
 
-            await PlayCard.discardCard({}, {}, cardContent, card, currentCards);
+            await PlayCard.discardCard({}, {}, {hasBeenPlayed: true}, {}, currentCards);
 
             expect(ChatMessage.create).toHaveBeenCalledWith({
                 speaker: expect.any(Object),
@@ -79,25 +79,20 @@ describe("PlayCard", () => {
             expect(currentCards.pass).not.toHaveBeenCalled();
         });
 
-        test("should discard the card if it has not been played", async () => {
-            const cardContent = {hasBeenPlayed: false};
+        test("transfère la carte à la pile quand elle n'a pas été jouée", async () => {
             const card = {id: "mockCardId", _id: "mockCardId", back: {img: "mockImg"}, origin: {name: "mockName"}};
             const currentCards = {pass: vi.fn().mockResolvedValue()};
 
-            await PlayCard.discardCard({}, {}, cardContent, card, currentCards);
+            await PlayCard.discardCard({}, {}, {hasBeenPlayed: false}, card, currentCards);
 
-            expect(game.user.character.update).toHaveBeenCalledWith({
-                "system.fq.cards.currentDrop": 1,
-            });
             expect(currentCards.pass).toHaveBeenCalledWith({}, ["mockCardId"], expect.any(Object));
         });
 
-        test("should warn and not discard an ephemeral card", async () => {
-            const cardContent = {hasBeenPlayed: false, replayable: "ephemere"};
+        test("avertit et ne défausse pas une carte éphémère", async () => {
             const card = {system: {fq: {choices: [{replayable: "ephemere"}]}}};
             const currentCards = {pass: vi.fn().mockResolvedValue()};
 
-            await PlayCard.discardCard({}, {}, cardContent, card, currentCards);
+            await PlayCard.discardCard({}, {}, {hasBeenPlayed: false, replayable: "ephemere"}, card, currentCards);
 
             expect(ChatMessage.create).toHaveBeenCalledWith({
                 speaker: expect.any(Object),
@@ -106,14 +101,46 @@ describe("PlayCard", () => {
             expect(currentCards.pass).not.toHaveBeenCalled();
         });
 
-        test("should call ui.notifications.error when currentCards.pass rejects", async () => {
-            const cardContent = {hasBeenPlayed: false};
-            const card = makeCard();
+        test("remonte une erreur de transfert en notification", async () => {
             const currentCards = {pass: vi.fn().mockRejectedValue(new Error("boom"))};
 
-            await PlayCard.discardCard({}, {}, cardContent, card, currentCards);
+            await PlayCard.discardCard({}, {}, {hasBeenPlayed: false}, makeCard(), currentCards);
 
             expect(ui.notifications.error).toHaveBeenCalledWith("boom");
+        });
+    });
+
+    describe("coût en défausse", () => {
+        // Le vrai `pay` est rendu aux autres suites : sans coût `drop`, il laisse
+        // passer, et un espion laissé en place fausserait tout le reste du fichier.
+        afterEach(() => DiscardCost.pay.mockRestore?.());
+
+        const playableCard = () => ({
+            id: "mockCardId", _id: "mockCardId",
+            back: {img: "mockImg"}, origin: {name: "mockName"}, flags: {}
+        });
+
+        test("laisse passer le jeu quand le coût est payé", async () => {
+            vi.spyOn(DiscardCost, "pay").mockResolvedValue(true);
+            const currentCards = {pass: vi.fn().mockResolvedValue()};
+            const cardContent = {drop: -1};
+            const card = playableCard();
+
+            await PlayCard.callBackplayCard({}, {}, cardContent, true, {}, currentCards, card);
+
+            expect(DiscardCost.pay).toHaveBeenCalledWith(cardContent, card, {});
+            expect(CardEffect.applyCardEffect).toHaveBeenCalled();
+        });
+
+        test("renonce au jeu quand le joueur ne paie pas : rien n'est joué ni transféré", async () => {
+            vi.spyOn(DiscardCost, "pay").mockResolvedValue(false);
+            const currentCards = {pass: vi.fn().mockResolvedValue()};
+
+            await PlayCard.callBackplayCard({}, {}, {drop: -1}, true, {}, currentCards, playableCard());
+
+            expect(currentCards.pass).not.toHaveBeenCalled();
+            expect(CardEffect.applyCardEffect).not.toHaveBeenCalled();
+            expect(ChatMessage.create).not.toHaveBeenCalled();
         });
     });
 

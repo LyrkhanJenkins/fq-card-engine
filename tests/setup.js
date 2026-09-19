@@ -245,7 +245,7 @@ beforeEach(() => {
                     abilities: {},
                     fq: {
                         bonus: {range: 0},
-                        cards: {currentDrop: 0}
+                        cards: {}
                     }
                 }
             },

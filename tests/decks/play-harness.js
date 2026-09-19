@@ -4,6 +4,7 @@ import path from "path";
 import {forceDie, installDeterministicRoll, pushDie, resetDiceControl} from "./deterministic-roll.js";
 import {defaultFdFor} from "./fd-table.js";
 import ZoneTargeting from "../../src/domain/interface/targeting/zone-targeting.js";
+import CardSelection from "../../src/domain/interface/window/card-selection.js";
 
 /**
  * Socle du driver de test exhaustif (07-02) : monte un `game` Foundry cohérent
@@ -498,6 +499,15 @@ export async function playChoice(rawCard, choiceIndex = 0, opts = {}) {
     // ses propres tests (play-validated-card-targeting / zone-targeting).
     if (cardContent?.targetType === "Zone") {
         vi.spyOn(ZoneTargeting, "hasPlacement").mockReturnValue(true);
+    }
+
+    // Le voile de sélection attend un clic : sans réponse par défaut, tout choix
+    // à coût en défausse bloquerait le harnais. Il retient les `count` premières
+    // cartes proposées — au test qui veut un autre verdict (ou l'annulation) de
+    // poser SON espion avant l'appel, celui-ci est alors laissé en place.
+    if (!vi.isMockFunction(CardSelection.openSelectionVeil)) {
+        vi.spyOn(CardSelection, "openSelectionVeil")
+            .mockImplementation(async (cards, count) => cards.slice(0, count));
     }
 
     let threw = false;

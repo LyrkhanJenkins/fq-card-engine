@@ -5,16 +5,14 @@
 - Vérifier la localisation notamment pour les macros
 - faire bouger tornade effet magique
 - Quand fin du combat, supprimer le dossier temporaire d'acteur et supprimer les tokens (vérifier que c'est pas déjà fait)
-- La main ne parait pas entière des fois , besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR
+- La main ne parait pas entière des fois, besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR
 
 ### Fix à prioriser
-- Problème encore avec le clignotement
+- Problème encore avec le clignotement (Reporté en phases de tests)
 
 ### Versions prévues
 #### 3.0.0
 - Utiliser la portée des armes pour certaines cartes?
-- Ne plus faire de score de défausse mais UI pour défausser des cartes?
-- 
 
 #### 3.1.x
 - Rajouter des règles d'architectures

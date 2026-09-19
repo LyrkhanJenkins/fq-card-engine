@@ -7,19 +7,23 @@ import ActionFQTemplate from "../../src/domain/system/items/item-action-fq.mjs";
 describe("ActionFQTemplate.defineSchema", () => {
     const fq = ActionFQTemplate.defineSchema().fq;
 
-    it("expose les clés action/mana/zeal/drop/hp", () => {
+    it("expose les clés action/mana/zeal/hp", () => {
         expect(fq).toHaveProperty("action");
         expect(fq).toHaveProperty("mana");
         expect(fq).toHaveProperty("zeal");
-        expect(fq).toHaveProperty("drop");
         expect(fq).toHaveProperty("hp");
     });
 
-    it("verrouille les défauts réels : action=-10, mana/zeal/drop/hp=0", () => {
+    // Le coût en défausse se paie en cartes de la main, au moment du jeu : un objet
+    // dnd5e, résolu par des hooks synchrones, n'a pas de main où puiser.
+    it("ne porte aucun coût en défausse", () => {
+        expect(fq).not.toHaveProperty("drop");
+    });
+
+    it("verrouille les défauts réels : action=-10, mana/zeal/hp=0", () => {
         expect(fq.action.initial).toBe(-10);
         expect(fq.mana.initial).toBe(0);
         expect(fq.zeal.initial).toBe(0);
-        expect(fq.drop.initial).toBe(0);
         expect(fq.hp.initial).toBe(0);
     });
 

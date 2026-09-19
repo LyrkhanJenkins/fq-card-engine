@@ -14,21 +14,22 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
-const {playChoice, getSocketSpy, makeEquippedWeapon} = await import("./play-harness.js");
+const {playChoice, getSocketSpy, makeEquippedWeapon, makeHandCard} = await import("./play-harness.js");
+const CardSelection = (await import("../../src/domain/interface/window/card-selection.js")).default;
 const {DeterministicRoll, resetDiceControl} = await import("./deterministic-roll.js");
 
 const FormError = (await import("../../src/core/error/form-error.model.js")).default;
-const {DECKS_DIR, isFilled, resolveFormula, reachAllowsFixtureDistance, installMacroStub} = await import("./corpus-helpers.js");
+const {DECKS_DIR, worldFixture, isFilled, resolveFormula, reachAllowsFixtureDistance, installMacroStub} = await import("./corpus-helpers.js");
 installMacroStub();
 
 /**
  * Phase 07 Plan 04 — Task 3 : bornes X/Y (min/max/hors) [EXHA-03] et
- * mécaniques propres de cartes clés (currentDrop, cartes<->zèle, pioche,
+ * mécaniques propres de cartes clés (coût en défausse, cartes<->zèle, pioche,
  * effet requis, sbires, applyEffectsFormulas, replayable/passif).
  *
  * ⚠️ AUCUNE sélection par nom de carte : chaque choix exercé est découvert
  * par glob puis filtré par PROPRIÉTÉ de ses données (présence de xmin/xmax,
- * xvalue==="fq.cards.currentDrop", coût zèle littéralement "+XXX"/"-XXX",
+ * coût `drop` littéralement "-XXX", coût zèle littéralement "+XXX"/"-XXX",
  * présence de draw/minions/applyEffectsFormulas/customEvals/replayable...).
  */
 
@@ -69,8 +70,7 @@ function abundantWorld(extra = {}) {
                 fq: {
                     action: {value: 999, max: 999},
                     mana: {value: 999, max: 999},
-                    zeal: {value: 999, max: 999},
-                    cards: {currentDrop: 999}
+                    zeal: {value: 999, max: 999}
                 }
             }
         },
@@ -146,6 +146,27 @@ async function xBoundsCandidates() {
 
 const xCandidates = await xBoundsCandidates();
 
+/**
+ * Options d'enrobage d'une carte à borne X : un choix dont le coût en défausse
+ * suit X doit trouver en main de quoi payer jusqu'à `xmax`, sinon c'est la main
+ * trop courte — et non la borne — qui déciderait du verdict. Les autres choix
+ * gardent la main par défaut du harnais (une seule carte, cf. `wrapCard`).
+ *
+ * @param {object} choice - Le choix exercé.
+ * @param {number} xmax   - La borne haute résolue de X.
+ *
+ * @returns {object|undefined} Les `cardOptions` à passer, ou undefined.
+ */
+function handForDropCost(choice, xmax) {
+    if (!/XXX/.test(String(choice.drop ?? ""))) {
+        return undefined;
+    }
+    return {
+        handCards: Array.from({length: xmax + 1},
+            (_, i) => makeHandCard(`xbounds-hand-${i}`, `FQCARDTITLE.XBoundsHand${i}`))
+    };
+}
+
 // Seule carte du dépôt déclarant `ymax` (découverte par glob, non en dur) —
 // exercée telle quelle : si une future carte à `ymax` est ajoutée, elle
 // rejoint automatiquement ce lot au prochain run.
@@ -158,16 +179,19 @@ describe("EXHA-03 : bornes X — acceptées aux bornes, rejetées hors bornes", 
 
     test.each(xCandidates)(
         "$deckFile :: $cardName :: choix $choiceIndex — X accepté à xmin=$xmin et xmax=$xmax",
-        async ({card, choiceIndex, xmin, xmax}) => {
-            const atMin = await playChoice(card, choiceIndex, {world: abundantWorld(), fd: {XXX: xmin, YYY: 0}});
+        async ({card, choice, choiceIndex, xmin, xmax}) => {
+            const cardOptions = handForDropCost(choice, xmax);
+            const atMin = await playChoice(card, choiceIndex, {world: abundantWorld(), fd: {XXX: xmin, YYY: 0}, cardOptions});
             expect(atMin.threw).toBe(false);
             expect(chatText(atMin)).not.toContain("FQCARDENGINE.WarningMsgXValueInferiorXMin");
             expect(chatText(atMin)).not.toContain("FQCARDENGINE.WarningMsgXValueSuperiorXMax");
+            expect(chatText(atMin)).not.toContain("FQCARDENGINE.WarningMsgNotEnoughCardsToDiscard");
 
-            const atMax = await playChoice(card, choiceIndex, {world: abundantWorld(), fd: {XXX: xmax, YYY: 0}});
+            const atMax = await playChoice(card, choiceIndex, {world: abundantWorld(), fd: {XXX: xmax, YYY: 0}, cardOptions});
             expect(atMax.threw).toBe(false);
             expect(chatText(atMax)).not.toContain("FQCARDENGINE.WarningMsgXValueInferiorXMin");
             expect(chatText(atMax)).not.toContain("FQCARDENGINE.WarningMsgXValueSuperiorXMax");
+            expect(chatText(atMax)).not.toContain("FQCARDENGINE.WarningMsgNotEnoughCardsToDiscard");
         }
     );
 
@@ -235,27 +259,46 @@ describe("EXHA-03 : bornes Y — au moins une carte à ymax", () => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════
-// Mécanique : XXX/YYY dérivé de `fq.cards.currentDrop` (ex. SecretWeapons,
-// EmergencyHealing) — sélection par propriété `xvalue`/`yvalue`.
+// Mécanique : coût en défausse indexé sur X (ex. SecretWeapons, AshOffering) —
+// le joueur saisit X, puis défausse exactement X cartes de sa main.
+// Sélection par propriété `drop`, jamais par nom.
 // ═══════════════════════════════════════════════════════════════════════
 
-const currentDropCandidates = rawEntries.filter(entry =>
-    entry.choice.xvalue === "fq.cards.currentDrop" || entry.choice.yvalue === "fq.cards.currentDrop");
+const dropTiedToXCandidates = rawEntries.filter(entry => /^-XXX$/.test(String(entry.choice.drop ?? "")));
 
-describe("Mécanique : XXX/YYY dérivé de currentDrop, remis à 0 après consommation", () => {
+describe("Mécanique : X pilote le nombre de cartes défaussées", () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
-    test.each(currentDropCandidates)(
-        "$deckFile :: $cardName :: choix $choiceIndex — currentDrop pilote XXX/YYY et est remis à 0",
-        async ({card, choiceIndex}) => {
+    test.each(dropTiedToXCandidates)(
+        "$deckFile :: $cardName :: choix $choiceIndex — X cartes de la main partent à la défausse",
+        async ({card, choice, choiceIndex}) => {
+            const X = 2;
+            const veil = vi.spyOn(CardSelection, "openSelectionVeil")
+                .mockImplementation(async (cards, count) => cards.slice(0, count));
             const result = await playChoice(card, choiceIndex, {
-                world: abundantWorld({character: {system: {fq: {cards: {currentDrop: 5}}}}})
+                // Hors combat, aucune défausse n'est jamais exigée : la mécanique
+                // ne se manifeste que sur le tour de son lanceur.
+                world: abundantWorld({
+                    combat: {
+                        round: 1,
+                        // Une carte réactive ne se joue JAMAIS pendant le tour de son
+                        // porteur : le tour est donné à un autre combattant.
+                        combatant: {actor: {id: choice.reactive ? "other-combatant" : worldFixture.character.id}},
+                        combatants: [{actorId: worldFixture.character.id}, {actorId: "other-combatant"}],
+                        flags: {fq: {logs: []}}
+                    }
+                }),
+                fd: {XXX: X, YYY: 0},
+                cardOptions: {
+                    handCards: Array.from({length: X},
+                        (_, i) => makeHandCard(`drop-hand-${i}`, `FQCARDTITLE.DropHand${i}`))
+                }
             });
             expect(result.threw).toBe(false);
-            const resetCall = result.updates.find(call => call[0]["system.fq.cards.currentDrop"] === 0);
-            expect(resetCall).toBeDefined();
+            expect(veil).toHaveBeenCalledWith(expect.any(Array), X, expect.any(Object));
+            expect(result.handPassCalls[0][1]).toHaveLength(X);
         }
     );
 });
@@ -695,7 +738,7 @@ describe("Garde-fou d'auto-couverture", () => {
     test("chaque axe/mécanique a au moins un choix découvert par glob (sans nom en dur)", () => {
         expect(xCandidates.length).toBeGreaterThanOrEqual(1);
         expect(yBoundsCandidates.length).toBeGreaterThanOrEqual(1);
-        expect(currentDropCandidates.length).toBeGreaterThanOrEqual(1);
+        expect(dropTiedToXCandidates.length).toBeGreaterThanOrEqual(1);
         expect(zealTiedToXCandidates.length).toBeGreaterThanOrEqual(1);
         expect(drawCandidates.length).toBeGreaterThanOrEqual(1);
         expect(minionCandidates.length).toBeGreaterThanOrEqual(1);

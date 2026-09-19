@@ -45,12 +45,17 @@ export default class ResourceHandler {
      * préparée, réévaluées à chaque événement de combat), qui inonderaient
      * sinon le chat d'un avertissement par évaluation.
      *
+     * Le coût en défausse (`drop`) ne passe PAS par ici : il ne se lit sur aucune
+     * réserve, se paie en cartes de la main, et son verdict
+     * (`DiscardCost.verify`) est rendu par chaque appelant qui connaît la carte
+     * jouée — le faire ici obligerait ce module, importé par tout le moteur, à
+     * dépendre de la couche interface.
+     *
      * @param {object} resources         - Les coûts à payer (valeurs négatives).
      * @param {number} [resources.hp]     - Coût en points de vie.
      * @param {number} [resources.action] - Coût en points d'action.
      * @param {number} [resources.mana]   - Coût en mana.
      * @param {number} [resources.zeal]   - Coût en zèle.
-     * @param {number} [resources.drop]   - Coût en défausses (vérifié seulement en combat).
      * @param {object} actor             - L'acteur qui paie les coûts.
      * @param {object} [options]          - Les options de vérification.
      * @param {boolean} [options.silent=false] - Ne publie aucun avertissement.
@@ -62,8 +67,8 @@ export default class ResourceHandler {
             return true;
         }
 
-        for (const {field, current, warningKey, applies} of ResourceHandler.#COSTS) {
-            if (!resources?.[field] || (applies && !applies())) {
+        for (const {field, current, warningKey} of ResourceHandler.#COSTS) {
+            if (!resources?.[field]) {
                 continue;
             }
             if (current(actor) + resources[field] < 0) {
@@ -79,10 +84,9 @@ export default class ResourceHandler {
 
     /**
      * Descripteurs des coûts vérifiés par {@link ResourceHandler.checkResources} :
-     * champ du contenu de carte, réserve courante de l'acteur, clé i18n de
-     * l'avertissement, et condition d'application éventuelle (la défausse n'est
-     * contrôlée qu'en combat). L'ordre de la table EST l'ordre de vérification :
-     * seul le premier coût insuffisant est signalé.
+     * champ du contenu de carte, réserve courante de l'acteur et clé i18n de
+     * l'avertissement. L'ordre de la table EST l'ordre de vérification : seul le
+     * premier coût insuffisant est signalé.
      */
     static #COSTS = Object.freeze([
         {
@@ -104,12 +108,6 @@ export default class ResourceHandler {
             field: "zeal",
             current: actor => actor.system?.fq.zeal.value,
             warningKey: "FQCARDENGINE.WarningMsgNotEnoughZeal"
-        },
-        {
-            field: "drop",
-            current: actor => actor.system?.fq.cards.currentDrop,
-            warningKey: "FQCARDENGINE.WarningMsgNotEnoughDrop",
-            applies: () => Constants.isActorInCombat
         },
     ]);
 
@@ -149,10 +147,11 @@ export default class ResourceHandler {
     /**
      * Applique la consommation (ou le gain) de ressources sur l'acteur. Les
      * ressources sont plafonnées à leur maximum (sauf l'action qui peut le
-     * dépasser), la défausse ne descend pas sous 0, et certaines variables
-     * spéciales (squelettes sacrifiés, défausses courantes) sont remises à 0.
+     * dépasser), et le score de squelettes sacrifiés est déduit de ce que la
+     * carte en a dépensé. Le coût en défausse (`drop`) ne passe pas par ici :
+     * il se paie en cartes, au moment du jeu (cf. `DiscardCost.pay`).
      *
-     * @param {object} resources - Les ressources à appliquer (hp, action, mana, zeal, drop, xvalue, yvalue).
+     * @param {object} resources - Les ressources à appliquer (hp, action, mana, zeal, xvalue, yvalue).
      * @param {object} actor     - L'acteur sur lequel appliquer les modifications.
      *
      * @returns {void}
@@ -172,15 +171,6 @@ export default class ResourceHandler {
             const cap = max?.(actor);
             actor.update({[path]: total > cap ? cap : total});
         }
-        if (resources?.drop) {
-            // Ne peux pas descendre en dessous de 0
-            // Utile dans le cas ou on est hors combat, on ne check pas
-            let newDrop = actor.system?.fq.cards.currentDrop + resources.drop;
-            newDrop = (newDrop > 0) ? newDrop : 0;
-            actor.update({
-                "system.fq.cards.currentDrop": newDrop
-            });
-        }
         if (resources?.xvalue === SACRIFICE_PATH || resources?.yvalue === SACRIFICE_PATH) {
             // Le score de sacrifice est DÉDUIT de ce que la carte a réellement
             // dépensé — c'est-à-dire X, lui-même plafonné par `xmax` (cf.
@@ -190,11 +180,6 @@ export default class ResourceHandler {
             const spent = Math.min(current, ResourceHandler.#spendCap(resources, current));
             actor.update({
                 "system.fq.minions.sacrificedMinion": Math.max(0, current - spent)
-            });
-        }
-        if (resources?.xvalue === "fq.cards.currentDrop" || resources?.yvalue === "fq.cards.currentDrop") {
-            actor.update({
-                "system.fq.cards.currentDrop": 0
             });
         }
     }
@@ -327,7 +312,7 @@ export default class ResourceHandler {
      *
      * @returns {boolean} True si c'est le tour de l'acteur en combat, false sinon.
      */
-    static validateUseSpellInTurn(actor) {
+    static  validateUseSpellInTurn(actor) {
         if (!game.combat || game.combat.combatant?.actor?.id !== actor?.id) {
             createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPlayOutOfHisRound"), {actor: Constants.actorCurrent});
             return false;

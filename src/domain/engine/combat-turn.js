@@ -87,17 +87,6 @@ export default class CombatTurn {
     }
 
     /**
-     * Remet à 0 le compteur de défausses courantes de chaque combattant.
-     *
-     * @param {object[]} combatants - Les combattants du combat.
-     *
-     * @returns {void}
-     */
-    static resetCurrentDropCard(combatants) {
-        CombatTurn.#resetAttribute(combatants, "system.fq.cards.currentDrop", () => 0);
-    }
-
-    /**
      * Remet à 0 le compteur de squelettes sacrifiés de chaque combattant.
      *
      * @param {object[]} combatants - Les combattants du combat.

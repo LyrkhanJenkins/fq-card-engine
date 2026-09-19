@@ -1,6 +1,7 @@
 import Constants from "../constants.js";
 import CardFqSystem from "../system/cards/card-fq-system.mjs";
 import CardEffect from "./shared/card-effect.js";
+import DiscardCost from "./shared/discard-cost.js";
 import PlayCard from "./play-card.js";
 import ResourceHandler from "./shared/resource-handler.js";
 import TradingCards, {HAND_TYPE, PILE_TYPE} from "../trading/trading-cards.js";
@@ -69,7 +70,7 @@ export default class AutoCard {
         const cardContents = ObjectUtils.deepCopy(initCardContents);
         const cardContent = cardContents[choiceIndex];
 
-        if (!AutoCard.canAfford(cardContent)) {
+        if (!AutoCard.canAfford(cardContent, card)) {
             return AutoCard.discardUnaffordable(card, hand, to);
         }
 
@@ -83,15 +84,18 @@ export default class AutoCard {
      * Indique si le porteur peut encore payer le coût d'un choix automatique. La
      * copie du choix est résolue comme au jeu (bonus de caractéristiques puis
      * coûts) pour que le verdict porte sur les mêmes nombres que ceux qui seront
-     * prélevés.
+     * prélevés. La carte accompagne le verdict : un coût en défausse se compte
+     * sur la main qui la porte, elle-même exclue du décompte.
      *
      * @param {object} cardContent - Le choix automatique, non résolu.
+     * @param {Card}   card        - La carte automatique.
      *
      * @returns {boolean} True si toutes les ressources exigées sont disponibles.
      */
-    static canAfford(cardContent) {
+    static canAfford(cardContent, card) {
         const cost = CardEffect.resolveForSilentCheck(cardContent);
-        return ResourceHandler.checkResources(cost, Constants.actorCurrent);
+        return ResourceHandler.checkResources(cost, Constants.actorCurrent)
+            && DiscardCost.verify(cost, card);
     }
 
     /**

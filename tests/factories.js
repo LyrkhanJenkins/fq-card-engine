@@ -11,7 +11,7 @@ import {vi} from "vitest";
 //
 // Les défauts sont alignés sur les schémas source :
 // - src/domain/system/actors/creature-fq.mjs (action/mana/zeal/attributes/bonus)
-// - src/domain/system/actors/character-fq.mjs (cards.hand/pick/currentDrop)
+// - src/domain/system/actors/character-fq.mjs (cards.hand/pick)
 // - src/domain/system/cards/card-fq-system.mjs (fq de carte + getChoiceSchema)
 // - src/domain/system/cards/cards-fq-system.mjs (fq de deck)
 //
@@ -34,7 +34,7 @@ export function makeActor(overrides = {}) {
                 zeal: {value: 0, max: 8, init: 0},
                 attributes: {critical: 1, evasion: 1},
                 bonus: {range: 0, damage: "", heal: "", dot: 0},
-                cards: {hand: 1, pick: 1, currentDrop: 0}
+                cards: {hand: 1, pick: 1}
             }
         }
     };

@@ -3,6 +3,7 @@ import CardCondition from "./shared/card-condition.js";
 import CardEffect from "./shared/card-effect.js";
 import CardFqSystem from "../system/cards/card-fq-system.mjs";
 import ResourceHandler from "./shared/resource-handler.js";
+import DiscardCost from "./shared/discard-cost.js";
 import TradingCards, {HAND_TYPE, PILE_TYPE} from "../trading/trading-cards.js";
 import ObjectUtils from "../../core/utils/object.utils.js";
 import {createStatus} from "../../core/utils/chat.utils.js";
@@ -189,7 +190,7 @@ export default class PreparedCard {
         const cardContents = ObjectUtils.deepCopy(initCardContents);
         const cardContent = cardContents[choiceIndex];
         const {hasVariables} = CardFqSystem.choiceVariables(initCardContents[0]);
-        if (!PreparedCard.canPlayNow(cardContent, fd, hasVariables)) {
+        if (!PreparedCard.canPlayNow(cardContent, fd, hasVariables, card)) {
             return;
         }
 
@@ -216,13 +217,15 @@ export default class PreparedCard {
      * @param {object}  cardContent  - Le choix préparé, non résolu (copie de travail).
      * @param {object}  fd           - L'instantané du formulaire de la préparation.
      * @param {boolean} hasVariables - True si la carte porte des variables X/Y libres.
+     * @param {Card}    card         - La carte préparée (main du porteur, coût en défausse).
      *
      * @returns {boolean} True si la carte peut être jouée à cet instant.
      */
-    static canPlayNow(cardContent, fd, hasVariables) {
+    static canPlayNow(cardContent, fd, hasVariables, card) {
         const resolved = CardEffect.resolveForSilentCheck(cardContent, {hasVariables, xValue: fd.XXX, yValue: fd.YYY});
 
-        if (!ResourceHandler.checkResources(resolved, Constants.actorCurrent, {silent: true})) {
+        if (!ResourceHandler.checkResources(resolved, Constants.actorCurrent, {silent: true})
+            || !DiscardCost.verify(resolved, card, {silent: true})) {
             return false;
         }
         // Même garde de ciblage que `playValidatedCard`, au même endroit du

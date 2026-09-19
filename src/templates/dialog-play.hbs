@@ -49,10 +49,6 @@
                     <span class="fq-play-chip-icon">💨</span>
                     <span class="fq-play-chip-val">{{charStats.evasion}}</span>
                 </span>
-                <span class="fq-play-chip fq-gauge-drop" title="{{ localize 'FQCARDENGINE.DropScore' }}">
-                    <span class="fq-play-chip-icon">🗑</span>
-                    <span class="fq-play-chip-val">{{charStats.currentDrop}}</span>
-                </span>
                 {{#if charStats.showSacrifice}}
                     <span class="fq-play-chip fq-gauge-sacrifice"
                           title="{{ localize 'FQCARDENGINE.SacrificedMinion' }}">
@@ -226,11 +222,6 @@
                     </div>
                 </div>
             {{/if}}
-
-            {{!-- Compteur défausse --}}
-            <div class="fq-play-label">
-                {{localize "FQCARDENGINE.DropScore"}} : <strong>{{charStats.currentDrop}}</strong>
-            </div>
 
         </form>
 

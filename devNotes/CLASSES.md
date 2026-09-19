@@ -238,7 +238,6 @@ Chaque carac a un usage dominant bien tranché dans les formules de cartes. Dans
 | Pioche | `fq.cards.pick` | Cartes piochées chaque tour | Oui (`pick`) |
 | Déplacement | `movement.walk` | Mouvement (1 carte = +5 ft = +1 case) | Oui (`moving`) |
 | Bonus de portée | `fq.bonus.range` | Ajouté au `maxReach` de toutes les cartes — **jamais montable**, uniquement en combat | Non |
-| Défausse courante | `fq.cards.currentDrop` | Compteur de défausses du round, payable via `drop` | Non |
 | DOT/HOT | `fq.bonus.dot` | Dégâts (ou soins si négatif) par tour | Non |
 
 8 types de cartes de stats existent : `action-point`, `mana`, `critical`, `evasion`, `hand`, `pick`, `moving`, `zeal`. Il n'existe **ni carte PV ni carte portée**.
@@ -337,6 +336,8 @@ Coût moyen et cartes peu chères calculés sur les cartes N1‑N12 à coût fix
 | 1 zèle dépensé | ≈ 1 mana ≈ 3 PA | *Conversion* (1 zèle → 1 mana), *Souffle de Ki* (1 zèle → 1 carte + 2 PA) |
 | 1 carte piochée | ≈ 1 à 2 PA | *Pioche II* (2 PA → 2 cartes), *Pioche III* (3 PA → 3 cartes) |
 | 1 carte défaussée | ≈ coût d'une petite carte | *Magie des Éléments*, *Soin*, *Sortilège d'Ombre* (défausse en coût d'appoint) |
+
+> **Le coût `drop` se paie en cartes, pas en score.** Une carte qui déclare `drop` ouvre, au moment du jeu, le voile de sélection sur la main : le joueur y désigne exactement les cartes exigées, et valider les envoie à la défausse en même temps que la carte se joue. Hors combat, aucune défausse n'est jamais exigée ; en combat, une main trop courte (la carte jouée non comptée) rend la carte injouable, sans même ouvrir le voile.
 
 **Autres cibles** (à fixer à l'étape 4) : ratio générateurs / consommateurs de zèle par classe ; nombre d'exemplaires par tranche de niveau (`TARGETS.copies` dans `utils/class-report.mjs`).
 
@@ -480,7 +481,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 **Mécaniques signature** :
 - **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume Curative).
   - Poing Rouge est la seule carte du jeu qui monte `zeal.max` (+5, permanent).
-- **Flux de cartes** : Souffle de Ki (zèle → X cartes **et** 2X actions), Maître Du Chi (carte innée passive bidirectionnelle : défausse ↔ zèle ↔ pioche), Armes Secrètes (monétise la défausse en dégâts inesquivables).
+- **Flux de cartes** : Souffle de Ki (zèle → X cartes **et** 2X actions), Maître Du Chi (carte innée passive bidirectionnelle : défausse ↔ zèle ↔ pioche), Armes Secrètes (X cartes défaussées → autant de dégâts inesquivables).
 - **Rejouable conditionnel scripté** (unique au Moine) : Coup Droit/Gauche rejouables **une fois** seulement si assez de PA ont déjà été dépensés ce tour (4 / 5) — récompense l'**ordonnancement** des cartes.
 - **Défense réactive** : 4 réactives (Bouclier Zélé sur sort subi, Vive-Esquive sur dégâts, Armes Secrètes, Interruption qui retire 1d6 PA et entrave) + Dissimulation (intouchable 1 tour au prix de dégâts nuls, puis fenêtre offensive).
 - **Déplacement améliorable** : dégâts et déplacement (Déplacement Éclair, Pas du vide, Charge) (le seul avec le Gardien ? Enlever le gardien ?)
@@ -679,7 +680,7 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - **Score de sacrifice** (`fq.minions.sacrificedMinion`) : détruire ses squelettes alimente un compteur-ressource consommé par Ostéologie (invoque un squelette de niveau = sacrifices, cap 4), Afflux De Vie/Mana, Déplacement Morbide, Récolte Macabre et les rituels.
 - **Comptage de l'armée** (`SCRIPT:` sur les tokens « Skeleton ») : Afflux D'Agilité (esquive), Afflux De Pouvoir (actions), Rituel Du Sang (zèle) — plus l'armée est grande, plus la sorcière est forte.
 - **`targetType: Skeletons`** : buffs de masse dédiés (Bouclier D'Os, Canalisation Des Ombres — invulnérabilité 1 round —, Forme d'Ombre, Déplacement Morbide, Ossature Renforcée, Fureur des Morts, Apothéose Macabre).
-- Défausse en coût d'appoint (Sortilège d'Ombre, Rituel Du Sang) et en ressource (Offrande de Cendres) — la ressource centrale reste le **sacrifice**.
+- Défausse en coût d'appoint (Sortilège d'Ombre, Rituel Du Sang) et en carburant (Offrande de Cendres : X cartes défaussées → dégâts) — la ressource centrale reste le **sacrifice**.
 
 **Boucle de jeu** : invoquer en attaquant → sacrifier → recycler en mana/PV/actions/zèle → réinvoquer plus gros. Aucune défense personnelle : l'armée est le rempart.
 

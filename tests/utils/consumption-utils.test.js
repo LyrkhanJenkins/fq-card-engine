@@ -5,11 +5,10 @@ import Geometry from "../../src/domain/engine/shared/geometry.js";
 
 describe("ResourceHandler", () => {
 
-    const resources = {currentDrop: -1, action: -1, mana: -1, zeal: -1, hp: -1, drop: -1};
+    const resources = {action: -1, mana: -1, zeal: -1, hp: -1};
     const actor = {
         system: {
             fq: {
-                cards: {currentDrop: 2},
                 action: {value: 2},
                 mana: {value: 2},
                 zeal: {value: 2}
@@ -60,12 +59,12 @@ describe("ResourceHandler", () => {
         expect(result).toEqual(false);
     });
 
-    test("checkResourcesNotEnoughCurrentDrop", () => {
-        const result = ResourceHandler.checkResources(
-            {drop: -7},
-            {system: {fq: {cards: {currentDrop: 6}}}});
-        expect(ChatMessage.create).toHaveBeenCalledTimes(1);
-        expect(result).toEqual(false);
+    // Le coût en défausse ne se lit sur aucune réserve : il est hors du périmètre
+    // de `checkResources` (cf. tests/engine/discard-cost.test.js).
+    test("checkResourcesIgnoreLeCoutEnDefausse", () => {
+        const result = ResourceHandler.checkResources({drop: -99}, actor);
+        expect(ChatMessage.create).toHaveBeenCalledTimes(0);
+        expect(result).toEqual(true);
     });
 
     test("checkResourcesOk", () => {
@@ -76,16 +75,16 @@ describe("ResourceHandler", () => {
 
     test("checkConsumeResources", () => {
         ResourceHandler.consumeResources(resources, actor);
-        expect(actor.update).toHaveBeenCalledTimes(5);
+        expect(actor.update).toHaveBeenCalledTimes(4);
     });
 
     // ─── consumeResources — branches spéciales et plafonds ─────────────────────
 
     describe("ResourceHandler.consumeResources — branches spéciales", () => {
-        it("bounds drop at 0 when it would go negative", () => {
-            const localActor = {system: {fq: {cards: {currentDrop: 2}}}, update: vi.fn()};
+        it("ignore le coût en défausse : il se paie en cartes, pas sur une réserve", () => {
+            const localActor = {system: {fq: {}}, update: vi.fn()};
             ResourceHandler.consumeResources({drop: -10}, localActor);
-            expect(localActor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
+            expect(localActor.update).not.toHaveBeenCalled();
         });
 
         it("déduit du score de sacrifice au plus xmax, et laisse le reliquat", () => {
@@ -104,12 +103,6 @@ describe("ResourceHandler", () => {
             const localActor = {system: {fq: {minions: {sacrificedMinion: 7}}}, update: vi.fn()};
             ResourceHandler.consumeResources({yvalue: "fq.minions.sacrificedMinion"}, localActor);
             expect(localActor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedMinion": 0});
-        });
-
-        it("resets cards.currentDrop when xvalue matches fq.cards.currentDrop", () => {
-            const localActor = {system: {fq: {}}, update: vi.fn()};
-            ResourceHandler.consumeResources({xvalue: "fq.cards.currentDrop"}, localActor);
-            expect(localActor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
         });
 
         it("caps hp at its max", () => {

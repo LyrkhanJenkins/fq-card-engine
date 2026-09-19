@@ -1,22 +1,26 @@
 import Constants, {PREPARED_FLAG, SUCCESS_COLOR} from "../constants.js";
 import CardEffect from "./shared/card-effect.js";
+import DiscardCost from "./shared/discard-cost.js";
 import RollService from "./roll/roll-service.js";
 import CardFqSystem from "../system/cards/card-fq-system.mjs";
 import {createStatus, createWarning} from "../../core/utils/chat.utils.js";
 import TargetingPredicates from "./shared/targeting-predicates.js";
 
 /**
- * Orchestration du jeu et de la défausse d'une carte : gestion des cartes
- * rejouables (passives/automatiques/à charges), des cartes éphémères (détruites au jeu),
- * application des effets, envoi des messages de chat et transfert de la carte
- * vers la pile de défausse.
+ * Orchestration du jeu d'une carte : gestion des cartes rejouables
+ * (passives/automatiques/à charges), des cartes éphémères (détruites au jeu),
+ * paiement du coût en défausse, application des effets, envoi des messages de
+ * chat et transfert de la carte vers la pile de défausse. S'y ajoute la
+ * défausse à la main, outil de MJ (cf. {@link PlayCard.discardCard}).
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
 export default class PlayCard {
     /**
-     * Défausse une carte vers la pile cible. Bloque la défausse d'une carte déjà
-     * jouée ou éphémère, incrémente le compteur de défausses du personnage puis
-     * transfère la carte (face cachée si demandé).
+     * Défausse une carte vers la pile cible, SANS la jouer — le geste d'arbitrage
+     * du MJ (retirer une carte d'une main, corriger une distribution), et de lui
+     * seul : un joueur ne se débarrasse d'une carte qu'en la jouant, ou en la
+     * payant comme coût en défausse d'une autre. Bloque la défausse d'une carte
+     * déjà jouée ou éphémère, puis transfère la carte (face cachée si demandé).
      *
      * @param {Cards}  to           - La pile de défausse cible.
      * @param {object} fd           - Les données du formulaire du dialogue (ex. `down` pour face cachée).
@@ -39,10 +43,6 @@ export default class PlayCard {
             return;
         }
 
-        // Add +1 on drop card
-        Constants.actorCurrent.update({
-            "system.fq.cards.currentDrop": Constants.actorFQ.cards.currentDrop + 1
-        });
         this.renderChatMessage(to, fd, card, "FQCARDENGINE.CardDiscard");
 
         return PlayCard.transferToPile(currentCards, to, card, fd);
@@ -70,6 +70,13 @@ export default class PlayCard {
      */
     static async callBackplayCard(to, fd, cardContent, hasVariables, initCardContents, currentCards, card) {
         if (!CardEffect.checkIfCanUseCard(cardContent, card, to)) {
+            return;
+        }
+
+        // Coût en défausse : le joueur choisit lui-même les cartes qu'il sacrifie.
+        // Payé ICI, une fois la carte déclarée jouable et avant tout autre
+        // prélèvement — renoncer à la sélection renonce au jeu, sans rien coûter.
+        if (!await DiscardCost.pay(cardContent, card, to)) {
             return;
         }
 
@@ -158,8 +165,9 @@ export default class PlayCard {
 
     /**
      * Transfère la carte de la main vers la pile de défausse cible, face cachée
-     * si le formulaire le demande — le geste commun à la défausse volontaire et
-     * au jeu d'une carte non rejouable. Une erreur de transfert est notifiée à
+     * si le formulaire le demande — le geste commun au jeu d'une carte non
+     * rejouable, à la défausse à la main du MJ et à la sortie d'une carte
+     * automatique devenue impayable. Une erreur de transfert est notifiée à
      * l'utilisateur sans interrompre le flux appelant.
      *
      * Une préparation de carte réactive ne survit pas à la défausse : elle vaut
@@ -219,7 +227,7 @@ export default class PlayCard {
     }
 
     /**
-     * Construit et publie le message de chat consolidé « carte jouée / défaussée »
+     * Construit et publie le message de chat consolidé « carte jouée »
      * (visuel de la carte, face visible ou dos selon `fd.down`) enrichi des choix
      * faits par l'utilisateur dans le dialogue de jeu — effet retenu, valeurs X/Y
      * saisies et cibles visées — uniquement si l'option `betterChatMessages` est
@@ -231,7 +239,7 @@ export default class PlayCard {
      * @param {object} fd          - Les données du formulaire (ex. `down` pour face cachée, `XXX`/`YYY`).
      * @param {Card}   card        - La carte concernée par le message.
      * @param {string} actionLabel - La clé de localisation du libellé d'action à afficher.
-     * @param {object} [choiceData] - Les choix faits dans le dialogue à reporter (jeu uniquement).
+     * @param {object} [choiceData] - Les choix faits dans le dialogue à reporter.
      * @param {object} [choiceData.cardContent]      - Le contenu (choix) retenu, déjà résolu (X/Y substitués).
      * @param {boolean} [choiceData.hasVariables]    - True si l'utilisateur a saisi des valeurs X/Y.
      * @param {boolean} [choiceData.hasSeveralChoices] - True si la carte proposait plusieurs choix d'effet.
@@ -294,8 +302,8 @@ export default class PlayCard {
      * Assemble, pour le message de chat consolidé, les données décrivant les choix
      * faits par l'utilisateur : effet retenu (si la carte proposait plusieurs
      * choix), valeurs X/Y saisies (si la carte a des variables), et cibles visées.
-     * Renvoie un objet vide de détails si aucun `cardContent` n'est fourni (ex.
-     * défausse : la carte n'est pas résolue, aucun choix à reporter).
+     * Renvoie un objet vide de détails si aucun `cardContent` n'est fourni : la
+     * carte n'est alors pas résolue, il n'y a aucun choix à reporter.
      *
      * @param {object} fd         - Les données du formulaire (`XXX`, `YYY`, `nameContent`…).
      * @param {object} choiceData - Les choix faits (`cardContent`, `hasVariables`, `hasSeveralChoices`).

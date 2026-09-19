@@ -134,7 +134,6 @@ function makeCharacter(overrides = {}) {
                 action: {value: 3, max: 5},
                 mana: {value: 2, max: 4},
                 zeal: {value: 1, max: 8},
-                cards: {currentDrop: 0}
             }
         },
         ...overrides
@@ -164,6 +163,7 @@ describe("playDialog", () => {
             cards: [currentCards, pile],
             user: {
                 character: makeCharacter(),
+                isGM: false,
                 targets: new Set()
             },
             i18n: {
@@ -180,7 +180,7 @@ describe("playDialog", () => {
     });
 
     describe("cas nominal", () => {
-        test("renderTemplate reçoit charStats/panel/cardContents/discards/hasVariables et Dialog.wait reçoit ok+discard", async () => {
+        test("renderTemplate reçoit charStats/panel/cardContents/discards/hasVariables et Dialog.wait reçoit ok", async () => {
             await window.FqCardEngineModule.playDialog(currentCards, card);
 
             expect(renderTemplateSpy).toHaveBeenCalledWith(
@@ -194,14 +194,26 @@ describe("playDialog", () => {
                 })
             );
             expect(Dialog.wait).toHaveBeenCalledWith(expect.objectContaining({
-                buttons: expect.objectContaining({
-                    ok: expect.any(Object),
-                    discard: expect.any(Object)
-                })
+                buttons: expect.objectContaining({ok: expect.any(Object)})
             }));
         });
 
-        test("carte innée (isInnate) : Dialog.wait reçoit le bouton discard comme une carte ordinaire", async () => {
+        // La défausse à la main est un outil d'arbitrage : le joueur ne sort une
+        // carte de sa main qu'en la jouant, ou en la payant comme coût d'une autre.
+        test("joueur : aucun bouton de défausse, pas même pour une carte innée", async () => {
+            const innateCard = makePlayableCard({id: "innate-1", _id: "innate-1", sort: 1, isInnate: true});
+            currentCards = makeHand([innateCard]);
+            globalThis.game.cards = [currentCards, pile];
+
+            await window.FqCardEngineModule.playDialog(currentCards, innateCard);
+
+            const callArgs = Dialog.wait.mock.calls[0][0];
+            expect(callArgs.buttons.ok).toBeDefined();
+            expect(callArgs.buttons.discard).toBeUndefined();
+        });
+
+        test("MJ : le bouton de défausse est proposé, y compris sur une carte innée", async () => {
+            globalThis.game.user.isGM = true;
             const innateCard = makePlayableCard({id: "innate-1", _id: "innate-1", sort: 1, isInnate: true});
             currentCards = makeHand([innateCard]);
             globalThis.game.cards = [currentCards, pile];
@@ -211,6 +223,20 @@ describe("playDialog", () => {
             const callArgs = Dialog.wait.mock.calls[0][0];
             expect(callArgs.buttons.ok).toBeDefined();
             expect(callArgs.buttons.discard).toBeDefined();
+        });
+
+        test("MJ : une carte éphémère reste indéfaussable (la jouer est sa seule sortie)", async () => {
+            globalThis.game.user.isGM = true;
+            const ephemeralCard = makePlayableCard({
+                id: "eph-1", _id: "eph-1", sort: 1,
+                choices: [makePlayableChoice({replayable: "ephemere"})]
+            });
+            currentCards = makeHand([ephemeralCard]);
+            globalThis.game.cards = [currentCards, pile];
+
+            await window.FqCardEngineModule.playDialog(currentCards, ephemeralCard);
+
+            expect(Dialog.wait.mock.calls[0][0].buttons.discard).toBeUndefined();
         });
 
         test("hasVariables est vrai quand un choix contient XXX sans xvalue", async () => {
@@ -399,7 +425,7 @@ describe("playDialog", () => {
         });
     });
 
-    describe("callback du bouton discard", () => {
+    describe("callback du bouton discard (MJ)", () => {
         /**
          * Construit une racine jsdom minimale portant le formulaire attendu par
          * `getCardContent` (`form.cards-dialog`).
@@ -413,11 +439,11 @@ describe("playDialog", () => {
         }
 
         test("délègue à PlayCard.discardCard avec (to, fd, cardContent, card, currentCards)", async () => {
+            globalThis.game.user.isGM = true;
             await window.FqCardEngineModule.playDialog(currentCards, card);
             const discardCallback = Dialog.wait.mock.calls[0][0].buttons.discard.callback;
-            const root = makeDiscardRoot();
 
-            discardCallback([root]);
+            discardCallback([makeDiscardRoot()]);
 
             expect(PlayCard.discardCard).toHaveBeenCalledWith(
                 pile,

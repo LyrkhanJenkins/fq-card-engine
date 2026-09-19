@@ -81,7 +81,8 @@ export default {
      * Ouvre le dialogue « Jouer la carte » : prépare toutes les données
      * d'affichage (visuel de la carte, stats du personnage et des cibles, choix,
      * variables X/Y, défausses disponibles), branche la navigation entre cartes de
-     * la main, et déclenche le jeu ou la défausse à la validation.
+     * la main, et déclenche le jeu (ou l'armement d'une carte réactive) à la
+     * validation — plus, pour le MJ seul, la défausse à la main.
      *
      * @param {Cards} currentCards - La main courante contenant la carte.
      * @param {Card}  card         - La carte à jouer.
@@ -144,7 +145,6 @@ export default {
             zealValue: character.system?.fq?.zeal?.value ?? 0,
             zealMax: character.system?.fq?.zeal?.max ?? 1,
             zealPct: Math.round(((character.system?.fq?.zeal?.value ?? 0) / (character.system?.fq?.zeal?.max ?? 1)) * 100),
-            currentDrop: character.system?.fq?.cards?.currentDrop ?? 0,
             critical: character.system?.fq?.attributes?.critical ?? 0,
             evasion: character.system?.fq?.attributes?.evasion ?? 0,
             sacrificedMinion: character.system?.fq?.minions?.sacrificedMinion ?? 0,
@@ -223,10 +223,13 @@ export default {
             };
         }
 
-        // Cartes éphémères : aucune défausse volontaire possible, jouer est leur
-        // seule sortie de la main. Les cartes innées se défaussent comme les autres :
-        // la distribution automatique les remettra en main.
-        if (!CardFqSystem.hasEphemeralChoice(card)) {
+        // Défausse à la main : outil d'arbitrage réservé au MJ. Un joueur ne sort
+        // une carte de sa main qu'en la jouant, ou en la payant comme coût en
+        // défausse d'une autre carte. Les cartes éphémères en sont exclues, même
+        // pour le MJ : les défausser les rendrait récupérables au lieu de les
+        // détruire. Les cartes innées se défaussent comme les autres : la
+        // distribution automatique les remettra en main.
+        if (game.user?.isGM && !CardFqSystem.hasEphemeralChoice(card)) {
             buttons = {
                 ...buttons, discard: {
                     icon: `<i class="fas fa-trash"></i>`,

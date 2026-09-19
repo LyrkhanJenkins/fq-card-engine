@@ -16,6 +16,7 @@ import {ERROR_COLOR} from "../../../core/constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
 import CardSelection from "../../interface/window/card-selection.js";
+import DiscardCost from "./discard-cost.js";
 import CardCondition from "./card-condition.js";
 import CardGenerated from "./card-generated.js";
 
@@ -1101,8 +1102,9 @@ export default class CardEffect {
     /**
      * Vérifie l'ensemble des conditions permettant de jouer une carte : scripts
      * d'évaluation personnalisés, règles de rejouabilité et de réactivité en
-     * combat, portée vers les cibles, disponibilité de la pioche et ressources
-     * suffisantes. Publie un avertissement pour chaque condition non remplie.
+     * combat, portée vers les cibles, disponibilité de la pioche, cartes en main
+     * pour un éventuel coût en défausse, et ressources suffisantes. Publie un
+     * avertissement pour chaque condition non remplie.
      *
      * @param {object} cardContent - Le contenu (choix) de la carte, déjà préparé.
      * @param {Card}   card        - La carte concernée.
@@ -1187,6 +1189,12 @@ export default class CardEffect {
             ?? HitProfile.missingWeaponWarningKey(cardContent, Constants.actorCurrent);
         if (weaponWarningKey) {
             ResourceHandler.createUserWarningMessage(game.i18n.localize(weaponWarningKey), Constants.actorCurrent);
+            return false;
+        }
+
+        // DÉFAUSSE : la seule « ressource » qui se paie en cartes, hors des réserves
+        // de l'acteur — et donc hors de `checkResources` (cf. `DiscardCost.verify`).
+        if (!DiscardCost.verify(cardContent, card)) {
             return false;
         }
 

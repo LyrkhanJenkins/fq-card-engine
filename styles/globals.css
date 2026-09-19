@@ -116,10 +116,6 @@
     color: var(--fq8-color-evasion);
 }
 
-.fq-gauge-drop {
-    color: var(--fq8-message-label);
-}
-
 .fq-gauge-sacrifice {
     color: var(--fq8-color-sacrifice);
 }

@@ -20,7 +20,6 @@
         "action": {"value": 10, "max": 10},
         "mana": {"value": 10, "max": 10},
         "zeal": {"value": 0, "max": 8},
-        "cards": {"currentDrop": 0},
         "bonus": {"range": 0, "damage": "", "heal": ""},
         "attributes": {"critical": 1, "evasion": 1},
         "minions": {"sacrificedMinion": 0}

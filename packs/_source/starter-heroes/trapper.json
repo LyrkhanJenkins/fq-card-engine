@@ -133,7 +133,6 @@
       "DOT": 0,
       "critical": 2,
       "evasion": 0,
-      "currentDropCard": 0,
       "hand": 0,
       "pick": 1,
       "death": {
@@ -460,8 +459,7 @@
       },
       "cards": {
         "hand": 0,
-        "pick": 1,
-        "currentDrop": 0
+        "pick": 1
       },
       "attributes": {
         "critical": 0,

@@ -16,6 +16,8 @@ globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {playChoice} = await import("./play-harness.js");
 const {makeCard, makeChoice} = await import("../factories.js");
+const {makeHandCard} = await import("./play-harness.js");
+const CardSelection = (await import("../../src/domain/interface/window/card-selection.js")).default;
 const FormError = (await import("../../src/core/error/form-error.model.js")).default;
 const {DECKS_DIR, worldFixture, isFilled, resolveFormula, reachAllowsFixtureDistance, installMacroStub} = await import("./corpus-helpers.js");
 installMacroStub();
@@ -180,7 +182,9 @@ const negativeZeal = zealCosts.filter(entry => entry.resolvedCost < 0);
 const positiveZeal = zealCosts.filter(entry => entry.resolvedCost > 0);
 const negativeHp = hpCosts.filter(entry => entry.resolvedCost < 0);
 
-const dropCandidates = simpleReachCompatible.filter(entry => isFilled(entry.choice.drop));
+// Coût en défausse à valeur FIXE : un `-XXX` dépend de la saisie du joueur et
+// n'a pas de coût résolvable hors formulaire.
+const dropCandidates = (await resourceCandidates("drop")).filter(entry => entry.resolvedCost < 0);
 
 const reachCandidatesInRange = simpleReachCompatible.filter(entry =>
     isFilled(entry.choice.minReach) || isFilled(entry.choice.maxReach));
@@ -421,42 +425,79 @@ describe("EXHA-01 : rejet propre quand une ressource est insuffisante", () => {
     );
 });
 
-describe("EXHA-01 : la défausse (drop) n'est vérifiée qu'en combat", () => {
+describe("EXHA-01 : le coût en défausse se paie en cartes, et seulement en combat", () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
+    /** Un combat en cours où le personnage de la fixture joue son tour. */
+    const inCombat = () => ({
+        round: 1,
+        combatant: {actor: {id: worldFixture.character.id}},
+        combatants: [{actorId: worldFixture.character.id}],
+        flags: {fq: {logs: []}}
+    });
+
+    /** Une main de `size` cartes ordinaires, toutes défaussables. */
+    const handOf = (size) => Array.from({length: size},
+        (_, i) => makeHandCard(`harness-hand-${i}`, `FQCARDTITLE.HarnessHand${i}`));
+
     test.each(dropCandidates)(
-        "$deckFile :: $cardName :: choix $choiceIndex — hors combat : pas de vérification du solde de défausse",
+        "$deckFile :: $cardName :: choix $choiceIndex — hors combat : main vide, aucune défausse exigée",
         async ({card, choiceIndex}) => {
+            const veil = vi.spyOn(CardSelection, "openSelectionVeil");
             const result = await playChoice(card, choiceIndex, {
-                world: abundantWorld({
-                    character: {system: {fq: {cards: {currentDrop: 0}}}},
-                    combat: null
-                })
+                world: abundantWorld({combat: null}),
+                cardOptions: {handCards: []}
             });
             expect(result.threw).toBe(false);
-            expect(chatText(result)).not.toContain("FQCARDENGINE.WarningMsgNotEnoughDrop");
+            expect(chatText(result)).not.toContain("FQCARDENGINE.WarningMsgNotEnoughCardsToDiscard");
+            expect(veil).not.toHaveBeenCalled();
         }
     );
 
     test.each(dropCandidates)(
-        "$deckFile :: $cardName :: choix $choiceIndex — en combat, solde de défausse insuffisant : rejet propre",
+        "$deckFile :: $cardName :: choix $choiceIndex — en combat, main trop courte : rejet sans ouvrir le voile",
         async ({card, choiceIndex}) => {
+            const veil = vi.spyOn(CardSelection, "openSelectionVeil");
             const result = await playChoice(card, choiceIndex, {
-                world: abundantWorld({
-                    character: {system: {fq: {cards: {currentDrop: 0}}}},
-                    combat: {
-                        round: 1,
-                        combatant: {actor: {id: worldFixture.character.id}},
-                        combatants: [{actorId: worldFixture.character.id}],
-                        flags: {fq: {logs: []}}
-                    }
-                })
+                world: abundantWorld({combat: inCombat()}),
+                cardOptions: {handCards: []}
             });
             expect(result.threw).toBe(false);
             expect(result.hpCalls).toHaveLength(0);
-            expect(chatText(result)).toContain("FQCARDENGINE.WarningMsgNotEnoughDrop");
+            expect(chatText(result)).toContain("FQCARDENGINE.WarningMsgNotEnoughCardsToDiscard");
+            expect(veil).not.toHaveBeenCalled();
+        }
+    );
+
+    test.each(dropCandidates)(
+        "$deckFile :: $cardName :: choix $choiceIndex — en combat, main fournie : le voile réclame le compte exact et la main se défausse",
+        async ({card, choiceIndex, resolvedCost}) => {
+            const veil = vi.spyOn(CardSelection, "openSelectionVeil")
+                .mockImplementation(async (cards, count) => cards.slice(0, count));
+            const result = await playChoice(card, choiceIndex, {
+                world: abundantWorld({combat: inCombat()}),
+                cardOptions: {handCards: handOf(Math.abs(resolvedCost))}
+            });
+            expect(result.threw).toBe(false);
+            expect(chatText(result)).not.toContain("FQCARDENGINE.WarningMsgNotEnoughCardsToDiscard");
+            expect(veil).toHaveBeenCalledWith(expect.any(Array), Math.abs(resolvedCost), expect.any(Object));
+            expect(result.handPassCalls[0][1]).toHaveLength(Math.abs(resolvedCost));
+        }
+    );
+
+    test.each(dropCandidates)(
+        "$deckFile :: $cardName :: choix $choiceIndex — sélection annulée : rien n'est joué",
+        async ({card, choiceIndex, resolvedCost}) => {
+            vi.spyOn(CardSelection, "openSelectionVeil").mockResolvedValue(null);
+            const result = await playChoice(card, choiceIndex, {
+                world: abundantWorld({combat: inCombat()}),
+                cardOptions: {handCards: handOf(Math.abs(resolvedCost))}
+            });
+            expect(result.threw).toBe(false);
+            expect(result.hpCalls).toHaveLength(0);
+            expect(result.passCalls).toHaveLength(0);
         }
     );
 });

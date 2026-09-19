@@ -59,7 +59,7 @@ function makeCombatant({actorId = "actor-1", fq = {}, attributes = {}, effects} 
                 action: {value: 0, max: 5},
                 zeal: {value: 0, max: 8, init: 2},
                 bonus: {range: 0, damage: "", heal: "", dot: 0},
-                cards: {hand: 2, pick: 1, currentDrop: 0},
+                cards: {hand: 2, pick: 1},
                 ...fq
             },
             attributes: {
@@ -401,14 +401,14 @@ describe("hook/combat.hook.js", () => {
             expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.action.value": 7});
         });
 
-        it("premier round : resetAction + resetZeal + drawHand + resetCurrentDropCard + resetSacrificedMinion", async () => {
+        it("premier round : resetAction + resetZeal + drawHand + resetSacrificedMinion", async () => {
             const activeCombatant = makeCombatant({
                 actorId: "active-actor",
-                fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 3}, cards: {hand: 4, pick: 1, currentDrop: 0}}
+                fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 3}, cards: {hand: 4, pick: 1}}
             });
             const inactiveCombatant = makeCombatant({
                 actorId: "inactive-actor",
-                fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 1}, cards: {hand: 2, pick: 1, currentDrop: 0}}
+                fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 1}, cards: {hand: 2, pick: 1}}
             });
 
             game.users = Object.assign([
@@ -442,8 +442,6 @@ describe("hook/combat.hook.js", () => {
             // resetZeal
             expect(activeCombatant.actor.update).toHaveBeenCalledWith({"system.fq.zeal.value": 3});
             expect(inactiveCombatant.actor.update).toHaveBeenCalledWith({"system.fq.zeal.value": 1});
-            // resetCurrentDropCard
-            expect(activeCombatant.actor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
             // resetSacrificedMinion
             expect(activeCombatant.actor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedMinion": 0});
             // drawHand : utilisateur actif -> executeAsUser ; utilisateur inactif -> executeAsGM
@@ -456,11 +454,11 @@ describe("hook/combat.hook.js", () => {
             game.settings.get = vi.fn(() => true);
             const deboutCombatant = makeCombatant({
                 actorId: "debout-actor",
-                fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 3}, cards: {hand: 4, pick: 1, currentDrop: 0}}
+                fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 3}, cards: {hand: 4, pick: 1}}
             });
             const aTerreCombatant = makeCombatant({
                 actorId: "a-terre-actor",
-                fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 1}, cards: {hand: 4, pick: 1, currentDrop: 0}},
+                fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 1}, cards: {hand: 4, pick: 1}},
                 attributes: {exhaustion: 0, hp: {value: 0, max: 12}}
             });
 
@@ -575,7 +573,7 @@ describe("hook/combat.hook.js", () => {
         it("tour d'un joueur, deck suffisant : drawPick pioche pickScore cartes", async () => {
             const combatant = makeCombatant({
                 actorId: "player-actor",
-                fq: {cards: {hand: 2, pick: 2, currentDrop: 1}},
+                fq: {cards: {hand: 2, pick: 2}},
                 attributes: {exhaustion: 0, hp: {value: 10, max: 10}}
             });
             game.users = Object.assign([
@@ -599,7 +597,6 @@ describe("hook/combat.hook.js", () => {
             await getHook("combatTurnChange")(combat, {}, {});
 
             expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.minions.sacrificedMinion": 0});
-            expect(combatant.actor.update).toHaveBeenCalledWith({"system.fq.cards.currentDrop": 0});
             expect(socket.executeAsUser).toHaveBeenCalledWith("drawCard", "player-user", "hand-1", "deck-1", 2);
             expect(recallSpy).not.toHaveBeenCalled();
             expect(ChatMessage.create).not.toHaveBeenCalled();
@@ -608,7 +605,7 @@ describe("hook/combat.hook.js", () => {
         it("tour d'un joueur, deck insuffisant (mais non vide) : pioche le reste sans épuisement, message d'alerte, défausse rappelée dans le deck", async () => {
             const combatant = makeCombatant({
                 actorId: "player-actor",
-                fq: {cards: {hand: 2, pick: 3, currentDrop: 0}},
+                fq: {cards: {hand: 2, pick: 3}},
                 attributes: {exhaustion: 0, hp: {value: 10, max: 10}}
             });
             game.users = Object.assign([
@@ -656,7 +653,7 @@ describe("hook/combat.hook.js", () => {
         it("tour d'un joueur, deck vide, recyclage partiel : pioche plafonnée aux cartes recyclées", async () => {
             const combatant = makeCombatant({
                 actorId: "player-actor",
-                fq: {cards: {hand: 2, pick: 3, currentDrop: 0}},
+                fq: {cards: {hand: 2, pick: 3}},
                 attributes: {exhaustion: 0, hp: {value: 10, max: 10}}
             });
             game.users = Object.assign([
@@ -699,7 +696,7 @@ describe("hook/combat.hook.js", () => {
         it("tour d'un joueur, deck vide et rien à recycler : aucune pioche, aucun épuisement", async () => {
             const combatant = makeCombatant({
                 actorId: "player-actor",
-                fq: {cards: {hand: 2, pick: 3, currentDrop: 0}},
+                fq: {cards: {hand: 2, pick: 3}},
                 attributes: {exhaustion: 0, hp: {value: 10, max: 10}}
             });
             game.users = Object.assign([
@@ -739,7 +736,7 @@ describe("hook/combat.hook.js", () => {
             // combatTurnChange (0 est filtré par cette même garde).
             const combatant = makeCombatant({
                 actorId: "player-actor",
-                fq: {cards: {hand: 2, pick: -1, currentDrop: 0}},
+                fq: {cards: {hand: 2, pick: -1}},
                 attributes: {exhaustion: 0, hp: {value: 10, max: 10}}
             });
             game.users = Object.assign([

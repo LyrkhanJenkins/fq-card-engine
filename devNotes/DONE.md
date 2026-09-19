@@ -41,10 +41,11 @@ Feat :
 - Gérer la classe d'Armure Dnd5e (modif de la réalité : demi-dégâts)  (en cours...)
 - Gérer les dés de sauvegarde  (en cours...)
 - Géré les resistances, les immunités et les absorptions.(en cours...)
-- Cartes de niveau 0 obligatoire dans les spellbooks et decks (lutte contre les tous petits decks)
+- Cartes de niveau 1 de la classe principale définit le nombre de carte minimum pour un deck
 - Cartes peuvent créer des tiles avec des walls (Mur de givre)
 - Restriction des droits au minium (drag and drop de cartes, édition d'items, récupération depuis un compendium)
 - Ajout des coûts FQ sur les items et les spells
+- Ne plus faire de score de défausse mais UI pour défausser des cartes
 
 Fix :
 - Correction du bouton OpenDeck dans la main du joueur
