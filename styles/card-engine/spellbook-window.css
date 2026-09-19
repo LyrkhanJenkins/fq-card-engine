@@ -100,6 +100,19 @@
     color: var(--fq-gold-bright);
 }
 
+/* Plancher du deck : lu comme un repère, jamais comme une valeur courante —
+   d'où le retrait en graisse et en contraste face au nombre distribué. */
+.fq-spellbook-deck-size-min {
+    font-weight: 600;
+    color: rgba(var(--fq-cream-rgb), 0.7);
+}
+
+/* Deck au plancher : plus rien ne peut en sortir. Le compte prend la teinte
+   du verrou pour l'annoncer avant le premier retrait refusé. */
+.fq-spellbook-deck-size-label--at-min .fq-spellbook-deck-size-count {
+    color: var(--fq-danger-text);
+}
+
 /* ============================================================
    RANGÉE GRILLE/PANNEAU — remplace le rôle que jouait .fq-spellbook-grid
    seule en phase 1/2 (UI-SPEC §1). Porte désormais la flexibilité déplacée
@@ -387,13 +400,16 @@
     border: 1px solid rgba(var(--fq-success-hi-rgb), 0.7);
 }
 
-/* Carte obligatoire : le cadenas se lit en or quel que soit l'état, le
-   compte n/N garde la couleur de son état de distribution. */
-.fq-spellbook-card-badge--mandatory i {
+/* Retrait verrouillé par le plancher du deck : le cadenas se lit en or quel
+   que soit l'état, le compte n/N garde la couleur de son état de
+   distribution. Le verrou n'interdit que le retrait — une carte partielle
+   reste cliquable pour compléter ses exemplaires, seule la carte pleine
+   (dont le clic ne pourrait que retirer) prend le curseur d'interdiction. */
+.fq-spellbook-card-badge--locked i {
     color: var(--fq-gold-bright);
 }
 
-.fq-spellbook-card--mandatory.fq-spellbook-card--full {
+.fq-spellbook-card--locked.fq-spellbook-card--full {
     cursor: not-allowed;
 }
 

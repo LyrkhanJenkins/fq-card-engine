@@ -265,7 +265,9 @@ function cardProfile(classKey, profile) {
         const level = levelOf(card);
         const fq = card.system?.fq ?? {};
         const choices = fq.choices ?? [];
-        const bucket = level >= 0 && level <= 12 ? level : "hors";
+        // Le niveau 0 n'existe plus : une carte qui en porterait un est hors
+        // campagne au même titre qu'une N13 oubliée, et doit se voir.
+        const bucket = level >= 1 && level <= 12 ? level : "hors";
         perLevel[bucket] ??= {distinct: 0, copies: 0};
         perLevel[bucket].distinct++;
         perLevel[bucket].copies += copiesOf(card);
@@ -375,12 +377,13 @@ alternativement sur les deux caracs primaires (plafond 20) ; PV = dé max au N1 
     out.push("\n## Vue d'ensemble des cartes (decks de base)\n");
     const levelHeaders = Array.from({length: 12}, (_, i) => `N${i + 1}`);
     out.push(table(
-        ["Classe", "N0", ...levelHeaders, "Hors N0‑12", "Total distinctes / exemplaires", "Générées (dist./ex.)",
+        ["Classe", ...levelHeaders, "Hors N1‑12", "Plancher deck", "Total distinctes / exemplaires", "Générées (dist./ex.)",
             "Coût moyen PA", "Cartes 1‑4 PA", "Réactives", "Zèle + / −", "Innées"],
         data.map(d => {
             const c = d.cards;
             const cell = key => c.perLevel[key]?.distinct ?? 0;
-            return [d.label, cell(0), ...levelHeaders.map((_, i) => cell(i + 1)), cell("hors"),
+            return [d.label, ...levelHeaders.map((_, i) => cell(i + 1)), cell("hors"),
+                `${c.perLevel[1]?.copies ?? 0}`,
                 `${c.cards.length} / ${c.cards.reduce((s, x) => s + copiesOf(x), 0)}`,
                 `${c.generated.distinct} / ${c.generated.copies}`,
                 c.costAverage === null ? "–" : fmt(c.costAverage), c.cheap, c.tags.reactive,
@@ -429,10 +432,10 @@ function check(data) {
         const unlocked = d.cards.unlocked(TARGETS.maxLevel);
         const [min, max] = TARGETS.distinct;
         if (unlocked.distinct < min || unlocked.distinct > max) {
-            problems.push(`${d.label} : ${unlocked.distinct} cartes distinctes N0‑N12 (cible ${min}‑${max})`);
+            problems.push(`${d.label} : ${unlocked.distinct} cartes distinctes N1‑N12 (cible ${min}‑${max})`);
         }
         if (d.cards.outOfRange.length) {
-            problems.push(`${d.label} : ${d.cards.outOfRange.length} carte(s) hors N0‑N12 → ${d.cards.outOfRange.join(", ")}`);
+            problems.push(`${d.label} : ${d.cards.outOfRange.length} carte(s) hors N1‑N12 → ${d.cards.outOfRange.join(", ")}`);
         }
         for (const level of LEVELS) {
             const target = TARGETS.copies[level];

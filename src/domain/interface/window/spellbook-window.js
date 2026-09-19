@@ -1,7 +1,7 @@
 import DisplayCard from "../card-svg/display-card.js";
 import {
-    buildLevelOptions, buildSpellbookGroups, computeCopyState, computeDeckSize, computeIncrementAction,
-    computeToggleAction, matchesSpellbookFilters
+    buildLevelOptions, buildSpellbookGroups, computeCopyState, computeDeckMinSize, computeDeckSize,
+    computeIncrementAction, computeToggleAction, matchesSpellbookFilters
 } from "../../engine/shared/spellbook-grid.js";
 import TradingCards from "../../trading/trading-cards.js";
 
@@ -114,14 +114,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         }
         const app = new SpellbookWindow(spellBook, deck);
         SpellbookWindow.#instances.set(spellBook.id, app);
-        // Les cartes obligatoires manquantes sont remises AVANT le premier
-        // rendu, pour que les badges affichent d'emblée le deck complété.
-        // Seul un propriétaire du deck (le joueur, ou le MJ) peut le compléter.
-        const sync = deck.isOwner
-            ? TradingCards.syncMandatoryCards(deck, spellBook.cards.contents)
-            : Promise.resolve();
-        sync.catch(err => ui.notifications.error(err.message))
-            .finally(() => app.render(true));
+        app.render(true);
         return app;
     }
 
@@ -218,7 +211,8 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             combatLocked: SpellbookWindow.isCombatLocked(),
             groups: this.#preparedGroups.groups.map(({classKey, classLabel, count}) => ({classKey, classLabel, count})),
             levelOptions: buildLevelOptions(this.spellBook.cards.contents),
-            deckSize: computeDeckSize(this.deck)
+            deckSize: computeDeckSize(this.deck),
+            deckMinSize: computeDeckMinSize(this.deck)
         };
     }
 
@@ -259,7 +253,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
                 this.#filters = filters;
             });
         }
-        SpellbookWindow.applyDeckSize(this.element, computeDeckSize(this.deck));
+        SpellbookWindow.applyDeckSize(this.element, computeDeckSize(this.deck), computeDeckMinSize(this.deck));
         if (this.#preparedGroups.isEmpty) {
             return;
         }
@@ -354,18 +348,19 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      * affectation de HTML brut (T-01-02). N'ADD/n'APPEND jamais après un
      * nettoyage : un second appel sur une carte déjà peuplée empile classe
      * d'état et badge (voir `patchCopyState`, qui nettoie avant de rappeler
-     * cette méthode). Une carte obligatoire porte en plus la classe
-     * `fq-spellbook-card--mandatory` et un cadenas à la place de l'icône d'état.
+     * cette méthode). Une carte dont le retrait ferait passer le deck sous son
+     * plancher porte en plus la classe `fq-spellbook-card--locked` et un
+     * cadenas à la place de l'icône d'état.
      *
      * @param {Element} cardElement - L'élément racine de la carte rendue.
-     * @param {{count: number, max: number, state: string, mandatory?: boolean}} copies - L'état de distribution déjà calculé.
+     * @param {{count: number, max: number, state: string, locked?: boolean, min?: number}} copies - L'état de distribution déjà calculé.
      *
      * @returns {void}
      */
     static applyCopyState(cardElement, copies) {
-        const {count, max, state, mandatory} = copies;
+        const {count, max, state, locked, min = 0} = copies;
         cardElement.classList.add(`fq-spellbook-card--${state}`);
-        cardElement.classList.toggle("fq-spellbook-card--mandatory", !!mandatory);
+        cardElement.classList.toggle("fq-spellbook-card--locked", !!locked);
 
         const inner = cardElement.querySelector(".fq-card-inner");
         if (!inner) {
@@ -373,10 +368,10 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         }
         const badge = document.createElement("span");
         badge.className = `fq-card-badge fq-spellbook-card-badge fq-spellbook-card-badge--${state}`;
-        if (mandatory) {
-            badge.classList.add("fq-spellbook-card-badge--mandatory");
+        if (locked) {
+            badge.classList.add("fq-spellbook-card-badge--locked");
         }
-        const iconClass = mandatory ? "fa-lock" : COPY_STATE_ICONS[state];
+        const iconClass = locked ? "fa-lock" : COPY_STATE_ICONS[state];
         if (iconClass) {
             const icon = document.createElement("i");
             icon.className = `fa-solid ${iconClass}`;
@@ -385,8 +380,8 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         const text = document.createElement("span");
         text.textContent = `${count}/${max}`;
         badge.appendChild(text);
-        badge.dataset.tooltip = mandatory
-            ? game.i18n.format("FQCARDENGINE.SpellBookMandatoryTooltip", {n: count, total: max})
+        badge.dataset.tooltip = locked
+            ? game.i18n.format("FQCARDENGINE.SpellBookLockedTooltip", {n: count, total: max, min})
             : state === "none"
                 ? game.i18n.localize(COPY_STATE_TOOLTIP_KEYS.none)
                 : state === "partial"
@@ -410,6 +405,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         cardElement.classList.remove(
             "fq-spellbook-card--none", "fq-spellbook-card--partial", "fq-spellbook-card--full"
         );
+        cardElement.classList.remove("fq-spellbook-card--locked");
         cardElement.querySelector(".fq-spellbook-card-badge")?.remove();
         SpellbookWindow.applyCopyState(cardElement, copies);
     }
@@ -436,13 +432,14 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      * collection locale du deck est déjà à jour au retour de la promesse).
      * Aucune boîte de confirmation, dans aucun des deux sens (D2-05).
      *
-     * @param {Element} cardElement - L'élément racine de la carte cliquée.
-     * @param {Card}    card        - La carte du grimoire concernée.
-     * @param {Cards}   deck        - Le deck du joueur, cible de la mutation.
+     * @param {Element} cardElement  - L'élément racine de la carte cliquée.
+     * @param {Card}    card         - La carte du grimoire concernée.
+     * @param {Cards}   deck         - Le deck du joueur, cible de la mutation.
+     * @param {Cards}   [spellBook]  - Le grimoire, pour rafraîchir les verrous des autres cartes.
      *
      * @returns {Promise<void>}
      */
-    static async toggleCardCopies(cardElement, card, deck) {
+    static async toggleCardCopies(cardElement, card, deck, spellBook) {
         if (cardElement.dataset.busy === "true") {
             return;
         }
@@ -451,9 +448,10 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             return;
         }
 
-        const {action, count} = computeToggleAction(computeCopyState(card, deck));
+        const copies = computeCopyState(card, deck);
+        const {action, count} = computeToggleAction(copies);
         if (action === "locked") {
-            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.WarningCantRemoveMandatoryCard"));
+            ui.notifications.warn(game.i18n.format("FQCARDENGINE.WarningDeckMinSize", {min: copies.min}));
             return;
         }
         if (count <= 0) {
@@ -471,6 +469,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             }
             SpellbookWindow.patchCopyState(cardElement, computeCopyState(card, deck));
             SpellbookWindow.patchDeckSize(cardElement, deck);
+            SpellbookWindow.refreshLocks(cardElement, spellBook, deck);
         } catch (err) {
             ui.notifications.error(err.message);
         } finally {
@@ -491,13 +490,14 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      * `signalMaxReached` produit le signal « maximum atteint » (D21-02) — la
      * garde de combat l'emporte toujours sur ce signal, jamais l'inverse.
      *
-     * @param {Element} cardElement - L'élément racine de la carte visée.
-     * @param {Card}    card        - La carte du grimoire concernée.
-     * @param {Cards}   deck        - Le deck du joueur, cible de la mutation.
+     * @param {Element} cardElement  - L'élément racine de la carte visée.
+     * @param {Card}    card         - La carte du grimoire concernée.
+     * @param {Cards}   deck         - Le deck du joueur, cible de la mutation.
+     * @param {Cards}   [spellBook]  - Le grimoire, pour rafraîchir les verrous des autres cartes.
      *
      * @returns {Promise<void>}
      */
-    static async addOneCopy(cardElement, card, deck) {
+    static async addOneCopy(cardElement, card, deck, spellBook) {
         if (cardElement.dataset.busy === "true") {
             return;
         }
@@ -519,6 +519,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             await TradingCards.createCardsForDeck(deck, Array(count).fill(card));
             SpellbookWindow.patchCopyState(cardElement, computeCopyState(card, deck));
             SpellbookWindow.patchDeckSize(cardElement, deck);
+            SpellbookWindow.refreshLocks(cardElement, spellBook, deck);
         } catch (err) {
             ui.notifications.error(err.message);
         } finally {
@@ -615,7 +616,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             }
             // Le gestionnaire d'événement reste synchrone : la promesse de
             // addOneCopy n'est jamais attendue ici.
-            SpellbookWindow.addOneCopy(cardElement, card, deck);
+            SpellbookWindow.addOneCopy(cardElement, card, deck, spellBook);
         });
     }
 
@@ -805,26 +806,56 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      *
      * @returns {void}
      */
-    static applyDeckSize(rootElement, size) {
+    static applyDeckSize(rootElement, size, min = 0) {
         const counterHost = rootElement?.querySelector?.(".fq-spellbook-deck-size");
         if (!counterHost) {
             return;
         }
         counterHost.querySelector(".fq-spellbook-deck-size-label")?.remove();
         const template = game.i18n.localize("FQCARDENGINE.SpellBookDeckSize");
-        const [before, after = ""] = template.split("{count}");
         const label = document.createElement("span");
         label.className = "fq-spellbook-deck-size-label";
-        if (before) {
-            label.appendChild(document.createTextNode(before));
+        // Le gabarit est découpé sur ses deux jetons plutôt que formaté d'un
+        // bloc : chaque nombre garde son propre span (cible du style, et du
+        // patch après mutation) et tout le reste entre en texte brut, jamais
+        // en HTML (T-01-02). Le groupe capturant du séparateur conserve les
+        // jetons dans le tableau produit par `split`.
+        const values = {"{count}": String(size), "{min}": String(min)};
+        const classNames = {
+            "{count}": "fq-spellbook-deck-size-count",
+            "{min}": "fq-spellbook-deck-size-min"
+        };
+        const buildValueSpan = token => {
+            const span = document.createElement("span");
+            span.className = classNames[token];
+            span.textContent = values[token];
+            return span;
+        };
+        // Seul le compte est garanti : c'est la valeur que l'indicateur existe
+        // pour porter. Un gabarit qui ne nomme pas le plancher a fait ce choix,
+        // et se voir ajouter un nombre nu en fin de libellé n'y aiderait pas.
+        let hasCount = false;
+        for (const part of template.split(/(\{count\}|\{min\})/)) {
+            if (!part) {
+                continue;
+            }
+            if (!(part in values)) {
+                label.appendChild(document.createTextNode(part));
+                continue;
+            }
+            hasCount = hasCount || part === "{count}";
+            label.appendChild(buildValueSpan(part));
         }
-        const countSpan = document.createElement("span");
-        countSpan.className = "fq-spellbook-deck-size-count";
-        countSpan.textContent = String(size);
-        label.appendChild(countSpan);
-        if (after) {
-            label.appendChild(document.createTextNode(after));
+        // Gabarit amputé de son jeton de compte (traduction incomplète, ou clé
+        // manquante que Foundry renvoie telle quelle) : le nombre est ajouté en
+        // fin de libellé plutôt que perdu.
+        if (!hasCount) {
+            label.appendChild(buildValueSpan("{count}"));
         }
+        // Deck au plancher : plus rien ne peut en sortir tant que le joueur
+        // n'a pas ajouté d'autres cartes. L'indicateur le dit avant que le
+        // premier retrait refusé ne le rappelle.
+        label.classList.toggle("fq-spellbook-deck-size-label--at-min", min > 0 && size <= min);
         counterHost.appendChild(label);
     }
 
@@ -846,7 +877,37 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      */
     static patchDeckSize(cardElement, deck) {
         const rootElement = cardElement.closest(".fq-spellbook-body");
-        SpellbookWindow.applyDeckSize(rootElement, computeDeckSize(deck));
+        SpellbookWindow.applyDeckSize(rootElement, computeDeckSize(deck), computeDeckMinSize(deck));
+    }
+
+    /**
+     * Rejoue l'état de distribution de TOUTES les cartes rendues après une
+     * mutation. Contrairement au badge `n/N`, qui ne dépend que de la carte
+     * mutée, le verrou de plancher dépend de la taille du deck ENTIER : ajouter
+     * une carte déverrouille d'un coup toutes les autres, en retirer une peut
+     * toutes les verrouiller. Patcher la seule carte cliquée laisserait donc la
+     * grille mentir jusqu'au prochain rendu complet. Sans grimoire (appels des
+     * tests unitaires de mutation, signature historique) ou hors d'une fenêtre
+     * montée, ne fait rien : le patch chirurgical de la carte mutée, déjà
+     * appliqué par l'appelant, reste le comportement minimal garanti.
+     *
+     * @param {Element} cardElement - L'élément racine de la carte mutée.
+     * @param {Cards}   [spellBook] - Le grimoire portant les cartes rendues.
+     * @param {Cards}   deck        - Le deck du joueur, référence du calcul.
+     *
+     * @returns {void}
+     */
+    static refreshLocks(cardElement, spellBook, deck) {
+        const rootElement = cardElement.closest?.(".fq-spellbook-body");
+        if (!rootElement || !spellBook) {
+            return;
+        }
+        rootElement.querySelectorAll(".fq-spellbook-card[data-card-id]").forEach(element => {
+            const card = spellBook.cards.get(element.dataset.cardId);
+            if (card) {
+                SpellbookWindow.patchCopyState(element, computeCopyState(card, deck));
+            }
+        });
     }
 
     /**
@@ -912,7 +973,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         if (!card) {
             return;
         }
-        await SpellbookWindow.toggleCardCopies(target, card, this.deck);
+        await SpellbookWindow.toggleCardCopies(target, card, this.deck, this.spellBook);
     }
 
     /**

@@ -227,7 +227,7 @@ describe("PlayCard", () => {
 
             expect(currentCards.pass).not.toHaveBeenCalled();
             expect(currentCards.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["ephemeral"]);
-            expect(card.origin.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["ephemeral"], {fqAllowMandatory: true});
+            expect(card.origin.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["ephemeral"], {fqAllowBelowMin: true});
         });
 
         test("carte générée (aucun exemplaire dans le deck) : seule la main est nettoyée", async () => {

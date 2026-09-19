@@ -14,11 +14,14 @@ export const SPELLBOOK_TYPE = "SPELLBOOK";
 export const NEUTRAL_PATTERN_DECK_NAME = "Neutral Base";
 
 /**
- * Niveau des cartes obligatoires : une carte de ce niveau est débloquée dès
- * que le personnage possède sa classe (ou, pour le deck neutre, dès qu'il a
- * une classe FQ), et le deck de combat en porte toujours tous les exemplaires.
+ * Niveau des cartes de départ : le premier niveau du jeu. Le deck de combat
+ * est créé avec tous les exemplaires des cartes de ce niveau appartenant à la
+ * classe FQ principale, et le total de ces exemplaires fixe le plancher du
+ * deck (cf. {@link TradingCards.computeDeckMinSize}) : le joueur peut ensuite
+ * remplacer ces cartes par d'autres, jamais descendre sous ce nombre. Il
+ * n'existe pas de niveau 0.
  */
-export const MANDATORY_CARD_LEVEL = 0;
+export const STARTING_CARD_LEVEL = 1;
 
 export default class TradingCards {
 
@@ -212,6 +215,16 @@ export default class TradingCards {
      * neutre (cf. {@link NEUTRAL_PATTERN_DECK_NAME}) se débloquent au niveau global du
      * personnage — somme des niveaux de ses classes FQ — dès qu'il en a au moins une.
      *
+     * À sa création — c'est-à-dire quand le personnage reçoit sa première
+     * classe FQ — le deck de combat reçoit les cartes de départ de la classe
+     * principale (cf. {@link TradingCards.buildStartingCards}) et fige leur
+     * nombre comme plancher (`system.fq.minSize`). C'est le seul peuplement
+     * automatique du deck ET le seul calcul du plancher : un deck existant
+     * n'est plus jamais ni rempli ni recalculé, quoi qu'il arrive ensuite aux
+     * classes du personnage. Perdre toutes ses classes FQ n'est pas un cas
+     * géré : faute de classe principale, la reconstruction s'arrête avant
+     * d'arriver ici.
+     *
      * @param {string} currentUserId - L'id Foundry de l'utilisateur cible.
      *
      * @returns {Promise<void>}
@@ -320,8 +333,8 @@ export default class TradingCards {
 
             if (newLevel < oldLevel) {
                 // Classe rétrogradée : cartes perdues entre le nouveau niveau (exclu) et l'ancien (inclus).
-                // Classe disparue : ses cartes obligatoires partent aussi, d'où la borne sous le niveau 0.
-                const lowerBound = className in newClassLevels ? newLevel : MANDATORY_CARD_LEVEL - 1;
+                // Classe disparue : ses cartes de départ partent aussi, d'où la borne sous le premier niveau.
+                const lowerBound = className in newClassLevels ? newLevel : STARTING_CARD_LEVEL - 1;
                 cardsToRemove = cardsToRemove.concat(
                     classeCards.filter(c => c.system.fq.level > lowerBound && c.system.fq.level <= oldLevel)
                 );
@@ -340,15 +353,25 @@ export default class TradingCards {
         // Create deck if not exist
         let deck = TradingCards.getFirstDeck(user.id, DECK_TYPE, false);
         if (!deck) {
+            // Cartes de départ et plancher ne sont calculés QUE sur ce chemin :
+            // un deck déjà né n'y repasse jamais.
+            const startingCards = TradingCards.buildStartingCards(originDeck.cards ? [...originDeck.cards] : []);
             let deckName = game.i18n.localize("FQCARDENGINE.DeckPrefixName") + user.character.name;
             deck = await Cards.create({
                 ...originDeck,
                 name: deckName,
                 type: "deck",
                 cards: [],
-                system: {...originDeck?.system, fq: {type: "DECK", owner: user.id}},
+                system: {...originDeck?.system, fq: {type: "DECK", owner: user.id, minSize: startingCards.length}},
                 ownership
             });
+            // Unique peuplement automatique du deck, et unique calcul de son
+            // plancher : les cartes de départ de la classe principale, posées
+            // une seule fois à la création. Tout le reste de la construction
+            // appartient ensuite au joueur.
+            if (startingCards.length) {
+                await TradingCards.createCardsForDeck(deck, startingCards);
+            }
         }
 
         // Retire du deck uniquement les cartes concernées par la baisse de niveau
@@ -357,57 +380,47 @@ export default class TradingCards {
             const removeInDeck = deck.cards.filter(c => removeNames.has(c.name));
             await TradingCards.deleteCardsForDeck(deck, removeInDeck);
         }
-
-        // Seul peuplement automatique du deck : les cartes obligatoires.
-        await TradingCards.syncMandatoryCards(deck, allCards);
     }
 
     /**
-     * Indique si une carte est obligatoire : de niveau {@link MANDATORY_CARD_LEVEL}
-     * et non générée en cours de partie (une carte générée a son propre cycle de
-     * vie, détruite en fin de combat quel que soit son niveau).
+     * Cartes de départ d'un deck de combat : tous les exemplaires
+     * (`maxSameCard`, 1 à défaut) de chaque carte de niveau
+     * {@link STARTING_CARD_LEVEL} du patron fourni — celui de la classe FQ
+     * principale. Le tableau renvoyé porte une entrée PAR EXEMPLAIRE : c'est
+     * exactement ce qui est créé dans le deck, et sa longueur est le plancher
+     * du deck. Un patron sans carte de premier niveau donne un tableau vide,
+     * donc aucun plancher.
      *
-     * @param {Card|object} card - La carte inspectée.
+     * @param {Card[]|object[]} patternCards - Les cartes du deck patron de la classe principale.
      *
-     * @returns {boolean} Vrai si la carte est obligatoire.
+     * @returns {object[]} Les cartes de départ, un élément par exemplaire.
      */
-    static isMandatoryCard(card) {
-        const moduleName = globalThis.FqCardEngineModule?.moduleName;
-        return card?.system?.fq?.level === MANDATORY_CARD_LEVEL && !card.flags?.[moduleName]?.generated;
-    }
-
-    /**
-     * Complète le deck avec les exemplaires manquants de chaque carte obligatoire
-     * parmi les cartes sources (le grimoire), jusqu'à `maxSameCard` exemplaires,
-     * en un seul appel de création. Le compte se lit sur le deck seul, exemplaires
-     * piochés compris, comme le badge du grimoire. Rien n'est fait pendant un
-     * combat : une carte obligatoire éphémère détruite ne doit pas revenir avant
-     * la fin de l'affrontement.
-     *
-     * @param {Cards}           deck        - Le deck de combat du joueur.
-     * @param {Card[]|object[]} sourceCards - Les cartes débloquées (grimoire).
-     *
-     * @returns {Promise<number>} Le nombre d'exemplaires ajoutés.
-     */
-    static async syncMandatoryCards(deck, sourceCards) {
-        if (!deck || game.combat) return 0;
-
-        const seen = new Set();
-        const toCreate = [];
-        for (const card of sourceCards ?? []) {
-            if (!TradingCards.isMandatoryCard(card) || seen.has(card.name)) continue;
-            seen.add(card.name);
+    static buildStartingCards(patternCards) {
+        const startingCards = [];
+        for (const card of patternCards ?? []) {
+            if (Number(card?.system?.fq?.level) !== STARTING_CARD_LEVEL) continue;
             const rawMax = card.system.fq.maxSameCard;
             const max = Number.isFinite(rawMax) ? rawMax : 1;
-            const count = deck.cards.filter(c => c.name === card.name).length;
-            for (let i = count; i < max; i++) {
-                toCreate.push(card);
+            for (let i = 0; i < max; i++) {
+                startingCards.push(card);
             }
         }
-        if (!toCreate.length) return 0;
+        return startingCards;
+    }
 
-        await TradingCards.createCardsForDeck(deck, toCreate);
-        return toCreate.length;
+    /**
+     * Plancher d'un deck de combat : le nombre d'exemplaires de départ de la
+     * classe principale (cf. {@link TradingCards.buildStartingCards}). Le deck
+     * ne peut jamais descendre sous ce total, quelles que soient les cartes qui
+     * le composent — c'est l'unique contrainte de composition du deck, en
+     * remplacement du verrou par carte des cartes obligatoires.
+     *
+     * @param {Card[]|object[]} patternCards - Les cartes du deck patron de la classe principale.
+     *
+     * @returns {number} Le nombre minimal de cartes du deck.
+     */
+    static computeDeckMinSize(patternCards) {
+        return TradingCards.buildStartingCards(patternCards).length;
     }
 
     /**
@@ -464,8 +477,8 @@ export default class TradingCards {
 
     /**
      * Supprime les cartes d'un deck via `deleteEmbeddedDocuments`. Chemin
-     * interne au moteur : il lève le verrou des cartes obligatoires (option
-     * `fqAllowMandatory`, lue par le hook `preDeleteCard`), les appelants
+     * interne au moteur : il lève le plancher du deck (option
+     * `fqAllowBelowMin`, lue par le hook `preDeleteCard`), les appelants
      * d'interface filtrant eux-mêmes ce que le joueur a le droit de retirer.
      *
      * @param {Cards}    deck     - Le deck Foundry dont on retire les cartes.
@@ -474,14 +487,19 @@ export default class TradingCards {
      * @returns {Promise<Cards>}
      */
     static async deleteCardsForDeck(deck, cards) {
-        return await deck.deleteEmbeddedDocuments("Card", cards.map(c => c.id), {fqAllowMandatory: true});
+        return await deck.deleteEmbeddedDocuments("Card", cards.map(c => c.id), {fqAllowBelowMin: true});
     }
 
     /**
-     * Garde de suppression d'une carte obligatoire : refuse (et avertit) toute
-     * suppression d'une carte obligatoire d'un deck de combat qui ne passe pas
-     * par un chemin interne du moteur (option `fqAllowMandatory`). Couvre la
-     * feuille du deck, y compris le bouton natif du MJ.
+     * Garde du plancher du deck de combat : refuse (et avertit) toute
+     * suppression qui ferait passer le deck sous son nombre minimal de cartes
+     * (`system.fq.minSize`) sans passer par un chemin interne du moteur
+     * (option `fqAllowBelowMin`). Couvre la feuille du deck, y compris le
+     * bouton natif du MJ. La garde raisonne sur la taille AVANT suppression :
+     * un deck strictement au-dessus du plancher laisse passer la suppression,
+     * ce hook ne voyant jamais qu'une carte à la fois — les retraits groupés
+     * du grimoire sont, eux, décidés en amont sur le lot entier
+     * (cf. `computeToggleAction`).
      *
      * @param {Card}   card      - La carte en cours de suppression.
      * @param {object} [options] - Les options de suppression Foundry.
@@ -489,10 +507,27 @@ export default class TradingCards {
      * @returns {boolean} False pour bloquer la suppression, true sinon.
      */
     static canDeleteDeckCard(card, options) {
-        if (options?.fqAllowMandatory) return true;
-        if (card?.parent?.system?.fq?.type !== DECK_TYPE || !TradingCards.isMandatoryCard(card)) return true;
-        ui.notifications.warn(game.i18n.localize("FQCARDENGINE.WarningCantRemoveMandatoryCard"));
+        if (options?.fqAllowBelowMin) return true;
+        const parent = card?.parent;
+        if (parent?.system?.fq?.type !== DECK_TYPE) return true;
+        const min = Number(parent.system.fq.minSize) || 0;
+        if (TradingCards.countDeckCards(parent) > min) return true;
+        ui.notifications.warn(game.i18n.format("FQCARDENGINE.WarningDeckMinSize", {min}));
         return false;
+    }
+
+    /**
+     * Nombre de cartes que porte un jeu, exemplaires piochés compris — même
+     * discipline de comptage que le badge du grimoire (BOOK-07). `Cards#cards`
+     * est une `Collection` Foundry (donc `size`) ; le repli sur `length` couvre
+     * les collections simulées sous forme de tableau.
+     *
+     * @param {Cards} [stack] - Le jeu inspecté.
+     *
+     * @returns {number} Le nombre de cartes (0 sans jeu).
+     */
+    static countDeckCards(stack) {
+        return stack?.cards?.size ?? stack?.cards?.length ?? 0;
     }
 
     /**

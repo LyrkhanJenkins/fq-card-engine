@@ -145,7 +145,10 @@ export default class CombatTurn {
                     .filter(c => c.flags?.[moduleName]?.generated)
                     .map(c => c.id);
                 if (generatedIds.length) {
-                    await deck.deleteEmbeddedDocuments("Card", generatedIds);
+                    // Nettoyage moteur : ces cartes n'appartiennent pas à la
+                    // composition choisie par le joueur, elles sortent du deck
+                    // même s'il est à son plancher (`fqAllowBelowMin`).
+                    await deck.deleteEmbeddedDocuments("Card", generatedIds, {fqAllowBelowMin: true});
                 }
             }
         }

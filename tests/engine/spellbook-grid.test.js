@@ -1,7 +1,8 @@
 import {describe, expect, it, vi} from "vitest";
 import {
-    buildLevelOptions, buildSpellbookGroups, computeCopyState, computeDeckSize, computeIncrementAction,
-    computeToggleAction, groupCardsByClass, localizeClassKey, matchesSpellbookFilters, sortCardsByLevelThenName
+    buildLevelOptions, buildSpellbookGroups, computeCopyState, computeDeckMinSize, computeDeckSize,
+    computeIncrementAction, computeToggleAction, groupCardsByClass, localizeClassKey, matchesSpellbookFilters,
+    sortCardsByLevelThenName
 } from "../../src/domain/engine/shared/spellbook-grid.js";
 
 /**
@@ -61,9 +62,14 @@ describe("sortCardsByLevelThenName", () => {
     });
 });
 
-/** Fabrique un deck minimal : un tableau de cartes exposé sous `.cards`. */
-function makeDeck(cards) {
-    return {cards};
+/**
+ * Fabrique un deck minimal : un tableau de cartes exposé sous `.cards`, et le
+ * plancher du deck là où il est porté en jeu (`system.fq.minSize`). Un deck
+ * fabriqué sans plancher n'en a pas : tout y est retirable, comme avant la
+ * règle de taille minimale.
+ */
+function makeDeck(cards, minSize = 0) {
+    return {cards, system: {fq: {type: "DECK", minSize}}};
 }
 
 describe("computeCopyState", () => {
@@ -71,14 +77,14 @@ describe("computeCopyState", () => {
         const card = makeCard({name: "FQCARDTITLE.Card", maxSameCard: 3});
         const deck = makeDeck([]);
 
-        expect(computeCopyState(card, deck)).toEqual({count: 0, max: 3, state: "none", mandatory: false});
+        expect(computeCopyState(card, deck)).toEqual({count: 0, max: 3, state: "none", locked: false, min: 0});
     });
 
     it("1 exemplaire sur maxSameCard 3 : state partial", () => {
         const card = makeCard({name: "FQCARDTITLE.Card", maxSameCard: 3});
         const deck = makeDeck([{name: "FQCARDTITLE.Card"}]);
 
-        expect(computeCopyState(card, deck)).toEqual({count: 1, max: 3, state: "partial", mandatory: false});
+        expect(computeCopyState(card, deck)).toEqual({count: 1, max: 3, state: "partial", locked: false, min: 0});
     });
 
     it("3 exemplaires sur maxSameCard 3 : state full", () => {
@@ -87,7 +93,7 @@ describe("computeCopyState", () => {
             {name: "FQCARDTITLE.Card"}, {name: "FQCARDTITLE.Card"}, {name: "FQCARDTITLE.Card"}
         ]);
 
-        expect(computeCopyState(card, deck)).toEqual({count: 3, max: 3, state: "full", mandatory: false});
+        expect(computeCopyState(card, deck)).toEqual({count: 3, max: 3, state: "full", locked: false, min: 0});
     });
 
     it("4 exemplaires sur maxSameCard 3 (deck hérité incohérent) : full, compte réel affiché sans écrêtage", () => {
@@ -97,7 +103,7 @@ describe("computeCopyState", () => {
             {name: "FQCARDTITLE.Card"}, {name: "FQCARDTITLE.Card"}
         ]);
 
-        expect(computeCopyState(card, deck)).toEqual({count: 4, max: 3, state: "full", mandatory: false});
+        expect(computeCopyState(card, deck)).toEqual({count: 4, max: 3, state: "full", locked: false, min: 0});
     });
 
     it("sans maxSameCard, ou valeur non finie : max vaut 1 (COPY-05)", () => {
@@ -112,7 +118,7 @@ describe("computeCopyState", () => {
     it("deck absent : count 0, state none, sans lever", () => {
         const card = makeCard({name: "FQCARDTITLE.Card", maxSameCard: 3});
 
-        expect(computeCopyState(card, undefined)).toEqual({count: 0, max: 3, state: "none", mandatory: false});
+        expect(computeCopyState(card, undefined)).toEqual({count: 0, max: 3, state: "none", locked: false, min: 0});
     });
 
     it("BOOK-07 : une carte marquée drawn reste comptée (aucun filtre sur l'état de pioche)", () => {
@@ -132,24 +138,75 @@ describe("computeCopyState", () => {
     });
 });
 
-describe("cartes obligatoires (niveau 0)", () => {
-    it("computeCopyState marque obligatoire une carte de niveau 0, pas une carte sans niveau", () => {
-        const mandatory = makeCard({name: "FQCARDTITLE.Basic", level: 0, maxSameCard: 2});
-        const withoutLevel = makeCard({name: "FQCARDTITLE.NoLevel", maxSameCard: 2});
-        const nullLevel = makeCard({name: "FQCARDTITLE.NullLevel", level: null, maxSameCard: 2});
-
-        expect(computeCopyState(mandatory, makeDeck([])).mandatory).toBe(true);
-        expect(computeCopyState(withoutLevel, makeDeck([])).mandatory).toBe(false);
-        expect(computeCopyState(nullLevel, makeDeck([])).mandatory).toBe(false);
+describe("computeDeckMinSize", () => {
+    it("lit le plancher porté par le deck", () => {
+        expect(computeDeckMinSize(makeDeck([], 14))).toBe(14);
     });
 
-    it("computeToggleAction verrouille le retrait d'une carte obligatoire complète", () => {
-        expect(computeToggleAction({count: 2, max: 2, state: "full", mandatory: true}))
+    it("plancher absent, nul, négatif ou non numérique : aucun plancher", () => {
+        expect(computeDeckMinSize(makeDeck([]))).toBe(0);
+        expect(computeDeckMinSize({cards: []})).toBe(0);
+        expect(computeDeckMinSize({cards: [], system: {fq: {minSize: null}}})).toBe(0);
+        expect(computeDeckMinSize({cards: [], system: {fq: {minSize: -3}}})).toBe(0);
+        expect(computeDeckMinSize({cards: [], system: {fq: {minSize: "abc"}}})).toBe(0);
+        expect(computeDeckMinSize(undefined)).toBe(0);
+    });
+});
+
+describe("plancher du deck : verrou de retrait", () => {
+    /** Fabrique un deck de `size` cartes portant toutes le même nom. */
+    function deckOf(name, size, minSize) {
+        return makeDeck(Array.from({length: size}, (_, i) => ({id: `c${i}`, name})), minSize);
+    }
+
+    it("deck exactement au plancher : les cartes présentes sont verrouillées", () => {
+        const card = makeCard({name: "FQCARDTITLE.Card", maxSameCard: 3});
+
+        expect(computeCopyState(card, deckOf("FQCARDTITLE.Card", 3, 3)))
+            .toEqual({count: 3, max: 3, state: "full", locked: true, min: 3});
+    });
+
+    it("retrait qui laisse le deck pile au plancher : autorisé", () => {
+        const card = makeCard({name: "FQCARDTITLE.Card", maxSameCard: 2});
+        const deck = makeDeck([
+            {id: "a", name: "FQCARDTITLE.Card"}, {id: "b", name: "FQCARDTITLE.Card"},
+            {id: "c", name: "FQCARDTITLE.Other"}, {id: "d", name: "FQCARDTITLE.Other"},
+            {id: "e", name: "FQCARDTITLE.Other"}
+        ], 3);
+
+        expect(computeCopyState(card, deck))
+            .toEqual({count: 2, max: 2, state: "full", locked: false, min: 3});
+    });
+
+    it("retrait qui ferait passer sous le plancher d'une seule carte : verrouillé", () => {
+        const card = makeCard({name: "FQCARDTITLE.Card", maxSameCard: 2});
+        const deck = makeDeck([
+            {id: "a", name: "FQCARDTITLE.Card"}, {id: "b", name: "FQCARDTITLE.Card"},
+            {id: "c", name: "FQCARDTITLE.Other"}, {id: "d", name: "FQCARDTITLE.Other"}
+        ], 3);
+
+        expect(computeCopyState(card, deck).locked).toBe(true);
+    });
+
+    it("carte absente du deck : jamais verrouillée, il n'y a rien à en retirer", () => {
+        const card = makeCard({name: "FQCARDTITLE.Absent", maxSameCard: 2});
+
+        expect(computeCopyState(card, deckOf("FQCARDTITLE.Other", 3, 3)).locked).toBe(false);
+    });
+
+    it("deck sans plancher : rien n'est jamais verrouillé", () => {
+        const card = makeCard({name: "FQCARDTITLE.Card", maxSameCard: 2});
+
+        expect(computeCopyState(card, deckOf("FQCARDTITLE.Card", 2, 0)).locked).toBe(false);
+    });
+
+    it("computeToggleAction refuse le retrait d'une carte complète verrouillée", () => {
+        expect(computeToggleAction({count: 2, max: 2, state: "full", locked: true}))
             .toEqual({action: "locked", count: 0});
     });
 
-    it("computeToggleAction complète une carte obligatoire partielle", () => {
-        expect(computeToggleAction({count: 1, max: 3, state: "partial", mandatory: true}))
+    it("computeToggleAction complète une carte partielle, verrou ou non", () => {
+        expect(computeToggleAction({count: 1, max: 3, state: "partial", locked: true}))
             .toEqual({action: "create", count: 2});
     });
 });
@@ -284,10 +341,10 @@ describe("buildSpellbookGroups", () => {
         expect(result.groups.map(g => g.classLabel)).toEqual(["Alpha", "Beta"]);
         expect(result.groups[0].count).toBe(1);
         expect(result.groups[0].entries).toEqual([
-            {card: elementalistCard, copies: {count: 1, max: 2, state: "partial", mandatory: false}}
+            {card: elementalistCard, copies: {count: 1, max: 2, state: "partial", locked: false, min: 0}}
         ]);
         expect(result.groups[1].entries).toEqual([
-            {card: monkCard, copies: {count: 0, max: 1, state: "none", mandatory: false}}
+            {card: monkCard, copies: {count: 0, max: 1, state: "none", locked: false, min: 0}}
         ]);
     });
 

@@ -345,12 +345,20 @@ describe("TradingCards", () => {
 
         await TradingCards.deleteCardsForDeck(targetDeck, cardsToDelete);
 
-        expect(deleteEmbeddedDocumentsMock).toHaveBeenCalledWith("Card", ["card1", "card2"], {fqAllowMandatory: true});
+        expect(deleteEmbeddedDocumentsMock).toHaveBeenCalledWith("Card", ["card1", "card2"], {fqAllowBelowMin: true});
     });
 
-    // ─── cartes obligatoires ──────────────────────────────────────────────────
+    // ─── plancher du deck ─────────────────────────────────────────────────────
 
-    describe("TradingCards — cartes obligatoires", () => {
+    describe("TradingCards — plancher du deck", () => {
+
+        /** Fabrique un deck de combat portant `size` cartes et le plancher donné. */
+        function deckAt(size, minSize) {
+            return {
+                cards: Array.from({length: size}, (_, i) => ({id: `c${i}`, name: "Card"})),
+                system: {fq: {type: "DECK", minSize}}
+            };
+        }
 
         beforeEach(() => {
             globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
@@ -361,67 +369,59 @@ describe("TradingCards", () => {
             globalThis.FqCardEngineModule = undefined;
         });
 
-        it("isMandatoryCard : niveau 0 non générée seulement", () => {
-            expect(TradingCards.isMandatoryCard({system: {fq: {level: 0}}})).toBe(true);
-            expect(TradingCards.isMandatoryCard({system: {fq: {level: 1}}})).toBe(false);
-            expect(TradingCards.isMandatoryCard({system: {fq: {level: null}}})).toBe(false);
-            expect(TradingCards.isMandatoryCard({system: {fq: {}}})).toBe(false);
-            expect(TradingCards.isMandatoryCard({
-                system: {fq: {level: 0}}, flags: {"fq-card-engine": {generated: true}}
-            })).toBe(false);
+        it("buildStartingCards : un élément par exemplaire des seules cartes de niveau 1", () => {
+            const first = {name: "First", system: {fq: {level: 1, maxSameCard: 3}}};
+            const second = {name: "Second", system: {fq: {level: 1}}};
+            const later = {name: "Later", system: {fq: {level: 2, maxSameCard: 4}}};
+
+            expect(TradingCards.buildStartingCards([first, later, second]))
+                .toEqual([first, first, first, second]);
         });
 
-        it("syncMandatoryCards : complète chaque carte obligatoire jusqu'à maxSameCard, en un seul appel", async () => {
-            const createSpy = vi.spyOn(TradingCards, "createCardsForDeck").mockResolvedValue();
-            const basic = {name: "Basic", system: {fq: {level: 0, maxSameCard: 3}}};
-            const other = {name: "Other", system: {fq: {level: 0, maxSameCard: 1}}};
-            const optional = {name: "Optional", system: {fq: {level: 1, maxSameCard: 2}}};
-            const targetDeck = {cards: [{name: "Basic", drawn: true}]};
-
-            const added = await TradingCards.syncMandatoryCards(targetDeck, [basic, other, optional, basic]);
-
-            expect(added).toBe(3);
-            expect(createSpy).toHaveBeenCalledTimes(1);
-            expect(createSpy).toHaveBeenCalledWith(targetDeck, [basic, basic, other]);
+        it("buildStartingCards : patron vide, absent ou sans carte de niveau 1", () => {
+            expect(TradingCards.buildStartingCards([])).toEqual([]);
+            expect(TradingCards.buildStartingCards(undefined)).toEqual([]);
+            expect(TradingCards.buildStartingCards([{name: "L2", system: {fq: {level: 2}}}])).toEqual([]);
         });
 
-        it("syncMandatoryCards : rien à créer quand le deck est déjà complet", async () => {
-            const createSpy = vi.spyOn(TradingCards, "createCardsForDeck").mockResolvedValue();
-            const basic = {name: "Basic", system: {fq: {level: 0, maxSameCard: 1}}};
+        it("computeDeckMinSize : le total des exemplaires de départ", () => {
+            const first = {name: "First", system: {fq: {level: 1, maxSameCard: 3}}};
+            const second = {name: "Second", system: {fq: {level: 1, maxSameCard: 2}}};
+            const later = {name: "Later", system: {fq: {level: 4, maxSameCard: 9}}};
 
-            const added = await TradingCards.syncMandatoryCards({cards: [{name: "Basic"}]}, [basic]);
-
-            expect(added).toBe(0);
-            expect(createSpy).not.toHaveBeenCalled();
+            expect(TradingCards.computeDeckMinSize([first, second, later])).toBe(5);
+            expect(TradingCards.computeDeckMinSize([])).toBe(0);
         });
 
-        it("syncMandatoryCards : aucune mutation pendant un combat", async () => {
-            game.combat = {id: "combat"};
-            const createSpy = vi.spyOn(TradingCards, "createCardsForDeck").mockResolvedValue();
-            const basic = {name: "Basic", system: {fq: {level: 0, maxSameCard: 2}}};
-
-            const added = await TradingCards.syncMandatoryCards({cards: []}, [basic]);
-
-            expect(added).toBe(0);
-            expect(createSpy).not.toHaveBeenCalled();
-        });
-
-        it("canDeleteDeckCard : refuse la suppression d'une carte obligatoire d'un deck de combat", () => {
-            const card = {system: {fq: {level: 0}}, parent: {system: {fq: {type: "DECK"}}}};
+        it("canDeleteDeckCard : refuse le retrait d'un deck déjà au plancher", () => {
+            const card = {id: "c0", parent: deckAt(3, 3)};
 
             expect(TradingCards.canDeleteDeckCard(card, {})).toBe(false);
-            expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningCantRemoveMandatoryCard");
+            expect(ui.notifications.warn).toHaveBeenCalledWith(expect.stringContaining("FQCARDENGINE.WarningDeckMinSize"));
         });
 
-        it("canDeleteDeckCard : laisse passer les chemins internes, les autres cartes et les autres piles", () => {
-            const mandatoryInDeck = {system: {fq: {level: 0}}, parent: {system: {fq: {type: "DECK"}}}};
-            const optionalInDeck = {system: {fq: {level: 2}}, parent: {system: {fq: {type: "DECK"}}}};
-            const mandatoryInHand = {system: {fq: {level: 0}}, parent: {system: {fq: {type: "HAND"}}}};
+        it("canDeleteDeckCard : accepte le retrait tant que le deck est au-dessus du plancher", () => {
+            const card = {id: "c0", parent: deckAt(4, 3)};
 
-            expect(TradingCards.canDeleteDeckCard(mandatoryInDeck, {fqAllowMandatory: true})).toBe(true);
-            expect(TradingCards.canDeleteDeckCard(optionalInDeck, {})).toBe(true);
-            expect(TradingCards.canDeleteDeckCard(mandatoryInHand, {})).toBe(true);
+            expect(TradingCards.canDeleteDeckCard(card, {})).toBe(true);
             expect(ui.notifications.warn).not.toHaveBeenCalled();
+        });
+
+        it("canDeleteDeckCard : laisse passer les chemins internes, les decks sans plancher et les autres piles", () => {
+            const atFloor = {id: "c0", parent: deckAt(3, 3)};
+            const noFloor = {id: "c0", parent: deckAt(3, 0)};
+            const inHand = {id: "c0", parent: {cards: [], system: {fq: {type: "HAND", minSize: 3}}}};
+
+            expect(TradingCards.canDeleteDeckCard(atFloor, {fqAllowBelowMin: true})).toBe(true);
+            expect(TradingCards.canDeleteDeckCard(noFloor, {})).toBe(true);
+            expect(TradingCards.canDeleteDeckCard(inHand, {})).toBe(true);
+            expect(ui.notifications.warn).not.toHaveBeenCalled();
+        });
+
+        it("canDeleteDeckCard : un deck déjà sous son plancher ne laisse plus rien sortir", () => {
+            const card = {id: "c0", parent: deckAt(2, 3)};
+
+            expect(TradingCards.canDeleteDeckCard(card, {})).toBe(false);
         });
     });
 
@@ -811,38 +811,8 @@ describe("TradingCards", () => {
             expect(TradingCards.deleteCardsForDeck).toHaveBeenCalledWith(existingDeck, [deckCard]);
         });
 
-        it("should fill the deck with every copy of the mandatory (level 0) cards", async () => {
+        it("should create the deck with every copy of the main class starting (level 1) cards", async () => {
             game.combat = null;
-            const warrior = {name: "Warrior", system: {isOriginalClass: true, levels: 1}};
-            game.users = {
-                ...game.users,
-                get: vi.fn().mockReturnValue({
-                    id: "user1",
-                    character: {id: "char1", name: "CharacterName"},
-                    isGM: false
-                })
-            };
-            vi.spyOn(Constants, "userFQClasses").mockReturnValue([warrior]);
-
-            const basic = {name: "Basic", system: {fq: {level: 0, maxSameCard: 2}}};
-            const optional = {name: "Optional", system: {fq: {level: 1, maxSameCard: 2}}};
-            game.packs.get = vi.fn(() => ({
-                getDocuments: vi.fn().mockResolvedValue([
-                    {name: "Warrior Base", system: {someBase: true}, cards: [basic, optional]}
-                ])
-            }));
-
-            await TradingCards.updateDeckForUser("user1");
-
-            // 1er appel : le grimoire ; 2e : les exemplaires obligatoires du deck, seuls.
-            expect(TradingCards.createCardsForDeck).toHaveBeenCalledTimes(2);
-            expect(TradingCards.createCardsForDeck).toHaveBeenNthCalledWith(2,
-                expect.objectContaining({id: "newDeck"}),
-                [basic, basic]
-            );
-        });
-
-        it("should remove the mandatory cards of a class the character no longer has", async () => {
             const warrior = {name: "Warrior", system: {isOriginalClass: true, levels: 2}};
             game.users = {
                 ...game.users,
@@ -854,7 +824,86 @@ describe("TradingCards", () => {
             };
             vi.spyOn(Constants, "userFQClasses").mockReturnValue([warrior]);
 
-            const mageBasic = {name: "MageBasic", system: {fq: {level: 0}}};
+            const starting = {name: "Starting", system: {fq: {level: 1, maxSameCard: 2}}};
+            const later = {name: "Later", system: {fq: {level: 2, maxSameCard: 2}}};
+            game.packs.get = vi.fn(() => ({
+                getDocuments: vi.fn().mockResolvedValue([
+                    {name: "Warrior Base", system: {someBase: true}, cards: [starting, later]}
+                ])
+            }));
+
+            await TradingCards.updateDeckForUser("user1");
+
+            // Le deck naît avec le plancher gravé dans son système…
+            expect(Cards.create).toHaveBeenCalledWith(expect.objectContaining({
+                system: expect.objectContaining({
+                    fq: expect.objectContaining({type: "DECK", minSize: 2})
+                })
+            }));
+            // …et avec exactement les exemplaires de départ, jamais les cartes
+            // de niveau supérieur (1er appel : le grimoire ; 2e : le deck).
+            expect(TradingCards.createCardsForDeck).toHaveBeenCalledTimes(2);
+            expect(TradingCards.createCardsForDeck).toHaveBeenNthCalledWith(2,
+                expect.objectContaining({id: "newDeck"}),
+                [starting, starting]
+            );
+        });
+
+        it("should never repopulate an existing deck nor recompute its floor", async () => {
+            const warrior = {name: "Warrior", system: {isOriginalClass: true, levels: 2}};
+            game.users = {
+                ...game.users,
+                get: vi.fn().mockReturnValue({
+                    id: "user1",
+                    character: {id: "char1", name: "CharacterName"},
+                    isGM: false
+                })
+            };
+            vi.spyOn(Constants, "userFQClasses").mockReturnValue([warrior]);
+
+            const starting = {name: "Starting", system: {fq: {level: 1, maxSameCard: 2}}};
+            game.packs.get = vi.fn(() => ({
+                getDocuments: vi.fn().mockResolvedValue([
+                    {name: "Warrior Base", system: {someBase: true}, cards: [starting]}
+                ])
+            }));
+
+            const existingSpellbook = {id: "existingSpellbook", system: {fq: {classLevels: {Warrior: 2}}}};
+            const existingDeck = {
+                id: "existingDeck",
+                cards: [],
+                system: {fq: {type: "DECK", minSize: 0}},
+                update: vi.fn().mockResolvedValue()
+            };
+            TradingCards.getFirstDeck.mockImplementation((userId, typeFq) => {
+                if (typeFq === "SPELLBOOK") return existingSpellbook;
+                if (typeFq === "DECK") return existingDeck;
+                return {id: "other"};
+            });
+
+            await TradingCards.updateDeckForUser("user1");
+
+            // Le plancher est figé à la création : même désaccord avec le patron
+            // de la classe, il n'est pas retouché.
+            expect(existingDeck.update).not.toHaveBeenCalled();
+            expect(existingDeck.system.fq.minSize).toBe(0);
+            // Seul le grimoire est peuplé : un deck existant appartient au joueur.
+            expect(TradingCards.createCardsForDeck).toHaveBeenCalledTimes(1);
+        });
+
+        it("should remove the starting cards of a class the character no longer has", async () => {
+            const warrior = {name: "Warrior", system: {isOriginalClass: true, levels: 2}};
+            game.users = {
+                ...game.users,
+                get: vi.fn().mockReturnValue({
+                    id: "user1",
+                    character: {id: "char1", name: "CharacterName"},
+                    isGM: false
+                })
+            };
+            vi.spyOn(Constants, "userFQClasses").mockReturnValue([warrior]);
+
+            const mageBasic = {name: "MageBasic", system: {fq: {level: 1}}};
             game.packs.get = vi.fn(() => ({
                 getDocuments: vi.fn().mockResolvedValue([
                     {name: "Warrior Base", system: {someBase: true}, cards: []},

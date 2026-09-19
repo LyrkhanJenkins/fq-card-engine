@@ -130,7 +130,7 @@ function detectIssues() {
             if (fq.class !== expectedClass) {
                 issues.push(`classe :: ${label} :: ${fq.class} (attendu ${expectedClass})`);
             }
-            if (!Number.isInteger(fq.level) || fq.level < 0 || fq.level > MAX_LEVEL) {
+            if (!Number.isInteger(fq.level) || fq.level < 1 || fq.level > MAX_LEVEL) {
                 issues.push(`niveau :: ${label} :: ${fq.level}`);
             }
             const copies = Number(fq.maxSameCard);

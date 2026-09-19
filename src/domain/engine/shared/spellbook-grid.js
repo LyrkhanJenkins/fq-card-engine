@@ -1,5 +1,4 @@
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
-import TradingCards from "../../trading/trading-cards.js";
 
 /**
  * Fonctions pures de préparation de la grille du grimoire : tri, groupement
@@ -35,20 +34,25 @@ export function sortCardsByLevelThenName(cards) {
  * l'état de pioche des cartes du deck : Foundry laisse l'originale dans le
  * deck (marquée `drawn`) à la pioche, le compte reste donc juste en combat
  * (BOOK-07). N'est jamais appelée comme critère de tri — toujours APRÈS le
- * tri, en pure annotation (D-14). `mandatory` signale une carte obligatoire,
- * que le joueur ne peut pas retirer du deck.
+ * tri, en pure annotation (D-14). `locked` signale que retirer du deck les
+ * exemplaires de cette carte le ferait passer sous son plancher
+ * (cf. {@link computeDeckMinSize}) : le retrait est alors refusé, il faut
+ * d'abord ajouter d'autres cartes. Le plancher (`min`) voyage avec l'état,
+ * pour que l'affichage puisse le nommer sans relire le deck.
  *
  * @param {Card}   card    - La carte du grimoire.
  * @param {Cards}  [deck]  - Le deck du joueur (absent = 0 exemplaire).
  *
- * @returns {{count: number, max: number, state: "none"|"partial"|"full", mandatory: boolean}} L'état de distribution.
+ * @returns {{count: number, max: number, state: "none"|"partial"|"full", locked: boolean, min: number}} L'état de distribution.
  */
 export function computeCopyState(card, deck) {
     const rawMax = card.system?.fq?.maxSameCard;
     const max = Number.isFinite(rawMax) ? rawMax : 1;
     const count = deck ? deck.cards.filter(c => c.name === card.name).length : 0;
     const state = count === 0 ? "none" : count >= max ? "full" : "partial";
-    return {count, max, state, mandatory: TradingCards.isMandatoryCard(card)};
+    const min = computeDeckMinSize(deck);
+    const locked = count > 0 && computeDeckSize(deck) - count < min;
+    return {count, max, state, locked, min};
 }
 
 /**
@@ -56,17 +60,21 @@ export function computeCopyState(card, deck) {
  * calculé par `computeCopyState` : aucune → crée les exemplaires manquants
  * (`max - count`, qui vaut `max` quand `count` est 0, COPY-01) ; partielle →
  * même calcul (COPY-03, COPY-04, ne dépasse jamais) ; pleine → retire tout
- * (COPY-02), sauf pour une carte obligatoire, qui ne se retire jamais. Ne
- * lit jamais directement le deck ou la carte : reçoit l'état déjà annoté,
- * pour rester composable avec `computeCopyState` sans dépendance circulaire.
+ * (COPY-02), sauf quand l'état est verrouillé, c'est-à-dire quand le retrait
+ * du lot entier ferait passer le deck sous son plancher. Décider sur le lot
+ * complet est indispensable : le hook `preDeleteCard` ne voit qu'une carte à
+ * la fois et ne peut pas, seul, empêcher un retrait groupé de franchir le
+ * plancher. Ne lit jamais directement le deck ou la carte : reçoit l'état
+ * déjà annoté, pour rester composable avec `computeCopyState` sans dépendance
+ * circulaire.
  *
- * @param {{count: number, max: number, state: "none"|"partial"|"full", mandatory?: boolean}} copies - L'état de distribution.
+ * @param {{count: number, max: number, state: "none"|"partial"|"full", locked?: boolean}} copies - L'état de distribution.
  *
  * @returns {{action: "create"|"remove"|"locked", count: number}} L'action à effectuer et le nombre d'exemplaires concernés.
  */
 export function computeToggleAction(copies) {
     if (copies.state === "full") {
-        return copies.mandatory ? {action: "locked", count: 0} : {action: "remove", count: copies.count};
+        return copies.locked ? {action: "locked", count: 0} : {action: "remove", count: copies.count};
     }
     return {action: "create", count: copies.max - copies.count};
 }
@@ -167,6 +175,26 @@ export function buildLevelOptions(cards) {
  */
 export function computeDeckSize(deck) {
     return deck?.cards?.size ?? deck?.cards?.length ?? 0;
+}
+
+/**
+ * Plancher du deck du joueur : le nombre de cartes sous lequel il ne peut pas
+ * descendre, figé une fois pour toutes dans `system.fq.minSize` à la création
+ * du deck, sur le total des exemplaires de départ de la classe FQ principale
+ * (cf. `TradingCards.computeDeckMinSize`). Jamais recalculé ici — ni nulle part
+ * ailleurs après la création : la valeur lue est celle du document, pour que la
+ * grille, l'indicateur de taille et le garde de suppression parlent toujours du
+ * même nombre, sans lecture de compendium sur un chemin synchrone. Une valeur
+ * absente, nulle ou non numérique vaut zéro — un deck sans plancher, où tout se
+ * retire (decks d'avant la règle).
+ *
+ * @param {Cards} [deck] - Le deck du joueur (absent = pas de plancher).
+ *
+ * @returns {number} Le nombre minimal de cartes du deck.
+ */
+export function computeDeckMinSize(deck) {
+    const raw = Number(deck?.system?.fq?.minSize);
+    return Number.isFinite(raw) && raw > 0 ? raw : 0;
 }
 
 /**

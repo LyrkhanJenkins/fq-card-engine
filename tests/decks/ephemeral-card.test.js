@@ -65,7 +65,7 @@ describe("Carte éphémère — détruite au jeu, jamais défaussée", () => {
         expect(result.threw).toBe(false);
         expect(result.passCalls).toHaveLength(0);
         expect(result.handDestroyCalls).toEqual([["Card", [EPHEMERAL_CARD_ID]]]);
-        expect(result.deckDestroyCalls).toEqual([["Card", [EPHEMERAL_CARD_ID], {fqAllowMandatory: true}]]);
+        expect(result.deckDestroyCalls).toEqual([["Card", [EPHEMERAL_CARD_ID], {fqAllowBelowMin: true}]]);
     });
 
     test("la carte est détruite AVANT l'application de ses effets, qui s'appliquent malgré tout", async () => {
@@ -108,7 +108,7 @@ describe("Carte éphémère — détruite au jeu, jamais défaussée", () => {
 
         expect(applyCardEffect).toHaveBeenCalled();
         expect(result.handDestroyCalls).toEqual([["Card", [EPHEMERAL_CARD_ID]]]);
-        expect(result.deckDestroyCalls).toEqual([["Card", [EPHEMERAL_CARD_ID], {fqAllowMandatory: true}]]);
+        expect(result.deckDestroyCalls).toEqual([["Card", [EPHEMERAL_CARD_ID], {fqAllowBelowMin: true}]]);
         applyCardEffect.mockRestore();
     });
 

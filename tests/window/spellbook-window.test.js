@@ -50,10 +50,11 @@ function makeFakeCard({name = "Boule de feu", maxSameCard = 3, id = "sourceCardI
  *
  * @returns {object} Le deck factice.
  */
-function makeFakeDeck(initialCards = []) {
+function makeFakeDeck(initialCards = [], minSize = 0) {
     let nextId = 0;
     const deck = {
         cards: [...initialCards],
+        system: {fq: {type: "DECK", minSize}},
         createEmbeddedDocuments: vi.fn(async (type, data) => {
             const created = data.map(cardData => {
                 const newCard = {id: `generated-${nextId++}`, name: cardData.name};
@@ -262,57 +263,79 @@ describe("SpellbookWindow.patchCopyState — nettoyage avant re-application (RES
     });
 });
 
-describe("SpellbookWindow — cartes obligatoires (niveau 0)", () => {
-    function makeMandatoryCard({name = "Frappe de base", maxSameCard = 2} = {}) {
-        const card = makeFakeCard({name, maxSameCard});
-        card.system.fq.level = 0;
-        return card;
-    }
+describe("SpellbookWindow — plancher du deck", () => {
 
-    test("clic sur une carte obligatoire complète : aucun retrait, avertissement dédié", async () => {
+    test("clic de retrait sur un deck au plancher : aucun retrait, avertissement dédié", async () => {
         game.combat = null;
         const el = makeCardElement({name: "Frappe de base"});
-        const card = makeMandatoryCard();
-        const deck = makeFakeDeck([{id: "c1", name: "Frappe de base"}, {id: "c2", name: "Frappe de base"}]);
+        const card = makeFakeCard({name: "Frappe de base", maxSameCard: 2});
+        const deck = makeFakeDeck(
+            [{id: "c1", name: "Frappe de base"}, {id: "c2", name: "Frappe de base"}], 2
+        );
 
         await SpellbookWindow.toggleCardCopies(el, card, deck);
 
         expect(deck.deleteEmbeddedDocuments).not.toHaveBeenCalled();
         expect(deck.cards).toHaveLength(2);
-        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.WarningCantRemoveMandatoryCard");
+        expect(ui.notifications.warn)
+            .toHaveBeenCalledWith(expect.stringContaining("FQCARDENGINE.WarningDeckMinSize"));
     });
 
-    test("clic sur une carte obligatoire partielle : complète jusqu'au maximum", async () => {
+    test("clic sur une carte partielle : le plancher n'empêche jamais d'ajouter", async () => {
         game.combat = null;
         const el = makeCardElement({name: "Frappe de base"});
-        const card = makeMandatoryCard({maxSameCard: 3});
-        const deck = makeFakeDeck([{id: "c1", name: "Frappe de base"}]);
+        const card = makeFakeCard({name: "Frappe de base", maxSameCard: 3});
+        const deck = makeFakeDeck([{id: "c1", name: "Frappe de base"}, {id: "c2", name: "Autre"}], 1);
 
         await SpellbookWindow.toggleCardCopies(el, card, deck);
 
         expect(deck.createEmbeddedDocuments.mock.calls[0][1]).toHaveLength(2);
-        expect(el.classList.contains("fq-spellbook-card--mandatory")).toBe(true);
+        expect(el.classList.contains("fq-spellbook-card--locked")).toBe(false);
     });
 
-    test("applyCopyState : cadenas et classe obligatoire, tooltip dédié", () => {
+    test("clic de retrait au-dessus du plancher : le retrait a bien lieu", async () => {
+        game.combat = null;
+        const el = makeCardElement({name: "Frappe de base"});
+        const card = makeFakeCard({name: "Frappe de base", maxSameCard: 2});
+        const deck = makeFakeDeck([
+            {id: "c1", name: "Frappe de base"}, {id: "c2", name: "Frappe de base"},
+            {id: "c3", name: "Autre"}, {id: "c4", name: "Autre"}
+        ], 2);
+
+        await SpellbookWindow.toggleCardCopies(el, card, deck);
+
+        expect(deck.deleteEmbeddedDocuments).toHaveBeenCalledTimes(1);
+        expect(deck.cards.map(c => c.id)).toEqual(["c3", "c4"]);
+    });
+
+    test("applyCopyState : cadenas et classe verrouillée, tooltip dédié", () => {
         const el = makeCardElement({name: "Frappe de base"});
 
-        SpellbookWindow.applyCopyState(el, {count: 2, max: 2, state: "full", mandatory: true});
+        SpellbookWindow.applyCopyState(el, {count: 2, max: 2, state: "full", locked: true, min: 14});
 
         const badge = el.querySelector(".fq-spellbook-card-badge");
-        expect(el.classList.contains("fq-spellbook-card--mandatory")).toBe(true);
-        expect(badge.classList.contains("fq-spellbook-card-badge--mandatory")).toBe(true);
+        expect(el.classList.contains("fq-spellbook-card--locked")).toBe(true);
+        expect(badge.classList.contains("fq-spellbook-card-badge--locked")).toBe(true);
         expect(badge.querySelector("i").className).toContain("fa-lock");
-        expect(badge.dataset.tooltip).toContain("FQCARDENGINE.SpellBookMandatoryTooltip");
+        expect(badge.dataset.tooltip).toContain("FQCARDENGINE.SpellBookLockedTooltip");
     });
 
-    test("applyCopyState : une carte optionnelle ne porte ni cadenas ni classe obligatoire", () => {
+    test("applyCopyState : une carte retirable ne porte ni cadenas ni classe verrouillée", () => {
         const el = makeCardElement({name: "Boule de feu"});
 
-        SpellbookWindow.applyCopyState(el, {count: 3, max: 3, state: "full", mandatory: false});
+        SpellbookWindow.applyCopyState(el, {count: 3, max: 3, state: "full", locked: false, min: 0});
 
-        expect(el.classList.contains("fq-spellbook-card--mandatory")).toBe(false);
+        expect(el.classList.contains("fq-spellbook-card--locked")).toBe(false);
         expect(el.querySelector(".fq-spellbook-card-badge i").className).toContain("fa-circle-check");
+    });
+
+    test("patchCopyState : un verrou posé puis levé ne laisse pas la classe derrière lui", () => {
+        const el = makeCardElement({name: "Boule de feu"});
+
+        SpellbookWindow.patchCopyState(el, {count: 2, max: 2, state: "full", locked: true, min: 2});
+        SpellbookWindow.patchCopyState(el, {count: 2, max: 2, state: "full", locked: false, min: 2});
+
+        expect(el.classList.contains("fq-spellbook-card--locked")).toBe(false);
     });
 });
 
@@ -873,15 +896,39 @@ function makeDeckSizeRoot() {
 }
 
 describe("SpellbookWindow.applyDeckSize — indicateur de taille de deck (D3-09, D3-10)", () => {
-    test("écrit le total dans le nœud de compte et le reste du libellé autour de lui", () => {
+    test("écrit le total et le plancher dans leurs nœuds, et le reste du libellé autour d'eux", () => {
         vi.spyOn(game.i18n, "localize").mockImplementation(key =>
-            (key === "FQCARDENGINE.SpellBookDeckSize" ? "Deck : {count} carte(s)" : key));
+            (key === "FQCARDENGINE.SpellBookDeckSize" ? "Deck : {count}/{min} carte(s)" : key));
         const {root, counter} = makeDeckSizeRoot();
 
-        SpellbookWindow.applyDeckSize(root, 7);
+        SpellbookWindow.applyDeckSize(root, 17, 14);
 
-        expect(counter.querySelector(".fq-spellbook-deck-size-count").textContent).toBe("7");
-        expect(counter.textContent).toBe("Deck : 7 carte(s)");
+        expect(counter.querySelector(".fq-spellbook-deck-size-count").textContent).toBe("17");
+        expect(counter.querySelector(".fq-spellbook-deck-size-min").textContent).toBe("14");
+        expect(counter.textContent).toBe("Deck : 17/14 carte(s)");
+    });
+
+    test("deck au plancher : le libellé porte le modificateur qui l'annonce", () => {
+        const {root, counter} = makeDeckSizeRoot();
+
+        SpellbookWindow.applyDeckSize(root, 14, 14);
+        const atMin = counter.querySelector(".fq-spellbook-deck-size-label")
+            .classList.contains("fq-spellbook-deck-size-label--at-min");
+
+        SpellbookWindow.applyDeckSize(root, 15, 14);
+        const aboveMin = counter.querySelector(".fq-spellbook-deck-size-label")
+            .classList.contains("fq-spellbook-deck-size-label--at-min");
+
+        expect([atMin, aboveMin]).toEqual([true, false]);
+    });
+
+    test("deck sans plancher : jamais de modificateur, même à zéro carte", () => {
+        const {root, counter} = makeDeckSizeRoot();
+
+        SpellbookWindow.applyDeckSize(root, 0, 0);
+
+        expect(counter.querySelector(".fq-spellbook-deck-size-label")
+            .classList.contains("fq-spellbook-deck-size-label--at-min")).toBe(false);
     });
 
     test("appelée deux fois de suite ne laisse qu'un seul libellé dans l'indicateur", () => {

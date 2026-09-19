@@ -201,7 +201,8 @@ describe("hook/combat.hook.js", () => {
 
             await getHook("deleteCombat")({combatants: []}, {});
 
-            expect(deck.deleteEmbeddedDocuments).toHaveBeenCalledWith("Card", ["gen-recycled"]);
+            expect(deck.deleteEmbeddedDocuments)
+                .toHaveBeenCalledWith("Card", ["gen-recycled"], {fqAllowBelowMin: true});
         });
 
         it("ne touche pas aux mains/piles sans carte orpheline", async () => {

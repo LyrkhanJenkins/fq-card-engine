@@ -16,7 +16,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 |---|---|---|
 | Rapport des classes (`utils/class-report.mjs`) | `npm run report:classes` | Affiche en markdown les tableaux de ce fichier : stats moyennes, vue d'ensemble des cartes, exemplaires, caracs utilisées, rendement des cartes (dégâts/soins par PA). |
 | | `npm run report:classes -- --out devNotes/rapport-classes.md` | Écrit le même rapport dans un fichier, pour copier les tableaux dans CLASSES.md. |
-| | `npm run report:classes -- --check` | Contrôle les cibles de la passe : 30‑40 cartes distinctes N0‑N12, aucune carte hors N0‑N12, et exemplaires par niveau une fois la cible fixée (`TARGETS` en tête du script). Code de sortie 1 s'il reste des écarts. |
+| | `npm run report:classes -- --check` | Contrôle les cibles de la passe : 30‑40 cartes distinctes N1‑N12, aucune carte hors N1‑N12, et exemplaires par niveau une fois la cible fixée (`TARGETS` en tête du script). Code de sortie 1 s'il reste des écarts. |
 | Test d'intégrité (`tests/decks/class-deck-integrity.test.js`) | `npx vitest run tests/decks` | Tests des decks : intégrité (niveau, exemplaires, classe, image avec la bonne casse, portée, pools de stats), clés de traduction (`deck-references`), clés de paquet (`pack-keys`)… Les anomalies déjà connues sont listées dans `KNOWN_ISSUES` : **retirer chaque entrée corrigée**, le test l'exige. |
 | Suite complète | `npm test` | Toute la suite (~2 min), à lancer en fin d'étape. |
 
@@ -25,14 +25,14 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 - [ ] Ajuster les règles (grille, cibles) d'après la pilote, puis dérouler les étapes pour les 7 autres classes.
 
 ### Étape 1 — Première passe des cartes : niveaux, cartes manquantes, 30 à 40 cartes par classe
-- [ ] ▶️ Avant de commencer : `npm run report:classes -- --check` pour voir, par classe, le nombre de cartes et la liste des cartes hors N0‑N12.
+- [ ] ▶️ Avant de commencer : `npm run report:classes -- --check` pour voir, par classe, le nombre de cartes et la liste des cartes hors N1‑N12.
 - [ ] Remplir à la main, pour chaque classe, les blocs **Spécificités / Spécialisations / Contraintes** (section « À définir à la main »), en s'appuyant sur les tableaux « Spécialisations proposées ».
-- [ ] Viser **30 à 40 cartes distinctes jouables entre N0 et N12** par classe. Proposition : ~7 cartes N0‑N1, puis ~3 cartes par niveau N2‑N12 (environ une carte par spécialisation et par niveau).
+- [ ] Viser **30 à 40 cartes distinctes jouables entre N1 et N12** par classe. Proposition : ~7 cartes N1, puis ~3 cartes par niveau N2‑N12 (environ une carte par spécialisation et par niveau).
 - [ ] Écrire les nouvelles cartes avec la **grille de coûts provisoire** (section « Règles d'équilibrage (provisoires) »), pour ne pas tout réécrire à l'étape 4.
 - [ ] **Mettre les cartes aux bons niveaux** :
   - [ ] Trier les cartes **N13** (« en attente », 128 au total) : leur donner un niveau (1 à 12), les fusionner ou les supprimer.
   - [ ] Trapper : *Tir Précis II* est au **niveau 21**.
-  - [ ] Décider des **cartes obligatoires (N0)** : aucune classe n'en a aujourd'hui (`MANDATORY_CARD_LEVEL = 0`).
+  - [ ] Vérifier les **cartes de départ (N1)** de chaque classe : leur total d'exemplaires (`maxSameCard` cumulé) est le **plancher du deck** de tout personnage dont c'est la classe principale — aujourd'hui de 0 (Gardien, sans carte N1) à 19 (Élémentaliste). Le Gardien n'aura pas de deck de départ tant que ses cartes N13 ne sont pas redescendues.
 - [ ] **Supprimer ou fusionner les cartes redondantes** (listes « Redondances à trancher » de chaque classe). L'Élémentaliste (47 cartes) et le Maître d'Armes (38 jouables) sont surtout à élaguer.
 - [ ] **Écrire les cartes manquantes** :
   - [ ] Niveaux **8 à 12 vides** pour Moine, Gardien, Mage Blanc, Élémentaliste, Trapper et Sorcière ; 8 à 11 pour l'Illusionniste ; 11 et 12 pour le Maître d'Armes.
@@ -247,7 +247,8 @@ Chaque carac a un usage dominant bien tranché dans les formules de cartes. Dans
 
 ### Niveaux des cartes
 - `level` 1 à 12 : débloquée quand le niveau de la classe atteint cette valeur (les cartes neutres suivent le niveau global, somme des niveaux de classes).
-- `level` 0 : carte **obligatoire**, ajoutée automatiquement au deck (aucune classe n'en a aujourd'hui).
+- `level` 1 : en plus, **cartes de départ**. À la création du deck — quand le personnage reçoit sa première classe FQ — celles de la classe FQ **principale** y sont posées en tous leurs exemplaires ; leur total est figé comme **plancher du deck** (`system.fq.minSize`), en dessous duquel il ne peut plus descendre, et n'est plus jamais recalculé. Rien n'est verrouillé carte par carte : le joueur peut remplacer n'importe laquelle, à condition d'ajouter avant de retirer.
+- **Il n'y a pas de niveau 0.** L'ancienne notion de « carte obligatoire » (N0, indéboulonnable du deck) a été remplacée par ce plancher.
 - `level` 13 : hors campagne, jamais débloquée. Sert aujourd'hui de réserve de cartes « en attente ».
 
 ### Types de rôles utilisés dans ce document
