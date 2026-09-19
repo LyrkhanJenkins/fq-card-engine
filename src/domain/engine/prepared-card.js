@@ -1,4 +1,4 @@
-import Constants, {PREPARED_COLOR, PREPARED_FLAG} from "../constants.js";
+import Constants, {PREPARED_COLOR, PREPARED_FLAG, preparationOf} from "../constants.js";
 import CardCondition from "./shared/card-condition.js";
 import CardEffect from "./shared/card-effect.js";
 import CardFqSystem from "../system/cards/card-fq-system.mjs";
@@ -80,7 +80,7 @@ export default class PreparedCard {
      * @returns {object|undefined} L'instantané `{fd, toId}` de la préparation.
      */
     static getPreparation(card) {
-        return card?.flags?.[globalThis.FqCardEngineModule?.moduleName]?.[PREPARED_FLAG] ?? undefined;
+        return preparationOf(card);
     }
 
     /**

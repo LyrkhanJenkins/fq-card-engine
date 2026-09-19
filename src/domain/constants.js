@@ -14,6 +14,39 @@ export const OriginFQEffectLabel = "FQ Effect";
 export const PREPARED_FLAG = "prepared";
 
 /**
+ * L'instantané de préparation posé sur une carte, ou undefined.
+ *
+ * Unique LECTURE du drapeau dans le module : elle vit ici, avec la clé, et non
+ * dans `PreparedCard` — les modules qui font SORTIR une carte de la main
+ * (`PlayCard`, `DiscardCost`) doivent la faire sans pouvoir importer
+ * `PreparedCard`, qui dépend déjà d'eux.
+ *
+ * @param {Card} [card] - La carte inspectée.
+ *
+ * @returns {object|undefined} L'instantané `{fd, toId}` de la préparation.
+ */
+export function preparationOf(card) {
+    return card?.flags?.[globalThis.FqCardEngineModule?.moduleName]?.[PREPARED_FLAG] ?? undefined;
+}
+
+/**
+ * Le fragment de mise à jour qui DÉSARME une carte, à joindre au transfert qui
+ * la sort de la main.
+ *
+ * Une préparation vaut pour une carte EN MAIN : sans cet effacement, une carte
+ * armée puis sortie reviendrait armée de la défausse au premier rappel — un
+ * armement jamais payé. La règle est la même quelle que soit la porte de sortie
+ * (jeu d'une autre carte, défausse du MJ, paiement d'un coût en défausse),
+ * d'où un seul fragment pour toutes. Il ne dépend d'aucune carte : c'est à
+ * l'appelant de ne le joindre qu'aux cartes que {@link preparationOf} désigne.
+ *
+ * @returns {object} Le fragment `{flags: {...}}` à joindre à `updateData`.
+ */
+export function disarmUpdateData() {
+    return {flags: {[globalThis.FqCardEngineModule?.moduleName]: {[PREPARED_FLAG]: null}}};
+}
+
+/**
  * Couleur des messages de statut d'une carte préparée — le bleu de son halo dans
  * la main, pour que le chat et la main parlent la même langue.
  * @type {string}

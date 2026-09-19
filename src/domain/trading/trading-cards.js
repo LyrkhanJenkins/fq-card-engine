@@ -17,9 +17,10 @@ export const NEUTRAL_PATTERN_DECK_NAME = "Neutral Base";
  * Niveau des cartes de départ : le premier niveau du jeu. Le deck de combat
  * est créé avec tous les exemplaires des cartes de ce niveau appartenant à la
  * classe FQ principale, et le total de ces exemplaires fixe le plancher du
- * deck (cf. {@link TradingCards.computeDeckMinSize}) : le joueur peut ensuite
- * remplacer ces cartes par d'autres, jamais descendre sous ce nombre. Il
- * n'existe pas de niveau 0.
+ * deck, figé dans `system.fq.minSize` à sa création (cf.
+ * {@link TradingCards.buildStartingCards} et {@link TradingCards.deckMinSize}) :
+ * le joueur peut ensuite remplacer ces cartes par d'autres, jamais descendre
+ * sous ce nombre. Il n'existe pas de niveau 0.
  */
 export const STARTING_CARD_LEVEL = 1;
 
@@ -409,21 +410,6 @@ export default class TradingCards {
     }
 
     /**
-     * Plancher d'un deck de combat : le nombre d'exemplaires de départ de la
-     * classe principale (cf. {@link TradingCards.buildStartingCards}). Le deck
-     * ne peut jamais descendre sous ce total, quelles que soient les cartes qui
-     * le composent — c'est l'unique contrainte de composition du deck, en
-     * remplacement du verrou par carte des cartes obligatoires.
-     *
-     * @param {Card[]|object[]} patternCards - Les cartes du deck patron de la classe principale.
-     *
-     * @returns {number} Le nombre minimal de cartes du deck.
-     */
-    static computeDeckMinSize(patternCards) {
-        return TradingCards.buildStartingCards(patternCards).length;
-    }
-
-    /**
      * Supprime le Deck principal et le Spellbook d'un utilisateur.
      * Le Deck n'est supprimé que si l'utilisateur est monoclasse de niveau 5 ou moins
      * (cas où il peut être reconstruit automatiquement).
@@ -510,7 +496,7 @@ export default class TradingCards {
         if (options?.fqAllowBelowMin) return true;
         const parent = card?.parent;
         if (parent?.system?.fq?.type !== DECK_TYPE) return true;
-        const min = Number(parent.system.fq.minSize) || 0;
+        const min = TradingCards.deckMinSize(parent);
         if (TradingCards.countDeckCards(parent) > min) return true;
         ui.notifications.warn(game.i18n.format("FQCARDENGINE.WarningDeckMinSize", {min}));
         return false;
@@ -528,6 +514,28 @@ export default class TradingCards {
      */
     static countDeckCards(stack) {
         return stack?.cards?.size ?? stack?.cards?.length ?? 0;
+    }
+
+    /**
+     * Plancher d'un deck de combat : le nombre de cartes sous lequel il ne peut
+     * pas descendre, figé une fois pour toutes dans `system.fq.minSize` à sa
+     * création, sur le total des exemplaires de départ de la classe FQ
+     * principale (cf. {@link TradingCards.buildStartingCards}). Jamais recalculé
+     * après coup : la valeur lue est celle du document, pour que la grille du
+     * grimoire, l'indicateur de taille et le garde de suppression parlent
+     * toujours du même nombre, sans lecture de compendium sur un chemin
+     * synchrone.
+     *
+     * Une valeur absente, nulle ou non numérique vaut zéro — un deck sans
+     * plancher, où tout se retire (decks d'avant la règle).
+     *
+     * @param {Cards} [deck] - Le deck inspecté (absent = pas de plancher).
+     *
+     * @returns {number} Le nombre minimal de cartes du deck.
+     */
+    static deckMinSize(deck) {
+        const raw = Number(deck?.system?.fq?.minSize);
+        return Number.isFinite(raw) && raw > 0 ? raw : 0;
     }
 
     /**

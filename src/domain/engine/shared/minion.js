@@ -333,22 +333,39 @@ export default class Minion {
      * Opération de MJ : appelée depuis les hooks de combat, côté premier MJ actif,
      * là où les documents de la scène et du combat sont modifiables.
      *
-     * @param {object} [token] - Le jeton du fantôme (placeable ou document).
+     * @param {object} [token]  - Le jeton du fantôme (placeable ou document).
+     * @param {object} [combat] - Le combat dont il est combattant (défaut : `game.combat`).
      *
      * @returns {Promise<void>}
      */
-    static async dismissGhost(token) {
+    static async dismissGhost(token, combat = game.combat) {
         const tokenDocument = token?.document ?? token;
         if (!tokenDocument) {
             return;
         }
         const actor = tokenDocument.actor;
-        const combatant = [...(game.combat?.combatants ?? [])]
+        const combatant = [...(combat?.combatants ?? [])]
             .find(c => c.tokenId === tokenDocument.id);
 
         await combatant?.delete();
         await tokenDocument.delete();
         await actor?.delete();
+    }
+
+    /**
+     * Les jetons des scènes où un fantôme du combat peut se trouver : la scène du
+     * combat et la scène ACTIVE du monde, où `Damage.createActorFromData` pose le
+     * jeton. Jamais la scène affichée par le MJ (`game.canvas.scene`) : elle
+     * n'a aucun lien avec le combat — un MJ qui prépare une autre scène pendant
+     * la partie ne verrait plus aucun fantôme, qui survivrait alors à son tour.
+     *
+     * @param {object} [combat] - Le combat concerné (défaut : `game.combat`).
+     *
+     * @returns {object[]} Les jetons des scènes concernées, sans doublon de scène.
+     */
+    static #ghostSearchTokens(combat) {
+        const scenes = new Set([combat?.scene, game.scenes?.active].filter(Boolean));
+        return [...scenes].flatMap(scene => [...(scene.tokens ?? [])]);
     }
 
     /**
@@ -360,30 +377,34 @@ export default class Minion {
      *
      * @param {string} [tokenId] - L'id du jeton dont le tour s'achève
      *        (`prior.tokenId` du hook de changement de tour).
+     * @param {object} [combat]  - Le combat en cours (défaut : `game.combat`).
      *
      * @returns {Promise<void>}
      */
-    static async dismissGhostOfTurn(tokenId) {
+    static async dismissGhostOfTurn(tokenId, combat = game.combat) {
         if (!tokenId) {
             return;
         }
-        const token = game.canvas?.scene?.tokens?.get?.(tokenId)
-            ?? [...(game.canvas?.scene?.tokens ?? [])].find(t => t.id === tokenId);
+        const token = Minion.#ghostSearchTokens(combat).find(t => t.id === tokenId);
         if (Minion.isGhostToken(token)) {
-            await Minion.dismissGhost(token);
+            await Minion.dismissGhost(token, combat);
         }
     }
 
     /**
-     * Dissipe TOUS les fantômes encore posés sur la scène active — le filet de la
-     * fin de combat, pour ceux que la fin de leur tour n'a pas emportés : un
-     * fantôme créé dans le dernier tour, ou dont le tour n'est jamais venu.
+     * Dissipe TOUS les fantômes encore posés sur les scènes du combat — le filet
+     * de la fin de combat, pour ceux que la fin de leur tour n'a pas emportés :
+     * un fantôme créé dans le dernier tour, ou dont le tour n'est jamais venu.
+     *
+     * @param {object} [combat] - Le combat terminé (défaut : `game.combat`). À la
+     *        suppression du combat, `game.combat` est déjà vide : l'appelant fournit
+     *        le document reçu par le hook.
      *
      * @returns {Promise<void>}
      */
-    static async dismissAllGhosts() {
-        for (const token of [...(game.canvas?.scene?.tokens ?? [])].filter(t => Minion.isGhostToken(t))) {
-            await Minion.dismissGhost(token);
+    static async dismissAllGhosts(combat = game.combat) {
+        for (const token of Minion.#ghostSearchTokens(combat).filter(t => Minion.isGhostToken(t))) {
+            await Minion.dismissGhost(token, combat);
         }
     }
 

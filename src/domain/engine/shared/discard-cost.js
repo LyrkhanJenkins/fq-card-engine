@@ -1,4 +1,4 @@
-import Constants from "../../constants.js";
+import Constants, {disarmUpdateData, preparationOf} from "../../constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import CardSelection from "../../interface/window/card-selection.js";
 import {createInfo, createWarning} from "../../../core/utils/chat.utils.js";
@@ -97,11 +97,23 @@ export default class DiscardCost {
             return true;
         }
         if (!silent) {
-            createWarning(game.i18n.format("FQCARDENGINE.WarningMsgNotEnoughCardsToDiscard",
-                {count: DiscardCost.required(cardContent)}),
-            {actor: Constants.actorCurrent, prependActorName: true});
+            DiscardCost.#warnHandTooShort(DiscardCost.required(cardContent));
         }
         return false;
+    }
+
+    /**
+     * Publie l'avertissement « main trop courte pour payer ce coût ». Les deux
+     * refus possibles — le verdict rendu avant le jeu et le garde-fou du voile —
+     * disent la MÊME chose au joueur, et la disent donc d'un seul endroit.
+     *
+     * @param {number} count - Le nombre de cartes que le coût exige.
+     *
+     * @returns {void}
+     */
+    static #warnHandTooShort(count) {
+        createWarning(game.i18n.format("FQCARDENGINE.WarningMsgNotEnoughCardsToDiscard", {count}),
+            {actor: Constants.actorCurrent, prependActorName: true});
     }
 
     /**
@@ -128,8 +140,7 @@ export default class DiscardCost {
         // Garde-fou : `canPay` a déjà refusé le jeu en amont, mais le voile ne
         // doit jamais s'ouvrir sur une sélection impossible à compléter.
         if (candidates.length < count) {
-            createWarning(game.i18n.format("FQCARDENGINE.WarningMsgNotEnoughCardsToDiscard", {count}),
-                {actor: Constants.actorCurrent, prependActorName: true});
+            DiscardCost.#warnHandTooShort(count);
             return false;
         }
         const chosen = await CardSelection.openSelectionVeil(candidates, count, {
@@ -148,6 +159,12 @@ export default class DiscardCost {
      * l'utilisateur sans interrompre le jeu de la carte — le coût est alors
      * considéré payé, comme tout prélèvement déjà engagé.
      *
+     * Une carte réactive armée qui sert de paiement est DÉSARMÉE en chemin, par
+     * le constructeur que partagent toutes les sorties de main
+     * (`disarmUpdateData`) : sans lui, elle reviendrait armée de la défausse au
+     * premier rappel. Les cartes armées voyagent donc à part — `pass` applique
+     * un seul `updateData` à tout un lot — et chacune avec le sien.
+     *
      * @param {Card[]} chosen - Les cartes retenues par le joueur.
      * @param {Cards}  hand   - La main du lanceur.
      * @param {Cards}  to     - La pile de défausse cible.
@@ -155,10 +172,20 @@ export default class DiscardCost {
      * @returns {Promise<void>}
      */
     static async discardChosen(chosen, hand, to) {
-        await hand.pass(to, chosen.map(c => c.id), {
+        const options = {
             action: "pass",
             chatNotification: !CONFIG.FqCardEngine.options.hideMessages
-        }).catch(err => ui.notifications.error(err.message));
+        };
+        const armed = chosen.filter(card => preparationOf(card));
+        const plain = chosen.filter(card => !preparationOf(card));
+        const batches = [
+            {cards: plain, options},
+            {cards: armed, options: {...options, updateData: disarmUpdateData()}}
+        ].filter(batch => batch.cards.length);
+        for (const batch of batches) {
+            await hand.pass(to, batch.cards.map(c => c.id), batch.options)
+                .catch(err => ui.notifications.error(err.message));
+        }
         createInfo(game.i18n.format("FQCARDENGINE.InfoMsgCardsDiscardedForCost",
             {names: chosen.map(c => game.i18n.localize(c.name)).join(", ")}),
         {actor: Constants.actorCurrent});

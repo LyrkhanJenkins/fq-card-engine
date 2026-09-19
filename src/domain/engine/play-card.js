@@ -1,4 +1,4 @@
-import Constants, {PREPARED_FLAG, SUCCESS_COLOR} from "../constants.js";
+import Constants, {SUCCESS_COLOR, disarmUpdateData, preparationOf} from "../constants.js";
 import CardEffect from "./shared/card-effect.js";
 import DiscardCost from "./shared/discard-cost.js";
 import RollService from "./roll/roll-service.js";
@@ -182,11 +182,10 @@ export default class PlayCard {
      * @returns {Promise<*>} La promesse du transfert.
      */
     static transferToPile(currentCards, to, card, fd) {
-        const moduleName = globalThis.FqCardEngineModule.moduleName;
-        const updateData = fd.down ? {face: null} : {};
-        if (card.flags?.[moduleName]?.[PREPARED_FLAG]) {
-            updateData.flags = {[moduleName]: {[PREPARED_FLAG]: null}};
-        }
+        const updateData = {
+            ...(fd.down ? {face: null} : {}),
+            ...(preparationOf(card) ? disarmUpdateData() : {})
+        };
         return currentCards.pass(to, [card.id], {
             action: "pass",
             chatNotification: !CONFIG.FqCardEngine.options.hideMessages,

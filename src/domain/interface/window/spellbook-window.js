@@ -1,7 +1,7 @@
 import DisplayCard from "../card-svg/display-card.js";
 import {
-    buildLevelOptions, buildSpellbookGroups, computeCopyState, computeDeckMinSize, computeDeckSize,
-    computeIncrementAction, computeToggleAction, matchesSpellbookFilters
+    buildLevelOptions, buildSpellbookGroups, computeCopyState, computeIncrementAction,
+    computeToggleAction, matchesSpellbookFilters
 } from "../../engine/shared/spellbook-grid.js";
 import TradingCards from "../../trading/trading-cards.js";
 
@@ -211,8 +211,8 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             combatLocked: SpellbookWindow.isCombatLocked(),
             groups: this.#preparedGroups.groups.map(({classKey, classLabel, count}) => ({classKey, classLabel, count})),
             levelOptions: buildLevelOptions(this.spellBook.cards.contents),
-            deckSize: computeDeckSize(this.deck),
-            deckMinSize: computeDeckMinSize(this.deck)
+            deckSize: TradingCards.countDeckCards(this.deck),
+            deckMinSize: TradingCards.deckMinSize(this.deck)
         };
     }
 
@@ -253,7 +253,8 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
                 this.#filters = filters;
             });
         }
-        SpellbookWindow.applyDeckSize(this.element, computeDeckSize(this.deck), computeDeckMinSize(this.deck));
+        SpellbookWindow.applyDeckSize(this.element, TradingCards.countDeckCards(this.deck),
+            TradingCards.deckMinSize(this.deck));
         if (this.#preparedGroups.isEmpty) {
             return;
         }
@@ -403,9 +404,9 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      */
     static patchCopyState(cardElement, copies) {
         cardElement.classList.remove(
-            "fq-spellbook-card--none", "fq-spellbook-card--partial", "fq-spellbook-card--full"
+            "fq-spellbook-card--none", "fq-spellbook-card--partial", "fq-spellbook-card--full",
+            "fq-spellbook-card--locked"
         );
-        cardElement.classList.remove("fq-spellbook-card--locked");
         cardElement.querySelector(".fq-spellbook-card-badge")?.remove();
         SpellbookWindow.applyCopyState(cardElement, copies);
     }
@@ -467,9 +468,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
                 const matches = deck.cards.filter(c => c.name === card.name);
                 await TradingCards.deleteCardsForDeck(deck, matches);
             }
-            SpellbookWindow.patchCopyState(cardElement, computeCopyState(card, deck));
-            SpellbookWindow.patchDeckSize(cardElement, deck);
-            SpellbookWindow.refreshLocks(cardElement, spellBook, deck);
+            SpellbookWindow.repaintAfterMutation(cardElement, card, deck, spellBook);
         } catch (err) {
             ui.notifications.error(err.message);
         } finally {
@@ -517,9 +516,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
         cardElement.classList.add("fq-spellbook-card--busy");
         try {
             await TradingCards.createCardsForDeck(deck, Array(count).fill(card));
-            SpellbookWindow.patchCopyState(cardElement, computeCopyState(card, deck));
-            SpellbookWindow.patchDeckSize(cardElement, deck);
-            SpellbookWindow.refreshLocks(cardElement, spellBook, deck);
+            SpellbookWindow.repaintAfterMutation(cardElement, card, deck, spellBook);
         } catch (err) {
             ui.notifications.error(err.message);
         } finally {
@@ -877,7 +874,31 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      */
     static patchDeckSize(cardElement, deck) {
         const rootElement = cardElement.closest(".fq-spellbook-body");
-        SpellbookWindow.applyDeckSize(rootElement, computeDeckSize(deck), computeDeckMinSize(deck));
+        SpellbookWindow.applyDeckSize(rootElement, TradingCards.countDeckCards(deck),
+            TradingCards.deckMinSize(deck));
+    }
+
+    /**
+     * Rafraîchit la grille après une mutation du deck : le badge de la carte
+     * mutée, l'indicateur de taille, puis les verrous de toutes les cartes.
+     *
+     * Les trois gestes vont ensemble — un ajout change à la fois le badge de sa
+     * carte, la taille du deck et le verrou de TOUTES les autres — et c'est
+     * pourquoi ils ne se dupliquent pas d'un point de mutation à l'autre
+     * (ajout d'un exemplaire, bascule du lot) : les oublier séparément ferait
+     * mentir la grille de trois façons différentes.
+     *
+     * @param {Element} cardElement  - L'élément racine de la carte mutée.
+     * @param {Card}    card         - La carte du grimoire concernée.
+     * @param {Cards}   deck         - Le deck du joueur, référence du calcul.
+     * @param {Cards}   [spellBook]  - Le grimoire, pour les verrous des autres cartes.
+     *
+     * @returns {void}
+     */
+    static repaintAfterMutation(cardElement, card, deck, spellBook) {
+        SpellbookWindow.patchCopyState(cardElement, computeCopyState(card, deck));
+        SpellbookWindow.patchDeckSize(cardElement, deck);
+        SpellbookWindow.refreshLocks(cardElement, spellBook, deck);
     }
 
     /**

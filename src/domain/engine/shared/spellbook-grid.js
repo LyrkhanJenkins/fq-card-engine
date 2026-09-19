@@ -1,4 +1,5 @@
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
+import TradingCards from "../../trading/trading-cards.js";
 
 /**
  * Fonctions pures de préparation de la grille du grimoire : tri, groupement
@@ -36,7 +37,7 @@ export function sortCardsByLevelThenName(cards) {
  * (BOOK-07). N'est jamais appelée comme critère de tri — toujours APRÈS le
  * tri, en pure annotation (D-14). `locked` signale que retirer du deck les
  * exemplaires de cette carte le ferait passer sous son plancher
- * (cf. {@link computeDeckMinSize}) : le retrait est alors refusé, il faut
+ * (cf. {@link TradingCards.deckMinSize}) : le retrait est alors refusé, il faut
  * d'abord ajouter d'autres cartes. Le plancher (`min`) voyage avec l'état,
  * pour que l'affichage puisse le nommer sans relire le deck.
  *
@@ -50,8 +51,8 @@ export function computeCopyState(card, deck) {
     const max = Number.isFinite(rawMax) ? rawMax : 1;
     const count = deck ? deck.cards.filter(c => c.name === card.name).length : 0;
     const state = count === 0 ? "none" : count >= max ? "full" : "partial";
-    const min = computeDeckMinSize(deck);
-    const locked = count > 0 && computeDeckSize(deck) - count < min;
+    const min = TradingCards.deckMinSize(deck);
+    const locked = count > 0 && TradingCards.countDeckCards(deck) - count < min;
     return {count, max, state, locked, min};
 }
 
@@ -153,48 +154,6 @@ export function buildLevelOptions(cards) {
         return Number.isFinite(value) ? value : 0;
     };
     return [...new Set(cards.map(level))].sort((a, b) => a - b);
-}
-
-/**
- * Calcule le nombre total d'exemplaires réellement présents dans le deck du
- * joueur (D3-09), indépendamment des filtres actifs sur la grille (D3-11) :
- * toutes les cartes du deck, sans filtre sur l'état de pioche ni sur les
- * cartes marquées comme générées — exactement la même discipline que
- * `computeCopyState`. C'est cette symétrie qui garantit que la somme des
- * badges `n/N` de toutes les cartes du grimoire correspond à ce total ; toute
- * divergence entre les deux serait une incohérence, pas une subtilité.
- *
- * `Cards#cards` est une `Collection` Foundry, qui hérite de `Map` et expose
- * donc `size` et non `length` : lire `length` directement renverrait
- * `undefined` en jeu. Le repli sur `length` couvre les collections simulées
- * sous forme de tableau.
- *
- * @param {Cards} [deck] - Le deck du joueur (absent = zéro exemplaire).
- *
- * @returns {number} Le nombre total d'exemplaires du deck.
- */
-export function computeDeckSize(deck) {
-    return deck?.cards?.size ?? deck?.cards?.length ?? 0;
-}
-
-/**
- * Plancher du deck du joueur : le nombre de cartes sous lequel il ne peut pas
- * descendre, figé une fois pour toutes dans `system.fq.minSize` à la création
- * du deck, sur le total des exemplaires de départ de la classe FQ principale
- * (cf. `TradingCards.computeDeckMinSize`). Jamais recalculé ici — ni nulle part
- * ailleurs après la création : la valeur lue est celle du document, pour que la
- * grille, l'indicateur de taille et le garde de suppression parlent toujours du
- * même nombre, sans lecture de compendium sur un chemin synchrone. Une valeur
- * absente, nulle ou non numérique vaut zéro — un deck sans plancher, où tout se
- * retire (decks d'avant la règle).
- *
- * @param {Cards} [deck] - Le deck du joueur (absent = pas de plancher).
- *
- * @returns {number} Le nombre minimal de cartes du deck.
- */
-export function computeDeckMinSize(deck) {
-    const raw = Number(deck?.system?.fq?.minSize);
-    return Number.isFinite(raw) && raw > 0 ? raw : 0;
 }
 
 /**

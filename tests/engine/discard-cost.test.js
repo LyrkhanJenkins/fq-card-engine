@@ -2,6 +2,8 @@ import {beforeEach, describe, expect, it, vi} from "vitest";
 import DiscardCost from "../../src/domain/engine/shared/discard-cost.js";
 import CardSelection from "../../src/domain/interface/window/card-selection.js";
 
+const MODULE = "fq-card-engine";
+
 /**
  * Coût en défausse d'une carte (`drop`) : combien de cartes il réclame, lesquelles
  * de la main peuvent le payer, et comment le paiement se déroule — voile de
@@ -21,6 +23,20 @@ function handCard(id, choices = [{}]) {
 }
 
 /**
+ * Construit une carte réactive ARMÉE : celle qui porte le flag de préparation,
+ * posé en main et qui ne doit pas la suivre à la défausse.
+ *
+ * @param {string} id - L'id de la carte.
+ *
+ * @returns {object} La carte armée.
+ */
+function preparedCard(id) {
+    const card = handCard(id);
+    card.flags = {[MODULE]: {prepared: {choiceIndex: 0}}};
+    return card;
+}
+
+/**
  * Construit la carte jouée et sa main.
  *
  * @param {object[]} others - Les autres cartes de la main.
@@ -37,6 +53,7 @@ describe("DiscardCost", () => {
     beforeEach(() => {
         vi.clearAllMocks();
         vi.restoreAllMocks();
+        globalThis.FqCardEngineModule = {...globalThis.FqCardEngineModule, moduleName: MODULE};
     });
 
     describe("required", () => {
@@ -147,6 +164,41 @@ describe("DiscardCost", () => {
             await expect(DiscardCost.pay({drop: -3}, card, {})).resolves.toBe(false);
             expect(veil).not.toHaveBeenCalled();
             expect(ChatMessage.create).toHaveBeenCalled();
+        });
+
+        it("désarme une carte réactive ARMÉE emportée par le paiement", async () => {
+            // Sans cet effacement, la carte reviendrait armée de la défausse au
+            // premier rappel : un armement gratuit, jamais payé.
+            vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => [...cards]);
+            const card = playedCardIn([preparedCard("armed")]);
+
+            await expect(DiscardCost.pay({drop: -1}, card, {})).resolves.toBe(true);
+
+            expect(card.parent.pass).toHaveBeenCalledWith({}, ["armed"],
+                expect.objectContaining({updateData: {flags: {[MODULE]: {prepared: null}}}}));
+        });
+
+        it("sépare les cartes armées des autres : un seul lot ne peut pas porter les deux", async () => {
+            vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => [...cards]);
+            const card = playedCardIn([handCard("plain"), preparedCard("armed")]);
+
+            await expect(DiscardCost.pay({drop: -2}, card, {})).resolves.toBe(true);
+
+            expect(card.parent.pass).toHaveBeenCalledTimes(2);
+            const [ordinary, armed] = card.parent.pass.mock.calls;
+            expect(ordinary[1]).toEqual(["plain"]);
+            expect(ordinary[2].updateData).toBeUndefined();
+            expect(armed[1]).toEqual(["armed"]);
+            expect(armed[2].updateData).toEqual({flags: {[MODULE]: {prepared: null}}});
+        });
+
+        it("n'ouvre qu'un seul transfert quand aucune carte retenue n'est armée", async () => {
+            vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => [...cards]);
+            const card = playedCardIn([handCard("a"), handCard("b")]);
+
+            await DiscardCost.pay({drop: -2}, card, {});
+
+            expect(card.parent.pass).toHaveBeenCalledTimes(1);
         });
 
         it("notifie une erreur de transfert sans faire échouer le paiement", async () => {

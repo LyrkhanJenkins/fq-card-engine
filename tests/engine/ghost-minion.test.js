@@ -207,15 +207,22 @@ describe("Minion — l'initiative d'une créature invoquée", () => {
 describe("Minion — dissipation d'un fantôme", () => {
 
     /**
-     * Pose un fantôme sur la scène, inscrit à son combat, et rend les espions de
+     * Pose un fantôme sur la scène du combat, l'y inscrit, et rend les espions de
      * suppression de chacun de ses trois documents.
      *
-     * @param {object} [options]      - Les options de montage.
-     * @param {string} [options.type] - Le type de sbire estampillé sur l'acteur.
+     * La scène AFFICHÉE par le MJ (`game.canvas.scene`) est délibérément une
+     * autre, vide : c'est la situation de table ordinaire (un MJ qui prépare la
+     * suite pendant que le combat tourne), et la dissipation ne doit rien lui
+     * devoir.
+     *
+     * @param {object}  [options]         - Les options de montage.
+     * @param {string}  [options.type]    - Le type de sbire estampillé sur l'acteur.
+     * @param {boolean} [options.onActiveScene=false] - Pose le fantôme sur la scène
+     *        ACTIVE du monde plutôt que sur celle du combat (combat sans scène).
      *
      * @returns {object} Les espions `combatant`, `token` et `actor`.
      */
-    function mountGhostOnScene({type = GHOST} = {}) {
+    function mountGhostOnScene({type = GHOST, onActiveScene = false} = {}) {
         const deletes = {combatant: vi.fn(), token: vi.fn(), actor: vi.fn()};
         const tokenDocument = {
             id: "ghostTokenId",
@@ -226,10 +233,17 @@ describe("Minion — dissipation d'un fantôme", () => {
                 flags: {"fq-card-engine": {minionType: type, summonerId: "casterId"}}
             }
         };
-        const tokens = [tokenDocument];
-        tokens.get = (id) => tokens.find(t => t.id === id);
-        game.canvas = {scene: {dimensions: {size: 100}, tokens}};
-        game.combat = {combatants: [{tokenId: "ghostTokenId", delete: deletes.combatant}]};
+        const ghostScene = {dimensions: {size: 100}, tokens: [tokenDocument]};
+        const emptyScene = {dimensions: {size: 100}, tokens: []};
+        // La scène sous les yeux du MJ n'est celle de personne : si la dissipation
+        // la lit, elle ne trouvera aucun fantôme et le test le dira.
+        game.canvas = {scene: emptyScene};
+        game.scenes = [ghostScene];
+        game.scenes.active = onActiveScene ? ghostScene : emptyScene;
+        game.combat = {
+            scene: onActiveScene ? null : ghostScene,
+            combatants: [{tokenId: "ghostTokenId", delete: deletes.combatant}]
+        };
         return deletes;
     }
 
@@ -240,7 +254,7 @@ describe("Minion — dissipation d'un fantôme", () => {
     it("à la fin de son tour, retire le combattant, le jeton puis l'acteur", async () => {
         const deletes = mountGhostOnScene();
 
-        await Minion.dismissGhostOfTurn("ghostTokenId");
+        await Minion.dismissGhostOfTurn("ghostTokenId", game.combat);
 
         expect(deletes.combatant).toHaveBeenCalled();
         expect(deletes.token).toHaveBeenCalled();
@@ -250,7 +264,7 @@ describe("Minion — dissipation d'un fantôme", () => {
     it("ne touche pas à un jeton qui n'est pas un fantôme", async () => {
         const deletes = mountGhostOnScene({type: SKELETON});
 
-        await Minion.dismissGhostOfTurn("ghostTokenId");
+        await Minion.dismissGhostOfTurn("ghostTokenId", game.combat);
 
         expect(deletes.token).not.toHaveBeenCalled();
         expect(deletes.actor).not.toHaveBeenCalled();
@@ -259,7 +273,7 @@ describe("Minion — dissipation d'un fantôme", () => {
     it("sans jeton désigné, ne fait rien", async () => {
         const deletes = mountGhostOnScene();
 
-        await Minion.dismissGhostOfTurn(undefined);
+        await Minion.dismissGhostOfTurn(undefined, game.combat);
 
         expect(deletes.token).not.toHaveBeenCalled();
     });
@@ -267,8 +281,42 @@ describe("Minion — dissipation d'un fantôme", () => {
     it("la fin du combat emporte les fantômes restants", async () => {
         const deletes = mountGhostOnScene();
 
-        await Minion.dismissAllGhosts();
+        await Minion.dismissAllGhosts(game.combat);
 
+        expect(deletes.token).toHaveBeenCalled();
+        expect(deletes.actor).toHaveBeenCalled();
+    });
+
+    it("dissipe sur la scène ACTIVE quand le combat n'en déclare aucune", async () => {
+        const deletes = mountGhostOnScene({onActiveScene: true});
+
+        await Minion.dismissGhostOfTurn("ghostTokenId", game.combat);
+
+        expect(deletes.token).toHaveBeenCalled();
+        expect(deletes.actor).toHaveBeenCalled();
+    });
+
+    it("dissipe même quand le MJ regarde une AUTRE scène que celle du combat", async () => {
+        // Le défaut que cette garde couvre : chercher le jeton sur
+        // `game.canvas.scene` laissait le fantôme en jeu — et jouant chaque round
+        // — dès que le MJ ouvrait une autre scène pendant le combat.
+        const deletes = mountGhostOnScene();
+        expect(game.canvas.scene.tokens).toEqual([]);
+
+        await Minion.dismissGhostOfTurn("ghostTokenId", game.combat);
+        await Minion.dismissAllGhosts(game.combat);
+
+        expect(deletes.token).toHaveBeenCalled();
+    });
+
+    it("à la suppression du combat, dissipe sur le combat REÇU (game.combat est déjà vide)", async () => {
+        const deletes = mountGhostOnScene();
+        const deletedCombat = game.combat;
+        game.combat = null;
+
+        await Minion.dismissAllGhosts(deletedCombat);
+
+        expect(deletes.combatant).toHaveBeenCalled();
         expect(deletes.token).toHaveBeenCalled();
         expect(deletes.actor).toHaveBeenCalled();
     });

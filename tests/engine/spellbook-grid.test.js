@@ -1,6 +1,6 @@
 import {describe, expect, it, vi} from "vitest";
 import {
-    buildLevelOptions, buildSpellbookGroups, computeCopyState, computeDeckMinSize, computeDeckSize,
+    buildLevelOptions, buildSpellbookGroups, computeCopyState,
     computeIncrementAction, computeToggleAction, groupCardsByClass, localizeClassKey, matchesSpellbookFilters,
     sortCardsByLevelThenName
 } from "../../src/domain/engine/shared/spellbook-grid.js";
@@ -135,21 +135,6 @@ describe("computeCopyState", () => {
         const deck = makeDeck([{name: "FQCARDTITLE.Card"}, {name: "FQCARDTITLE.OtherCard"}]);
 
         expect(computeCopyState(card, deck).count).toBe(1);
-    });
-});
-
-describe("computeDeckMinSize", () => {
-    it("lit le plancher porté par le deck", () => {
-        expect(computeDeckMinSize(makeDeck([], 14))).toBe(14);
-    });
-
-    it("plancher absent, nul, négatif ou non numérique : aucun plancher", () => {
-        expect(computeDeckMinSize(makeDeck([]))).toBe(0);
-        expect(computeDeckMinSize({cards: []})).toBe(0);
-        expect(computeDeckMinSize({cards: [], system: {fq: {minSize: null}}})).toBe(0);
-        expect(computeDeckMinSize({cards: [], system: {fq: {minSize: -3}}})).toBe(0);
-        expect(computeDeckMinSize({cards: [], system: {fq: {minSize: "abc"}}})).toBe(0);
-        expect(computeDeckMinSize(undefined)).toBe(0);
     });
 });
 
@@ -421,35 +406,5 @@ describe("buildLevelOptions", () => {
 
     it("un tableau vide renvoie un tableau vide", () => {
         expect(buildLevelOptions([])).toEqual([]);
-    });
-});
-
-describe("computeDeckSize", () => {
-    it("un deck de cinq cartes renvoie cinq, quels que soient noms et états de pioche", () => {
-        const deck = makeDeck([
-            {name: "A", drawn: true}, {name: "A", drawn: false}, {name: "B"}, {name: "B"}, {name: "C"}
-        ]);
-
-        expect(computeDeckSize(deck)).toBe(5);
-    });
-
-    it("un deck vide renvoie zéro", () => {
-        expect(computeDeckSize(makeDeck([]))).toBe(0);
-    });
-
-    it("sans deck : renvoie zéro", () => {
-        expect(computeDeckSize(undefined)).toBe(0);
-    });
-
-    it("compte les exemplaires, pas les cartes distinctes : trois exemplaires du même nom comptent pour trois", () => {
-        const deck = makeDeck([{name: "A"}, {name: "A"}, {name: "A"}]);
-
-        expect(computeDeckSize(deck)).toBe(3);
-    });
-
-    it("collection Foundry (héritée de Map, donc size et non length) : compte quand même", () => {
-        const collection = new Map([["a", {name: "A"}], ["b", {name: "A"}], ["c", {name: "B"}]]);
-
-        expect(computeDeckSize({cards: collection})).toBe(3);
     });
 });

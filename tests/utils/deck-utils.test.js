@@ -384,13 +384,39 @@ describe("TradingCards", () => {
             expect(TradingCards.buildStartingCards([{name: "L2", system: {fq: {level: 2}}}])).toEqual([]);
         });
 
-        it("computeDeckMinSize : le total des exemplaires de départ", () => {
-            const first = {name: "First", system: {fq: {level: 1, maxSameCard: 3}}};
-            const second = {name: "Second", system: {fq: {level: 1, maxSameCard: 2}}};
-            const later = {name: "Later", system: {fq: {level: 4, maxSameCard: 9}}};
+        it("deckMinSize : lit le plancher porté par le deck", () => {
+            expect(TradingCards.deckMinSize(deckAt(0, 14))).toBe(14);
+        });
 
-            expect(TradingCards.computeDeckMinSize([first, second, later])).toBe(5);
-            expect(TradingCards.computeDeckMinSize([])).toBe(0);
+        it("deckMinSize : plancher absent, nul, négatif ou non numérique : aucun plancher", () => {
+            // Decks d'avant la règle, et valeurs qu'un monde bricolé peut porter :
+            // tout ce qui n'est pas un nombre strictement positif laisse le deck
+            // entièrement démontable, plutôt que de le verrouiller par accident.
+            expect(TradingCards.deckMinSize(deckAt(0, 0))).toBe(0);
+            expect(TradingCards.deckMinSize({cards: []})).toBe(0);
+            expect(TradingCards.deckMinSize(deckAt(0, null))).toBe(0);
+            expect(TradingCards.deckMinSize(deckAt(0, -3))).toBe(0);
+            expect(TradingCards.deckMinSize(deckAt(0, "abc"))).toBe(0);
+            expect(TradingCards.deckMinSize(undefined)).toBe(0);
+        });
+
+        it("countDeckCards : compte les exemplaires, pas les cartes distinctes", () => {
+            // L'état de pioche ne retire rien du compte : Foundry laisse
+            // l'originale dans le deck, marquée `drawn` (BOOK-07).
+            const cards = [{name: "A", drawn: true}, {name: "A"}, {name: "B"}, {name: "B"}, {name: "C"}];
+
+            expect(TradingCards.countDeckCards({cards})).toBe(5);
+        });
+
+        it("countDeckCards : jeu vide ou absent", () => {
+            expect(TradingCards.countDeckCards({cards: []})).toBe(0);
+            expect(TradingCards.countDeckCards(undefined)).toBe(0);
+        });
+
+        it("countDeckCards : collection Foundry (héritée de Map, donc size et non length)", () => {
+            const collection = new Map([["a", {name: "A"}], ["b", {name: "A"}], ["c", {name: "B"}]]);
+
+            expect(TradingCards.countDeckCards({cards: collection})).toBe(3);
         });
 
         it("canDeleteDeckCard : refuse le retrait d'un deck déjà au plancher", () => {

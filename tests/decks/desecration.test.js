@@ -75,7 +75,7 @@ describe("Profanation — conversion malédiction → hantise, une pour une", ()
         expect(DESECRATION).toBeDefined();
         expect(DESECRATION.system.fq.choices[0].applyEffectsFormulas).toHaveLength(5);
         expect(DESECRATION.system.fq.choices[0].xvalue)
-            .toBe('SCRIPT:FqCardEngineModule.cond.targetEffectCount(["Curse"])');
+            .toBe("SCRIPT:FqCardEngineModule.cond.targetEffectCount([\"Curse\"])");
     });
 
     test("une seule malédiction : une seule hantise, un seul retrait", async () => {
