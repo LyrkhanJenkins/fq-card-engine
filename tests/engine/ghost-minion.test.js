@@ -261,6 +261,17 @@ describe("Minion — dissipation d'un fantôme", () => {
         expect(deletes.actor).toHaveBeenCalled();
     });
 
+    it("supprime l'acteur du MONDE (baseActor) et non l'acteur synthétique d'un jeton non lié", async () => {
+        const deletes = mountGhostOnScene();
+        const worldActorDelete = vi.fn();
+        game.scenes[0].tokens[0].baseActor = {id: "ghostActorId", delete: worldActorDelete};
+
+        await Minion.dismissGhostOfTurn("ghostTokenId", game.combat);
+
+        expect(worldActorDelete).toHaveBeenCalled();
+        expect(deletes.actor).not.toHaveBeenCalled();
+    });
+
     it("ne touche pas à un jeton qui n'est pas un fantôme", async () => {
         const deletes = mountGhostOnScene({type: SKELETON});
 

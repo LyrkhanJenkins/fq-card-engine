@@ -70,14 +70,9 @@ export default class HitProfile {
         const ability = choice.hitAbility || null;
         const saveAbility = choice.saveAbility || null;
 
-        if (source === CardFqSystem.HIT_SOURCE_NONE) {
-            return HitProfile.#incomplete(choice, "aucune source de modificateur");
-        }
-        if (source === CardFqSystem.HIT_SOURCE_ABILITY && !ability) {
-            return HitProfile.#incomplete(choice, "source « caractéristique » sans caractéristique");
-        }
-        if (type === CardFqSystem.HIT_TYPE_SAVE && !saveAbility) {
-            return HitProfile.#incomplete(choice, "sauvegarde sans caractéristique de sauvegarde");
+        const reason = HitProfile.#incompleteReason(choice);
+        if (reason) {
+            return HitProfile.#incomplete(choice, reason);
         }
 
         const base = HitProfile.#baseAttack(actor, source, ability);
@@ -124,9 +119,7 @@ export default class HitProfile {
         const ability = choice.hitAbility || null;
         const saveAbility = choice.saveAbility || null;
         const save = type === CardFqSystem.HIT_TYPE_SAVE;
-        if (source === CardFqSystem.HIT_SOURCE_NONE
-            || (source === CardFqSystem.HIT_SOURCE_ABILITY && !ability)
-            || (save && !saveAbility)) {
+        if (HitProfile.#incompleteReason(choice)) {
             return null;
         }
         const base = HitProfile.#baseAttack(actor, source, ability);
@@ -237,6 +230,31 @@ export default class HitProfile {
             return null;
         }
         return WeaponDamage.missingWeaponWarningKeyFor(choice.hitSource, actor);
+    }
+
+    /**
+     * Pourquoi la configuration de toucher d'un choix est inexploitable, ou null
+     * si elle est complète. Source UNIQUE de la règle d'incomplétude : le profil du
+     * jeu ({@link HitProfile.of}, qui la journalise) et celui de l'affichage
+     * ({@link HitProfile.preview}, qui se tait) la partagent, pour qu'une carte
+     * ne soit jamais dessinée avec un profil que le jet refusera.
+     *
+     * @param {object} choice - Le choix (contenu) de la carte, portant un jet pour toucher.
+     *
+     * @returns {?string} La raison de l'incomplétude, ou null.
+     */
+    static #incompleteReason(choice) {
+        const source = choice.hitSource ?? CardFqSystem.HIT_SOURCE_NONE;
+        if (source === CardFqSystem.HIT_SOURCE_NONE) {
+            return "aucune source de modificateur";
+        }
+        if (source === CardFqSystem.HIT_SOURCE_ABILITY && !choice.hitAbility) {
+            return "source « caractéristique » sans caractéristique";
+        }
+        if (choice.hitType === CardFqSystem.HIT_TYPE_SAVE && !choice.saveAbility) {
+            return "sauvegarde sans caractéristique de sauvegarde";
+        }
+        return null;
     }
 
     /**

@@ -1,3 +1,4 @@
+import {isGeneratedCard} from "../../../constants.js";
 import TradingCards, {DECK_TYPE, SPELLBOOK_TYPE} from "../../../trading/trading-cards.js";
 import DisplayCard from "../../card-svg/display-card.js";
 
@@ -72,9 +73,8 @@ export default class FqCardsSheet extends foundry.applications.sheets.CardDeckCo
             partContext.isYourDeck = (partContext?.document.system?.fq?.type === DECK_TYPE && partContext?.document.system?.fq?.owner === game.user.id);
             partContext.isYourSpellbook = (partContext?.document.system?.fq?.type === SPELLBOOK_TYPE && partContext?.document.system?.fq?.owner === game.user.id);
 
-            const moduleName = globalThis.FqCardEngineModule?.moduleName;
             for (const cardCtx of partContext.cards ?? []) {
-                cardCtx.isGenerated = Boolean(cardCtx.flags?.[moduleName]?.generated);
+                cardCtx.isGenerated = isGeneratedCard(cardCtx);
             }
 
             if (partContext.isYourSpellbook) {

@@ -312,7 +312,7 @@ export default class ResourceHandler {
      *
      * @returns {boolean} True si c'est le tour de l'acteur en combat, false sinon.
      */
-    static  validateUseSpellInTurn(actor) {
+    static validateUseSpellInTurn(actor) {
         if (!game.combat || game.combat.combatant?.actor?.id !== actor?.id) {
             createWarning(game.i18n.localize("FQCARDENGINE.WarningMsgPlayOutOfHisRound"), {actor: Constants.actorCurrent});
             return false;

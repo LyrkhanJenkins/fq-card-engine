@@ -8,7 +8,7 @@ import WeaponDamage from "../roll/weapon-damage.js";
 import HitProfile from "../roll/hit-profile.js";
 import Minion from "./minion.js";
 import Geometry from "./geometry.js";
-import Constants, {OriginFQEffectLabel} from "../../constants.js";
+import Constants, {OriginFQEffectLabel, isGeneratedCard} from "../../constants.js";
 import Facing from "./facing.js";
 import Fx from "./fx.js";
 import {createInfo, createWarning} from "../../../core/utils/chat.utils.js";
@@ -232,7 +232,7 @@ export default class CardEffect {
         const trimmed = spec?.trim() ?? "";
         const available = (pile?.cards ?? [])
             .filter(c => c.id !== excludeCardId)
-            .filter(c => !generatedOnly || CardEffect.isGeneratedCard(c))
+            .filter(c => !generatedOnly || isGeneratedCard(c))
             // Une carte piochée reste dans le deck, marquée `drawn` : elle est déjà
             // sortie de la pioche et n'est donc plus récupérable depuis le deck.
             .filter(c => !undrawnOnly || !c.drawn);
@@ -253,19 +253,6 @@ export default class CardEffect {
             }
         }
         return {choose: false, cards, missing};
-    }
-
-    /**
-     * Indique si une carte est une copie générée en cours de partie (encart 🃏,
-     * runes gravées…) plutôt qu'une carte permanente du deck du joueur. Seules
-     * ces copies peuvent être détruites depuis la défausse.
-     *
-     * @param {Card} card - La carte à qualifier.
-     *
-     * @returns {boolean} True si la carte porte le drapeau `generated` du module.
-     */
-    static isGeneratedCard(card) {
-        return Boolean(card?.flags?.[FqCardEngineModule.moduleName]?.generated);
     }
 
     /**

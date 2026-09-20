@@ -441,11 +441,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      * @returns {Promise<void>}
      */
     static async toggleCardCopies(cardElement, card, deck, spellBook) {
-        if (cardElement.dataset.busy === "true") {
-            return;
-        }
-        if (SpellbookWindow.isCombatLocked()) {
-            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.SpellBookCombatLockedBanner"));
+        if (!SpellbookWindow.#mayGesture(cardElement)) {
             return;
         }
 
@@ -459,9 +455,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             return;
         }
 
-        cardElement.dataset.busy = "true";
-        cardElement.classList.add("fq-spellbook-card--busy");
-        try {
+        await SpellbookWindow.#runBusy(cardElement, async () => {
             if (action === "create") {
                 await TradingCards.createCardsForDeck(deck, Array(count).fill(card));
             } else {
@@ -469,12 +463,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
                 await TradingCards.deleteCardsForDeck(deck, matches);
             }
             SpellbookWindow.repaintAfterMutation(cardElement, card, deck, spellBook);
-        } catch (err) {
-            ui.notifications.error(err.message);
-        } finally {
-            cardElement.dataset.busy = "false";
-            cardElement.classList.remove("fq-spellbook-card--busy");
-        }
+        });
     }
 
     /**
@@ -497,11 +486,7 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
      * @returns {Promise<void>}
      */
     static async addOneCopy(cardElement, card, deck, spellBook) {
-        if (cardElement.dataset.busy === "true") {
-            return;
-        }
-        if (SpellbookWindow.isCombatLocked()) {
-            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.SpellBookCombatLockedBanner"));
+        if (!SpellbookWindow.#mayGesture(cardElement)) {
             return;
         }
 
@@ -512,11 +497,48 @@ export default class SpellbookWindow extends HandlebarsApplicationMixin(Applicat
             return;
         }
 
+        await SpellbookWindow.#runBusy(cardElement, async () => {
+            await TradingCards.createCardsForDeck(deck, Array(count).fill(card));
+            SpellbookWindow.repaintAfterMutation(cardElement, card, deck, spellBook);
+        });
+    }
+
+    /**
+     * Les gardes que partagent les gestes de mutation du deck (bascule au clic
+     * gauche, ajout au clic droit), dans cet ordre : pas de geste en cours sur la
+     * carte (verrou anti double-geste PARTAGÉ, D21-05), puis pas de combat en cours
+     * (re-vérifié à chaque geste, D2-06 / D21-06 ; la garde de combat avertit).
+     *
+     * @param {Element} cardElement - L'élément racine de la carte visée.
+     *
+     * @returns {boolean} True si le geste peut se poursuivre.
+     */
+    static #mayGesture(cardElement) {
+        if (cardElement.dataset.busy === "true") {
+            return false;
+        }
+        if (SpellbookWindow.isCombatLocked()) {
+            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.SpellBookCombatLockedBanner"));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Exécute la mutation d'un geste sous le verrou `busy` de la carte : le
+     * verrou est posé avant, levé après quoi qu'il arrive, et une erreur de la
+     * mutation est notifiée à l'utilisateur sans remonter au gestionnaire d'événement.
+     *
+     * @param {Element}         cardElement - L'élément racine de la carte visée.
+     * @param {() => Promise<void>} mutation - La mutation du deck et le repaint qui suit.
+     *
+     * @returns {Promise<void>}
+     */
+    static async #runBusy(cardElement, mutation) {
         cardElement.dataset.busy = "true";
         cardElement.classList.add("fq-spellbook-card--busy");
         try {
-            await TradingCards.createCardsForDeck(deck, Array(count).fill(card));
-            SpellbookWindow.repaintAfterMutation(cardElement, card, deck, spellBook);
+            await mutation();
         } catch (err) {
             ui.notifications.error(err.message);
         } finally {

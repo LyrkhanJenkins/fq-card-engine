@@ -1,3 +1,4 @@
+import {isGeneratedCard} from "../constants.js";
 import TradingCards, {DECK_TYPE, HAND_TYPE, PILE_TYPE} from "../trading/trading-cards.js";
 import {createWarning} from "../../core/utils/chat.utils.js";
 import {socket} from "../../hook/integration/socketlib.hook.js";
@@ -127,11 +128,10 @@ export default class CombatTurn {
      */
     static async deleteGeneratedDeckCards() {
         if (CombatTurn.isLocalUserFirstActiveGM()) {
-            const moduleName = globalThis.FqCardEngineModule?.moduleName;
             for (const deck of game.cards
                 .filter(c => c.system.fq.type === DECK_TYPE)) {
                 const generatedIds = [...(deck.cards ?? [])]
-                    .filter(c => c.flags?.[moduleName]?.generated)
+                    .filter(isGeneratedCard)
                     .map(c => c.id);
                 if (generatedIds.length) {
                     // Nettoyage moteur : ces cartes n'appartiennent pas à la

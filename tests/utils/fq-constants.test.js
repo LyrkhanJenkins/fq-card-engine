@@ -1,5 +1,5 @@
 import {afterEach, beforeEach, describe, expect, it} from "vitest";
-import Constants from "../../src/domain/constants.js";
+import Constants, {isGeneratedCard} from "../../src/domain/constants.js";
 
 describe("Constants", () => {
 
@@ -178,5 +178,28 @@ describe("Constants", () => {
 
             expect(Constants.lastCriticalThisTurn()).toBe(false);
         });
+    });
+});
+
+describe("isGeneratedCard", () => {
+    const previous = globalThis.FqCardEngineModule;
+
+    beforeEach(() => {
+        globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
+    });
+
+    afterEach(() => {
+        globalThis.FqCardEngineModule = previous;
+    });
+
+    it("reconnaît une carte portant le drapeau generated du module", () => {
+        expect(isGeneratedCard({flags: {"fq-card-engine": {generated: true}}})).toBe(true);
+    });
+
+    it("refuse une carte permanente, un drapeau d'un autre module ou une carte absente", () => {
+        expect(isGeneratedCard({flags: {}})).toBe(false);
+        expect(isGeneratedCard({flags: {"fq-card-engine": {generatedAt: 1}}})).toBe(false);
+        expect(isGeneratedCard({flags: {autre: {generated: true}}})).toBe(false);
+        expect(isGeneratedCard(undefined)).toBe(false);
     });
 });

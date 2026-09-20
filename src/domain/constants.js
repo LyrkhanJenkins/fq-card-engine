@@ -30,6 +30,24 @@ export function preparationOf(card) {
 }
 
 /**
+ * Indique si une carte est une copie GÉNÉRÉE en cours de partie (encart 🃏, runes
+ * gravées…) plutôt qu'une carte permanente du deck du joueur. C'est ce drapeau
+ * qui décide quelles cartes sont détruites en fin de combat et lesquelles se
+ * détruisent depuis la défausse.
+ *
+ * Unique LECTURE du drapeau dans le module (l'écriture est à `card-generated.js`) :
+ * elle vit ici, avec `preparationOf`, parce que moteur, feuilles et échanges de
+ * cartes la partagent sans pouvoir s'importer entre eux.
+ *
+ * @param {Card} [card] - La carte à qualifier.
+ *
+ * @returns {boolean} True si la carte porte le drapeau `generated` du module.
+ */
+export function isGeneratedCard(card) {
+    return Boolean(card?.flags?.[globalThis.FqCardEngineModule?.moduleName]?.generated);
+}
+
+/**
  * Le fragment de mise à jour qui DÉSARME une carte, à joindre au transfert qui
  * la sort de la main.
  *

@@ -1,4 +1,4 @@
-import Constants, {MAX_CLASS_LEVEL} from "../constants.js";
+import Constants, {MAX_CLASS_LEVEL, isGeneratedCard} from "../constants.js";
 import {sampleItems} from "../../core/utils/random.utils.js";
 
 export const DECK_TYPE = "DECK";
@@ -596,13 +596,12 @@ export default class TradingCards {
      * @returns {{pile: Cards, pileCards: Card[], generated: Card[]}[]} Les piles porteuses et leurs cartes rappelables.
      */
     static getRecallableCardsByPile(deck) {
-        const moduleName = globalThis.FqCardEngineModule?.moduleName;
         return game.cards.filter(c => c.system.fq.type === PILE_TYPE)
             .map(pile => ({
                 pile,
                 pileCards: pile.cards.filter(c => c.origin?.id === deck.id),
                 generated: pile.system.fq.owner === deck.system.fq.owner
-                    ? pile.cards.filter(c => c.flags?.[moduleName]?.generated && c.origin?.type !== "deck")
+                    ? pile.cards.filter(c => isGeneratedCard(c) && c.origin?.type !== "deck")
                     : []
             }))
             .filter(entry => entry.pileCards.length || entry.generated.length);

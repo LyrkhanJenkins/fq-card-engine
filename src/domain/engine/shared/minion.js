@@ -343,7 +343,12 @@ export default class Minion {
         if (!tokenDocument) {
             return;
         }
-        const actor = tokenDocument.actor;
+        // L'acteur à supprimer est celui du MONDE, pas `tokenDocument.actor` : le
+        // jeton du fantôme est non lié (`actorLink: false`), son `actor` est donc
+        // un acteur synthétique dont la suppression n'atteindrait pas l'acteur
+        // « Fantôme … » créé dans le dossier temporaire. `baseActor` est
+        // l'acteur du monde du jeton (le même que `actor` pour un jeton lié).
+        const actor = tokenDocument.baseActor ?? tokenDocument.actor;
         const combatant = Minion.#isCombatLive(combat)
             ? [...(combat.combatants ?? [])].find(c => c.tokenId === tokenDocument.id)
             : undefined;
