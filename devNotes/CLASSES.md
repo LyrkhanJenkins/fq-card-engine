@@ -1,7 +1,7 @@
 # Caractérisation des classes
 
 Document de référence design : ce qui définit chaque classe (identité dnd5e, stats FQ, rôle, mécaniques signature, spécialisations, contraintes), établi à partir des données réelles (`packs/_source/classes-fq8`, `decks-pattern-fq8`, `classes-stats-fq8`, `starter-heroes`, `lang/fr.json`) et du code (`src/domain`, `src/hook`).
-Chiffres mis à jour le 2026-09-16 (après la migration dnd5e 6.0.0).
+Chiffres mis à jour le 2026-09-20 (après la migration dnd5e 6.0.0).
 
 ---
 
@@ -30,13 +30,13 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 - [ ] Viser **30 à 40 cartes distinctes jouables entre N1 et N12** par classe. Proposition : ~7 cartes N1, puis ~3 cartes par niveau N2‑N12 (environ une carte par spécialisation et par niveau).
 - [ ] Écrire les nouvelles cartes avec la **grille de coûts provisoire** (section « Règles d'équilibrage (provisoires) »), pour ne pas tout réécrire à l'étape 4.
 - [ ] **Mettre les cartes aux bons niveaux** :
-  - [ ] Trier les cartes **N13** (« en attente », 128 au total) : leur donner un niveau (1 à 12), les fusionner ou les supprimer.
+  - [ ] Trier les cartes **N13** (« en attente », 154 au total, dont les 41 du Gardien) : leur donner un niveau (1 à 12), les fusionner ou les supprimer.
   - [ ] Trapper : *Tir Précis II* est au **niveau 21**.
   - [ ] Vérifier les **cartes de départ (N1)** de chaque classe : leur total d'exemplaires (`maxSameCard` cumulé) est le **plancher du deck** de tout personnage dont c'est la classe principale — aujourd'hui de 0 (Gardien, sans carte N1) à 19 (Élémentaliste). Le Gardien n'aura pas de deck de départ tant que ses cartes N13 ne sont pas redescendues.
 - [ ] **Supprimer ou fusionner les cartes redondantes** (listes « Redondances à trancher » de chaque classe). L'Élémentaliste (47 cartes) et le Maître d'Armes (38 jouables) sont surtout à élaguer.
 - [ ] **Écrire les cartes manquantes** :
-  - [ ] Niveaux **8 à 12 vides** pour Moine, Gardien, Mage Blanc, Élémentaliste, Trapper et Sorcière ; 8 à 11 pour l'Illusionniste ; 11 et 12 pour le Maître d'Armes.
-  - [ ] Mage Blanc : **aucune carte au niveau 7**.
+  - [ ] Niveaux **8 à 12 vides** pour Moine, Gardien, Élémentaliste, Trapper et Sorcière ; 8, 9, 11 et 12 pour le Mage Blanc ; 10 et 11 pour l'Illusionniste ; 11 et 12 pour le Maître d'Armes.
+  - [ ] ~~Mage Blanc : **aucune carte au niveau 7**.~~ → fait (Soins Majeurs au N7, Soins De Groupe au N10).
   - [ ] Cartes **peu chères** (1 à 4 PA) pour la Sorcière (0), le Mage Blanc (2), l'Élémentaliste (3) et le Trapper (3).
   - [ ] Sorts de rang 2 (versions plus fortes, ex. *Trait de feu II*) pour les niveaux supérieurs ou les trous.
   - [ ] Combos : si certaines actions réussissent, rendre tous les PA ou ramener le coût d'une carte à 0.
@@ -183,7 +183,7 @@ Chaque case donne **N1 / N6 / N12**. Scores de caractéristique suivis du modifi
 | CA (équipement de départ) | 14 / 15 / 16 | **18** | 8 / 8 / 10 | 11 | 14 / 15 / 16 | **8** | 13 / 14 / 16 | 13 / 14 / 16 | 10 |
 | Équipement de départ | Cuir, mains nues | Cotte de mailles, bouclier, masse | Robe, masse | Robe, bâton | Cuir, arc court | Robe, bâton | Cuir, dague | Cuir, lance, arc court | Cuir, hachette |
 | **Cartes** | | | | | | | | | |
-| Cartes débloquées (distinctes / exemplaires) | 4/17 · 17/45 · 19/48 | 3/12 · 18/42 · 20/44 | 4/16 · 20/44 · 20/44 | 4/19 · 19/45 · 20/46 | 5/13 · 19/40 · 21/42 | 2/12 · 18/43 · 19/44 | 6/14 · 24/41 · 27/46 | 5/14 · 30/64 · 38/76 | 3/9 · 4/10 · 5/11 (+ runes) |
+| Cartes débloquées (distinctes / exemplaires) | 4/17 · 17/45 · 19/48 | **0/0 · 0/0 · 0/0** | 4/16 · 20/44 · 22/47 | 4/19 · 19/45 · 20/46 | 5/13 · 19/40 · 21/42 | 2/12 · 18/43 · 19/44 | 6/14 · 24/41 · 29/49 | 5/14 · 30/64 · 38/76 | 4/5 · 9/10 · 15/16 (+ runes) |
 
 **Hypothèses de calcul** (script sur les données, pas de mesure en partie) :
 - **Base commune** (starter heroes) : PA 7, mana 2, zèle 0, critique 0, esquive 0, main 0, pioche 1, déplacement 5 cases, +15 PV fixes. S'y ajoutent les *Start stats* de la classe (`classes-stats-fq8/start-stats-*.json`).
@@ -213,14 +213,15 @@ Chaque carac a un usage dominant bien tranché dans les formules de cartes. Dans
 
 | Classe | Primaires | FOR | DEX | CON | INT | SAG | CHA | Arme (`@wpnM`/`@wpnR`) | Jets (toucher/sauvegarde) |
 |---|---|---|---|---|---|---|---|---|---|
-| Moine | FOR + DEX | 7 | 13 | 4 | – | 3 | 2 | – | DEX 6, FOR 4, SAG 1, CHA 1 |
-| Gardien | FOR + CON | 14 | – | 14 | – | – | 4 | 6 | arme 9, FOR 3, CHA 2, CON 1 |
-| Mage Blanc | CON + SAG | – | – | 5 | 8 | 12 | 1 | – | SAG 13, INT 4 |
+| Moine | FOR + DEX | 7 | 15 | 4 | – | 3 | 2 | – | DEX 6, FOR 4, CHA 1, SAG 1 |
+| Gardien | FOR + CON | 15 | – | 19 | – | – | 3 | 7 | arme 9, FOR 3, CHA 2, CON 1 |
+| Mage Blanc | CON + SAG | – | – | 5 | 8 | 15 | 1 | – | SAG 18, INT 4 |
 | Élémentaliste | INT + SAG | – | 1 | – | 26 | 19 | 1 | – | INT 28, SAG 13, DEX 1 |
 | Trapper | DEX + SAG | 1 | 16 | – | 3 | 5 | **7** | 10 | arme 10, SAG 6, DEX 4, CHA 2, INT 1 |
 | Sorcière | INT + CHA | – | – | – | **3** | **9** | 11 | – | SAG 4, INT 1 |
-| Illusionniste | DEX + CHA | 2 | 6 | 1 | 1 | 7 | 7 | 2 | **INT 17**, DEX 2, arme 2 |
+| Illusionniste | DEX + CHA | 2 | 6 | 1 | 1 | 7 | 8 | 2 | **INT 17**, DEX 2, arme 2 |
 | Maître d'Armes | FOR + DEX | 5 | 9 | – | – | – | 3 | 13 | arme 13, DEX 4, FOR 1 |
+| Guerrier Runique | FOR + INT | 4 | – | 4 | 4 | – | – | 12 | arme 12 |
 
 Écarts à traiter : INT pour l'Illusionniste, SAG/INT pour la Sorcière, CHA pour la spé bêtes du Trapper.
 
@@ -277,19 +278,19 @@ Stats de départ notables : **critique** de départ nul pour Moine, Gardien, Mag
 
 ### Vue d'ensemble des cartes (decks de base)
 
-| Classe | N1 | N2 | N3 | N4 | N5 | N6 | N7 | N8‑12 | N13 (en attente) | Total distinctes / exemplaires | Coût moyen PA | Cartes à 1‑4 PA | Réactives | Zèle + / zèle − | Innées |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Moine | 4 | 2 | 3 | 3 | 2 | 3 | 2 | 0 | 20 | 39 / 79 | 5,6 | 5 | 4 | 20 / 13 | 1 |
-| Gardien | 3 | 1 | 7 | 2 | 2 | 3 | 2 | 0 | 10 | 30 / 57 | 6,1 | 4 | 4 | 6 / 15 | 1 |
-| Mage Blanc | 4 | 2 | 3 | 3 | 5 | 3 | **0** | 0 | 11 | 31 / 62 | 6,1 | 2 | 8 | 9 / 10 | 2 |
-| Élémentaliste | 4 | 4 | 1 | 4 | 2 | 4 | 1 | 0 | **27** | 47 / 94 | 7,3 | 3 | 2 | **9 / 28** | 1 |
-| Trapper | 5 | 2 | 2 | 2 | 4 | 4 | 2 | 0 | 16 (+1 au N21) | 38 / 70 | 7,5 | 3 | 9 | 7 / 18 | 1 |
-| Sorcière | 2 | 6 | 3 | 1 | 3 | 3 | 1 | 0 | 19 | 38 / 79 | **8,1** | **0** | 1 | 4 / 11 | 2 |
-| Illusionniste | 6 | 2 | 4 | 4 | 4 | 4 | 1 | N12 : 2 | 10 | 37 / 61 | 4,8 | 11 | 2 | 6 / 18 | 2 |
-| Maître d'Armes | 5 | 5 | 4 | 4 | 5 | 7 | 2 | N8 : 3, N9 : 1, N10 : 2 | 1 | 39 / 77 (+12 générées) | 5,1 | 18 | 3 | 14 / 14 | 5 |
-| Guerrier Runique | 3 | 1 | – | – | – | – | – | N11 : 1 | – | 5 / 11 (+117 runes, 17 générées) | – | – | – | – | – |
+| Classe | N1 | N2 | N3 | N4 | N5 | N6 | N7 | N8 | N9 | N10 | N11 | N12 | Hors N1‑12 | Plancher deck | Total distinctes / exemplaires | Générées (dist./ex.) | Coût moyen PA | Cartes 1‑4 PA | Réactives | Zèle + / − | Innées |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Moine | 4 | 2 | 3 | 3 | 2 | 3 | 2 | 0 | 0 | 0 | 0 | 0 | 20 | 17 | 39 / 79 | 1 / 1 | 5,6 | 5 | 4 | 20 / 13 | 1 |
+| Gardien | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **41** | **0** | 41 / 75 | 3 / 32 | – | 0 | 6 | 13 / 17 | 1 |
+| Mage Blanc | 4 | 2 | 3 | 3 | 5 | 3 | 1 | 0 | 0 | 1 | 0 | 0 | 19 | 16 | 41 / 79 | 2 / 4 | 6,8 | 2 | 9 | 12 / 12 | 3 |
+| Élémentaliste | 4 | 4 | 1 | 4 | 2 | 4 | 1 | 0 | 0 | 0 | 0 | 0 | **27** | 19 | 47 / 94 | 2 / 4 | 7,3 | 3 | 2 | **9 / 28** | 1 |
+| Trapper | 5 | 2 | 2 | 2 | 4 | 4 | 2 | 0 | 0 | 0 | 0 | 0 | 17 | 13 | 38 / 70 | 0 / 0 | 7,5 | 3 | 9 | 7 / 18 | 1 |
+| Sorcière | 2 | 6 | 3 | 1 | 3 | 3 | 1 | 0 | 0 | 0 | 0 | 0 | 19 | 12 | 38 / 79 | 1 / 3 | **8,1** | **0** | 1 | 4 / 11 | 2 |
+| Illusionniste | 6 | 2 | 4 | 4 | 4 | 4 | 1 | 1 | 1 | 0 | 0 | 2 | 10 | 14 | 39 / 64 | 0 / 0 | 4,8 | 12 | 2 | 7 / 19 | 2 |
+| Maître d'Armes | 5 | 5 | 4 | 4 | 5 | 7 | 2 | 3 | 1 | 2 | 0 | 0 | 1 | 14 | 39 / 77 | 12 / 46 | 5,1 | 18 | 3 | 14 / 14 | 5 |
+| Guerrier Runique | 4 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 5 | 15 / 16 (+117 runes) | 17 / 408 | 5,9 | 1 | 0 | 12 / 0 | 0 |
 
-Coût moyen et cartes peu chères calculés sur les cartes N1‑N12 à coût fixe (les coûts en X sont exclus).
+Coût moyen et cartes peu chères calculés sur les cartes N1‑N12 à coût fixe (les coûts en X sont exclus). **Hors N1‑12** : les cartes garées au N13 (plus *Tir Précis II* au N21 chez le Trapper). **Plancher deck** : exemplaires des cartes N1, figés comme `minSize` du deck de départ. Tableau copié de `npm run report:classes`.
 
 ---
 
@@ -317,9 +318,11 @@ Coût moyen et cartes peu chères calculés sur les cartes N1‑N12 à coût fix
 
 | Tranche | Dégâts / PA | Soins / PA | Exemple (carte à 6 PA) | Échantillon mesuré |
 |---|---|---|---|---|
-| N1‑N3 | ≈ 0,9 | ≈ 1 | ≈ 5 dégâts (*Attaque Simple* : 7 PA, 1 mana, 5,5 dégâts) | 36 choix de dégâts, 2 de soins |
-| N4‑N7 | ≈ 1,2 | ≈ 1 | ≈ 7 dégâts | 21 / 3 |
-| N8‑N12 | ≈ 1,5 (à confirmer) | ≈ 1,2 (à confirmer) | ≈ 9 dégâts | 4 / 1 : trop peu de cartes, valeur extrapolée |
+| N1‑N3 | ≈ 0,9 | ≈ 1 | ≈ 5 dégâts (*Attaque Simple* : 7 PA, 1 mana, 5,5 dégâts) | 33 choix de dégâts, 2 de soins |
+| N4‑N7 | ≈ 1,2 | ≈ 1 | ≈ 7 dégâts | 24 / 5 |
+| N8‑N12 | ≈ 1,5 (à confirmer) | ≈ 1,2 (à confirmer) | ≈ 9 dégâts | 8 / 2 : trop peu de cartes, valeur extrapolée |
+
+**Mesure actuelle** (médiane toutes classes, `npm run report:classes`) : **0,9 / 0,9 / 0,6** dégâts par PA et **1 / 1 / 0,8** soins par PA sur les trois tranches. Les cibles ci-dessus restent au-dessus du mesuré aux tranches hautes : c'est voulu — les N4‑N12 sont encore à écrire.
 
 À ajouter à la valeur de base, puis à compenser par le coût :
 - **Effet** (DoT, état, debuff) : l'équivalent d'environ 1 à 2 PA selon sa durée.
@@ -389,7 +392,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - 3 cartes **générées** dans `guardian-generated.json` (Lame Chargée, Tourbillon Déchaîné, Bénédiction du Rempart), toutes éphémères.
 - Exemplaires : 75 au total, plus 32 exemplaires générés.
 - Zèle : 13 générateurs pour 17 consommateurs (contre 6/15 avant le lot), grâce aux réactifs de l'Ange Gardien et aux petites frappes.
-- Aucun soin réel ni HOT dans le deck : les 11 cartes qui rendent des PV les rendent toutes en **temporaires**.
+- Aucun soin réel ni HOT dans le deck : les 12 cartes du deck de base qui rendent des PV les rendent toutes en **temporaires** (13 avec la Bénédiction du Rempart, générée).
 - Beaucoup de cartes coûtent 1 mana (Frappe Héroïque ×6, Hémorragie ×4, Brèche, Égide, Coup Puissant…) : l'alternative PV est indispensable avec 2,5 mana au N1.
 
 ### Cartes N13 à placer (lot du 2026-09-18)
@@ -423,14 +426,15 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 
 | Spécialisation | Principe | Nombres de cartes |
 |---|---|---|
-| Mage Blanc (healeur et soutien) | Fais des soins et utilise des aura pour soigner et buffé ces alliés |  |
-| Malédictions (dps) | utilise des stacks de malédictions pour faire d'importants dégâts |  |
-| Hanteur (dps spécial) | Consomme les malédictions et/ou réduits ses stats de dégâts et de heal pour contrôler d'autres tokens dans un tour bonus  |  |
+| Mage Blanc (healeur et soutien) | Fais des soins et utilise des aura pour soigner et buffé ces alliés | 16 |
+| Malédictions (dps) | utilise des stacks de malédictions pour faire d'importants dégâts | 12 |
+| Hanteur (dps spécial) | Consomme les malédictions et/ou réduits ses stats de dégâts et de heal pour contrôler d'autres tokens dans un tour bonus | 8 |
+| *(transverse)* | Exorcisme, Infusion de Mana, Sang Bleu, Absorption de Sort, Lumière Révélatrice | 5 |
 
 **Mécaniques signature** :
 - **Malédiction (`Curse`)** : pose plusieurs stacks sur des cibles, permet d'utiliser d'autres sorts efficaces avec beaucoup de stacks. Tue une cible ayant suffisamment de malédictions (Jugement Dernier).
 - **Hantise (`Haunt`)** : seconde marque empilable, distincte de la malédiction et qui ne se confond jamais avec elle. Elle ne fait aucun dégât : elle ouvre la **prise de contrôle**. À 5 hantises, le *Fantôme* — une COPIE de la cible, sur sa case, jouée par le Mage Blanc le temps d'un seul tour puis dissipée. *Profanation* convertit les malédictions en hantises, une pour une, ce qui relie les deux spécialisations.
-- **Suite de boucliers réactifs** : 8 cartes réactives (Bouclier de Mana, Divin, Vengeur, Empathique, Réprouver, Soins d'Urgence, Ange Gardien, Absorption de Sort), Bouclier de Mana avec `replayable: @wis`. Trois modèles de mitigation distincts : PV temporaires, soin réactif répété, invulnérabilité + restauration (Bouclier Divin).
+- **Suite de boucliers réactifs** : 8 des 9 réactives de la classe (Bouclier de Mana, Divin, Vengeur, Empathique, Réprouver, Soins d'Urgence, Ange Gardien, Absorption de Sort ; la neuvième, Voile de Cendres, relève de la Hantise), Bouclier de Mana avec `replayable: @wis`. Trois modèles de mitigation distincts : PV temporaires, soin réactif répété, invulnérabilité + restauration (Bouclier Divin).
 - **Transmutation de ressources** : Sang Bleu (2 PV → 1 mana), Le Bien Et Le Mal (transfert de PV à portée quasi illimitée), Soins d'Urgence (défausse → soin), Infusion de Mana (source de mana passive permanente), Absorption de Sort.
 - **Générateur de mana** : Infusion de Mana.
 - **Beaucoup de cartes automatiques** : les auras qui coûtent 1 mana par tour, à combiner avec les infusions de mana.
@@ -441,7 +445,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - Lent (5 cases), fragile au contact (CA 8)
 
 ### Constat des cartes (données)
-- 39 cartes : 20 débloquables (N1‑N6), **aucune au N7**, rien aux N8‑N12, 19 au N13 (dont les 5 auras, la moitié des malédictions et **toute la spécialisation Hantise**).
+- **41 cartes** : 22 débloquables (21 aux N1‑N7, plus *Soins De Groupe* au N10), rien aux N8‑N9 ni aux N11‑N12, 19 au N13 (dont les 5 auras, la moitié des malédictions et **toute la spécialisation Hantise**).
 - Seulement 2 cartes à 1‑4 PA.
 - Soin direct faible : Soin (innée), Énergie Lumineuse, Soins d'Urgence ; le reste est réactif ou bouclier.
 
@@ -474,6 +478,15 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 **Stats FQ** : le plus gros budget de départ (14) : **meilleur déplacement** (8 cases au N1), la seule classe avec du **zèle initial**, esquive de départ à égalité avec l'Illusionniste (2), bonne main (2). **Aucun critique de départ** — il joue le volume, pas le burst (le critique reste montable via le pool commun).
 
 **Spécialisations proposées (à valider)** :
+
+| Spécialisation | Principe | Nombres de cartes |
+|---|---|---|
+| Enchaînement (dps tempo) | Enchaîne des petites frappes rejouables pour monter son zèle, puis le dépense dans des cartes qui scalent | 11 |
+| Main pleine (dps de ressource) | Garde ses cartes au lieu de les jouer : plus la main est pleine, plus ses cartes frappent | 8 |
+| Paume (soutien) | Soigne au contact en frappant, à portée 1, sans jamais quitter la mêlée | 7 |
+| *(transverse)* | Tank esquive et mobilité : encaisse en esquivant plutôt qu'en PV, et se replace sans cesse | 13 |
+
+Détail des cartes :
 
 | Spécialisation | Principe | Cartes existantes | Manques |
 |---|---|---|---|
@@ -560,6 +573,19 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 
 **Rôle** : DPS magique « glass cannon », mono-cible burst avec pivot AoE (Météore, Onde glacée, Choc de feu), contrôle/debuff en sous-produit.
 
+**Spécialisations proposées (à valider)** — **la seule classe à 4 spécialisations, une par élément** :
+
+| Spécialisation | Principe | Nombres de cartes |
+|---|---|---|
+| Feu (dps sur la durée) | Empile les effets de brûlure : peu de dégâts directs, beaucoup de dégâts par tour cumulés | 7 |
+| Givre (contrôle de tempo) | Gèle une cible unique : ses sorts coûtent plus cher, elle perd ses points d'action | 5 |
+| Terre (dps mono-cible) | Les plus gros dégâts sur une seule cible, qu'il cloue au sol en lui retirant son esquive | 4 |
+| Air (dps multi-cible) | Frappe plusieurs cibles à la fois, les repousse et leur retire du déplacement | 5 |
+| *(combos)* | Les 6 paires d'éléments : 11 cartes exigent les **deux** éléments sur la même cible, 6 acceptent l'un **ou** l'autre | 17 |
+| *(transverse)* | Utilitaires : mana, pioche, report d'action, seule défense de la classe | 9 |
+
+**Les spés se combinent, c'est la particularité de la classe** : 17 cartes sur 47 — plus du tiers du deck — sont des cartes de paire, dont 11 restent injouables tant que les deux éléments ne sont pas actifs sur la même cible. Un Élémentaliste ne joue donc jamais une seule spé : il en amorce deux au premier tour pour ouvrir la troisième carte. Détail élément par élément et paire par paire plus bas.
+
 **Mécaniques signature** :
 - Feu : plus de dégâts sur la durée, plus de cumul avec xvalue : dégâts de durée sur 5‑6 tours. Petits dégâts, plein de DoT (2 effets en moyenne)
 - Givre : réduire les points d'action : faible chance de placer un effet de givre, mono-cible (0,33 effet en moyenne)
@@ -580,12 +606,12 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 
 ### Constat des cartes (données)
 - **47 cartes, la classe la plus fournie** : 20 débloquables (N1‑N7), **27 au N13**, rien aux N8‑N12. Il faut **en retirer**, pas en ajouter.
-- **16 cartes de combo bi-élémentaire** + 4 cartes utilitaires « nécessite 1 élément » + 4 ultimes mono-élément.
+- **17 cartes de paire d'éléments** : 11 exigent deux éléments actifs sur la MÊME cible, 6 acceptent l'un ou l'autre (Brouillard, Givrefeu, Météore, Plastron Magique, Onde Glacée, Choc de Feu). S'y ajoutent 4 utilitaires « nécessite 1 élément parmi 3 », 4 ultimes mono-élément, et 2 cartes conditionnées au NOMBRE d'effets (Assassin du Néant, Missiles Magiques +).
 - Zèle déséquilibré : **9 générateurs pour 28 consommateurs**, avec un zèle initial de 0,2 au N1.
 - Seulement 3 cartes à 1‑4 PA ; coût moyen 7,3 PA ; 6 cartes à 9 PA ou plus.
 - Défense quasi absente : Plastron Magique, Repli du Souffle, Captation de Mana.
 
-### Spécialisations proposées (à valider)
+### Spécialisations — cartes par spé
 | Spé | Cartes mono-élément | Ultime |
 |---|---|---|
 | **Feu** | Trait de Feu, Main Brûlante, Brasier Ardent, Boule de Feu, Traînée Ardente, Attiser les Braises | Immolation Absolue |
@@ -631,6 +657,14 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 
 **Rôle** : archer/DPS très longue portée, sous-thèmes invocateur (Louve N1, Ours N7) et contrôleur de terrain (pièges, entraves).
 
+**Spécialisations proposées (à valider)** :
+
+| Spécialisation | Principe | Nombres de cartes |
+|---|---|---|
+| Sniper (dps critique) | Transforme son score de critique en ressource et tire de très loin, d'autant plus fort qu'il reste immobile et seul | 14 |
+| Pièges (contrôle) | Pose des réactifs qui se déclenchent hors de son tour quand l'ennemi approche, entravent et empoisonnent | 12 |
+| Maître des bêtes (invocateur) | Joue à travers son familier : l'améliore avant de l'invoquer, ou le saigne pour frapper lui-même | 12 |
+
 **Mécaniques signature** :
 - **Le critique comme ressource** : buffs (Tireur d'Élite, Ajustage de Tir inné), conversion (Retrouver des Forces vend du critique contre du mana), et surtout les **pièges dont les dégâts scalent sur le score de critique** (`2d(critique)`) tout en étant incritiquables.
 - **Portée extrême** : `maxReach` formulés (`10+@dex`, `7+@dex`), Tir Supersonique à portée illimitée ; **coût en action = distance** (`xvalue: reach`) sur Tir Précis et Supersonique.
@@ -650,7 +684,7 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - 7 générateurs de zèle pour 18 consommateurs ; coût moyen 7,5 PA ; 3 cartes à 1‑4 PA.
 - Les trois spécialisations sont déjà bien identifiables dans les cartes.
 
-### Spécialisations proposées (à valider)
+### Spécialisations — cartes par spé
 | Spé | Cartes existantes | Manques |
 |---|---|---|
 | **Sniper / critique** | Tir Précis, Tir Précis II, Tireur d'Élite, Ajustage de Tir, Tir Supersonique, Tir Enraciné, Tir Transperçant, Embuscade, Retrouver des Forces, Étude du Point Faible, Chasseur Solitaire, Double Flèche, Pluie de Flèches, Tir Explosif | Finisher N10‑12 |
@@ -686,6 +720,14 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 
 **Rôle** : invocatrice / commandante d'armée à montée en puissance exponentielle — faible au premier tour, écrasante en fin de combat.
 
+**Spécialisations proposées (à valider)** :
+
+| Spécialisation | Principe | Nombres de cartes |
+|---|---|---|
+| Armée (invocateur) | Invoque de la piétaille en attaquant, puis buffe la masse : plus il y a de squelettes en jeu, plus elle est forte | 17 |
+| Colosse (invocateur solo) | Passe son armée au charnier en rituels pour faire naître un Squelette Géant de plus en plus gros | 9 |
+| Charnier (dps) | Sacrifie squelettes et défausse pour lancer elle-même des sorts directs et récupérer ses cartes | 12 |
+
 **Mécaniques signature** :
 - **Armée** : quasiment chaque carte offensive invoque un squelette en plus de son effet (Trait D'Ombre-Verte ×9 en deck). Paliers : Skeleton lvl 1‑2 → Giant Skeleton → Skeleton Sorcerer (capstone N7, mini-nécromancien autonome). Piétaille plafonnée à 6 ; le Sorcier en fait partie.
 - **Le squelette géant** : a son propre TYPE de sbire (`giantSkeleton`), donc son propre plafond de 1 hors des 6 de la piétaille, et il est le seul bénéficiaire des cartes de rituel. Mais il reste de FAMILLE `skeleton` (`CardFqSystem.MINION_FAMILY`) : les sorts qui dopent « tous vos squelettes » le prennent, et les comptages d'armée le comptent. Type = emplacement d'invocation, famille = genre de créature — c'est la seule créature où les deux divergent.
@@ -708,7 +750,7 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - Seulement 2 cartes distinctes au N1 (Nécromancie, Trait d'Ombre-Verte ×9).
 - 4 générateurs de zèle pour 11 consommateurs.
 
-### Spécialisations proposées (à valider)
+### Spécialisations — cartes par spé
 | Spé | Cartes existantes | Manques |
 |---|---|---|
 | **Armée** (piétaille) | Nécromancie, Trait d'Ombre-Verte, Croix de Squelettes, Carré de Squelettes, Levée d'Ossements, Fosse Commune, Bouclier d'Os, Canalisation des Ombres, Forme d'Ombre, Ossature Renforcée, Fureur des Morts, Apothéose Macabre, Déplacement Morbide, Afflux d'Agilité, Afflux de Pouvoir, Rituel du Sang, Sorcier Squelette | Invocation peu chère |
@@ -746,6 +788,15 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 
 **Rôle** : DPS martial polyvalent sur deux rails parallèles — mêlée (`@wpnM`) et distance (`@wpnR`) — plus un rail d'armes de jet.
 
+**Spécialisations proposées (à valider)** :
+
+| Spécialisation | Principe | Nombres de cartes |
+|---|---|---|
+| Mêlée (dps contact) | Frappe avec l'arme de mêlée équipée, en mono-cible ou sur toutes les cases autour de lui | 12 |
+| Distance (dps distance) | Le même kit reporté sur l'arme à distance équipée : tirs lents, lourds, et une zone | 8 |
+| Armes de jet (dps de ressource) | Fabrique des couteaux gratuits et les gonfle sans limite, plus cinq armes de jet uniques | 14 |
+| *(transverse)* | Instructeur : porte les dégâts d'arme ou l'esquive d'un allié à un plancher fixe | 5 |
+
 **Mécaniques signature** :
 - **Coût en mana** : la plupart des attaques coûtent 1 mana (Attaque Simple, Tir Simple, Fente Précise, Visée Posée, Frappe Double…), alors que la classe n'a que 3,5 mana au N1.
 - **Buffs d'arme fenêtrés** : Huile d'affûtage (mêlée), Prise équilibrée (distance), Maîtrise des armes (les deux, 3 rounds) — tour de setup puis burst.
@@ -769,7 +820,7 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - 18 cartes à 1‑4 PA : la plus grande densité de cartes peu chères. Zèle équilibré (14 / 14).
 - Déjà dans la cible des 30‑40 cartes : la passe consiste surtout à **élaguer** et à compléter N11‑N12.
 
-### Spécialisations proposées (à valider)
+### Spécialisations — cartes par spé
 | Spé | Cartes existantes | Manques |
 |---|---|---|
 | **Mêlée** | Attaque Simple, Fente Précise, Frappe Double, Frappe Triple, Huile d'Affûtage, Riposte, Attaque Latérale, Attaque Diagonale, Attaque en Cercle, Forge Spectrale, Forge Astrale, Reprise de Garde | Finisher N11‑12 |
@@ -804,16 +855,25 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - Soutien hybride (bonus de portée), sorts qui marchent avec toutes les classes
 - Healeur à réaction et spé HOT (derniers dégâts)
 
+**Spécialisations proposées (à valider)** :
+
+| Spécialisation | Principe | Nombres de cartes |
+|---|---|---|
+| Lame d'allonge (dps) | Empile du bonus de portée avec des cartes bon marché, puis le convertit en dégâts | 13 |
+| Barde (soutien, **healeur**) | Buffe l'équipe en continu — critique, esquive, dégâts, potions, invulnérabilité — et la maintient debout avec des **soins sur la durée** (HOT) plutôt qu'avec des gros soins d'urgence | 12 |
+| Chronomancien (contrôle et soins) | Manipule l'espace, le temps et les effets : renvoie les dégâts subis, déplace les figurines, copie les effets | 14 |
+
 **Mécaniques signature** :
 - **Bonus de portée**
 - **Cartes de manipulation d'espace** : peut bouger des cibles autres que lui (Passage éthéré, Cage de Rappel, Illusion de Maître de Jeu, Illusion Infranchissable)
-- **Cartes de manipulation temporelle** : soins des derniers dégâts subis, soins HOT ? (Frappe Temporelle, Miroir, Bombe à Retardement, Piège de Retour dans le Temps, Soins Expansifs)
+- **Cartes de manipulation temporelle** : soins des derniers dégâts subis, soins HOT (Frappe Temporelle, Miroir, Bombe à Retardement, Piège de Retour dans le Temps, Soins Expansifs, Rémission Illusoire, Écho de Convalescence)
 - **La portée comme ressource cumulative** (`fq.bonus.range`) : gains fiables (Allonge magique, Fouet Enchanté, Salto Arrière), aléatoires (Rapière Enchantée 1d2), temporaires (Potion d'allonge). Puis des cartes la dépensent ou la scalent : dégâts (Frappe Illusoire, Volée de shuriken, Prise En Traître), DoT (Nuage de dague), conversion (Illusion De Caractéristiques : portée → critique/soins/mana).
 - **Trois `xvalue` distincts** : bonus de portée, distance réelle à la cible (Orbe Grandissante `XXXd6`, Passage éthéré, Bombe à Retardement), nombre de cibles (Succion De Mana).
 - **Soutien d'équipe réel** : Inspiration Chantée (+crit, rejouable @cha fois), Danse Enfiévrée (+esquive), Inspiration Effrénée, Apothicaire I/II (potions), Immatérialité (invulnérabilité 1 tour).
+- **Soins sur la durée (HOT)** : le Barde ne soigne pas d'un coup, il **installe la guérison**. Le patron est toujours le même — aucun soin immédiat, un effet qui pose `system.fq.bonus.dot` en **négatif** (un DoT retourné) pour quelques rounds : Soins Expansifs (`-(6+2*@wis)` sur 1 round), Rémission Illusoire (`-(ceil(@cha/2))` sur 3 rounds), Écho de Convalescence (`-(1 + portée)` sur 2 rounds, jusqu'à 3 cibles). C'est le pendant exact de Nuage de Dague, le DoT de la classe, qui utilise le même champ en positif.
 - **Manipulation d'effets** : Peste Noire (duplique tous les effets FQ de la cible), Contagion (échange les effets de deux cibles), Images Miroir (esquive +@dex jusqu'au premier coup).
 - **Contrôle** : Regard Envoûtant (charme), Berceuse (sommeil).
-- Conversions : Vases communicants (mana ↔ 4 actions), zèle généré par 6 cartes et dépensé par 18.
+- Conversions : Vases communicants (mana ↔ 4 actions), zèle généré par 7 cartes et dépensé par 19.
 
 **Boucle de jeu** : empiler la portée avec des cartes bon marché qui rendent du zèle → encaisser les payoffs → soutenir l'équipe en continu.
 
@@ -827,18 +887,23 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - Le moins de PA au N1
 
 ### Constat des cartes (données)
-- 37 cartes : 25 débloquables aux N1‑N7, 2 au N12 (Magie des Arcanes, Magie Blanche), 10 au N13, rien aux N8‑N11.
-- 11 cartes à 1‑4 PA ; coût moyen 4,8 PA (le plus bas, cohérent avec ses 7,5 PA).
-- 6 générateurs de zèle pour 18 consommateurs.
-- Magie des Arcanes / Magie Blanche (N12) : identité floue, elles ressemblent à des cartes neutres génériques.
+- **39 cartes** : 27 débloquables aux N1‑N9, 2 au N12 (Magie des Arcanes, Magie Blanche), 10 au N13, rien aux N10‑N11.
+- 12 cartes à 1‑4 PA ; coût moyen 4,8 PA (le plus bas, cohérent avec ses 7,5 PA).
+- 7 générateurs de zèle pour 19 consommateurs.
+- *(résolu par le lot du 2026‑09‑20)* Magie des Arcanes est rattachée au dps (Lame d'allonge), Magie Blanche au soutien (Barde) : elles ne sont plus « à reclasser ».
 
-### Spécialisations proposées (à valider)
+### Cartes du lot 2026‑09‑20
+Le Barde devient explicitement le **healeur HOT** de la classe. Deux cartes ajoutées, toutes deux sans soin immédiat, et les deux cartes N12 rangées dans une spé.
+- **Rémission Illusoire** (N8, ×2) — 4 PA, 1 mana, **+1 zèle**, portée 0‑2. La cible récupère `ceil(@cha/2)` PV au début de chacun de ses tours pendant 3 tours. Petite carte, générateur de zèle : la classe en manquait (6 générateurs pour 18 consommateurs avant le lot). **Illustration à faire** (sur `in_progress.png`).
+- **Écho de Convalescence** (N9, ×1) — 6 PA, 1 mana, 1 zèle, jusqu'à 3 cibles à 4 cases. Chacune récupère `1 + bonus de portée` PV par tour pendant 2 tours. Elle branche le soin sur la **ressource signature** de la classe : nulle au premier tour, forte une fois la portée empilée. **Illustration à faire**.
+- ⚠️ Les deux sont écrites en **@cha**, pas en `@wis` : la SAG de l'Illusionniste reste plate à 10 (+0) et n'est jamais montée, alors que le CHA passe de +2 à +5. Les soins historiques (Soins Expansifs, potions de vie de l'Apothicaire) scalent encore sur `@wis` et rendent donc moins que leur libellé ne le laisse croire — même piège que le `@wis` du Moine, à reprendre.
+
+### Spécialisations — cartes par spé
 | Spé | Cartes existantes | Manques |
 |---|---|---|
-| **Lame d'allonge** (mêlée qui scale sur la portée) | Fouet Enchanté, Frappe avec Salto Arrière, Frappe Illusoire, Allonge Magique, Rapière Enchantée, Prise en Traître, Volée de Shuriken, Nuage de Dague, Orbe Grandissante, Shuriken, Shuriken Empoisonné, Illusion de Caractéristiques | Finisher N8‑12 |
-| **Barde** (soutien) | Inspiration Chantée, Danse Enfiévrée, Inspiration Effrénée, Apothicaire I, Apothicaire II, Immatérialité, Vases Communicants, Succion de Mana, Soins Expansifs | Sorts d'assistance (voir TODO) |
+| **Lame d'allonge** (mêlée qui scale sur la portée) | Fouet Enchanté, Frappe avec Salto Arrière, Frappe Illusoire, Allonge Magique, Rapière Enchantée, Prise en Traître, Volée de Shuriken, Nuage de Dague, Orbe Grandissante, Shuriken, Shuriken Empoisonné, Illusion de Caractéristiques, **Magie des Arcanes** | Finisher N8‑12 |
+| **Barde** (soutien, healeur HOT) | Inspiration Chantée, Danse Enfiévrée, Inspiration Effrénée, Apothicaire I, Apothicaire II, Immatérialité, Vases Communicants, Succion de Mana, Soins Expansifs, **Magie Blanche**, **Rémission Illusoire**, **Écho de Convalescence** | Sorts d'assistance (voir TODO) |
 | **Chronomancien / manipulateur** | Passage vers le Plan Éthéré, Peste Noire, Contagion, Frappe Temporelle, Miroir, Distorsion, Bombe à Retardement, Cage de Rappel, Illusion de Maître de Jeu, Piège de Retour dans le Temps, Illusion Infranchissable, Regard Envoûtant, Berceuse, Images Miroir | Cartes N8‑N11 |
-| À reclasser | Magie des Arcanes, Magie Blanche | |
 
 ### Redondances à trancher
 - Peste Noire / Contagion.
@@ -856,6 +921,7 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - **Contraintes** :
 
 **Questionnement et TODO :**
+- Reprendre en `@cha` les soins historiques restés en `@wis` (Soins Expansifs, potion de vie de l'Apothicaire I et II) : SAG 10 plate, jamais montée.
 - Si vous faites un critique, vous pouvez augmenter votre bonus de portée de 1 ?
 - Si vous faites une esquive, vous pouvez augmenter votre bonus de portée de 1 ?
 - Sort d'assistance : (2 de portée) (coût : 1 point de zèle ou 1 carte défaussée) (doublon avec le moine, ou seulement sur les alliés alors ça va ?)
@@ -875,7 +941,18 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 
 **Stats FQ prioritaires** : pioche, main, mana, génère et utilise beaucoup de zèle et d'action. Start stats : action 3, mana 2, main 1, déplacement 1 (la pioche n'a plus de bonus propre depuis le pool commun).
 
-**Rôle** : moteur / late-game carry. Départ délibérément faible (deck de base : 5 cartes distinctes, 11 exemplaires), montée en puissance par deck-building en cours de combat.
+**Rôle** : moteur / late-game carry. Départ délibérément faible (deck de base : 15 cartes distinctes, 16 exemplaires), montée en puissance par deck-building en cours de combat.
+
+**Spécialisations proposées (à valider)** :
+
+| Spécialisation | Principe | Nombres de cartes |
+|---|---|---|
+| Rouge (dps) | Dégâts et critique, améliorés par la Force ; ultime : immortel à 1 PV | 43 (4 frappes runiques + 39 runes) |
+| Jaune (tempo) | Actions et déplacement, améliorés par l'Intelligence ; ultime : 35 d'action, réduits par les runes jaunes déjà jouées | 43 (4 frappes runiques + 39 runes) |
+| Bleu (tank) | Soins personnels, esquive et regain de mana, améliorés par la Constitution ; ultime : régénération par rune bleue jouée | 43 (4 frappes runiques + 39 runes) |
+| *(transverse)* | Rune du Hasard, Marche du Nord (seule carte à dissiper la fatigue), Appel des Runes | 3 |
+
+Soit **132 cartes distinctes** : les 15 du deck de base et les 39 runes de chacune des 3 couleurs (N1 à N12).
 
 **Mécaniques signature** :
 - **Seules les frappes runiques qui génèrent des runes consomment du mana**
