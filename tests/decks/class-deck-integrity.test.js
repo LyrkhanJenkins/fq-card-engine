@@ -43,8 +43,6 @@ const MAX_LEVEL = 20;
 const IGNORED_DECKS = new Set(["draft.json"]);
 
 const KNOWN_ISSUES = new Set([
-    // Niveaux
-    "niveau :: trapper-base.json :: FQCARDTITLE.PreciseShotII :: 21",
     // Pools de stats
     "pool vide :: witch.json :: AQmRm5kfcKCJcGxS",
     // Casse des images (fichier réel en .PNG / .png, dossier illusionist en minuscules)
