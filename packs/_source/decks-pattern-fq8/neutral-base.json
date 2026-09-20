@@ -44,19 +44,30 @@
           "class": "neutral",
           "choices": [
             {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-2",
-              "mana": "",
+              "mana": "-1",
               "zeal": "",
               "reactive": false,
               "hp": "",
               "draw": "2",
               "drop": "",
+              "targetType": "Default",
               "minReach": "",
               "maxReach": "",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
               "xmin": "",
@@ -65,13 +76,26 @@
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "messages": [
                 {
                   "key": "FQCARDENGINE.CardMsgDrawCard",
                   "arg": "{\"draw\": \"2\"}"
                 }
               ],
-              "replayable": "",
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "",
@@ -80,9 +104,8 @@
               "name": "",
               "applyEffectsFormulas": [],
               "minions": [],
-              "hasBeenPlayed": false,
               "customEvals": [],
-              "targetType": "Default"
+              "hasBeenPlayed": false
             }
           ],
           "level": 9,
@@ -95,15 +118,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1789746579541,
+        "modifiedTime": 1789908307905,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cqd8EUF2UiCp50Q3"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cqd8EUF2UiCp50Q3",
+      "cards": []
     },
     {
       "_id": "cr3aAPUkov25LMOY",
@@ -137,19 +160,30 @@
           "class": "neutral",
           "choices": [
             {
-              "action": "-3",
-              "mana": "",
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-4",
+              "mana": "-1",
               "zeal": "",
               "reactive": false,
               "hp": "",
               "draw": "3",
               "drop": "",
+              "targetType": "Default",
               "minReach": "",
               "maxReach": "",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
               "xmin": "",
@@ -158,23 +192,35 @@
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "messages": [
                 {
                   "key": "FQCARDENGINE.CardMsgDrawCard",
                   "arg": "{ \"draw\": \"3\" }"
                 }
               ],
-              "replayable": "",
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
-              "name": "",
-              "applyEffectsFormulas": [],
-              "minions": [],
-              "customEvals": [],
-              "targetType": "Default",
               "visual": {
                 "path": "",
                 "onTarget": false
               },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": [],
               "hasBeenPlayed": false
             }
           ],
@@ -189,15 +235,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1789746516491,
+        "modifiedTime": 1789908318544,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cr3aAPUkov25LMOY"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.cr3aAPUkov25LMOY",
+      "cards": []
     },
     {
       "faces": [
@@ -1276,7 +1322,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/neutral/Recycling.png",
           "text": "FQCARDDESCRIPTION.Recycling"
         }
       ],
@@ -1339,15 +1385,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789000000000,
-        "modifiedTime": 1789746490570,
+        "modifiedTime": 1789908557865,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Rc4vNp7hTs1kGmZo"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Rc4vNp7hTs1kGmZo",
+      "cards": []
     },
     {
       "_id": "Rd9wQx3jVb6nHyTu",
@@ -1363,7 +1409,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/neutral/RecyclingII.png",
           "text": "FQCARDDESCRIPTION.RecyclingII"
         }
       ],
@@ -1426,15 +1472,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789000000000,
-        "modifiedTime": 1789746663797,
+        "modifiedTime": 1789908569590,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Rd9wQx3jVb6nHyTu"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Rd9wQx3jVb6nHyTu",
+      "cards": []
     },
     {
       "_id": "Rf2zMk8pCt5rJdWs",
@@ -1450,7 +1496,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/neutral/RecyclingIII.png",
           "text": "FQCARDDESCRIPTION.RecyclingIII"
         }
       ],
@@ -1513,15 +1559,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789000000000,
-        "modifiedTime": 1789746851818,
+        "modifiedTime": 1789908618486,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Rf2zMk8pCt5rJdWs"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Rf2zMk8pCt5rJdWs",
+      "cards": []
     },
     {
       "_id": "Pu6hBn2qYw4tLgVc",
@@ -1841,7 +1887,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_xii.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterXII"
         }
       ],
@@ -1909,15 +1955,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789000000000,
-        "modifiedTime": 1789746904346,
+        "modifiedTime": 1789908151805,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Tb6xLq2vHn9wSdRk"
+      "_key": "!cards.cards!mNzWDtA6wOPaLz2e.Tb6xLq2vHn9wSdRk",
+      "cards": []
     },
     {
       "_id": "Ds4mHq7yTx2vBnWr",

@@ -267,7 +267,7 @@ Chaque carac a un usage dominant bien tranché dans les formules de cartes. Dans
 | Gardien | d12 | FOR + CON | main 4, action 2, dépl 1 | Tank offensif | PV comme monnaie, zèle, charges de lame |
 | Mage Blanc | d6 | CON + SAG | mana 4, action 3, main 1 | Soigneur / contrôleur DoT | Malédictions + boucliers réactifs + auras |
 | Trapper | d8 | DEX + SAG | action 3, crit 2, mana 1, dépl 1 | DPS distance / sniper | Critique-ressource, pièges réactifs, bêtes |
-| Moine | d8 | FOR + DEX | action 3, mana 3, dépl 3, esq 2, main 2, zèle 1 | Bruiser à tempo | Flux de cartes ↔ zèle, rejouable conditionnel |
+| Moine | d8 | FOR + DEX | action 3, mana 3, dépl 3, esq 2, main 2, zèle 1 | Bruiser à tempo / soigneur de mêlée | Flux de cartes ↔ zèle, rejouable conditionnel, paumes de soin au contact |
 | Sorcière | d6 | INT + CHA | action 1, main 1, dépl 1 | Invocatrice | Armée de squelettes + score de sacrifice |
 | Illusionniste | d6 | DEX + CHA | crit 2, esq 2, dépl 2, mana 1, main 1 | Contrôle / soutien hybride | Portée cumulative dépensable |
 | Maître d'Armes | d10 | FOR + DEX | dépl 2, action 1, mana 1, crit 1, esq 1, main 1 | DPS martial polyvalent | Armes équipées (`@wpnM`/`@wpnR`), armes de jet |
@@ -279,7 +279,7 @@ Stats de départ notables : **critique** de départ nul pour Moine, Gardien, Mag
 
 | Classe | N1 | N2 | N3 | N4 | N5 | N6 | N7 | N8‑12 | N13 (en attente) | Total distinctes / exemplaires | Coût moyen PA | Cartes à 1‑4 PA | Réactives | Zèle + / zèle − | Innées |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Moine | 4 | 2 | 3 | 3 | 2 | 3 | 2 | 0 | 17 | 36 / 73 | 5,9 | 4 | 4 | 17 / 13 | 1 |
+| Moine | 4 | 2 | 3 | 3 | 2 | 3 | 2 | 0 | 20 | 39 / 79 | 5,6 | 5 | 4 | 20 / 13 | 1 |
 | Gardien | 3 | 1 | 7 | 2 | 2 | 3 | 2 | 0 | 10 | 30 / 57 | 6,1 | 4 | 4 | 6 / 15 | 1 |
 | Mage Blanc | 4 | 2 | 3 | 3 | 5 | 3 | **0** | 0 | 11 | 31 / 62 | 6,1 | 2 | 8 | 9 / 10 | 2 |
 | Élémentaliste | 4 | 4 | 1 | 4 | 2 | 4 | 1 | 0 | **27** | 47 / 94 | 7,3 | 3 | 2 | **9 / 28** | 1 |
@@ -469,55 +469,66 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 
 > « Adepte d'un jeu très dynamique : joue beaucoup de cartes différentes pour monter rapidement son zèle. Robuste, score d'esquive élevé. »
 
-**Identité dnd5e** : d8, FOR + DEX. CON alimente les soins et coûts, SAG/CHA les plafonds de X.
+**Identité dnd5e** : d8, FOR + DEX. CON alimente les coûts et les PV temporaires. ⚠️ **SAG reste plate à 8 (−1)** et n'est jamais montée par les ASI : toute formule en `@wis` rend *moins que rien* au Moine. Les soins du lot 2026‑09‑20 sont donc écrits en **DEX**, la vraie carac de la classe ; ne restent en `@wis` que l'appoint historique de Paume De Jade et le `@wis` de Sérénité Pleine, tous deux à reprendre.
 
 **Stats FQ** : le plus gros budget de départ (14) : **meilleur déplacement** (8 cases au N1), la seule classe avec du **zèle initial**, esquive de départ à égalité avec l'Illusionniste (2), bonne main (2). **Aucun critique de départ** — il joue le volume, pas le burst (le critique reste montable via le pool commun).
 
-**Rôle** : bruiser mobile à tempo, duelliste corps à corps, avec appoints tank (taunt Uppercut, Interruption) et soins (Vive-Esquive, Méditation Zen, Paume Curative).
-- Healeur fort mais corps à corps
-- Duelliste corps à corps ultra mobile
-- Tank spé esquive
+**Spécialisations proposées (à valider)** :
+
+| Spécialisation | Principe | Cartes existantes | Manques |
+|---|---|---|---|
+| **Enchaînement** (cadence, frappes) | Petites frappes rejouables qui montent le zèle, puis consommateurs scalables | Coup Droit, Coup Gauche, Combo, Combo 2, Lame Fantôme, Uppercut, Cadence, Élan Martial, Cycle du Souffle, Vacuité, Gant de Fer | Finisher N10‑12 |
+| **Main pleine** (garde les cartes) | X = cartes restant en main : plus la main est pleine, plus les cartes frappent | Poings des Cent Formes, Paume des Mille Feuilles, Sérénité Pleine, Ferveur Intérieure, Hyperactivité, Lecture du Souffle, Second Souffle, Maître du Chi | Carte défensive qui scale sur la main |
+| **Paume / soins au contact** | Soigne en frappant, à portée 1, sans jamais quitter la mêlée | Paume Curative, Paume De Jade, Sillage Curatif, Bague de Soins, Transfert de Soins, Méditation Zen, Vive-Esquive | Soin de groupe au contact, N8+ |
+| **Tank esquive / mobilité** *(transverse)* | Encaisse en esquivant plutôt qu'en PV, et se replace sans cesse | Posture du Roseau, Sérénité Pleine, Dissimulation, Bouclier Zélé, Interruption, Déplacement Éclair, Sillage Curatif, Pas du Vide, Charge, Souffle de Ki, Poing Rouge, Souffle Perpétuel, Armes Secrètes, Cape Inhibitrice, Conversion | Provocation autre qu'Uppercut |
 
 **Mécaniques signature** :
-- **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume Curative).
+- **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, Paume Curative ×4, Posture du Roseau ×3, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume De Jade).
   - Poing Rouge est la seule carte du jeu qui monte `zeal.max` (+5, permanent).
+- **Soigner au contact, en frappant** : c'est le seul soigneur de mêlée du jeu, tous ses soins sont à portée 1 (Paume Curative, Paume De Jade, Bague de Soins, Transfert de Soins) ou sur la trajectoire d'un déplacement (Sillage Curatif). Depuis le lot 2026‑09‑20, deux étages : **Paume Curative** (3 PA, aucun mana, petit soin fixe, **+1 zèle**) est un générateur spammable au même tempo que Coup Droit ; **Paume De Jade** (l'ancienne Paume Curative, améliorée : X jusqu'à 3, +2 au soin de base, et le Moine se soigne de SAG au passage) est le gros soin à zèle dépensé.
+- **Le pendant soin du déplacement** : Déplacement Éclair (dégâts) et **Sillage Curatif** (soins) partagent la macro `FlashMove` et le même `customEval` d'alignement — deux faces d'une même mécanique, l'une traverse des ennemis, l'autre des alliés.
+- **PV temporaires, et rien d'autre, pour l'auto-soin de tempo** : Méditation Zen rend ses PV en **temporaires pendant 1 tour** (patron du Gardien : le `hp` soigne, l'effet monte `hp.tempmax` de la même formule). Le vrai soin personnel passe par Vive-Esquive (réactif), Sérénité Pleine, Sillage Curatif et l'appoint en X de Paume De Jade.
 - **Flux de cartes** : Souffle de Ki (zèle → X cartes **et** 2X actions), Maître Du Chi (carte innée passive bidirectionnelle : défausse ↔ zèle ↔ pioche), Armes Secrètes (X cartes défaussées → autant de dégâts inesquivables).
 - **Rejouable conditionnel scripté** (unique au Moine) : Coup Droit/Gauche rejouables **une fois** seulement si assez de PA ont déjà été dépensés ce tour (4 / 5) — récompense l'**ordonnancement** des cartes.
+- **Esquive plutôt que PV** : c'est la seule classe à gagner de l'esquive **définitivement** (Posture du Roseau, +1 par exemplaire, sans durée comme le Poing Rouge), au prix de −1 à tous ses dégâts pendant 1 tour. Sérénité Pleine y ajoute un pic d'esquive égal à la main restante jusqu'au prochain tour : les deux axes « main pleine » et « tank esquive » se rejoignent enfin sur une carte.
 - **Défense réactive** : 4 réactives (Bouclier Zélé sur sort subi, Vive-Esquive sur dégâts, Armes Secrètes, Interruption qui retire 1d6 PA et entrave) + Dissimulation (intouchable 1 tour au prix de dégâts nuls, puis fenêtre offensive).
-- **Déplacement améliorable** : dégâts et déplacement (Déplacement Éclair, Pas du vide, Charge) (le seul avec le Gardien ? Enlever le gardien ?)
-  - Le seul à faire plus de dégâts avec toutes les cartes en main
-  - Le seul à pouvoir augmenter son zèle max
-- Les heals uniquement pour les autres (comme l'illusionniste ?)
+- **Déplacement améliorable** : Déplacement Éclair, Sillage Curatif, Pas du Vide, Charge.
+- **Taunt** : Uppercut seul (⚠️ comme chez le Gardien, le taunt n'est qu'un message de chat, appliqué par le MJ).
 
-**Boucle de jeu** : enchaîner les petites frappes → zèle → convertir en cartes/actions/burst ; l'ordre de jeu dans le tour est la compétence clé.
+**Boucle de jeu** : enchaîner les petites frappes et les petites paumes → zèle → convertir en cartes/actions/burst ou en gros soin ; l'ordre de jeu dans le tour est la compétence clé.
 
 **Faiblesses** :
-- Aucun critique de départ
+- Aucun critique de départ.
+- Sérénité Pleine (et l'appoint `@wis` de Paume De Jade) scalent encore sur SAG, sa caractéristique la plus basse (−1) et jamais montée : ils rendent moins que leur libellé ne le laisse croire.
+- Doit rester au contact pour soigner : aucun soin à distance, aucun soin de zone.
+- Son auto-soin de tempo (Méditation Zen) ne rend plus que des PV temporaires : ce qui dépasse est perdu au bout d'un tour.
 
 ### Constat des cartes (données)
-- 36 cartes : 19 débloquables (N1‑N7), **17 en attente au N13**, rien aux N8‑N12.
-- Économie de zèle saine (17 générateurs / 13 consommateurs). Coût moyen 5,9 PA.
+- **39 cartes** : 19 débloquables (N1‑N7), **20 en attente au N13**, rien aux N8‑N12.
+- Économie de zèle : 20 générateurs / 13 consommateurs (contre 17/13 avant le lot), grâce à Paume Curative et Posture du Roseau. Coût moyen 5,6 PA.
+- 79 exemplaires. `maxSameCard` lourds : Coup Droit ×6, Uppercut ×6, Coup Gauche ×5, Paume Curative ×4, Posture du Roseau ×3.
 - Deux axes opposés apparaissent dans les cartes N13 : « **main pleine** » (X = cartes en main) et « **cadence** » (X = cartes déjà jouées ce round).
-- `maxSameCard` lourds : Coup Droit ×6, Uppercut ×6, Coup Gauche ×5, Paume Curative ×4.
-- Mana : 5,5 au N1 alors que Coup Gauche, Combo, Uppercut, Lame Fantôme, Dissimulation coûtent du mana.
+- Mana : 5,5 au N1 alors que Coup Gauche, Combo, Uppercut, Lame Fantôme, Dissimulation, Sillage Curatif coûtent du mana.
 
-### Spécialisations proposées (à valider)
-| Spé | Cartes existantes | Manques |
-|---|---|---|
-| **Enchaînement** (cadence, frappes) | Coup Droit, Coup Gauche, Combo, Combo 2, Lame Fantôme, Uppercut, Cadence, Élan Martial, Cycle du Souffle, Vacuité, Gant de Fer | Finisher N10‑12 |
-| **Main pleine** (garde les cartes) | Poings des Cent Formes, Paume des Mille Feuilles, Sérénité Pleine, Ferveur Intérieure, Hyperactivité, Lecture du Souffle, Second Souffle, Maître du Chi | Carte défensive qui scale sur la main |
-| **Paume / soins au contact** | Paume Curative, Bague de Soins, Transfert de Soins, Méditation Zen, Vive-Esquive | Soin de groupe au contact, N8+ |
-| **Tank esquive / mobilité** (transverse) | Dissimulation, Bouclier Zélé, Interruption, Déplacement Éclair, Pas du Vide, Charge, Souffle de Ki, Poing Rouge, Souffle Perpétuel, Armes Secrètes, Cape Inhibitrice, Conversion | Provocation + buff d'esquive (la spé « tank esquive » annoncée n'a presque aucune carte dédiée) |
+### Cartes du lot 2026‑09‑20
+- **Paume Curative** (N6, ×4) — nouvelle carte, reprend le nom et l'illustration de l'ancienne : petit soin au contact (`1 + ceil(@dex/2)`, calibré sur la grille ≈ 1 soin/PA), **+1 zèle**, 3 PA, sans mana. Le pendant soin de Coup Droit, même coût et même patron de formule.
+- **Paume De Jade** (N13, ×2) — l'ancienne Paume Curative, conservée et améliorée (X max 2 → 3, soin +2, et X PV de soin personnel). **Illustration à faire** (sur `in_progress.png`).
+- **Sillage Curatif** (N13, ×1) — le pendant soin de Déplacement Éclair. **Illustration à faire**.
+- **Posture Du Roseau** (N13, ×3) — +1 esquive définitive et +1 zèle, contre −1 dégâts pendant 1 tour. **Illustration à faire**.
+- **Méditation Zen** — les PV rendus deviennent temporaires pendant 1 tour.
+- **Sérénité Pleine** — ajoute X en esquive jusqu'au prochain tour, X = cartes restant en main.
 
 ### Redondances à trancher
 - Gain de PA : Hyperactivité / Vacuité / Souffle de Ki.
 - Gain de zèle : Ferveur Intérieure / Élan Martial / Maître du Chi / Souffle Perpétuel (+ Montée de Zèle générée).
-- Soin personnel : Sérénité Pleine / Méditation Zen / Vive-Esquive.
 - Pioche : Cycle du Souffle / Second Souffle / Lecture du Souffle / Souffle de Ki.
+- Soin au contact à portée 1 : Paume Curative / Paume De Jade / Bague de Soins / Transfert de Soins — quatre cartes pour le même geste, à différencier ou à fusionner.
+- *(résolue par le lot)* Soin personnel : Sérénité Pleine (soin + esquive) / Méditation Zen (PV temporaires) / Vive-Esquive (réactif) sont maintenant trois effets distincts.
 
 ### Incohérences relevées
 - Uppercut : « piochez une carte » absent des données.
 - Poing Rouge coûte 14 PA : injouable avant le N6 en moyenne.
+- Posture du Roseau ×3 donne **+3 d'esquive permanents** sur la durée d'une partie : à mesurer avant de valider le nombre d'exemplaires.
 
 ### À définir à la main
 - **Spécificités** :
@@ -525,6 +536,9 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - **Contraintes** :
 
 **Questionnement et TODO :**
+- Reprendre les deux formules en `@wis` qui restent (Sérénité Pleine, appoint de Paume De Jade), ou monter SAG dans les Start stats ?
+- Donner un niveau N1‑N12 aux 20 cartes garées au N13.
+- Illustrations de Paume De Jade, Sillage Curatif et Posture Du Roseau (restées sur `in_progress.png`).
 ---
 
 ## Élémentaliste
