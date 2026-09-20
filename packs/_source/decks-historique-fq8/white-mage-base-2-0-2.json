@@ -1875,7 +1875,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/heal.PNG",
+          "img": "modules/fq-card-engine/images/cards/white-mage/heal.png",
           "text": "FQCARDDESCRIPTION.Heal"
         }
       ],

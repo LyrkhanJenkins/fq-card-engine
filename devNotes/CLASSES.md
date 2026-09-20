@@ -30,10 +30,10 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 - [ ] Viser **30 à 40 cartes distinctes jouables entre N1 et N12** par classe. Proposition : ~7 cartes N1, puis ~3 cartes par niveau N2‑N12 (environ une carte par spécialisation et par niveau).
 - [ ] Écrire les nouvelles cartes avec la **grille de coûts provisoire** (section « Règles d'équilibrage (provisoires) »), pour ne pas tout réécrire à l'étape 4.
 - [ ] **Mettre les cartes aux bons niveaux** :
-  - [ ] Trier les cartes **N13** (« en attente », 154 au total, dont les 41 du Gardien) : leur donner un niveau (1 à 12), les fusionner ou les supprimer.
+  - [ ] Trier les cartes **N13** (« en attente », 150 au total, dont les 41 du Gardien) : leur donner un niveau (1 à 12), les fusionner ou les supprimer.
   - [ ] Trapper : *Tir Précis II* est au **niveau 21**.
   - [ ] Vérifier les **cartes de départ (N1)** de chaque classe : leur total d'exemplaires (`maxSameCard` cumulé) est le **plancher du deck** de tout personnage dont c'est la classe principale — aujourd'hui de 0 (Gardien, sans carte N1) à 19 (Élémentaliste). Le Gardien n'aura pas de deck de départ tant que ses cartes N13 ne sont pas redescendues.
-- [ ] **Supprimer ou fusionner les cartes redondantes** (listes « Redondances à trancher » de chaque classe). L'Élémentaliste (47 cartes) et le Maître d'Armes (38 jouables) sont surtout à élaguer.
+- [ ] **Supprimer ou fusionner les cartes redondantes** (listes « Redondances à trancher » de chaque classe). L'Élémentaliste (43 cartes) et le Maître d'Armes (38 jouables) sont surtout à élaguer.
 - [ ] **Écrire les cartes manquantes** :
   - [ ] Niveaux **8 à 12 vides** pour Moine, Gardien, Élémentaliste, Trapper et Sorcière ; 8, 9, 11 et 12 pour le Mage Blanc ; 10 et 11 pour l'Illusionniste ; 11 et 12 pour le Maître d'Armes.
   - [ ] ~~Mage Blanc : **aucune carte au niveau 7**.~~ → fait (Soins Majeurs au N7, Soins De Groupe au N10).
@@ -216,7 +216,7 @@ Chaque carac a un usage dominant bien tranché dans les formules de cartes. Dans
 | Moine | FOR + DEX | 7 | 15 | 4 | – | 3 | 2 | – | DEX 6, FOR 4, CHA 1, SAG 1 |
 | Gardien | FOR + CON | 15 | – | 19 | – | – | 3 | 7 | arme 9, FOR 3, CHA 2, CON 1 |
 | Mage Blanc | CON + SAG | – | – | 5 | 8 | 15 | 1 | – | SAG 18, INT 4 |
-| Élémentaliste | INT + SAG | – | 1 | – | 26 | 19 | 1 | – | INT 28, SAG 13, DEX 1 |
+| Élémentaliste | INT + SAG | – | 1 | – | 25 | 18 | 1 | – | INT 25, SAG 13, DEX 1 |
 | Trapper | DEX + SAG | 1 | 16 | – | 3 | 5 | **7** | 10 | arme 10, SAG 6, DEX 4, CHA 2, INT 1 |
 | Sorcière | INT + CHA | – | – | – | **3** | **9** | 11 | – | SAG 4, INT 1 |
 | Illusionniste | DEX + CHA | 2 | 6 | 1 | 1 | 7 | 8 | 2 | **INT 17**, DEX 2, arme 2 |
@@ -283,7 +283,7 @@ Stats de départ notables : **critique** de départ nul pour Moine, Gardien, Mag
 | Moine | 4 | 2 | 3 | 3 | 2 | 3 | 2 | 0 | 0 | 0 | 0 | 0 | 20 | 17 | 39 / 79 | 1 / 1 | 5,6 | 5 | 4 | 20 / 13 | 1 |
 | Gardien | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **41** | **0** | 41 / 75 | 3 / 32 | – | 0 | 6 | 13 / 17 | 1 |
 | Mage Blanc | 4 | 2 | 3 | 3 | 5 | 3 | 1 | 0 | 0 | 1 | 0 | 0 | 19 | 16 | 41 / 79 | 2 / 4 | 6,8 | 2 | 9 | 12 / 12 | 3 |
-| Élémentaliste | 4 | 4 | 1 | 4 | 2 | 4 | 1 | 0 | 0 | 0 | 0 | 0 | **27** | 19 | 47 / 94 | 2 / 4 | 7,3 | 3 | 2 | **9 / 28** | 1 |
+| Élémentaliste | 4 | 4 | 1 | 4 | 2 | 4 | 1 | 0 | 0 | 0 | 0 | 0 | **23** | 19 | 43 / 86 | 2 / 4 | 7,3 | 3 | 2 | **9 / 25** | 1 |
 | Trapper | 5 | 2 | 2 | 2 | 4 | 4 | 2 | 0 | 0 | 0 | 0 | 0 | 17 | 13 | 38 / 70 | 0 / 0 | 7,5 | 3 | 9 | 7 / 18 | 1 |
 | Sorcière | 2 | 6 | 3 | 1 | 3 | 3 | 1 | 0 | 0 | 0 | 0 | 0 | 19 | 12 | 38 / 79 | 1 / 3 | **8,1** | **0** | 1 | 4 / 11 | 2 |
 | Illusionniste | 6 | 2 | 4 | 4 | 4 | 4 | 1 | 1 | 1 | 0 | 0 | 2 | 10 | 14 | 39 / 64 | 0 / 0 | 4,8 | 12 | 2 | 7 / 19 | 2 |
@@ -577,14 +577,14 @@ Détail des cartes :
 
 | Spécialisation | Principe | Nombres de cartes |
 |---|---|---|
-| Feu (dps sur la durée) | Empile les effets de brûlure : peu de dégâts directs, beaucoup de dégâts par tour cumulés | 7 |
+| Feu (dps sur la durée) | Empile les effets de brûlure : peu de dégâts directs, beaucoup de dégâts par tour cumulés | 5 |
 | Givre (contrôle de tempo) | Gèle une cible unique : ses sorts coûtent plus cher, elle perd ses points d'action | 5 |
 | Terre (dps mono-cible) | Les plus gros dégâts sur une seule cible, qu'il cloue au sol en lui retirant son esquive | 4 |
 | Air (dps multi-cible) | Frappe plusieurs cibles à la fois, les repousse et leur retire du déplacement | 5 |
-| *(combos)* | Les 6 paires d'éléments : 11 cartes exigent les **deux** éléments sur la même cible, 6 acceptent l'un **ou** l'autre | 17 |
-| *(transverse)* | Utilitaires : mana, pioche, report d'action, seule défense de la classe | 9 |
+| *(combos)* | Les 6 paires d'éléments : 10 cartes exigent les **deux** éléments sur la même cible, 6 acceptent l'un **ou** l'autre | 16 |
+| *(transverse)* | Utilitaires : mana, pioche, report d'action, seule défense de la classe | 8 |
 
-**Les spés se combinent, c'est la particularité de la classe** : 17 cartes sur 47 — plus du tiers du deck — sont des cartes de paire, dont 11 restent injouables tant que les deux éléments ne sont pas actifs sur la même cible. Un Élémentaliste ne joue donc jamais une seule spé : il en amorce deux au premier tour pour ouvrir la troisième carte. Détail élément par élément et paire par paire plus bas.
+**Les spés se combinent, c'est la particularité de la classe** : 16 cartes sur 43 — plus du tiers du deck — sont des cartes de paire, dont 10 restent injouables tant que les deux éléments ne sont pas actifs sur la même cible. Un Élémentaliste ne joue donc jamais une seule spé : il en amorce deux au premier tour pour ouvrir la troisième carte. Détail élément par élément et paire par paire plus bas.
 
 **Mécaniques signature** :
 - Feu : plus de dégâts sur la durée, plus de cumul avec xvalue : dégâts de durée sur 5‑6 tours. Petits dégâts, plein de DoT (2 effets en moyenne)
@@ -605,16 +605,16 @@ Détail des cartes :
 - Faible déplacement et esquive, doit rester à distance
 
 ### Constat des cartes (données)
-- **47 cartes, la classe la plus fournie** : 20 débloquables (N1‑N7), **27 au N13**, rien aux N8‑N12. Il faut **en retirer**, pas en ajouter.
-- **17 cartes de paire d'éléments** : 11 exigent deux éléments actifs sur la MÊME cible, 6 acceptent l'un ou l'autre (Brouillard, Givrefeu, Météore, Plastron Magique, Onde Glacée, Choc de Feu). S'y ajoutent 4 utilitaires « nécessite 1 élément parmi 3 », 4 ultimes mono-élément, et 2 cartes conditionnées au NOMBRE d'effets (Assassin du Néant, Missiles Magiques +).
-- Zèle déséquilibré : **9 générateurs pour 28 consommateurs**, avec un zèle initial de 0,2 au N1.
+- **43 cartes, la classe la plus fournie** : 20 débloquables (N1‑N7), **23 au N13**, rien aux N8‑N12. Il faut **continuer à en retirer**, pas en ajouter.
+- **16 cartes de paire d'éléments** : 10 exigent deux éléments actifs sur la MÊME cible, 6 acceptent l'un ou l'autre (Brouillard, Givrefeu, Météore, Plastron Magique, Onde Glacée, Choc de Feu). S'y ajoutent 3 utilitaires « nécessite 1 élément parmi 3 », 4 ultimes mono-élément, et 2 cartes conditionnées au NOMBRE d'effets (Assassin du Néant, Missiles Magiques +).
+- Zèle déséquilibré : **9 générateurs pour 25 consommateurs**, avec un zèle initial de 0,2 au N1.
 - Seulement 3 cartes à 1‑4 PA ; coût moyen 7,3 PA ; 6 cartes à 9 PA ou plus.
 - Défense quasi absente : Plastron Magique, Repli du Souffle, Captation de Mana.
 
 ### Spécialisations — cartes par spé
 | Spé | Cartes mono-élément | Ultime |
 |---|---|---|
-| **Feu** | Trait de Feu, Main Brûlante, Brasier Ardent, Boule de Feu, Traînée Ardente, Attiser les Braises | Immolation Absolue |
+| **Feu** | Trait de Feu, Main Brûlante, Traînée Ardente, Attiser les Braises | Boule de Feu *(promue)* |
 | **Givre** | Frappe de Givre, Stalactite Géante, Zéro Absolu, Mur de Givre | Éternité Glaciaire |
 | **Terre** | Fracture Terrestre, Jet de Roche, Colosse de Pierre | Sépulcre de Pierre |
 | **Air** | Tornade, Tourbillon, Bourrasque de Dégâts, Bourrasque de Répulsion | Cyclone |
@@ -623,19 +623,34 @@ Combos par paire d'éléments (à réduire à ~2 par paire) :
 
 | Paire | Cartes |
 |---|---|
-| Feu + Givre | Givrefeu, Fusion des Extrêmes, Sceau Thermique |
+| Feu + Givre | Givrefeu, Fusion des Extrêmes |
 | Feu + Terre | Météore, Calcination, Cœur du Volcan |
 | Feu + Air | Choc de Feu, Nuée Incandescente, Brasier Tournant |
 | Terre + Air | Brouillard (air **ou** terre), Vent de Gravats, Convergence Tellurique |
 | Terre + Givre | Permafrost, Plastron Magique (terre **ou** givre) |
 | Givre + Air | Onde Glacée, Givre des Synapses, Nécrose Blanche |
 
-Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, Incantation, Propagation des Dégâts, Assassin du Néant, Missiles Magiques +, Lecture des Courants, Repli du Souffle, Chaleur Résiduelle.
+Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, Incantation, Propagation des Dégâts, Assassin du Néant, Missiles Magiques +, Lecture des Courants, Repli du Souffle.
+
+### Cartes retirées (élagage du 2026‑09‑20)
+Quatre cartes supprimées du deck, des `lang/fr.json` et `lang/en.json` (**47 → 43 cartes, 94 → 86 exemplaires**) :
+- **Sceau Thermique** (N13, ×2) — troisième carte de la paire Feu + Givre, ramenée à 2 comme les autres paires.
+- **Chaleur Résiduelle** (N13, ×3) — quatrième carte du moule « nécessite 1 élément parmi 3 », doublon de Captation de Mana, et la seule des quatre à **coûter** du zèle dans une classe qui en manque.
+- **Brasier Ardent** (N13, ×2) — 1d4 de dégâts : son seul métier réel était d'empiler de la brûlure, ce qu'Attiser les Braises fait pour 3 PA fixes, sans mana et en rendant 2 zèle ; comme amorce, Main Brûlante fait mieux pour moins cher, en piochant en plus.
+- **Immolation Absolue** (N13, ×1) — l'ultime du Feu, exigeait **8 effets de brûlure** sur une seule cible et la défausse de 4 cartes pour 12 PA / 3 mana / 2 zèle.
+
+**Boule de Feu est promue ultime du Feu** à la place d'Immolation Absolue, sur le gabarit de Cyclone (l'autre ultime de zone) : porte à **3 effets de brûlure sur une cible de la zone** — trois fois moins exigeante que les 8 d'Immolation, et atteignable dès un Trait de Feu ou un Attiser les Braises —, défausse de 3 cartes, **14 PA / 4 mana / 2 zèle** (la plus chère des quatre), dégâts portés de `2*@wis + 2d8` à `4*@wis + 3d10`, et **4 effets de brûlure** au lieu de 3. Les quatre éléments ont de nouveau leur ultime.
+
+D'autres coupes ont été proposées et **non retenues pour l'instant** : Missiles Magiques + (aucun élément, 16 PA / 4 mana / 4 zèle), Assassin du Néant (scale sur DEX, jamais montée), Givrefeu (condition en OU, 9 PA au N2), Traînée Ardente (cône partant de sa propre case, pour un personnage à d4 de PV), Mur de Givre (mur permanent arbitré par le MJ), Incantation (banque de PA sans élément).
+
+**Illustrations récupérées** : les deux images des cartes supprimées ont été renommées et réaffectées à des cartes qui étaient restées sur `in_progress.png` —
+- `burningtrail.png` → `burning_trail.png`, donnée à **Traînée Ardente** (l'image montre un cône de feu projeté depuis les mains du lanceur : c'est exactement sa zone) ;
+- `AbsoluteImmolation.png` → `whirling_blaze.png`, donnée à **Brasier Tournant** (l'image est une tornade de feu au-dessus d'un sol en fusion : c'est le brasier qui se rattise seul et frappe tout le champ de bataille). Cœur du Volcan était l'autre candidate, mais l'image n'a rien de localisé sous une cible unique.
 
 ### Redondances à trancher
-- Paires à 3 cartes (Feu+Givre, Feu+Terre, Feu+Air, Givre+Air) : garder 2 par paire.
-- Utilitaires N13 qui se recoupent : Lecture des Courants (pioche) / Chaleur Résiduelle (mana) / Captation de Mana.
-- Ultimes (Immolation, Éternité, Sépulcre, Cyclone) : bons candidats pour les N10‑N12, un par élément.
+- Paires à 3 cartes (Feu+Terre, Feu+Air, Givre+Air) : garder 2 par paire. *(Feu+Givre : fait)*
+- Utilitaires N13 qui se recoupent : Lecture des Courants (pioche) / Captation de Mana (mana). *(Chaleur Résiduelle retirée)*
+- Ultimes (Boule de Feu, Éternité, Sépulcre, Cyclone) : bons candidats pour les N10‑N12, un par élément.
 
 ### À définir à la main
 - **Spécificités** :
