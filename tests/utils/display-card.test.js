@@ -10,56 +10,86 @@ import {
     actorWith, makeAttackActivity, makeReferenceActor, makeWeapon, NEUTRAL_ABILITIES, REFERENCE_ABILITIES
 } from "./formula-fixtures.js";
 
-describe("DisplayCard.simplifyExpression", () => {
+/**
+ * Le repli symbolique d'une bulle ronde : ce qui s'affiche quand une variable
+ * `XXX`/`YYY` laisse le jet inévaluable. Ce repli est celui de `FormulaDisplay`,
+ * le seul arbre de repli du module — la bulle avait auparavant son propre
+ * analyseur (`DisplayCard.simplifyExpression`, supprimé), qui ignorait la
+ * division et l'arrondi et les lisait comme des multiplications implicites.
+ *
+ * Les cas s'écrivent tous au travers de l'API publique
+ * `getNumberForBubbleCardSvg`, avec un `Roll` qui lève comme le fait Foundry sur
+ * une formule à variable libre : c'est le seul chemin par lequel une bulle
+ * atteint le repli en jeu.
+ */
+describe("DisplayCard.getNumberForBubbleCardSvg — repli symbolique d'une bulle", () => {
 
-    describe("cas nominaux", () => {
-        it("additionne des constantes", () => {
-            expect(DisplayCard.simplifyExpression("1+5")).toBe("6");
-        });
+    const realRoll = globalThis.Roll;
 
-        it("combine constantes et multiplication implicite d'une variable", () => {
-            expect(DisplayCard.simplifyExpression("5 + 3 + 4*X")).toBe("8+4X");
-        });
-
-        it("simplifie une multiplication explicite constante*variable", () => {
-            expect(DisplayCard.simplifyExpression("2*X")).toBe("2X");
-        });
-
-        it("annule une variable soustraite à elle-même", () => {
-            expect(DisplayCard.simplifyExpression("X-X")).toBe("0");
+    beforeEach(() => {
+        // RollService.replaceAbilitiesBonus lit Constants.actorAbi.<abi>.mod sans
+        // chaînage optionnel : les 6 caractéristiques doivent être posées.
+        game.user.character.system.abilities = {
+            str: {mod: 0}, dex: {mod: 0}, con: {mod: 0}, int: {mod: 0}, wis: {mod: 0}, cha: {mod: 0}
+        };
+        globalThis.Roll = vi.fn(function (formula) {
+            this.formula = formula;
+            this.evaluateSync = () => {
+                throw new Error("This Roll contains terms that cannot be synchronously evaluated");
+            };
         });
     });
 
-    describe("cas d'erreur (Error native, pas FormError)", () => {
-        it("lève une erreur si la parenthèse fermante est absente", () => {
-            expect(() => DisplayCard.simplifyExpression("(1+2"))
-                .toThrow("Parenthèse fermante attendue");
+    afterEach(() => {
+        globalThis.Roll = realRoll;
+    });
+
+    describe("cas nominaux (sorties historiques des bulles, inchangées)", () => {
+        it("combine constantes et multiplication d'une variable", () => {
+            expect(DisplayCard.getNumberForBubbleCardSvg("5 + 3 + 4*XXX")).toBe("8+4X");
         });
 
-        it("lève une erreur si l'expression est incomplète", () => {
-            expect(() => DisplayCard.simplifyExpression("1+"))
-                .toThrow("Expression incomplète");
+        it("replie une multiplication explicite constante*variable", () => {
+            expect(DisplayCard.getNumberForBubbleCardSvg("2*XXX")).toBe("2X");
         });
 
-        it("lève une erreur sur un produit de deux variables", () => {
-            expect(() => DisplayCard.simplifyExpression("X*Y"))
-                .toThrow("Produit de deux variables");
+        it("replie un coût parenthésé négatif", () => {
+            expect(DisplayCard.getNumberForBubbleCardSvg("-(3 + XXX)")).toBe("-3-X");
         });
 
-        it("lève une erreur si des tokens restent non consommés", () => {
-            expect(() => DisplayCard.simplifyExpression("1)"))
-                .toThrow("Tokens non consommés");
+        it("nomme la seconde variable Y", () => {
+            expect(DisplayCard.getNumberForBubbleCardSvg("-(YYY)")).toBe("-Y");
+        });
+    });
+
+    describe("ce que l'ancien analyseur de bulle lisait faux", () => {
+        it("une division par une constante reste une division (et non un facteur)", () => {
+            // L'ancien analyseur ignorait « / » : `XXX/2` s'affichait « 2X », soit
+            // le QUADRUPLE de la valeur réelle pour X=4.
+            expect(DisplayCard.getNumberForBubbleCardSvg("XXX/2")).toBe("X÷2");
         });
 
-        it("lève des instances d'Error natives (pas de FormError)", () => {
-            let caught;
-            try {
-                DisplayCard.simplifyExpression("(1+2");
-            } catch (error) {
-                caught = error;
+        it("un arrondi est transparent au lieu de faire échouer le repli", () => {
+            // L'ancien analyseur voyait `ceil` comme une variable et levait
+            // « Produit de deux variables », ce qui annulait le rendu de la carte.
+            expect(DisplayCard.getNumberForBubbleCardSvg("ceil(XXX/2)")).toBe("X÷2");
+        });
+
+        it("une notation de dé à compte variable reste un dé", () => {
+            // L'ancien analyseur lisait `XXXd6` comme X*d*6 et affichait « 6Xd ».
+            expect(DisplayCard.getNumberForBubbleCardSvg("XXXd6")).toBe("Xd6");
+        });
+    });
+
+    describe("robustesse : une bulle ne peut pas annuler le rendu de sa carte", () => {
+        it("une expression irrepliable s'affiche telle quelle, variables rendues lisibles", () => {
+            expect(DisplayCard.getNumberForBubbleCardSvg("(1+XXX")).toBe("(1+X");
+        });
+
+        it("ne lève jamais, quelle que soit la saisie", () => {
+            for (const saisie of ["(1+2", "1)", "1+", "XXX*", ")("]) {
+                expect(() => DisplayCard.getNumberForBubbleCardSvg(saisie)).not.toThrow();
             }
-            expect(caught).toBeInstanceOf(Error);
-            expect(caught.constructor.name).toBe("Error");
         });
     });
 });
@@ -526,9 +556,17 @@ describe("DisplayCard — périmètres exclus : non-régression (D-12, D-13, Tas
         expect(countPills(withBonus)).toBe(countPills(withoutBonus));
     });
 
-    it("DisplayCard.getNumberForBubbleCardSvg et DisplayCard.simplifyExpression conservent leur comportement historique (D-13, bulles rondes hors périmètre)", () => {
-        expect(DisplayCard.simplifyExpression("5 + 3 + 4*X")).toBe("8+4X");
-        expect(DisplayCard.simplifyExpression("1+5")).toBe("6");
+    // D-13 tenait la bulle ronde HORS du périmètre de la phase 20 : elle gardait
+    // son propre analyseur, `DisplayCard.simplifyExpression`. Cette exclusion est
+    // LEVÉE (revue du 2026-09-20, constat AUD-2026-09-20-04) : l'analyseur de la
+    // bulle lisait `XXX/2` comme « 2X » et `XXXd6` comme « 6Xd », et levait sur
+    // un arrondi — une grammaire concurrente de celle de `FormulaDisplay` sur la
+    // même notation de carte. Il est supprimé ; la bulle passe par `foldFormula`,
+    // ce que couvre « repli symbolique d'une bulle » en tête de fichier (sortie
+    // vérifiée identique sur les 29 valeurs de bulle à variable des packs).
+    // Ne subsiste ici que ce que D-13 gardait de PROPRE à la bulle : ses deux
+    // sorties symboliques, qui ne passent par aucun analyseur.
+    it("les sorties propres à la bulle ronde sont inchangées (vide → « 0 », au-delà de 99 → « ∞ »)", () => {
         expect(DisplayCard.getNumberForBubbleCardSvg("")).toBe("0");
         expect(DisplayCard.getNumberForBubbleCardSvg("999999").toString()).toBe("∞");
     });

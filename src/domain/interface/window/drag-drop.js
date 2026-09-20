@@ -1,6 +1,68 @@
 import Constants from "../../constants.js";
 
 /**
+ * Règle de « Limitation des droits du joueur » sur un dépôt de carte : rien de
+ * ce qui vient d'un compendium ne se dépose, quel que soit le type de données
+ * glissées, et une carte n'entre dans une pile que si elle en vient déjà (le
+ * tri reste permis). Source UNIQUE de la règle : la barre de main
+ * (`drop`) et les feuilles de `Cards` (`restrictCardsConfigDrop`) la partagent,
+ * pour qu'une évolution ne laisse jamais l'un des deux chemins plus permissif.
+ *
+ * Une carte de la pile a une uuid préfixée par celle de la pile, ou, sans uuid,
+ * le même jeu source.
+ *
+ * Le refus est publié à l'utilisateur ; le MJ n'est jamais concerné.
+ *
+ * @param {object} data  - Les données glissées (`getDragEventData`).
+ * @param {Cards}  stack - La pile qui reçoit le dépôt.
+ *
+ * @returns {boolean} True si le dépôt est refusé (l'appelant doit s'arrêter).
+ */
+export function refuseRestrictedDrop(data, stack) {
+    if (!Constants.isPlayerRightsLimited) {
+        return false;
+    }
+    if (data.uuid?.startsWith("Compendium.") || data.pack) {
+        ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropCompendiumRefused"));
+        return true;
+    }
+    if (data.type !== "Card") {
+        return false;
+    }
+    const fromThisStack = data.uuid
+        ? data.uuid.startsWith(`${stack.uuid}.`)
+        : data.cardsId === stack.id;
+    if (!fromThisStack) {
+        ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropPlayerRightsLimited"));
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Enveloppe libWrapper du `_onDrop` des feuilles de `Cards` (deck, main,
+ * défausse et `FqCardsSheet` héritent de ce gestionnaire) : sous droits limités,
+ * un joueur ne fait passer aucune carte d'un jeu à un autre en la déposant sur
+ * une feuille ; le tri reste permis. Les `pass` du moteur appellent
+ * `Cards#pass` directement et ne passent pas par ici.
+ *
+ * Appelée par libWrapper avec `this` lié à la feuille.
+ *
+ * @param {Function}  wrapper - Le gestionnaire d'origine.
+ * @param {DragEvent} event   - L'événement de dépôt.
+ * @param {...*}      args    - Les arguments suivants du gestionnaire d'origine.
+ *
+ * @returns {*} Le résultat du gestionnaire d'origine, ou undefined si le dépôt est refusé.
+ */
+export function restrictCardsConfigDrop(wrapper, event, ...args) {
+    const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+    if (refuseRestrictedDrop(data, this.document)) {
+        return;
+    }
+    return wrapper(event, ...args);
+}
+
+/**
  * Glisser-déposer des cartes entre barres de main. Extrait de la façade
  * `FqCardEngineModule` ; réassemblé par spread dans `init-engine.js`.
  *
@@ -68,24 +130,10 @@ export default {
         let cards = this.getCards();
         const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
 
-        // Sous droits limités, rien de ce qui vient d'un compendium ne se dépose,
-        // quel que soit le type de données glissées.
-        if (Constants.isPlayerRightsLimited && (data.uuid?.startsWith("Compendium.") || data.pack)) {
-            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropCompendiumRefused"));
-            return;
-        }
+        // Sous droits limités, rien ne vient d'un compendium et aucune carte
+        // étrangère n'entre dans la main : seul le tri reste permis.
+        if (refuseRestrictedDrop(data, cards)) return;
         if (data.type !== "Card") return;
-
-        // Sous droits limités, un joueur peut encore réordonner sa main mais n'y
-        // fait entrer aucune carte venue d'ailleurs. Une carte de la main a une
-        // uuid préfixée par celle de la main, ou, sans uuid, le même jeu source.
-        const fromThisHand = data.uuid
-            ? data.uuid.startsWith(`${cards.uuid}.`)
-            : data.cardsId === cards.id;
-        if (Constants.isPlayerRightsLimited && !fromThisHand) {
-            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropPlayerRightsLimited"));
-            return;
-        }
 
         //SORT
         let sort = function (card) {

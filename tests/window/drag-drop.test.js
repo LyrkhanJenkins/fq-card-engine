@@ -1,5 +1,5 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
-import DragDrop from "../../src/domain/interface/window/drag-drop.js";
+import DragDrop, {restrictCardsConfigDrop} from "../../src/domain/interface/window/drag-drop.js";
 
 /**
  * Couvre la garde du dépôt sur une barre de main sous « Limitation des droits du
@@ -158,5 +158,98 @@ describe("drop sous droits limités", () => {
             makeEvent({type: "Card", cardsId: "deck", cardId: "x"}));
 
         expect(deck.cards.get("x").pass).toHaveBeenCalled();
+    });
+});
+
+/**
+ * Le dépôt sur une FEUILLE de `Cards` (deck, main, défausse, FqCardsSheet), passé
+ * par l'enveloppe libWrapper de `CardsConfig.prototype._onDrop`. La règle de droits
+ * y est la MÊME que sur la barre de main : les deux chemins partagent
+ * `refuseRestrictedDrop`, et ces cas le vérifient sur le chemin de la feuille —
+ * celui par lequel un joueur limité pourrait sinon contourner la restriction.
+ *
+ * `restrictCardsConfigDrop` est invoquée avec `this` lié à la feuille, comme le
+ * fait libWrapper.
+ */
+describe("restrictCardsConfigDrop (dépôt sur une feuille de Cards)", () => {
+    /**
+     * Construit la feuille qui reçoit le dépôt.
+     *
+     * @param {string} id - L'id du jeu porté par la feuille.
+     *
+     * @returns {object} La feuille simulée (`this` du gestionnaire).
+     */
+    function makeSheet(id) {
+        return {document: {id, uuid: `Cards.${id}`}};
+    }
+
+    it("refuse une carte d'un autre jeu désignée par ids", () => {
+        const wrapper = vi.fn();
+
+        restrictCardsConfigDrop.call(makeSheet("deck"), wrapper,
+            makeEvent({type: "Card", cardsId: "hand", cardId: "x"}));
+
+        expect(wrapper).not.toHaveBeenCalled();
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.DragDropPlayerRightsLimited");
+    });
+
+    it("refuse une carte d'un autre jeu désignée par uuid", () => {
+        const wrapper = vi.fn();
+
+        restrictCardsConfigDrop.call(makeSheet("deck"), wrapper,
+            makeEvent({type: "Card", uuid: "Cards.hand.Card.x"}));
+
+        expect(wrapper).not.toHaveBeenCalled();
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.DragDropPlayerRightsLimited");
+    });
+
+    it("refuse tout ce qui vient d'un compendium, quel que soit le type", () => {
+        const wrapper = vi.fn();
+
+        restrictCardsConfigDrop.call(makeSheet("deck"), wrapper,
+            makeEvent({type: "Item", pack: "fq.items"}));
+
+        expect(wrapper).not.toHaveBeenCalled();
+        expect(ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.DragDropCompendiumRefused");
+    });
+
+    it("laisse réordonner une carte du jeu de la feuille", () => {
+        const wrapper = vi.fn(() => "trié");
+
+        const result = restrictCardsConfigDrop.call(makeSheet("deck"), wrapper,
+            makeEvent({type: "Card", uuid: "Cards.deck.Card.a"}));
+
+        expect(result).toBe("trié");
+        expect(ui.notifications.warn).not.toHaveBeenCalled();
+    });
+
+    it("ne bride pas le MJ", () => {
+        game.user.isGM = true;
+        const wrapper = vi.fn();
+
+        restrictCardsConfigDrop.call(makeSheet("deck"), wrapper,
+            makeEvent({type: "Card", cardsId: "hand", cardId: "x"}));
+
+        expect(wrapper).toHaveBeenCalled();
+    });
+
+    it("ne bride pas un joueur quand le réglage est désactivé", () => {
+        CONFIG.FqCardEngine.options.playerLimitCardsRight = false;
+        const wrapper = vi.fn();
+
+        restrictCardsConfigDrop.call(makeSheet("deck"), wrapper,
+            makeEvent({type: "Card", cardsId: "hand", cardId: "x"}));
+
+        expect(wrapper).toHaveBeenCalled();
+    });
+
+    it("laisse passer les autres types de données hors compendium (dossier, macro…)", () => {
+        const wrapper = vi.fn(() => "délégué");
+
+        const result = restrictCardsConfigDrop.call(makeSheet("deck"), wrapper,
+            makeEvent({type: "Folder", uuid: "Folder.f"}));
+
+        expect(result).toBe("délégué");
+        expect(ui.notifications.warn).not.toHaveBeenCalled();
     });
 });

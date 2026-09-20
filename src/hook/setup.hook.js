@@ -5,6 +5,7 @@ import FqNpcSheet from "../domain/interface/sheet/actor/fq-npc-sheet.js";
 import FqItemSheet from "../domain/interface/sheet/items/fq-item-sheet.js";
 import FqCardsSheet from "../domain/interface/sheet/cards/fq-cards-sheet.js";
 import FqCardSheet from "../domain/interface/sheet/cards/fq-card-sheet.js";
+import {restrictCardsConfigDrop} from "../domain/interface/window/drag-drop.js";
 import DisplayCard from "../domain/interface/card-svg/display-card.js";
 import ResultWindow from "../domain/interface/window/result-window.js";
 import {registerResultPresenter} from "../domain/engine/roll/result-presenter.js";
@@ -72,23 +73,9 @@ Hooks.on("setup", function () {
 
     // Sous « Limitation des droits du joueur », un joueur ne fait passer aucune
     // carte d'un jeu à un autre en la déposant sur une feuille de Cards (deck,
-    // main, défausse et FqCardsSheet héritent de ce _onDrop) ; le tri reste permis.
-    // Les pass du moteur appellent Cards#pass directement et ne passent pas par ici.
-    libWrapper.register(FqCardEngineModule.moduleName, "foundry.applications.sheets.CardsConfig.prototype._onDrop", function (wrapper, event, ...args) {
-        const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
-        if (Constants.isPlayerRightsLimited && (data.uuid?.startsWith("Compendium.") || data.pack)) {
-            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropCompendiumRefused"));
-            return;
-        }
-        const fromThisStack = data.uuid
-            ? data.uuid.startsWith(`${this.document.uuid}.`)
-            : data.cardsId === this.document.id;
-        if (data.type === "Card" && Constants.isPlayerRightsLimited && !fromThisStack) {
-            ui.notifications.warn(game.i18n.localize("FQCARDENGINE.DragDropPlayerRightsLimited"));
-            return;
-        }
-        return wrapper(event, ...args);
-    }, "MIXED");
+    // main, défausse et FqCardsSheet héritent de ce _onDrop) ; règle partagée avec
+    // la barre de main (cf. `restrictCardsConfigDrop`).
+    libWrapper.register(FqCardEngineModule.moduleName, "foundry.applications.sheets.CardsConfig.prototype._onDrop", restrictCardsConfigDrop, "MIXED");
 
     if (game.settings.get(FqCardEngineModule.moduleName, "PlayerLimitCardsRight")) {
         CONFIG.FqCardEngine.options.playerLimitCardsRight = true;

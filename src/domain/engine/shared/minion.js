@@ -344,12 +344,31 @@ export default class Minion {
             return;
         }
         const actor = tokenDocument.actor;
-        const combatant = [...(combat?.combatants ?? [])]
-            .find(c => c.tokenId === tokenDocument.id);
+        const combatant = Minion.#isCombatLive(combat)
+            ? [...(combat.combatants ?? [])].find(c => c.tokenId === tokenDocument.id)
+            : undefined;
 
-        await combatant?.delete();
-        await tokenDocument.delete();
-        await actor?.delete();
+        try {
+            await combatant?.delete();
+            await tokenDocument.delete();
+            await actor?.delete();
+        } catch (err) {
+            ui.notifications.error(err.message);
+        }
+    }
+
+    /**
+     * Indique si un combat existe encore dans le monde. Un combat qui vient d'être
+     * supprimé (hook `deleteCombat`) est déjà retiré de `game.combats`, alors que
+     * son document reste lisible en mémoire. Sans collection de combats exposée,
+     * le combat est réputé vivant.
+     *
+     * @param {object} [combat] - Le combat inspecté.
+     *
+     * @returns {boolean} True si le combat est encore présent dans `game.combats`.
+     */
+    static #isCombatLive(combat) {
+        return !!combat && (game.combats?.has(combat.id) ?? true);
     }
 
     /**

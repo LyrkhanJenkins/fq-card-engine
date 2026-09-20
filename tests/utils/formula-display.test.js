@@ -847,18 +847,25 @@ describe("FormulaDisplay.collectSources — groupe d'indicateurs", () => {
     });
 });
 
-describe("FormulaDisplay.foldSegment vs DisplayCard.simplifyExpression — justification du module séparé", () => {
-    it("simplifyExpression garde la constante en tête (contrat des bulles, inchangé)", () => {
-        expect(DisplayCard.simplifyExpression("5 + 3 + 4*X")).toBe("8+4X");
-    });
-
-    it("foldSegment produit le même résultat sur une expression sans dé", () => {
+/**
+ * `foldSegment` a repris le contrat de l'analyseur propre aux bulles rondes
+ * (`DisplayCard.simplifyExpression`, supprimé à la revue du 2026-09-20, constat
+ * AUD-2026-09-20-04) : ces deux sorties sont celles que la bulle affichait, et
+ * doivent le rester — c'est ce qui rend la suppression de son analyseur
+ * invisible à la table. La troisième est celle que l'analyseur de la bulle ne
+ * savait PAS produire (il lisait `1d6` comme un produit implicite).
+ */
+describe("FormulaDisplay.foldSegment — le contrat d'affichage repris des bulles rondes", () => {
+    it("garde la constante en tête", () => {
         expect(FormulaDisplay.foldSegment("5 + 3 + 4*X")).toBe("8+4X");
     });
 
-    it("foldSegment replie fidèlement une expression avec dé, là où simplifyExpression ne représente pas la formule réelle", () => {
+    it("replie une multiplication explicite constante*variable", () => {
+        expect(FormulaDisplay.foldSegment("2*X")).toBe("2X");
+    });
+
+    it("replie fidèlement une expression avec dé", () => {
         expect(FormulaDisplay.foldSegment("1d6+4")).toBe("1d6+4");
-        expect(DisplayCard.simplifyExpression("1d6+4")).not.toBe("1d6+4");
     });
 });
 
@@ -1064,8 +1071,11 @@ describe("FormulaDisplay — garde-fous d'injection (Task 3)", () => {
 });
 
 describe("FormulaDisplay — périmètres exclus (scope fence, Task 3)", () => {
-    it("les bulles rondes (DisplayCard.simplifyExpression / getNumberForBubbleCardSvg) restent hors périmètre, inchangées", () => {
-        expect(DisplayCard.simplifyExpression("5 + 3 + 4*X")).toBe("8+4X");
+    // La bulle ronde n'est PLUS hors périmètre : son analyseur propre est supprimé
+    // et son repli symbolique passe par `foldFormula` (revue du 2026-09-20, constat
+    // AUD-2026-09-20-04). Ce qui reste à elle, et que la phase 20 n'a jamais
+    // touché, c'est sa lecture d'une valeur vide.
+    it("la bulle ronde garde sa lecture d'une valeur vide", () => {
         expect(DisplayCard.getNumberForBubbleCardSvg("", {})).toBe("0");
     });
 

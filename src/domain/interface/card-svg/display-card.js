@@ -51,14 +51,15 @@ function sizeForLength(steps, length) {
  * Utilitaires de présentation d'une carte : extraction du titre, de la
  * description et de l'image, dimensionnement du texte pour le rendu SVG,
  * transformation des tokens (@abilities, [types de dégâts]) en symboles lisibles,
- * et évaluation/simplification des valeurs affichées dans les bulles.
+ * et évaluation des valeurs affichées dans les bulles — dont le repli symbolique
+ * passe par `FormulaDisplay`, seul arbre de repli du module.
  * Toutes les méthodes sont statiques : la classe sert de namespace.
  */
 export default class DisplayCard {
     /**
      * Calcule la valeur à afficher dans une bulle de carte (action, mana, portée…).
      * Renvoie « 0 » si vide, « ∞ » au-delà de 99, la valeur évaluée du jet, ou
-     * l'expression algébrique simplifiée si des variables subsistent (XXX→X, YYY→Y).
+     * l'expression symbolique repliée si des variables subsistent (XXX→X, YYY→Y).
      *
      * @param {string} str - L'expression brute de la bulle (peut contenir des bonus/variables).
      *
@@ -70,14 +71,46 @@ export default class DisplayCard {
         }
         const match = str.match(/-?\d+/g);
         if (match?.length && match[0] > 99) return "∞";
-        let result = RollService.replaceAbilitiesBonus(str);
+        const result = RollService.replaceAbilitiesBonus(str);
         try {
             return RollService.rollResultSync(result);
         } catch {
-            // Dans le cas ou il y a des variables
-            result = result.replaceAll("XXX", "X").replaceAll("YYY", "Y");
-            result = DisplayCard.simplifyExpression(result);
-            return result;
+            // Variables libres : le jet est impossible, la bulle montre l'expression.
+            return DisplayCard.#foldBubbleExpression(result);
+        }
+    }
+
+    /**
+     * Replie pour l'affichage l'expression d'une bulle que le jet n'a pas pu
+     * évaluer — celle dont une variable `XXX`/`YYY` reste libre.
+     *
+     * Le repli est celui de {@link FormulaDisplay}, seul arbre de repli du module :
+     * la bulle ronde avait le sien, un analyseur réduit qui ne connaissait ni la
+     * division ni les arrondis et les lisait comme des multiplications implicites
+     * (`XXX/2` s'affichait « 2X », `XXXd6` « 6Xd », `floor(XXX/2)` levait). Deux
+     * grammaires pour une même notation de carte, c'était la garantie qu'une
+     * formule de bulle finisse par mentir.
+     *
+     * L'expression reçue a DÉJÀ traversé `replaceAbilitiesBonus` : ses jetons de
+     * caractéristique et de bonus nommé sont donc des nombres, et le repli n'a
+     * aucune pastille ni émoji à poser — la bulle reste ce qu'elle a toujours été,
+     * un nombre ou une expression courte, sa couleur verte disant à elle seule
+     * qu'un bonus de caractéristique s'y applique.
+     *
+     * Ne lève jamais : `foldFormula` lève sur une expression irrepliable (une
+     * parenthèse non fermée saisie dans la fiche de carte), et une bulle ne doit
+     * pas pouvoir annuler le rendu de la carte qui la porte. Le dernier recours
+     * affiche l'expression telle quelle, variables rendues lisibles.
+     *
+     * @param {string} expr - L'expression de la bulle, caractéristiques déjà substituées.
+     *
+     * @returns {string} L'expression repliée, prête pour la bulle.
+     */
+    static #foldBubbleExpression(expr) {
+        try {
+            return FormulaDisplay.foldFormula(expr);
+        } catch {
+            return expr.replaceAll("XXX", "X").replaceAll("YYY", "Y");
         }
     }
 
@@ -324,131 +357,6 @@ export default class DisplayCard {
             }
             return result;
         });
-    }
-
-    /**
-     * Simplifie une expression algébrique linéaire simple.
-     * Supporte : +, -, *, parenthèses, variables alphabétiques.
-     * Exemples : "5 + 3 + 4*X" -> "8+4X" ; "1+5" -> "6"
-     *
-     * @param {string} expr - L'expression algébrique à simplifier.
-     *
-     * @returns {string} L'expression simplifiée (« 0 » si le résultat est nul).
-     *
-     * @throws {Error} Si l'expression est incomplète, mal parenthésée, contient
-     *                 un produit de deux variables, ou des tokens non consommés.
-     */
-    static simplifyExpression(expr) {
-        const tokens = expr.match(/\d+(\.\d+)?|[a-zA-Z_]+|[+\-*()]/g);
-        if (!tokens) return expr;
-
-        let pos = 0;
-        const peek = () => tokens[pos];
-        const next = () => tokens[pos++];
-
-        // Un token qui peut démarrer un nouveau facteur (donc multiplication implicite possible)
-        const startsFactorImplicit = () => {
-            const t = peek();
-            return t !== undefined && t !== "+" && t !== "-" && t !== "*" && t !== ")";
-        };
-
-        function parseExpr() {
-            let terms = parseTerm();
-            while (peek() === "+" || peek() === "-") {
-                const op = next();
-                const rhs = parseTerm();
-                terms = combine(terms, rhs, op === "-" ? -1 : 1);
-            }
-            return terms;
-        }
-
-        function parseTerm() {
-            let factors = parseFactor();
-            // multiplication explicite OU implicite
-            while (peek() === "*" || startsFactorImplicit()) {
-                if (peek() === "*") next();
-                const rhs = parseFactor();
-                factors = multiply(factors, rhs);
-            }
-            return factors;
-        }
-
-        function parseFactor() {
-            if (peek() === "(") {
-                next();
-                const val = parseExpr();
-                if (peek() !== ")") {
-                    throw new Error(`Parenthèse fermante attendue dans "${expr}"`);
-                }
-                next();
-                return val;
-            }
-            if (peek() === "+") {          // <-- AJOUT : + unaire, on l'ignore simplement
-                next();
-                return parseFactor();
-            }
-            if (peek() === "-") {
-                next();
-                const val = parseFactor();
-                return multiply(val, { const: -1, vars: {} });
-            }
-            const tok = next();
-            if (tok === undefined) {
-                throw new Error(`Expression incomplète: "${expr}"`);
-            }
-            if (/^\d/.test(tok)) {
-                return { const: parseFloat(tok), vars: {} };
-            } else {
-                return { const: 0, vars: { [tok]: 1 } };
-            }
-        }
-
-        function combine(a, b, sign) {
-            const result = { const: a.const + sign * b.const, vars: { ...a.vars } };
-            for (const v in b.vars) {
-                result.vars[v] = (result.vars[v] || 0) + sign * b.vars[v];
-            }
-            return result;
-        }
-
-        function multiply(a, b) {
-            if (Object.keys(a.vars).length && Object.keys(b.vars).length) {
-                throw new Error(`Produit de deux variables non supporté dans "${expr}"`);
-            }
-            const varsSource = Object.keys(a.vars).length ? a.vars : b.vars;
-            const scalar = Object.keys(a.vars).length ? b.const : a.const;
-            const result = { const: a.const * b.const, vars: {} };
-            for (const v in varsSource) {
-                result.vars[v] = varsSource[v] * scalar;
-            }
-            return result;
-        }
-
-        const parsed = parseExpr();
-
-        // *** Vérification cruciale ***
-        if (pos < tokens.length) {
-            throw new Error(
-                `Tokens non consommés dans "${expr}": [${tokens.slice(pos).join(", ")}] ` +
-                `(reste à la position ${pos})`
-            );
-        }
-
-        let out = "";
-        if (parsed.const !== 0 || Object.keys(parsed.vars).length === 0) {
-            out += parsed.const;
-        }
-        for (const v in parsed.vars) {
-            const coeff = parsed.vars[v];
-            if (coeff === 0) continue;
-            let part;
-            if (coeff === 1) part = v;
-            else if (coeff === -1) part = `-${v}`;
-            else part = `${coeff}${v}`;
-            if (out && coeff > 0 && !part.startsWith("-")) out += "+";
-            out += part;
-        }
-        return out || "0";
     }
 
     /**

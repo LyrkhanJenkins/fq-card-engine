@@ -316,9 +316,45 @@ describe("Minion — dissipation d'un fantôme", () => {
 
         await Minion.dismissAllGhosts(deletedCombat);
 
+        expect(deletes.token).toHaveBeenCalled();
+        expect(deletes.actor).toHaveBeenCalled();
+    });
+
+    it("à la suppression du combat, ne supprime pas le combattant : il est parti avec son combat", async () => {
+        const deletes = mountGhostOnScene();
+        const deletedCombat = game.combat;
+        deletedCombat.id = "deletedCombatId";
+        game.combat = null;
+        game.combats = new Map();
+
+        await Minion.dismissAllGhosts(deletedCombat);
+
+        expect(deletes.combatant).not.toHaveBeenCalled();
+        expect(deletes.token).toHaveBeenCalled();
+        expect(deletes.actor).toHaveBeenCalled();
+    });
+
+    it("retire le combattant quand le combat existe encore dans le monde", async () => {
+        const deletes = mountGhostOnScene();
+        game.combat.id = "liveCombatId";
+        game.combats = new Map([["liveCombatId", game.combat]]);
+
+        await Minion.dismissGhostOfTurn("ghostTokenId", game.combat);
+
         expect(deletes.combatant).toHaveBeenCalled();
         expect(deletes.token).toHaveBeenCalled();
         expect(deletes.actor).toHaveBeenCalled();
+    });
+
+    it("une suppression rejetée est notifiée sans se propager, et l'acteur est épargné", async () => {
+        const deletes = mountGhostOnScene();
+        deletes.combatant.mockRejectedValue(new Error("Combatant does not exist!"));
+
+        await expect(Minion.dismissAllGhosts(game.combat)).resolves.toBeUndefined();
+
+        expect(ui.notifications.error).toHaveBeenCalledWith("Combatant does not exist!");
+        expect(deletes.token).not.toHaveBeenCalled();
+        expect(deletes.actor).not.toHaveBeenCalled();
     });
 });
 
