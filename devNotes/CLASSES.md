@@ -1,7 +1,7 @@
 # Caractérisation des classes
 
 Document de référence design : ce qui définit chaque classe (identité dnd5e, stats FQ, rôle, mécaniques signature, spécialisations, contraintes), établi à partir des données réelles (`packs/_source/classes-fq8`, `decks-pattern-fq8`, `classes-stats-fq8`, `starter-heroes`, `lang/fr.json`) et du code (`src/domain`, `src/hook`).
-Chiffres mis à jour le 2026-09-21 : rééquilibrage des stats de départ et des pools de stats (étape 2), puis répartition des 319 cartes des huit classes sur les niveaux N1 à N12 (étape 1, détail dans [DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md)). `npm test` est vert.
+Chiffres mis à jour le 2026-09-21 : rééquilibrage des stats de départ et des pools de stats (étape 2), puis répartition des 323 cartes des huit classes sur les niveaux N1 à N12 et lot de 4 cartes (étape 1). `npm test` est vert.
 
 ---
 
@@ -29,7 +29,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 - [ ] Remplir à la main, pour chaque classe, les blocs **Spécificités / Spécialisations / Contraintes** (section « À définir à la main »), en s'appuyant sur les tableaux « Spécialisations proposées ».
 - [ ] Viser **30 à 40 cartes distinctes jouables entre N1 et N12** par classe. Réalisé : 3 cartes au N1 (4 pour l'Élémentaliste), puis 3 à 4 par niveau, une par spécialisation ouverte quand le compte le permet.
 - [ ] Écrire les nouvelles cartes avec la **grille de coûts provisoire** (section « Règles d'équilibrage (provisoires) »), pour ne pas tout réécrire à l'étape 4.
-- [x] **Mettre les cartes aux bons niveaux** — les **319 cartes** des huit classes sont réparties sur N1‑N12 depuis le 2026‑09‑21. Règles retenues, paliers d'ouverture des spés et grille carte par carte : [DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md). Plus aucune carte hors N1‑N12 (`npm run report:classes -- --check`).
+- [x] **Mettre les cartes aux bons niveaux** — les **319 cartes** des huit classes ont reçu un niveau N1‑N12 le 2026‑09‑21, et plus aucune n'est hors de cette plage (`npm run report:classes -- --check`). Les paliers d'ouverture des spécialisations sont dans « Spécialisations par niveau » ci‑dessous ; le détail par niveau se lit dans « Vue d'ensemble des cartes » et dans les decks eux‑mêmes (`system.fq.level`).
   - [x] *Lecture Du Souffle* (Moine, N8), qui pioche dans le deck par niveau, a été recalée sur la plage jouable : elle propose maintenant des cartes N1‑N7 (elle pointait encore vers les anciens niveaux de garage).
   - [ ] **Plancher du deck à revoir** : les exemplaires des cartes N1 (`maxSameCard` cumulé) valent 7 (Illusionniste) à 19 (Élémentaliste), contre 5 pour le Guerrier Runique. Cible ~7‑8 partout, à trancher avec les `maxSameCard` de l'étape 4 : Élémentaliste 19, Sorcière 14, Moine et Mage Blanc 13, Gardien 12.
 - [ ] **Supprimer ou fusionner les cartes redondantes** (listes « Redondances à trancher » de chaque classe) : l'Élémentaliste (43 cartes), le Gardien et le Mage Blanc (41) dépassent la cible de 40.
@@ -38,8 +38,8 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - [ ] Une **frappe à 2 PA pour le Moine** : ses trois cartes N1 sont à 3 PA, soit 9 PA pour 10,2 disponibles, alors que la classe vit du nombre de cartes jouées par tour.
   - [ ] Sorts de rang 2 (versions plus fortes, ex. *Trait de feu II*) pour les niveaux supérieurs ou les trous.
   - [ ] Combos : si certaines actions réussissent, rendre tous les PA ou ramener le coût d'une carte à 0.
-- [ ] Revoir les `maxSameCard` excessifs (Trait d'Ombre-Verte ×9, Coup Droit ×6, Uppercut ×6, Frappe Héroïque ×6, Énergie Lumineuse ×6).
-- [ ] Nouvelles cartes : clés de localisation FR/EN, illustrations, sons et visuels. **En attente** : *Lien du Fauve*, *Rémission Illusoire* et *Écho de Convalescence* sont encore sur `in_progress.png`.
+- [ ] Revoir les `maxSameCard` excessifs : Coup Droit ×6, Uppercut ×6, Frappe Héroïque ×6, Énergie Lumineuse ×6. *(~~Trait d'Ombre-Verte ×9~~ → ramené à ×3 le 2026‑09‑21, doublé par une version mineure ×5.)*
+- [ ] Nouvelles cartes : clés de localisation FR/EN, illustrations, sons et visuels. **En attente** : *Lien du Fauve*, *Rémission Illusoire*, *Écho de Convalescence*, *Estoc Perçant*, *Refrain Vivifiant*, *Crescendo* et *Trait d'Ombre-Verte Mineur* sont encore sur `in_progress.png`.
 - [x] ▶️ `npx vitest run tests/decks` après la répartition : **vert**, et `npm test` aussi (3865 tests). Les deux clés de traduction sans carte (*ScytheStrike*, *MassedVolley*) ont été supprimées de `lang/fr.json` et `lang/en.json`, avec `CardWarningMsgTargetsInSquare` qui n'était écrite que pour elles.
 - [ ] ▶️ **Fin de l'étape** : `npm run report:classes -- --check` ne doit plus signaler d'écart sur le nombre de cartes (les niveaux sont faits), puis `npm test`.
 - [ ] 📝 **Mettre à jour CLASSES.md**, dans chaque classe :
@@ -336,16 +336,16 @@ Stats de départ notables (détail dans « Stats de départ ») : **critique** d
 | Mage Blanc | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 3 | 0 | 13 | 41 / 79 | 2 / 4 | 6,0 | 7 | 9 | 12 / 12 | 3 |
 | Élémentaliste | 4 | 4 | 4 | 4 | 4 | 3 | 4 | 4 | 3 | 3 | 3 | 3 | 0 | 19 | 43 / 86 | 2 / 4 | 7,8 | 7 | 2 | 9 / 25 | 1 |
 | Trapper | 3 | 3 | 3 | 3 | 3 | 4 | 4 | 4 | 3 | 3 | 3 | 3 | 0 | 9 | 39 / 72 | 0 / 0 | 7,9 | 5 | 9 | 8 / 18 | 1 |
-| Sorcière | 3 | 3 | 3 | 3 | 4 | 4 | 3 | 3 | 3 | 3 | 3 | 3 | 0 | 14 | 38 / 79 | 1 / 3 | 6,8 | 5 | 1 | 4 / 11 | 2 |
-| Illusionniste | 3 | 3 | 3 | 3 | 3 | 4 | 3 | 3 | 4 | 3 | 4 | 3 | 0 | 7 | 39 / 64 | 0 / 0 | 5,2 | 13 | 2 | 7 / 19 | 2 |
+| Sorcière | 4 | 3 | 3 | 3 | 4 | 4 | 3 | 3 | 3 | 3 | 3 | 3 | 0 | 13 | 39 / 78 | 1 / 3 | 6,8 | 5 | 1 | 5 / 11 | 2 |
+| Illusionniste | 4 | 4 | 4 | 3 | 3 | 4 | 3 | 3 | 4 | 3 | 4 | 3 | 0 | 9 | 42 / 70 | 0 / 0 | 5,2 | 13 | 2 | 8 / 20 | 2 |
 | Maître d'Armes | 3 | 3 | 3 | 3 | 4 | 3 | 3 | 3 | 4 | 3 | 4 | 3 | 0 | 10 | 39 / 77 | 12 / 46 | 5,1 | 18 | 3 | 14 / 14 | 5 |
 | Guerrier Runique | 4 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 5 | 15 / 16 | 17 / 408 | 5,9 | 1 | 0 | 12 / 0 | 0 |
 
-**Hors N1‑12** : plus aucune carte, les neuf decks sont rangés. **Plancher deck** : exemplaires des cartes N1, figés comme `minSize` du deck de départ — il reste à le ramener autour de 7‑8 partout (étape 4), l'Élémentaliste à 19 et la Sorcière à 14 étant les plus lourds. Tableau copié de `npm run report:classes`. Répartition et justification niveau par niveau : [DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md).
+**Hors N1‑12** : plus aucune carte, les neuf decks sont rangés. **Plancher deck** : exemplaires des cartes N1, figés comme `minSize` du deck de départ — il reste à le ramener autour de 7‑8 partout (étape 4), l'Élémentaliste à 19 et la Sorcière à 13 étant les plus lourds. Tableau copié de `npm run report:classes`.
 
 ### Spécialisations par niveau
 
-Les 319 cartes des huit classes ont été réparties sur les niveaux N1 à N12 le 2026‑09‑21 (le Guerrier Runique garde ses niveaux et ses 117 runes). Le détail carte par carte, les règles retenues et les paliers d'ouverture des spécialisations sont dans **[DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md)**. En résumé, chaque classe ouvre deux spécialisations au N1 et garde la troisième pour plus tard :
+Les 319 cartes des huit classes ont été réparties sur les niveaux N1 à N12 le 2026‑09‑21 (le Guerrier Runique garde ses niveaux et ses 117 runes). Chaque classe ouvre deux spécialisations au N1 et garde la troisième pour plus tard :
 
 | Classe | Ouvre au N1 | Ouvre plus tard |
 |---|---|---|
@@ -358,7 +358,30 @@ Les 319 cartes des huit classes ont été réparties sur les niveaux N1 à N12 l
 | Illusionniste | Lame d'allonge, Barde | Chronomancien → N5 |
 | Maître d'Armes | Mêlée, Distance | Armes de jet → N3, Instructeur → N5 |
 
-Trois règles encadrent la répartition : le **N1 ne reçoit que 3 cartes** (4 pour l'Élémentaliste, une par élément), **aucune carte innée avant le N3**, et **aucune carte ne coûte de zèle au N1**, puisque le compteur y est encore à zéro.
+Cinq règles encadrent la répartition :
+
+| # | Règle | Pourquoi |
+|---|---|---|
+| **N1 minimal** | 3 cartes (4 pour l'Élémentaliste, une par élément ; 4 aussi pour la Sorcière et l'Illusionniste depuis le lot du 2026‑09‑21) | Le N1 est aussi le **plancher du deck** : tout ce qu'on y met est posé en tous ses exemplaires à la création du personnage. |
+| **3 à 4 par niveau** ensuite | une carte par spécialisation ouverte quand le compte le permet | La montée de niveau fait progresser tous les axes du personnage, pas un seul. |
+| **Aucune innée avant le N3** | la première innée de chaque classe est au N3 ou au N4 | Les innées sont distribuées d'office en main au début de chaque combat (`combat-turn.js`) : les donner plus tôt figerait la main de départ. |
+| **Aucun coût en zèle au N1** | les cartes N1 en **rendent** ; les consommateurs commencent au N2‑N3 | Le zèle initial vaut 0,1 à 0,3 selon la classe — aucune n'en a au départ : une carte qui en coûte serait injouable au premier tour. |
+| **Prérequis = niveau tardif** | stacks (3 brûlures, 5 hantises, 4 effets de terre), défausse de 3‑4 cartes, « après 2 autres réactives » | Une carte n'arrive qu'après celles qui produisent sa condition. Les ultimes et les cartes « tout ou rien » ferment les N10‑N12. |
+
+Le coût tient dans les ressources du niveau : N1‑N2 ≤ 7 PA / 1 mana ; N3‑N5 ≤ 9 PA / 2 mana ; N6‑N8 ≤ 12 PA / 3 mana ; N9‑N12 le reste. Rapportés aux cartes réellement en main au premier tour (main + pioche), les N1 tombent juste partout : Mage Blanc, Maître d'Armes et Élémentaliste à 4,6‑4,9 PA par carte disponible pour des cartes à 4‑6 PA, et le **Trapper** à 12,2 PA pour une seule carte par tour (main 0,1), ce qui valide exactement *Tir Précis* et *Embuscade*, dont le coût est la distance ou tout le budget du tour.
+
+### Lot de cartes du 2026‑09‑21
+
+| Carte | Classe | Niv. | Ex. | Coûts | Effet |
+|---|---|---|---|---|---|
+| **Estoc perçant** | Illusionniste (Lame d'allonge) | N1 | ×2 | 7 PA, 1 mana, **+1 zèle** | `(@dex + @cha + 1d4)` perçant, portée 1‑1 ; **1d2 de chance de +1 portée** (patron de la Rapière Enchantée) |
+| **Refrain Vivifiant** | Illusionniste (Barde) | N2 | ×2 | **−4 + 1d6 PA** | HOT : `-(1 + ceil(@cha/2))` PV par tour pendant 2 tours, portée 0‑2. Aucun soin immédiat, et 1d6 des 4 PA revient — la seule carte du jeu dont le coût en action porte un dé |
+| **Crescendo** | Illusionniste (Barde) | N3 | ×2 | 1 zèle | **+1 au maximum de zèle, définitivement**. Deuxième carte du jeu à toucher `zeal.max` après Poing Rouge (+5) |
+| **Trait d'Ombre-Verte Mineur** | Sorcière (Charnier) | N1 | ×5 | 5 PA, 1 mana, **+1 zèle** | `@int` acide + rongement, portée 2‑8, **sans squelette** ; **1 chance sur 2 d'augmenter le score de sacrifice de 1** — la première carte du jeu qui l'alimente, les autres ne font que le consommer |
+
+Deux ajustements du même lot : ***Trait d'Ombre-Verte*** passe de **9 à 3 exemplaires**, doublé par sa version mineure — le spam du N1 de la Sorcière alimente désormais le charnier autant que l'armée ; et ***Magie Blanche*** est renommée ***Magie Verte*** (clé `FQCARDTITLE.GreenMagic`, image `images/cards/illusionist/GreenMagic.png`), son `_id` technique `illWhiteMagic001` étant conservé pour ne pas casser les decks existants.
+
+L'Illusionniste passe à **42 cartes** et rejoint les classes à élaguer. Les quatre nouvelles cartes sont sur `in_progress.png` : illustrations à faire.
 
 ---
 
@@ -565,7 +588,7 @@ Détail des cartes :
 
 **Mécaniques signature** :
 - **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, Paume Curative ×4, Posture du Roseau ×3, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume De Jade).
-  - Poing Rouge est la seule carte du jeu qui monte `zeal.max` (+5, permanent).
+  - Poing Rouge monte `zeal.max` (+5, permanent) ; depuis le 2026‑09‑21, *Crescendo* (Illusionniste, N3) fait de même pour +1 contre 1 zèle.
 - **Soigner au contact, en frappant** : c'est le seul soigneur de mêlée du jeu, tous ses soins sont à portée 1 (Paume Curative, Paume De Jade, Bague de Soins, Transfert de Soins) ou sur la trajectoire d'un déplacement (Sillage Curatif). Depuis le lot 2026‑09‑20, deux étages : **Paume Curative** (3 PA, aucun mana, petit soin fixe, **+1 zèle**) est un générateur spammable au même tempo que Coup Droit ; **Paume De Jade** (l'ancienne Paume Curative, améliorée : X jusqu'à 3, +2 au soin de base, et le Moine se soigne de SAG au passage) est le gros soin à zèle dépensé.
 - **Le pendant soin du déplacement** : Déplacement Éclair (dégâts) et **Sillage Curatif** (soins) partagent la macro `FlashMove` et le même `customEval` d'alignement — deux faces d'une même mécanique, l'une traverse des ennemis, l'autre des alliés.
 - **PV temporaires, et rien d'autre, pour l'auto-soin de tempo** : Méditation Zen rend ses PV en **temporaires pendant 1 tour** (patron du Gardien : le `hp` soigne, l'effet monte `hp.tempmax` de la même formule). Le vrai soin personnel passe par Vive-Esquive (réactif), Sérénité Pleine, Sillage Curatif et l'appoint en X de Paume De Jade.
@@ -835,7 +858,7 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 - Peu de points de vie
 
 ### Constat des cartes (données)
-- **38 cartes réparties sur N1‑N12**, le Colosse n'ouvrant qu'au N6 : coût moyen 6,8 PA et 5 cartes à 1‑4 PA (elle n'en avait aucune avant la passe).
+- **39 cartes réparties sur N1‑N12**, le Colosse n'ouvrant qu'au N6 : coût moyen 6,8 PA et 5 cartes à 1‑4 PA (elle n'en avait aucune avant la passe). *Trait d'Ombre-Verte* est passé de 9 à 3 exemplaires, doublé par un *Trait d'Ombre-Verte Mineur* (×5) qui alimente le charnier au lieu de l'armée.
 - **Aucune carte à 1‑4 PA** parmi les débloquables ; coût moyen 8,1 PA (le plus élevé) pour 8,5 PA au N1 : **une carte par tour au N1**.
 - Seulement 2 cartes distinctes au N1 (Nécromancie, Trait d'Ombre-Verte ×9).
 - 4 générateurs de zèle pour 11 consommateurs.
@@ -855,7 +878,7 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 
 ### Incohérences relevées
 - `ItemChoice` vide dans `classes-fq8/witch.json`.
-- Trait d'Ombre-Verte ×9.
+- ~~Trait d'Ombre-Verte ×9~~ → ×3, avec une version mineure ×5 qui alimente le score de sacrifice.
 - Sorcier Squelette (15 PA, 4 mana, 4 zèle) et Apothéose Macabre (14 PA) hors de portée avant le N6‑N7.
 
 ### À définir à la main
@@ -980,10 +1003,10 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 - Le moins de PA au N1
 
 ### Constat des cartes (données)
-- **39 cartes réparties sur N1‑N12**, le Chronomancien ouvrant au N5 : coût moyen 5,2 PA et 13 cartes à 1‑4 PA.
+- **42 cartes réparties sur N1‑N12**, le Chronomancien ouvrant au N5 : coût moyen 5,2 PA et 13 cartes à 1‑4 PA. Deux cartes de trop pour la cible de 30‑40 depuis le lot du 2026‑09‑21 (*Estoc perçant*, *Refrain Vivifiant*, *Crescendo*).
 - 12 cartes à 1‑4 PA ; coût moyen 4,8 PA, le plus bas du jeu — cohérent avec ses 8,3 PA au N1, le plus bas aussi.
 - 7 générateurs de zèle pour 19 consommateurs.
-- *(résolu par le lot du 2026‑09‑20)* Magie des Arcanes est rattachée au dps (Lame d'allonge), Magie Blanche au soutien (Barde) : elles ne sont plus « à reclasser ».
+- *(résolu par le lot du 2026‑09‑20)* Magie des Arcanes est rattachée au dps (Lame d'allonge), **Magie Verte** au soutien (Barde) : elles ne sont plus « à reclasser ». *Magie Blanche* a été renommée **Magie Verte** le 2026‑09‑21 (clé `FQCARDTITLE.GreenMagic`, image `GreenMagic.png`) ; son `_id` technique `illWhiteMagic001` est conservé.
 
 ### Cartes du lot 2026‑09‑20
 Le Barde devient explicitement le **healeur HOT** de la classe. Deux cartes ajoutées, toutes deux sans soin immédiat, et les deux cartes N12 rangées dans une spé.
@@ -994,8 +1017,8 @@ Le Barde devient explicitement le **healeur HOT** de la classe. Deux cartes ajou
 ### Spécialisations — cartes par spé
 | Spé | Cartes existantes | Manques |
 |---|---|---|
-| **Lame d'allonge** (mêlée qui scale sur la portée) | Fouet Enchanté, Frappe avec Salto Arrière, Frappe Illusoire, Allonge Magique, Rapière Enchantée, Prise en Traître, Volée de Shuriken, Nuage de Dague, Orbe Grandissante, Shuriken, Shuriken Empoisonné, Illusion de Caractéristiques, **Magie des Arcanes** | Finisher N8‑12 |
-| **Barde** (soutien, healeur HOT) | Inspiration Chantée, Danse Enfiévrée, Inspiration Effrénée, Apothicaire I, Apothicaire II, Immatérialité, Vases Communicants, Succion de Mana, Soins Expansifs, **Magie Blanche**, **Rémission Illusoire**, **Écho de Convalescence** | Sorts d'assistance (voir TODO) |
+| **Lame d'allonge** (mêlée qui scale sur la portée) | Fouet Enchanté, Frappe avec Salto Arrière, Frappe Illusoire, Allonge Magique, Rapière Enchantée, Prise en Traître, Volée de Shuriken, Nuage de Dague, Orbe Grandissante, Shuriken, Shuriken Empoisonné, Illusion de Caractéristiques, Magie des Arcanes, **Estoc Perçant** | Finisher N8‑12 |
+| **Barde** (soutien, healeur HOT) | Inspiration Chantée, Danse Enfiévrée, Inspiration Effrénée, Apothicaire I, Apothicaire II, Immatérialité, Vases Communicants, Succion de Mana, Soins Expansifs, Magie Verte, Rémission Illusoire, Écho de Convalescence, **Refrain Vivifiant**, **Crescendo** | Sorts d'assistance (voir TODO) |
 | **Chronomancien / manipulateur** | Passage vers le Plan Éthéré, Peste Noire, Contagion, Frappe Temporelle, Miroir, Distorsion, Bombe à Retardement, Cage de Rappel, Illusion de Maître de Jeu, Piège de Retour dans le Temps, Illusion Infranchissable, Regard Envoûtant, Berceuse, Images Miroir | Cartes N8‑N11 |
 
 ### Redondances à trancher
