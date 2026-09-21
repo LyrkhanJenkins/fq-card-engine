@@ -74,21 +74,11 @@
           },
           {
             "key": "system.fq.attributes.critical",
-            "value": 3,
-            "priority": null,
-            "type": "add",
-            "phase": "initial",
-            "_id": "CDq2N47DjdmbxfH8",
-            "conditions": "{}",
-            "replacement": ""
-          },
-          {
-            "key": "system.fq.attributes.evasion",
             "value": 1,
             "priority": null,
             "type": "add",
             "phase": "initial",
-            "_id": "2NFsQFMLjqiqJo2G",
+            "_id": "CDq2N47DjdmbxfH8",
             "conditions": "{}",
             "replacement": ""
           },
@@ -99,6 +89,16 @@
             "type": "add",
             "phase": "initial",
             "_id": "lzcn8UF4D6ekQHMM",
+            "conditions": "{}",
+            "replacement": ""
+          },
+          {
+            "key": "system.fq.cards.pick",
+            "value": 1,
+            "priority": null,
+            "type": "add",
+            "phase": "initial",
+            "_id": "3TXgEVYUB1HbOBo1",
             "conditions": "{}",
             "replacement": ""
           },

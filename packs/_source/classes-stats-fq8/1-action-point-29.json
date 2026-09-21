@@ -1,10 +1,10 @@
 {
-  "name": "+1 action point (3)",
+  "name": "+1 action point (29)",
   "type": "feat",
   "img": "icons/magic/light/explosion-star-glow-orange.webp",
   "effects": [
     {
-      "_id": "gLxh9IhVmNUCs9pM",
+      "_id": "WiUJ7IpnrEP12dys",
       "disabled": false,
       "duration": {
         "value": null,
@@ -28,13 +28,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
+        "exportSource": null,
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "6.0.1",
-        "createdTime": 1789381772720,
-        "modifiedTime": 1789381772720,
         "lastModifiedBy": "dnd5ebuilder0000",
-        "exportSource": null
+        "createdTime": 1789381774071,
+        "modifiedTime": 1789381774071
       },
       "name": "+1 point d'action",
       "img": "icons/magic/light/explosion-star-glow-orange.webp",
@@ -47,7 +47,7 @@
             "priority": null,
             "type": "add",
             "phase": "initial",
-            "_id": "lRxIek5IRghH4FVj",
+            "_id": "tUM7CiRaVpbXyde9",
             "conditions": "{}",
             "replacement": ""
           }
@@ -62,7 +62,7 @@
       "start": null,
       "showIcon": 1,
       "folder": null,
-      "_key": "!items.effects!3xcKaffBtgGMOG7c.gLxh9IhVmNUCs9pM"
+      "_key": "!items.effects!EPug2SLXdRRhTd25.WiUJ7IpnrEP12dys"
     }
   ],
   "folder": null,
@@ -74,16 +74,13 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
+    "exportSource": null,
     "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "6.0.1",
-    "createdTime": 1724140493857,
-    "modifiedTime": 1789381772720,
-    "lastModifiedBy": "dnd5ebuilder0000",
-    "exportSource": null
-  },
-  "ownership": {
-    "default": 0
+    "systemVersion": "5.1.2",
+    "createdTime": 1756552338395,
+    "modifiedTime": 1789381774071,
+    "lastModifiedBy": "dnd5ebuilder0000"
   },
   "system": {
     "description": {
@@ -92,72 +89,17 @@
     },
     "source": {
       "custom": "",
-      "rules": "2014"
-    },
-    "activation": {
-      "type": "",
-      "cost": null,
-      "condition": ""
-    },
-    "duration": {
-      "value": "",
-      "units": ""
-    },
-    "target": {
-      "value": "",
-      "width": null,
-      "units": "",
-      "type": "",
-      "prompt": true
-    },
-    "range": {
-      "value": null,
-      "long": null,
-      "units": ""
+      "revision": 1,
+      "rules": "2024"
     },
     "uses": {
-      "value": null,
       "max": "",
-      "per": null,
-      "recovery": "",
-      "prompt": true
-    },
-    "consume": {
-      "type": "",
-      "target": null,
-      "amount": null,
-      "scale": false
-    },
-    "ability": null,
-    "actionType": "",
-    "chatFlavor": "",
-    "critical": {
-      "threshold": null,
-      "damage": ""
-    },
-    "damage": {
-      "parts": [],
-      "versatile": ""
-    },
-    "formula": "",
-    "save": {
-      "ability": "",
-      "dc": null,
-      "scaling": "spell"
+      "spent": 0,
+      "recovery": []
     },
     "requirements": "",
-    "recharge": {
-      "value": null,
-      "charged": false
-    },
-    "attack": {
-      "bonus": "",
-      "flat": false
-    },
     "cover": null,
     "crewed": false,
-    "enchantment": null,
-    "summons": null,
     "fq": {
       "action": 0,
       "mana": 0,
@@ -170,12 +112,20 @@
       "subtype": ""
     },
     "prerequisites": {
-      "level": 1
+      "level": 12,
+      "items": [],
+      "repeatable": false
     },
     "properties": [],
-    "identifier": "1-action-point-3"
+    "activities": {},
+    "advancement": [],
+    "identifier": "1-action-point-29",
+    "enchant": {}
   },
-  "_id": "3xcKaffBtgGMOG7c",
-  "sort": 7800000,
-  "_key": "!items!3xcKaffBtgGMOG7c"
+  "_id": "EPug2SLXdRRhTd25",
+  "sort": 9200000,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!EPug2SLXdRRhTd25"
 }

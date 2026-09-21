@@ -646,7 +646,7 @@
       },
       "cards": {
         "hand": 0,
-        "pick": 1
+        "pick": 0
       },
       "minions": {
         "sacrificedMinion": 1

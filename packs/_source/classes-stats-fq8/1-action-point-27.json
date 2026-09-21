@@ -1,10 +1,10 @@
 {
-  "name": "⭐ +1 pick (4) ⭐",
+  "name": "+1 action point (27)",
   "type": "feat",
-  "img": "icons/sundries/gaming/playing-cards-grey.webp",
+  "img": "icons/magic/light/explosion-star-glow-orange.webp",
   "effects": [
     {
-      "_id": "8fypySjQndYs7gpC",
+      "_id": "yil8hwkHyLqyr8j2",
       "disabled": false,
       "duration": {
         "value": null,
@@ -28,26 +28,26 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
+        "exportSource": null,
         "coreVersion": "14.367",
         "systemId": "dnd5e",
         "systemVersion": "6.0.1",
-        "createdTime": 1789381773124,
-        "modifiedTime": 1789381773124,
         "lastModifiedBy": "dnd5ebuilder0000",
-        "exportSource": null
+        "createdTime": 1789381774071,
+        "modifiedTime": 1789381774071
       },
-      "name": "+1 pioche",
-      "img": "icons/sundries/gaming/playing-cards-grey.webp",
+      "name": "+1 point d'action",
+      "img": "icons/magic/light/explosion-star-glow-orange.webp",
       "type": "base",
       "system": {
         "changes": [
           {
-            "key": "system.fq.cards.pick",
+            "key": "system.fq.action.max",
             "value": 1,
             "priority": null,
             "type": "add",
             "phase": "initial",
-            "_id": "AOOBXZqro3g9K712",
+            "_id": "bXlo4aZVZQL1Ojwh",
             "conditions": "{}",
             "replacement": ""
           }
@@ -62,7 +62,7 @@
       "start": null,
       "showIcon": 1,
       "folder": null,
-      "_key": "!items.effects!KTPzRHNpeb9HbFth.8fypySjQndYs7gpC"
+      "_key": "!items.effects!AicluyaaiDWYIok9.yil8hwkHyLqyr8j2"
     }
   ],
   "folder": null,
@@ -74,16 +74,13 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
+    "exportSource": null,
     "coreVersion": "14.367",
     "systemId": "dnd5e",
-    "systemVersion": "6.0.1",
-    "createdTime": 1724140566041,
-    "modifiedTime": 1789381773123,
-    "lastModifiedBy": "dnd5ebuilder0000",
-    "exportSource": null
-  },
-  "ownership": {
-    "default": 0
+    "systemVersion": "5.1.2",
+    "createdTime": 1756552338395,
+    "modifiedTime": 1789381774071,
+    "lastModifiedBy": "dnd5ebuilder0000"
   },
   "system": {
     "description": {
@@ -92,72 +89,17 @@
     },
     "source": {
       "custom": "",
-      "rules": "2014"
-    },
-    "activation": {
-      "type": "",
-      "cost": null,
-      "condition": ""
-    },
-    "duration": {
-      "value": "",
-      "units": ""
-    },
-    "target": {
-      "value": "",
-      "width": null,
-      "units": "",
-      "type": "",
-      "prompt": true
-    },
-    "range": {
-      "value": null,
-      "long": null,
-      "units": ""
+      "revision": 1,
+      "rules": "2024"
     },
     "uses": {
-      "value": null,
       "max": "",
-      "per": null,
-      "recovery": "",
-      "prompt": true
-    },
-    "consume": {
-      "type": "",
-      "target": null,
-      "amount": null,
-      "scale": false
-    },
-    "ability": null,
-    "actionType": "",
-    "chatFlavor": "",
-    "critical": {
-      "threshold": null,
-      "damage": ""
-    },
-    "damage": {
-      "parts": [],
-      "versatile": ""
-    },
-    "formula": "",
-    "save": {
-      "ability": "",
-      "dc": null,
-      "scaling": "spell"
+      "spent": 0,
+      "recovery": []
     },
     "requirements": "",
-    "recharge": {
-      "value": null,
-      "charged": false
-    },
-    "attack": {
-      "bonus": "",
-      "flat": false
-    },
     "cover": null,
     "crewed": false,
-    "enchantment": null,
-    "summons": null,
     "fq": {
       "action": 0,
       "mana": 0,
@@ -170,12 +112,20 @@
       "subtype": ""
     },
     "prerequisites": {
-      "level": 10
+      "level": 11,
+      "items": [],
+      "repeatable": false
     },
     "properties": [],
-    "identifier": "-1-pick-4-"
+    "activities": {},
+    "advancement": [],
+    "identifier": "1-action-point-27",
+    "enchant": {}
   },
-  "_id": "KTPzRHNpeb9HbFth",
-  "sort": 1600000,
-  "_key": "!items!KTPzRHNpeb9HbFth"
+  "_id": "AicluyaaiDWYIok9",
+  "sort": 8900000,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!AicluyaaiDWYIok9"
 }

@@ -459,7 +459,7 @@
       },
       "cards": {
         "hand": 0,
-        "pick": 1
+        "pick": 0
       },
       "attributes": {
         "critical": 0,

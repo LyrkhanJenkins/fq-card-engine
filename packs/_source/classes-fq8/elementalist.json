@@ -112,83 +112,83 @@
         "configuration": {
           "choices": {
             "1": {
-              "count": 2,
+              "count": 3,
               "replacement": false
             },
             "2": {
-              "count": 3,
+              "count": 2,
               "replacement": false
             },
             "3": {
-              "count": 2,
+              "count": 3,
               "replacement": false
             },
             "4": {
-              "count": 3,
+              "count": 2,
               "replacement": false
             },
             "5": {
-              "count": 2,
+              "count": 3,
               "replacement": false
             },
             "6": {
-              "count": 3,
+              "count": 2,
               "replacement": false
             },
             "7": {
-              "count": 2,
+              "count": 3,
               "replacement": false
             },
             "8": {
-              "count": 3,
+              "count": 2,
               "replacement": false
             },
             "9": {
-              "count": 2,
+              "count": 3,
               "replacement": false
             },
             "10": {
-              "count": 3,
+              "count": 2,
               "replacement": false
             },
             "11": {
-              "count": 2,
+              "count": 3,
               "replacement": false
             },
             "12": {
-              "count": 3,
+              "count": 2,
               "replacement": false
             },
             "13": {
-              "count": 2,
+              "count": 3,
               "replacement": false
             },
             "14": {
-              "count": 3,
+              "count": 2,
               "replacement": false
             },
             "15": {
-              "count": 2,
+              "count": 3,
               "replacement": false
             },
             "16": {
-              "count": 3,
+              "count": 2,
               "replacement": false
             },
             "17": {
-              "count": 2,
+              "count": 3,
               "replacement": false
             },
             "18": {
-              "count": 3,
-              "replacement": false
-            },
-            "19": {
               "count": 2,
               "replacement": false
             },
-            "20": {
+            "19": {
               "count": 3,
+              "replacement": false
+            },
+            "20": {
+              "count": 2,
               "replacement": false
             }
           },
@@ -454,7 +454,22 @@
               "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.oZlLtsPZhx3nRNIR"
             },
             {
-              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.KTPzRHNpeb9HbFth"
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.3pcme0c3TkywmUvu"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.5MBdrm6LBVJKLFnl"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.AicluyaaiDWYIok9"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.UIurDE0KIqOe05nR"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.EPug2SLXdRRhTd25"
+            },
+            {
+              "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.SCX2m1rKCtOylURF"
             },
             {
               "uuid": "Compendium.fq-card-engine.classes-stats-fq8.Item.o2IgHEIEdELHmZRr"
