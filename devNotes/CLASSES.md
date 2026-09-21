@@ -292,7 +292,8 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - L'image d'Essor Vital est référencée avec une casse qui ne correspond pas au fichier (`KNOWN_ISSUES`).
 
 **Questionnement et TODO :**
--
+- Hemmoragie doit avoir un coup en PV alternatif
+- Offrande de sang fais plus de dégâts si saignement
 ---
 
 ## Mage Blanc
