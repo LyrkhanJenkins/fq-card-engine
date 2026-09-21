@@ -1,7 +1,7 @@
 # Caractérisation des classes
 
 Document de référence design : ce qui définit chaque classe (identité dnd5e, stats FQ, rôle, mécaniques signature, spécialisations, contraintes), établi à partir des données réelles (`packs/_source/classes-fq8`, `decks-pattern-fq8`, `classes-stats-fq8`, `starter-heroes`, `lang/fr.json`) et du code (`src/domain`, `src/hook`).
-Chiffres mis à jour le 2026-09-21 (rééquilibrage des stats de départ et des pools de stats, étape 2). Les lignes « Cartes » du tableau des moyennes restent à 0 : les decks sont encore au garage, voir l'étape 1 et [DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md).
+Chiffres mis à jour le 2026-09-21 : rééquilibrage des stats de départ et des pools de stats (étape 2), puis répartition des 319 cartes des huit classes sur les niveaux N1 à N12 (étape 1, détail dans [DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md)). `npm test` est vert.
 
 ---
 
@@ -25,28 +25,29 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 - [ ] Ajuster les règles (grille, cibles) d'après la pilote, puis dérouler les étapes pour les 7 autres classes.
 
 ### Étape 1 — Première passe des cartes : niveaux, cartes manquantes, 30 à 40 cartes par classe
-- [ ] ▶️ Avant de commencer : `npm run report:classes -- --check` pour voir, par classe, le nombre de cartes et la liste des cartes hors N1‑N12.
+- [x] ▶️ `npm run report:classes -- --check` : plus aucune carte hors N1‑N12. Restent 3 écarts, tous sur le nombre de cartes (Gardien 41, Mage Blanc 41, Élémentaliste 43 pour une cible de 30‑40) : c'est l'élagage ci‑dessous.
 - [ ] Remplir à la main, pour chaque classe, les blocs **Spécificités / Spécialisations / Contraintes** (section « À définir à la main »), en s'appuyant sur les tableaux « Spécialisations proposées ».
-- [ ] Viser **30 à 40 cartes distinctes jouables entre N1 et N12** par classe. Proposition : ~7 cartes N1, puis ~3 cartes par niveau N2‑N12 (environ une carte par spécialisation et par niveau).
+- [ ] Viser **30 à 40 cartes distinctes jouables entre N1 et N12** par classe. Réalisé : 3 cartes au N1 (4 pour l'Élémentaliste), puis 3 à 4 par niveau, une par spécialisation ouverte quand le compte le permet.
 - [ ] Écrire les nouvelles cartes avec la **grille de coûts provisoire** (section « Règles d'équilibrage (provisoires) »), pour ne pas tout réécrire à l'étape 4.
-- [ ] **Mettre les cartes aux bons niveaux** — proposition complète de répartition N1‑N12 des 319 cartes garées dans [DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md) (règles retenues, paliers d'ouverture des spés, grille par classe) : à valider puis à appliquer.
-  - [ ] Trier les cartes du **garage** (N13 et au-delà, **321 cartes** : tout sauf le Guerrier Runique) : leur donner un niveau (1 à 12), les fusionner ou les supprimer. Elles y sont rangées **par spécialisation, une spé par niveau** — voir « Niveaux de garage » plus bas.
-  - [ ] Vérifier les **cartes de départ (N1)** de chaque classe : leur total d'exemplaires (`maxSameCard` cumulé) est le **plancher du deck** de tout personnage dont c'est la classe principale. **Il vaut aujourd'hui 0 partout** (5 pour le Guerrier Runique, seule classe encore rangée en N1‑N12) : aucune classe n'a de deck de départ tant que les cartes ne sont pas sorties du garage.
-- [ ] **Supprimer ou fusionner les cartes redondantes** (listes « Redondances à trancher » de chaque classe). L'Élémentaliste (43 cartes) et le Maître d'Armes (41) sont surtout à élaguer.
+- [x] **Mettre les cartes aux bons niveaux** — les **319 cartes** des huit classes sont réparties sur N1‑N12 depuis le 2026‑09‑21. Règles retenues, paliers d'ouverture des spés et grille carte par carte : [DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md). Plus aucune carte hors N1‑N12 (`npm run report:classes -- --check`).
+  - [x] *Lecture Du Souffle* (Moine, N8), qui pioche dans le deck par niveau, a été recalée sur la plage jouable : elle propose maintenant des cartes N1‑N7 (elle pointait encore vers les anciens niveaux de garage).
+  - [ ] **Plancher du deck à revoir** : les exemplaires des cartes N1 (`maxSameCard` cumulé) valent 7 (Illusionniste) à 19 (Élémentaliste), contre 5 pour le Guerrier Runique. Cible ~7‑8 partout, à trancher avec les `maxSameCard` de l'étape 4 : Élémentaliste 19, Sorcière 14, Moine et Mage Blanc 13, Gardien 12.
+- [ ] **Supprimer ou fusionner les cartes redondantes** (listes « Redondances à trancher » de chaque classe) : l'Élémentaliste (43 cartes), le Gardien et le Mage Blanc (41) dépassent la cible de 40.
 - [ ] **Écrire les cartes manquantes** :
-  - [ ] **Tous les niveaux N1‑N12 sont vides** pour les huit classes depuis la mise au garage : il n'y a plus de trous à combler, il y a un rangement complet à faire.
-  - [ ] Cartes **peu chères** (1 à 4 PA) pour la Sorcière (0), le Mage Blanc (2), l'Élémentaliste (3) et le Trapper (3). *(Chiffres relevés avant la mise au garage : le rapport ne mesure les coûts que sur les cartes N1‑N12, il ne les affiche donc plus.)*
+  - [ ] Cartes **peu chères** (1 à 4 PA) pour le Mage Blanc et l'Élémentaliste (7 chacun), le Trapper et la Sorcière (5 chacun) — contre 18 pour le Maître d'Armes et 15 pour le Moine.
+  - [ ] Une **frappe à 2 PA pour le Moine** : ses trois cartes N1 sont à 3 PA, soit 9 PA pour 10,2 disponibles, alors que la classe vit du nombre de cartes jouées par tour.
   - [ ] Sorts de rang 2 (versions plus fortes, ex. *Trait de feu II*) pour les niveaux supérieurs ou les trous.
   - [ ] Combos : si certaines actions réussissent, rendre tous les PA ou ramener le coût d'une carte à 0.
 - [ ] Revoir les `maxSameCard` excessifs (Trait d'Ombre-Verte ×9, Coup Droit ×6, Uppercut ×6, Frappe Héroïque ×6, Énergie Lumineuse ×6).
-- [ ] Nouvelles cartes : clés de localisation FR/EN, illustrations, sons et visuels.
-- [ ] ▶️ **Après chaque lot de cartes** (création, suppression, changement de niveau) : `npx vitest run tests/decks`. Si une anomalie connue a été corrigée au passage (ex. *Tir Précis II*), retirer sa ligne de `KNOWN_ISSUES`.
-- [ ] ▶️ **Fin de l'étape** : `npm run report:classes -- --check` ne doit plus signaler d'écart sur le nombre de cartes ni sur les niveaux, puis `npm test`.
+- [ ] Nouvelles cartes : clés de localisation FR/EN, illustrations, sons et visuels. **En attente** : *Lien du Fauve*, *Rémission Illusoire* et *Écho de Convalescence* sont encore sur `in_progress.png`.
+- [x] ▶️ `npx vitest run tests/decks` après la répartition : **vert**, et `npm test` aussi (3865 tests). Les deux clés de traduction sans carte (*ScytheStrike*, *MassedVolley*) ont été supprimées de `lang/fr.json` et `lang/en.json`, avec `CardWarningMsgTargetsInSquare` qui n'était écrite que pour elles.
+- [ ] ▶️ **Fin de l'étape** : `npm run report:classes -- --check` ne doit plus signaler d'écart sur le nombre de cartes (les niveaux sont faits), puis `npm test`.
 - [ ] 📝 **Mettre à jour CLASSES.md**, dans chaque classe :
   - [ ] « À définir à la main » : spécificités, spécialisations et contraintes arrêtées.
   - [ ] « Spécialisations proposées » : cartes ajoutées, supprimées, fusionnées ; vider la colonne « Manques » traitée.
   - [ ] « Redondances à trancher » : retirer les points tranchés.
-  - [ ] « Constat des cartes » et « Mécaniques signature » : nombres de cartes et noms de cartes à jour (chiffres : `npm run report:classes`, section « Vue d'ensemble des cartes »).
+  - [x] « Constat des cartes » : nombres de cartes, coût moyen et cartes à 1‑4 PA à jour pour les neuf classes (chiffres : `npm run report:classes`).
+  - [ ] « Mécaniques signature » : noms de cartes à revoir après l'élagage.
   - [ ] Cocher dans l'étape 5 les incohérences corrigées au passage (ex. *Tir Précis II*).
 
 ### Étape 2 — Retirer des choix de stats pour chaque classe ✅
@@ -65,7 +66,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 - [x] 📝 **CLASSES.md à jour** : « Distribution », « Stats de départ », « Pool de stats par classe », tableau des stats moyennes, « Stats de départ notables », paragraphes « Stats FQ » des 9 classes, et colonne « Start stats » retirée de la « Vue d'ensemble » (redondante avec le nouveau tableau).
 
 ### Étape 3 — Refaire le calcul des stats moyennes
-- [x] ▶️ `npm run report:classes -- --out devNotes/rapport-classes.md` : le rapport tient compte des nouveaux pools (étape 2). **À relancer après l'étape 1** (les decks sont encore au garage).
+- [x] ▶️ `npm run report:classes -- --out devNotes/rapport-classes.md` : le rapport tient compte des nouveaux pools (étape 2) et des niveaux de cartes (étape 1). **À relancer après l'élagage et l'équilibrage.**
 - [x] Vérifier les hypothèses du rapport (base du starter hero, répartition des ASI, CA) : le rapport lit les starter heroes et les pools sur les données, il a suivi les changements de l'étape 2 sans modification.
 - [ ] 📝 **Mettre à jour CLASSES.md** en copiant les tableaux du rapport :
   - [x] « Stats moyennes par classe » : tableau complet, hypothèses de calcul et date en tête de fichier.
@@ -103,7 +104,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - [ ] Mage Blanc : *Exorcisme* annonce « coûte @cha PA en moins » mais le coût est fixe (-7).
   - [ ] Trapper : *Pluie de flèches* annonce « incritiquable » sans `bonusCrit` (à vérifier).
   - [ ] **Casse des images** : 30 cartes et le dos du deck Moine généré pointent vers un fichier dont la casse diffère (`.png` / `.PNG`, dossier `Illusionist` au lieu de `illusionist`). Invisible sous Windows, image cassée sur un serveur Linux. Liste complète dans `KNOWN_ISSUES` du test d'intégrité.
-  - [ ] Contenu de test du `draft.json` (9 cartes sans `maxSameCard`) : à sortir des patterns livrés.
+  - [x] ~~Contenu de test du `draft.json` (9 cartes sans `maxSameCard`) : à sortir des patterns livrés.~~ → fait, le fichier est retiré du pack. Le garde-fou de `tests/decks/sweep.test.js` est passé de 21 à 20 decks.
 - [ ] Comparer chaque description à ses données (coûts, dégâts, effets), puis relecture IA des descriptions.
 - [ ] Vérifier chaque fonctionnalité du moteur utilisée par chaque classe (tests / UAT).
 - [ ] ▶️ **Après chaque correction** : `npx vitest run tests/decks`, et retirer de `KNOWN_ISSUES` les lignes corrigées.
@@ -158,14 +159,14 @@ Chaque case donne **N1 / N6 / N12**. Scores de caractéristique suivis du modifi
 | **FQ** | | | | | | | | | |
 | Budget Start stats | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 |
 | Choix de stats cumulés | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 |
-| Points d'action | 8,2 / 13,2 / 19,3 | 10,3 / 15,3 / 21,7 | 11,2 / 16,3 / 22,5 | 10,2 / 15,3 / 21,5 | 12,2 / 17,3 / 23,5 | 10,2 / 15,3 / 21,5 | 10,2 / 15,3 / 21,5 | 11,2 / 16,3 / 22,5 | 11,2 / 16,2 / 22,3 |
+| Points d'action | 10,2 / 15,2 / 21,3 | 10,3 / 15,3 / 21,7 | 11,2 / 16,3 / 22,5 | 10,2 / 15,3 / 21,5 | 12,2 / 17,3 / 23,5 | 10,2 / 15,3 / 21,5 | 8,3 / 13,3 / 19,5 | 11,2 / 16,3 / 22,5 | 9,2 / 14,2 / 20,3 |
 | Mana | 4,4 / 6,1 / 8,1 | 2,2 / 3,1 / 4,1 | 6,8 / 10,2 / 14,3 | 7,0 / 11,0 / 16,0 | 3,7 / 6,3 / 9,7 | 5,8 / 8,7 / 12,5 | 3,7 / 6,7 / 10,5 | 3,7 / 6,3 / 9,7 | 4,5 / 6,5 / 8,9 |
 | Zèle initial | 0,3 / 1,6 / 3,3 | 0,3 / 1,7 / 3,4 | 0,2 / 0,8 / 1,7 | 0,1 / 0,6 / 1,3 | 0,2 / 0,8 / 1,7 | 0,2 / 1,3 / 2,5 | 0,1 / 0,6 / 1,3 | 0,2 / 0,8 / 1,7 | 0,2 / 1,2 / 2,5 |
-| Critique | 0 / 0 / 0 | 1,3 / 2,7 / 4,4 | 0,2 / 1,0 / 2,1 | 1,1 / 1,6 / 2,3 | 2,4 / 4,1 / 6,2 | 0,2 / 1,3 / 2,5 | 1,1 / 1,6 / 2,3 | 1,3 / 2,7 / 4,3 | 0,2 / 0,8 / 1,6 |
-| Esquive | 2,4 / 4,1 / 6,1 | 1,3 / 2,7 / 4,4 | 1,2 / 2,0 / 3,1 | 0,1 / 0,6 / 1,3 | 0 / 0 / 0 | 1,2 / 1,8 / 2,7 | 1,3 / 2,3 / 3,5 | 1,2 / 1,8 / 2,7 | 0,3 / 1,4 / 2,9 |
+| Critique | 0 / 0 / 0 | 1,3 / 2,7 / 4,4 | 0,2 / 1,0 / 2,1 | 1,1 / 1,6 / 2,3 | 2,4 / 4,1 / 6,2 | 0,2 / 1,3 / 2,5 | 2,1 / 2,6 / 3,2 | 1,3 / 2,7 / 4,3 | 1,2 / 1,8 / 2,6 |
+| Esquive | 2,4 / 4,1 / 6,1 | 1,3 / 2,7 / 4,4 | 1,2 / 2,0 / 3,1 | 0,1 / 0,6 / 1,3 | 0 / 0 / 0 | 1,2 / 1,8 / 2,7 | 2,2 / 3,3 / 4,5 | 1,2 / 1,8 / 2,7 | 1,3 / 2,4 / 3,9 |
 | Main (début de combat) | 2,2 / 2,8 / 3,6 | 5,3 / 6,5 / 8,0 | 1,2 / 1,8 / 2,7 | 1,1 / 1,6 / 2,3 | 0,1 / 0,4 / 0,8 | 2,2 / 3,3 / 4,5 | 2,2 / 2,8 / 3,7 | 1,2 / 1,8 / 2,7 | 2,2 / 3,2 / 4,5 |
 | Pioche (par tour) | 1,1 / 1,6 / 2,2 | 0,0 / 0,2 / 0,4 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 2,1 / 2,6 / 3,2 |
-| Déplacement (cases) | 8,3 / 9,6 / 11,3 | 6,2 / 6,8 / 7,7 | 5,1 / 5,4 / 5,8 | 6,2 / 6,8 / 7,7 | 7,3 / 8,7 / 10,3 | 6 / 6 / 6 | 7,3 / 8,2 / 9,5 | 7,2 / 7,8 / 8,7 | 6,2 / 7,0 / 8,1 |
+| Déplacement (cases) | 6,3 / 7,6 / 9,3 | 6,2 / 6,8 / 7,7 | 5,1 / 5,4 / 5,8 | 6,2 / 6,8 / 7,7 | 7,3 / 8,7 / 10,3 | 6 / 6 / 6 | 7,3 / 8,2 / 9,5 | 7,2 / 7,8 / 8,7 | 6,2 / 7,0 / 8,1 |
 | **dnd5e** | | | | | | | | | |
 | Dé de vie | d8 | d12 | d6 | d4 | d8 | d6 | d6 | d10 | d10 |
 | PV moyens | 23 / 48 / 78 | 29 / 80 / 164 | 24 / 65 / 125 | 18 / 28 / 52 | 23 / 48 / 90 | 19 / 29 / 53 | 20 / 35 / 53 | 24 / 49 / 79 | 27 / 67 / 115 |
@@ -252,15 +253,15 @@ Les neuf *starter heroes* sont strictement identiques (toutes caractéristiques 
 | Classe | PA | Mana | Zèle | Crit | Esq | Main | Pioche | Dépl | Budget |
 |---|---|---|---|---|---|---|---|---|---|
 | **Starter hero (base)** | **7** | **2** | **0** | **0** | **0** | **0** | **0** | **5** | — |
-| Moine | 0 | +2 | 0 | 0 | +2 | +2 | +1 | +3 | 10 |
+| Moine | +2 | +2 | 0 | 0 | +2 | +2 | +1 | +1 | 10 |
 | Gardien | +2 | 0 | 0 | +1 | +1 | +5 | 0 | +1 | 10 |
 | Mage Blanc | +3 | +4 | 0 | 0 | +1 | +1 | +1 | 0 | 10 |
 | Élémentaliste | +2 | +4 | 0 | +1 | 0 | +1 | +1 | +1 | 10 |
 | Trapper | +4 | +1 | 0 | +2 | 0 | 0 | +1 | +2 | 10 |
 | Sorcière | +2 | +3 | 0 | 0 | +1 | +2 | +1 | +1 | 10 |
-| Illusionniste | +2 | +1 | 0 | +1 | +1 | +2 | +1 | +2 | 10 |
+| Illusionniste | 0 | +1 | 0 | +2 | +2 | +2 | +1 | +2 | 10 |
 | Maître d'Armes | +3 | +1 | 0 | +1 | +1 | +1 | +1 | +2 | 10 |
-| Guerrier Runique | +3 | +2 | 0 | 0 | 0 | +2 | +2 | +1 | 10 |
+| Guerrier Runique | +1 | +2 | 0 | +1 | +1 | +2 | +2 | +1 | 10 |
 
 Le déplacement se compte en cases (l'effet vaut +5 ft). **Aucune classe ne démarre avec du zèle** ; le **Gardien** est le seul à ne pas piocher en début de partie, compensé par la plus grosse main du jeu (5).
 
@@ -324,44 +325,40 @@ Quand une classe ne garde qu'une partie d'une stat, les objets retenus sont **r�
 | Maître d'Armes | d10 | FOR + DEX | DPS martial polyvalent | Armes équipées (`@wpnM`/`@wpnR`), armes de jet |
 | Guerrier Runique | d10 | FOR + INT | Moteur / late-game carry | Deck-building en combat (runes) |
 
-Stats de départ notables (détail dans « Stats de départ ») : **critique** de départ nul pour Moine, Mage Blanc, Sorcière et Guerrier Runique — et le Moine ne peut pas le monter du tout ; **esquive** nulle pour Trapper et Guerrier Runique, le Trapper ne pouvant pas la monter non plus ; **zèle** nul pour toutes les classes ; **pioche** nulle pour le Gardien, qui n'a qu'un objet de pioche dans son pool.
+Stats de départ notables (détail dans « Stats de départ ») : **critique** de départ nul pour Moine, Mage Blanc et Sorcière — et le Moine ne peut pas le monter du tout ; **esquive** nulle pour Trapper et Élémentaliste, le Trapper ne pouvant pas la monter non plus ; **zèle** nul pour toutes les classes ; **pioche** nulle pour le Gardien, qui n'a qu'un objet de pioche dans son pool ; **aucun point d'action** pour l'Illusionniste, qui compense par les cartes les moins chères du jeu.
 
 ### Vue d'ensemble des cartes (decks de base)
 
 | Classe | N1 | N2 | N3 | N4 | N5 | N6 | N7 | N8 | N9 | N10 | N11 | N12 | Hors N1‑12 | Plancher deck | Total distinctes / exemplaires | Générées (dist./ex.) | Coût moyen PA | Cartes 1‑4 PA | Réactives | Zèle + / − | Innées |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Moine | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **39** | 0 | 39 / 79 | 1 / 1 | – | – | 4 | 20 / 13 | 1 |
-| Gardien | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **41** | 0 | 41 / 75 | 3 / 32 | – | – | 6 | 13 / 17 | 1 |
-| Mage Blanc | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **41** | 0 | 41 / 79 | 2 / 4 | – | – | 9 | 12 / 12 | 3 |
-| Élémentaliste | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **43** | 0 | 43 / 86 | 2 / 4 | – | – | 2 | **9 / 25** | 1 |
-| Trapper | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **39** | 0 | 39 / 72 | 0 / 0 | – | – | 9 | 8 / 18 | 1 |
-| Sorcière | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **38** | 0 | 38 / 79 | 1 / 3 | – | – | 1 | 4 / 11 | 2 |
-| Illusionniste | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **39** | 0 | 39 / 64 | 0 / 0 | – | – | 2 | 7 / 19 | 2 |
-| Maître d'Armes | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **39** | 0 | 39 / 77 | 12 / 46 | – | – | 3 | 14 / 14 | 5 |
-| Guerrier Runique | 4 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 5 | 15 / 16 (+117 runes) | 17 / 408 | 5,9 | 1 | 0 | 12 / 0 | 0 |
+| Moine | 3 | 3 | 4 | 3 | 3 | 4 | 3 | 3 | 3 | 4 | 3 | 3 | 0 | 13 | 39 / 79 | 1 / 1 | 5,2 | 15 | 4 | 20 / 13 | 1 |
+| Gardien | 3 | 4 | 3 | 3 | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 4 | 0 | 12 | 41 / 75 | 3 / 32 | 5,1 | 11 | 6 | 13 / 17 | 1 |
+| Mage Blanc | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 3 | 0 | 13 | 41 / 79 | 2 / 4 | 6,0 | 7 | 9 | 12 / 12 | 3 |
+| Élémentaliste | 4 | 4 | 4 | 4 | 4 | 3 | 4 | 4 | 3 | 3 | 3 | 3 | 0 | 19 | 43 / 86 | 2 / 4 | 7,8 | 7 | 2 | 9 / 25 | 1 |
+| Trapper | 3 | 3 | 3 | 3 | 3 | 4 | 4 | 4 | 3 | 3 | 3 | 3 | 0 | 9 | 39 / 72 | 0 / 0 | 7,9 | 5 | 9 | 8 / 18 | 1 |
+| Sorcière | 3 | 3 | 3 | 3 | 4 | 4 | 3 | 3 | 3 | 3 | 3 | 3 | 0 | 14 | 38 / 79 | 1 / 3 | 6,8 | 5 | 1 | 4 / 11 | 2 |
+| Illusionniste | 3 | 3 | 3 | 3 | 3 | 4 | 3 | 3 | 4 | 3 | 4 | 3 | 0 | 7 | 39 / 64 | 0 / 0 | 5,2 | 13 | 2 | 7 / 19 | 2 |
+| Maître d'Armes | 3 | 3 | 3 | 3 | 4 | 3 | 3 | 3 | 4 | 3 | 4 | 3 | 0 | 10 | 39 / 77 | 12 / 46 | 5,1 | 18 | 3 | 14 / 14 | 5 |
+| Guerrier Runique | 4 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 5 | 15 / 16 | 17 / 408 | 5,9 | 1 | 0 | 12 / 0 | 0 |
 
-⚠️ **Les huit classes hors Guerrier Runique sont intégralement au garage** (voir la section suivante) : N1 à N12 sont vides, le plancher de deck vaut 0 partout, et le rapport ne peut plus calculer ni le **coût moyen** ni les **cartes à 1‑4 PA**, qu'il ne mesure que sur les cartes N1‑N12. Les dernières valeurs relevées avant la mise au garage sont conservées dans le « Constat des cartes » de chaque classe.
+**Hors N1‑12** : plus aucune carte, les neuf decks sont rangés. **Plancher deck** : exemplaires des cartes N1, figés comme `minSize` du deck de départ — il reste à le ramener autour de 7‑8 partout (étape 4), l'Élémentaliste à 19 et la Sorcière à 14 étant les plus lourds. Tableau copié de `npm run report:classes`. Répartition et justification niveau par niveau : [DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md).
 
-**Hors N1‑12** : les cartes du garage. **Plancher deck** : exemplaires des cartes N1, figés comme `minSize` du deck de départ. Tableau copié de `npm run report:classes`.
+### Spécialisations par niveau
 
-### Niveaux de garage (rangement par spécialisation)
+Les 319 cartes des huit classes ont été réparties sur les niveaux N1 à N12 le 2026‑09‑21 (le Guerrier Runique garde ses niveaux et ses 117 runes). Le détail carte par carte, les règles retenues et les paliers d'ouverture des spécialisations sont dans **[DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md)**. En résumé, chaque classe ouvre deux spécialisations au N1 et garde la troisième pour plus tard :
 
-Toutes les cartes des huit classes sont garées **à partir du N13, une spécialisation par niveau** : aucune n'est jouable, et il suffit de descendre un niveau entier pour traiter une spé d'un bloc. Le **Guerrier Runique est hors périmètre** (il garde ses niveaux N1‑N12 et ses 117 runes).
+| Classe | Ouvre au N1 | Ouvre plus tard |
+|---|---|---|
+| Gardien | Berzerker, Sac à PV temp | Ange Gardien → N4 |
+| Mage Blanc | Soutien/healeur, Malédictions | Hanteur (fantômes) → N7 |
+| Moine | Enchaînement, Paume, transverse | Main pleine → N3 |
+| Élémentaliste | Feu, Givre, Terre, Air | combos « ou » → N4, combos « et » → N7 |
+| Trapper | Sniper | Pièges → N4, Bêtes → N6 |
+| Sorcière | Armée, Charnier | Colosse → N6 |
+| Illusionniste | Lame d'allonge, Barde | Chronomancien → N5 |
+| Maître d'Armes | Mêlée, Distance | Armes de jet → N3, Instructeur → N5 |
 
-| Classe | N13 | N14 | N15 | N16 | N17 | N18 | Total |
-|---|---|---|---|---|---|---|---|
-| Gardien | Berzerker (13) | Sac à PV temp (13) | Ange Gardien (13) | transverse (2) | – | – | 41 |
-| Mage Blanc | Soutien / healeur (16) | Malédictions (12) | Hanteur (8) | transverse (5) | – | – | 41 |
-| Moine | Enchaînement (11) | Main pleine (8) | Paume (7) | transverse : tank esquive (13) | – | – | 39 |
-| Élémentaliste | Feu (5) | Givre (5) | Terre (4) | Air (5) | Combos bi-élémentaires (16) | Utilitaires (8) | 43 |
-| Trapper | Sniper (14) | Pièges (12) | Maître des bêtes (13) | – | – | – | 39 |
-| Sorcière | Armée (17) | Colosse (9) | Charnier (12) | – | – | – | 38 |
-| Maître d'Armes | Mêlée (12) | Distance (8) | Armes de jet (14) | transverse : instructeur (5) | – | – | 39 |
-| Illusionniste | Lame d'allonge (13) | Barde (12) | Chronomancien (14) | – | – | – | 39 |
-
-**321 cartes** au total. Le plafond du test d'intégrité est le **N20** : l'Élémentaliste, avec ses six lignes, est la classe qui en utilise le plus (N13 à N18).
-
-⚠️ Deux cartes qui piochaient dans les niveaux N1‑N7 ont été recalées sur les niveaux de garage, sans quoi elles ne proposaient plus rien : **Lecture Du Souffle** (Moine, `chooseCardsLevels` 1‑7 → 13‑16) et la carte de test « Propose 3 sorts élémentalistes » de `draft.json` (1‑2 → 13‑18). *Réserve de Pièges*, *Sifflet du Chasseur* et *Choix de l'Arsenal* filtrent autrement et n'étaient pas concernées.
+Trois règles encadrent la répartition : le **N1 ne reçoit que 3 cartes** (4 pour l'Élémentaliste, une par élément), **aucune carte innée avant le N3**, et **aucune carte ne coûte de zèle au N1**, puisque le compteur y est encore à zéro.
 
 ---
 
@@ -459,7 +456,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - A du mal à arriver au contact d'une cible (pas de sort pour augmenter le déplacement, uniquement pour agripper des ennemis)
 
 ### Constat des cartes (données)
-- **41 cartes, toutes au garage** : Berzerker au N13, Sac à PV temp au N14, Ange Gardien au N15, les deux transverses au N16. Aucune carte n'est débloquable tant que les niveaux N1‑N12 n'ont pas été réattribués — `npm run report:classes -- --check` signale 0 carte jouable, c'est voulu.
+- **41 cartes réparties sur N1‑N12** (3 à 4 par niveau), coût moyen 5,1 PA et 11 cartes à 1‑4 PA. Deux cartes de trop pour la cible de 30‑40 : l'élagage reste à faire.
 - 3 cartes **générées** dans `guardian-generated.json` (Lame Chargée, Tourbillon Déchaîné, Bénédiction du Rempart), toutes éphémères.
 - Exemplaires : 75 au total, plus 32 exemplaires générés.
 - Zèle : 13 générateurs pour 17 consommateurs (contre 6/15 avant le lot), grâce aux réactifs de l'Ange Gardien et aux petites frappes.
@@ -516,7 +513,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - Lent (5 cases), fragile au contact (CA 8)
 
 ### Constat des cartes (données)
-- **41 cartes, toutes au garage** : soutien au N13, malédictions au N14, Hantise au N15, transverses au N16. *(Avant la mise au garage : 22 débloquables, coût moyen 6,8 PA, 2 cartes à 1‑4 PA.)*
+- **41 cartes réparties sur N1‑N12**, coût moyen 6,0 PA et 7 cartes à 1‑4 PA. Deux cartes de trop pour la cible de 30‑40 : l'élagage reste à faire.
 - Seulement 2 cartes à 1‑4 PA.
 - Soin direct faible : Soin (innée), Énergie Lumineuse, Soins d'Urgence ; le reste est réactif ou bouclier.
 
@@ -546,7 +543,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 
 **Identité dnd5e** : d8, FOR + DEX. CON alimente les coûts et les PV temporaires. ⚠️ **SAG reste plate à 8 (−1)** et n'est jamais montée par les ASI : toute formule en `@wis` rend *moins que rien* au Moine. Les soins du lot 2026‑09‑20 sont donc écrits en **DEX**, la vraie carac de la classe ; ne restent en `@wis` que l'appoint historique de Paume De Jade et le `@wis` de Sérénité Pleine, tous deux à reprendre.
 
-**Stats FQ** : **aucun point d'action de départ**, ce qui en fait la classe qui en a le moins (8,2 au N1, 19,3 au N12) alors qu'elle joue beaucoup de cartes — le pool compense (30 objets d'action, 41 % de son pool). **Meilleur déplacement du jeu** (8,3 au N1, 11,3 au N12) et **meilleure esquive** (2,4 / 6,1). **Aucun critique, jamais** : c'est la seule classe dont le pool n'en contient aucun — il joue le volume, pas le burst. Mana bridé (10 objets).
+**Stats FQ** : **la meilleure esquive du jeu** (2,4 au N1, 6,1 au N12) et de quoi jouer plusieurs petites cartes par tour (10,2 PA au N1, 21,3 au N12, 30 objets d'action dans son pool, 41 % du total). **Aucun critique, jamais** : c'est la seule classe dont le pool n'en contient aucun — il joue le volume, pas le burst. Déplacement correct mais plus le meilleur du jeu (6,3 au N1, 9,3 au N12) ; mana bridé (10 objets).
 
 **Spécialisations proposées (à valider)** :
 
@@ -583,13 +580,13 @@ Détail des cartes :
 
 **Faiblesses** :
 - **Aucun critique, et aucun moyen d'en gagner** : son pool n'en contient pas un seul.
-- Le moins de points d'action du jeu au N1 (8,2), alors qu'il vit du nombre de cartes jouées par tour.
+- Son déplacement de départ est tombé à 6,3 cases : il ne survole plus le terrain, il doit monter la stat pour retrouver sa mobilité.
 - Sérénité Pleine (et l'appoint `@wis` de Paume De Jade) scalent encore sur SAG, sa caractéristique la plus basse (−1) et jamais montée : ils rendent moins que leur libellé ne le laisse croire.
 - Doit rester au contact pour soigner : aucun soin à distance, aucun soin de zone.
 - Son auto-soin de tempo (Méditation Zen) ne rend plus que des PV temporaires : ce qui dépasse est perdu au bout d'un tour.
 
 ### Constat des cartes (données)
-- **39 cartes, toutes au garage** : Enchaînement au N13, Main pleine au N14, Paume au N15, transverses au N16. *(Avant la mise au garage : 19 débloquables, coût moyen 5,6 PA, 5 cartes à 1‑4 PA.)*
+- **39 cartes réparties sur N1‑N12**, coût moyen 5,2 PA et 15 cartes à 1‑4 PA — la 2e plus grande densité de cartes peu chères, cohérent avec son jeu de volume.
 - Économie de zèle : 20 générateurs / 13 consommateurs (contre 17/13 avant le lot), grâce à Paume Curative et Posture du Roseau. Coût moyen 5,6 PA.
 - 79 exemplaires. `maxSameCard` lourds : Coup Droit ×6, Uppercut ×6, Coup Gauche ×5, Paume Curative ×4, Posture du Roseau ×3.
 - Deux axes opposés apparaissent dans les cartes N13 : « **main pleine** » (X = cartes en main) et « **cadence** » (X = cartes déjà jouées ce round).
@@ -677,7 +674,7 @@ Détail des cartes :
 - Faible déplacement et esquive, doit rester à distance
 
 ### Constat des cartes (données)
-- **43 cartes, la classe la plus fournie**, toutes au garage : Feu au N13, Givre au N14, Terre au N15, Air au N16, combos au N17, utilitaires au N18 — la seule classe qui monte jusqu'au N18. Il faut **continuer à en retirer**, pas en ajouter. *(Avant la mise au garage : 20 débloquables, coût moyen 7,3 PA, 3 cartes à 1‑4 PA.)*
+- **43 cartes, la classe la plus fournie**, réparties sur N1‑N12 (4 par niveau jusqu'au N8) : coût moyen 7,8 PA, seulement 7 cartes à 1‑4 PA. Trois cartes de trop pour la cible de 30‑40 : il faut **continuer à en retirer**, pas en ajouter.
 - **16 cartes de paire d'éléments** : 10 exigent deux éléments actifs sur la MÊME cible, 6 acceptent l'un ou l'autre (Brouillard, Givrefeu, Météore, Plastron Magique, Onde Glacée, Choc de Feu). S'y ajoutent 3 utilitaires « nécessite 1 élément parmi 3 », 4 ultimes mono-élément, et 2 cartes conditionnées au NOMBRE d'effets (Assassin du Néant, Missiles Magiques +).
 - Zèle déséquilibré : **9 générateurs pour 25 consommateurs**, avec un zèle initial de 0,1 au N1 et 1,3 au N12 (3 objets de zèle dans son pool).
 - Seulement 3 cartes à 1‑4 PA ; coût moyen 7,3 PA ; 6 cartes à 9 PA ou plus.
@@ -768,7 +765,7 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 - **Aucun soin ni PV temporaire sur lui-même** : avec le Maître d'Armes, la seule classe dont le deck ne protège jamais ses propres points de vie (Lien du Fauve ne soigne que la bête).
 
 ### Constat des cartes (données)
-- **39 cartes, toutes au garage** : Sniper au N13, Pièges au N14, bêtes au N15. *Tir Précis II*, qui traînait au **N21**, est redescendu au N13 avec le reste du Sniper. *(Avant la mise au garage : 21 débloquables, coût moyen 7,5 PA, 3 cartes à 1‑4 PA.)*
+- **39 cartes réparties sur N1‑N12** : le Sniper occupe seul les N1‑N3, les pièges ouvrent au N4 et les bêtes au N6. Coût moyen 7,9 PA — le plus élevé du jeu — et seulement 5 cartes à 1‑4 PA, ce qui colle à ses 12,2 PA et à sa carte unique par tour.
 - 8 générateurs de zèle pour 18 consommateurs (7/18 avant le lot du 2026‑09‑20) ; 72 exemplaires.
 - **Asymétrie avec l'autre invocateur** : la Sorcière entretient son armée (Bouclier d'Os, Ossature Renforcée, Canalisation des Ombres, seconde face soignante de Couronne d'Ossements), le Trapper n'avait rien — ses bêtes coûtent 8 à 16 PA et mouraient sans recours. *Lien du Fauve* ouvre ce versant.
 - Les trois spécialisations sont déjà bien identifiables dans les cartes.
@@ -838,7 +835,7 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 - Peu de points de vie
 
 ### Constat des cartes (données)
-- **38 cartes, toutes au garage** : Armée au N13, Colosse au N14, Charnier au N15. *(Avant la mise au garage : 19 débloquables, coût moyen 8,1 PA — le plus élevé du jeu — et aucune carte à 1‑4 PA.)*
+- **38 cartes réparties sur N1‑N12**, le Colosse n'ouvrant qu'au N6 : coût moyen 6,8 PA et 5 cartes à 1‑4 PA (elle n'en avait aucune avant la passe).
 - **Aucune carte à 1‑4 PA** parmi les débloquables ; coût moyen 8,1 PA (le plus élevé) pour 8,5 PA au N1 : **une carte par tour au N1**.
 - Seulement 2 cartes distinctes au N1 (Nécromancie, Trait d'Ombre-Verte ×9).
 - 4 générateurs de zèle pour 11 consommateurs.
@@ -908,7 +905,7 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 - Pas d'amélioration personnelle d'esquive par les cartes (⚠️ Leçon d'esquive a une portée minimale de 0 : elle peut se cibler soi-même)
 
 ### Constat des cartes (données)
-- **41 cartes, toutes au garage** : Mêlée au N13, Distance au N14, armes de jet au N15, instructeur au N16. C'était **la classe la plus avancée** avant la mise au garage — 38 cartes déjà rangées jusqu'au N10 —, c'est donc celle dont le retour en N1‑N12 sera le plus rapide. *(Avant : coût moyen 5,1 PA, 18 cartes à 1‑4 PA, la plus grande densité de cartes peu chères.)*
+- **39 cartes réparties sur N1‑N12** : les deux rails d'arme au N1, les armes de jet au N3, l'instructeur au N5, et les cinq armes innées tous les deux niveaux (N3, N5, N7, N9, N11). Coût moyen 5,1 PA et **18 cartes à 1‑4 PA, la plus grande densité du jeu**.
 - 12 cartes générées (couteaux, étapes des forges).
 - 18 cartes à 1‑4 PA : la plus grande densité de cartes peu chères. Zèle 14 générateurs / 16 consommateurs (14 / 14 avant le lot du 2026‑09‑20, les deux finishers en consommant 2 chacun) ; 79 exemplaires.
 - Déjà dans la cible des 30‑40 cartes : la passe consiste surtout à **élaguer** et à compléter N11‑N12 — les deux finishers du lot du 2026‑09‑20 couvrent ce second point.
@@ -916,16 +913,13 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 ### Spécialisations — cartes par spé
 | Spé | Cartes existantes | Manques |
 |---|---|---|
-| **Mêlée** | Attaque Simple, Fente Précise, Frappe Double, Frappe Triple, Huile d'Affûtage, Riposte, Attaque Latérale, Attaque Diagonale, Attaque en Cercle, Forge Spectrale, Forge Astrale, Reprise de Garde, **Coup de Faux** | |
-| **Distance** | Tir Simple, Visée Posée, Tir Appuyé, Prise Équilibrée, Riposte à Distance, Pluie d'Acier, Forge Éthérée, Forge Arcanique, **Salve Groupée** | |
+| **Mêlée** | Attaque Simple, Fente Précise, Frappe Double, Frappe Triple, Huile d'Affûtage, Riposte, Attaque Latérale, Attaque Diagonale, Attaque en Cercle, Forge Spectrale, Forge Astrale, Reprise de Garde | |
+| **Distance** | Tir Simple, Visée Posée, Tir Appuyé, Prise Équilibrée, Riposte à Distance, Pluie d'Acier, Forge Éthérée, Forge Arcanique | |
 | **Armes de jet** | Ceinture de Couteaux, Affûtage des Couteaux, Fourreau Caché, Sang-froid, Volée de Couteaux, Momentum, Lancer Lesté, Prise Inversée, Javelot, Plumbata, Chakram, Filet de Rétiaire, Kpinga, Choix de l'Arsenal | |
 | **Instructeur** (soutien CHA) | Leçon d'Esquive, Leçon d'Estoc, Leçon de Visée, Maîtrise des Armes, Réplique Parfaite | Cartes N7+ |
 
-### Cartes du lot 2026‑09‑20
-Les deux **finishers N11‑12** que la spé mêlée et la spé distance réclamaient, tous deux bâtis sur une contrainte de placement (les deux seules figures que le moteur savait déjà évaluer et qu'aucune carte n'utilisait).
-- **Coup de Faux** (N13, ×1) — 12 PA, 1 mana, 2 zèle, portée **1‑2**, 2 cibles, `(2*@wpnM + @str)` tranchant à chacune. Exige deux ennemis **orthogonalement adjacents entre eux** (`targetsAdjacentPair`) : un seul revers les fauche tous les deux. **Illustration à faire** (sur `in_progress.png`).
-- **Salve Groupée** (N14, ×1) — 11 PA, 2 mana, 2 zèle, portée 2‑8, jusqu'à 3 cibles, `(@wpnR + @dex)` perforant à chacune. Exige que les cibles tiennent dans un **carré de 3 cases de côté** (`targetsWithinSquare(3)`). Le joueur **choisit** ses cibles, là où Pluie d'Acier pose une zone qui prend aussi les alliés : moins de dégâts par tête, aucun tir fratricide. **Illustration à faire**.
-- Coûts et dégâts écrits sur la grille provisoire (section « Règles d'équilibrage ») : à repasser à l'étape 4 comme le reste du deck.
+### Deux finishers abandonnés (2026‑09‑21)
+*Coup de Faux* (mêlée) et *Salve Groupée* (distance) avaient été annoncées dans le lot du 2026‑09‑20 avec leurs clés de traduction FR/EN et leurs messages d'erreur, mais **aucune carte ne les a jamais portées** : deux tests restaient rouges sur des placeholders de description sans carte. Décision du 2026‑09‑21 : **les traductions ont été supprimées** plutôt que les cartes écrites. La classe reste à 39 cartes, sans finisher de mêlée ni de distance au-delà de *Frappe triple* (N12) et *Pluie d'acier* (N11). Les conditions `targetsAdjacentPair` et `targetsWithinSquare` restent dans le moteur, testées, sans carte qui les utilise.
 
 ### Redondances à trancher
 - Attaque Simple / Fente Précise et Tir Simple / Visée Posée (même dégâts, +1 PA pour un bonus au toucher).
@@ -947,7 +941,7 @@ Les deux **finishers N11‑12** que la spé mêlée et la spé distance réclama
 
 **Identité dnd5e** : d6, DEX + CHA. Classe la plus multi-carac du jeu : SAG (potions, mana), FOR/`@wpnM` (frappes), CON (Peste Noire). **17 jets de toucher/sauvegarde utilisent INT**, qui n'est pas primaire (INT 10) : à corriger ou à assumer.
 
-**Stats FQ** : profil polyvalent (+2 action, +2 main, +2 déplacement, +1 mana, critique et esquive, pioche). Bonne esquive (1,3 au N1, 3,5 au N12) et bonne mobilité (7,3 / 9,5) ; critique et zèle bridés à 3 objets. La **portée n'est achetable nulle part** — c'est précisément sa mécanique : elle se construit en combat.
+**Stats FQ** : **aucun point d'action de départ**, ce qui en fait la classe qui en a le moins (8,3 au N1, 19,5 au N12) — ses cartes sont aussi les moins chères du jeu. En échange, **le meilleur couple critique + esquive de départ** (+2 et +2, soit 2,1 et 2,2 au N1) et une bonne mobilité (7,3 / 9,5). Critique et zèle bridés à 3 objets dans le pool. La **portée n'est achetable nulle part** — c'est précisément sa mécanique : elle se construit en combat.
 
 **Rôle** :
 - Dégâts corps à corps (bonus de portée)
@@ -986,8 +980,8 @@ Les deux **finishers N11‑12** que la spé mêlée et la spé distance réclama
 - Le moins de PA au N1
 
 ### Constat des cartes (données)
-- **39 cartes, toutes au garage** : Lame d'allonge au N13, Barde au N14, Chronomancien au N15. *(Avant la mise au garage : 27 débloquables, coût moyen 4,8 PA — le plus bas du jeu — et 12 cartes à 1‑4 PA.)*
-- 12 cartes à 1‑4 PA ; coût moyen 4,8 PA, le plus bas du jeu (il avait 7,5 PA au N1 avant le rééquilibrage des stats de départ, il en a 10,2).
+- **39 cartes réparties sur N1‑N12**, le Chronomancien ouvrant au N5 : coût moyen 5,2 PA et 13 cartes à 1‑4 PA.
+- 12 cartes à 1‑4 PA ; coût moyen 4,8 PA, le plus bas du jeu — cohérent avec ses 8,3 PA au N1, le plus bas aussi.
 - 7 générateurs de zèle pour 19 consommateurs.
 - *(résolu par le lot du 2026‑09‑20)* Magie des Arcanes est rattachée au dps (Lame d'allonge), Magie Blanche au soutien (Barde) : elles ne sont plus « à reclasser ».
 
@@ -1038,7 +1032,7 @@ Le Barde devient explicitement le **healeur HOT** de la classe. Deux cartes ajou
 
 **Identité dnd5e** : d10, FOR + INT (3e : CON) — frontliner qui frappe au corps à corps (`@wpnM`).
 
-**Stats FQ prioritaires** : **la meilleure pioche et la 2e meilleure main du jeu** (2,1 / 3,2 de pioche, les 3 objets de pioche gardés ; 2,2 / 4,5 de main) — c'est ce qui alimente son deck-building en combat. Pas de critique de départ et peu montable (4 objets) ; mana bridé à 12 objets.
+**Stats FQ prioritaires** : **la meilleure pioche et la 2e meilleure main du jeu** (2,1 / 3,2 de pioche, les 3 objets de pioche gardés ; 2,2 / 4,5 de main) — c'est ce qui alimente son deck-building en combat. Un point de critique et d'esquive au départ, mais peu montables (4 et 7 objets) ; PA modestes (9,2 au N1) et mana bridé à 12 objets.
 
 **Rôle** : moteur / late-game carry. Départ délibérément faible (deck de base : 15 cartes distinctes, 16 exemplaires), montée en puissance par deck-building en cours de combat.
 

@@ -97,7 +97,7 @@
             }
           ],
           "maxSameCard": 4,
-          "level": 15,
+          "level": 1,
           "isInnate": false
         }
       },
@@ -242,7 +242,7 @@
             }
           ],
           "maxSameCard": 5,
-          "level": 16,
+          "level": 1,
           "isInnate": false
         }
       },
@@ -360,7 +360,7 @@
               "customEvals": []
             }
           ],
-          "level": 14,
+          "level": 1,
           "isInnate": false
         }
       },
@@ -519,7 +519,7 @@
             }
           ],
           "maxSameCard": 5,
-          "level": 13,
+          "level": 1,
           "isInnate": false
         }
       },
@@ -632,7 +632,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 18,
+          "level": 2,
           "isInnate": false
         }
       },
@@ -802,7 +802,7 @@
               "targetType": "CombatEnemies"
             }
           ],
-          "level": 17,
+          "level": 6,
           "isInnate": false
         }
       },
@@ -933,7 +933,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 4,
           "isInnate": false
         }
       },
@@ -1066,7 +1066,7 @@
               "zoneSize": "3"
             }
           ],
-          "level": 17,
+          "level": 5,
           "isInnate": false
         }
       },
@@ -1171,7 +1171,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 18,
+          "level": 11,
           "isInnate": false
         }
       },
@@ -1298,7 +1298,7 @@
               "chooseCardsList": "fq-card-engine.decks-pattern-fq8.Elementalist Generated.FQCARDTITLE.Incantation"
             }
           ],
-          "level": 18,
+          "level": 5,
           "isInnate": false
         }
       },
@@ -1466,7 +1466,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 5,
           "isInnate": false
         }
       },
@@ -1571,7 +1571,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 4,
           "isInnate": false
         }
       },
@@ -1705,7 +1705,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 6,
           "isInnate": false
         }
       },
@@ -1848,7 +1848,7 @@
               "chooseCardsList": "fq-card-engine.decks-pattern-fq8.Elementalist Generated.FQCARDTITLE.DamagePropagation"
             }
           ],
-          "level": 18,
+          "level": 7,
           "isInnate": false
         }
       },
@@ -1884,7 +1884,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 18,
+          "level": 4,
           "isInnate": true,
           "class": "elementalist",
           "choices": [
@@ -2258,7 +2258,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 16,
+          "level": 2,
           "isInnate": false,
           "class": "elementalist",
           "choices": [
@@ -2471,7 +2471,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 15,
+          "level": 2,
           "isInnate": false,
           "class": "elementalist",
           "choices": [
@@ -2602,7 +2602,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 13,
+          "level": 2,
           "isInnate": false,
           "class": "elementalist",
           "choices": [
@@ -2759,7 +2759,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 14,
+          "level": 5,
           "isInnate": false,
           "class": "elementalist",
           "choices": [
@@ -2895,7 +2895,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 18,
+          "level": 12,
           "isInnate": false,
           "class": "elementalist",
           "choices": [
@@ -3101,7 +3101,7 @@
               "zoneSize": "2"
             }
           ],
-          "level": 13,
+          "level": 11,
           "isInnate": false
         }
       },
@@ -3226,7 +3226,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 15,
+          "level": 7,
           "isInnate": false
         }
       },
@@ -3533,7 +3533,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 16,
+          "level": 4,
           "isInnate": false
         }
       },
@@ -3658,7 +3658,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 14,
+          "level": 9,
           "isInnate": false
         }
       },
@@ -3839,7 +3839,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 14,
+          "level": 11,
           "isInnate": false
         }
       },
@@ -4014,7 +4014,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 15,
+          "level": 12,
           "isInnate": false
         }
       },
@@ -4163,7 +4163,7 @@
               "zoneSize": "2"
             }
           ],
-          "level": 16,
+          "level": 12,
           "isInnate": false
         }
       },
@@ -4322,7 +4322,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 16,
+          "level": 8,
           "isInnate": false
         }
       },
@@ -4463,7 +4463,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 13,
+          "level": 6,
           "isInnate": false
         }
       },
@@ -4642,7 +4642,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 7,
           "isInnate": false
         }
       },
@@ -4853,7 +4853,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 8,
           "isInnate": false
         }
       },
@@ -5041,7 +5041,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 8,
           "isInnate": false
         }
       },
@@ -5188,7 +5188,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 9,
           "isInnate": false
         }
       },
@@ -5344,7 +5344,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 8,
           "isInnate": false
         }
       },
@@ -5525,7 +5525,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 7,
           "isInnate": false
         }
       },
@@ -5639,7 +5639,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 18,
+          "level": 3,
           "isInnate": false
         }
       },
@@ -5785,7 +5785,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 13,
+          "level": 3,
           "isInnate": false
         }
       },
@@ -5943,7 +5943,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 18,
+          "level": 3,
           "isInnate": false
         }
       },
@@ -6101,7 +6101,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 10,
           "isInnate": false
         }
       },
@@ -6244,7 +6244,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 9,
           "isInnate": false
         }
       },
@@ -6417,7 +6417,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 10,
           "isInnate": false
         }
       },
@@ -6550,7 +6550,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 14,
+          "level": 3,
           "isInnate": false
         }
       },
@@ -6728,7 +6728,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 10,
           "isInnate": false
         }
       },
