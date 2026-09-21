@@ -156,7 +156,7 @@ Le pool complet compte **100 objets** : PA 30, mana 24, critique 10, esquive 10,
 | Classe | PA /30 | Mana /24 | Crit /10 | Esq /10 | Zèle /8 | Dépl /8 | Main /7 | Pioche N3 | N5 | N8 | Pool |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Moine | 30 | 10 | **0** | 10 | 8 | 8 | 4 | ✓ | ✓ | ✓ | 73 |
-| Gardien | 30 | 5 | 8 | 8 | 8 | 4 | 7 | ✓ | — | — | 71 |
+| Gardien | 30 | 5 | 8 | 8 | 8 | 4 | 7 | ✓ | ✓ | - | 72 |
 | Mage Blanc | 30 | 20 | 5 | 5 | 4 | 2 | 4 | ✓ | — | ✓ | 72 |
 | Élémentaliste | 30 | 24 | 3 | 3 | 3 | 4 | 3 | ✓ | — | ✓ | 72 |
 | Trapper | 30 | 16 | 10 | **0** | 4 | 8 | 2 | ✓ | ✓ | — | 72 |
