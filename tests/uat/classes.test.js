@@ -50,18 +50,18 @@ describe("loadClassCatalog", () => {
 });
 
 describe("resolvePicks", () => {
-    it("au niveau 1, rend exactement 2 UUID pour runic-warrior ; les niveaux pairs en rendent 3", async () => {
+    it("au niveau 1, rend exactement 3 UUID pour runic-warrior ; les niveaux pairs en rendent 2", async () => {
         const catalog = await loadClassCatalog(REPO_ROOT);
 
         const picks = resolvePicks(catalog["runic-warrior"], 1, createRng(4242));
-        expect(picks).toHaveLength(2);
+        expect(picks).toHaveLength(3);
         for (const pick of picks) {
             expect(pick.uuid).toMatch(/^Compendium\.fq-card-engine\.classes-stats-fq8\.Item\./);
             expect(pick.level).toBe(1);
         }
 
         const atLevelTwo = resolvePicks(catalog["runic-warrior"], 2, createRng(4242));
-        expect(atLevelTwo.filter(pick => pick.level === 2)).toHaveLength(3);
+        expect(atLevelTwo.filter(pick => pick.level === 2)).toHaveLength(2);
     });
 
     it("au niveau 20, le total de picks égale la somme des count atteints, sans doublon par advancement", async () => {

@@ -1,7 +1,7 @@
 # Caractérisation des classes
 
 Document de référence design : ce qui définit chaque classe (identité dnd5e, stats FQ, rôle, mécaniques signature, spécialisations, contraintes), établi à partir des données réelles (`packs/_source/classes-fq8`, `decks-pattern-fq8`, `classes-stats-fq8`, `starter-heroes`, `lang/fr.json`) et du code (`src/domain`, `src/hook`).
-Chiffres mis à jour le 2026-09-20 (après la migration dnd5e 6.0.0).
+Chiffres mis à jour le 2026-09-21 (rééquilibrage des stats de départ et des pools de stats, étape 2). Les lignes « Cartes » du tableau des moyennes restent à 0 : les decks sont encore au garage, voir l'étape 1 et [DISPATCH-NIVEAUX.md](DISPATCH-NIVEAUX.md).
 
 ---
 
@@ -21,7 +21,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 | Suite complète | `npm test` | Toute la suite (~2 min), à lancer en fin d'étape. |
 
 ### Ordre conseillé : une classe pilote d'abord
-- [ ] Faire les étapes 1 à 6 en entier sur **la Sorcière** avant les autres classes : c'est la plus contrainte (budget de départ 3, aucune carte à moins de 5 PA, 2,5 mana au N1), donc celle qui éprouve le mieux la grille de coûts, la cible d'exemplaires et le pool de stats réduit.
+- [ ] Faire les étapes 1 à 6 en entier sur **la Sorcière** avant les autres classes : c'est la plus contrainte (aucune carte à moins de 5 PA, 8,5 PA au N1, déplacement figé à 6 cases), donc celle qui éprouve le mieux la grille de coûts, la cible d'exemplaires et le pool de stats réduit.
 - [ ] Ajuster les règles (grille, cibles) d'après la pilote, puis dérouler les étapes pour les 7 autres classes.
 
 ### Étape 1 — Première passe des cartes : niveaux, cartes manquantes, 30 à 40 cartes par classe
@@ -49,26 +49,26 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - [ ] « Constat des cartes » et « Mécaniques signature » : nombres de cartes et noms de cartes à jour (chiffres : `npm run report:classes`, section « Vue d'ensemble des cartes »).
   - [ ] Cocher dans l'étape 5 les incohérences corrigées au passage (ex. *Tir Précis II*).
 
-### Étape 2 — Retirer des choix de stats pour chaque classe
-- [ ] Aujourd'hui, le **pool de stats est identique** pour les 9 classes (95 objets) : retirer, par classe, les stats qui ne correspondent pas à son identité (ex. critique pour le Moine, esquive pour le Trapper…). Le script lit les pools de chaque classe (`classes-fq8/*.json`) : il suivra ces changements sans modification.
-- [ ] Revoir en même temps le **budget des Start stats** : Sorcière 3 points contre Moine 14 et Élémentaliste 12 (les autres entre 7 et 8).
-- [ ] Points de vigilance issus du tableau des moyennes :
-  - [ ] **Mana de départ vs coûts** : Sorcière et Gardien à 2,5 mana au N1 ; Maître d'Armes et Trapper à 3,5, alors que leurs attaques de base coûtent 1 mana.
-  - [ ] **Main de départ** : Trapper à 0 (0,1 en moyenne au N1), il ne pioche rien au début du combat.
-  - [ ] **Dés de vie** : Élémentaliste (d4) à 52 PV au N12 contre 164 pour le Gardien.
-- [ ] Nettoyer l'`ItemChoice` vide de la Sorcière (`classes-fq8/witch.json`), puis retirer la ligne `pool vide :: witch.json` de `KNOWN_ISSUES`.
-- [ ] ▶️ **Après chaque modification d'une classe** : `npx vitest run tests/decks/class-deck-integrity.test.js` (pools non vides, objets de stats existants, un seul objet de Start stats par classe).
+### Étape 2 — Retirer des choix de stats pour chaque classe ✅
+- [x] **Pool des points d'action porté de 24 à 30 objets**, pour qu'il couvre les 30 choix cumulés d'un personnage de niveau 12 : les six nouveaux vont aux N10 à N12, et la courbe des prérequis suit désormais exactement le cumul des choix.
+- [x] **Choix de stats inversés** : 3 aux niveaux impairs, 2 aux pairs (au lieu de 2/3).
+- [x] **Pioche ramenée de 4 à 3 objets** (niveaux 3, 5 et 8) et retirée de la base des starter heroes (1 → 0).
+- [x] **Budget des Start stats uniformisé à 10 points** pour les 9 classes (il allait de 3 pour la Sorcière à 14 pour le Moine). Tableau dans « Stats de départ ».
+- [x] **Pool différencié par classe** : 70 objets hors pioche pour chacune, plus 1 à 3 objets de pioche — 30 objets retirés par classe selon son identité. Tableau dans « Pool de stats par classe ».
+- [x] Points de vigilance du tableau des moyennes traités : le mana de la Sorcière passe de 2,5 à 5,8 au N1 ; le Gardien assume au contraire le mana le plus bas (2,2) avec son alternative en PV.
+- [ ] Reste ouvert : **la main du Trapper** (0,1 au N1, 0,8 au N12) — il ne commence pratiquement jamais un combat avec une carte, à confirmer comme identité ou à corriger.
+- [ ] Reste ouvert : **dés de vie**, Élémentaliste (d4) à 52 PV au N12 contre 164 pour le Gardien.
+- [ ] Reste ouvert : nettoyer l'`ItemChoice` vide de la Sorcière (`classes-fq8/witch.json`), puis retirer la ligne `pool vide :: witch.json` de `KNOWN_ISSUES`.
+- [ ] Reste ouvert : le **pool de mana est resté à 24 objets** alors que celui des PA est à 30. Un personnage ne peut donc pas mettre ses 3 choix du N1 en mana, et le pool de mana s'épuise au N10 — à étendre à 30 comme les PA, ou à assumer.
+- [x] ▶️ `npx vitest run tests/decks/class-deck-integrity.test.js` : vert (pools non vides, objets de stats existants, un seul objet de Start stats par classe).
 - [ ] ▶️ **Fin de l'étape** : `npm test`, puis `npm run build` pour recompiler les compendiums et vérifier en jeu une montée de niveau.
-- [ ] 📝 **Mettre à jour CLASSES.md** :
-  - [ ] « Stats FQ du personnage » : colonne « Montable via carte de stat » et section « Distribution » (pools par classe).
-  - [ ] « Vue d'ensemble » : colonne « Start stats » si les budgets de départ ont changé, et paragraphe « Stats de départ notables ».
-  - [ ] Dans chaque classe : paragraphes « Stats FQ » et « Faiblesses ».
+- [x] 📝 **CLASSES.md à jour** : « Distribution », « Stats de départ », « Pool de stats par classe », tableau des stats moyennes, « Stats de départ notables », paragraphes « Stats FQ » des 9 classes, et colonne « Start stats » retirée de la « Vue d'ensemble » (redondante avec le nouveau tableau).
 
 ### Étape 3 — Refaire le calcul des stats moyennes
-- [ ] ▶️ `npm run report:classes -- --out devNotes/rapport-classes.md` : le rapport tient compte des nouveaux pools (étape 2) et des nouveaux decks (étape 1).
-- [ ] Vérifier les hypothèses du rapport (base du starter hero, répartition des ASI, CA) : si un starter hero ou un équipement de départ a changé, adapter `starterBase` ou `ARMORS` dans `utils/class-report.mjs`.
+- [x] ▶️ `npm run report:classes -- --out devNotes/rapport-classes.md` : le rapport tient compte des nouveaux pools (étape 2). **À relancer après l'étape 1** (les decks sont encore au garage).
+- [x] Vérifier les hypothèses du rapport (base du starter hero, répartition des ASI, CA) : le rapport lit les starter heroes et les pools sur les données, il a suivi les changements de l'étape 2 sans modification.
 - [ ] 📝 **Mettre à jour CLASSES.md** en copiant les tableaux du rapport :
-  - [ ] « Stats moyennes par classe » : tableau complet, hypothèses de calcul et date en tête de fichier.
+  - [x] « Stats moyennes par classe » : tableau complet, hypothèses de calcul et date en tête de fichier.
   - [ ] « Vue d'ensemble des cartes » et « Caracs utilisées par les cartes ».
   - [ ] Étape 4 : tableau des exemplaires par deck (section « Exemplaires débloqués » du rapport).
   - [ ] « Règles d'équilibrage (provisoires) » : chiffres de rendement (section « Rendement des cartes » du rapport).
@@ -156,36 +156,36 @@ Chaque case donne **N1 / N6 / N12**. Scores de caractéristique suivis du modifi
 | Stat | Moine | Gardien | Mage Blanc | Élémentaliste | Trapper | Sorcière | Illusionniste | Maître d'Armes | Guerrier Runique |
 |---|---|---|---|---|---|---|---|---|---|
 | **FQ** | | | | | | | | | |
-| Budget Start stats | 14 | 7 | 8 | 12 | 7 | **3** | 8 | 7 | 7 |
-| Choix de stats cumulés | 2 / 15 / 30 | 2 / 15 / 30 | 2 / 15 / 30 | 2 / 15 / 30 | 2 / 15 / 30 | 2 / 15 / 30 | 2 / 15 / 30 | 2 / 15 / 30 | 2 / 15 / 30 |
-| Points d'action | 10,5 / 13,8 / 17,6 | 9,5 / 12,8 / 16,6 | 10,5 / 13,8 / 17,6 | 9,5 / 12,8 / 16,6 | 10,5 / 13,8 / 17,6 | 8,5 / 11,8 / 15,6 | **7,5** / 10,8 / 14,6 | 8,5 / 11,8 / 15,6 | 10,5 / 13,8 / 17,6 |
-| Mana | 5,5 / 8,8 / 12,6 | **2,5** / 5,8 / 9,6 | 6,5 / 9,8 / 13,6 | 6,5 / 9,8 / 13,6 | 3,5 / 6,8 / 10,6 | **2,5** / 5,8 / 9,6 | 3,5 / 6,8 / 10,6 | 3,5 / 6,8 / 10,6 | 4,5 / 7,8 / 11,6 |
-| Zèle initial | 1,2 / 2,3 / 3,5 | 0,2 / 1,3 / 2,5 | 0,2 / 1,3 / 2,5 | 0,2 / 1,3 / 2,5 | 0,2 / 1,3 / 2,5 | 0,2 / 1,3 / 2,5 | 0,2 / 1,3 / 2,5 | 0,2 / 1,3 / 2,5 | 0,2 / 1,3 / 2,5 |
-| Critique | 0,2 / 1,6 / 3,2 | 0,2 / 1,6 / 3,2 | 0,2 / 1,6 / 3,2 | **3,2** / 4,6 / 6,2 | 2,2 / 3,6 / 5,2 | 0,2 / 1,6 / 3,2 | 2,2 / 3,6 / 5,2 | 1,2 / 2,6 / 4,2 | 0,2 / 1,6 / 3,2 |
-| Esquive | 2,2 / 3,6 / 5,2 | 0,2 / 1,6 / 3,2 | 0,2 / 1,6 / 3,2 | 1,2 / 2,6 / 4,2 | 0,2 / 1,6 / 3,2 | 0,2 / 1,6 / 3,2 | 2,2 / 3,6 / 5,2 | 1,2 / 2,6 / 4,2 | 0,2 / 1,6 / 3,2 |
-| Main (début de combat) | 2,1 / 3,1 / 4,2 | **4,1** / 5,1 / 6,2 | 1,1 / 2,1 / 3,2 | 1,1 / 2,1 / 3,2 | **0,1** / 1,1 / 2,2 | 1,1 / 2,1 / 3,2 | 1,1 / 2,1 / 3,2 | 1,1 / 2,1 / 3,2 | 1,1 / 2,1 / 3,2 |
-| Pioche (par tour) | 1,1 / 1,6 / 2,3 | 1,1 / 1,6 / 2,3 | 1,1 / 1,6 / 2,3 | 1,1 / 1,6 / 2,3 | 1,1 / 1,6 / 2,3 | 1,1 / 1,6 / 2,3 | 1,1 / 1,6 / 2,3 | 1,1 / 1,6 / 2,3 | 1,1 / 1,6 / 2,3 |
-| Déplacement (cases) | **8,2** / 9,3 / 10,5 | 6,2 / 7,3 / 8,5 | 5,2 / 6,3 / 7,5 | 6,2 / 7,3 / 8,5 | 6,2 / 7,3 / 8,5 | 6,2 / 7,3 / 8,5 | 7,2 / 8,3 / 9,5 | 7,2 / 8,3 / 9,5 | 6,2 / 7,3 / 8,5 |
+| Budget Start stats | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 |
+| Choix de stats cumulés | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 |
+| Points d'action | 8,2 / 13,2 / 19,3 | 10,3 / 15,3 / 21,7 | 11,2 / 16,3 / 22,5 | 10,2 / 15,3 / 21,5 | 12,2 / 17,3 / 23,5 | 10,2 / 15,3 / 21,5 | 10,2 / 15,3 / 21,5 | 11,2 / 16,3 / 22,5 | 11,2 / 16,2 / 22,3 |
+| Mana | 4,4 / 6,1 / 8,1 | 2,2 / 3,1 / 4,1 | 6,8 / 10,2 / 14,3 | 7,0 / 11,0 / 16,0 | 3,7 / 6,3 / 9,7 | 5,8 / 8,7 / 12,5 | 3,7 / 6,7 / 10,5 | 3,7 / 6,3 / 9,7 | 4,5 / 6,5 / 8,9 |
+| Zèle initial | 0,3 / 1,6 / 3,3 | 0,3 / 1,7 / 3,4 | 0,2 / 0,8 / 1,7 | 0,1 / 0,6 / 1,3 | 0,2 / 0,8 / 1,7 | 0,2 / 1,3 / 2,5 | 0,1 / 0,6 / 1,3 | 0,2 / 0,8 / 1,7 | 0,2 / 1,2 / 2,5 |
+| Critique | 0 / 0 / 0 | 1,3 / 2,7 / 4,4 | 0,2 / 1,0 / 2,1 | 1,1 / 1,6 / 2,3 | 2,4 / 4,1 / 6,2 | 0,2 / 1,3 / 2,5 | 1,1 / 1,6 / 2,3 | 1,3 / 2,7 / 4,3 | 0,2 / 0,8 / 1,6 |
+| Esquive | 2,4 / 4,1 / 6,1 | 1,3 / 2,7 / 4,4 | 1,2 / 2,0 / 3,1 | 0,1 / 0,6 / 1,3 | 0 / 0 / 0 | 1,2 / 1,8 / 2,7 | 1,3 / 2,3 / 3,5 | 1,2 / 1,8 / 2,7 | 0,3 / 1,4 / 2,9 |
+| Main (début de combat) | 2,2 / 2,8 / 3,6 | 5,3 / 6,5 / 8,0 | 1,2 / 1,8 / 2,7 | 1,1 / 1,6 / 2,3 | 0,1 / 0,4 / 0,8 | 2,2 / 3,3 / 4,5 | 2,2 / 2,8 / 3,7 | 1,2 / 1,8 / 2,7 | 2,2 / 3,2 / 4,5 |
+| Pioche (par tour) | 1,1 / 1,6 / 2,2 | 0,0 / 0,2 / 0,4 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 2,1 / 2,6 / 3,2 |
+| Déplacement (cases) | 8,3 / 9,6 / 11,3 | 6,2 / 6,8 / 7,7 | 5,1 / 5,4 / 5,8 | 6,2 / 6,8 / 7,7 | 7,3 / 8,7 / 10,3 | 6 / 6 / 6 | 7,3 / 8,2 / 9,5 | 7,2 / 7,8 / 8,7 | 6,2 / 7,0 / 8,1 |
 | **dnd5e** | | | | | | | | | |
 | Dé de vie | d8 | d12 | d6 | d4 | d8 | d6 | d6 | d10 | d10 |
-| PV moyens | 23 / 48 / 78 | 29 / 80 / **164** | 24 / 65 / 125 | **18 / 28 / 52** | 23 / 48 / 90 | 19 / 29 / 53 | 20 / 35 / 53 | 24 / 49 / 79 | 27 / 67 / 115 |
+| PV moyens | 23 / 48 / 78 | 29 / 80 / 164 | 24 / 65 / 125 | 18 / 28 / 52 | 23 / 48 / 90 | 19 / 29 / 53 | 20 / 35 / 53 | 24 / 49 / 79 | 27 / 67 / 115 |
 | Caracs primaires | FOR + DEX | FOR + CON | CON + SAG | INT + SAG | DEX + SAG | INT + CHA | DEX + CHA | FOR + DEX | FOR + INT |
-| FOR | 12(+1) / 15(+2) / 20(+5) | 16(+3) / 19(+4) / 20(+5) | 6(-2) | 6(-2) | 6(-2) | 10(+0) | 8(-1) | 14(+2) / 17(+3) / 20(+5) | 14(+2) / 17(+3) / 20(+5) |
-| DEX | 16(+3) / 19(+4) / 20(+5) | 10(+0) / 10(+0) / 12(+1) | 6(-2) / 6(-2) / 10(+0) | 12(+1) | 16(+3) / 19(+4) / 20(+5) | 6(-2) | 14(+2) / 17(+3) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 8(-1) |
-| CON | 10(+0) | 14(+2) / 17(+3) / 20(+5) | 16(+3) / 19(+4) / 20(+5) | 8(-1) / 8(-1) / 10(+0) | 10(+0) / 10(+0) / 12(+1) | 6(-2) / 6(-2) / 8(-1) | 8(-1) | 8(-1) | 14(+2) |
-| INT | 10(+0) | 6(-2) | 14(+2) | 16(+3) / 19(+4) / 20(+5) | 12(+1) | 14(+2) / 17(+3) / 20(+5) | 10(+0) | 8(-1) | 12(+1) / 15(+2) / 18(+4) |
-| SAG | 8(-1) | 6(-2) | 16(+3) / 19(+4) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 12(+1) | 10(+0) | 8(-1) | 10(+0) |
-| CHA | 8(-1) | 12(+1) | 6(-2) | 8(-1) | 6(-2) | 16(+3) / 19(+4) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 12(+1) | 6(-2) |
+| FOR | 12(+1) / 15(+2) / 20(+5) | 16(+3) / 19(+4) / 20(+5) | 6(-2) / 6(-2) / 6(-2) | 6(-2) / 6(-2) / 6(-2) | 6(-2) / 6(-2) / 6(-2) | 10(+0) / 10(+0) / 10(+0) | 8(-1) / 8(-1) / 8(-1) | 14(+2) / 17(+3) / 20(+5) | 14(+2) / 17(+3) / 20(+5) |
+| DEX | 16(+3) / 19(+4) / 20(+5) | 10(+0) / 10(+0) / 12(+1) | 6(-2) / 6(-2) / 10(+0) | 12(+1) / 12(+1) / 12(+1) | 16(+3) / 19(+4) / 20(+5) | 6(-2) / 6(-2) / 6(-2) | 14(+2) / 17(+3) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 8(-1) / 8(-1) / 8(-1) |
+| CON | 10(+0) / 10(+0) / 10(+0) | 14(+2) / 17(+3) / 20(+5) | 16(+3) / 19(+4) / 20(+5) | 8(-1) / 8(-1) / 10(+0) | 10(+0) / 10(+0) / 12(+1) | 6(-2) / 6(-2) / 8(-1) | 8(-1) / 8(-1) / 8(-1) | 8(-1) / 8(-1) / 8(-1) | 14(+2) / 14(+2) / 14(+2) |
+| INT | 10(+0) / 10(+0) / 10(+0) | 6(-2) / 6(-2) / 6(-2) | 14(+2) / 14(+2) / 14(+2) | 16(+3) / 19(+4) / 20(+5) | 12(+1) / 12(+1) / 12(+1) | 14(+2) / 17(+3) / 20(+5) | 10(+0) / 10(+0) / 10(+0) | 8(-1) / 8(-1) / 8(-1) | 12(+1) / 15(+2) / 18(+4) |
+| SAG | 8(-1) / 8(-1) / 8(-1) | 6(-2) / 6(-2) / 6(-2) | 16(+3) / 19(+4) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 12(+1) / 12(+1) / 12(+1) | 10(+0) / 10(+0) / 10(+0) | 8(-1) / 8(-1) / 8(-1) | 10(+0) / 10(+0) / 10(+0) |
+| CHA | 8(-1) / 8(-1) / 8(-1) | 12(+1) / 12(+1) / 12(+1) | 6(-2) / 6(-2) / 6(-2) | 8(-1) / 8(-1) / 8(-1) | 6(-2) / 6(-2) / 6(-2) | 16(+3) / 19(+4) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 12(+1) / 12(+1) / 12(+1) | 6(-2) / 6(-2) / 6(-2) |
 | Maîtrise | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 |
 | Bonus d'attaque (meilleure carac primaire) | +5 / +7 / +9 | +5 / +7 / +9 | +5 / +7 / +9 | +5 / +7 / +9 | +5 / +7 / +9 | +5 / +7 / +9 | +4 / +6 / +9 | +4 / +6 / +9 | +4 / +6 / +9 |
-| CA (équipement de départ) | 14 / 15 / 16 | **18** | 8 / 8 / 10 | 11 | 14 / 15 / 16 | **8** | 13 / 14 / 16 | 13 / 14 / 16 | 10 |
+| CA (équipement de départ) | 14 / 15 / 16 | 18 / 18 / 18 | 8 / 8 / 10 | 11 / 11 / 11 | 14 / 15 / 16 | 8 / 8 / 8 | 13 / 14 / 16 | 13 / 14 / 16 | 10 / 10 / 10 |
 | Équipement de départ | Cuir, mains nues | Cotte de mailles, bouclier, masse | Robe, masse | Robe, bâton | Cuir, arc court | Robe, bâton | Cuir, dague | Cuir, lance, arc court | Cuir, hachette |
 | **Cartes** | | | | | | | | | |
-| Cartes débloquées (distinctes / exemplaires) | 0/0 | 0/0 | 0/0 | 0/0 | 0/0 | 0/0 | 0/0 | 0/0 | 4/5 · 9/10 · 15/16 (+ runes) |
+| Cartes débloquées (distinctes/exemplaires) | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 4/5 / 9/10 / 15/16 |
 
 **Hypothèses de calcul** (script sur les données, pas de mesure en partie) :
-- **Base commune** (starter heroes) : PA 7, mana 2, zèle 0, critique 0, esquive 0, main 0, pioche 1, déplacement 5 cases, +15 PV fixes. S'y ajoutent les *Start stats* de la classe (`classes-stats-fq8/start-stats-*.json`).
-- **Choix de stats** : 2 aux niveaux impairs, 3 aux niveaux pairs, dans un **pool commun aux 9 classes** de 95 objets (PA 24, mana 24, critique 10, esquive 10, zèle 8, déplacement 8, main 7, pioche 4). La moyenne est l'espérance d'un tirage proportionnel au pool. Chaque choix vaut en moyenne +0,25 PA, +0,25 mana, +0,11 critique, +0,11 esquive, +0,08 zèle, +0,08 déplacement, +0,07 main et +0,04 pioche. **Le gain est identique pour toutes les classes** : seuls les Start stats, le dé de vie et les caracs les différencient.
+- **Base commune** (starter heroes) : PA 7, mana 2, zèle 0, critique 0, esquive 0, main 0, pioche 0, déplacement 5 cases, +15 PV fixes. S'y ajoutent les *Start stats* de la classe (voir « Stats de départ » ci-dessous).
+- **Choix de stats** : 3 aux niveaux impairs, 2 aux niveaux pairs, dans le **pool propre à chaque classe** (70 objets hors pioche, plus 1 à 3 objets de pioche). La moyenne est l'espérance d'un tirage proportionnel au pool : elle diffère donc d'une classe à l'autre, puisque les pools diffèrent. Voir « Pool de stats par classe ».
 - **ASI** : +2 points à chaque niveau pair, répartis alternativement sur les deux caracs primaires (plafond 20, surplus sur l'autre primaire puis CON).
 - **PV** : dé max au N1, puis moyenne dnd5e (d/2 + 1), plus le modificateur de CON par niveau.
 - **CA** : équipement de départ conservé, seule la DEX évolue.
@@ -241,7 +241,59 @@ Chaque carac a un usage dominant bien tranché dans les formules de cartes. Dans
 
 8 types de cartes de stats existent : `action-point`, `mana`, `critical`, `evasion`, `hand`, `pick`, `moving`, `zeal`. Il n'existe **ni carte PV ni carte portée**.
 
-**Distribution** : chaque classe reçoit au N1 ses *Start stats* (stats FQ et caracs), puis choisit 2 stats aux niveaux impairs et 3 aux niveaux pairs dans **le même pool commun de 95 objets** (sans remise). ASI de +2 à chaque niveau pair. L'ancien système « pool primaire / pool secondaire -M » n'existe plus : **l'identité FQ d'une classe tient désormais uniquement à ses Start stats**.
+**Distribution** : chaque classe reçoit au N1 ses *Start stats* (stats FQ et caracs), puis choisit **3 stats aux niveaux impairs et 2 aux niveaux pairs** (sans remise), dans **son propre pool** — 70 objets hors pioche, plus 1 à 3 objets de pioche. ASI de +2 à chaque niveau pair. L'identité FQ d'une classe tient donc à deux choses : ses *Start stats*, et ce qu'elle peut monter ou non au fil des niveaux.
+
+Cumul des choix : 3 au N1, 5 au N2, 8 au N3, 10 au N4, 13 au N5, 15 au N6, 18 au N7, 20 au N8, 23 au N9, 25 au N10, 28 au N11, **30 au N12**.
+
+### Stats de départ
+
+Les neuf *starter heroes* sont strictement identiques (toutes caractéristiques à 10) ; seuls les *Start stats* de la classe (`classes-stats-fq8/start-stats-*.json`) les différencient. Budget de **10 points pour toutes les classes**.
+
+| Classe | PA | Mana | Zèle | Crit | Esq | Main | Pioche | Dépl | Budget |
+|---|---|---|---|---|---|---|---|---|---|
+| **Starter hero (base)** | **7** | **2** | **0** | **0** | **0** | **0** | **0** | **5** | — |
+| Moine | 0 | +2 | 0 | 0 | +2 | +2 | +1 | +3 | 10 |
+| Gardien | +2 | 0 | 0 | +1 | +1 | +5 | 0 | +1 | 10 |
+| Mage Blanc | +3 | +4 | 0 | 0 | +1 | +1 | +1 | 0 | 10 |
+| Élémentaliste | +2 | +4 | 0 | +1 | 0 | +1 | +1 | +1 | 10 |
+| Trapper | +4 | +1 | 0 | +2 | 0 | 0 | +1 | +2 | 10 |
+| Sorcière | +2 | +3 | 0 | 0 | +1 | +2 | +1 | +1 | 10 |
+| Illusionniste | +2 | +1 | 0 | +1 | +1 | +2 | +1 | +2 | 10 |
+| Maître d'Armes | +3 | +1 | 0 | +1 | +1 | +1 | +1 | +2 | 10 |
+| Guerrier Runique | +3 | +2 | 0 | 0 | 0 | +2 | +2 | +1 | 10 |
+
+Le déplacement se compte en cases (l'effet vaut +5 ft). **Aucune classe ne démarre avec du zèle** ; le **Gardien** est le seul à ne pas piocher en début de partie, compensé par la plus grosse main du jeu (5).
+
+### Pool de stats par classe
+
+Le pool complet compte **100 objets** : PA 30, mana 24, critique 10, esquive 10, zèle 8, déplacement 8, main 7, pioche 3. Chaque classe en garde **70 hors pioche**, plus les objets de pioche qui lui sont laissés — les 30 retirés sont ce qu'elle ne peut pas monter, ou plus difficilement.
+
+| Classe | PA /30 | Mana /24 | Crit /10 | Esq /10 | Zèle /8 | Dépl /8 | Main /7 | Pioche N3 | N5 | N8 | Pool |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Moine | 30 | 10 | **0** | 10 | 8 | 8 | 4 | ✓ | ✓ | ✓ | 73 |
+| Gardien | 30 | 5 | 8 | 8 | 8 | 4 | 7 | ✓ | — | — | 71 |
+| Mage Blanc | 30 | 20 | 5 | 5 | 4 | 2 | 4 | ✓ | — | ✓ | 72 |
+| Élémentaliste | 30 | 24 | 3 | 3 | 3 | 4 | 3 | ✓ | — | ✓ | 72 |
+| Trapper | 30 | 16 | 10 | **0** | 4 | 8 | 2 | ✓ | ✓ | — | 72 |
+| Sorcière | 30 | 18 | 6 | 4 | 6 | **0** | 6 | ✓ | ✓ | — | 72 |
+| Illusionniste | 30 | 18 | 3 | 6 | 3 | 6 | 4 | ✓ | — | ✓ | 72 |
+| Maître d'Armes | 30 | 16 | 8 | 4 | 4 | 4 | 4 | ✓ | ✓ | — | 72 |
+| Guerrier Runique | 30 | 12 | 4 | 7 | 6 | 5 | 6 | ✓ | ✓ | ✓ | 73 |
+
+Trois portes sont complètement fermées : le **Moine** ne monte jamais son critique, le **Trapper** jamais son esquive, la **Sorcière** jamais son déplacement (elle reste à 6 cases toute la campagne).
+
+**Niveau minimum de chaque objet** (`system.prerequisites.level`) — le pool des PA suit exactement le cumul des choix, pour qu'un personnage puisse toujours tout mettre en points d'action :
+
+| Stat | Objets | Répartition par niveau |
+|---|---|---|
+| Points d'action | 30 | 3 aux niveaux impairs, 2 aux pairs (N1 → N12) |
+| Mana | 24 | N1:2 N2:2 N3:3 N4:2 N5:3 N6:3 N7:2 N8:3 N9:2 N10:2 |
+| Critique, esquive | 10 chacun | 1 par niveau, N1 → N10 |
+| Zèle, déplacement | 8 chacun | N1, N2, N4, N5, N6, N7, N9, N10 |
+| Main | 7 | N1, N3, N4, N6, N7, N9, N10 |
+| Pioche | 3 | N3, N5, N8 |
+
+Quand une classe ne garde qu'une partie d'une stat, les objets retenus sont **répartis uniformément sur l'échelle des niveaux** (pour k objets sur n, on garde les indices `⌊j·n/k⌋`) : le premier reste accessible au N1 et les suivants s'étalent jusqu'au plafond de la stat, sans créer de trou en début de campagne.
 
 ### Niveaux des cartes
 - `level` 1 à 12 : débloquée quand le niveau de la classe atteint cette valeur (les cartes neutres suivent le niveau global, somme des niveaux de classes).
@@ -260,19 +312,19 @@ Chaque carac a un usage dominant bien tranché dans les formules de cartes. Dans
 
 ### Vue d'ensemble
 
-| Classe | Dé de vie | Caracs dnd5e | Start stats (bonus FQ au N1) | Rôle | Signature |
-|---|---|---|---|---|---|
-| Élémentaliste | d4 | INT + SAG | mana 4, crit 3, action 2, esq 1, main 1, dépl 1 | DPS burst + debuff | 4 effets élémentaires prérequis des combos |
-| Gardien | d12 | FOR + CON | main 4, action 2, dépl 1 | Tank offensif | PV comme monnaie, zèle, charges de lame |
-| Mage Blanc | d6 | CON + SAG | mana 4, action 3, main 1 | Soigneur / contrôleur DoT | Malédictions + boucliers réactifs + auras |
-| Trapper | d8 | DEX + SAG | action 3, crit 2, mana 1, dépl 1 | DPS distance / sniper | Critique-ressource, pièges réactifs, bêtes |
-| Moine | d8 | FOR + DEX | action 3, mana 3, dépl 3, esq 2, main 2, zèle 1 | Bruiser à tempo / soigneur de mêlée | Flux de cartes ↔ zèle, rejouable conditionnel, paumes de soin au contact |
-| Sorcière | d6 | INT + CHA | action 1, main 1, dépl 1 | Invocatrice | Armée de squelettes + score de sacrifice |
-| Illusionniste | d6 | DEX + CHA | crit 2, esq 2, dépl 2, mana 1, main 1 | Contrôle / soutien hybride | Portée cumulative dépensable |
-| Maître d'Armes | d10 | FOR + DEX | dépl 2, action 1, mana 1, crit 1, esq 1, main 1 | DPS martial polyvalent | Armes équipées (`@wpnM`/`@wpnR`), armes de jet |
-| Guerrier Runique | d10 | FOR + INT | action 3, mana 2, main 1, dépl 1 | Moteur / late-game carry | Deck-building en combat (runes) |
+| Classe | Dé de vie | Caracs dnd5e | Rôle | Signature |
+|---|---|---|---|---|
+| Élémentaliste | d4 | INT + SAG | DPS burst + debuff | 4 effets élémentaires prérequis des combos |
+| Gardien | d12 | FOR + CON | Tank offensif | PV comme monnaie, zèle, charges de lame |
+| Mage Blanc | d6 | CON + SAG | Soigneur / contrôleur DoT | Malédictions + boucliers réactifs + auras |
+| Trapper | d8 | DEX + SAG | DPS distance / sniper | Critique-ressource, pièges réactifs, bêtes |
+| Moine | d8 | FOR + DEX | Bruiser à tempo / soigneur de mêlée | Flux de cartes ↔ zèle, rejouable conditionnel, paumes de soin au contact |
+| Sorcière | d6 | INT + CHA | Invocatrice | Armée de squelettes + score de sacrifice |
+| Illusionniste | d6 | DEX + CHA | Contrôle / soutien hybride | Portée cumulative dépensable |
+| Maître d'Armes | d10 | FOR + DEX | DPS martial polyvalent | Armes équipées (`@wpnM`/`@wpnR`), armes de jet |
+| Guerrier Runique | d10 | FOR + INT | Moteur / late-game carry | Deck-building en combat (runes) |
 
-Stats de départ notables : **critique** de départ nul pour Moine, Gardien, Mage Blanc, Sorcière et Guerrier Runique (le meilleur critique de départ est celui de l'Élémentaliste, 3) ; **esquive** de départ nulle pour Gardien, Mage Blanc, Trapper, Sorcière et Guerrier Runique. Comme le pool est commun, toutes ces stats restent montables.
+Stats de départ notables (détail dans « Stats de départ ») : **critique** de départ nul pour Moine, Mage Blanc, Sorcière et Guerrier Runique — et le Moine ne peut pas le monter du tout ; **esquive** nulle pour Trapper et Guerrier Runique, le Trapper ne pouvant pas la monter non plus ; **zèle** nul pour toutes les classes ; **pioche** nulle pour le Gardien, qui n'a qu'un objet de pioche dans son pool.
 
 ### Vue d'ensemble des cartes (decks de base)
 
@@ -371,7 +423,7 @@ Toutes les cartes des huit classes sont garées **à partir du N13, une spécial
 
 **Identité dnd5e** : d12, FOR + CON. CHA sert aux cartes de provocation, au Coup de bouclier, à Garde Absolue et au Cri de Ralliement — elle reste plate à 12 (+1), jamais montée par les ASI : à trancher (basculer sur CON, ou l'assumer).
 
-**Stats FQ** : la **plus grosse main du jeu, pioche très faible**, peu de mana.
+**Stats FQ** : la **plus grosse main du jeu** (5 au N1, 8 au N12) et **aucune pioche** — un seul objet de pioche dans son pool, au N3 : il joue sa main de départ, ses réactives et ses cartes générées. **Le moins de mana du jeu** (2,2 au N1, 4,1 au N12, 5 objets de mana seulement) : l'alternative en points de vie n'est pas un confort, c'est sa ressource. Mobilité bridée (4 objets de déplacement). Sa vraie ressource est le couple PV + zèle, avec **les PV et la CA les plus élevés** (164 PV au N12, CA 18).
 Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés** (164 PV au N12, CA 18).
 
 **Spécialisations validées** :
@@ -412,7 +464,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - Exemplaires : 75 au total, plus 32 exemplaires générés.
 - Zèle : 13 générateurs pour 17 consommateurs (contre 6/15 avant le lot), grâce aux réactifs de l'Ange Gardien et aux petites frappes.
 - Aucun soin réel ni HOT dans le deck : les 12 cartes du deck de base qui rendent des PV les rendent toutes en **temporaires** (13 avec la Bénédiction du Rempart, générée).
-- Beaucoup de cartes coûtent 1 mana (Frappe Héroïque ×6, Hémorragie ×4, Brèche, Égide, Coup Puissant…) : l'alternative PV est indispensable avec 2,5 mana au N1.
+- Beaucoup de cartes coûtent 1 mana (Frappe Héroïque ×6, Hémorragie ×4, Brèche, Égide, Coup Puissant…) : l'alternative PV est indispensable avec 2,2 mana au N1 et 4,1 au N12 (5 objets de mana dans son pool).
 
 ### Cartes N13 à placer (lot du 2026-09-18)
 **Tout le deck est au niveau 13** : il reste à donner un niveau N1‑N12 aux 41 cartes et à équilibrer les `maxSameCard`. 11 cartes ont été écrites dans ce lot.
@@ -439,7 +491,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 
 **Identité dnd5e** : d6, CON + SAG (les deux requises) ; INT s'ajoute en pratique (dégâts radiants, boucliers réactifs, 8 cartes) — classe structurellement étalée sur 3 caracs. CHA à 6 (-2).
 
-**Stats FQ** : **mana le plus haut** (4 de départ, à égalité avec l'Élémentaliste), action 3. **Déplacement le plus faible** (5 cases), aucun critique ni esquive de départ, CA 8. Zèle généré en jeu par la moitié du deck.
+**Stats FQ** : **le 2e meilleur mana du jeu** (6,8 au N1, 14,3 au N12, 20 objets de mana) et le meilleur budget d'action de départ (+3). **Déplacement le plus faible et quasi figé** (5,1 au N1, 5,8 au N12 : 2 objets de déplacement seulement) — il ne bougera jamais. Peu de zèle montable (4 objets), CA 8.
 
 **Spécialisations validées** :
 
@@ -494,7 +546,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 
 **Identité dnd5e** : d8, FOR + DEX. CON alimente les coûts et les PV temporaires. ⚠️ **SAG reste plate à 8 (−1)** et n'est jamais montée par les ASI : toute formule en `@wis` rend *moins que rien* au Moine. Les soins du lot 2026‑09‑20 sont donc écrits en **DEX**, la vraie carac de la classe ; ne restent en `@wis` que l'appoint historique de Paume De Jade et le `@wis` de Sérénité Pleine, tous deux à reprendre.
 
-**Stats FQ** : le plus gros budget de départ (14) : **meilleur déplacement** (8 cases au N1), la seule classe avec du **zèle initial**, esquive de départ à égalité avec l'Illusionniste (2), bonne main (2). **Aucun critique de départ** — il joue le volume, pas le burst (le critique reste montable via le pool commun).
+**Stats FQ** : **aucun point d'action de départ**, ce qui en fait la classe qui en a le moins (8,2 au N1, 19,3 au N12) alors qu'elle joue beaucoup de cartes — le pool compense (30 objets d'action, 41 % de son pool). **Meilleur déplacement du jeu** (8,3 au N1, 11,3 au N12) et **meilleure esquive** (2,4 / 6,1). **Aucun critique, jamais** : c'est la seule classe dont le pool n'en contient aucun — il joue le volume, pas le burst. Mana bridé (10 objets).
 
 **Spécialisations proposées (à valider)** :
 
@@ -530,7 +582,8 @@ Détail des cartes :
 **Boucle de jeu** : enchaîner les petites frappes et les petites paumes → zèle → convertir en cartes/actions/burst ou en gros soin ; l'ordre de jeu dans le tour est la compétence clé.
 
 **Faiblesses** :
-- Aucun critique de départ.
+- **Aucun critique, et aucun moyen d'en gagner** : son pool n'en contient pas un seul.
+- Le moins de points d'action du jeu au N1 (8,2), alors qu'il vit du nombre de cartes jouées par tour.
 - Sérénité Pleine (et l'appoint `@wis` de Paume De Jade) scalent encore sur SAG, sa caractéristique la plus basse (−1) et jamais montée : ils rendent moins que leur libellé ne le laisse croire.
 - Doit rester au contact pour soigner : aucun soin à distance, aucun soin de zone.
 - Son auto-soin de tempo (Méditation Zen) ne rend plus que des PV temporaires : ce qui dépasse est perdu au bout d'un tour.
@@ -588,7 +641,7 @@ Détail des cartes :
 
 **Identité dnd5e** : d4, INT + SAG (les deux requises). INT pour les dégâts directs, givre et terre ; SAG pour le feu et l'air. Assassin du Néant utilise DEX (12).
 
-**Stats FQ** : 2e plus gros budget de départ (12) : **mana le plus haut** (4, à égalité avec le Mage Blanc) et **meilleur critique de départ du jeu** (3). **Les PV les plus bas** (18 / 28 / 52).
+**Stats FQ** : **le meilleur mana du jeu** (7,0 au N1, 16,0 au N12, les 24 objets de mana) — c'est la seule classe qui garde le pool de mana en entier. En échange, presque tout le reste est rogné : critique, esquive, zèle et main à 3 objets chacun, et **les PV les plus bas** (18 / 28 / 52).
 
 **Rôle** : DPS magique « glass cannon », mono-cible burst avec pivot AoE (Météore, Onde glacée, Choc de feu), contrôle/debuff en sous-produit.
 
@@ -626,7 +679,7 @@ Détail des cartes :
 ### Constat des cartes (données)
 - **43 cartes, la classe la plus fournie**, toutes au garage : Feu au N13, Givre au N14, Terre au N15, Air au N16, combos au N17, utilitaires au N18 — la seule classe qui monte jusqu'au N18. Il faut **continuer à en retirer**, pas en ajouter. *(Avant la mise au garage : 20 débloquables, coût moyen 7,3 PA, 3 cartes à 1‑4 PA.)*
 - **16 cartes de paire d'éléments** : 10 exigent deux éléments actifs sur la MÊME cible, 6 acceptent l'un ou l'autre (Brouillard, Givrefeu, Météore, Plastron Magique, Onde Glacée, Choc de Feu). S'y ajoutent 3 utilitaires « nécessite 1 élément parmi 3 », 4 ultimes mono-élément, et 2 cartes conditionnées au NOMBRE d'effets (Assassin du Néant, Missiles Magiques +).
-- Zèle déséquilibré : **9 générateurs pour 25 consommateurs**, avec un zèle initial de 0,2 au N1.
+- Zèle déséquilibré : **9 générateurs pour 25 consommateurs**, avec un zèle initial de 0,1 au N1 et 1,3 au N12 (3 objets de zèle dans son pool).
 - Seulement 3 cartes à 1‑4 PA ; coût moyen 7,3 PA ; 6 cartes à 9 PA ou plus.
 - Défense quasi absente : Plastron Magique, Repli du Souffle, Captation de Mana.
 
@@ -687,7 +740,7 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 
 **Identité dnd5e** : d8, DEX + SAG. CHA est le levier du build « maître des bêtes » (stats des minions, 7 cartes), alors que le Trapper démarre à CHA 6 (-2). INT reste marginal.
 
-**Stats FQ** : action 3, critique 2 (2e meilleur critique de départ après l'Élémentaliste), mana 1. **Aucune esquive de départ** : la classe doit rester loin. **Main de départ à 0** : il ne pioche rien au début du combat.
+**Stats FQ** : **le plus de points d'action du jeu** (12,2 au N1, 23,5 au N12) et **le meilleur critique** (2,4 / 6,2, les 10 objets) : le sniper transforme les deux en portée et en dégâts. **Aucune esquive, jamais** — son pool n'en contient aucune, la classe doit rester loin. **Main quasi nulle** (0,1 au N1, 0,8 au N12, 2 objets) : il ne commence pratiquement jamais un combat avec une carte, tout passe par la pioche.
 
 **Rôle** : archer/DPS très longue portée, sous-thèmes invocateur (Louve N1, Ours N7) et contrôleur de terrain (pièges, entraves).
 
@@ -738,7 +791,7 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 ### Incohérences relevées
 - ~~Tir Précis II au niveau 21.~~ → fait : redescendu au N13 avec la spé Sniper, et retiré de `KNOWN_ISSUES`.
 - Pluie de Flèches « incritiquable » sans `bonusCrit`.
-- Ours Enragé (16 PA) et Tireur d'Élite (10 PA pour un buff) très chers au regard des 10,5 PA du N1.
+- Ours Enragé (16 PA) et Tireur d'Élite (10 PA pour un buff) très chers au regard des 12,2 PA du N1.
 
 ### À définir à la main
 - **Spécificités** :
@@ -755,7 +808,7 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 
 **Identité dnd5e** : d6, INT + CHA. **SAG est plus utilisée que INT dans les cartes** (9 contre 3 : Afflux, Mauvais Œil, Sortilège d'Ombre, Explosion d'Ombre…) : écart fiche/deck à trancher.
 
-**Stats FQ** : **le plus petit budget de départ du jeu (3)** : action 1, main 1, déplacement 1, rien d'autre. Mana à 2,5 au N1 (le plus bas, avec le Gardien), CA 8, 19 PV. Coûts d'action réduits par les caracs (`−8+@cha`, `−7+@wis`) : les caracs rendent le kit moins cher.
+**Stats FQ** : **déplacement figé à 6 cases pour toute la campagne** — son pool n'a aucun objet de déplacement, elle reste derrière son armée. Bon mana (5,8 au N1, 12,5 au N12, 18 objets) et bonne main (2,2 / 4,5), CA 8, 19 PV. Coûts d'action réduits par les caracs (`−8+@cha`, `−7+@wis`) : les caracs rendent le kit moins cher.
 
 **Rôle** : invocatrice / commandante d'armée à montée en puissance exponentielle — faible au premier tour, écrasante en fin de combat.
 
@@ -780,7 +833,8 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 **Boucle de jeu** : invoquer en attaquant → sacrifier → recycler en mana/PV/actions/zèle → réinvoquer plus gros. Aucune défense personnelle : l'armée est le rempart.
 
 **Faiblesses** :
-- Vite à court de mana ? → **confirmé par les chiffres** : 2,5 mana au N1, alors que Trait d'Ombre-Verte (×9) coûte 1 mana et 7 PA pour 8,5 PA disponibles.
+- ~~Vite à court de mana~~ → corrigé par le rééquilibrage des stats de départ : 5,8 mana au N1 (contre 2,5 avant) et 18 objets de mana dans son pool. Reste le coût en action : Trait d'Ombre-Verte (×9) coûte 7 PA pour 10,2 PA disponibles au N1.
+- **Déplacement figé à 6 cases** sur toute la campagne : aucun objet de déplacement dans son pool.
 - Peu de points de vie
 
 ### Constat des cartes (données)
@@ -823,7 +877,7 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 
 **Identité dnd5e** : d10, FOR + DEX (3e : CHA). DEX domine (tirs, armes de jet), FOR sur les frappes de mêlée.
 
-**Stats FQ** : budget 7, étalé : déplacement 2, puis 1 en action, mana, critique, esquive et main.
+**Stats FQ** : le profil le plus étalé du jeu — un point dans presque tout au départ (+3 action, +2 déplacement, +1 mana, critique, esquive, main et pioche), et un pool sans trou : 8 objets de critique, 4 d'esquive, de zèle, de déplacement et de main, 16 de mana.
 
 **Rôle** : DPS martial polyvalent sur deux rails parallèles — mêlée (`@wpnM`) et distance (`@wpnR`) — plus un rail d'armes de jet.
 
@@ -893,7 +947,7 @@ Les deux **finishers N11‑12** que la spé mêlée et la spé distance réclama
 
 **Identité dnd5e** : d6, DEX + CHA. Classe la plus multi-carac du jeu : SAG (potions, mana), FOR/`@wpnM` (frappes), CON (Peste Noire). **17 jets de toucher/sauvegarde utilisent INT**, qui n'est pas primaire (INT 10) : à corriger ou à assumer.
 
-**Stats FQ** : budget 8 : critique 2, esquive 2, déplacement 2, mana 1, main 1. **Aucun PA de départ : 7,5 PA au N1, le plus bas du jeu.** La **portée n'est achetable nulle part** — c'est précisément sa mécanique : elle se construit en combat.
+**Stats FQ** : profil polyvalent (+2 action, +2 main, +2 déplacement, +1 mana, critique et esquive, pioche). Bonne esquive (1,3 au N1, 3,5 au N12) et bonne mobilité (7,3 / 9,5) ; critique et zèle bridés à 3 objets. La **portée n'est achetable nulle part** — c'est précisément sa mécanique : elle se construit en combat.
 
 **Rôle** :
 - Dégâts corps à corps (bonus de portée)
@@ -933,7 +987,7 @@ Les deux **finishers N11‑12** que la spé mêlée et la spé distance réclama
 
 ### Constat des cartes (données)
 - **39 cartes, toutes au garage** : Lame d'allonge au N13, Barde au N14, Chronomancien au N15. *(Avant la mise au garage : 27 débloquables, coût moyen 4,8 PA — le plus bas du jeu — et 12 cartes à 1‑4 PA.)*
-- 12 cartes à 1‑4 PA ; coût moyen 4,8 PA (le plus bas, cohérent avec ses 7,5 PA).
+- 12 cartes à 1‑4 PA ; coût moyen 4,8 PA, le plus bas du jeu (il avait 7,5 PA au N1 avant le rééquilibrage des stats de départ, il en a 10,2).
 - 7 générateurs de zèle pour 19 consommateurs.
 - *(résolu par le lot du 2026‑09‑20)* Magie des Arcanes est rattachée au dps (Lame d'allonge), Magie Blanche au soutien (Barde) : elles ne sont plus « à reclasser ».
 
@@ -984,7 +1038,7 @@ Le Barde devient explicitement le **healeur HOT** de la classe. Deux cartes ajou
 
 **Identité dnd5e** : d10, FOR + INT (3e : CON) — frontliner qui frappe au corps à corps (`@wpnM`).
 
-**Stats FQ prioritaires** : pioche, main, mana, génère et utilise beaucoup de zèle et d'action. Start stats : action 3, mana 2, main 1, déplacement 1 (la pioche n'a plus de bonus propre depuis le pool commun).
+**Stats FQ prioritaires** : **la meilleure pioche et la 2e meilleure main du jeu** (2,1 / 3,2 de pioche, les 3 objets de pioche gardés ; 2,2 / 4,5 de main) — c'est ce qui alimente son deck-building en combat. Pas de critique de départ et peu montable (4 objets) ; mana bridé à 12 objets.
 
 **Rôle** : moteur / late-game carry. Départ délibérément faible (deck de base : 15 cartes distinctes, 16 exemplaires), montée en puissance par deck-building en cours de combat.
 
