@@ -30,9 +30,9 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 - [ ] Viser **30 à 40 cartes distinctes jouables entre N1 et N12** par classe. Proposition : ~7 cartes N1, puis ~3 cartes par niveau N2‑N12 (environ une carte par spécialisation et par niveau).
 - [ ] Écrire les nouvelles cartes avec la **grille de coûts provisoire** (section « Règles d'équilibrage (provisoires) »), pour ne pas tout réécrire à l'étape 4.
 - [ ] **Mettre les cartes aux bons niveaux** :
-  - [ ] Trier les cartes du **garage** (N13 et au-delà, **318 cartes** : tout sauf le Guerrier Runique) : leur donner un niveau (1 à 12), les fusionner ou les supprimer. Elles y sont rangées **par spécialisation, une spé par niveau** — voir « Niveaux de garage » plus bas.
+  - [ ] Trier les cartes du **garage** (N13 et au-delà, **321 cartes** : tout sauf le Guerrier Runique) : leur donner un niveau (1 à 12), les fusionner ou les supprimer. Elles y sont rangées **par spécialisation, une spé par niveau** — voir « Niveaux de garage » plus bas.
   - [ ] Vérifier les **cartes de départ (N1)** de chaque classe : leur total d'exemplaires (`maxSameCard` cumulé) est le **plancher du deck** de tout personnage dont c'est la classe principale. **Il vaut aujourd'hui 0 partout** (5 pour le Guerrier Runique, seule classe encore rangée en N1‑N12) : aucune classe n'a de deck de départ tant que les cartes ne sont pas sorties du garage.
-- [ ] **Supprimer ou fusionner les cartes redondantes** (listes « Redondances à trancher » de chaque classe). L'Élémentaliste (43 cartes) et le Maître d'Armes (39) sont surtout à élaguer.
+- [ ] **Supprimer ou fusionner les cartes redondantes** (listes « Redondances à trancher » de chaque classe). L'Élémentaliste (43 cartes) et le Maître d'Armes (41) sont surtout à élaguer.
 - [ ] **Écrire les cartes manquantes** :
   - [ ] **Tous les niveaux N1‑N12 sont vides** pour les huit classes depuis la mise au garage : il n'y a plus de trous à combler, il y a un rangement complet à faire.
   - [ ] Cartes **peu chères** (1 à 4 PA) pour la Sorcière (0), le Mage Blanc (2), l'Élémentaliste (3) et le Trapper (3). *(Chiffres relevés avant la mise au garage : le rapport ne mesure les coûts que sur les cartes N1‑N12, il ne les affiche donc plus.)*
@@ -215,7 +215,7 @@ Chaque carac a un usage dominant bien tranché dans les formules de cartes. Dans
 | Gardien | FOR + CON | 15 | – | 19 | – | – | 3 | 7 | arme 9, FOR 3, CHA 2, CON 1 |
 | Mage Blanc | CON + SAG | – | – | 5 | 8 | 15 | 1 | – | SAG 18, INT 4 |
 | Élémentaliste | INT + SAG | – | 1 | – | 25 | 18 | 1 | – | INT 25, SAG 13, DEX 1 |
-| Trapper | DEX + SAG | 1 | 16 | – | 3 | 5 | **7** | 10 | arme 10, SAG 6, DEX 4, CHA 2, INT 1 |
+| Trapper | DEX + SAG | 1 | 16 | – | 3 | 6 | **7** | 10 | arme 10, SAG 6, DEX 4, CHA 2, INT 1 |
 | Sorcière | INT + CHA | – | – | – | **3** | **9** | 11 | – | SAG 4, INT 1 |
 | Illusionniste | DEX + CHA | 2 | 6 | 1 | 1 | 7 | 8 | 2 | **INT 17**, DEX 2, arme 2 |
 | Maître d'Armes | FOR + DEX | 5 | 9 | – | – | – | 3 | 13 | arme 13, DEX 4, FOR 1 |
@@ -282,7 +282,7 @@ Stats de départ notables : **critique** de départ nul pour Moine, Gardien, Mag
 | Gardien | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **41** | 0 | 41 / 75 | 3 / 32 | – | – | 6 | 13 / 17 | 1 |
 | Mage Blanc | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **41** | 0 | 41 / 79 | 2 / 4 | – | – | 9 | 12 / 12 | 3 |
 | Élémentaliste | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **43** | 0 | 43 / 86 | 2 / 4 | – | – | 2 | **9 / 25** | 1 |
-| Trapper | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **38** | 0 | 38 / 70 | 0 / 0 | – | – | 9 | 7 / 18 | 1 |
+| Trapper | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **39** | 0 | 39 / 72 | 0 / 0 | – | – | 9 | 8 / 18 | 1 |
 | Sorcière | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **38** | 0 | 38 / 79 | 1 / 3 | – | – | 1 | 4 / 11 | 2 |
 | Illusionniste | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **39** | 0 | 39 / 64 | 0 / 0 | – | – | 2 | 7 / 19 | 2 |
 | Maître d'Armes | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **39** | 0 | 39 / 77 | 12 / 46 | – | – | 3 | 14 / 14 | 5 |
@@ -302,12 +302,12 @@ Toutes les cartes des huit classes sont garées **à partir du N13, une spécial
 | Mage Blanc | Soutien / healeur (16) | Malédictions (12) | Hanteur (8) | transverse (5) | – | – | 41 |
 | Moine | Enchaînement (11) | Main pleine (8) | Paume (7) | transverse : tank esquive (13) | – | – | 39 |
 | Élémentaliste | Feu (5) | Givre (5) | Terre (4) | Air (5) | Combos bi-élémentaires (16) | Utilitaires (8) | 43 |
-| Trapper | Sniper (14) | Pièges (12) | Maître des bêtes (12) | – | – | – | 38 |
+| Trapper | Sniper (14) | Pièges (12) | Maître des bêtes (13) | – | – | – | 39 |
 | Sorcière | Armée (17) | Colosse (9) | Charnier (12) | – | – | – | 38 |
 | Maître d'Armes | Mêlée (12) | Distance (8) | Armes de jet (14) | transverse : instructeur (5) | – | – | 39 |
 | Illusionniste | Lame d'allonge (13) | Barde (12) | Chronomancien (14) | – | – | – | 39 |
 
-**318 cartes** au total. Le plafond du test d'intégrité est le **N20** : l'Élémentaliste, avec ses six lignes, est la classe qui en utilise le plus (N13 à N18).
+**321 cartes** au total. Le plafond du test d'intégrité est le **N20** : l'Élémentaliste, avec ses six lignes, est la classe qui en utilise le plus (N13 à N18).
 
 ⚠️ Deux cartes qui piochaient dans les niveaux N1‑N7 ont été recalées sur les niveaux de garage, sans quoi elles ne proposaient plus rien : **Lecture Du Souffle** (Moine, `chooseCardsLevels` 1‑7 → 13‑16) et la carte de test « Propose 3 sorts élémentalistes » de `draft.json` (1‑2 → 13‑18). *Réserve de Pièges*, *Sifflet du Chasseur* et *Choix de l'Arsenal* filtrent autrement et n'étaient pas concernées.
 
@@ -697,14 +697,14 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 |---|---|---|
 | Sniper (dps critique) | Transforme son score de critique en ressource et tire de très loin, d'autant plus fort qu'il reste immobile et seul | 14 |
 | Pièges (contrôle) | Pose des réactifs qui se déclenchent hors de son tour quand l'ennemi approche, entravent et empoisonnent | 12 |
-| Maître des bêtes (invocateur) | Joue à travers son familier : l'améliore avant de l'invoquer, ou le saigne pour frapper lui-même | 12 |
+| Maître des bêtes (invocateur) | Joue à travers son familier : l'améliore avant de l'invoquer, le soigne pour le garder en vie, ou le saigne pour frapper lui-même | 13 |
 
 **Mécaniques signature** :
 - **Le critique comme ressource** : buffs (Tireur d'Élite, Ajustage de Tir inné), conversion (Retrouver des Forces vend du critique contre du mana), et surtout les **pièges dont les dégâts scalent sur le score de critique** (`2d(critique)`) tout en étant incritiquables.
 - **Portée extrême** : `maxReach` formulés (`10+@dex`, `7+@dex`), Tir Supersonique à portée illimitée ; **coût en action = distance** (`xvalue: reach`) sur Tir Précis et Supersonique.
 - **Spécialiste du réactif** (9 réactives, record du jeu) : Piège à Pointes / Empoisonné — 0 action, 1 mana, déclenchés par `targetsWithinReach` quand un ennemi approche.
 - **Auto-handicap comme ressource** : Embuscade (vide tous les PA → +@wis dégâts cumulable), Tir Enraciné (convertit le déplacement en dégâts + auto-immobilisation).
-- **Bêtes** : Louve Apprivoisée, Ours Enragé, Faucon de Chasse, Tortue Géante, jouant après le tour du Trapper, scaling `@cha`.
+- **Bêtes** : Louve Apprivoisée, Ours Enragé, Faucon de Chasse, Tortue Géante, jouant après le tour du Trapper, scaling `@cha`. **Lien du Fauve** (lot du 2026‑09‑20) est la seule carte de la classe qui rende des points de vie — à une bête, jamais au Trapper.
 - Zones distance (rectangle 3×3, ligne, cercle), entraves (Traquenard, repoussée du Tir Supersonique), DoT poison.
 
 **Boucle de jeu** : préparer le tir (buffs de critique, embuscade), sécuriser la zone (pièges), déléguer le contact aux bêtes, décharger à longue portée.
@@ -712,10 +712,12 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 **Faiblesses** :
 - Pas d'esquive
 - Pas d'attaque corps à corps
+- **Aucun soin ni PV temporaire sur lui-même** : avec le Maître d'Armes, la seule classe dont le deck ne protège jamais ses propres points de vie (Lien du Fauve ne soigne que la bête).
 
 ### Constat des cartes (données)
-- **38 cartes, toutes au garage** : Sniper au N13, Pièges au N14, bêtes au N15. *Tir Précis II*, qui traînait au **N21**, est redescendu au N13 avec le reste du Sniper. *(Avant la mise au garage : 21 débloquables, coût moyen 7,5 PA, 3 cartes à 1‑4 PA.)*
-- 7 générateurs de zèle pour 18 consommateurs ; coût moyen 7,5 PA ; 3 cartes à 1‑4 PA.
+- **39 cartes, toutes au garage** : Sniper au N13, Pièges au N14, bêtes au N15. *Tir Précis II*, qui traînait au **N21**, est redescendu au N13 avec le reste du Sniper. *(Avant la mise au garage : 21 débloquables, coût moyen 7,5 PA, 3 cartes à 1‑4 PA.)*
+- 8 générateurs de zèle pour 18 consommateurs (7/18 avant le lot du 2026‑09‑20) ; 72 exemplaires.
+- **Asymétrie avec l'autre invocateur** : la Sorcière entretient son armée (Bouclier d'Os, Ossature Renforcée, Canalisation des Ombres, seconde face soignante de Couronne d'Ossements), le Trapper n'avait rien — ses bêtes coûtent 8 à 16 PA et mouraient sans recours. *Lien du Fauve* ouvre ce versant.
 - Les trois spécialisations sont déjà bien identifiables dans les cartes.
 
 ### Spécialisations — cartes par spé
@@ -723,7 +725,10 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 |---|---|---|
 | **Sniper / critique** | Tir Précis, Tir Précis II, Tireur d'Élite, Ajustage de Tir, Tir Supersonique, Tir Enraciné, Tir Transperçant, Embuscade, Retrouver des Forces, Étude du Point Faible, Chasseur Solitaire, Double Flèche, Pluie de Flèches, Tir Explosif | Finisher N10‑12 |
 | **Pièges** (réactifs, poison) | Piège à Pointes, Piège Empoisonné, Piège en Chaîne, Collet Mortel, Piège d'Affût, Piège à Fosse, Hallali, Réserve de Pièges, Traquenard, Tir Réflexe, Tir Empoisonné, Mutation Virale | Carte peu chère de pose |
-| **Maître des bêtes** | Louve Apprivoisée, Ours Enragé, Faucon de Chasse, Tortue Géante, Sifflet du Chasseur, Meute, Dressage, Crocs Affûtés, Instinct de Chasse, Ordre d'Attaquer, Saignée du Fauve, Offrande Sauvage | Caractéristique à trancher (CHA -2) |
+| **Maître des bêtes** | Louve Apprivoisée, Ours Enragé, Faucon de Chasse, Tortue Géante, Sifflet du Chasseur, Meute, Dressage, Crocs Affûtés, Instinct de Chasse, Ordre d'Attaquer, Saignée du Fauve, Offrande Sauvage, **Lien du Fauve** | Caractéristique à trancher (CHA -2) |
+
+### Carte du lot 2026‑09‑20
+- **Lien du Fauve** (N15, ×2) — 4 PA, aucun mana, **+1 zèle**, portée 1‑10, 1 cible. Rend `2 + 2*@wis` PV à une de vos bêtes ; le garde-fou `targetsAreMinionType("beast")` refuse toute autre cible. Elle répond à deux manques d'un coup : la spé bêtes n'avait **aucun moyen d'entretenir** ce qu'elle paie 8 à 16 PA, et la classe manquait de **petites cartes qui rendent du zèle** (7 générateurs pour 18 consommateurs). Écrite en **SAG** et non en CHA, comme la Paume Curative du Moine l'a été en DEX : c'est la carac primaire, la seule que les ASI montent (+2 → +5), tandis que le CHA du Trapper reste à −2. **Illustration à faire** (sur `in_progress.png`).
 
 ### Redondances à trancher
 - Dressage / Crocs Affûtés / Instinct de Chasse : même structure (bonus aux prochaines bêtes) → une carte à 3 choix ?
@@ -849,18 +854,24 @@ D'autres coupes ont été proposées et **non retenues pour l'instant** : Missil
 - Pas d'amélioration personnelle d'esquive par les cartes (⚠️ Leçon d'esquive a une portée minimale de 0 : elle peut se cibler soi-même)
 
 ### Constat des cartes (données)
-- **39 cartes, toutes au garage** : Mêlée au N13, Distance au N14, armes de jet au N15, instructeur au N16. C'était **la classe la plus avancée** avant la mise au garage — 38 cartes déjà rangées jusqu'au N10 —, c'est donc celle dont le retour en N1‑N12 sera le plus rapide. *(Avant : coût moyen 5,1 PA, 18 cartes à 1‑4 PA, la plus grande densité de cartes peu chères.)*
+- **41 cartes, toutes au garage** : Mêlée au N13, Distance au N14, armes de jet au N15, instructeur au N16. C'était **la classe la plus avancée** avant la mise au garage — 38 cartes déjà rangées jusqu'au N10 —, c'est donc celle dont le retour en N1‑N12 sera le plus rapide. *(Avant : coût moyen 5,1 PA, 18 cartes à 1‑4 PA, la plus grande densité de cartes peu chères.)*
 - 12 cartes générées (couteaux, étapes des forges).
-- 18 cartes à 1‑4 PA : la plus grande densité de cartes peu chères. Zèle équilibré (14 / 14).
-- Déjà dans la cible des 30‑40 cartes : la passe consiste surtout à **élaguer** et à compléter N11‑N12.
+- 18 cartes à 1‑4 PA : la plus grande densité de cartes peu chères. Zèle 14 générateurs / 16 consommateurs (14 / 14 avant le lot du 2026‑09‑20, les deux finishers en consommant 2 chacun) ; 79 exemplaires.
+- Déjà dans la cible des 30‑40 cartes : la passe consiste surtout à **élaguer** et à compléter N11‑N12 — les deux finishers du lot du 2026‑09‑20 couvrent ce second point.
 
 ### Spécialisations — cartes par spé
 | Spé | Cartes existantes | Manques |
 |---|---|---|
-| **Mêlée** | Attaque Simple, Fente Précise, Frappe Double, Frappe Triple, Huile d'Affûtage, Riposte, Attaque Latérale, Attaque Diagonale, Attaque en Cercle, Forge Spectrale, Forge Astrale, Reprise de Garde | Finisher N11‑12 |
-| **Distance** | Tir Simple, Visée Posée, Tir Appuyé, Prise Équilibrée, Riposte à Distance, Pluie d'Acier, Forge Éthérée, Forge Arcanique | Finisher N11‑12 |
+| **Mêlée** | Attaque Simple, Fente Précise, Frappe Double, Frappe Triple, Huile d'Affûtage, Riposte, Attaque Latérale, Attaque Diagonale, Attaque en Cercle, Forge Spectrale, Forge Astrale, Reprise de Garde, **Coup de Faux** | |
+| **Distance** | Tir Simple, Visée Posée, Tir Appuyé, Prise Équilibrée, Riposte à Distance, Pluie d'Acier, Forge Éthérée, Forge Arcanique, **Salve Groupée** | |
 | **Armes de jet** | Ceinture de Couteaux, Affûtage des Couteaux, Fourreau Caché, Sang-froid, Volée de Couteaux, Momentum, Lancer Lesté, Prise Inversée, Javelot, Plumbata, Chakram, Filet de Rétiaire, Kpinga, Choix de l'Arsenal | |
 | **Instructeur** (soutien CHA) | Leçon d'Esquive, Leçon d'Estoc, Leçon de Visée, Maîtrise des Armes, Réplique Parfaite | Cartes N7+ |
+
+### Cartes du lot 2026‑09‑20
+Les deux **finishers N11‑12** que la spé mêlée et la spé distance réclamaient, tous deux bâtis sur une contrainte de placement (les deux seules figures que le moteur savait déjà évaluer et qu'aucune carte n'utilisait).
+- **Coup de Faux** (N13, ×1) — 12 PA, 1 mana, 2 zèle, portée **1‑2**, 2 cibles, `(2*@wpnM + @str)` tranchant à chacune. Exige deux ennemis **orthogonalement adjacents entre eux** (`targetsAdjacentPair`) : un seul revers les fauche tous les deux. **Illustration à faire** (sur `in_progress.png`).
+- **Salve Groupée** (N14, ×1) — 11 PA, 2 mana, 2 zèle, portée 2‑8, jusqu'à 3 cibles, `(@wpnR + @dex)` perforant à chacune. Exige que les cibles tiennent dans un **carré de 3 cases de côté** (`targetsWithinSquare(3)`). Le joueur **choisit** ses cibles, là où Pluie d'Acier pose une zone qui prend aussi les alliés : moins de dégâts par tête, aucun tir fratricide. **Illustration à faire**.
+- Coûts et dégâts écrits sur la grille provisoire (section « Règles d'équilibrage ») : à repasser à l'étape 4 comme le reste du deck.
 
 ### Redondances à trancher
 - Attaque Simple / Fente Précise et Tir Simple / Visée Posée (même dégâts, +1 PA pour un bonus au toucher).
