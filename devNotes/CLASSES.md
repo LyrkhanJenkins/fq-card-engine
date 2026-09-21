@@ -22,7 +22,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - Rajouter des images
 - Pour chaque classe, dans l'ordre :
   - [x] Revoir les stats FQ
-  - [ ] Répartir les classes du niveau 1 à 12 plus remplir les eventuelle trous -> Gardian (avec premier équilibrage des coûts action mana zèle) -> Gardian (1)
+  - [ ] Répartir les classes du niveau 1 à 12 plus remplir les eventuelle trous -> Gardian (avec premier équilibrage des coûts action mana zèle) -> Mage Blanc (1)
   - [ ] IA - Points sur les coûts ET dégâts/heal et à chaque niveau ( Étape 4) 
   - [ ] Rééquilibrage manuel
   - [ ] Revoir les types d'attaques (Attaque, sauvegarde, dégâts bruts)
@@ -33,6 +33,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - [ ] Vérifier la lisibilité des descriptions
   - [ ] Vérifier chaque fonctionnalité du moteur et des cartes utilisée par chaque classe.
   - [ ] Faire un inventaire des types de dégâts par classe.
+  - [ ] Description ou méthodes orphelines.
 
 ### Rééquilibrage coût
 - ratio **générateurs / consommateurs de zèle**
@@ -230,6 +231,7 @@ Stats de départ notables (détail dans « Stats de départ ») : **critique** d
 ### Règles générales sur les cartes
 - Les dégâts de zone ne font pas beaucoup moins de dégâts que les sorts monocibles (on ne divise pas les dégâts entre les cibles)
 - Environ 40 cartes différentes par deck au niveau 12 sauf guerrier runique
+- **Le ratio générateurs / consommateurs de zèle n'est pas une contrainte de niveau.** Une classe n'a pas à pouvoir payer toutes ses cartes avec ses seuls générateurs, et un niveau qui n'ouvre que des consommateurs n'est pas un défaut : le zèle est une ressource que **le joueur** choisit d'alimenter, en gardant assez de cartes génératrices dans son deck pour lancer ensuite les plus puissantes. Le ratio de `npm run report:classes` sert à vérifier qu'une classe a de quoi en produire dans son catalogue, pas à équilibrer palier par palier.
 
 ---
 
