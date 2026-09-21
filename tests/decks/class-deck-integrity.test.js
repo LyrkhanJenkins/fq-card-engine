@@ -154,7 +154,7 @@ function detectIssues() {
         }
     }
     for (const {file, cls} of classes) {
-        const advancement = cls.system?.advancement ?? [];
+        const advancement = Object.values(cls.system?.advancement ?? {});
         const grants = advancement.filter(a => a.type === "ItemGrant" && Number(a.level) === 1)
             .flatMap(a => a.configuration?.items ?? [])
             .filter(i => i.uuid.includes("classes-stats-fq8"));

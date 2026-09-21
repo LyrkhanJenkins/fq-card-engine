@@ -1832,5 +1832,9 @@
   "FQCARDTITLE.GapingWound": "Plaie Béante",
   "FQCARDDESCRIPTION.GapingWound": "Vous rouvrez les plaies de la cible : inflige {0_damage} dégâts et ouvre deux saignements de plus, qui lui infligent chacun votre modificateur de Force en dégâts par tour pendant 2 tours.\n5 dégâts de plus si la cible saigne déjà.",
   "FQCARDTITLE.JudgmentHour": "Heure du Jugement",
-  "FQCARDDESCRIPTION.JudgmentHour": "L’heure sonne : prenez un Jugement Dernier dans votre deck et mettez-le en main.\nIl doit encore s’y trouver : une carte déjà piochée n’est plus récupérable."
+  "FQCARDDESCRIPTION.JudgmentHour": "L’heure sonne : prenez un Jugement Dernier dans votre deck et mettez-le en main.\nIl doit encore s’y trouver : une carte déjà piochée n’est plus récupérable.",
+  "FQCARDTITLE.Hook": "Crochet",
+  "FQCARDDESCRIPTION.Hook": "Inflige {0_damage} points de dégâts et vous rapporte 1d2 points de zèle.\nVous pouvez rejouer une fois cette carte si vous avez déjà dépensé 4 points d’action ce tour-ci.",
+  "FQCARDTITLE.DawnPalm": "Paume de l’Aube",
+  "FQCARDDESCRIPTION.DawnPalm": "Vous posez la paume et laissez passer tout ce qu’il vous reste : dépensez X points d’action et rendez X points de vie à une cible au contact.\nAucun plafond : tout le budget du tour peut y passer."
 }

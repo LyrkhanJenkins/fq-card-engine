@@ -406,9 +406,7 @@ Détail des cartes :
 - *(résolue par le lot)* Soin personnel : Sérénité Pleine (soin + esquive) / Méditation Zen (PV temporaires) / Vive-Esquive (réactif) sont maintenant trois effets distincts.
 
 ### Incohérences relevées
-- Uppercut : « piochez une carte » absent des données.
-- Poing Rouge coûte 14 PA : injouable avant le N6 en moyenne.
-- Posture du Roseau ×3 donne **+3 d'esquive permanents** sur la durée d'une partie : à mesurer avant de valider le nombre d'exemplaires.
+
 
 ### À définir à la main
 - **Spécificités** :
@@ -416,9 +414,6 @@ Détail des cartes :
 - **Contraintes** :
 
 **Questionnement et TODO :**
-- Reprendre les deux formules en `@wis` qui restent (Sérénité Pleine, appoint de Paume De Jade), ou monter SAG dans les Start stats ?
-- Donner un niveau N1‑N12 aux 20 cartes garées au N13.
-- Illustrations de Paume De Jade, Sillage Curatif et Posture Du Roseau (restées sur `in_progress.png`).
 ---
 
 ## Élémentaliste

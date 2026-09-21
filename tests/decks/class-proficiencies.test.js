@@ -19,7 +19,7 @@ import {SOURCE_DIR, documents} from "./pack-source.js";
 
 const CLASSES_DIR = path.join(SOURCE_DIR, "classes-fq8");
 /** Le titre de l'octroi de niveau 1 qui porte armure et armes de départ. */
-const STARTING_EQUIPMENT_TITLE = "Équipement de départ";
+const STARTING_EQUIPMENT_NAME = "Équipement de départ";
 const HEROES_DIR = path.join(SOURCE_DIR, "starter-heroes");
 
 /** La maîtrise qu'exige chaque catégorie d'armure. L'étoffe n'en exige aucune. */
@@ -31,19 +31,6 @@ const ARMOR_PROFICIENCY = Object.freeze({
 });
 
 /**
- * Le tableau d'advancements d'un item de classe, quelle que soit sa forme :
- * les paquets le portent tantôt en tableau, tantôt en objet indexé.
- *
- * @param {object} classItem - L'item de classe.
- *
- * @returns {object[]} Les advancements.
- */
-function advancements(classItem) {
-    const raw = classItem?.system?.advancement;
-    return Array.isArray(raw) ? raw : Object.values(raw ?? {});
-}
-
-/**
  * Les maîtrises qu'une classe accorde jusqu'à un niveau donné.
  *
  * @param {object} classItem - L'item de classe.
@@ -52,7 +39,7 @@ function advancements(classItem) {
  * @returns {{weapon: string[], armor: string[]}} Les clés acquises, par famille.
  */
 function grantedUpTo(classItem, level) {
-    const keys = advancements(classItem)
+    const keys = Object.values(classItem?.system?.advancement ?? {})
         .filter(a => a.type === "Trait" && Number(a.level) <= level)
         .flatMap(a => a.configuration?.grants ?? []);
     return {
@@ -128,8 +115,8 @@ describe("Maîtrises des classes et des héros de départ", () => {
 
     it("chaque classe octroie un équipement de départ à sa classe principale, dès le niveau 1", () => {
         const bare = [...classes.values()]
-            .filter(classItem => !advancements(classItem).some(a => a.type === "ItemGrant"
-                && a.title === STARTING_EQUIPMENT_TITLE && Number(a.level) === 1
+            .filter(classItem => !Object.values(classItem?.system?.advancement ?? {}).some(a => a.type === "ItemGrant"
+                && a.name === STARTING_EQUIPMENT_NAME && Number(a.level) === 1
                 && a.classRestriction === "primary" && (a.configuration?.items ?? []).length > 0))
             .map(classItem => `${classItem.name} n'octroie aucun équipement de départ`);
 
@@ -139,8 +126,8 @@ describe("Maîtrises des classes et des héros de départ", () => {
     it("tout l'équipement de départ octroyé vient des compendiums dnd5e", () => {
         // L'équipement n'est que de la donnée SRD : en garder des copies locales
         // revenait à entretenir une divergence.
-        const local = [...classes.values()].flatMap(classItem => advancements(classItem)
-            .filter(a => a.type === "ItemGrant" && a.title === STARTING_EQUIPMENT_TITLE)
+        const local = [...classes.values()].flatMap(classItem => Object.values(classItem?.system?.advancement ?? {})
+            .filter(a => a.type === "ItemGrant" && a.name === STARTING_EQUIPMENT_NAME)
             .flatMap(a => a.configuration?.items ?? [])
             .filter(entry => !(entry.uuid ?? "").startsWith("Compendium.dnd5e."))
             .map(entry => `${classItem.name} octroie ${entry.uuid || "rien"}`));

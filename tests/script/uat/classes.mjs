@@ -58,7 +58,7 @@ function parseHitDieFaces(denomination) {
  * @returns {Promise<Object<string, number>>} Le modificateur total par caractéristique.
  */
 async function startingAbilityChanges(repoRoot, classData) {
-    const grantedIds = (classData.system.advancement ?? [])
+    const grantedIds = Object.values(classData.system.advancement ?? {})
         .filter(a => a.type === "ItemGrant" && Number(a.level) <= 1 && a.classRestriction !== "secondary")
         .flatMap(a => a.configuration?.items ?? [])
         .map(entry => entry.uuid.split(".").pop());
@@ -101,7 +101,7 @@ export async function loadClassCatalog(repoRoot = process.cwd()) {
         const classData = JSON.parse(await readFile(classPath, "utf8"));
         const heroData = JSON.parse(await readFile(heroPath, "utf8"));
 
-        const advancement = classData.system.advancement ?? [];
+        const advancement = Object.values(classData.system.advancement ?? {});
         // Les starters sont livrés sans classe : leurs caractéristiques de niveau 1
         // sont celles du héros vierge plus les stats de départ de sa classe.
         const startingChanges = await startingAbilityChanges(repoRoot, classData);

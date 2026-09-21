@@ -1832,5 +1832,9 @@
   "FQCARDTITLE.GapingWound": "Gaping Wound",
   "FQCARDDESCRIPTION.GapingWound": "You tear the target’s wounds wide open: deal {0_damage} damage and open two more bleeds, each dealing your Strength modifier in damage per turn for 2 turns.\n5 extra damage if the target is already bleeding.",
   "FQCARDTITLE.JudgmentHour": "Hour of Judgment",
-  "FQCARDDESCRIPTION.JudgmentHour": "The hour strikes: take a Final Judgment from your deck and put it into your hand.\nIt must still be in there: a card already drawn can no longer be retrieved."
+  "FQCARDDESCRIPTION.JudgmentHour": "The hour strikes: take a Final Judgment from your deck and put it into your hand.\nIt must still be in there: a card already drawn can no longer be retrieved.",
+  "FQCARDTITLE.Hook": "Hook",
+  "FQCARDDESCRIPTION.Hook": "Deals {0_damage} damage and grants you 1d2 zeal points.\nYou may play this card again if you have already spent 4 action points this turn.",
+  "FQCARDTITLE.DawnPalm": "Dawn Palm",
+  "FQCARDDESCRIPTION.DawnPalm": "You lay your palm and let through everything you have left: spend X action points and restore X hit points to a target in contact.\nNo cap: the whole turn's budget can go into it."
 }
