@@ -395,6 +395,21 @@ describe("CardCondition — effets actifs", () => {
         expect(CardCondition.targetsHaveEffect()).toBe(false);
     });
 
+    it("targetsEffectCount : additionne les effets nommés de TOUTES les cibles sélectionnées", () => {
+        const twice = makeToken({id: "a", actorId: "a", effects: [{name: "Curse"}, {name: "Curse"}]});
+        const once = makeToken({id: "b", actorId: "b", effects: [{name: "Curse"}, {name: "Burn"}]});
+        mountScene({tokens: [twice, once], targets: [twice, once]});
+        expect(CardCondition.targetsEffectCount(["Curse"])).toBe(3);
+        expect(CardCondition.targetsEffectCount()).toBe(4);
+        expect(CardCondition.targetsEffectCount(["Frost"])).toBe(0);
+
+        // La nuance avec targetEffectCount, qui ne lit que la première cible.
+        expect(CardCondition.targetEffectCount(["Curse"])).toBe(2);
+
+        mountScene({tokens: [], targets: []});
+        expect(CardCondition.targetsEffectCount(["Curse"])).toBe(0);
+    });
+
     it("selfEffectCount : compte les effets du lanceur, filtrés par nom si une liste est fournie", () => {
         mountScene({character: {id: "me", effects: [{name: "Curse"}, {name: "Curse"}, {name: "Burn"}]}});
         expect(CardCondition.selfEffectCount(["Curse"])).toBe(2);

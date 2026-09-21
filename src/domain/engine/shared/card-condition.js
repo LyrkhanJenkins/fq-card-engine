@@ -777,6 +777,27 @@ export default class CardCondition {
     }
 
     /**
+     * Compte les effets actifs portés par TOUTES les cibles sélectionnées, cumulés
+     * — parmi les noms donnés si une liste est fournie, tous sinon.
+     *
+     * La nuance avec {@link CardCondition.targetEffectCount} est le corpus, pas le
+     * calcul : celui-ci lit la PREMIÈRE cible (une carte dont le seuil dépend
+     * d'une cible en vise une seule), celui-là additionne la sélection entière.
+     * C'est le comptage des cartes de ZONE dont la puissance monte avec ce que la
+     * zone recouvre — les malédictions ramassées par une explosion d'arcanes —, là
+     * où {@link CardCondition.combatEnemiesEffectCount} ratisse tout le camp
+     * adverse, y compris ce que la carte ne touche pas.
+     *
+     * @param {string[]} [names] - Les noms d'effets comptés (vide = tous).
+     *
+     * @returns {number} Le nombre total d'effets correspondants (0 sans cible).
+     */
+    static targetsEffectCount(names = []) {
+        return Constants.currentTargets
+            .reduce((total, t) => total + CardCondition.#effectsNamed(t.actor, names).length, 0);
+    }
+
+    /**
      * Indique si au moins une cible sélectionnée porte SIMULTANÉMENT chacun des
      * effets nommés — la garde des cartes de combinaison, là où
      * {@link CardCondition.targetsHaveEffect} se contente d'un effet PARMI la

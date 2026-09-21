@@ -22,7 +22,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - Rajouter des images
 - Pour chaque classe, dans l'ordre :
   - [x] Revoir les stats FQ
-  - [ ] Répartir les classes du niveau 1 à 12 plus remplir les eventuelle trous -> Gardian (avec premier équilibrage des coûts action mana zèle) -> Mage Blanc (1)
+  - [ ] Répartir les classes du niveau 1 à 12 plus remplir les eventuelle trous -> Gardian (avec premier équilibrage des coûts action mana zèle) -> Moine (1)
   - [ ] IA - Points sur les coûts ET dégâts/heal et à chaque niveau ( Étape 4) 
   - [ ] Rééquilibrage manuel
   - [ ] Revoir les types d'attaques (Attaque, sauvegarde, dégâts bruts)
@@ -316,7 +316,7 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 | *(transverse)* | Exorcisme, Infusion de Mana, Sang Bleu, Absorption de Sort, Lumière Révélatrice | 5 |
 
 **Mécaniques signature** :
-- **Malédiction (`Curse`)** : pose plusieurs stacks sur des cibles, permet d'utiliser d'autres sorts efficaces avec beaucoup de stacks. Tue une cible ayant suffisamment de malédictions (Jugement Dernier).
+- **Malédiction (`Curse`)** : pose plusieurs stacks sur des cibles, permet d'utiliser d'autres sorts efficaces avec beaucoup de stacks surtout pour être utilisé avec Jugement dernier. Tue une cible ayant suffisamment de malédictions (Jugement Dernier).
 - **Hantise (`Haunt`)** : seconde marque empilable, distincte de la malédiction et qui ne se confond jamais avec elle. Elle ne fait aucun dégât : elle ouvre la **prise de contrôle**. À 5 hantises, le *Fantôme* — une COPIE de la cible, sur sa case, jouée par le Mage Blanc le temps d'un seul tour puis dissipée. *Profanation* convertit les malédictions en hantises, une pour une, ce qui relie les deux spécialisations.
 - **Suite de boucliers réactifs** : 8 des 9 réactives de la classe (Bouclier de Mana, Divin, Vengeur, Empathique, Réprouver, Soins d'Urgence, Ange Gardien, Absorption de Sort ; la neuvième, Voile de Cendres, relève de la Hantise), Bouclier de Mana avec `replayable: @wis`. Trois modèles de mitigation distincts : PV temporaires, soin réactif répété, invulnérabilité + restauration (Bouclier Divin).
 - **Transmutation de ressources** : Sang Bleu (2 PV → 1 mana), Le Bien Et Le Mal (transfert de PV à portée quasi illimitée), Soins d'Urgence (défausse → soin), Infusion de Mana (source de mana passive permanente), Absorption de Sort.
@@ -329,28 +329,10 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - Lent (5 cases), fragile au contact (CA 8)
 
 ### Constat des cartes (données)
-- **41 cartes réparties sur N1‑N12**, coût moyen 6,0 PA et 7 cartes à 1‑4 PA. Deux cartes de trop pour la cible de 30‑40 : l'élagage reste à faire.
+- **40 cartes réparties sur N1‑N12**, coût moyen 6,0 PA et 7 cartes à 1‑4 PA. Deux cartes de trop pour la cible de 30‑40 : l'élagage reste à faire.
 - Seulement 2 cartes à 1‑4 PA.
-- Soin direct faible : Soin (innée), Énergie Lumineuse, Soins d'Urgence ; le reste est réactif ou bouclier.
-
-### Redondances à trancher
-- Bouclier Vengeur / Bouclier Empathique (même déclencheur, dégâts ou soin) : fusionner en une carte à deux choix ?
-- Pacte Maudit / Sentence Maudite (malédictions sur soi → dégâts).
-
-### Incohérences relevées
-- Maudire : `mana: 1` (gain).
-- Exorcisme : réduction « @cha » annoncée mais absente des données.
-- Aura de Force : scale sur CHA (-2 pour le Mage Blanc).
-- Effet Ange et Démon : 16 PA, 4 mana, 4 zèle.
-
-### À définir à la main
-- **Spécificités** :
-- **Spécialisations** :
-- **Contraintes** :
 
 **Questionnement et TODO :**
-
-
 ---
 
 ## Moine

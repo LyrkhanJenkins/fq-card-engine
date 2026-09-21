@@ -121,7 +121,14 @@ function abundantWorld(extra = {}) {
                 id: "abundant-p1", name: "FQCARDTITLE.AbundantRetrievable", face: 0, origin: null,
                 faces: [{img: "images/abundant-p1.png"}], flags: {"fq-card-engine": {generated: true}}
             }]
-        }
+        },
+        // Le deck de combat porte les cartes que les specs NOMMÉES de
+        // `retrieveFromDeck` du corpus vont chercher. Le deck par défaut du
+        // harness n'a qu'une carte générique, qui satisfait `*` mais AUCUN nom
+        // précis : sans ces exemplaires, la garde de lançabilité refuserait la
+        // carte AVANT tout prélèvement et le coût sous test ne serait jamais
+        // consommé. La liste est dérivée du corpus, jamais écrite en dur.
+        deck: {cards: namedDeckRetrievals.map((name, index) => makeHandCard(`abundant-deck-${index}`, name))}
     }, extra);
 }
 
@@ -137,6 +144,18 @@ for (const deckFile of deckFiles) {
         });
     }
 }
+
+/**
+ * Les noms de cartes exigés par les specs NOMMÉES de `retrieveFromDeck` du
+ * corpus (`*` exclu : le deck par défaut du harness le satisfait déjà).
+ * Utilisé par {@link abundantWorld} pour garnir le deck de combat.
+ *
+ * @type {string[]}
+ */
+const namedDeckRetrievals = [...new Set(rawEntries
+    .map(entry => String(entry.choice.retrieveFromDeck ?? "").trim())
+    .filter(spec => spec && spec !== "*")
+    .flatMap(spec => spec.split(",").map(name => name.trim()).filter(Boolean)))];
 
 const simpleReachCompatible = [];
 for (const entry of rawEntries) {
