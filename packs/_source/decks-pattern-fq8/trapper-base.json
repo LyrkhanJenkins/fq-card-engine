@@ -88,7 +88,7 @@
               "customEvals": []
             }
           ],
-          "level": 6,
+          "level": 15,
           "isInnate": false
         }
       },
@@ -183,7 +183,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 1,
+          "level": 13,
           "isInnate": false
         }
       },
@@ -278,7 +278,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 4,
+          "level": 13,
           "isInnate": false
         }
       },
@@ -407,7 +407,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 5,
+          "level": 13,
           "isInnate": false
         }
       },
@@ -502,7 +502,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 1,
+          "level": 13,
           "isInnate": false
         }
       },
@@ -599,7 +599,7 @@
               "zoneSize": "3"
             }
           ],
-          "level": 3,
+          "level": 13,
           "isInnate": false
         }
       },
@@ -739,7 +739,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 4,
+          "level": 14,
           "isInnate": false
         }
       },
@@ -844,7 +844,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 6,
+          "level": 14,
           "isInnate": false
         }
       },
@@ -969,7 +969,7 @@
               "customEvals": []
             }
           ],
-          "level": 5,
+          "level": 14,
           "isInnate": false
         }
       },
@@ -1066,7 +1066,7 @@
               "zoneSize": "2"
             }
           ],
-          "level": 3,
+          "level": 13,
           "isInnate": false
         }
       },
@@ -1206,7 +1206,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 2,
+          "level": 13,
           "isInnate": false
         }
       },
@@ -1350,7 +1350,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 1,
+          "level": 13,
           "isInnate": false
         }
       },
@@ -1450,7 +1450,7 @@
               "targetType": "Default"
             }
           ],
-          "level": 6,
+          "level": 13,
           "isInnate": false
         }
       },
@@ -1547,7 +1547,7 @@
               "zoneSize": "1"
             }
           ],
-          "level": 2,
+          "level": 13,
           "isInnate": false
         }
       },
@@ -1583,7 +1583,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 12,
+          "level": 15,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -1690,7 +1690,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 3,
+          "level": 13,
           "isInnate": true,
           "class": "trapper",
           "choices": [
@@ -1827,7 +1827,7 @@
       "system": {
         "fq": {
           "maxSameCard": 3,
-          "level": 4,
+          "level": 14,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -1930,7 +1930,7 @@
       "system": {
         "fq": {
           "maxSameCard": 3,
-          "level": 5,
+          "level": 14,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2063,7 +2063,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 7,
+          "level": 13,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2217,7 +2217,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 2,
+          "level": 13,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2340,7 +2340,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 11,
+          "level": 14,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2505,7 +2505,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 9,
+          "level": 14,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2668,7 +2668,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 10,
+          "level": 14,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2780,7 +2780,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 8,
+          "level": 14,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2892,7 +2892,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 7,
+          "level": 14,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3064,7 +3064,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 11,
+          "level": 15,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3205,7 +3205,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 8,
+          "level": 15,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3336,7 +3336,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 10,
+          "level": 15,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3467,7 +3467,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 7,
+          "level": 15,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3613,7 +3613,7 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
-          "level": 6,
+          "level": 15,
           "isInnate": false,
           "choices": [
             {
@@ -3720,7 +3720,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 10,
+          "level": 15,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3895,7 +3895,7 @@
               "customEvals": []
             }
           ],
-          "level": 11,
+          "level": 15,
           "isInnate": false
         }
       },
@@ -3931,7 +3931,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 12,
+          "level": 14,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4043,7 +4043,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 8,
+          "level": 14,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4142,7 +4142,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 9,
+          "level": 15,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4241,7 +4241,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 9,
+          "level": 13,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4345,7 +4345,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 8,
+          "level": 15,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4463,7 +4463,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 12,
+          "level": 15,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4670,7 +4670,7 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 7,
+          "level": 15,
           "isInnate": false
         }
       },

@@ -775,7 +775,7 @@
   "FQCARDTITLE.Charge": "Charge",
   "FQCARDDESCRIPTION.Charge": "Charge an enemy within 9 squares.\nFor 1 turn, increase damage by @dex, plus 1d4, and critical chance by @str.",
   "FQCARDTITLE.HeroicStrike": "Heroic Strike",
-  "FQCARDDESCRIPTION.HeroicStrike": "Deal {0_damage} damage.\nYou may choose not to spend your mana point and instead lose 6 hit points, minus @con.",
+  "FQCARDDESCRIPTION.HeroicStrike": "Deal {0_damage} damage.\nYou may choose not to spend your mana point and instead lose 6 hit points, minus @con.\nX is the number of bleeds already on the target: the more it bleeds, the harder you hit.",
   "FQCARDTITLE.ManaSurge": "Mana Surge",
   "FQCARDDESCRIPTION.ManaSurge": "Regain twice the amount of mana points spent on your last spell.\n(Costs 1 less action point per @wis)",
   "FQCARDTITLE.DrawII": "Draw II",
@@ -789,7 +789,7 @@
   "FQCARDTITLE.RageSurge": "Rage Surge",
   "FQCARDDESCRIPTION.RageSurge": "Sacrifice 3 hit points, plus @con, and regain 1 mana point; your damage is increased by @con for 1 turn.",
   "FQCARDTITLE.PowerfulStrike": "Powerful Strike",
-  "FQCARDDESCRIPTION.PowerfulStrike": "Deal {0_damage} damage.",
+  "FQCARDDESCRIPTION.PowerfulStrike": "Deal {0_damage} damage.\nX is the number of bleeds already on the target: the more it bleeds, the harder you hit.",
   "FQCARDTITLE.BladeCharging": "Blade Charging",
   "FQCARDDESCRIPTION.BladeCharging": "You charge your attack by X, and the charge is retained after your turn.\nWhen you reach 12 charge points, you draw a Loaded Blade and discard this card. Any excess charge is lost.\n(X max = {0_xmax})",
   "FQCARDTITLE.Sharpening": "Sharpening",
@@ -1832,5 +1832,7 @@
   "FQCARDTITLE.RampartBlessing": "Rampart Blessing",
   "FQCARDDESCRIPTION.RampartBlessing": "Ephemeral card: once played, it is destroyed for good.\nGrants {0_heal} temporary hit points to all your allies for 3 turns.",
   "FQCARDTITLE.InspiredStrike": "Inspired Strike",
-  "FQCARDDESCRIPTION.InspiredStrike": "Deals {0_damage} damage in melee.\nX is the number of your allies who have hit a target since the start of the round: the more they strike, the harder you strike."
+  "FQCARDDESCRIPTION.InspiredStrike": "Deals {0_damage} damage in melee.\nX is the number of your allies who have hit a target since the start of the round: the more they strike, the harder you strike.",
+  "FQCARDTITLE.GapingWound": "Gaping Wound",
+  "FQCARDDESCRIPTION.GapingWound": "You tear the target’s wounds wide open: deal {0_damage} damage and open two more bleeds, each dealing your Strength modifier in damage per turn for 2 turns.\nX is the number of bleeds it already carries, three at most: the more it bleeds, the harder the blow lands."
 }

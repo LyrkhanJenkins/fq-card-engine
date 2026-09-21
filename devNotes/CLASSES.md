@@ -4,10 +4,7 @@ Document de référence design : ce qui définit chaque classe (identité dnd5e,
 Chiffres mis à jour le 2026-09-21 : rééquilibrage des stats de départ et des pools de stats (étape 2), puis répartition des 323 cartes des huit classes sur les niveaux N1 à N12 et lot de 4 cartes (étape 1). `npm test` est vert.
 
 ---
-
 > ⚠️ **Document de travail temporaire.** Une fois toutes les étapes du TODO réalisées, on retire tout ce qui relève des questionnements et des TODO : ce fichier devient une **aide pour les joueurs** qui décrit chaque classe avec ses points forts et ses points faibles (voir « Fin de chantier » en bas du TODO).
-
-## TODO — Passe de rééquilibrage (30 à 40 cartes par classe, hors Guerrier Runique)
 
 ### Outils de la passe (temporaires)
 Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la fin du rééquilibrage** (voir « Fin de chantier »).
@@ -20,83 +17,35 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 | Test d'intégrité (`tests/decks/class-deck-integrity.test.js`) | `npx vitest run tests/decks` | Tests des decks : intégrité (niveau, exemplaires, classe, image avec la bonne casse, portée, pools de stats), clés de traduction (`deck-references`), clés de paquet (`pack-keys`)… Les anomalies déjà connues sont listées dans `KNOWN_ISSUES` : **retirer chaque entrée corrigée**, le test l'exige. |
 | Suite complète | `npm test` | Toute la suite (~2 min), à lancer en fin d'étape. |
 
-### Ordre conseillé : une classe pilote d'abord
-- [ ] Faire les étapes 1 à 6 en entier sur **la Sorcière** avant les autres classes : c'est la plus contrainte (aucune carte à moins de 5 PA, 8,5 PA au N1, déplacement figé à 6 cases), donc celle qui éprouve le mieux la grille de coûts, la cible d'exemplaires et le pool de stats réduit.
-- [ ] Ajuster les règles (grille, cibles) d'après la pilote, puis dérouler les étapes pour les 7 autres classes.
+## TODO Manuel
+- Quand tu veux :
+  - Rajouter des images
+- Pour chaque classe, dans l'ordre :
+  - [x] Revoir les stats FQ
+  - [ ] Répartir les classes du niveau 1 à 12 plus remplir les eventuelle trous -> Gardian (avec premier équilibrage des coûts action mana zèle) -> Gardian (1)
+  - [ ] IA - Points sur les coûts ET dégâts/heal et à chaque niveau ( Étape 4) 
+  - [ ] Rééquilibrage manuel
+  - [ ] Revoir les types d'attaques (Attaque, sauvegarde, dégâts bruts)
+  - [ ] Revoir la constitution avec les dés de vie
+  - [ ] Réatribuer les stats dnd5E sur les cartes (en rajouter sur les cartes qui en ont pas)
+  - [ ] IA - Points sur les coûts ET dégâts/heal et à chaque niveau
+  - [ ] Detection incohérence entre descriptions et ce aue fais réélement la carte
+  - [ ] Vérifier la lisibilité des descriptions
+  - [ ] Vérifier chaque fonctionnalité du moteur et des cartes utilisée par chaque classe.
+  - [ ] Faire un inventaire des types de dégâts par classe.
 
-### Étape 1 — Première passe des cartes : niveaux, cartes manquantes, 30 à 40 cartes par classe
-- [x] ▶️ `npm run report:classes -- --check` : plus aucune carte hors N1‑N12. Restent 3 écarts, tous sur le nombre de cartes (Gardien 41, Mage Blanc 41, Élémentaliste 43 pour une cible de 30‑40) : c'est l'élagage ci‑dessous.
-- [ ] Remplir à la main, pour chaque classe, les blocs **Spécificités / Spécialisations / Contraintes** (section « À définir à la main »), en s'appuyant sur les tableaux « Spécialisations proposées ».
-- [ ] Viser **30 à 40 cartes distinctes jouables entre N1 et N12** par classe. Réalisé : 3 cartes au N1 (4 pour l'Élémentaliste), puis 3 à 4 par niveau, une par spécialisation ouverte quand le compte le permet.
-- [ ] Écrire les nouvelles cartes avec la **grille de coûts provisoire** (section « Règles d'équilibrage (provisoires) »), pour ne pas tout réécrire à l'étape 4.
-- [x] **Mettre les cartes aux bons niveaux** — les **319 cartes** des huit classes ont reçu un niveau N1‑N12 le 2026‑09‑21, et plus aucune n'est hors de cette plage (`npm run report:classes -- --check`). Les paliers d'ouverture des spécialisations sont dans « Spécialisations par niveau » ci‑dessous ; le détail par niveau se lit dans « Vue d'ensemble des cartes » et dans les decks eux‑mêmes (`system.fq.level`).
-  - [x] *Lecture Du Souffle* (Moine, N8), qui pioche dans le deck par niveau, a été recalée sur la plage jouable : elle propose maintenant des cartes N1‑N7 (elle pointait encore vers les anciens niveaux de garage).
-  - [ ] **Plancher du deck à revoir** : les exemplaires des cartes N1 (`maxSameCard` cumulé) valent 7 (Illusionniste) à 19 (Élémentaliste), contre 5 pour le Guerrier Runique. Cible ~7‑8 partout, à trancher avec les `maxSameCard` de l'étape 4 : Élémentaliste 19, Sorcière 14, Moine et Mage Blanc 13, Gardien 12.
-- [ ] **Supprimer ou fusionner les cartes redondantes** (listes « Redondances à trancher » de chaque classe) : l'Élémentaliste (43 cartes), le Gardien et le Mage Blanc (41) dépassent la cible de 40.
-- [ ] **Écrire les cartes manquantes** :
-  - [ ] Cartes **peu chères** (1 à 4 PA) pour le Mage Blanc et l'Élémentaliste (7 chacun), le Trapper et la Sorcière (5 chacun) — contre 18 pour le Maître d'Armes et 15 pour le Moine.
-  - [ ] Une **frappe à 2 PA pour le Moine** : ses trois cartes N1 sont à 3 PA, soit 9 PA pour 10,2 disponibles, alors que la classe vit du nombre de cartes jouées par tour.
-  - [ ] Sorts de rang 2 (versions plus fortes, ex. *Trait de feu II*) pour les niveaux supérieurs ou les trous.
-  - [ ] Combos : si certaines actions réussissent, rendre tous les PA ou ramener le coût d'une carte à 0.
-- [ ] Revoir les `maxSameCard` excessifs : Coup Droit ×6, Uppercut ×6, Frappe Héroïque ×6, Énergie Lumineuse ×6. *(~~Trait d'Ombre-Verte ×9~~ → ramené à ×3 le 2026‑09‑21, doublé par une version mineure ×5.)*
+### Rééquilibrage coût
+- ratio **générateurs / consommateurs de zèle**
+- ration consommation de resource VS dégâts ou heal entre les classes
+- Equilibrage nombres d'exemplaire de cartes (entre les classes)
+- Transformer la grille provisoire en **grille de coûts** définitive : dégâts ou soins attendus pour X PA / 1 mana / 1 zèle, par tranche de niveau (N1, N6, N12), à partir du rapport recalculé.
+- Plus un sort est haut en niveau plus il doit avoir un ratio cout/efficacité élevé (légèrement, il faut que les sorts de faible niveau reste interessant)
+
+## TODO détéctés
 - [ ] Nouvelles cartes : clés de localisation FR/EN, illustrations, sons et visuels. **En attente** : *Lien du Fauve*, *Rémission Illusoire*, *Écho de Convalescence*, *Estoc Perçant*, *Refrain Vivifiant*, *Crescendo* et *Trait d'Ombre-Verte Mineur* sont encore sur `in_progress.png`.
-- [x] ▶️ `npx vitest run tests/decks` après la répartition : **vert**, et `npm test` aussi (3865 tests). Les deux clés de traduction sans carte (*ScytheStrike*, *MassedVolley*) ont été supprimées de `lang/fr.json` et `lang/en.json`, avec `CardWarningMsgTargetsInSquare` qui n'était écrite que pour elles.
-- [ ] ▶️ **Fin de l'étape** : `npm run report:classes -- --check` ne doit plus signaler d'écart sur le nombre de cartes (les niveaux sont faits), puis `npm test`.
-- [ ] 📝 **Mettre à jour CLASSES.md**, dans chaque classe :
-  - [ ] « À définir à la main » : spécificités, spécialisations et contraintes arrêtées.
-  - [ ] « Spécialisations proposées » : cartes ajoutées, supprimées, fusionnées ; vider la colonne « Manques » traitée.
-  - [ ] « Redondances à trancher » : retirer les points tranchés.
-  - [x] « Constat des cartes » : nombres de cartes, coût moyen et cartes à 1‑4 PA à jour pour les neuf classes (chiffres : `npm run report:classes`).
-  - [ ] « Mécaniques signature » : noms de cartes à revoir après l'élagage.
-  - [ ] Cocher dans l'étape 5 les incohérences corrigées au passage (ex. *Tir Précis II*).
-
-### Étape 2 — Retirer des choix de stats pour chaque classe ✅
-- [x] **Pool des points d'action porté de 24 à 30 objets**, pour qu'il couvre les 30 choix cumulés d'un personnage de niveau 12 : les six nouveaux vont aux N10 à N12, et la courbe des prérequis suit désormais exactement le cumul des choix.
-- [x] **Choix de stats inversés** : 3 aux niveaux impairs, 2 aux pairs (au lieu de 2/3).
-- [x] **Pioche ramenée de 4 à 3 objets** (niveaux 3, 5 et 8) et retirée de la base des starter heroes (1 → 0).
-- [x] **Budget des Start stats uniformisé à 10 points** pour les 9 classes (il allait de 3 pour la Sorcière à 14 pour le Moine). Tableau dans « Stats de départ ».
-- [x] **Pool différencié par classe** : 70 objets hors pioche pour chacune, plus 1 à 3 objets de pioche — 30 objets retirés par classe selon son identité. Tableau dans « Pool de stats par classe ».
-- [x] Points de vigilance du tableau des moyennes traités : le mana de la Sorcière passe de 2,5 à 5,8 au N1 ; le Gardien assume au contraire le mana le plus bas (2,2) avec son alternative en PV.
-- [ ] Reste ouvert : **la main du Trapper** (0,1 au N1, 0,8 au N12) — il ne commence pratiquement jamais un combat avec une carte, à confirmer comme identité ou à corriger.
 - [ ] Reste ouvert : **dés de vie**, Élémentaliste (d4) à 52 PV au N12 contre 164 pour le Gardien.
 - [ ] Reste ouvert : nettoyer l'`ItemChoice` vide de la Sorcière (`classes-fq8/witch.json`), puis retirer la ligne `pool vide :: witch.json` de `KNOWN_ISSUES`.
-- [ ] Reste ouvert : le **pool de mana est resté à 24 objets** alors que celui des PA est à 30. Un personnage ne peut donc pas mettre ses 3 choix du N1 en mana, et le pool de mana s'épuise au N10 — à étendre à 30 comme les PA, ou à assumer.
-- [x] ▶️ `npx vitest run tests/decks/class-deck-integrity.test.js` : vert (pools non vides, objets de stats existants, un seul objet de Start stats par classe).
-- [ ] ▶️ **Fin de l'étape** : `npm test`, puis `npm run build` pour recompiler les compendiums et vérifier en jeu une montée de niveau.
-- [x] 📝 **CLASSES.md à jour** : « Distribution », « Stats de départ », « Pool de stats par classe », tableau des stats moyennes, « Stats de départ notables », paragraphes « Stats FQ » des 9 classes, et colonne « Start stats » retirée de la « Vue d'ensemble » (redondante avec le nouveau tableau).
-
-### Étape 3 — Refaire le calcul des stats moyennes
-- [x] ▶️ `npm run report:classes -- --out devNotes/rapport-classes.md` : le rapport tient compte des nouveaux pools (étape 2) et des niveaux de cartes (étape 1). **À relancer après l'élagage et l'équilibrage.**
-- [x] Vérifier les hypothèses du rapport (base du starter hero, répartition des ASI, CA) : le rapport lit les starter heroes et les pools sur les données, il a suivi les changements de l'étape 2 sans modification.
-- [ ] 📝 **Mettre à jour CLASSES.md** en copiant les tableaux du rapport :
-  - [x] « Stats moyennes par classe » : tableau complet, hypothèses de calcul et date en tête de fichier.
-  - [ ] « Vue d'ensemble des cartes » et « Caracs utilisées par les cartes ».
-  - [ ] Étape 4 : tableau des exemplaires par deck (section « Exemplaires débloqués » du rapport).
-  - [ ] « Règles d'équilibrage (provisoires) » : chiffres de rendement (section « Rendement des cartes » du rapport).
-  - [ ] Revoir les chiffres cités dans les étapes 4 à 6 (ratio de zèle, coûts, nombres de jets par carac).
-
-### Étape 4 — Rééquilibrer les cartes (avec Claude)
-- [ ] Transformer la grille provisoire en **grille de coûts** définitive : dégâts ou soins attendus pour X PA / 1 mana / 1 zèle, par tranche de niveau (N1, N6, N12), à partir du rapport recalculé.
-- [ ] Définir le ratio **générateurs / consommateurs de zèle** attendu par classe (l'Élémentaliste a aujourd'hui 9 générateurs pour 28 consommateurs).
-- [ ] Équilibrage manuel de chaque classe, puis relecture IA : dégâts, coûts (si trop de sorts coûteux, ajouter des sorts peu chers), nombre de cartes, synergies.
-- [ ] **Équilibrer le nombre d'exemplaires par deck** (somme des `maxSameCard`, et pas seulement le nombre de cartes distinctes) : fixer une cible d'exemplaires par tranche de niveau, commune à toutes les classes, puis ajuster les `maxSameCard`. Point de départ actuel (exemplaires débloqués N1 / N6 / N12, cartes générées exclues) :
-
-  | Moine | Gardien | Mage Blanc | Élémentaliste | Trapper | Sorcière | Illusionniste | Maître d'Armes |
-  |---|---|---|---|---|---|---|---|
-  | 17 / 45 / 48 | 12 / 42 / 44 | 16 / 44 / 44 | 19 / 45 / 46 | 13 / 40 / 42 | 12 / 43 / 44 | 14 / 41 / 46 | 14 / 64 / **76** |
-
-  - [ ] Reporter la cible choisie dans `TARGETS.copies` en tête de `utils/class-report.mjs` (ex. `{1: [12, 16], 6: [40, 45], 12: [48, 55]}`).
-  - [ ] Tenir compte des cartes **générées en combat**, qui gonflent le deck réel (Maître d'Armes : couteaux ×24 et étapes de forge ; Sorcière : Nécromancie ; Mage Blanc : Infusion de Mana, Frappe de Lumière ; Élémentaliste : Incantation, Propagation des dégâts).
-  - [ ] Tenir compte de la pioche : plus le deck est gros, moins une carte donnée sort souvent (pioche ≈ 1,1 au N1 et 2,3 au N12).
-- [ ] Repérer les cartes trop chères pour leur niveau (ex. Poing Rouge 14 PA, Essor Vital 16 PA, Sorcier Squelette 15 PA, Orbe Grandissante 14 PA).
-- [ ] ▶️ **Pendant l'équilibrage** : `npm run report:classes` (section « Rendement des cartes ») pour comparer chaque classe à la grille, et `npx vitest run tests/decks` après chaque lot de modifications.
-- [ ] ▶️ **Fin de l'étape** : `npm run report:classes -- --check` ne doit plus signaler aucun écart (exemplaires compris), puis `npm test`.
-- [ ] 📝 **Mettre à jour CLASSES.md** :
-  - [ ] Passer « Règles d'équilibrage (provisoires) » en version définitive : grille de coûts, ratio de zèle cible et cible d'exemplaires par tranche de niveau.
-  - [ ] « Vue d'ensemble des cartes » (exemplaires, coûts, zèle) et « Constat des cartes » de chaque classe (chiffres : `npm run report:classes`).
-  - [ ] « Incohérences relevées » de chaque classe : retirer les cartes trop chères corrigées.
-
-### Étape 5 — Chercher les erreurs
+- [ ] ▶️ **Fin de l'étape** : `npm run report:classes -- --check` ne doit plus signaler d'écart sur le nombre de cartes (les niveaux sont faits), puis `npm test`.
 - [ ] Incohérences déjà relevées :
   - [ ] Moine : *Uppercut* annonce « piochez une carte » mais n'a pas de `draw`.
   - [ ] Gardien : *Frappe provocatrice*, le choix « -4 PV » coûte **aussi** 1 mana.
@@ -104,34 +53,11 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - [ ] Mage Blanc : *Exorcisme* annonce « coûte @cha PA en moins » mais le coût est fixe (-7).
   - [ ] Trapper : *Pluie de flèches* annonce « incritiquable » sans `bonusCrit` (à vérifier).
   - [ ] **Casse des images** : 30 cartes et le dos du deck Moine généré pointent vers un fichier dont la casse diffère (`.png` / `.PNG`, dossier `Illusionist` au lieu de `illusionist`). Invisible sous Windows, image cassée sur un serveur Linux. Liste complète dans `KNOWN_ISSUES` du test d'intégrité.
-  - [x] ~~Contenu de test du `draft.json` (9 cartes sans `maxSameCard`) : à sortir des patterns livrés.~~ → fait, le fichier est retiré du pack. Le garde-fou de `tests/decks/sweep.test.js` est passé de 21 à 20 decks.
-- [ ] Comparer chaque description à ses données (coûts, dégâts, effets), puis relecture IA des descriptions.
-- [ ] Vérifier chaque fonctionnalité du moteur utilisée par chaque classe (tests / UAT).
-- [ ] ▶️ **Après chaque correction** : `npx vitest run tests/decks`, et retirer de `KNOWN_ISSUES` les lignes corrigées.
-- [ ] ▶️ **Fin de l'étape** : `KNOWN_ISSUES` doit être **vide**, puis `npm test`.
-- [ ] 📝 **Mettre à jour CLASSES.md** :
-  - [ ] « Incohérences relevées » de chaque classe : retirer les erreurs corrigées, ajouter les nouvelles trouvées.
-  - [ ] « Mécaniques signature » si une correction change le comportement d'une carte.
-
-### Étape 6 — Vérifier la correspondance avec la caractérisation des classes
-- [ ] ▶️ Avant de commencer : `npm run report:classes` (section « Caracs utilisées par les cartes ») pour la liste à jour des caracs citées et des jets par carac.
-- [ ] Contrôler que chaque carte sert une spécificité ou une spécialisation de sa classe et respecte ses contraintes.
 - [ ] Caractéristiques dnd5e (tableau « Caracs utilisées par les cartes ») :
   - [ ] Illusionniste : 17 jets de toucher/sauvegarde sur **INT**, qui n'est ni primaire ni montée (INT 10).
   - [ ] Sorcière : les formules utilisent SAG 9 fois contre INT 3 fois, alors que INT est primaire.
   - [ ] Trapper : la spé bêtes scale sur **CHA** (7 formules) alors que le Trapper démarre à CHA 6 (-2).
   - [ ] Mage Blanc : *Aura de Force* et *Exorcisme* scalent sur CHA, alors que le Mage Blanc a CHA 6 (-2).
-- [ ] Faire un inventaire des types de dégâts par classe.
-- [ ] ▶️ **Fin de l'étape** : `npx vitest run tests/decks`, puis `npm test`.
-- [ ] 📝 **Mettre à jour CLASSES.md** :
-  - [ ] « Caracs utilisées par les cartes » (copie du rapport) et « Rôle des caractéristiques dnd5e ».
-  - [ ] Dans chaque classe : « Identité dnd5e », « Rôle », « Problème de caractérisation » et « Questionnement et TODO ».
-  - [ ] Ajouter l'inventaire des types de dégâts (nouveau tableau dans « Rappel système »).
-
-### Ensuite — Finitions
-- [ ] Régénérer `decks-fq8-generated` et mettre à jour les `starter-heroes`.
-- [ ] ▶️ `npm run report:classes -- --check` (aucun écart), `npm test` (suite verte), puis `npm run build`.
-- [ ] 📝 **Mettre à jour CLASSES.md** : dernier `npm run report:classes -- --out devNotes/rapport-classes.md` pour les tableaux, relecture complète, date en tête de fichier, puis écrire un nouvel état des lieux dans `historique/` (y archiver ce TODO une fois terminé).
 
 ### Fin de chantier — Transformer ce fichier en aide de jeu pour les joueurs
 Une fois **toutes les étapes ci-dessus réalisées**, ce document cesse d'être une note de conception et devient une **aide pour les joueurs** qui décrit chaque classe.
@@ -147,49 +73,6 @@ Une fois **toutes les étapes ci-dessus réalisées**, ce document cesse d'être
   - [ ] les tableaux et sections techniques (chemins de fichiers, clés de données, hypothèses de calcul, « Constat des cartes », « Vue d'ensemble des cartes », « Caracs utilisées par les cartes », « Règles d'équilibrage »).
 - [ ] Réécrire chaque classe pour un joueur : présentation, rôle, spécialisations, **points forts**, **points faibles**, caractéristiques à privilégier, style de jeu et cartes emblématiques.
 - [ ] Garder un rappel des règles utile aux joueurs (stats FQ, rôle des caractéristiques) et, si utile, un tableau comparatif simple des classes.
-
----
-
-## Stats moyennes par classe (niveaux 1 / 6 / 12)
-
-Chaque case donne **N1 / N6 / N12**. Scores de caractéristique suivis du modificateur entre parenthèses.
-
-| Stat | Moine | Gardien | Mage Blanc | Élémentaliste | Trapper | Sorcière | Illusionniste | Maître d'Armes | Guerrier Runique |
-|---|---|---|---|---|---|---|---|---|---|
-| **FQ** | | | | | | | | | |
-| Budget Start stats | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 | 10 |
-| Choix de stats cumulés | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 | 3 / 15 / 30 |
-| Points d'action | 10,2 / 15,2 / 21,3 | 10,3 / 15,3 / 21,7 | 11,2 / 16,3 / 22,5 | 10,2 / 15,3 / 21,5 | 12,2 / 17,3 / 23,5 | 10,2 / 15,3 / 21,5 | 8,3 / 13,3 / 19,5 | 11,2 / 16,3 / 22,5 | 9,2 / 14,2 / 20,3 |
-| Mana | 4,4 / 6,1 / 8,1 | 2,2 / 3,1 / 4,1 | 6,8 / 10,2 / 14,3 | 7,0 / 11,0 / 16,0 | 3,7 / 6,3 / 9,7 | 5,8 / 8,7 / 12,5 | 3,7 / 6,7 / 10,5 | 3,7 / 6,3 / 9,7 | 4,5 / 6,5 / 8,9 |
-| Zèle initial | 0,3 / 1,6 / 3,3 | 0,3 / 1,7 / 3,4 | 0,2 / 0,8 / 1,7 | 0,1 / 0,6 / 1,3 | 0,2 / 0,8 / 1,7 | 0,2 / 1,3 / 2,5 | 0,1 / 0,6 / 1,3 | 0,2 / 0,8 / 1,7 | 0,2 / 1,2 / 2,5 |
-| Critique | 0 / 0 / 0 | 1,3 / 2,7 / 4,4 | 0,2 / 1,0 / 2,1 | 1,1 / 1,6 / 2,3 | 2,4 / 4,1 / 6,2 | 0,2 / 1,3 / 2,5 | 2,1 / 2,6 / 3,2 | 1,3 / 2,7 / 4,3 | 1,2 / 1,8 / 2,6 |
-| Esquive | 2,4 / 4,1 / 6,1 | 1,3 / 2,7 / 4,4 | 1,2 / 2,0 / 3,1 | 0,1 / 0,6 / 1,3 | 0 / 0 / 0 | 1,2 / 1,8 / 2,7 | 2,2 / 3,3 / 4,5 | 1,2 / 1,8 / 2,7 | 1,3 / 2,4 / 3,9 |
-| Main (début de combat) | 2,2 / 2,8 / 3,6 | 5,3 / 6,5 / 8,0 | 1,2 / 1,8 / 2,7 | 1,1 / 1,6 / 2,3 | 0,1 / 0,4 / 0,8 | 2,2 / 3,3 / 4,5 | 2,2 / 2,8 / 3,7 | 1,2 / 1,8 / 2,7 | 2,2 / 3,2 / 4,5 |
-| Pioche (par tour) | 1,1 / 1,6 / 2,2 | 0,0 / 0,2 / 0,4 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 1,1 / 1,4 / 1,8 | 2,1 / 2,6 / 3,2 |
-| Déplacement (cases) | 6,3 / 7,6 / 9,3 | 6,2 / 6,8 / 7,7 | 5,1 / 5,4 / 5,8 | 6,2 / 6,8 / 7,7 | 7,3 / 8,7 / 10,3 | 6 / 6 / 6 | 7,3 / 8,2 / 9,5 | 7,2 / 7,8 / 8,7 | 6,2 / 7,0 / 8,1 |
-| **dnd5e** | | | | | | | | | |
-| Dé de vie | d8 | d12 | d6 | d4 | d8 | d6 | d6 | d10 | d10 |
-| PV moyens | 23 / 48 / 78 | 29 / 80 / 164 | 24 / 65 / 125 | 18 / 28 / 52 | 23 / 48 / 90 | 19 / 29 / 53 | 20 / 35 / 53 | 24 / 49 / 79 | 27 / 67 / 115 |
-| Caracs primaires | FOR + DEX | FOR + CON | CON + SAG | INT + SAG | DEX + SAG | INT + CHA | DEX + CHA | FOR + DEX | FOR + INT |
-| FOR | 12(+1) / 15(+2) / 20(+5) | 16(+3) / 19(+4) / 20(+5) | 6(-2) / 6(-2) / 6(-2) | 6(-2) / 6(-2) / 6(-2) | 6(-2) / 6(-2) / 6(-2) | 10(+0) / 10(+0) / 10(+0) | 8(-1) / 8(-1) / 8(-1) | 14(+2) / 17(+3) / 20(+5) | 14(+2) / 17(+3) / 20(+5) |
-| DEX | 16(+3) / 19(+4) / 20(+5) | 10(+0) / 10(+0) / 12(+1) | 6(-2) / 6(-2) / 10(+0) | 12(+1) / 12(+1) / 12(+1) | 16(+3) / 19(+4) / 20(+5) | 6(-2) / 6(-2) / 6(-2) | 14(+2) / 17(+3) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 8(-1) / 8(-1) / 8(-1) |
-| CON | 10(+0) / 10(+0) / 10(+0) | 14(+2) / 17(+3) / 20(+5) | 16(+3) / 19(+4) / 20(+5) | 8(-1) / 8(-1) / 10(+0) | 10(+0) / 10(+0) / 12(+1) | 6(-2) / 6(-2) / 8(-1) | 8(-1) / 8(-1) / 8(-1) | 8(-1) / 8(-1) / 8(-1) | 14(+2) / 14(+2) / 14(+2) |
-| INT | 10(+0) / 10(+0) / 10(+0) | 6(-2) / 6(-2) / 6(-2) | 14(+2) / 14(+2) / 14(+2) | 16(+3) / 19(+4) / 20(+5) | 12(+1) / 12(+1) / 12(+1) | 14(+2) / 17(+3) / 20(+5) | 10(+0) / 10(+0) / 10(+0) | 8(-1) / 8(-1) / 8(-1) | 12(+1) / 15(+2) / 18(+4) |
-| SAG | 8(-1) / 8(-1) / 8(-1) | 6(-2) / 6(-2) / 6(-2) | 16(+3) / 19(+4) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 12(+1) / 12(+1) / 12(+1) | 10(+0) / 10(+0) / 10(+0) | 8(-1) / 8(-1) / 8(-1) | 10(+0) / 10(+0) / 10(+0) |
-| CHA | 8(-1) / 8(-1) / 8(-1) | 12(+1) / 12(+1) / 12(+1) | 6(-2) / 6(-2) / 6(-2) | 8(-1) / 8(-1) / 8(-1) | 6(-2) / 6(-2) / 6(-2) | 16(+3) / 19(+4) / 20(+5) | 14(+2) / 17(+3) / 20(+5) | 12(+1) / 12(+1) / 12(+1) | 6(-2) / 6(-2) / 6(-2) |
-| Maîtrise | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 | +2 / +3 / +4 |
-| Bonus d'attaque (meilleure carac primaire) | +5 / +7 / +9 | +5 / +7 / +9 | +5 / +7 / +9 | +5 / +7 / +9 | +5 / +7 / +9 | +5 / +7 / +9 | +4 / +6 / +9 | +4 / +6 / +9 | +4 / +6 / +9 |
-| CA (équipement de départ) | 14 / 15 / 16 | 18 / 18 / 18 | 8 / 8 / 10 | 11 / 11 / 11 | 14 / 15 / 16 | 8 / 8 / 8 | 13 / 14 / 16 | 13 / 14 / 16 | 10 / 10 / 10 |
-| Équipement de départ | Cuir, mains nues | Cotte de mailles, bouclier, masse | Robe, masse | Robe, bâton | Cuir, arc court | Robe, bâton | Cuir, dague | Cuir, lance, arc court | Cuir, hachette |
-| **Cartes** | | | | | | | | | |
-| Cartes débloquées (distinctes/exemplaires) | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 0/0 / 0/0 / 0/0 | 4/5 / 9/10 / 15/16 |
-
-**Hypothèses de calcul** (script sur les données, pas de mesure en partie) :
-- **Base commune** (starter heroes) : PA 7, mana 2, zèle 0, critique 0, esquive 0, main 0, pioche 0, déplacement 5 cases, +15 PV fixes. S'y ajoutent les *Start stats* de la classe (voir « Stats de départ » ci-dessous).
-- **Choix de stats** : 3 aux niveaux impairs, 2 aux niveaux pairs, dans le **pool propre à chaque classe** (70 objets hors pioche, plus 1 à 3 objets de pioche). La moyenne est l'espérance d'un tirage proportionnel au pool : elle diffère donc d'une classe à l'autre, puisque les pools diffèrent. Voir « Pool de stats par classe ».
-- **ASI** : +2 points à chaque niveau pair, répartis alternativement sur les deux caracs primaires (plafond 20, surplus sur l'autre primaire puis CON).
-- **PV** : dé max au N1, puis moyenne dnd5e (d/2 + 1), plus le modificateur de CON par niveau.
-- **CA** : équipement de départ conservé, seule la DEX évolue.
 
 ---
 
@@ -328,7 +211,7 @@ Quand une classe ne garde qu'une partie d'une stat, les objets retenus sont **r�
 Stats de départ notables (détail dans « Stats de départ ») : **critique** de départ nul pour Moine, Mage Blanc et Sorcière — et le Moine ne peut pas le monter du tout ; **esquive** nulle pour Trapper et Élémentaliste, le Trapper ne pouvant pas la monter non plus ; **zèle** nul pour toutes les classes ; **pioche** nulle pour le Gardien, qui n'a qu'un objet de pioche dans son pool ; **aucun point d'action** pour l'Illusionniste, qui compense par les cartes les moins chères du jeu.
 
 ### Vue d'ensemble des cartes (decks de base)
-
+# TODO A mettre à jour:
 | Classe | N1 | N2 | N3 | N4 | N5 | N6 | N7 | N8 | N9 | N10 | N11 | N12 | Hors N1‑12 | Plancher deck | Total distinctes / exemplaires | Générées (dist./ex.) | Coût moyen PA | Cartes 1‑4 PA | Réactives | Zèle + / − | Innées |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Moine | 3 | 3 | 4 | 3 | 3 | 4 | 3 | 3 | 3 | 4 | 3 | 3 | 0 | 13 | 39 / 79 | 1 / 1 | 5,2 | 15 | 4 | 20 / 13 | 1 |
@@ -343,97 +226,10 @@ Stats de départ notables (détail dans « Stats de départ ») : **critique** d
 
 **Hors N1‑12** : plus aucune carte, les neuf decks sont rangés. **Plancher deck** : exemplaires des cartes N1, figés comme `minSize` du deck de départ — il reste à le ramener autour de 7‑8 partout (étape 4), l'Élémentaliste à 19 et la Sorcière à 13 étant les plus lourds. Tableau copié de `npm run report:classes`.
 
-### Spécialisations par niveau
-
-Les 319 cartes des huit classes ont été réparties sur les niveaux N1 à N12 le 2026‑09‑21 (le Guerrier Runique garde ses niveaux et ses 117 runes). Chaque classe ouvre deux spécialisations au N1 et garde la troisième pour plus tard :
-
-| Classe | Ouvre au N1 | Ouvre plus tard |
-|---|---|---|
-| Gardien | Berzerker, Sac à PV temp | Ange Gardien → N4 |
-| Mage Blanc | Soutien/healeur, Malédictions | Hanteur (fantômes) → N7 |
-| Moine | Enchaînement, Paume, transverse | Main pleine → N3 |
-| Élémentaliste | Feu, Givre, Terre, Air | combos « ou » → N4, combos « et » → N7 |
-| Trapper | Sniper | Pièges → N4, Bêtes → N6 |
-| Sorcière | Armée, Charnier | Colosse → N6 |
-| Illusionniste | Lame d'allonge, Barde | Chronomancien → N5 |
-| Maître d'Armes | Mêlée, Distance | Armes de jet → N3, Instructeur → N5 |
-
-Cinq règles encadrent la répartition :
-
-| # | Règle | Pourquoi |
-|---|---|---|
-| **N1 minimal** | 3 cartes (4 pour l'Élémentaliste, une par élément ; 4 aussi pour la Sorcière et l'Illusionniste depuis le lot du 2026‑09‑21) | Le N1 est aussi le **plancher du deck** : tout ce qu'on y met est posé en tous ses exemplaires à la création du personnage. |
-| **3 à 4 par niveau** ensuite | une carte par spécialisation ouverte quand le compte le permet | La montée de niveau fait progresser tous les axes du personnage, pas un seul. |
-| **Aucune innée avant le N3** | la première innée de chaque classe est au N3 ou au N4 | Les innées sont distribuées d'office en main au début de chaque combat (`combat-turn.js`) : les donner plus tôt figerait la main de départ. |
-| **Aucun coût en zèle au N1** | les cartes N1 en **rendent** ; les consommateurs commencent au N2‑N3 | Le zèle initial vaut 0,1 à 0,3 selon la classe — aucune n'en a au départ : une carte qui en coûte serait injouable au premier tour. |
-| **Prérequis = niveau tardif** | stacks (3 brûlures, 5 hantises, 4 effets de terre), défausse de 3‑4 cartes, « après 2 autres réactives » | Une carte n'arrive qu'après celles qui produisent sa condition. Les ultimes et les cartes « tout ou rien » ferment les N10‑N12. |
-
-Le coût tient dans les ressources du niveau : N1‑N2 ≤ 7 PA / 1 mana ; N3‑N5 ≤ 9 PA / 2 mana ; N6‑N8 ≤ 12 PA / 3 mana ; N9‑N12 le reste. Rapportés aux cartes réellement en main au premier tour (main + pioche), les N1 tombent juste partout : Mage Blanc, Maître d'Armes et Élémentaliste à 4,6‑4,9 PA par carte disponible pour des cartes à 4‑6 PA, et le **Trapper** à 12,2 PA pour une seule carte par tour (main 0,1), ce qui valide exactement *Tir Précis* et *Embuscade*, dont le coût est la distance ou tout le budget du tour.
-
-### Lot de cartes du 2026‑09‑21
-
-| Carte | Classe | Niv. | Ex. | Coûts | Effet |
-|---|---|---|---|---|---|
-| **Estoc perçant** | Illusionniste (Lame d'allonge) | N1 | ×2 | 7 PA, 1 mana, **+1 zèle** | `(@dex + @cha + 1d4)` perçant, portée 1‑1 ; **1d2 de chance de +1 portée** (patron de la Rapière Enchantée) |
-| **Refrain Vivifiant** | Illusionniste (Barde) | N2 | ×2 | **−4 + 1d6 PA** | HOT : `-(1 + ceil(@cha/2))` PV par tour pendant 2 tours, portée 0‑2. Aucun soin immédiat, et 1d6 des 4 PA revient — la seule carte du jeu dont le coût en action porte un dé |
-| **Crescendo** | Illusionniste (Barde) | N3 | ×2 | 1 zèle | **+1 au maximum de zèle, définitivement**. Deuxième carte du jeu à toucher `zeal.max` après Poing Rouge (+5) |
-| **Trait d'Ombre-Verte Mineur** | Sorcière (Charnier) | N1 | ×5 | 5 PA, 1 mana, **+1 zèle** | `@int` acide + rongement, portée 2‑8, **sans squelette** ; **1 chance sur 2 d'augmenter le score de sacrifice de 1** — la première carte du jeu qui l'alimente, les autres ne font que le consommer |
-
-Deux ajustements du même lot : ***Trait d'Ombre-Verte*** passe de **9 à 3 exemplaires**, doublé par sa version mineure — le spam du N1 de la Sorcière alimente désormais le charnier autant que l'armée ; et ***Magie Blanche*** est renommée ***Magie Verte*** (clé `FQCARDTITLE.GreenMagic`, image `images/cards/illusionist/GreenMagic.png`), son `_id` technique `illWhiteMagic001` étant conservé pour ne pas casser les decks existants.
-
-L'Illusionniste passe à **42 cartes** et rejoint les classes à élaguer. Les quatre nouvelles cartes sont sur `in_progress.png` : illustrations à faire.
-
----
-
-**Questionnement et TODO générique :**
-- Combos : si certaines actions réussissent → redonne tous les points d'action pour jouer d'autres cartes, ou réduit le coût d'une carte à 0.
-
-**Dernière passe pour chaque classe :** (détaillée dans le TODO en tête de fichier)
-- Environ 40 cartes par classe : 7 aux niveaux 0 et 1, environ 3 cartes par niveau pour chaque spécialisation
-- Vérifier la caractérisation des autres classes
-- Équilibrage de la classe manuel puis IA : dégâts, coûts (si trop de sorts coûtent cher, rajouter quelques sorts peu chers), nombre de cartes, synergies
-- Vérifier la caractérisation des abilities dnd
-- Vérifier chaque fonctionnalité du moteur pour chaque classe
-- Faire un inventaire des types de dégâts
-- Faire vérifier les descriptions par une IA
-- Compléter avec des sorts de rang 2 (juste des sorts plus forts, par exemple Trait de feu II) pour les niveaux supérieurs OU les trous
 
 ### Règles générales sur les cartes
 - Les dégâts de zone ne font pas beaucoup moins de dégâts que les sorts monocibles (on ne divise pas les dégâts entre les cibles)
-
-### Règles d'équilibrage (provisoires)
-
-*Grille de départ pour écrire les cartes de l'étape 1 ; elle sera recalibrée à l'étape 4. Source : `npm run report:classes`, section « Rendement des cartes » (médiane des cartes existantes à coût et formule fixes, caracs moyennes de la classe au niveau de la carte, arme d6).*
-
-**Dégâts et soins moyens attendus par PA dépensé** (carte coûtant en plus 0 à 1 mana, comme la plupart des cartes mesurées) :
-
-| Tranche | Dégâts / PA | Soins / PA | Exemple (carte à 6 PA) | Échantillon mesuré |
-|---|---|---|---|---|
-| N1‑N3 | ≈ 0,9 | ≈ 1 | ≈ 5 dégâts (*Attaque Simple* : 7 PA, 1 mana, 5,5 dégâts) | 33 choix de dégâts, 2 de soins |
-| N4‑N7 | ≈ 1,2 | ≈ 1 | ≈ 7 dégâts | 24 / 5 |
-| N8‑N12 | ≈ 1,5 (à confirmer) | ≈ 1,2 (à confirmer) | ≈ 9 dégâts | 8 / 2 : trop peu de cartes, valeur extrapolée |
-
-**Mesure actuelle** (médiane toutes classes, `npm run report:classes`) : **0,9 / 0,9 / 0,6** dégâts par PA et **1 / 1 / 0,8** soins par PA sur les trois tranches. Les cibles ci-dessus restent au-dessus du mesuré aux tranches hautes : c'est voulu — les N4‑N12 sont encore à écrire.
-
-À ajouter à la valeur de base, puis à compenser par le coût :
-- **Effet** (DoT, état, debuff) : l'équivalent d'environ 1 à 2 PA selon sa durée.
-- **Zone ou multi-cible** : dégâts proches du monocible (règle générale ci-dessus), le surcoût passe par le PA, le mana ou le zèle.
-- **Carte réactive (0 PA)** : se paie en mana et/ou en zèle.
-- **Critique et esquive** ne sont pas comptés dans la grille : une carte inesquivable ou incritiquable doit le compenser.
-
-**Équivalences de ressources, à valider** (tirées des conversions déjà présentes dans les cartes) :
-
-| Échange | Valeur provisoire | Cartes de référence |
-|---|---|---|
-| 1 mana ↔ PA | 1 mana ≈ 3 PA | *Vases communicants* (1 mana ⇄ 4 PA), *Récupération de mana* I à III (1 à 1,7 PA par mana) |
-| 1 mana ↔ PV | 1 mana ≈ 4 PV | *Frappe Héroïque* (6 − CON PV), *Frappe provocatrice* (4 PV), *Sang Bleu* (2 PV par mana, plus généreux) |
-| 1 zèle dépensé | ≈ 1 mana ≈ 3 PA | *Conversion* (1 zèle → 1 mana), *Souffle de Ki* (1 zèle → 1 carte + 2 PA) |
-| 1 carte piochée | ≈ 1 à 2 PA | *Pioche II* (2 PA → 2 cartes), *Pioche III* (3 PA → 3 cartes) |
-| 1 carte défaussée | ≈ coût d'une petite carte | *Magie des Éléments*, *Soin*, *Sortilège d'Ombre* (défausse en coût d'appoint) |
-
-> **Le coût `drop` se paie en cartes, pas en score.** Une carte qui déclare `drop` ouvre, au moment du jeu, le voile de sélection sur la main : le joueur y désigne exactement les cartes exigées, et valider les envoie à la défausse en même temps que la carte se joue. Hors combat, aucune défausse n'est jamais exigée ; en combat, une main trop courte (la carte jouée non comptée) rend la carte injouable, sans même ouvrir le voile.
-
-**Autres cibles** (à fixer à l'étape 4) : ratio générateurs / consommateurs de zèle par classe ; nombre d'exemplaires par tranche de niveau (`TARGETS.copies` dans `utils/class-report.mjs`).
+- Environ 40 cartes différentes par deck au niveau 12 sauf guerrier runique
 
 ---
 
@@ -441,9 +237,11 @@ L'Illusionniste passe à **42 cartes** et rejoint les classes à élaguer. Les q
 
 > « Le plus grand nombre de points de vie du jeu. Peut puiser dans ses points de vie pour améliorer ses dégâts ou soutenir ses alliés. »
 
-**Identité dnd5e** : d12, FOR + CON. CHA sert aux cartes de provocation, au Coup de bouclier, à Garde Absolue et au Cri de Ralliement — elle reste plate à 12 (+1), jamais montée par les ASI : à trancher (basculer sur CON, ou l'assumer).
+**Identité dnd5e** : d12, FOR + CON. Troisième stats CHA.
 
-**Stats FQ** : la **plus grosse main du jeu** (5 au N1, 8 au N12) et **aucune pioche** — un seul objet de pioche dans son pool, au N3 : il joue sa main de départ, ses réactives et ses cartes générées. **Le moins de mana du jeu** (2,2 au N1, 4,1 au N12, 5 objets de mana seulement) : l'alternative en points de vie n'est pas un confort, c'est sa ressource. Mobilité bridée (4 objets de déplacement). Sa vraie ressource est le couple PV + zèle, avec **les PV et la CA les plus élevés** (164 PV au N12, CA 18).
+**Stats FQ** : la **plus grosse main du jeu** (5 au N1, 8 au N12) et **aucune pioche** —. 
+**Le moins de mana du jeu** (2,2 au N1, 4,1 au N12, 5 objets de mana seulement) : l'alternative en points de vie n'est pas un confort, c'est sa ressource. 
+Mobilité bridée (4 objets de déplacement).
 Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés** (164 PV au N12, CA 18).
 
 **Spécialisations validées** :
@@ -479,30 +277,22 @@ Sa vraie ressource est le couple PV + zèle. **Les PV et la CA les plus élevés
 - A du mal à arriver au contact d'une cible (pas de sort pour augmenter le déplacement, uniquement pour agripper des ennemis)
 
 ### Constat des cartes (données)
-- **41 cartes réparties sur N1‑N12** (3 à 4 par niveau), coût moyen 5,1 PA et 11 cartes à 1‑4 PA. Deux cartes de trop pour la cible de 30‑40 : l'élagage reste à faire.
+- **41 cartes réparties sur N1‑N12** (3 à 4 par niveau), coût moyen 5,1 PA et 11 cartes à 1‑4 PA.
 - 3 cartes **générées** dans `guardian-generated.json` (Lame Chargée, Tourbillon Déchaîné, Bénédiction du Rempart), toutes éphémères.
 - Exemplaires : 75 au total, plus 32 exemplaires générés.
 - Zèle : 13 générateurs pour 17 consommateurs (contre 6/15 avant le lot), grâce aux réactifs de l'Ange Gardien et aux petites frappes.
 - Aucun soin réel ni HOT dans le deck : les 12 cartes du deck de base qui rendent des PV les rendent toutes en **temporaires** (13 avec la Bénédiction du Rempart, générée).
 - Beaucoup de cartes coûtent 1 mana (Frappe Héroïque ×6, Hémorragie ×4, Brèche, Égide, Coup Puissant…) : l'alternative PV est indispensable avec 2,2 mana au N1 et 4,1 au N12 (5 objets de mana dans son pool).
 
-### Cartes N13 à placer (lot du 2026-09-18)
-**Tout le deck est au niveau 13** : il reste à donner un niveau N1‑N12 aux 41 cartes et à équilibrer les `maxSameCard`. 11 cartes ont été écrites dans ce lot.
-
 ### Redondances à trancher
 - Bonus de dégâts contre auto-dégâts : Posture de Berzerker / Chair de Berzerker / Rage Ultime / Soif de Sang.
 - Payer en PV : Offrande de Sang / choix PV de Frappe Héroïque.
 
 ### Incohérences relevées
-- Essor Vital coûte 16 PA : injouable avant le N6‑N7 en moyenne (le soin est devenu temporaire, le coût reste à revoir).
 - L'image d'Essor Vital est référencée avec une casse qui ne correspond pas au fichier (`KNOWN_ISSUES`).
 
 **Questionnement et TODO :**
-- Berzerker utilise des pv pour s'approcher d'une cible?
-- Lui rajouter des PVs dans les stats FQ?
-- Sorts de tank plus fort si PV élevés? bouclier temporaire automatiques?
-- **Donner un niveau N1‑N12 aux 41 cartes** (tout le deck est au N13) et fixer les `maxSameCard` (cible proposée : 14 exemplaires au N1, ~40 au N6, ~58 au N12 — incompatible avec `TARGETS.copies = {12: [48,55]}`, qu'il faudra relever).
-- Illustrations des cartes nouvelles restées sur `in_progress.png`.
+-
 ---
 
 ## Mage Blanc

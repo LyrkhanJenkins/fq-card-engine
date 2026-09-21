@@ -775,7 +775,7 @@
   "FQCARDTITLE.Charge": "Charge",
   "FQCARDDESCRIPTION.Charge": "Charge un ennemi se trouvant à 9 cases ou moins.\nPendant 1 tour, augmente les dégâts de @dex, plus 1d4, et le critique de @str",
   "FQCARDTITLE.HeroicStrike": "Frappe Héroïque",
-  "FQCARDDESCRIPTION.HeroicStrike": "Inflige {0_damage} points de dégâts\nVous pouvez choisir de ne pas consommer votre point de mana et perdre 6 points de vie, moins @con, à la place",
+  "FQCARDDESCRIPTION.HeroicStrike": "Inflige {0_damage} points de dégâts\nVous pouvez choisir de ne pas consommer votre point de mana et perdre 6 points de vie, moins @con, à la place\nX est le nombre de saignements déjà portés par la cible : plus elle saigne, plus vous frappez fort.",
   "FQCARDTITLE.ManaSurge": "Montée de mana",
   "FQCARDDESCRIPTION.ManaSurge": "Regagnez le double de points de mana dépensés au dernier sort\n(Coûte 1 point d’action de moins par @wis)",
   "FQCARDTITLE.DrawII": "Pioche II",
@@ -789,7 +789,7 @@
   "FQCARDTITLE.RageSurge": "Montée de la rage",
   "FQCARDDESCRIPTION.RageSurge": "Sacrifiez 3 points de vie, plus @con, et récupérez 1 point(s) de mana, vos dégâts sont augmentés de @con pendant 1 tour",
   "FQCARDTITLE.PowerfulStrike": "Coup Puissant",
-  "FQCARDDESCRIPTION.PowerfulStrike": "Inflige {0_damage} points de dégâts.",
+  "FQCARDDESCRIPTION.PowerfulStrike": "Inflige {0_damage} points de dégâts.\nX est le nombre de saignements déjà portés par la cible : plus elle saigne, plus vous frappez fort.",
   "FQCARDTITLE.BladeCharging": "Chargement Des Lames",
   "FQCARDDESCRIPTION.BladeCharging": "Vous chargez votre attaque de X, la charge est conservée après votre tour.\nLorsque vous atteignez 12 points de charge, vous piochez une Lame Chargée et vous défaussez cette carte. Le surplus de charge est perdu.\n(Xmax = {0_xmax})",
   "FQCARDTITLE.Sharpening": "Affutage",
@@ -1832,5 +1832,7 @@
   "FQCARDTITLE.RampartBlessing": "Bénédiction du Rempart",
   "FQCARDDESCRIPTION.RampartBlessing": "Carte éphémère : jouée, elle est définitivement détruite.\nDonne {0_heal} points de vie temporaires à tous vos alliés pendant 3 tours.",
   "FQCARDTITLE.InspiredStrike": "Frappe Inspirée",
-  "FQCARDDESCRIPTION.InspiredStrike": "Inflige {0_damage} points de dégâts au contact.\nX est le nombre de vos alliés qui ont touché une cible depuis le début du round : plus ils frappent, plus vous frappez."
+  "FQCARDDESCRIPTION.InspiredStrike": "Inflige {0_damage} points de dégâts au contact.\nX est le nombre de vos alliés qui ont touché une cible depuis le début du round : plus ils frappent, plus vous frappez.",
+  "FQCARDTITLE.GapingWound": "Plaie Béante",
+  "FQCARDDESCRIPTION.GapingWound": "Vous rouvrez les plaies de la cible : inflige {0_damage} dégâts et ouvre deux saignements de plus, qui lui infligent chacun votre modificateur de Force en dégâts par tour pendant 2 tours.\nX est le nombre de saignements qu’elle porte déjà, trois au plus : plus elle saigne, plus le coup porte."
 }
