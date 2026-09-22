@@ -295,9 +295,15 @@
           "class": "elementalist",
           "choices": [
             {
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "int",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-4",
               "mana": "-1",
-              "zeal": "",
+              "zeal": "1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -306,23 +312,33 @@
               "minReach": "3",
               "maxReach": "9",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(1+@int+1d3)[cold]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "int",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Frost",
@@ -331,9 +347,19 @@
                     {
                       "result": "2",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "frost"
+                          "status": "frost",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -341,13 +367,13 @@
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 }
               ],
-              "replayable": "",
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.ray_of_frost.blue",
@@ -356,8 +382,8 @@
               "name": "",
               "messages": [],
               "minions": [],
-              "hasBeenPlayed": false,
-              "customEvals": []
+              "customEvals": [],
+              "hasBeenPlayed": false
             }
           ],
           "level": 1,
@@ -370,15 +396,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1790058602724,
+        "modifiedTime": 1790066387168,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.j4ZuP5eAWzQdkOIh"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.j4ZuP5eAWzQdkOIh",
+      "cards": []
     },
     {
       "_id": "VTHKHIaML2gmihrI",
@@ -685,19 +711,30 @@
           "class": "elementalist",
           "choices": [
             {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-5",
               "mana": "-1",
-              "zeal": "",
+              "zeal": "1",
               "reactive": false,
               "hp": "",
               "draw": "",
               "drop": "",
+              "targetType": "CombatEnemies",
               "minReach": "1",
               "maxReach": "999999999",
               "nbTargets": "999999999",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
               "xmin": "",
@@ -706,6 +743,18 @@
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Fog",
@@ -714,8 +763,10 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
+                          "status": "",
                           "name": "Fog",
                           "img": "icons/magic/air/fog-gas-smoke-gray.webp",
                           "changes": [
@@ -738,6 +789,7 @@
                               "priority": null
                             }
                           ],
+                          "showIcon": 1,
                           "duration": {
                             "value": "3",
                             "units": "rounds"
@@ -750,8 +802,7 @@
                           "key": "FQCARDENGINE.CardMsgFogEffect",
                           "arg": "{\"critical\":\"@wis\",\"evasion\":\"@int\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 },
@@ -766,11 +817,15 @@
                       "data": [
                         {
                           "status": "blinded",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "1",
                             "units": "rounds"
                           },
-                          "expireOnDamage": false
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": []
@@ -778,6 +833,7 @@
                   ]
                 }
               ],
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "!game.user.targets.size || FqCardEngineModule.cond.targetsHaveEffect([\"Air Effect\", \"Earth Effect\"])",
@@ -789,7 +845,7 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.fog_cloud.01.white",
@@ -798,8 +854,7 @@
               "name": "",
               "messages": [],
               "minions": [],
-              "hasBeenPlayed": false,
-              "targetType": "CombatEnemies"
+              "hasBeenPlayed": false
             }
           ],
           "level": 3,
@@ -812,15 +867,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1790058783893,
+        "modifiedTime": 1790066337163,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.wfkVjXjUGpI9ZdYq"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.wfkVjXjUGpI9ZdYq",
+      "cards": []
     },
     {
       "_id": "1Jt458KJrfctzAw5",
@@ -1339,8 +1394,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.KRG93bkjGLjVbXL8",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.KRG93bkjGLjVbXL8"
     },
     {
       "_id": "7EERAiwdiZRV820b",
@@ -1375,9 +1430,15 @@
           "class": "elementalist",
           "choices": [
             {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-7",
               "mana": "-2",
-              "zeal": "-1",
+              "zeal": "+2",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -1386,9 +1447,13 @@
               "minReach": "0",
               "maxReach": "8",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "10 + 3*@cha",
+              "magical": true,
               "bonusCrit": "-9999",
               "bonusEva": "",
               "xmin": "",
@@ -1397,6 +1462,18 @@
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Magic Plastron",
@@ -1408,6 +1485,7 @@
                       "removeEffectName": "",
                       "data": [
                         {
+                          "status": "",
                           "name": "Magic Plastron",
                           "img": "icons/magic/defensive/shield-barrier-flaming-pentagon-blue-yellow.webp",
                           "changes": [
@@ -1424,6 +1502,7 @@
                               "priority": null
                             }
                           ],
+                          "showIcon": 1,
                           "duration": {
                             "value": "3",
                             "units": "rounds"
@@ -1467,6 +1546,7 @@
                   ]
                 }
               ],
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Earth Effect\", \"Frost\"])",
@@ -1478,7 +1558,7 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.shield.01.complete.01.blue",
@@ -1500,15 +1580,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1790059258820,
+        "modifiedTime": 1790066565836,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.7EERAiwdiZRV820b"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.7EERAiwdiZRV820b",
+      "cards": []
     },
     {
       "_id": "cfsCGxWArknKpCYn",
@@ -1543,33 +1623,51 @@
           "class": "elementalist",
           "choices": [
             {
-              "action": "-7",
-              "mana": "-1",
-              "zeal": "",
-              "reactive": false,
-              "hp": "",
-              "draw": "",
-              "drop": "",
-              "minReach": "1",
-              "maxReach": "1",
-              "nbTargets": "",
-              "damage": "(1+@wis+1d4)[thunder]+(1+@int+1d4)[cold]",
-              "magical": true,
-              "heal": "",
-              "bonusCrit": "",
-              "bonusEva": "",
               "hitType": "save",
               "hitSource": "ability",
               "hitAbility": "wis",
               "saveAbility": "con",
               "hitBonus": "",
               "saveDc": "",
+              "action": "-7",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Adjacent",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "(1+@wis+1d4)[thunder]+(1+@int+1d4)[cold]",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Air Effect\", \"Frost\"])",
@@ -1581,17 +1679,16 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "executeEval": "",
               "sound": "",
-              "name": "",
-              "applyEffectsFormulas": [],
-              "messages": [],
-              "minions": [],
-              "targetType": "Adjacent",
               "visual": {
                 "path": "jb2a.ice_spikes.radial.burst.white",
                 "onTarget": true
               },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
               "hasBeenPlayed": false
             }
           ],
@@ -1605,15 +1702,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1790059163346,
+        "modifiedTime": 1790066538360,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.cfsCGxWArknKpCYn"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.cfsCGxWArknKpCYn",
+      "cards": []
     },
     {
       "_id": "Wg3cQAhelVLks3cu",
@@ -2263,8 +2360,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FixHMRps3B939MwE",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FixHMRps3B939MwE"
     },
     {
       "faces": [
@@ -2281,7 +2378,7 @@
       "type": "base",
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 3,
           "level": 4,
           "isInnate": false,
           "class": "elementalist",
@@ -2469,15 +2566,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1790058812676,
+        "modifiedTime": 1790066501026,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.e9muLayxFRouooiW"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.e9muLayxFRouooiW",
+      "cards": []
     },
     {
       "faces": [
@@ -2494,7 +2591,7 @@
       "type": "base",
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 3,
           "level": 4,
           "isInnate": false,
           "class": "elementalist",
@@ -2600,15 +2697,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1790058804248,
+        "modifiedTime": 1790066488131,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.uisrnmTzrbXq3qVe"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.uisrnmTzrbXq3qVe",
+      "cards": []
     },
     {
       "faces": [
@@ -2625,7 +2722,7 @@
       "type": "base",
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 3,
           "level": 4,
           "isInnate": false,
           "class": "elementalist",
@@ -2757,15 +2854,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1790058793475,
+        "modifiedTime": 1790066492624,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.nDiICDtC3fT0bFVm"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.nDiICDtC3fT0bFVm",
+      "cards": []
     },
     {
       "faces": [
@@ -2782,7 +2879,7 @@
       "type": "base",
       "system": {
         "fq": {
-          "maxSameCard": 2,
+          "maxSameCard": 3,
           "level": 4,
           "isInnate": false,
           "class": "elementalist",
@@ -2893,15 +2990,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1790058798823,
+        "modifiedTime": 1790066496849,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.OocP85tAwyaBTmq4"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.OocP85tAwyaBTmq4",
+      "cards": []
     },
     {
       "faces": [
@@ -3178,10 +3275,15 @@
           "class": "elementalist",
           "choices": [
             {
-              "name": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "int",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-8",
               "mana": "-1",
-              "zeal": "",
+              "zeal": "-1",
               "reactive": false,
               "hp": "-(3*XXX)",
               "draw": "",
@@ -3190,23 +3292,33 @@
               "minReach": "1",
               "maxReach": "4",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(XXX*@int+XXXd10)[bludgeoning]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "int",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "1",
               "xmax": "3",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Earth Effect",
@@ -3215,12 +3327,31 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "earth"
+                          "status": "earth",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         },
                         {
-                          "status": "earth"
+                          "status": "earth",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -3232,18 +3363,19 @@
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Earth Effect\",\"turn\":\"4\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 }
               ],
-              "replayable": "",
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.falling_rocks.top.1x1.grey",
                 "onTarget": true
               },
+              "name": "",
               "messages": [],
               "minions": [],
               "customEvals": [],
@@ -3260,15 +3392,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1790059204072,
+        "modifiedTime": 1790066624899,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemColossus01"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemColossus01",
+      "cards": []
     },
     {
       "_id": "FQelemCyclone001",
@@ -3303,9 +3435,15 @@
           "class": "elementalist",
           "choices": [
             {
+              "hitType": "save",
+              "hitSource": "ability",
+              "hitAbility": "wis",
+              "saveAbility": "con",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-7",
               "mana": "-1",
-              "zeal": "",
+              "zeal": "-1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -3319,16 +3457,10 @@
               "zoneAngle": "",
               "zoneWidth": "",
               "damage": "(@wis+1d6)[thunder]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "save",
-              "hitSource": "ability",
-              "hitAbility": "wis",
-              "saveAbility": "con",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "1",
               "xmax": "3",
               "ymin": "",
@@ -3361,12 +3493,12 @@
                           "status": "air",
                           "name": "",
                           "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
                           },
                           "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": []
                         }
                       ],
@@ -3390,24 +3522,24 @@
                           "status": "air",
                           "name": "",
                           "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
                           },
                           "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": []
                         },
                         {
                           "status": "air",
                           "name": "",
                           "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
                           },
                           "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": []
                         }
                       ],
@@ -3431,36 +3563,36 @@
                           "status": "air",
                           "name": "",
                           "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
                           },
                           "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": []
                         },
                         {
                           "status": "air",
                           "name": "",
                           "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
                           },
                           "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": []
                         },
                         {
                           "status": "air",
                           "name": "",
                           "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
                           },
                           "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": []
                         }
                       ],
@@ -3484,48 +3616,48 @@
                           "status": "air",
                           "name": "",
                           "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
                           },
                           "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": []
                         },
                         {
                           "status": "air",
                           "name": "",
                           "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
                           },
                           "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": []
                         },
                         {
                           "status": "air",
                           "name": "",
                           "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
                           },
                           "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": []
                         },
                         {
                           "status": "air",
                           "name": "",
                           "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
                           },
                           "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": []
                         }
                       ],
@@ -3567,15 +3699,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1790059210376,
+        "modifiedTime": 1790066610760,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCyclone001"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCyclone001",
+      "cards": []
     },
     {
       "_id": "FQelemAbsZero001",
@@ -3699,8 +3831,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemAbsZero001",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemAbsZero001"
     },
     {
       "_id": "FQelemGlacial001",
@@ -3733,10 +3865,15 @@
           "class": "elementalist",
           "choices": [
             {
-              "name": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "int",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-11",
               "mana": "-3",
-              "zeal": "-1",
+              "zeal": "-2",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -3745,23 +3882,26 @@
               "minReach": "1",
               "maxReach": "9",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(4*@int + 3d10)[cold]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "int",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -3777,18 +3917,55 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "frost"
+                          "status": "frost",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         },
                         {
-                          "status": "frost"
+                          "status": "frost",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         },
                         {
-                          "status": "frost"
+                          "status": "frost",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         },
                         {
-                          "status": "frost"
+                          "status": "frost",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -3800,8 +3977,7 @@
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Frost\",\"turn\":\"3\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 },
@@ -3816,11 +3992,15 @@
                       "data": [
                         {
                           "status": "paralyzed",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "1",
                             "units": "rounds"
                           },
-                          "expireOnDamage": false
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": []
@@ -3828,12 +4008,7 @@
                   ]
                 }
               ],
-              "messages": [],
-              "minions": [],
-              "replayable": "",
-              "retrieveFromDiscard": "",
-              "destroyFromDiscard": "",
-              "duplicateFromHand": "",
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
@@ -3860,6 +4035,9 @@
                 "path": "jb2a.spell_projectile.ice_shard.blue",
                 "onTarget": true
               },
+              "name": "",
+              "messages": [],
+              "minions": [],
               "hasBeenPlayed": false
             }
           ],
@@ -3873,15 +4051,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788609600000,
-        "modifiedTime": 1790059086646,
+        "modifiedTime": 1790066740552,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlacial001"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlacial001",
+      "cards": []
     },
     {
       "_id": "FQelemSepulcre01",
@@ -4055,8 +4233,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemSepulcre01",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemSepulcre01"
     },
     {
       "_id": "FQelemCycloneEy1",
@@ -4538,10 +4716,15 @@
           "class": "elementalist",
           "choices": [
             {
-              "name": "",
-              "action": "-8",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "int",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-10",
               "mana": "-2",
-              "zeal": "-1",
+              "zeal": "+2",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -4555,22 +4738,21 @@
               "zoneAngle": "",
               "zoneWidth": "",
               "damage": "(3*@int + 1d12)[fire]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "int",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -4586,14 +4768,14 @@
                     {
                       "result": "1",
                       "self": false,
-                      "data": [],
+                      "removeEffectName": "Earth Effect",
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgConsumeEffect",
                           "arg": "{\"effectName\":\"Earth Effect\"}"
                         }
                       ],
-                      "removeEffectName": "Earth Effect"
+                      "data": []
                     }
                   ]
                 },
@@ -4604,18 +4786,55 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "burn"
+                          "status": "burn",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         },
                         {
-                          "status": "burn"
+                          "status": "burn",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         },
                         {
-                          "status": "burn"
+                          "status": "burn",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         },
                         {
-                          "status": "burn"
+                          "status": "burn",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -4623,20 +4842,12 @@
                           "key": "FQCARDENGINE.CardMsgDamageEffect",
                           "arg": "{\"effectName\":\"Burn\",\"damage\":\"4\",\"turn\":\"3\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 }
               ],
-              "messages": [],
-              "minions": [],
               "minionsOnZone": false,
-              "replayable": "",
-              "retrieveFromDiscard": "",
-              "retrieveFromDeck": "",
-              "destroyFromDiscard": "",
-              "duplicateFromHand": "",
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
@@ -4663,6 +4874,9 @@
                 "path": "jb2a.scorching_ray.01.orange",
                 "onTarget": true
               },
+              "name": "",
+              "messages": [],
+              "minions": [],
               "hasBeenPlayed": false
             }
           ],
@@ -4676,7 +4890,7 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1790060875662,
+        "modifiedTime": 1790066800033,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -4894,8 +5108,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlowing402",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlowing402"
     },
     {
       "_id": "FQelemExtreme403",
@@ -4928,10 +5142,15 @@
           "class": "elementalist",
           "choices": [
             {
-              "name": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "int",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-9",
               "mana": "-2",
-              "zeal": "-1",
+              "zeal": "-2",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -4945,22 +5164,21 @@
               "zoneAngle": "",
               "zoneWidth": "",
               "damage": "(4*@int + 2d8)[psychic]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "int",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -4976,14 +5194,14 @@
                     {
                       "result": "1",
                       "self": false,
-                      "data": [],
+                      "removeEffectName": "Burn",
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgConsumeEffect",
                           "arg": "{\"effectName\":\"Burn\"}"
                         }
                       ],
-                      "removeEffectName": "Burn"
+                      "data": []
                     }
                   ]
                 },
@@ -4994,14 +5212,14 @@
                     {
                       "result": "1",
                       "self": false,
-                      "data": [],
+                      "removeEffectName": "Frost",
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgConsumeEffect",
                           "arg": "{\"effectName\":\"Frost\"}"
                         }
                       ],
-                      "removeEffectName": "Frost"
+                      "data": []
                     }
                   ]
                 },
@@ -5016,11 +5234,15 @@
                       "data": [
                         {
                           "status": "deafened",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "2",
                             "units": "rounds"
                           },
-                          "expireOnDamage": false
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": []
@@ -5028,14 +5250,7 @@
                   ]
                 }
               ],
-              "messages": [],
-              "minions": [],
               "minionsOnZone": false,
-              "replayable": "",
-              "retrieveFromDiscard": "",
-              "retrieveFromDeck": "",
-              "destroyFromDiscard": "",
-              "duplicateFromHand": "",
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
@@ -5062,6 +5277,9 @@
                 "path": "jb2a.fireball.explosion.orange",
                 "onTarget": true
               },
+              "name": "",
+              "messages": [],
+              "minions": [],
               "hasBeenPlayed": false
             }
           ],
@@ -5075,7 +5293,7 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1790060756203,
+        "modifiedTime": 1790066481661,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -5229,8 +5447,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemRubbleW404",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemRubbleW404"
     },
     {
       "_id": "FQelemPermafr405",
@@ -5385,8 +5603,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemPermafr405",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemPermafr405"
     },
     {
       "_id": "FQelemSynapse406",
@@ -5566,8 +5784,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemSynapse406",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemSynapse406"
     },
     {
       "_id": "FQelemCurrent407",
@@ -5680,8 +5898,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCurrent407",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCurrent407"
     },
     {
       "_id": "FQelemStokeEm408",
@@ -5714,10 +5932,15 @@
           "class": "elementalist",
           "choices": [
             {
-              "name": "",
+              "hitType": "save",
+              "hitSource": "ability",
+              "hitAbility": "int",
+              "saveAbility": "dex",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-3",
               "mana": "",
-              "zeal": "2",
+              "zeal": "1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -5731,22 +5954,21 @@
               "zoneAngle": "",
               "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "save",
-              "hitSource": "ability",
-              "hitAbility": "int",
-              "saveAbility": "dex",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -5762,12 +5984,31 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "burn"
+                          "status": "burn",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         },
                         {
-                          "status": "burn"
+                          "status": "burn",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -5775,20 +6016,12 @@
                           "key": "FQCARDENGINE.CardMsgDamageEffect",
                           "arg": "{\"effectName\":\"Burn\",\"damage\":\"2\",\"turn\":\"3\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 }
               ],
-              "messages": [],
-              "minions": [],
               "minionsOnZone": false,
-              "replayable": "",
-              "retrieveFromDiscard": "",
-              "retrieveFromDeck": "",
-              "destroyFromDiscard": "",
-              "duplicateFromHand": "",
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Burn\", \"Earth Effect\", \"Air Effect\"])",
@@ -5806,6 +6039,9 @@
                 "path": "jb2a.flames.02.orange",
                 "onTarget": true
               },
+              "name": "",
+              "messages": [],
+              "minions": [],
               "hasBeenPlayed": false
             }
           ],
@@ -5819,7 +6055,7 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1790060598990,
+        "modifiedTime": 1790066410338,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -5984,8 +6220,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemBreathR409",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemBreathR409"
     },
     {
       "_id": "FQelemVolcano411",
@@ -6142,8 +6378,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemVolcano411",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemVolcano411"
     },
     {
       "_id": "FQelemWhirlin412",
@@ -6176,9 +6412,14 @@
           "class": "elementalist",
           "choices": [
             {
-              "name": "",
+              "hitType": "save",
+              "hitSource": "ability",
+              "hitAbility": "wis",
+              "saveAbility": "dex",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-4",
-              "mana": "-2",
+              "mana": "-1",
               "zeal": "-1",
               "reactive": false,
               "hp": "",
@@ -6193,22 +6434,21 @@
               "zoneAngle": "",
               "zoneWidth": "",
               "damage": "(@wis)[fire]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "save",
-              "hitSource": "ability",
-              "hitAbility": "wis",
-              "saveAbility": "dex",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "auto",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -6224,9 +6464,19 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "burn"
+                          "status": "burn",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -6234,20 +6484,12 @@
                           "key": "FQCARDENGINE.CardMsgDamageEffect",
                           "arg": "{\"effectName\":\"Burn\",\"damage\":\"1\",\"turn\":\"3\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 }
               ],
-              "messages": [],
-              "minions": [],
               "minionsOnZone": false,
-              "replayable": "auto",
-              "retrieveFromDiscard": "",
-              "retrieveFromDeck": "",
-              "destroyFromDiscard": "",
-              "duplicateFromHand": "",
               "customEvals": [
                 {
                   "script": "!game.user.targets.size || FqCardEngineModule.cond.targetsHaveAllEffects([\"Burn\", \"Air Effect\"])",
@@ -6265,6 +6507,9 @@
                 "path": "jb2a.flames.02.orange",
                 "onTarget": true
               },
+              "name": "",
+              "messages": [],
+              "minions": [],
               "hasBeenPlayed": false
             }
           ],
@@ -6278,15 +6523,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1790059468600,
+        "modifiedTime": 1790066679177,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemWhirlin412"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemWhirlin412",
+      "cards": []
     },
     {
       "_id": "FQelemTelluri414",
@@ -6319,10 +6564,15 @@
           "class": "elementalist",
           "choices": [
             {
-              "name": "",
+              "hitType": "save",
+              "hitSource": "ability",
+              "hitAbility": "int",
+              "saveAbility": "dex",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-10",
               "mana": "-3",
-              "zeal": "-1",
+              "zeal": "-2",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -6336,22 +6586,21 @@
               "zoneAngle": "",
               "zoneWidth": "",
               "damage": "(@int + 2*XXX + 1d8)[force]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "save",
-              "hitSource": "ability",
-              "hitAbility": "int",
-              "saveAbility": "dex",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "SCRIPT:FqCardEngineModule.cond.combatEnemiesEffectCount([\"Burn\", \"Frost\", \"Earth Effect\", \"Air Effect\"])",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -6367,9 +6616,19 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "earth"
+                          "status": "earth",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -6381,8 +6640,7 @@
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Earth Effect\",\"turn\":\"4\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 },
@@ -6393,9 +6651,19 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "air"
+                          "status": "air",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -6407,20 +6675,12 @@
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{\"effectName\":\"Air Effect\",\"turn\":\"2\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 }
               ],
-              "messages": [],
-              "minions": [],
               "minionsOnZone": false,
-              "replayable": "",
-              "retrieveFromDiscard": "",
-              "retrieveFromDeck": "",
-              "destroyFromDiscard": "",
-              "duplicateFromHand": "",
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsHaveAllEffects([\"Earth Effect\", \"Air Effect\"])",
@@ -6438,6 +6698,9 @@
                 "path": "jb2a.falling_rocks.top.1x1.grey",
                 "onTarget": true
               },
+              "name": "",
+              "messages": [],
+              "minions": [],
               "hasBeenPlayed": false
             }
           ],
@@ -6451,7 +6714,7 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1790060621155,
+        "modifiedTime": 1790066474350,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -6492,10 +6755,15 @@
           "class": "elementalist",
           "choices": [
             {
-              "name": "",
+              "hitType": "save",
+              "hitSource": "ability",
+              "hitAbility": "int",
+              "saveAbility": "dex",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-6",
-              "mana": "-2",
-              "zeal": "",
+              "mana": "-1",
+              "zeal": "-1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -6509,22 +6777,21 @@
               "zoneAngle": "",
               "zoneWidth": "1",
               "damage": "(@int + 1d6)[cold]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "save",
-              "hitSource": "ability",
-              "hitAbility": "int",
-              "saveAbility": "dex",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -6540,9 +6807,19 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "frost"
+                          "status": "frost",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -6550,27 +6827,22 @@
                           "key": "FQCARDENGINE.CardMsgTemporaryEffect",
                           "arg": "{ \"effectName\": \"Frost\",  \"turn\": \"3\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 }
               ],
-              "messages": [],
-              "minions": [],
               "minionsOnZone": false,
-              "replayable": "",
-              "retrieveFromDiscard": "",
-              "retrieveFromDeck": "",
-              "destroyFromDiscard": "",
-              "duplicateFromHand": "",
-              "customEvals": [],
               "executeEval": "FqCardEngineModule.walls.fromZone(cardContent, {strokeColor: \"#bfe9ff\"});",
               "sound": "",
               "visual": {
                 "path": "jb2a.ice_spikes.radial.burst.white",
                 "onTarget": true
               },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
               "hasBeenPlayed": false
             }
           ],
@@ -6584,7 +6856,7 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1790060611379,
+        "modifiedTime": 1790066428302,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -6769,8 +7041,8 @@
       },
       "width": null,
       "height": null,
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemWhiteNe416",
-      "cards": []
+      "cards": [],
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemWhiteNe416"
     }
   ],
   "width": null,
