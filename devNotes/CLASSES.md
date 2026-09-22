@@ -22,7 +22,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - Rajouter des images
 - Pour chaque classe, dans l'ordre :
   - [x] Revoir les stats FQ
-  - [ ] Répartir les classes du niveau 1 à 12 plus remplir les eventuelle trous -> Gardian (avec premier équilibrage des coûts action mana zèle) -> Moine (1)
+  - [ ] Répartir les classes du niveau 1 à 12 plus remplir les eventuelle trous -> Elementaliste (avec premier équilibrage des coûts action mana zèle) -> Moine (1)
   - [ ] IA - Points sur les coûts ET dégâts/heal et à chaque niveau ( Étape 4) 
   - [ ] Rééquilibrage manuel
   - [ ] Revoir les types d'attaques (Attaque, sauvegarde, dégâts bruts)
@@ -383,36 +383,6 @@ Détail des cartes :
 - Doit rester au contact pour soigner : aucun soin à distance, aucun soin de zone.
 - Son auto-soin de tempo (Méditation Zen) ne rend plus que des PV temporaires : ce qui dépasse est perdu au bout d'un tour.
 
-### Constat des cartes (données)
-- **39 cartes réparties sur N1‑N12**, coût moyen 5,2 PA et 15 cartes à 1‑4 PA — la 2e plus grande densité de cartes peu chères, cohérent avec son jeu de volume.
-- Économie de zèle : 20 générateurs / 13 consommateurs (contre 17/13 avant le lot), grâce à Paume Curative et Posture du Roseau. Coût moyen 5,6 PA.
-- 79 exemplaires. `maxSameCard` lourds : Coup Droit ×6, Uppercut ×6, Coup Gauche ×5, Paume Curative ×4, Posture du Roseau ×3.
-- Deux axes opposés apparaissent dans les cartes N13 : « **main pleine** » (X = cartes en main) et « **cadence** » (X = cartes déjà jouées ce round).
-- Mana : 5,5 au N1 alors que Coup Gauche, Combo, Uppercut, Lame Fantôme, Dissimulation, Sillage Curatif coûtent du mana.
-
-### Cartes du lot 2026‑09‑20
-- **Paume Curative** (N6, ×4) — nouvelle carte, reprend le nom et l'illustration de l'ancienne : petit soin au contact (`1 + ceil(@dex/2)`, calibré sur la grille ≈ 1 soin/PA), **+1 zèle**, 3 PA, sans mana. Le pendant soin de Coup Droit, même coût et même patron de formule.
-- **Paume De Jade** (N13, ×2) — l'ancienne Paume Curative, conservée et améliorée (X max 2 → 3, soin +2, et X PV de soin personnel). **Illustration à faire** (sur `in_progress.png`).
-- **Sillage Curatif** (N13, ×1) — le pendant soin de Déplacement Éclair. **Illustration à faire**.
-- **Posture Du Roseau** (N13, ×3) — +1 esquive définitive et +1 zèle, contre −1 dégâts pendant 1 tour. **Illustration à faire**.
-- **Méditation Zen** — les PV rendus deviennent temporaires pendant 1 tour.
-- **Sérénité Pleine** — ajoute X en esquive jusqu'au prochain tour, X = cartes restant en main.
-
-### Redondances à trancher
-- Gain de PA : Hyperactivité / Vacuité / Souffle de Ki.
-- Gain de zèle : Ferveur Intérieure / Élan Martial / Maître du Chi / Souffle Perpétuel (+ Montée de Zèle générée).
-- Pioche : Cycle du Souffle / Second Souffle / Lecture du Souffle / Souffle de Ki.
-- Soin au contact à portée 1 : Paume Curative / Paume De Jade / Bague de Soins / Transfert de Soins — quatre cartes pour le même geste, à différencier ou à fusionner.
-- *(résolue par le lot)* Soin personnel : Sérénité Pleine (soin + esquive) / Méditation Zen (PV temporaires) / Vive-Esquive (réactif) sont maintenant trois effets distincts.
-
-### Incohérences relevées
-
-
-### À définir à la main
-- **Spécificités** :
-- **Spécialisations** :
-- **Contraintes** :
-
 **Questionnement et TODO :**
 ---
 
@@ -494,34 +464,12 @@ Combos par paire d'éléments (à réduire à ~2 par paire) :
 
 Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, Incantation, Propagation des Dégâts, Assassin du Néant, Missiles Magiques +, Lecture des Courants, Repli du Souffle.
 
-### Cartes retirées (élagage du 2026‑09‑20)
-Quatre cartes supprimées du deck, des `lang/fr.json` et `lang/en.json` (**47 → 43 cartes, 94 → 86 exemplaires**) :
-- **Sceau Thermique** (N13, ×2) — troisième carte de la paire Feu + Givre, ramenée à 2 comme les autres paires.
-- **Chaleur Résiduelle** (N13, ×3) — quatrième carte du moule « nécessite 1 élément parmi 3 », doublon de Captation de Mana, et la seule des quatre à **coûter** du zèle dans une classe qui en manque.
-- **Brasier Ardent** (N13, ×2) — 1d4 de dégâts : son seul métier réel était d'empiler de la brûlure, ce qu'Attiser les Braises fait pour 3 PA fixes, sans mana et en rendant 2 zèle ; comme amorce, Main Brûlante fait mieux pour moins cher, en piochant en plus.
-- **Immolation Absolue** (N13, ×1) — l'ultime du Feu, exigeait **8 effets de brûlure** sur une seule cible et la défausse de 4 cartes pour 12 PA / 3 mana / 2 zèle.
-
-**Boule de Feu est promue ultime du Feu** à la place d'Immolation Absolue, sur le gabarit de Cyclone (l'autre ultime de zone) : porte à **3 effets de brûlure sur une cible de la zone** — trois fois moins exigeante que les 8 d'Immolation, et atteignable dès un Trait de Feu ou un Attiser les Braises —, défausse de 3 cartes, **14 PA / 4 mana / 2 zèle** (la plus chère des quatre), dégâts portés de `2*@wis + 2d8` à `4*@wis + 3d10`, et **4 effets de brûlure** au lieu de 3. Les quatre éléments ont de nouveau leur ultime.
-
-D'autres coupes ont été proposées et **non retenues pour l'instant** : Missiles Magiques + (aucun élément, 16 PA / 4 mana / 4 zèle), Assassin du Néant (scale sur DEX, jamais montée), Givrefeu (condition en OU, 9 PA au N2), Traînée Ardente (cône partant de sa propre case, pour un personnage à d4 de PV), Mur de Givre (mur permanent arbitré par le MJ), Incantation (banque de PA sans élément).
-
-**Illustrations récupérées** : les deux images des cartes supprimées ont été renommées et réaffectées à des cartes qui étaient restées sur `in_progress.png` —
-- `burningtrail.png` → `burning_trail.png`, donnée à **Traînée Ardente** (l'image montre un cône de feu projeté depuis les mains du lanceur : c'est exactement sa zone) ;
-- `AbsoluteImmolation.png` → `whirling_blaze.png`, donnée à **Brasier Tournant** (l'image est une tornade de feu au-dessus d'un sol en fusion : c'est le brasier qui se rattise seul et frappe tout le champ de bataille). Cœur du Volcan était l'autre candidate, mais l'image n'a rien de localisé sous une cible unique.
-
 ### Redondances à trancher
 - Paires à 3 cartes (Feu+Terre, Feu+Air, Givre+Air) : garder 2 par paire. *(Feu+Givre : fait)*
 - Utilitaires N13 qui se recoupent : Lecture des Courants (pioche) / Captation de Mana (mana). *(Chaleur Résiduelle retirée)*
 - Ultimes (Boule de Feu, Éternité, Sépulcre, Cyclone) : bons candidats pour les N10‑N12, un par élément.
 
-### À définir à la main
-- **Spécificités** :
-- **Spécialisations** :
-- **Contraintes** :
-
 **Questionnement et TODO :**
-- TROP DE SORTS générés : à réduire ?
-
 ---
 
 ## Trapper

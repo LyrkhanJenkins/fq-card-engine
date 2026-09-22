@@ -97,25 +97,25 @@
             }
           ],
           "maxSameCard": 4,
-          "level": 15,
+          "level": 1,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690795,
+        "modifiedTime": 1790058643532,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.Q9RFeGNVatgXv0DI"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.Q9RFeGNVatgXv0DI",
+      "cards": []
     },
     {
       "_id": "LiV3GfFpzwkGxlbt",
@@ -241,26 +241,26 @@
               "targetType": "Default"
             }
           ],
-          "maxSameCard": 5,
-          "level": 16,
+          "maxSameCard": 4,
+          "level": 1,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690795,
+        "modifiedTime": 1790058627126,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.LiV3GfFpzwkGxlbt"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.LiV3GfFpzwkGxlbt",
+      "cards": []
     },
     {
       "_id": "j4ZuP5eAWzQdkOIh",
@@ -291,7 +291,7 @@
       },
       "system": {
         "fq": {
-          "maxSameCard": 5,
+          "maxSameCard": 4,
           "class": "elementalist",
           "choices": [
             {
@@ -360,25 +360,25 @@
               "customEvals": []
             }
           ],
-          "level": 14,
+          "level": 1,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690795,
+        "modifiedTime": 1790058602724,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.j4ZuP5eAWzQdkOIh"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.j4ZuP5eAWzQdkOIh",
+      "cards": []
     },
     {
       "_id": "VTHKHIaML2gmihrI",
@@ -518,26 +518,26 @@
               "targetType": "Default"
             }
           ],
-          "maxSameCard": 5,
-          "level": 13,
+          "maxSameCard": 4,
+          "level": 1,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1788693343254,
+        "modifiedTime": 1790058595115,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.VTHKHIaML2gmihrI"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.VTHKHIaML2gmihrI",
+      "cards": []
     },
     {
       "_id": "acQlsztKO3v9QLTn",
@@ -632,25 +632,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 18,
+          "level": 2,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690796,
+        "modifiedTime": 1790058747631,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.acQlsztKO3v9QLTn"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.acQlsztKO3v9QLTn",
+      "cards": []
     },
     {
       "_id": "wfkVjXjUGpI9ZdYq",
@@ -802,25 +802,25 @@
               "targetType": "CombatEnemies"
             }
           ],
-          "level": 17,
+          "level": 3,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690797,
+        "modifiedTime": 1790058783893,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.wfkVjXjUGpI9ZdYq"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.wfkVjXjUGpI9ZdYq",
+      "cards": []
     },
     {
       "_id": "1Jt458KJrfctzAw5",
@@ -933,25 +933,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 3,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690797,
+        "modifiedTime": 1790058772986,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.1Jt458KJrfctzAw5"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.1Jt458KJrfctzAw5",
+      "cards": []
     },
     {
       "_id": "jzkcUigO0lx6X86a",
@@ -1066,25 +1066,25 @@
               "zoneSize": "3"
             }
           ],
-          "level": 17,
+          "level": 6,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690797,
+        "modifiedTime": 1790059146171,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.jzkcUigO0lx6X86a"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.jzkcUigO0lx6X86a",
+      "cards": []
     },
     {
       "_id": "HRqJ4fy9LSxQvUY8",
@@ -1171,25 +1171,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 18,
+          "level": 10,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690797,
+        "modifiedTime": 1790059287686,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.HRqJ4fy9LSxQvUY8"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.HRqJ4fy9LSxQvUY8",
+      "cards": []
     },
     {
       "_id": "KRG93bkjGLjVbXL8",
@@ -1298,25 +1298,25 @@
               "chooseCardsList": "fq-card-engine.decks-pattern-fq8.Elementalist Generated.FQCARDTITLE.Incantation"
             }
           ],
-          "level": 18,
+          "level": 3,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690798,
+        "modifiedTime": 1790058856620,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.KRG93bkjGLjVbXL8"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.KRG93bkjGLjVbXL8",
+      "cards": []
     },
     {
       "_id": "7EERAiwdiZRV820b",
@@ -1466,25 +1466,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 7,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690798,
+        "modifiedTime": 1790059258820,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.7EERAiwdiZRV820b"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.7EERAiwdiZRV820b",
+      "cards": []
     },
     {
       "_id": "cfsCGxWArknKpCYn",
@@ -1571,25 +1571,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 6,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690798,
+        "modifiedTime": 1790059163346,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.cfsCGxWArknKpCYn"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.cfsCGxWArknKpCYn",
+      "cards": []
     },
     {
       "_id": "Wg3cQAhelVLks3cu",
@@ -1705,25 +1705,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 7,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690798,
+        "modifiedTime": 1790059263892,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.Wg3cQAhelVLks3cu"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.Wg3cQAhelVLks3cu",
+      "cards": []
     },
     {
       "_id": "3unjv6bIUcJEI5P7",
@@ -1848,25 +1848,25 @@
               "chooseCardsList": "fq-card-engine.decks-pattern-fq8.Elementalist Generated.FQCARDTITLE.DamagePropagation"
             }
           ],
-          "level": 18,
+          "level": 6,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690799,
+        "modifiedTime": 1790059154520,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.3unjv6bIUcJEI5P7"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.3unjv6bIUcJEI5P7",
+      "cards": []
     },
     {
       "faces": [
@@ -1884,7 +1884,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 18,
+          "level": 2,
           "isInnate": true,
           "class": "elementalist",
           "choices": [
@@ -2227,20 +2227,20 @@
       "sort": 300000,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690799,
+        "modifiedTime": 1790058667818,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FixHMRps3B939MwE"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FixHMRps3B939MwE",
+      "cards": []
     },
     {
       "faces": [
@@ -2258,7 +2258,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 16,
+          "level": 4,
           "isInnate": false,
           "class": "elementalist",
           "choices": [
@@ -2440,20 +2440,20 @@
       "sort": 400000,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690799,
+        "modifiedTime": 1790058812676,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.e9muLayxFRouooiW"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.e9muLayxFRouooiW",
+      "cards": []
     },
     {
       "faces": [
@@ -2471,7 +2471,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 15,
+          "level": 4,
           "isInnate": false,
           "class": "elementalist",
           "choices": [
@@ -2571,20 +2571,20 @@
       "sort": 500000,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690800,
+        "modifiedTime": 1790058804248,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.uisrnmTzrbXq3qVe"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.uisrnmTzrbXq3qVe",
+      "cards": []
     },
     {
       "faces": [
@@ -2602,7 +2602,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 13,
+          "level": 4,
           "isInnate": false,
           "class": "elementalist",
           "choices": [
@@ -2728,20 +2728,20 @@
       "sort": 600000,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690800,
+        "modifiedTime": 1790058793475,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.nDiICDtC3fT0bFVm"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.nDiICDtC3fT0bFVm",
+      "cards": []
     },
     {
       "faces": [
@@ -2759,7 +2759,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 14,
+          "level": 4,
           "isInnate": false,
           "class": "elementalist",
           "choices": [
@@ -2864,20 +2864,20 @@
       "sort": 700000,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690800,
+        "modifiedTime": 1790058798823,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.OocP85tAwyaBTmq4"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.OocP85tAwyaBTmq4",
+      "cards": []
     },
     {
       "faces": [
@@ -2895,7 +2895,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 18,
+          "level": 11,
           "isInnate": false,
           "class": "elementalist",
           "choices": [
@@ -2967,20 +2967,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690801,
+        "modifiedTime": 1790059282386,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.wXVcNbJUneiuE1SV"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.wXVcNbJUneiuE1SV",
+      "cards": []
     },
     {
       "_id": "FQelemFireball01",
@@ -3101,25 +3101,25 @@
               "zoneSize": "2"
             }
           ],
-          "level": 13,
+          "level": 12,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1788693362099,
+        "modifiedTime": 1790059016444,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemFireball01"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemFireball01",
+      "cards": []
     },
     {
       "_id": "FQelemColossus01",
@@ -3226,25 +3226,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 15,
+          "level": 9,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1788694212234,
+        "modifiedTime": 1790059204072,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemColossus01"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemColossus01",
+      "cards": []
     },
     {
       "_id": "FQelemCyclone001",
@@ -3533,25 +3533,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 16,
+          "level": 9,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1788890204163,
+        "modifiedTime": 1790059210376,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCyclone001"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCyclone001",
+      "cards": []
     },
     {
       "_id": "FQelemAbsZero001",
@@ -3658,25 +3658,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 14,
+          "level": 9,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690797,
+        "modifiedTime": 1790059217002,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemAbsZero001"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemAbsZero001",
+      "cards": []
     },
     {
       "_id": "FQelemGlacial001",
@@ -3839,25 +3839,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 14,
+          "level": 12,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788609600000,
-        "modifiedTime": 1788890036775,
+        "modifiedTime": 1790059086646,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlacial001"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlacial001",
+      "cards": []
     },
     {
       "_id": "FQelemSepulcre01",
@@ -4014,25 +4014,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 15,
+          "level": 12,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
-        "lastModifiedBy": "GkukoBpykcafjbri",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788609600000,
-        "modifiedTime": 1788609600000,
+        "modifiedTime": 1790059092306,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemSepulcre01"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemSepulcre01",
+      "cards": []
     },
     {
       "_id": "FQelemCycloneEy1",
@@ -4163,25 +4163,25 @@
               "zoneSize": "2"
             }
           ],
-          "level": 16,
+          "level": 12,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788609600000,
-        "modifiedTime": 1788890011866,
+        "modifiedTime": 1790059077099,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCycloneEy1"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCycloneEy1",
+      "cards": []
     },
     {
       "_id": "fq13ElemGust01Az",
@@ -4322,25 +4322,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 16,
+          "level": 7,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788685199085,
-        "modifiedTime": 1788693675458,
+        "modifiedTime": 1790059180523,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.fq13ElemGust01Az"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.fq13ElemGust01Az",
+      "cards": []
     },
     {
       "_id": "fq13ElemTrail02B",
@@ -4463,25 +4463,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 13,
+          "level": 9,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788685199085,
-        "modifiedTime": 1788693962294,
+        "modifiedTime": 1790059198666,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.fq13ElemTrail02B"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.fq13ElemTrail02B",
+      "cards": []
     },
     {
       "_id": "FQelemCalcina401",
@@ -4642,25 +4642,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 8,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059324426,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCalcina401"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCalcina401",
+      "cards": []
     },
     {
       "_id": "FQelemGlowing402",
@@ -4853,25 +4853,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 10,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059378912,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlowing402"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemGlowing402",
+      "cards": []
     },
     {
       "_id": "FQelemExtreme403",
@@ -5041,25 +5041,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 5,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059006696,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemExtreme403"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemExtreme403",
+      "cards": []
     },
     {
       "_id": "FQelemRubbleW404",
@@ -5188,25 +5188,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 6,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059518463,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemRubbleW404"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemRubbleW404",
+      "cards": []
     },
     {
       "_id": "FQelemPermafr405",
@@ -5344,25 +5344,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 10,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059387765,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemPermafr405"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemPermafr405",
+      "cards": []
     },
     {
       "_id": "FQelemSynapse406",
@@ -5525,25 +5525,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 8,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059332545,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemSynapse406"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemSynapse406",
+      "cards": []
     },
     {
       "_id": "FQelemCurrent407",
@@ -5572,7 +5572,7 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 3,
+          "maxSameCard": 5,
           "class": "elementalist",
           "choices": [
             {
@@ -5639,25 +5639,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 18,
+          "level": 8,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059300687,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCurrent407"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemCurrent407",
+      "cards": []
     },
     {
       "_id": "FQelemStokeEm408",
@@ -5785,25 +5785,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 13,
+          "level": 2,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790058902591,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemStokeEm408"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemStokeEm408",
+      "cards": []
     },
     {
       "_id": "FQelemBreathR409",
@@ -5943,25 +5943,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 18,
+          "level": 8,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059443136,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemBreathR409"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemBreathR409",
+      "cards": []
     },
     {
       "_id": "FQelemVolcano411",
@@ -6101,25 +6101,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 11,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059356452,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemVolcano411"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemVolcano411",
+      "cards": []
     },
     {
       "_id": "FQelemWhirlin412",
@@ -6244,25 +6244,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 10,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059468600,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemWhirlin412"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemWhirlin412",
+      "cards": []
     },
     {
       "_id": "FQelemTelluri414",
@@ -6417,25 +6417,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 5,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790058999250,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemTelluri414"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemTelluri414",
+      "cards": []
     },
     {
       "_id": "FQelemIceWall415",
@@ -6550,25 +6550,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 14,
+          "level": 5,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059130878,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemIceWall415"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemIceWall415",
+      "cards": []
     },
     {
       "_id": "FQelemWhiteNe416",
@@ -6728,25 +6728,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 17,
+          "level": 11,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789171200000,
-        "modifiedTime": 1789171200000,
+        "modifiedTime": 1790059363193,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemWhiteNe416"
+      "_key": "!cards.cards!mRziAmAOW06QjB3b.FQelemWhiteNe416",
+      "cards": []
     }
   ],
   "width": null,

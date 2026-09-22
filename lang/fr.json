@@ -934,7 +934,7 @@
   "FQCARDTITLE.ZealousShield": "Bouclier Zélé",
   "FQCARDDESCRIPTION.ZealousShield": "Coût supplémentaire : \n-2 points d’action au prochain tour\nLorsque vous subissez un sort quelconque, gagnez 2 points de zèle, plus @cha",
   "FQCARDTITLE.PhantomBlade": "Lame Fantôme",
-  "FQCARDDESCRIPTION.PhantomBlade": "Inflige {0_damage} points de dégâts avec @str en critique supplémentaire pour cette attaque",
+  "FQCARDDESCRIPTION.PhantomBlade": "Inflige {0_damage} points de dégâts avec 6 points de critique supplémentaires pour cette attaque, plus @str",
   "FQCARDTITLE.Concealment": "Dissimulation",
   "FQCARDDESCRIPTION.Concealment": "Vous êtes invisible et intouchable, et votre déplacement est augmenté de 4 jusqu’à la fin de votre prochain tour. \nLes dégâts à votre prochain tour uniquement seront augmentés d’un dé dont le nombre de faces correspond à votre Dextérité\nVous ne pouvez infliger de dégâts ce tour-ci",
   "FQCARDTITLE.KiBreath": "Souffle De Ki",
@@ -1574,7 +1574,7 @@
   "FQCARDTITLE.ThousandLeavesPalm": "Paume Des Mille Feuilles",
   "FQCARDDESCRIPTION.ThousandLeavesPalm": "Inflige {0_damage} points de dégâts à toutes les cibles adjacentes, X étant le nombre de cartes restant dans votre main.",
   "FQCARDTITLE.InnerFervor": "Ferveur Intérieure",
-  "FQCARDDESCRIPTION.InnerFervor": "Gagnez autant de points de zèle que de cartes restant dans votre main.",
+  "FQCARDDESCRIPTION.InnerFervor": "Gagnez autant de points de zèle que la moitié des cartes restantes dans votre main.",
   "FQCARDTITLE.Cadence": "Cadence",
   "FQCARDDESCRIPTION.Cadence": "Inflige {0_damage} points de dégâts, X étant le nombre de cartes déjà jouées ce round.",
   "FQCARDTITLE.BreathCycle": "Cycle Du Souffle",
@@ -1836,5 +1836,7 @@
   "FQCARDTITLE.Hook": "Crochet",
   "FQCARDDESCRIPTION.Hook": "Inflige {0_damage} points de dégâts et vous rapporte 1d2 points de zèle.\nVous pouvez rejouer une fois cette carte si vous avez déjà dépensé 4 points d’action ce tour-ci.",
   "FQCARDTITLE.DawnPalm": "Paume de l’Aube",
-  "FQCARDDESCRIPTION.DawnPalm": "Vous posez la paume et laissez passer tout ce qu’il vous reste : dépensez X points d’action et rendez X points de vie à une cible au contact.\nAucun plafond : tout le budget du tour peut y passer."
+  "FQCARDDESCRIPTION.DawnPalm": "Vous posez la paume et laissez passer tout ce qu’il vous reste : dépensez X points d’action et rendez X points de vie à une cible au contact.\nAucun plafond : tout le budget du tour peut y passer.",
+  "FQCARDTITLE.SecretRemedies": "Remèdes Secrets",
+  "FQCARDDESCRIPTION.SecretRemedies": "Réactif : défaussez-vous de X cartes et rendez {0_heal} points de vie à une cible située à 6 cases ou moins, vous compris.\nAucun plafond : toute la main peut y passer."
 }

@@ -934,7 +934,7 @@
   "FQCARDTITLE.ZealousShield": "Zealous Shield",
   "FQCARDDESCRIPTION.ZealousShield": "Additional cost:\n-2 action points on the next turn.\nWhen you receive any spell, gain 2 zeal points, plus @cha.",
   "FQCARDTITLE.PhantomBlade": "Phantom Blade",
-  "FQCARDDESCRIPTION.PhantomBlade": "Deals {0_damage} damage with @str as additional critical score for this attack.",
+  "FQCARDDESCRIPTION.PhantomBlade": "Deals {0_damage} damage with 6 additional points of critical score for this attack, plus @str.",
   "FQCARDTITLE.Concealment": "Concealment",
   "FQCARDDESCRIPTION.Concealment": "You are invisible and untouchable, and your movement is increased by 4 until the end of your next turn.\nDamage on your next turn only will be increased by a die whose number of sides matches your Dexterity.\nYou cannot deal damage this turn.",
   "FQCARDTITLE.KiBreath": "Ki Breath",
@@ -1574,7 +1574,7 @@
   "FQCARDTITLE.ThousandLeavesPalm": "Thousand Leaves Palm",
   "FQCARDDESCRIPTION.ThousandLeavesPalm": "Deals {0_damage} damage to every adjacent target, X being the number of cards remaining in your hand.",
   "FQCARDTITLE.InnerFervor": "Inner Fervor",
-  "FQCARDDESCRIPTION.InnerFervor": "Gain as many zeal points as cards remaining in your hand.",
+  "FQCARDDESCRIPTION.InnerFervor": "Gain as many zeal points as half of remaining cards in your hand.",
   "FQCARDTITLE.Cadence": "Cadence",
   "FQCARDDESCRIPTION.Cadence": "Deals {0_damage} damage, X being the number of cards already played this round.",
   "FQCARDTITLE.BreathCycle": "Breath Cycle",
@@ -1836,5 +1836,7 @@
   "FQCARDTITLE.Hook": "Hook",
   "FQCARDDESCRIPTION.Hook": "Deals {0_damage} damage and grants you 1d2 zeal points.\nYou may play this card again if you have already spent 4 action points this turn.",
   "FQCARDTITLE.DawnPalm": "Dawn Palm",
-  "FQCARDDESCRIPTION.DawnPalm": "You lay your palm and let through everything you have left: spend X action points and restore X hit points to a target in contact.\nNo cap: the whole turn's budget can go into it."
+  "FQCARDDESCRIPTION.DawnPalm": "You lay your palm and let through everything you have left: spend X action points and restore X hit points to a target in contact.\nNo cap: the whole turn's budget can go into it.",
+  "FQCARDTITLE.SecretRemedies": "Secret Remedies",
+  "FQCARDDESCRIPTION.SecretRemedies": "Reactive: discard X cards and restore {0_heal} hit points to a target within 6 tiles, yourself included.\nNo cap: your whole hand can go into it."
 }

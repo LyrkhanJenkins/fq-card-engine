@@ -33,10 +33,16 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 3,
+          "maxSameCard": 99,
           "class": "elementalist",
           "choices": [
             {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-(XXX)",
               "mana": "",
               "zeal": "",
@@ -44,12 +50,17 @@
               "hp": "",
               "draw": "",
               "drop": "",
+              "targetType": "Default",
               "minReach": "",
               "maxReach": "",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
               "xmin": "",
@@ -58,6 +69,18 @@
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "passif",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Incantation",
@@ -65,8 +88,11 @@
                   "effects": [
                     {
                       "result": "1",
+                      "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
+                          "status": "",
                           "name": "Incantation +XXX",
                           "img": "icons/magic/symbols/runes-carved-stone-yellow.webp",
                           "changes": [
@@ -77,6 +103,7 @@
                               "priority": null
                             }
                           ],
+                          "showIcon": 1,
                           "duration": {
                             "value": "1",
                             "units": "rounds"
@@ -89,38 +116,36 @@
                           "key": "FQCARDENGINE.CardMsgIncantationEffect",
                           "arg": "{\"action\": \"XXX\"}"
                         }
-                      ],
-                      "self": false,
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 }
               ],
-              "replayable": "passif",
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "modules/fq-card-engine/sounds/specific_spells/incantation.mp3",
-              "name": "",
-              "messages": [],
-              "minions": [],
-              "customEvals": [],
-              "targetType": "Default",
               "visual": {
                 "path": "jb2a.magic_signs.circle.02.transmutation.intro.yellow",
                 "onTarget": false
               },
-              "hasBeenPlayed": true
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
             }
           ],
-          "level": 4,
+          "level": 1,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690798,
+        "modifiedTime": 1790056645172,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
@@ -159,10 +184,16 @@
       "value": null,
       "system": {
         "fq": {
-          "maxSameCard": 1,
+          "maxSameCard": 99,
           "class": "elementalist",
           "choices": [
             {
+              "hitType": "save",
+              "hitSource": "ability",
+              "hitAbility": "int",
+              "saveAbility": "con",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "",
               "mana": "",
               "zeal": "",
@@ -170,26 +201,37 @@
               "hp": "",
               "draw": "",
               "drop": "",
+              "targetType": "Default",
               "minReach": "1",
               "maxReach": "9",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "save",
-              "hitSource": "ability",
-              "hitAbility": "int",
-              "saveAbility": "con",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "passif",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Damage Propagation",
@@ -198,8 +240,10 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
+                          "status": "",
                           "name": "Damage Propagation",
                           "img": "icons/magic/sonic/explosion-impact-shock-wave.webp",
                           "changes": [
@@ -210,6 +254,7 @@
                               "priority": null
                             }
                           ],
+                          "showIcon": 1,
                           "duration": {
                             "value": "3",
                             "units": "rounds"
@@ -222,12 +267,12 @@
                           "key": "FQCARDENGINE.CardMsgDamagePropagationEffect",
                           "arg": "{\"damage\": \"@wis\"}"
                         }
-                      ],
-                      "removeEffectName": ""
+                      ]
                     }
                   ]
                 }
               ],
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.lastPlayedDamageCardOnOtherTarget()",
@@ -239,7 +284,7 @@
                   ]
                 }
               ],
-              "replayable": "passif",
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.chain_lightning.primary.blue",
@@ -248,21 +293,20 @@
               "name": "",
               "messages": [],
               "minions": [],
-              "hasBeenPlayed": true,
-              "targetType": "Default"
+              "hasBeenPlayed": false
             }
           ],
-          "level": 4,
+          "level": 1,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786109690791,
-        "modifiedTime": 1786109690799,
+        "modifiedTime": 1790056653222,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
