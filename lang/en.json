@@ -989,7 +989,7 @@
   "FQCARDTITLE.TamedWolf": "Tamed Wolf",
   "FQCARDDESCRIPTION.TamedWolf": "Summons a wolf on an adjacent square, which acts immediately after your turn.\n10 hit points, plus @cha; 1d6 damage, plus a third of your Charisma (melee); 4 movement, plus half your Charisma",
   "FQCARDTITLE.ExplosiveShot": "Explosive Shot",
-  "FQCARDDESCRIPTION.ExplosiveShot": "Place a 1-tile-radius area.\nDeals {0_damage} damage to covered targets.",
+  "FQCARDDESCRIPTION.ExplosiveShot": "Place a 3-tiles-radius area.\nDeals {0_damage} damage to covered targets.",
   "FQCARDTITLE.EliteMarksman": "Elite Marksman",
   "FQCARDDESCRIPTION.EliteMarksman": "Increases critical by @int, plus 7, until the end of the next turn.",
   "FQCARDTITLE.RainOfArrows": "Rain Of Arrows",

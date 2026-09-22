@@ -989,7 +989,7 @@
   "FQCARDTITLE.TamedWolf": "Louve Apprivoisée",
   "FQCARDDESCRIPTION.TamedWolf": "Invoque un loup sur une case adjacente, il joue juste après votre tour.\n10 points de vie, plus @cha ; 1d6 de dégâts, plus le tiers de votre Charisme, CàC ; 4 de déplacement, plus la moitié de votre Charisme",
   "FQCARDTITLE.ExplosiveShot": "Tir Explosif",
-  "FQCARDDESCRIPTION.ExplosiveShot": "Posez une zone circulaire d’1 case de rayon\nInflige {0_damage} points de dégâts aux cibles couvertes.",
+  "FQCARDDESCRIPTION.ExplosiveShot": "Posez une zone circulaire de 3 cases de rayon\nInflige {0_damage} points de dégâts aux cibles couvertes.",
   "FQCARDTITLE.EliteMarksman": "Tireur D’Élite",
   "FQCARDDESCRIPTION.EliteMarksman": "Augmente le critique de @int, plus 7, jusqu’à la fin du prochain tour.",
   "FQCARDTITLE.RainOfArrows": "Pluie De Flèches",

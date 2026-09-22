@@ -500,12 +500,6 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - Pas d'attaque corps à corps
 - **Aucun soin ni PV temporaire sur lui-même** : avec le Maître d'Armes, la seule classe dont le deck ne protège jamais ses propres points de vie (Lien du Fauve ne soigne que la bête).
 
-### Constat des cartes (données)
-- **39 cartes réparties sur N1‑N12** : le Sniper occupe seul les N1‑N3, les pièges ouvrent au N4 et les bêtes au N6. Coût moyen 7,9 PA — le plus élevé du jeu — et seulement 5 cartes à 1‑4 PA, ce qui colle à ses 12,2 PA et à sa carte unique par tour.
-- 8 générateurs de zèle pour 18 consommateurs (7/18 avant le lot du 2026‑09‑20) ; 72 exemplaires.
-- **Asymétrie avec l'autre invocateur** : la Sorcière entretient son armée (Bouclier d'Os, Ossature Renforcée, Canalisation des Ombres, seconde face soignante de Couronne d'Ossements), le Trapper n'avait rien — ses bêtes coûtent 8 à 16 PA et mouraient sans recours. *Lien du Fauve* ouvre ce versant.
-- Les trois spécialisations sont déjà bien identifiables dans les cartes.
-
 ### Spécialisations — cartes par spé
 | Spé | Cartes existantes | Manques |
 |---|---|---|
@@ -513,23 +507,11 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 | **Pièges** (réactifs, poison) | Piège à Pointes, Piège Empoisonné, Piège en Chaîne, Collet Mortel, Piège d'Affût, Piège à Fosse, Hallali, Réserve de Pièges, Traquenard, Tir Réflexe, Tir Empoisonné, Mutation Virale | Carte peu chère de pose |
 | **Maître des bêtes** | Louve Apprivoisée, Ours Enragé, Faucon de Chasse, Tortue Géante, Sifflet du Chasseur, Meute, Dressage, Crocs Affûtés, Instinct de Chasse, Ordre d'Attaquer, Saignée du Fauve, Offrande Sauvage, **Lien du Fauve** | Caractéristique à trancher (CHA -2) |
 
-### Carte du lot 2026‑09‑20
-- **Lien du Fauve** (N15, ×2) — 4 PA, aucun mana, **+1 zèle**, portée 1‑10, 1 cible. Rend `2 + 2*@wis` PV à une de vos bêtes ; le garde-fou `targetsAreMinionType("beast")` refuse toute autre cible. Elle répond à deux manques d'un coup : la spé bêtes n'avait **aucun moyen d'entretenir** ce qu'elle paie 8 à 16 PA, et la classe manquait de **petites cartes qui rendent du zèle** (7 générateurs pour 18 consommateurs). Écrite en **SAG** et non en CHA, comme la Paume Curative du Moine l'a été en DEX : c'est la carac primaire, la seule que les ASI montent (+2 → +5), tandis que le CHA du Trapper reste à −2. **Illustration à faire** (sur `in_progress.png`).
-
-### Redondances à trancher
-- Dressage / Crocs Affûtés / Instinct de Chasse : même structure (bonus aux prochaines bêtes) → une carte à 3 choix ?
-- Tir Précis / Tir Précis II : rang 2 à placer au bon niveau.
-- Poison : Tir Empoisonné / Piège Empoisonné.
-
 ### Incohérences relevées
 - ~~Tir Précis II au niveau 21.~~ → fait : redescendu au N13 avec la spé Sniper, et retiré de `KNOWN_ISSUES`.
 - Pluie de Flèches « incritiquable » sans `bonusCrit`.
 - Ours Enragé (16 PA) et Tireur d'Élite (10 PA pour un buff) très chers au regard des 12,2 PA du N1.
 
-### À définir à la main
-- **Spécificités** :
-- **Spécialisations** :
-- **Contraintes** :
 
 **Questionnement et TODO :**
 

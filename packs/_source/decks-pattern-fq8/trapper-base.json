@@ -88,25 +88,25 @@
               "customEvals": []
             }
           ],
-          "level": 15,
+          "level": 1,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430827,
+        "modifiedTime": 1790067873856,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.d1iL0FtVRz5WREfI"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.d1iL0FtVRz5WREfI",
+      "cards": []
     },
     {
       "_id": "gbW08JaE31eaVYY6",
@@ -183,25 +183,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 13,
+          "level": 1,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430827,
+        "modifiedTime": 1790067819423,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.gbW08JaE31eaVYY6"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.gbW08JaE31eaVYY6",
+      "cards": []
     },
     {
       "_id": "gbW08JaE32eaVYY7",
@@ -236,6 +236,12 @@
           "class": "trapper",
           "choices": [
             {
+              "hitType": "attack",
+              "hitSource": "@wpnR",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-XXX",
               "mana": "-1",
               "zeal": "1",
@@ -243,27 +249,39 @@
               "hp": "",
               "draw": "",
               "drop": "",
+              "targetType": "Default",
               "minReach": "5",
               "maxReach": "10+@dex",
               "nbTargets": "",
-              "damage": "(5 + @dex + @wpnR)[piercing]",
-              "magical": false,
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "(7 + @dex + @wpnR)[piercing]",
               "heal": "",
+              "magical": false,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "@wpnR",
-              "hitAbility": "",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
-              "xmin": "5",
+              "xmin": "6",
               "xmax": "10+@dex",
               "ymin": "",
               "ymax": "",
               "xvalue": "reach",
               "yvalue": "",
               "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.arrow.physical.white.01",
@@ -273,30 +291,29 @@
               "applyEffectsFormulas": [],
               "messages": [],
               "minions": [],
-              "hasBeenPlayed": false,
               "customEvals": [],
-              "targetType": "Default"
+              "hasBeenPlayed": false
             }
           ],
-          "level": 13,
+          "level": 11,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430827,
+        "modifiedTime": 1790068666840,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.gbW08JaE32eaVYY7"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.gbW08JaE32eaVYY7",
+      "cards": []
     },
     {
       "_id": "KJD2EDaDIQ6ZsPgD",
@@ -407,25 +424,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 13,
+          "level": 2,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430827,
+        "modifiedTime": 1790067952684,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.KJD2EDaDIQ6ZsPgD"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.KJD2EDaDIQ6ZsPgD",
+      "cards": []
     },
     {
       "_id": "vTLHkgpfLtg25FEW",
@@ -460,27 +477,32 @@
           "class": "trapper",
           "choices": [
             {
-              "action": "-7",
-              "mana": "-1",
-              "zeal": "",
-              "reactive": false,
-              "hp": "",
-              "draw": "",
-              "drop": "",
-              "minReach": "2",
-              "maxReach": "8",
-              "nbTargets": "2",
-              "damage": "(@wpnR + 1d4)[piercing]",
-              "magical": false,
-              "heal": "",
-              "bonusCrit": "",
-              "bonusEva": "",
               "hitType": "attack",
               "hitSource": "@wpnR",
               "hitAbility": "",
               "saveAbility": "",
               "hitBonus": "",
               "saveDc": "",
+              "action": "-7",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "2",
+              "maxReach": "8",
+              "nbTargets": "2",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "(@wpnR + 1d4)[piercing]",
+              "heal": "",
+              "magical": false,
+              "bonusCrit": "",
+              "bonusEva": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
@@ -488,6 +510,19 @@
               "xvalue": "",
               "yvalue": "",
               "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.arrow.physical.white.01",
@@ -497,30 +532,29 @@
               "applyEffectsFormulas": [],
               "messages": [],
               "minions": [],
-              "hasBeenPlayed": false,
               "customEvals": [],
-              "targetType": "Default"
+              "hasBeenPlayed": false
             }
           ],
-          "level": 13,
+          "level": 3,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430828,
+        "modifiedTime": 1790068032466,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.vTLHkgpfLtg25FEW"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.vTLHkgpfLtg25FEW",
+      "cards": []
     },
     {
       "_id": "Wc6npoKcpdM5TQZv",
@@ -599,25 +633,25 @@
               "zoneSize": "3"
             }
           ],
-          "level": 13,
+          "level": 8,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430828,
+        "modifiedTime": 1790068368189,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Wc6npoKcpdM5TQZv"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Wc6npoKcpdM5TQZv",
+      "cards": []
     },
     {
       "_id": "avtGZSi6Wmto1NMP",
@@ -739,25 +773,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 14,
+          "level": 2,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430829,
+        "modifiedTime": 1790067970482,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.avtGZSi6Wmto1NMP"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.avtGZSi6Wmto1NMP",
+      "cards": []
     },
     {
       "_id": "RY2yaqnllHmwB2z6",
@@ -844,25 +878,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 14,
+          "level": 1,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430830,
+        "modifiedTime": 1790067866396,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.RY2yaqnllHmwB2z6"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.RY2yaqnllHmwB2z6",
+      "cards": []
     },
     {
       "_id": "kORVYHpmXhuDsizl",
@@ -969,25 +1003,25 @@
               "customEvals": []
             }
           ],
-          "level": 14,
+          "level": 5,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430830,
+        "modifiedTime": 1790068139785,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.kORVYHpmXhuDsizl"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.kORVYHpmXhuDsizl",
+      "cards": []
     },
     {
       "_id": "Yw9wSjfTpXDd36Mm",
@@ -1018,7 +1052,7 @@
       },
       "system": {
         "fq": {
-          "maxSameCard": 1,
+          "maxSameCard": 3,
           "class": "trapper",
           "choices": [
             {
@@ -1066,25 +1100,25 @@
               "zoneSize": "2"
             }
           ],
-          "level": 13,
+          "level": 4,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430830,
+        "modifiedTime": 1790068094241,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Yw9wSjfTpXDd36Mm"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Yw9wSjfTpXDd36Mm",
+      "cards": []
     },
     {
       "_id": "CD5n1ZGMMbAqO13C",
@@ -1206,25 +1240,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 13,
+          "level": 8,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430830,
+        "modifiedTime": 1790068465827,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.CD5n1ZGMMbAqO13C"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.CD5n1ZGMMbAqO13C",
+      "cards": []
     },
     {
       "_id": "tvqlIp3dj7D8e2fp",
@@ -1350,25 +1384,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 13,
+          "level": 8,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430830,
+        "modifiedTime": 1790068378198,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.tvqlIp3dj7D8e2fp"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.tvqlIp3dj7D8e2fp",
+      "cards": []
     },
     {
       "_id": "m2yw2H4tFxI806qo",
@@ -1450,25 +1484,25 @@
               "targetType": "Default"
             }
           ],
-          "level": 13,
+          "level": 7,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430831,
+        "modifiedTime": 1790068358467,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.m2yw2H4tFxI806qo"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.m2yw2H4tFxI806qo",
+      "cards": []
     },
     {
       "_id": "6qrrXMYhDLDjPltB",
@@ -1503,35 +1537,52 @@
           "class": "trapper",
           "choices": [
             {
-              "action": "-8",
-              "mana": "-1",
-              "zeal": "1",
-              "reactive": false,
-              "hp": "",
-              "draw": "",
-              "drop": "",
-              "minReach": "3",
-              "maxReach": "7",
-              "nbTargets": "",
-              "damage": "(@wpnR + @dex + 2d3)[force]",
-              "magical": false,
-              "heal": "",
-              "bonusCrit": "",
-              "bonusEva": "",
               "hitType": "attack",
               "hitSource": "@wpnR",
               "hitAbility": "",
               "saveAbility": "",
               "hitBonus": "",
               "saveDc": "",
+              "action": "-11",
+              "mana": "-2",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Zone",
+              "minReach": "3",
+              "maxReach": "7",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "3",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "(@wpnR + @dex + 2d8)[force]",
+              "heal": "",
+              "magical": false,
+              "bonusCrit": "",
+              "bonusEva": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
-              "customEvals": [],
               "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.explosion.01.orange",
@@ -1541,31 +1592,29 @@
               "applyEffectsFormulas": [],
               "messages": [],
               "minions": [],
-              "hasBeenPlayed": false,
-              "targetType": "Zone",
-              "zoneShape": "circle",
-              "zoneSize": "1"
+              "customEvals": [],
+              "hasBeenPlayed": false
             }
           ],
-          "level": 13,
+          "level": 12,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430831,
+        "modifiedTime": 1790068716586,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.6qrrXMYhDLDjPltB"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.6qrrXMYhDLDjPltB",
+      "cards": []
     },
     {
       "faces": [
@@ -1583,7 +1632,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 15,
+          "level": 6,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -1659,20 +1708,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430831,
+        "modifiedTime": 1790068245037,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.kvhW9fgonGQZHFwN"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.kvhW9fgonGQZHFwN",
+      "cards": []
     },
     {
       "faces": [
@@ -1690,7 +1739,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 13,
+          "level": 3,
           "isInnate": true,
           "class": "trapper",
           "choices": [
@@ -1796,20 +1845,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430831,
+        "modifiedTime": 1790067923306,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.d353d0O4KUCCQFoY"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.d353d0O4KUCCQFoY",
+      "cards": []
     },
     {
       "faces": [
@@ -1827,7 +1876,7 @@
       "system": {
         "fq": {
           "maxSameCard": 3,
-          "level": 14,
+          "level": 6,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -1899,20 +1948,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430831,
+        "modifiedTime": 1790068309565,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.a5VWk7LqfzGca2Rb"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.a5VWk7LqfzGca2Rb",
+      "cards": []
     },
     {
       "faces": [
@@ -1930,7 +1979,7 @@
       "system": {
         "fq": {
           "maxSameCard": 3,
-          "level": 14,
+          "level": 3,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2032,20 +2081,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430831,
+        "modifiedTime": 1790068049664,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.32n0BG877yvyRJ5q"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.32n0BG877yvyRJ5q",
+      "cards": []
     },
     {
       "faces": [
@@ -2063,7 +2112,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 13,
+          "level": 4,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2186,20 +2235,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430831,
+        "modifiedTime": 1790068449386,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.HKImFoYKvrcsn3Ep"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.HKImFoYKvrcsn3Ep",
+      "cards": []
     },
     {
       "faces": [
@@ -2217,7 +2266,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 13,
+          "level": 4,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2309,20 +2358,20 @@
       "sort": 0,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1786004430832,
+        "modifiedTime": 1790068116431,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.PAa1ZbJPO95KZHBg"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.PAa1ZbJPO95KZHBg",
+      "cards": []
     },
     {
       "faces": [
@@ -2340,7 +2389,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 14,
+          "level": 10,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2474,20 +2523,20 @@
       "sort": 16,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1788698296763,
+        "modifiedTime": 1790068579428,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1",
+      "cards": []
     },
     {
       "faces": [
@@ -2505,7 +2554,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 14,
+          "level": 7,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2637,20 +2686,20 @@
       "sort": 18,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1789290057398,
+        "modifiedTime": 1790068321390,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trChainTrap00001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trChainTrap00001",
+      "cards": []
     },
     {
       "faces": [
@@ -2668,7 +2717,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 14,
+          "level": 11,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2749,20 +2798,20 @@
       "sort": 19,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1788697777272,
+        "modifiedTime": 1790068550327,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trDeadlySnare001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trDeadlySnare001",
+      "cards": []
     },
     {
       "faces": [
@@ -2780,7 +2829,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 14,
+          "level": 7,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -2861,20 +2910,20 @@
       "sort": 20,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1789289925609,
+        "modifiedTime": 1790068317372,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trStakeoutTrap01"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trStakeoutTrap01",
+      "cards": []
     },
     {
       "faces": [
@@ -2892,7 +2941,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 14,
+          "level": 5,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3033,20 +3082,20 @@
       "sort": 21,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788346961046,
-        "modifiedTime": 1788699060680,
+        "modifiedTime": 1790068226703,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trPitTrap0000001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trPitTrap0000001",
+      "cards": []
     },
     {
       "faces": [
@@ -3064,7 +3113,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 15,
+          "level": 6,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3174,20 +3223,20 @@
       "sort": 22,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1788698217498,
+        "modifiedTime": 1790068342060,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastPack01x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastPack01x",
+      "cards": []
     },
     {
       "faces": [
@@ -3205,7 +3254,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 15,
+          "level": 3,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3305,20 +3354,20 @@
       "sort": 23,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1788697853200,
+        "modifiedTime": 1790068084441,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastTrain1x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastTrain1x",
+      "cards": []
     },
     {
       "faces": [
@@ -3336,7 +3385,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 15,
+          "level": 11,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3436,20 +3485,20 @@
       "sort": 24,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1788697785064,
+        "modifiedTime": 1790068427306,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapSharpFangs1x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapSharpFangs1x",
+      "cards": []
     },
     {
       "faces": [
@@ -3467,7 +3516,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 15,
+          "level": 4,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3567,20 +3616,20 @@
       "sort": 25,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1788698153743,
+        "modifiedTime": 1790068279822,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapHuntInstin1x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapHuntInstin1x",
+      "cards": []
     },
     {
       "_id": "trAttackOrder001",
@@ -3613,7 +3662,7 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
-          "level": 15,
+          "level": 9,
           "isInnate": false,
           "choices": [
             {
@@ -3689,20 +3738,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788400000000,
-        "modifiedTime": 1788698856877,
+        "modifiedTime": 1790068394689,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trAttackOrder001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trAttackOrder001",
+      "cards": []
     },
     {
       "faces": [
@@ -3720,7 +3769,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 15,
+          "level": 8,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -3796,20 +3845,20 @@
       "sort": 27,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786500000000,
-        "modifiedTime": 1788695701199,
+        "modifiedTime": 1790068332260,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Q7xhCz2mNbT4vRoa"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Q7xhCz2mNbT4vRoa",
+      "cards": []
     },
     {
       "_id": "Yk3pLdW8sJfE6nHu",
@@ -3895,25 +3944,25 @@
               "customEvals": []
             }
           ],
-          "level": 15,
+          "level": 12,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786500000000,
-        "modifiedTime": 1788695983477,
+        "modifiedTime": 1790068435053,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Yk3pLdW8sJfE6nHu"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Yk3pLdW8sJfE6nHu",
+      "cards": []
     },
     {
       "faces": [
@@ -3931,7 +3980,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 14,
+          "level": 12,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4012,20 +4061,20 @@
       "sort": 29,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788628636543,
-        "modifiedTime": 1788697929894,
+        "modifiedTime": 1790068542242,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntsEnd000001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntsEnd000001",
+      "cards": []
     },
     {
       "faces": [
@@ -4043,7 +4092,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 14,
+          "level": 10,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4111,20 +4160,20 @@
       "sort": 30,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788976800000,
-        "modifiedTime": 1788707230791,
+        "modifiedTime": 1790068495300,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trTrapStash00001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trTrapStash00001",
+      "cards": []
     },
     {
       "faces": [
@@ -4142,7 +4191,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 15,
+          "level": 10,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4210,20 +4259,20 @@
       "sort": 31,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788976800000,
-        "modifiedTime": 1788695502609,
+        "modifiedTime": 1790068409074,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntersWhis001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntersWhis001",
+      "cards": []
     },
     {
       "faces": [
@@ -4241,7 +4290,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 13,
+          "level": 9,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4314,20 +4363,20 @@
       "sort": 32,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788700000000,
-        "modifiedTime": 1788707211507,
+        "modifiedTime": 1790068631545,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trLoneHunter0001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trLoneHunter0001",
+      "cards": []
     },
     {
       "faces": [
@@ -4345,7 +4394,7 @@
       "system": {
         "fq": {
           "maxSameCard": 2,
-          "level": 15,
+          "level": 5,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4432,20 +4481,20 @@
       "sort": 33,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788700000000,
-        "modifiedTime": 1789290084475,
+        "modifiedTime": 1790068238211,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trBeastBleeding1"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trBeastBleeding1",
+      "cards": []
     },
     {
       "faces": [
@@ -4463,7 +4512,7 @@
       "system": {
         "fq": {
           "maxSameCard": 1,
-          "level": 15,
+          "level": 9,
           "isInnate": false,
           "class": "trapper",
           "choices": [
@@ -4550,20 +4599,20 @@
       "sort": 34,
       "flags": {},
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788700000000,
-        "modifiedTime": 1788707489897,
+        "modifiedTime": 1790068404451,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trWildOffering01"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trWildOffering01",
+      "cards": []
     },
     {
       "_id": "trpBeastBond0001",
@@ -4670,25 +4719,25 @@
               "hasBeenPlayed": false
             }
           ],
-          "level": 15,
+          "level": 2,
           "isInnate": false
         }
       },
       "_stats": {
-        "coreVersion": "14.367",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
-        "systemVersion": "5.3.3",
+        "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789905600000,
-        "modifiedTime": 1789905600000,
+        "modifiedTime": 1790067987773,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trpBeastBond0001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trpBeastBond0001",
+      "cards": []
     }
   ],
   "width": null,
