@@ -464,11 +464,6 @@ Combos par paire d'éléments (à réduire à ~2 par paire) :
 
 Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, Incantation, Propagation des Dégâts, Assassin du Néant, Missiles Magiques +, Lecture des Courants, Repli du Souffle.
 
-### Redondances à trancher
-- Paires à 3 cartes (Feu+Terre, Feu+Air, Givre+Air) : garder 2 par paire. *(Feu+Givre : fait)*
-- Utilitaires N13 qui se recoupent : Lecture des Courants (pioche) / Captation de Mana (mana). *(Chaleur Résiduelle retirée)*
-- Ultimes (Boule de Feu, Éternité, Sépulcre, Cyclone) : bons candidats pour les N10‑N12, un par élément.
-
 **Questionnement et TODO :**
 ---
 
