@@ -244,7 +244,7 @@
               "saveDc": "",
               "action": "-XXX",
               "mana": "-1",
-              "zeal": "1",
+              "zeal": "2",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -305,15 +305,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1790068666840,
+        "modifiedTime": 1790178025887,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.gbW08JaE32eaVYY7"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.gbW08JaE32eaVYY7",
+      "cards": []
     },
     {
       "_id": "KJD2EDaDIQ6ZsPgD",
@@ -498,7 +498,7 @@
               "zoneSize": "",
               "zoneAngle": "",
               "zoneWidth": "",
-              "damage": "(@wpnR + 1d4)[piercing]",
+              "damage": "(@wpnR + 1d8)[piercing]",
               "heal": "",
               "magical": false,
               "bonusCrit": "",
@@ -546,15 +546,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1790068032466,
+        "modifiedTime": 1790177349745,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.vTLHkgpfLtg25FEW"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.vTLHkgpfLtg25FEW",
+      "cards": []
     },
     {
       "_id": "Wc6npoKcpdM5TQZv",
@@ -589,35 +589,52 @@
           "class": "trapper",
           "choices": [
             {
-              "action": "-8",
-              "mana": "",
-              "zeal": "-1",
-              "reactive": false,
-              "hp": "",
-              "draw": "",
-              "drop": "",
-              "minReach": "4",
-              "maxReach": "12",
-              "nbTargets": "",
-              "damage": "(1+@dex + @wpnR)[piercing]",
-              "magical": false,
-              "heal": "",
-              "bonusCrit": "",
-              "bonusEva": "",
               "hitType": "attack",
               "hitSource": "@wpnR",
               "hitAbility": "",
               "saveAbility": "",
               "hitBonus": "",
               "saveDc": "",
+              "action": "-10",
+              "mana": "-1",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Zone",
+              "minReach": "4",
+              "maxReach": "12",
+              "nbTargets": "",
+              "zoneShape": "rectangle",
+              "zoneSize": "3",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "(1d6+@dex + @wpnR)[piercing]",
+              "heal": "",
+              "magical": false,
+              "bonusCrit": "",
+              "bonusEva": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
-              "customEvals": [],
               "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.volley_of_projectiles_Circle.arrow.001.001.orangeyellow",
@@ -627,10 +644,8 @@
               "applyEffectsFormulas": [],
               "messages": [],
               "minions": [],
-              "hasBeenPlayed": false,
-              "targetType": "Zone",
-              "zoneShape": "rectangle",
-              "zoneSize": "3"
+              "customEvals": [],
+              "hasBeenPlayed": false
             }
           ],
           "level": 8,
@@ -643,15 +658,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1790068368189,
+        "modifiedTime": 1790177897399,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Wc6npoKcpdM5TQZv"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.Wc6npoKcpdM5TQZv",
+      "cards": []
     },
     {
       "_id": "avtGZSi6Wmto1NMP",
@@ -1437,40 +1452,58 @@
           "class": "trapper",
           "choices": [
             {
-              "action": "-9",
-              "mana": "",
-              "zeal": "",
-              "reactive": false,
-              "hp": "",
-              "draw": "",
-              "drop": "",
-              "minReach": "2",
-              "maxReach": "9999",
-              "nbTargets": "",
-              "damage": "(@wpnR + (2 * @cha) + 1d6 - XXX)[bludgeoning]",
-              "magical": false,
-              "heal": "",
-              "bonusCrit": "-9999",
-              "bonusEva": "-9999",
               "hitType": "attack",
               "hitSource": "@wpnR",
               "hitAbility": "",
               "saveAbility": "",
               "hitBonus": "",
               "saveDc": "",
+              "action": "-9",
+              "mana": "-1",
+              "zeal": "+1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "2",
+              "maxReach": "9999",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "(@wpnR + (2 * @cha) + 1d6 - XXX)[bludgeoning]",
+              "heal": "",
+              "magical": false,
+              "bonusCrit": "-9999",
+              "bonusEva": "-9999",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "reach",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "messages": [
                 {
                   "key": "FQCARDENGINE.CardMsgSupersonicStrike",
                   "arg": "{\"score\": \"2*@wis-XXX\"}"
                 }
               ],
-              "replayable": "",
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "jb2a.bullet.Snipe.blue",
@@ -1479,9 +1512,8 @@
               "name": "",
               "applyEffectsFormulas": [],
               "minions": [],
-              "hasBeenPlayed": false,
               "customEvals": [],
-              "targetType": "Default"
+              "hasBeenPlayed": false
             }
           ],
           "level": 7,
@@ -1494,15 +1526,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1790068358467,
+        "modifiedTime": 1790177848126,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.m2yw2H4tFxI806qo"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.m2yw2H4tFxI806qo",
+      "cards": []
     },
     {
       "_id": "6qrrXMYhDLDjPltB",
@@ -2002,9 +2034,15 @@
           "class": "trapper",
           "choices": [
             {
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "cha",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "",
               "mana": "-1",
-              "zeal": "",
+              "zeal": "-1",
               "reactive": true,
               "hp": "",
               "draw": "",
@@ -2013,23 +2051,33 @@
               "minReach": "1",
               "maxReach": "3",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "5+@cha[poison]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "-99999",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "cha",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Poison",
@@ -2038,17 +2086,31 @@
                     {
                       "result": "1",
                       "self": false,
+                      "removeEffectName": "",
                       "data": [
                         {
-                          "status": "poison"
+                          "status": "poison",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         },
                         {
                           "status": "poisoned",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "2",
                             "units": "rounds"
                           },
-                          "expireOnDamage": false
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -2061,16 +2123,7 @@
                   ]
                 }
               ],
-              "replayable": "",
-              "sound": "",
-              "visual": {
-                "path": "jb2a.explosion.top_fracture.flask.01",
-                "onTarget": true
-              },
-              "name": "",
-              "messages": [],
-              "minions": [],
-              "hasBeenPlayed": false,
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
@@ -2081,7 +2134,17 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.explosion.top_fracture.flask.01",
+                "onTarget": true
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -2104,15 +2167,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1790068049664,
+        "modifiedTime": 1790178001645,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.32n0BG877yvyRJ5q"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.32n0BG877yvyRJ5q",
+      "cards": []
     },
     {
       "faces": [
@@ -2412,9 +2475,15 @@
           "class": "trapper",
           "choices": [
             {
+              "hitType": "save",
+              "hitSource": "ability",
+              "hitAbility": "wis",
+              "saveAbility": "con",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-5",
               "mana": "-1",
-              "zeal": "",
+              "zeal": "0",
               "reactive": true,
               "hp": "",
               "draw": "",
@@ -2423,23 +2492,33 @@
               "minReach": "1",
               "maxReach": "3",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "save",
-              "hitSource": "ability",
-              "hitAbility": "wis",
-              "saveAbility": "con",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Poison 1/3",
@@ -2490,7 +2569,16 @@
                       "removeEffectName": "",
                       "data": [
                         {
-                          "status": "virus"
+                          "status": "virus",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -2503,16 +2591,7 @@
                   ]
                 }
               ],
-              "replayable": "",
-              "sound": "",
-              "visual": {
-                "path": "jb2a.aura_themed.01.orbit.loop.nature",
-                "onTarget": true
-              },
-              "name": "",
-              "messages": [],
-              "minions": [],
-              "hasBeenPlayed": false,
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsHaveEffect([\"Poison\"], 3)",
@@ -2523,7 +2602,17 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.aura_themed.01.orbit.loop.nature",
+                "onTarget": true
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -2546,15 +2635,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1790068579428,
+        "modifiedTime": 1790177956414,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trViralMutation1",
+      "cards": []
     },
     {
       "faces": [
@@ -2577,9 +2666,15 @@
           "class": "trapper",
           "choices": [
             {
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "wis",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "",
-              "mana": "-2",
-              "zeal": "",
+              "mana": "0",
+              "zeal": "-1",
               "reactive": true,
               "hp": "",
               "draw": "",
@@ -2588,17 +2683,15 @@
               "minReach": "1",
               "maxReach": "6",
               "nbTargets": "3",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(@wis+1d6)[bludgeoning]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "-99999",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "wis",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
@@ -2606,12 +2699,17 @@
               "xvalue": "",
               "yvalue": "",
               "replayable": "",
-              "sound": "",
-              "visual": {
-                "path": "jb2a.entangle.green",
-                "onTarget": true
-              },
-              "name": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Immobilization",
@@ -2623,6 +2721,7 @@
                       "removeEffectName": "",
                       "data": [
                         {
+                          "status": "",
                           "name": "Immobilization",
                           "img": "icons/magic/control/silhouette-grow-shrink-blue.webp",
                           "changes": [
@@ -2639,6 +2738,7 @@
                               "priority": null
                             }
                           ],
+                          "showIcon": 1,
                           "duration": {
                             "value": "1",
                             "units": "rounds"
@@ -2647,11 +2747,15 @@
                         },
                         {
                           "status": "restrained",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "1",
                             "units": "rounds"
                           },
-                          "expireOnDamage": false
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": [
@@ -2664,9 +2768,7 @@
                   ]
                 }
               ],
-              "messages": [],
-              "minions": [],
-              "hasBeenPlayed": false,
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
@@ -2686,7 +2788,17 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.entangle.green",
+                "onTarget": true
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -2709,15 +2821,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1790068321390,
+        "modifiedTime": 1790177829956,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trChainTrap00001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trChainTrap00001",
+      "cards": []
     },
     {
       "faces": [
@@ -2852,9 +2964,15 @@
           "class": "trapper",
           "choices": [
             {
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "wis",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "",
               "mana": "-1",
-              "zeal": "-2",
+              "zeal": "+2",
               "reactive": true,
               "hp": "",
               "draw": "",
@@ -2863,17 +2981,15 @@
               "minReach": "1",
               "maxReach": "8",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(2*@wis+2d8)[piercing]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "-99999",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "wis",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
@@ -2881,16 +2997,18 @@
               "xvalue": "",
               "yvalue": "",
               "replayable": "",
-              "sound": "",
-              "visual": {
-                "path": "jb2a.arrow.physical.white.01",
-                "onTarget": false
-              },
-              "name": "",
-              "applyEffectsFormulas": [],
-              "messages": [],
-              "minions": [],
-              "hasBeenPlayed": false,
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
@@ -2910,7 +3028,18 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.arrow.physical.white.01",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -2933,15 +3062,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004430824,
-        "modifiedTime": 1790068317372,
+        "modifiedTime": 1790177816394,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trStakeoutTrap01"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trStakeoutTrap01",
+      "cards": []
     },
     {
       "faces": [
@@ -2964,10 +3093,15 @@
           "class": "trapper",
           "choices": [
             {
-              "name": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "dex",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "",
               "mana": "-1",
-              "zeal": "-2",
+              "zeal": "+2",
               "reactive": true,
               "hp": "",
               "draw": "",
@@ -2976,23 +3110,26 @@
               "minReach": "1",
               "maxReach": "6",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(2*@dex+1d8)[bludgeoning]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "-99999",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "dex",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -3011,6 +3148,7 @@
                       "removeEffectName": "",
                       "data": [
                         {
+                          "status": "",
                           "name": "Turn Ended",
                           "img": "icons/skills/wounds/injury-pain-body-orange.webp",
                           "changes": [
@@ -3021,6 +3159,7 @@
                               "priority": null
                             }
                           ],
+                          "showIcon": 1,
                           "duration": {
                             "value": "1",
                             "units": "rounds"
@@ -3029,11 +3168,15 @@
                         },
                         {
                           "status": "prone",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
                           "duration": {
                             "value": "1",
                             "units": "rounds"
                           },
-                          "expireOnDamage": false
+                          "expireOnDamage": false,
+                          "changes": []
                         }
                       ],
                       "messages": []
@@ -3041,12 +3184,7 @@
                   ]
                 }
               ],
-              "messages": [],
-              "minions": [],
-              "replayable": "",
-              "retrieveFromDiscard": "",
-              "destroyFromDiscard": "",
-              "duplicateFromHand": "",
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
@@ -3082,6 +3220,9 @@
                 "path": "jb2a.spike_trap.05x05ft.top.holes.normal.01.02",
                 "onTarget": true
               },
+              "name": "",
+              "messages": [],
+              "minions": [],
               "hasBeenPlayed": false
             }
           ]
@@ -3105,15 +3246,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788346961046,
-        "modifiedTime": 1790068226703,
+        "modifiedTime": 1790177386355,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trPitTrap0000001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trPitTrap0000001",
+      "cards": []
     },
     {
       "faces": [
@@ -3300,9 +3441,15 @@
           "class": "trapper",
           "choices": [
             {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-8",
               "mana": "-1",
-              "zeal": "-1",
+              "zeal": "+1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -3311,9 +3458,13 @@
               "minReach": "",
               "maxReach": "",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
               "xmin": "",
@@ -3322,13 +3473,18 @@
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
-              "messages": [
-                {
-                  "key": "FQCARDENGINE.CardMsgBeastHpBonus",
-                  "arg": ""
-                }
-              ],
-              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Beast Training",
@@ -3337,13 +3493,12 @@
                     {
                       "result": "1",
                       "self": true,
+                      "removeEffectName": "",
                       "data": [
                         {
                           "status": "",
                           "name": "Beast Training",
                           "img": "icons/magic/life/heart-cross-green.webp",
-                          "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": [
                             {
                               "key": "system.fq.minions.beast.hp",
@@ -3352,13 +3507,14 @@
                               "priority": null
                             }
                           ],
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
-                          }
+                          },
+                          "expireOnDamage": false
                         }
                       ],
-                      "removeEffectName": "",
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgBeastHpBonus",
@@ -3369,15 +3525,23 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgBeastHpBonus",
+                  "arg": ""
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "",
                 "onTarget": false
               },
               "name": "",
-              "hasBeenPlayed": false,
-              "customEvals": []
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -3400,15 +3564,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1790068084441,
+        "modifiedTime": 1790177329625,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastTrain1x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapBeastTrain1x",
+      "cards": []
     },
     {
       "faces": [
@@ -3431,9 +3595,15 @@
           "class": "trapper",
           "choices": [
             {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-10",
               "mana": "-2",
-              "zeal": "-2",
+              "zeal": "+1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -3442,9 +3612,13 @@
               "minReach": "",
               "maxReach": "",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
               "xmin": "",
@@ -3453,13 +3627,18 @@
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
-              "messages": [
-                {
-                  "key": "FQCARDENGINE.CardMsgBeastDamageBonus",
-                  "arg": ""
-                }
-              ],
-              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Sharpened Fangs",
@@ -3468,13 +3647,12 @@
                     {
                       "result": "1",
                       "self": true,
+                      "removeEffectName": "",
                       "data": [
                         {
                           "status": "",
                           "name": "Sharpened Fangs",
                           "img": "icons/skills/melee/blade-tips-double-blue.webp",
-                          "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": [
                             {
                               "key": "system.fq.minions.beast.damage",
@@ -3483,13 +3661,14 @@
                               "priority": null
                             }
                           ],
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
-                          }
+                          },
+                          "expireOnDamage": false
                         }
                       ],
-                      "removeEffectName": "",
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgBeastDamageBonus",
@@ -3500,15 +3679,23 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgBeastDamageBonus",
+                  "arg": ""
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "",
                 "onTarget": false
               },
               "name": "",
-              "hasBeenPlayed": false,
-              "customEvals": []
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -3531,15 +3718,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1790068427306,
+        "modifiedTime": 1790178041765,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapSharpFangs1x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapSharpFangs1x",
+      "cards": []
     },
     {
       "faces": [
@@ -3562,9 +3749,15 @@
           "class": "trapper",
           "choices": [
             {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-6",
               "mana": "-1",
-              "zeal": "-1",
+              "zeal": "+1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -3573,9 +3766,13 @@
               "minReach": "",
               "maxReach": "",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
               "xmin": "",
@@ -3584,13 +3781,18 @@
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
-              "messages": [
-                {
-                  "key": "FQCARDENGINE.CardMsgBeastMovementBonus",
-                  "arg": ""
-                }
-              ],
-              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "applyEffectsFormulas": [
                 {
                   "title": "Hunting Instinct",
@@ -3599,13 +3801,12 @@
                     {
                       "result": "1",
                       "self": true,
+                      "removeEffectName": "",
                       "data": [
                         {
                           "status": "",
                           "name": "Hunting Instinct",
                           "img": "icons/skills/movement/feet-winged-boots-glowing-yellow.webp",
-                          "expireOnDamage": false,
-                          "showIcon": 1,
                           "changes": [
                             {
                               "key": "system.fq.minions.beast.movement",
@@ -3614,13 +3815,14 @@
                               "priority": null
                             }
                           ],
+                          "showIcon": 1,
                           "duration": {
                             "value": "",
                             "units": "rounds"
-                          }
+                          },
+                          "expireOnDamage": false
                         }
                       ],
-                      "removeEffectName": "",
                       "messages": [
                         {
                           "key": "FQCARDENGINE.CardMsgBeastMovementBonus",
@@ -3631,15 +3833,23 @@
                   ]
                 }
               ],
-              "replayable": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgBeastMovementBonus",
+                  "arg": ""
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
               "sound": "",
               "visual": {
                 "path": "",
                 "onTarget": false
               },
               "name": "",
-              "hasBeenPlayed": false,
-              "customEvals": []
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -3662,15 +3872,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788000000000,
-        "modifiedTime": 1790068279822,
+        "modifiedTime": 1790177361804,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapHuntInstin1x"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trapHuntInstin1x",
+      "cards": []
     },
     {
       "_id": "trAttackOrder001",
@@ -3707,10 +3917,15 @@
           "isInnate": false,
           "choices": [
             {
-              "name": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "wis",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-4",
               "mana": "",
-              "zeal": "",
+              "zeal": "+1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -3719,23 +3934,26 @@
               "minReach": "1",
               "maxReach": "12",
               "nbTargets": "1",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(XXXdYYY)[slashing]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "wis",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
               "ymax": "",
               "xvalue": "SCRIPT:FqCardEngineModule.cond.minionWeaponDamageDice(\"beast\").number",
               "yvalue": "SCRIPT:FqCardEngineModule.cond.minionWeaponDamageDice(\"beast\").faces",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -3743,19 +3961,13 @@
               "chooseCardsCount": "",
               "chooseCardsExcludeDeck": false,
               "chooseCardsPlayNow": false,
-              "applyEffectsFormulas": [],
               "messages": [
                 {
                   "key": "FQCARDENGINE.CardMsgAttackOrder",
                   "arg": ""
                 }
               ],
-              "minions": [],
-              "replayable": "",
-              "retrieveFromDiscard": "",
-              "retrieveFromDeck": "",
-              "destroyFromDiscard": "",
-              "duplicateFromHand": "",
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.minionTokensOnScene(\"beast\").length > 0",
@@ -3773,6 +3985,9 @@
                 "path": "jb2a.melee_generic.creature_attack.fist.001",
                 "onTarget": true
               },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
               "hasBeenPlayed": false
             }
           ]
@@ -3784,15 +3999,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788400000000,
-        "modifiedTime": 1790068394689,
+        "modifiedTime": 1790177944805,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trAttackOrder001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trAttackOrder001",
+      "cards": []
     },
     {
       "faces": [
@@ -4255,10 +4470,15 @@
           "class": "trapper",
           "choices": [
             {
-              "name": "",
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-5",
               "mana": "",
-              "zeal": "-1",
+              "zeal": "0",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -4267,9 +4487,13 @@
               "minReach": "",
               "maxReach": "",
               "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
               "xmin": "",
@@ -4278,6 +4502,11 @@
               "ymax": "",
               "xvalue": "",
               "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
               "chooseCardsList": "",
               "chooseCardsFrom": "",
               "chooseCardsLevels": "",
@@ -4285,21 +4514,18 @@
               "chooseCardsCount": "1",
               "chooseCardsExcludeDeck": false,
               "chooseCardsPlayNow": false,
-              "applyEffectsFormulas": [],
-              "messages": [],
-              "minions": [],
-              "replayable": "",
-              "retrieveFromDiscard": "",
-              "retrieveFromDeck": "",
-              "destroyFromDiscard": "",
-              "duplicateFromHand": "",
-              "customEvals": [],
+              "minionsOnZone": false,
               "executeEval": "const uid = game.user.id;\nconst book = game.cards.find(c => c.ownership[uid] === 3 && c.system?.fq?.type === \"SPELLBOOK\" && c.system?.fq?.owner === uid);\nconst names = [...new Set([...(book?.cards ?? [])].filter(c => c.system?.fq?.class === \"trapper\" && (c.system?.fq?.choices ?? []).some(x => (x.minions ?? []).some(m => m.type === \"beast\"))).map(c => c.name))];\ncardContent.chooseCardsList = names.map(n => `fq-card-engine.decks-pattern-fq8.Trapper Base.${n}`).join(\",\");",
               "sound": "",
               "visual": {
                 "path": "jb2a.magic_signs.circle.02.conjuration.intro.yellow",
                 "onTarget": false
               },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
               "hasBeenPlayed": false
             }
           ]
@@ -4323,15 +4549,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788976800000,
-        "modifiedTime": 1790068409074,
+        "modifiedTime": 1790177968076,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntersWhis001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trHuntersWhis001",
+      "cards": []
     },
     {
       "faces": [
@@ -4354,10 +4580,15 @@
           "class": "trapper",
           "choices": [
             {
-              "name": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "dex",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-9",
               "mana": "-1",
-              "zeal": "",
+              "zeal": "-1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -4366,17 +4597,15 @@
               "minReach": "3",
               "maxReach": "10",
               "nbTargets": "1",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(2*@dex + 2d8 + XXX)[piercing]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "dex",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
@@ -4384,16 +4613,18 @@
               "xvalue": "SCRIPT:FqCardEngineModule.cond.minionTokensOnScene(\"beast\").length ? 0 : 12",
               "yvalue": "",
               "replayable": "",
-              "executeEval": "",
-              "sound": "",
-              "visual": {
-                "path": "jb2a.bullet.Snipe.blue",
-                "onTarget": false
-              },
-              "applyEffectsFormulas": [],
-              "messages": [],
-              "minions": [],
-              "hasBeenPlayed": false,
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
@@ -4404,7 +4635,18 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.bullet.Snipe.blue",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -4427,15 +4669,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788700000000,
-        "modifiedTime": 1790068631545,
+        "modifiedTime": 1790177922565,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trLoneHunter0001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trLoneHunter0001",
+      "cards": []
     },
     {
       "faces": [
@@ -4458,10 +4700,15 @@
           "class": "trapper",
           "choices": [
             {
-              "name": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "cha",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-6",
               "mana": "-1",
-              "zeal": "",
+              "zeal": "+1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -4470,17 +4717,15 @@
               "minReach": "1",
               "maxReach": "10",
               "nbTargets": "1",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(3*@cha + 3d8)[piercing]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "cha",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "",
               "ymin": "",
@@ -4488,21 +4733,24 @@
               "xvalue": "",
               "yvalue": "",
               "replayable": "",
-              "executeEval": "const beast = FqCardEngineModule.cond.minionTokensOnScene(\"beast\")[0]?.actor;\nif (beast) {\nconst hp = Number(beast.system.attributes.hp.value) || 0;\nconst bonus = Number(beast.system.fq?.bonus?.damage) || 0;\nbeast.update({\"system.attributes.hp.value\": Math.max(1, hp - 10), \"system.fq.bonus.damage\": Math.max(0, bonus - 2)});\n}",
-              "sound": "",
-              "visual": {
-                "path": "jb2a.explosion.01.orange",
-                "onTarget": true
-              },
-              "applyEffectsFormulas": [],
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "messages": [
                 {
                   "key": "FQCARDENGINE.CardMsgBeastDrained",
                   "arg": ""
                 }
               ],
-              "minions": [],
-              "hasBeenPlayed": false,
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.minionTokensOnScene(\"beast\").length > 0",
@@ -4522,7 +4770,17 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "executeEval": "const beast = FqCardEngineModule.cond.minionTokensOnScene(\"beast\")[0]?.actor;\nif (beast) {\nconst hp = Number(beast.system.attributes.hp.value) || 0;\nconst bonus = Number(beast.system.fq?.bonus?.damage) || 0;\nbeast.update({\"system.attributes.hp.value\": Math.max(1, hp - 10), \"system.fq.bonus.damage\": Math.max(0, bonus - 2)});\n}",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.explosion.01.orange",
+                "onTarget": true
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -4545,15 +4803,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788700000000,
-        "modifiedTime": 1790068238211,
+        "modifiedTime": 1790177397453,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trBeastBleeding1"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trBeastBleeding1",
+      "cards": []
     },
     {
       "faces": [
@@ -4576,10 +4834,15 @@
           "class": "trapper",
           "choices": [
             {
-              "name": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "dex",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
               "action": "-8",
               "mana": "-2",
-              "zeal": "",
+              "zeal": "+1",
               "reactive": false,
               "hp": "",
               "draw": "",
@@ -4588,17 +4851,15 @@
               "minReach": "1",
               "maxReach": "12",
               "nbTargets": "1",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
               "damage": "(4*@dex + 4d10)[piercing]",
-              "magical": true,
               "heal": "",
+              "magical": true,
               "bonusCrit": "",
               "bonusEva": "",
-              "hitType": "attack",
-              "hitSource": "ability",
-              "hitAbility": "dex",
-              "saveAbility": "",
-              "hitBonus": "",
-              "saveDc": "",
               "xmin": "",
               "xmax": "5",
               "ymin": "",
@@ -4606,21 +4867,24 @@
               "xvalue": "fq.minions.sacrificedMinion",
               "yvalue": "",
               "replayable": "",
-              "executeEval": "",
-              "sound": "",
-              "visual": {
-                "path": "jb2a.explosion.top_fracture.flask.01",
-                "onTarget": true
-              },
-              "applyEffectsFormulas": [],
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
               "messages": [
                 {
                   "key": "FQCARDENGINE.CardMsgWildOffering",
                   "arg": ""
                 }
               ],
-              "minions": [],
-              "hasBeenPlayed": false,
+              "minionsOnZone": false,
               "customEvals": [
                 {
                   "script": "FqCardEngineModule.cond.minionsAtLeast(\"sacrificedMinion\",5)",
@@ -4640,7 +4904,17 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.explosion.top_fracture.flask.01",
+                "onTarget": true
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false
             }
           ]
         }
@@ -4663,15 +4937,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1788700000000,
-        "modifiedTime": 1790068404451,
+        "modifiedTime": 1790177935741,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trWildOffering01"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trWildOffering01",
+      "cards": []
     },
     {
       "_id": "trpBeastBond0001",

@@ -22,7 +22,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - Rajouter des images
 - Pour chaque classe, dans l'ordre :
   - [x] Revoir les stats FQ
-  - [ ] Répartir les classes du niveau 1 à 12 plus remplir les eventuelle trous -> Trapper (avec premier équilibrage des coûts action mana zèle) -> Moine (1)
+  - [ ] Répartir les classes du niveau 1 à 12 plus remplir les eventuelle trous -> Sorcière (avec premier équilibrage des coûts action mana zèle) -> Moine (1)
   - [ ] IA - Points sur les coûts ET dégâts/heal et à chaque niveau ( Étape 4) 
   - [ ] Rééquilibrage manuel
   - [ ] Revoir les types d'attaques (Attaque, sauvegarde, dégâts bruts)
