@@ -42,7 +42,6 @@ Update 2.0.1:
         - Complete documentation of methods
         - End of Card Viewer recommendation
         - Update and pin package.json dependency versions
-        - Set up GSD with Claude Code
     Fix:
         - Fix fr.json and en.json translations
         - Fix wrong control of the Y variables

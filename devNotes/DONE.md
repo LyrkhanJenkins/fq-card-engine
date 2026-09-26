@@ -104,7 +104,6 @@ Chore :
 - Documentations complètes des méthodes
 - Fin recommandation card viewer
 - Mise à jour et figer les versions de dépendances du package.json
-- Mise en place de GSD avec claude code
 
 Fix :
 - Correction traduction fr.json et en.json
