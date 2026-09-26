@@ -105,3 +105,16 @@ The module provides also a special ui for creating your own deck with your Spell
 - Level 1 to 5, decks are the same for each character of the same class, after that, decks are customizable
 - The cards are design to be used with rectilinear grids
 ![img.png](images/doc/rectilinear-grid.png)
+
+## License
+
+- **Source code** (`src/`, `styles/`, `utils/`, `tests/`): MIT — see [LICENSE](LICENSE).
+- **Final Quest 8 game content** (compendiums, card illustrations, visual effects,
+  sounds, card titles and descriptions): all rights reserved — see
+  [LICENSE-CONTENT](LICENSE-CONTENT).
+
+You are free to use the Final Quest 8 content to play at your own table, and to
+modify it for your own games. Redistributing it, repackaging it or selling it is
+not permitted.
+
+See [CREDITS](CREDITS) for the systems and modules this one builds on.

@@ -37,7 +37,7 @@ window.FqCardEngineModule = {
     walls: {
         fromZone: (cardContent, style) => ZoneWall.requestFromZone(socket, cardContent, style)
     },
-    handMiniBarList: new Array(),
+    handBarList: new Array(),
     moduleName: "fq-card-engine",
     eventName: "module.fq-card-engine",
     handMax: 10,

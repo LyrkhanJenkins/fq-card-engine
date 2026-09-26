@@ -1,0 +1,32 @@
+Credits
+=======
+
+Final Quest 8
+-------------
+
+Game design, cards, classes, balance, illustrations and card layout: lyrkhan.
+
+
+Systems and modules
+-------------------
+
+  - Foundry VTT dnd5e system
+  - D&D 5th edition SRD 5.1, used under CC BY 4.0
+  - socketlib, lib-wrapper, DAE                 required dependencies
+  - Sequencer, JB2A, Dice So Nice               optional dependencies
+
+These modules are downloaded by the user from their own sources. None of their
+assets are redistributed in this package.
+
+
+Asset sources
+-------------
+
+Card illustrations, class art and tokens come from royalty-free sources or are
+AI-generated. Their selection, composition, card layout and integration into
+Final Quest 8 are the work of lyrkhan.
+
+Sound effects are original to this project (see RELEASE 2.0.0).
+
+Visual effects in visuals/ are rendered for this project. They are played through
+the optional Sequencer module; no JB2A asset is redistributed here.

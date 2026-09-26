@@ -1,0 +1,65 @@
+Final Quest 8 — Game content and asset license
+==============================================
+
+Copyright 2022-2026 lyrkhan. All rights reserved.
+
+Final Quest 8 is an original game. This license covers its content and assets,
+which are NOT part of the MIT-licensed source code in LICENSE:
+
+  - packs/ and packs/_source/   card compendiums, classes, decks, minions,
+                                items, NPC spells, starter heroes, macros
+  - images/                     card illustrations, class art, tokens
+  - visuals/                    visual effects
+  - sounds/                     sound effects
+  - artwork/                    module artwork
+  - devNotes/                   game design notes and balance data
+  - lang/*.json                 the FQCARDTITLE.* and FQCARDDESCRIPTION.* keys
+                                (card titles and descriptions)
+
+The FQCARDENGINE.* keys in lang/*.json are interface strings and fall under
+LICENSE instead.
+
+
+What you may do
+---------------
+
+You may use this content to play Final Quest 8 in your own Foundry VTT games,
+and modify it for use at your own table. No permission is needed for that.
+
+
+What you may not do
+-------------------
+
+Without prior written permission from the copyright holder, you may not:
+
+  - redistribute this content, in whole or in part, in any form, including
+    inside another module, system, world, or game package;
+  - sell, license, or otherwise commercially exploit it;
+  - extract the illustrations, effects, sounds, cards, or card data for use in
+    another product, whether free or paid;
+  - publish a fork, mirror, or repackaged copy of it.
+
+Requests: lyrkhanjenkins@gmail.com
+
+
+Scope in time
+-------------
+
+This license applies to releases from version 3.0.0 onward. Earlier releases of
+this module were distributed under the MIT license; that grant cannot be
+withdrawn and continues to apply to those earlier versions.
+
+
+Third-party material
+--------------------
+
+This module builds on the Foundry VTT dnd5e system. Game mechanics drawn from
+the D&D 5th edition SRD 5.1 are used under CC BY 4.0; no content outside the
+SRD is reproduced.
+
+The JB2A and Sequencer modules are optional dependencies, downloaded by the
+user from their own sources. No JB2A asset is redistributed here.
+
+Assets in visuals/ and sounds/ are subject to the licenses of their respective
+sources where those assets are not original to this project. See CREDITS for
+the current attribution list.

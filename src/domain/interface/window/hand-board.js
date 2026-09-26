@@ -40,7 +40,7 @@ export default class HandBoard {
      * Instancie une barre de main : rend son gabarit, branche les gestionnaires
      * d'événements de l'UI, enregistre les hooks de synchronisation des cartes et
      * des utilisateurs, puis peuple son affichage initial et s'auto-enregistre
-     * dans `FqCardEngineModule.handMiniBarList`. Côté MJ, l'affichage initial
+     * dans `FqCardEngineModule.handBarList`. Côté MJ, l'affichage initial
      * restaure l'état persistant depuis les flags (`restore()`, inchangé). Côté
      * joueur non-MJ, aucun flag n'est lu ou écrit : `update()` résout directement
      * sa propre main via `TradingCards.getFirstDeck` (D1-01/D1-03).
@@ -173,7 +173,7 @@ export default class HandBoard {
             this._hookIds[hook] = Hooks.on(hook, () => t._refreshReactiveGlow());
         }
         //auto register to listen for updates
-        FqCardEngineModule.handMiniBarList.push(this);
+        FqCardEngineModule.handBarList.push(this);
     }
 
     /**
@@ -716,7 +716,7 @@ export default class HandBoard {
     updatePlayerBarCount() {
         let count = 0;
         if (this.currentUser) {
-            let list = FqCardEngineModule.handMiniBarList;
+            let list = FqCardEngineModule.handBarList;
             let userId = this.currentUser._id;
             for (let i = 0; i < list.length && i < this.id; i++) {
                 let bar = list[i];

@@ -26,21 +26,21 @@ export default {
             value = FqCardEngineModule.handMax;
         }
         //add more
-        if (value == FqCardEngineModule.handMiniBarList.length) {
+        if (value == FqCardEngineModule.handBarList.length) {
             //do nothing
-        } else if (value > FqCardEngineModule.handMiniBarList.length) {
-            let more = value - FqCardEngineModule.handMiniBarList.length;
+        } else if (value > FqCardEngineModule.handBarList.length) {
+            let more = value - FqCardEngineModule.handBarList.length;
             for (let i = 0; i < more; i++) {
                 // Le constructeur de HandBoard inscrit lui-même la barre dans
-                // handMiniBarList : c'est la seule source d'enregistrement. La
+                // handBarList : c'est la seule source d'enregistrement. La
                 // réinscrire ici la compterait deux fois, et le passage suivant
                 // supprimerait la barre qui vient d'être créée.
-                new HandBoard(FqCardEngineModule.handMiniBarList.length);
+                new HandBoard(FqCardEngineModule.handBarList.length);
             }
         } else {//remove some may need additional cleanup
-            let less = FqCardEngineModule.handMiniBarList.length - value;
+            let less = FqCardEngineModule.handBarList.length - value;
             for (let i = 0; i < less; i++) {
-                FqCardEngineModule.handMiniBarList.pop().remove();
+                FqCardEngineModule.handBarList.pop().remove();
             }
         }
     },
@@ -50,7 +50,7 @@ export default {
      * @returns {void}
      */
     rerender: function () {
-        $(FqCardEngineModule.handMiniBarList).each(function (i, h) {
+        $(FqCardEngineModule.handBarList).each(function (i, h) {
             h.renderCards();
         });
     },
@@ -60,7 +60,7 @@ export default {
      * @returns {void}
      */
     restore: function () {
-        $(FqCardEngineModule.handMiniBarList).each(function (i, h) {
+        $(FqCardEngineModule.handBarList).each(function (i, h) {
             h.restore();
         });
     },
@@ -70,7 +70,7 @@ export default {
      * @returns {void}
      */
     updatePlayerBarCounts() {
-        $(FqCardEngineModule.handMiniBarList).each(function (i, h) {
+        $(FqCardEngineModule.handBarList).each(function (i, h) {
             h.updatePlayerBarCount();
         });
     },

@@ -13,13 +13,13 @@ import HandBoard from "../../src/domain/interface/window/hand-board.js";
 // de tests/setup.js) : on le remplace par une fabrique renvoyant un objet
 // simple portant une méthode `remove`, pour que `updateHandCount` puisse en
 // créer sans jamais toucher au DOM. Le vrai constructeur s'inscrit lui-même
-// dans `handMiniBarList` (source d'enregistrement unique) : le mock reproduit
+// dans `handBarList` (source d'enregistrement unique) : le mock reproduit
 // ce comportement, sans quoi un défaut qui compterait les barres deux fois
 // resterait invisible à la suite de tests.
 vi.mock("../../src/domain/interface/window/hand-board.js", () => ({
     default: vi.fn(function () {
         const instance = {remove: vi.fn()};
-        globalThis.FqCardEngineModule.handMiniBarList.push(instance);
+        globalThis.FqCardEngineModule.handBarList.push(instance);
         return instance;
     })
 }));
@@ -32,7 +32,7 @@ beforeEach(() => {
     previousModule = globalThis.FqCardEngineModule;
     globalThis.FqCardEngineModule = {
         moduleName: MODULE_NAME,
-        handMiniBarList: [{id: 0, playerBarCount: 0, updatePlayerBarCount: vi.fn()}],
+        handBarList: [{id: 0, playerBarCount: 0, updatePlayerBarCount: vi.fn()}],
         restore: vi.fn(),
         handMax: 10
     };
@@ -53,63 +53,63 @@ afterEach(() => {
 describe("updateHandCount", () => {
     it("crée le nombre de barres demandé pour le MJ (multi-barres conservé)", () => {
         game.user.isGM = true;
-        FqCardEngineModule.handMiniBarList = [];
+        FqCardEngineModule.handBarList = [];
 
         HandBars.updateHandCount(3);
 
         expect(HandBoard).toHaveBeenCalledTimes(3);
-        expect(FqCardEngineModule.handMiniBarList.length).toBe(3);
+        expect(FqCardEngineModule.handBarList.length).toBe(3);
     });
 
     it("ne crée qu'une seule barre pour un joueur non-MJ quelle que soit la valeur demandée", () => {
         game.user.isGM = false;
-        FqCardEngineModule.handMiniBarList = [];
+        FqCardEngineModule.handBarList = [];
 
         HandBars.updateHandCount(3);
 
         expect(HandBoard).toHaveBeenCalledTimes(1);
-        expect(FqCardEngineModule.handMiniBarList.length).toBe(1);
+        expect(FqCardEngineModule.handBarList.length).toBe(1);
     });
 
     it("ne crée aucune barre supplémentaire si un joueur non-MJ en a déjà une", () => {
         game.user.isGM = false;
-        FqCardEngineModule.handMiniBarList = [{id: 0, remove: vi.fn()}];
+        FqCardEngineModule.handBarList = [{id: 0, remove: vi.fn()}];
 
         HandBars.updateHandCount(5);
 
         expect(HandBoard).not.toHaveBeenCalled();
-        expect(FqCardEngineModule.handMiniBarList.length).toBe(1);
+        expect(FqCardEngineModule.handBarList.length).toBe(1);
     });
 
     it("plafonne le nombre de barres du MJ à handMax", () => {
         game.user.isGM = true;
-        FqCardEngineModule.handMiniBarList = [];
+        FqCardEngineModule.handBarList = [];
 
         HandBars.updateHandCount(15);
 
-        expect(FqCardEngineModule.handMiniBarList.length).toBe(FqCardEngineModule.handMax);
+        expect(FqCardEngineModule.handBarList.length).toBe(FqCardEngineModule.handMax);
     });
 
     it("n'enregistre chaque barre créée qu'une seule fois", () => {
         game.user.isGM = true;
-        FqCardEngineModule.handMiniBarList = [];
+        FqCardEngineModule.handBarList = [];
 
         HandBars.updateHandCount(1);
 
-        expect(FqCardEngineModule.handMiniBarList.length).toBe(1);
-        expect(FqCardEngineModule.handMiniBarList[0]).toBe(HandBoard.mock.results[0].value);
+        expect(FqCardEngineModule.handBarList.length).toBe(1);
+        expect(FqCardEngineModule.handBarList[0]).toBe(HandBoard.mock.results[0].value);
     });
 
     it("un second appel avec la même valeur ne retire ni n'ajoute aucune barre", () => {
         game.user.isGM = true;
-        FqCardEngineModule.handMiniBarList = [];
+        FqCardEngineModule.handBarList = [];
 
         HandBars.updateHandCount(2);
-        const barres = [...FqCardEngineModule.handMiniBarList];
+        const barres = [...FqCardEngineModule.handBarList];
 
         HandBars.updateHandCount(2);
 
-        expect(FqCardEngineModule.handMiniBarList.length).toBe(2);
+        expect(FqCardEngineModule.handBarList.length).toBe(2);
         for (const barre of barres) {
             expect(barre.remove).not.toHaveBeenCalled();
         }

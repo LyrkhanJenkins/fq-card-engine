@@ -1,4 +1,18 @@
-Copyright 2024 lyrkhan
+FQ Card Engine — Source code license
+====================================
+
+This MIT license applies to the SOURCE CODE of this module: the contents of
+src/, styles/, utils/, tests/, and the module's configuration files.
+
+Final Quest 8 itself is the original work of lyrkhan: its game design, cards,
+classes, balance, card layout, illustrations, compendiums, visual effects and
+sounds. That work is deliberately kept out of this MIT grant — the MIT license
+would let anyone redistribute and sell it. It is licensed under LICENSE-CONTENT
+instead, which reserves all rights.
+
+----
+
+Copyright 2022-2026 lyrkhan
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
