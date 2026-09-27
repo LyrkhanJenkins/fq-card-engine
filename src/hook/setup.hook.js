@@ -160,9 +160,6 @@ Hooks.on("setup", function () {
         if (game.settings.get(FqCardEngineModule.moduleName, "GMUsingCards")) {
             CONFIG.FqCardEngine.options.GMUsingCards = true;
         }
-        if (game.settings.get(FqCardEngineModule.moduleName, "RollInitiative")) {
-            CONFIG.FqCardEngine.options.rollInitiative = true;
-        }
         if (game.settings.get(FqCardEngineModule.moduleName, "BetterChatMessages")) {
             CONFIG.FqCardEngine.options.betterChatMessages = true;
         }

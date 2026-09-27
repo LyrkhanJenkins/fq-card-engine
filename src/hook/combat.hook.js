@@ -2,7 +2,7 @@ import {OriginFQEffectLabel} from "../domain/constants.js";
 import TradingCards, {DECK_TYPE, HAND_TYPE} from "../domain/trading/trading-cards.js";
 import CombatTurn from "../domain/engine/combat-turn.js";
 import AutoCard from "../domain/engine/auto-card.js";
-import DeathSave from "../domain/engine/death-save.js";
+import {deathSaveSkipsTurn} from "../core/utils/enhanced-combat.utils.js";
 import Damage from "../domain/engine/roll/damage.js";
 import Minion from "../domain/engine/shared/minion.js";
 
@@ -26,12 +26,6 @@ Hooks.on("deleteCombat", async function (combat, _delta) {
                 });
             }
         });
-    }
-});
-
-Hooks.on("createCombatant", async function (_combatant, _data, _options) {
-    if (CONFIG.FqCardEngine.options.rollInitiative && CombatTurn.isLocalUserFirstActiveGM()) {
-        await game.combat.rollAll();
     }
 });
 
@@ -90,9 +84,10 @@ Hooks.on("combatTurnChange", async function (combat, prior, _current) {
                 await actor.update({"system.attributes.hp.value": actor.system.attributes.hp.value - dot});
             }
         }
-        // Début de tour à 0 point de vie : jet de sauvegarde contre la mort pour un
-        // personnage, dissipation pour un sbire. Le tour consommé ne se déroule pas.
-        const turnConsumed = await DeathSave.resolveTurnStart(combat);
+        // Début de tour à 0 point de vie : fq-enhanced-combat résout le jet de
+        // sauvegarde, la dissipation d'un sbire ou la sortie d'un PNJ. Le moteur ne
+        // fait que constater que ce tour ne lui appartient pas.
+        const turnConsumed = deathSaveSkipsTurn(actor);
         if (!turnConsumed && combat.previous.round !== 0 && user) { // C'est le tour d'un joueur !
             CombatTurn.resetSacrificedMinion(combatants);
             // Un utilisateur ne devrait avoir qu'une main, une pile et un deck (FQ)
@@ -110,7 +105,7 @@ Hooks.on("combatTurnChange", async function (combat, prior, _current) {
     // du PORTEUR — le pipeline de jeu lit le personnage de l'utilisateur courant et
     // pose ses cibles. Chaque client ne traite donc que ses propres cartes.
     // Un porteur à terre ne rejoue rien : son tour appartient au jet de sauvegarde.
-    if (!DeathSave.skipsTurn(combat.combatant?.actor)) {
+    if (!deathSaveSkipsTurn(combat.combatant?.actor)) {
         await AutoCard.playTurnAutoCards();
     }
 });

@@ -96,9 +96,10 @@ describe("hook/combat.hook.js", () => {
     // ─── Tâche 1 : harnais + tranche end-to-end ────────────────────────────
 
     describe("harnais", () => {
-        it("capture les 5 hooks inline enregistrés par le module", () => {
+        it("capture les 4 hooks inline enregistrés par le module", () => {
+            // `createCombatant` n'y est plus : l'initiative lancée d'office à l'entrée
+            // en combat est passée dans fq-enhanced-combat.
             expect(getHook("deleteCombat")).toBeTypeOf("function");
-            expect(getHook("createCombatant")).toBeTypeOf("function");
             expect(getHook("createCombat")).toBeTypeOf("function");
             expect(getHook("userConnected")).toBeTypeOf("function");
             expect(getHook("combatTurnChange")).toBeTypeOf("function");
@@ -274,26 +275,6 @@ describe("hook/combat.hook.js", () => {
         });
     });
 
-    describe("createCombatant", () => {
-        it("MJ + rollInitiative actif : déclenche game.combat.rollAll", async () => {
-            CONFIG.FqCardEngine.options.rollInitiative = true;
-            game.combat.rollAll = vi.fn().mockResolvedValue(undefined);
-
-            await getHook("createCombatant")({}, {}, {});
-
-            expect(game.combat.rollAll).toHaveBeenCalled();
-        });
-
-        it("rollInitiative inactif : n'appelle pas game.combat.rollAll", async () => {
-            CONFIG.FqCardEngine.options.rollInitiative = false;
-            game.combat.rollAll = vi.fn().mockResolvedValue(undefined);
-
-            await getHook("createCombatant")({}, {}, {});
-
-            expect(game.combat.rollAll).not.toHaveBeenCalled();
-        });
-    });
-
     describe("userConnected -> CombatTurn.drawInnateCards", () => {
         it("passe uniquement les cartes innées non piochées de chaque utilisateur, de son deck vers sa main", () => {
             game.users = Object.assign([{id: "user-1"}], {activeGM: {id: GM_ID}});
@@ -451,7 +432,13 @@ describe("hook/combat.hook.js", () => {
 
         it("premier round : un personnage déjà à terre ne reçoit pas de main de départ", async () => {
             globalThis.FqCardEngineModule = {moduleName: "fq-card-engine"};
-            game.settings.get = vi.fn(() => true);
+            // Les jets de mort ont quitté ce module : c'est fq-enhanced-combat qui dit
+            // desormais qu'un début de tour lui appartient. Sans lui, le tour d'un
+            // personnage à terre se déroule normalement et il reçoit sa main.
+            game.modules = new Map([["fq-enhanced-combat", {
+                active: true,
+                api: {deathSave: {skipsTurn: actor => Number(actor?.system?.attributes?.hp?.value) <= 0}}
+            }]]);
             const deboutCombatant = makeCombatant({
                 actorId: "debout-actor",
                 fq: {action: {value: 0, max: 6}, zeal: {value: 0, max: 8, init: 3}, cards: {hand: 4, pick: 1}}

@@ -14,7 +14,6 @@ import {fqClassIds, hasFqClass, registerFqClass, unregisterFqClass} from "./doma
 
 CONFIG.FqCardEngine = {
     options: {
-        rollInitiative: false,
         playerLimitCardsRight: false,
         betterChatMessages: false,
         hideMessages: false,

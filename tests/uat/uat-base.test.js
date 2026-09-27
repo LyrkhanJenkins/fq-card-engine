@@ -163,7 +163,7 @@ describe("template uat-base", () => {
         // qu'un monde UAT sert à exercer.
         const expected = {
             "fq-card-engine.PlayerLimitCardsRight": true,
-            "fq-card-engine.RollInitiative": true,
+            "fq-enhanced-combat.RollInitiative": true,
             "fq-restrain-movement.gmNotRestrained": false,
             "core.gridDiagonals": 3,
             "fq-npc-ai.enabled": true,
@@ -178,13 +178,16 @@ describe("template uat-base", () => {
         }
     });
 
-    it("active fq-card-engine et fq-npc-ai dans le réglage core.moduleConfiguration", () => {
+    it("active fq-card-engine, fq-npc-ai et fq-enhanced-combat dans core.moduleConfiguration", () => {
         const setting = settings.find(s => s.key === "core.moduleConfiguration");
 
         expect(setting).toBeDefined();
         const moduleConfiguration = JSON.parse(setting.value);
         expect(moduleConfiguration["fq-card-engine"]).toBe(true);
         expect(moduleConfiguration["fq-npc-ai"]).toBe(true);
+        // Un monde UAT force les jets de mort et l'initiative : ils sont servis par
+        // fq-enhanced-combat, qui doit donc être chargé pour que ces réglages agissent.
+        expect(moduleConfiguration["fq-enhanced-combat"]).toBe(true);
     });
 
     it("conserve les modules déjà actifs du monde source en activant fq-npc-ai", () => {

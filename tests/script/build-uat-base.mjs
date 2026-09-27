@@ -24,13 +24,16 @@ const PLAYER_USER_ID = "uatPlayerUser001";
 const SEED_MACRO_ID = "uatSeedMacro0001";
 const DECK_MACRO_ID = "uatDeckMacro0001";
 const MODULE_ID = "fq-card-engine";
+// Les jets de mort et l'initiative automatique ont quitte le moteur de cartes :
+// ce sont des regles de combat dnd5e, desormais servies par fq-enhanced-combat.
+const ENHANCED_COMBAT_ID = "fq-enhanced-combat";
 const ARENA_SCENE_ID = "Pl5kNER7PeAwjkHI";
 const UNUSED_ARENA_IMAGE = "ancienne_arene_semoutiene.png";
 
 // Modules absents du monde source mais que tout monde UAT doit charger. Ils sont
 // FUSIONNÉS dans le core.moduleConfiguration existant, jamais substitués à lui : la
 // liste des modules déjà actifs dans le monde source fait foi, on ne fait qu'y ajouter.
-const FORCED_ACTIVE_MODULES = ["fq-npc-ai"];
+const FORCED_ACTIVE_MODULES = ["fq-npc-ai", ENHANCED_COMBAT_ID];
 
 // Id figé du réglage core.moduleConfiguration créé de toutes pièces si le monde source
 // n'en portait aucun — cas théorique, mais échouer silencieusement produirait un
@@ -43,7 +46,7 @@ const MODULE_CONFIGURATION_ID = "fqUatModules0001";
 // template reste reproductible.
 const FORCED_SETTINGS = [
     {module: MODULE_ID, key: "PlayerLimitCardsRight", value: true, id: "fqUatSetting0001"},
-    {module: MODULE_ID, key: "RollInitiative", value: true, id: "fqUatSetting0002"},
+    {module: ENHANCED_COMBAT_ID, key: "RollInitiative", value: true, id: "fqUatSetting0002"},
     // fq-restrain-movement laisse le MJ hors restrictions par défaut ; en UAT on veut
     // au contraire qu'il soit soumis aux mêmes règles de déplacement que le joueur.
     {module: "fq-restrain-movement", key: "gmNotRestrained", value: false, id: "fqUatSetting0004"},
@@ -63,7 +66,7 @@ const FORCED_SETTINGS = [
     // doit exercer, et il rend les tours de PNJ lisibles — un PNJ qui lance une entrave
     // ou un utilitaire brouille la lecture de ce qu'on cherche à valider.
     {module: "fq-npc-ai", key: "combatActivitiesOnly", value: true, id: "fqUatSetting0008"},
-    {module: MODULE_ID, key: "DeathSaveOnTurnStart", value: true, id: "fqUatSetting0009"}
+    {module: ENHANCED_COMBAT_ID, key: "DeathSaveOnTurnStart", value: true, id: "fqUatSetting0009"}
 ];
 
 // Horodatage figé pour que le template one-shot reste reproductible à l'octet

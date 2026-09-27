@@ -2,7 +2,7 @@ import {isGeneratedCard} from "../constants.js";
 import TradingCards, {DECK_TYPE, HAND_TYPE, PILE_TYPE} from "../trading/trading-cards.js";
 import {createWarning} from "../../core/utils/chat.utils.js";
 import {socket} from "../../hook/integration/socketlib.hook.js";
-import DeathSave from "./death-save.js";
+import {deathSaveSkipsTurn} from "../../core/utils/enhanced-combat.utils.js";
 
 /**
  * Action FQ déclenchée par les hooks Foundry pendant le changement d'état du combat : réinitialisation des
@@ -201,7 +201,7 @@ export default class CombatTurn {
         // get users with actors
         const users = game.users.filter(user => user.character?.id);
         for (const combatant1 of combatants
-            .filter(combatant => !DeathSave.skipsTurn(combatant.actor))
+            .filter(combatant => !deathSaveSkipsTurn(combatant.actor))
             .filter(combatant => users.filter(user => user.character?.id === combatant.actor.id).length === 1)) {
             const user = users.find(user => user.character.id === combatant1.actor.id);
             const deck = TradingCards.getFirstDeck(user?.id, DECK_TYPE);

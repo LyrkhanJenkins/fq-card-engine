@@ -1,5 +1,4 @@
 import {OPPORTUNITY_ATTACK_SETTING} from "../domain/engine/reaction/opportunity-attack.js";
-import {DEATH_SAVE_SETTING} from "../domain/engine/death-save.js";
 
 /**
  * Multiplicateurs de vitesse proposés pour la fenêtre de résultat. Une liste de
@@ -83,29 +82,6 @@ export function registerSettings() {
             CONFIG.FqCardEngine.options.playerLimitCardsRight = value;
             window.location.reload();
         },
-        filePicker: false,  // set true with a String `type` to use a file picker input
-    });
-    game.settings.register(FqCardEngineModule.moduleName, "RollInitiative", {
-        name: game.i18n.localize("FQCARDENGINE.RollInitiativeNameSetting"),
-        hint: game.i18n.localize("FQCARDENGINE.RollInitiativeNameSettingHint"),
-        scope: "world",     // "world" = sync to db, "client" = local storage
-        config: true,       // false if you dont want it to show in module config
-        type: Boolean,       // Number, Boolean, String,
-        default: false,
-        onChange: value => { // value is the new value of the setting
-            CONFIG.FqCardEngine.options.rollInitiative = value;
-        },
-        filePicker: false,  // set true with a String `type` to use a file picker input
-    });
-    game.settings.register(FqCardEngineModule.moduleName, DEATH_SAVE_SETTING, {
-        name: game.i18n.localize("FQCARDENGINE.DeathSaveSetting"),
-        hint: game.i18n.localize("FQCARDENGINE.DeathSaveSettingHint"),
-        scope: "world",     // "world" = sync to db, "client" = local storage
-        config: true,       // false if you dont want it to show in module config
-        type: Boolean,       // Number, Boolean, String,
-        // Désactivée par défaut : elle confie au moteur la mort des personnages et
-        // la disparition des sbires, ce doit être un choix explicite du MJ.
-        default: false,
         filePicker: false,  // set true with a String `type` to use a file picker input
     });
     game.settings.register(FqCardEngineModule.moduleName, "BetterChatMessages", {

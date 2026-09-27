@@ -124,6 +124,15 @@
         }
       },
       {
+        "id": "fq-enhanced-combat",
+        "type": "module",
+        "reason": "Serves the dnd5e combat rules that left this module: death saving throws at the start of a turn, and initiative rolled on joining combat.",
+        "compatibility": {
+          "minimum": "3.0.0",
+          "verified": "3.0.0"
+        }
+      },
+      {
         "id": "fq-restrain-movement",
         "type": "module",
         "reason": "This module restricts the movement of players' tokens.",
