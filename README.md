@@ -106,6 +106,34 @@ The module provides also a special ui for creating your own deck with your Spell
 - The cards are design to be used with rectilinear grids
 ![img.png](images/doc/rectilinear-grid.png)
 
+## Dev
+
+### Generate a random test world
+
+`npm run testWorld:random` creates a UAT world in the Foundry `worlds` folder. It only
+writes files (no LevelDB access), so it can run while Foundry is open. Options go after `--`:
+
+```bash
+npm run testWorld:random -- --seed=12345 --class=elementalist:3,trapper:2 --level=5 --enemies="Goblin x3, Ogre" --difficulty=hard --placement=scattered --allies=1 --regions=2 --combat --name=uat-test
+```
+
+| Option         | Values                                                                                               |
+|----------------|------------------------------------------------------------------------------------------------------|
+| `--seed`       | A number. When omitted, a seed is drawn and printed so the world can be replayed                     |
+| `--class`      | `slug[:level][,slug2[:level2]...]`, slugs taken from `packs/_source/classes-fq8` (e.g. `trapper`)     |
+| `--level`      | Total hero level (1-20)                                                                              |
+| `--enemies`    | A count (`4`) or an explicit list of monster names from the index (`"Goblin x3, Ogre"`)              |
+| `--difficulty` | `easy` \| `normal` \| `hard` \| `deadly`                                                             |
+| `--placement`  | `packed` \| `scattered` \| `line` \| `melee`                                                         |
+| `--allies`     | Number of allies (default 0)                                                                         |
+| `--regions`    | Number of regions                                                                                    |
+| `--combat`     | Sets up and starts the combat when seeding (default: off)                                            |
+| `--name`       | World name: lowercase letters, digits and dashes only (default `uat-<seed>`)                         |
+| `--worlds-dir` | Target `worlds` folder (default: the Foundry data path)                                              |
+| `--dry-run`    | Builds and prints the plan without writing anything                                                  |
+
+`npm run testWorld:random -- --help` prints the same list.
+
 ## License
 
 - **Source code** (`src/`, `styles/`, `utils/`, `tests/`): MIT — see [LICENSE](LICENSE).
