@@ -48,7 +48,10 @@ describe("Armes des paquets source", () => {
 
     it("balaie effectivement des armes", () => {
         // Garde du garde : un chemin cassé rendrait le test suivant vert à vide.
-        expect(weapons.length).toBeGreaterThan(10);
+        // Compte relatif : les sept armes de `items-fq8` sont passees dans
+        // `fq-card-engine-extended`. Restent celles embarquees dans les inventaires
+        // des acteurs livres ici, et un zero signalerait un chemin casse.
+        expect(weapons.length).toBeGreaterThan(0);
     });
 
     it("chaque arme porte une activité d'attaque", () => {

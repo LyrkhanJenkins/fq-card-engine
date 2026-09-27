@@ -58,13 +58,30 @@ The 8th Version is an adaptation to combine the trading card battle system with 
 
 The module provides several resources for start playing Final Quest 8 :
 - Cards for the first 5 level
-- Classes
+- Classes (four in this module, five more in the extended content)
 - Items
 - Passive Spells
 - Monsters
 - Macros
 
 ![img.png](images/doc/assets.png)
+
+### Extended content
+
+Five classes are not shipped with this module: **Guardian, Illusionist, Monk, Runic Warrior
+and Witch**. They live in a separate module, along with their cards, illustrations and summons.
+
+This module is fully playable on its own. **Elementalist, Fencing Master, Trapper and White
+Mage** are complete, every level included, as are the neutral cards that all classes share.
+
+The starter heroes of the five extended classes are still listed in the Starter Heroes
+compendium, but without their class item: they are there as a preview.
+
+Want the extended content? Send me a message:
+
+- Discord: `lyrkhanjenkins`
+- Email: <lyrkhanjenkins@gmail.com>
+
 
 ### Character new resources
 Specials resources are used for using cards or spells for FQ battle system.

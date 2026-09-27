@@ -45,7 +45,9 @@ release:
   script:
     - apk update
     - apk add zip
-    - rm -rf node_modules .git tests examples utils doc .babelrc .gitignore .gitlab-ci.yml package.json package-lock.json
+    # `images/doc` ne sert qu'aux captures du README : 16 Mo que chaque
+    # utilisateur telechargerait sans jamais les voir dans Foundry.
+    - rm -rf node_modules .git tests examples utils doc images/doc .babelrc .gitignore .gitlab-ci.yml package.json package-lock.json
     - echo "Releasing the tag..."
     - zip -r $RELEASE_DIR.zip * # Création de l'archive ZIP
     - ls -lrt

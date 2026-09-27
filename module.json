@@ -196,18 +196,6 @@
       "flags": {}
     },
     {
-      "label": "Items FQ8",
-      "type": "Item",
-      "name": "items-fq8",
-      "path": "packs/items-fq8",
-      "system": "dnd5e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      },
-      "flags": {}
-    },
-    {
       "label": "Macros FQ8",
       "type": "Macro",
       "name": "macros-fq8",
@@ -215,18 +203,6 @@
       "system": "dnd5e",
       "ownership": {
         "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      },
-      "flags": {}
-    },
-    {
-      "label": "Macros FQ8 (legacy)",
-      "type": "Macro",
-      "name": "macros-fq8-legacy",
-      "path": "packs/macros-fq8-legacy",
-      "system": "dnd5e",
-      "ownership": {
-        "PLAYER": "NONE",
         "ASSISTANT": "OWNER"
       },
       "flags": {}
@@ -251,18 +227,6 @@
       "system": "dnd5e",
       "ownership": {
         "PLAYER": "NONE",
-        "ASSISTANT": "OWNER"
-      },
-      "flags": {}
-    },
-    {
-      "label": "Spells NPC",
-      "type": "Item",
-      "name": "spells-npc",
-      "path": "packs/spells-npc",
-      "system": "dnd5e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
       },
       "flags": {}
@@ -313,7 +277,6 @@
           "color": "#317d0e",
           "packs": [
             "macros-fq8",
-            "macros-fq8-legacy",
             "macros-gm-fq8",
             "macros-sequencer"
           ],
@@ -321,9 +284,7 @@
         }
       ],
       "packs": [
-        "minions-fq8",
-        "spells-npc",
-        "items-fq8"
+        "minions-fq8"
       ]
     }
   ],
