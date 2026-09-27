@@ -4,6 +4,7 @@ import TargetingPredicates from "./targeting-predicates.js";
 import Constants, {DEFAULT_MAX_ZEAL} from "../../constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
+import PackUtils from "../../../core/utils/pack.utils.js";
 
 /**
  * Service de gestion des sbires (minions) : création de l'acteur et de son token
@@ -127,7 +128,7 @@ export default class Minion {
             return Minion.createGhostActorData(minion);
         }
 
-        const minionPack = await game.packs.get(FqCardEngineModule.moduleName + ".minions-fq8").getDocuments();
+        const minionPack = await PackUtils.documentsFrom("minions-fq8");
 
         const foundMinion = minionPack.find(m => m.name === minion?.name);
 

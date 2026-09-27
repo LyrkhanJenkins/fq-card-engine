@@ -1,5 +1,6 @@
 import Constants, {MAX_CLASS_LEVEL, isGeneratedCard} from "../constants.js";
 import {sampleItems} from "../../core/utils/random.utils.js";
+import PackUtils from "../../core/utils/pack.utils.js";
 
 export const DECK_TYPE = "DECK";
 export const HAND_TYPE = "HAND";
@@ -246,7 +247,7 @@ export default class TradingCards {
         const allFQClasses = Constants.userFQClasses(user);
         const mainClass = allFQClasses.find(c => c.system.isOriginalClass);
 
-        const compendium = await game.packs.get(FqCardEngineModule.moduleName + ".decks-pattern-fq8").getDocuments();
+        const compendium = await PackUtils.documentsFrom("decks-pattern-fq8");
         const nameOriginDeck = mainClass?.name + " Base";
         const originDeck = compendium.find(pack => pack.name === nameOriginDeck);
         if (!mainClass || !originDeck) {

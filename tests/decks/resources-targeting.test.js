@@ -620,7 +620,7 @@ describe("EXHA-04 : ciblage squelette (targetType Skeletons)", () => {
                         combatants: [{tokenId: "skeleton-target-token"}, {actorId: worldFixture.character.id}],
                         flags: {fq: {logs: []}}
                     },
-                    packs: {get: vi.fn(() => ({getDocuments: vi.fn(async () => [])}))}
+                    packs: {filter: vi.fn(() => []), get: vi.fn(() => ({getDocuments: vi.fn(async () => [])}))}
                 })
             });
             expect(result.threw).toBe(false);

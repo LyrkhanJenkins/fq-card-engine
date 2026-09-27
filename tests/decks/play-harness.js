@@ -301,7 +301,7 @@ export function mountWorld(overrides = {}) {
             format: vi.fn((str, args) => `${str} ${JSON.stringify(args)}`)
         },
         settings: {get: vi.fn(() => undefined), register: vi.fn()},
-        packs: {get: vi.fn(() => ({getDocuments: vi.fn(async () => [])}))},
+        packs: {filter: vi.fn(() => []), get: vi.fn(() => ({getDocuments: vi.fn(async () => [])}))},
         userId: HARNESS_USER_ID,
         user: {
             id: HARNESS_USER_ID,

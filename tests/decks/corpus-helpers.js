@@ -264,7 +264,7 @@ export function sweepWorldOverridesFor(choice) {
                 ]
             }
         },
-        packs: {get: vi.fn(() => ({getDocuments: vi.fn(async () => (choice.minions ?? []).map(minionDocFor))}))}
+        packs: {filter: vi.fn(() => []), get: vi.fn(() => ({getDocuments: vi.fn(async () => (choice.minions ?? []).map(minionDocFor))}))}
     };
 
     if (referencesCombatApi(choice) || usesCombatTargeting(choice)) {

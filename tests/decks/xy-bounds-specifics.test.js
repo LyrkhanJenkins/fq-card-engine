@@ -468,7 +468,7 @@ describe("Mécanique : invocation de sbires — création déléguée au MJ via 
             const result = await playChoice(card, choiceIndex, {
                 world: abundantWorld({
                     folders: [{type: "Actor", name: "Temporaire", id: "minion-temp-folder"}],
-                    packs: {get: vi.fn(() => ({getDocuments: vi.fn(async () => choice.minions.map(minionDocFor))}))}
+                    packs: {filter: vi.fn(() => []), get: vi.fn(() => ({getDocuments: vi.fn(async () => choice.minions.map(minionDocFor))}))}
                 })
             });
             expect(result.threw).toBe(false);

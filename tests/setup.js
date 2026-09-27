@@ -266,6 +266,10 @@ beforeEach(() => {
             combatants: [{actorId: "userCharacterId"}],
         },
         packs: {
+            // `game.packs` est une Collection Foundry : `filter` autant que `get`.
+            // Rendre [] signifie « le moteur est le seul à fournir ce compendium »
+            // (voir src/core/utils/pack.utils.js).
+            filter: vi.fn(() => []),
             get: vi.fn(() => ({
                 getDocuments: vi.fn(() => ([{
                     name: "minionName",

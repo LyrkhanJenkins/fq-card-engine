@@ -1,6 +1,7 @@
 import TargetingPredicates from "./targeting-predicates.js";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
 import {visualEffectData} from "../../system/fx/visualEffectData.js";
+import PackUtils from "../../../core/utils/pack.utils.js";
 
 /**
  * Utilitaires d'effets audiovisuels lors du jeu des cartes, s'appuyant sur le
@@ -40,7 +41,7 @@ export default class Fx {
         const macroName = executeMacro.split(" ")[0];
         let existing = game.macros.getName(macroName);
         if (!existing) {
-            const compendium = await game.packs.get(FqCardEngineModule.moduleName + ".macros-sequencer").getDocuments();
+            const compendium = await PackUtils.documentsFrom("macros-sequencer");
             const persistAura = compendium.find(macro => macro.name === macroName);
             await Macro.create(persistAura);
         }
