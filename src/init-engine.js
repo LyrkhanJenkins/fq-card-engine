@@ -10,6 +10,7 @@ import WeaponDamage from "./domain/engine/roll/weapon-damage.js";
 import CardCondition from "./domain/engine/shared/card-condition.js";
 import ZoneWall from "./domain/engine/shared/zone-wall.js";
 import {socket} from "./hook/integration/socketlib.hook.js";
+import {fqClassIds, hasFqClass, registerFqClass, unregisterFqClass} from "./domain/classes.js";
 
 CONFIG.FqCardEngine = {
     options: {
@@ -38,6 +39,21 @@ window.FqCardEngineModule = {
         fromZone: (cardContent, style) => ZoneWall.requestFromZone(socket, cardContent, style)
     },
     handBarList: new Array(),
+
+    /**
+     * Registre des classes FQ, ouvert aux modules de contenu : `registerClass`
+     * declare une classe (identifiant, cle de libelle), `unregisterClass` la
+     * retire, `hasClass` et `classIds` interrogent ce qui est disponible dans le
+     * monde courant.
+     *
+     * A appeler depuis le hook `init` du module appelant : le schema de carte est
+     * fige a la premiere carte instanciee, et n'enregistre plus rien ensuite.
+     */
+    registerClass: registerFqClass,
+    unregisterClass: unregisterFqClass,
+    hasClass: hasFqClass,
+    classIds: fqClassIds,
+
     moduleName: "fq-card-engine",
     eventName: "module.fq-card-engine",
     handMax: 10,

@@ -1,5 +1,6 @@
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import TradingCards from "../../trading/trading-cards.js";
+import {fqClassChoices} from "../../classes.js";
 
 /**
  * Fonctions pures de préparation de la grille du grimoire : tri, groupement
@@ -179,10 +180,18 @@ export function groupCardsByClass(sortedCards) {
 }
 
 /**
- * Localise un identifiant de classe FQ (`"runic-warrior"`) en libellé humain,
- * via la clé `FQCARDENGINE.Class<PascalCase>`. Renvoie l'identifiant brut si
- * la clé est absente du fichier de langue — c'est la façon dont Foundry
- * signale une clé manquante : `game.i18n.localize` renvoie alors la clé
+ * Localise un identifiant de classe FQ (`"runic-warrior"`) en libellé humain.
+ *
+ * La clé vient du registre (`domain/classes.js`), qui la tient de la classe
+ * elle-même : un module de contenu nomme ses clés dans son propre espace, et
+ * `FQCARDENGINE.Class<PascalCase>` ne les trouverait pas.
+ *
+ * Le repli sur cette construction reste nécessaire pour une classe ABSENTE du
+ * registre : une carte garde sa classe quand le module qui l'apportait n'est plus
+ * installé, et son libellé est encore dans les fichiers de langue du moteur.
+ *
+ * Renvoie l'identifiant brut si aucune clé n'aboutit — c'est la façon dont
+ * Foundry signale une clé manquante : `game.i18n.localize` renvoie alors la clé
  * demandée telle quelle.
  *
  * @param {string} classKey - L'identifiant de classe brut (`system.fq.class`).
@@ -191,7 +200,7 @@ export function groupCardsByClass(sortedCards) {
  */
 export function localizeClassKey(classKey) {
     const pascalCase = classKey.split("-").map(segment => segment.charAt(0).toUpperCase() + segment.slice(1)).join("");
-    const key = `FQCARDENGINE.Class${pascalCase}`;
+    const key = fqClassChoices()[classKey] ?? `FQCARDENGINE.Class${pascalCase}`;
     const localized = game.i18n.localize(key);
     return localized === key ? classKey : localized;
 }

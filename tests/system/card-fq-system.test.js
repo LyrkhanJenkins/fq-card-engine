@@ -57,19 +57,21 @@ describe("CardFqSystem.defineSchema", () => {
         expect(CardFqSystem.defineSchema().fq.class.initial()).toBe("neutral");
     });
 
-    it("liste les 10 classes de CLASS_CHOICE comme choix possibles", () => {
+    it("prend ses choix de classe au registre, en cles de localisation", () => {
+        // Les libelles etaient l'identifiant lui-meme, et le selecteur affichait
+        // « witch » : ce sont desormais des cles i18n, que le gabarit traduit.
         expect(CardFqSystem.defineSchema().fq.class.choices).toEqual(CardFqSystem.CLASS_CHOICE);
         expect(CardFqSystem.defineSchema().fq.class.choices).toEqual({
-            "neutral": "neutral",
-            "elementalist": "elementalist",
-            "fencing-master": "fencing-master",
-            "guardian": "guardian",
-            "illusionist": "illusionist",
-            "monk": "monk",
-            "runic-warrior": "runic-warrior",
-            "trapper": "trapper",
-            "white-mage": "white-mage",
-            "witch": "witch",
+            "neutral": "FQCARDENGINE.ClassNeutral",
+            "elementalist": "FQCARDENGINE.ClassElementalist",
+            "fencing-master": "FQCARDENGINE.ClassFencingMaster",
+            "guardian": "FQCARDENGINE.ClassGuardian",
+            "illusionist": "FQCARDENGINE.ClassIllusionist",
+            "monk": "FQCARDENGINE.ClassMonk",
+            "runic-warrior": "FQCARDENGINE.ClassRunicWarrior",
+            "trapper": "FQCARDENGINE.ClassTrapper",
+            "white-mage": "FQCARDENGINE.ClassWhiteMage",
+            "witch": "FQCARDENGINE.ClassWitch",
         });
     });
 });

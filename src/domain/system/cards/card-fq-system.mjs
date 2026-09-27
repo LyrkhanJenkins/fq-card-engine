@@ -1,6 +1,7 @@
 import StatusEffects from "../effects/status-effects.js";
 import {ABILITY_CHOICE} from "../../abilities.js";
 import {WEAPON_TOKEN_CHOICE} from "../../weapon-tokens.js";
+import {NEUTRAL_CLASS as NEUTRAL, fqClassChoices} from "../../classes.js";
 
 const {SchemaField, StringField, NumberField, BooleanField, ArrayField, FilePathField} = foundry.data.fields;
 
@@ -17,7 +18,7 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
     static TARGET_TYPE_ADJACENT = "Adjacent";
     static TARGET_TYPE_COMBAT_ENEMIES = "CombatEnemies";
     static TARGET_TYPE_COMBAT_ALLIES = "CombatAllies";
-    static NEUTRAL_CLASS = "neutral";
+    static NEUTRAL_CLASS = NEUTRAL;
     static REPLAYABLE_PASSIVE = "passif";
     static REPLAYABLE_EPHEMERAL = "ephemere";
     static REPLAYABLE_AUTO = "auto";
@@ -257,18 +258,19 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         rectangle: "FQCARDENGINE.ZoneShapeRectangle",
         line: "FQCARDENGINE.ZoneShapeLine"
     };
-    static CLASS_CHOICE = {
-        "neutral": this.NEUTRAL_CLASS,
-        "elementalist": "elementalist",
-        "fencing-master": "fencing-master",
-        "guardian": "guardian",
-        "illusionist": "illusionist",
-        "monk": "monk",
-        "runic-warrior": "runic-warrior",
-        "trapper": "trapper",
-        "white-mage": "white-mage",
-        "witch": "witch"
-    };
+    /**
+     * Les classes declarees dans ce monde, en table de choix. Lue au registre
+     * (`domain/classes.js`) a chaque acces et non figee ici : un module de
+     * contenu peut en ajouter ou en retirer depuis son hook `init`.
+     *
+     * Les libelles sont des cles de localisation, que le gabarit traduit via son
+     * drapeau `localize=true` (`fq-form/card/attributes.hbs`).
+     *
+     * @returns {Object<string, string>} Identifiant de classe vers cle de libelle.
+     */
+    static get CLASS_CHOICE() {
+        return fqClassChoices();
+    }
 
     static CHANGE_TYPE_CHOICES = Object.fromEntries(
         Object.keys(CONST.ACTIVE_EFFECT_CHANGE_TYPES).map(key => [key, key])
