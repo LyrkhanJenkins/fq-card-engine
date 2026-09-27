@@ -1,6 +1,7 @@
 ## V2.x
 ### Fix Prioritaire
 - Supprimer les visuals et ne plus utiliser que J2BA
+- Montée en version 6.0.5 de dnd5E
 ### Fix mineure
 - Vérifier la localisation notamment pour les macros
 - faire bouger tornade effet magique

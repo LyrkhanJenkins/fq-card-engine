@@ -2,7 +2,7 @@
   "name": "Trapper Base (2.0.2)",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cards/back_trapper.PNG",
+  "img": "modules/fq-card-engine/images/cards/back_neutral.png",
   "cards": [
     {
       "_id": "HIST000000000102",
@@ -18,7 +18,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/tamed_wolf.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.TamedWolf"
         }
       ],
@@ -121,7 +121,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/precise_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.PreciseShot"
         }
       ],
@@ -210,7 +210,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/elite_marksman.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.EliteMarksman"
         }
       ],
@@ -339,7 +339,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/double_arrows.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.DoubleArrows"
         }
       ],
@@ -429,7 +429,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/rain_of_arrows.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.RainOfArrows"
         }
       ],
@@ -527,7 +527,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.DrawII"
         }
       ],
@@ -621,7 +621,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_ii.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryII"
         }
       ],
@@ -715,7 +715,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/trap.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Trap"
         }
       ],
@@ -840,7 +840,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/reflex_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ReflexShot"
         }
       ],
@@ -929,7 +929,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterIV"
         }
       ],
@@ -1024,7 +1024,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/poisoned_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.PoisonedShot"
         }
       ],
@@ -1153,7 +1153,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/piercing_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.PiercingShot"
         }
       ],
@@ -1251,7 +1251,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/weak_point_study.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.WeakPointStudy"
         }
       ],
@@ -1391,7 +1391,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/ambush.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Ambush"
         }
       ],
@@ -1535,7 +1535,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/supersonic_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.SupersonicShot"
         }
       ],
@@ -1629,7 +1629,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/explosive_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ExplosiveShot"
         }
       ],
@@ -1718,7 +1718,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/enraged_bear.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.EnragedBear"
         }
       ],
@@ -1819,7 +1819,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/adjusted_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.AdjustedShot"
         }
       ],
@@ -1956,7 +1956,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/spike_trap.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.SpikeTrap"
         }
       ],
@@ -2043,7 +2043,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/poison_trap.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.PoisonTrap"
         }
       ],
@@ -2170,7 +2170,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/rooted_shot.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.RootedShot"
         }
       ],
@@ -2312,7 +2312,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/trapper/regain_strength.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.RegainStrength"
         }
       ],

@@ -2,7 +2,7 @@
   "name": "Witch Base (2.0.2)",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cards/back_witch.PNG",
+  "img": "modules/fq-card-engine/images/cards/back_neutral.png",
   "system": {
     "fq": {
       "type": "",
@@ -15,7 +15,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/necromancy.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Necromancy"
         }
       ],
@@ -111,7 +111,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/agility_influx.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.AgilityInflux"
         }
       ],
@@ -234,7 +234,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.DrawII"
         }
       ],
@@ -321,7 +321,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/giant_skeleton.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.GiantSkeleton"
         }
       ],
@@ -422,7 +422,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/bone_shield.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.BoneShield"
         }
       ],
@@ -551,7 +551,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/green_shadow_bolt.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.GreenShadowBolt"
         }
       ],
@@ -683,7 +683,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/life_influx.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.LifeInflux"
         }
       ],
@@ -770,7 +770,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_ii.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryII"
         }
       ],
@@ -857,7 +857,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/mana_influx.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ManaInflux"
         }
       ],
@@ -944,7 +944,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/power_influx.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.PowerInflux"
         }
       ],
@@ -1031,7 +1031,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/shadow_channeling.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ShadowChanneling"
         }
       ],
@@ -1160,7 +1160,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/shadow_explosion.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ShadowExplosion"
         }
       ],
@@ -1247,7 +1247,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/shadow_form.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ShadowForm"
         }
       ],
@@ -1417,7 +1417,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/square_of_skeletons.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.SquareOfSkeletons"
         }
       ],
@@ -1542,7 +1542,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterIV"
         }
       ],
@@ -1629,7 +1629,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/osteology.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Osteology"
         }
       ],
@@ -1748,7 +1748,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/shadow_spell.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ShadowSpell"
         }
       ],
@@ -1885,7 +1885,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/arcane_strike.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ArcaneStrike"
         }
       ],
@@ -1986,7 +1986,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/blood_ritual.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.BloodRitual"
         }
       ],
@@ -2073,7 +2073,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/morbid_shift.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.MorbidShift"
         }
       ],
@@ -2207,7 +2207,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/skeleton_sorcerer.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.SkeletonSorcerer"
         }
       ],

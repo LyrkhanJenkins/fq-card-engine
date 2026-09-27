@@ -2,7 +2,7 @@
   "name": "Monk Base (2.0.2)",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cards/back_monk.PNG",
+  "img": "modules/fq-card-engine/images/cards/back_neutral.png",
   "cards": [
     {
       "_id": "HIST000000000080",
@@ -18,7 +18,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/right_punch.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.RightPunch"
         }
       ],
@@ -107,7 +107,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/left_punch.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.LeftPunch"
         }
       ],
@@ -196,7 +196,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/combo.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Combo"
         }
       ],
@@ -285,7 +285,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryIII"
         }
       ],
@@ -379,7 +379,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/zealous_shield.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ZealousShield"
         }
       ],
@@ -509,7 +509,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/inhibiting_cape.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.InhibitingCape"
         }
       ],
@@ -627,7 +627,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/secret_weapons.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.SecretWeapons"
         }
       ],
@@ -716,7 +716,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/quick_dodge.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.QuickDodge"
         }
       ],
@@ -810,7 +810,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/conversion.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Conversion"
         }
       ],
@@ -904,7 +904,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/flash_move.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.FlashMove"
         }
       ],
@@ -957,7 +957,7 @@
                       "data": [
                         {
                           "name": "Flash Move",
-                          "img": "modules/fq-card-engine/images/cards/monk/flash_move.PNG",
+                          "img": "icons/magic/movement/trail-streak-zigzag-yellow.webp",
                           "changes": [
                             {
                               "key": "macro.execute",
@@ -1044,7 +1044,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/zen_meditation.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ZenMeditation"
         }
       ],
@@ -1138,7 +1138,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_v.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterV"
         }
       ],
@@ -1232,7 +1232,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/phantom_blade.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.PhantomBlade"
         }
       ],
@@ -1326,7 +1326,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/concealment.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Concealment"
         }
       ],
@@ -1486,7 +1486,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/ki_breath.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.KiBreath"
         }
       ],
@@ -1565,7 +1565,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/uppercut.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Uppercut"
         }
       ],
@@ -1657,7 +1657,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/interruption.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Interruption"
         }
       ],
@@ -1860,7 +1860,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/healing_palm.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.HealingPalm"
         }
       ],
@@ -1947,7 +1947,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/chi_master.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ChiMaster"
         }
       ],
@@ -2070,7 +2070,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/red_fist.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.RedFist"
         }
       ],
@@ -2194,7 +2194,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/monk/combo_2.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Combo2"
         }
       ],

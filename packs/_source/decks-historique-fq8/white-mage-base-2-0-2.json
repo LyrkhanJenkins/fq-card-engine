@@ -2,7 +2,7 @@
   "name": "White-Mage Base (2.0.2)",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cards/back_white-mage.PNG",
+  "img": "modules/fq-card-engine/images/cards/back_neutral.png",
   "cards": [
     {
       "_id": "HIST000000000125",
@@ -18,7 +18,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/light_energy.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.LightEnergy"
         }
       ],
@@ -143,7 +143,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/curse.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Curse"
         }
       ],
@@ -272,7 +272,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/magic_shield.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.MagicShield"
         }
       ],
@@ -401,7 +401,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/exorcism.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Exorcism"
         }
       ],
@@ -515,7 +515,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/instant_curse.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.InstantCurse"
         }
       ],
@@ -643,7 +643,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/arcane_explosion.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ArcaneExplosion"
         }
       ],
@@ -797,7 +797,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.DrawIII"
         }
       ],
@@ -891,7 +891,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_v.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterV"
         }
       ],
@@ -985,7 +985,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryIII"
         }
       ],
@@ -1079,7 +1079,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/epiphany.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Epiphany"
         }
       ],
@@ -1204,7 +1204,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/emergency_healing.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.EmergencyHealing"
         }
       ],
@@ -1293,7 +1293,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/mana_infusion.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ManaInfusion"
         }
       ],
@@ -1383,7 +1383,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/mana_shield.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.ManaShield"
         }
       ],
@@ -1477,7 +1477,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/divine_shield.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.DivineShield"
         }
       ],
@@ -1612,7 +1612,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/light_strike.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.LightStrike"
         }
       ],
@@ -1707,7 +1707,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/vengeful_shield.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.VengefulShield"
         }
       ],
@@ -1797,7 +1797,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/empathetic_shield.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.EmpatheticShield"
         }
       ],
@@ -1875,7 +1875,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/heal.png",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Heal"
         }
       ],
@@ -1962,7 +1962,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/solar_strike.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.SolarStrike"
         }
       ],
@@ -2095,7 +2095,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/good_and_evil.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.GoodAndEvil"
         }
       ],
@@ -2218,7 +2218,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/chastisement.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Chastisement"
         }
       ],
@@ -2315,7 +2315,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/blue_blood.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.BlueBlood"
         }
       ],
@@ -2402,7 +2402,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/white-mage/angel_and_demon_effect.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.AngelAndDemonEffect"
         }
       ],

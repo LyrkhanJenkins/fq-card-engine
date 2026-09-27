@@ -2,7 +2,7 @@
   "name": "Elementalist Generated (Hist)",
   "type": "deck",
   "description": "",
-  "img": "modules/fq-card-engine/images/cards/back_elementalist.PNG",
+  "img": "modules/fq-card-engine/images/cards/back_neutral.png",
   "cards": [
     {
       "_id": "HIST000000000015",
@@ -18,7 +18,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/elementalist/incantation.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.Incantation"
         }
       ],
@@ -145,7 +145,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/elementalist/damage_propagation.PNG",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
           "text": "FQCARDDESCRIPTION.DamagePropagation"
         }
       ],
