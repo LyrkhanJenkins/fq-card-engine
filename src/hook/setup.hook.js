@@ -64,11 +64,11 @@ Hooks.on("setup", function () {
     });
 
     foundry.applications.apps.DocumentSheetConfig.registerSheet(Cards, "core", FqCardsSheet, {
-        label: "FQCARDENGINE.SheetFQCardsConfig", types: ["deck"], makeDefault: true
+        label: "FQCARDENGINE.SheetCards", types: ["deck"], makeDefault: true
     });
 
     foundry.applications.apps.DocumentSheetConfig.registerSheet(Card, "core", FqCardSheet, {
-        label: "FQCARDENGINE.FQCardConfig", makeDefault: true
+        label: "FQCARDENGINE.SheetCard", makeDefault: true
     });
 
     // Sous « Limitation des droits du joueur », un joueur ne fait passer aucune
