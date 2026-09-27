@@ -18,7 +18,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/magic_reach.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/magic_reach.PNG",
           "text": "FQCARDDESCRIPTION.MagicReach"
         }
       ],
@@ -143,7 +143,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/enchanted_whip.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/enchanted_whip.PNG",
           "text": "FQCARDDESCRIPTION.EnchantedWhip"
         }
       ],
@@ -268,7 +268,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/backflip_strike.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/backflip_strike.PNG",
           "text": "FQCARDDESCRIPTION.BackflipStrike"
         }
       ],
@@ -433,7 +433,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/illusory_strike.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/illusory_strike.PNG",
           "text": "FQCARDDESCRIPTION.IllusoryStrike"
         }
       ],
@@ -522,7 +522,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/sung_inspiration.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/sung_inspiration.PNG",
           "text": "FQCARDDESCRIPTION.SungInspiration"
         }
       ],
@@ -651,7 +651,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/poisoned_shuriken.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/poisoned_shuriken.PNG",
           "text": "FQCARDDESCRIPTION.PoisonedShuriken"
         }
       ],
@@ -776,7 +776,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/communicating_vessels.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/communicating_vessels.PNG",
           "text": "FQCARDDESCRIPTION.CommunicatingVessels"
         }
       ],
@@ -901,7 +901,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/mirror_images.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/mirror_images.PNG",
           "text": "FQCARDDESCRIPTION.MirrorImages"
         }
       ],
@@ -1125,7 +1125,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.png",
           "text": "FQCARDDESCRIPTION.DrawII"
         }
       ],
@@ -1219,7 +1219,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.png",
           "text": "FQCARDDESCRIPTION.DrawIII"
         }
       ],
@@ -1314,7 +1314,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/shuriken.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/shuriken.PNG",
           "text": "FQCARDDESCRIPTION.Shuriken"
         }
       ],
@@ -1439,7 +1439,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/ethereal_plane_passage.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/ethereal_plane_passage.PNG",
           "text": "FQCARDDESCRIPTION.EtherealPlanePassage"
         }
       ],
@@ -1532,7 +1532,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/dagger_cloud.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/dagger_cloud.PNG",
           "text": "FQCARDDESCRIPTION.DaggerCloud"
         }
       ],
@@ -1657,7 +1657,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/shuriken_volley.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/shuriken_volley.PNG",
           "text": "FQCARDDESCRIPTION.ShurikenVolley"
         }
       ],
@@ -1746,7 +1746,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/apothecary_i.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/apothecary_i.PNG",
           "text": "FQCARDDESCRIPTION.ApothecaryI"
         }
       ],
@@ -2241,7 +2241,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/backstab.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/backstab.PNG",
           "text": "FQCARDDESCRIPTION.Backstab"
         }
       ],
@@ -2370,7 +2370,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/black_plague.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/black_plague.PNG",
           "text": "FQCARDDESCRIPTION.BlackPlague"
         }
       ],
@@ -2564,7 +2564,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/fevered_dance.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/fevered_dance.PNG",
           "text": "FQCARDDESCRIPTION.FeveredDance"
         }
       ],
@@ -2689,7 +2689,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/apothecary_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/apothecary_ii.PNG",
           "text": "FQCARDDESCRIPTION.ApothecaryII"
         }
       ],
@@ -3101,7 +3101,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/Illusionist/mana_drain.PNG",
+          "img": "modules/fq-card-engine/images/cards/illusionist/mana_drain.PNG",
           "text": "FQCARDDESCRIPTION.ManaDrain"
         }
       ],

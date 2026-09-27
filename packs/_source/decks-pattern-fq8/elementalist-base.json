@@ -3117,7 +3117,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/elementalist/fireball.png",
+          "img": "modules/fq-card-engine/images/cards/elementalist/fireball.PNG",
           "text": "FQCARDDESCRIPTION.Fireball"
         }
       ],

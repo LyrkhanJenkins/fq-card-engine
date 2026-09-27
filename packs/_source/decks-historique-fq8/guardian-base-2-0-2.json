@@ -660,7 +660,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.png",
           "text": "FQCARDDESCRIPTION.DrawII"
         }
       ],
@@ -997,7 +997,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_i.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_i.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryI"
         }
       ],
@@ -1783,7 +1783,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterIV"
         }
       ],
@@ -1842,7 +1842,7 @@
       "value": null,
       "back": {
         "text": "",
-        "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
+        "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.png",
         "name": ""
       },
       "drawn": false,
@@ -2703,7 +2703,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/guardian/vital_surge.PNG",
+          "img": "modules/fq-card-engine/images/cards/guardian/vital_surge.png",
           "text": "FQCARDDESCRIPTION.VitalSurge"
         }
       ],

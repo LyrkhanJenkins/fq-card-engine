@@ -111,7 +111,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/agility_influx.PNG",
+          "img": "modules/fq-card-engine/images/cards/witch/agility_influx.png",
           "text": "FQCARDDESCRIPTION.AgilityInflux"
         }
       ],
@@ -234,7 +234,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.png",
           "text": "FQCARDDESCRIPTION.DrawII"
         }
       ],
@@ -683,7 +683,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/life_influx.PNG",
+          "img": "modules/fq-card-engine/images/cards/witch/life_influx.png",
           "text": "FQCARDDESCRIPTION.LifeInflux"
         }
       ],
@@ -770,7 +770,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_ii.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryII"
         }
       ],
@@ -857,7 +857,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/mana_influx.PNG",
+          "img": "modules/fq-card-engine/images/cards/witch/mana_influx.png",
           "text": "FQCARDDESCRIPTION.ManaInflux"
         }
       ],
@@ -944,7 +944,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/witch/power_influx.PNG",
+          "img": "modules/fq-card-engine/images/cards/witch/power_influx.png",
           "text": "FQCARDDESCRIPTION.PowerInflux"
         }
       ],
@@ -1542,7 +1542,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterIV"
         }
       ],

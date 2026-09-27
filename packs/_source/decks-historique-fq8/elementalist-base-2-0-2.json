@@ -282,7 +282,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryIII"
         }
       ],
@@ -644,7 +644,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.png",
           "text": "FQCARDDESCRIPTION.DrawIII"
         }
       ],
@@ -1073,7 +1073,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_iv.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterIV"
         }
       ],

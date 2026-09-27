@@ -25,7 +25,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_ii.png",
           "text": "FQCARDDESCRIPTION.DrawII"
         }
       ],
@@ -142,7 +142,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/draw_iii.png",
           "text": "FQCARDDESCRIPTION.DrawIII"
         }
       ],
@@ -249,7 +249,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_i.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_i.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryI"
         }
       ],
@@ -346,7 +346,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_ii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_ii.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryII"
         }
       ],
@@ -440,7 +440,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryIII"
         }
       ],

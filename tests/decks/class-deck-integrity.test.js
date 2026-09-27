@@ -45,19 +45,6 @@ const IGNORED_DECKS = new Set(["draft.json"]);
 const KNOWN_ISSUES = new Set([
     // Pools de stats
     "pool vide :: witch.json :: AQmRm5kfcKCJcGxS",
-    // Casse des images (fichier réel en .PNG / .png, dossier illusionist en minuscules)
-    "image :: monk-generated.json :: (dos du deck)",
-    "image :: elementalist-base.json :: FQCARDTITLE.Fireball",
-    "image :: guardian-base.json :: FQCARDTITLE.VitalSurge",
-    ...["MagicReach", "EnchantedWhip", "BackflipStrike", "IllusoryStrike", "SungInspiration", "PoisonedShuriken",
-        "CommunicatingVessels", "MirrorImages", "Shuriken", "EtherealPlanePassage", "DaggerCloud", "ShurikenVolley",
-        "ApothecaryI", "Backstab", "BlackPlague", "FeveredDance", "ApothecaryII", "ManaDrain"]
-        .map(name => `image :: illusionist-base.json :: FQCARDTITLE.${name}`),
-    ...["DrawII", "DrawIII", "ManaRecoveryI", "ManaRecoveryII", "ManaRecoveryIII"]
-        .map(name => `image :: neutral-base.json :: FQCARDTITLE.${name}`),
-    "image :: trapper-base.json :: FQCARDTITLE.PreciseShotII",
-    ...["AgilityInflux", "LifeInflux", "ManaInflux", "PowerInflux"]
-        .map(name => `image :: witch-base.json :: FQCARDTITLE.${name}`),
 ]);
 
 const readJson = file => JSON.parse(fs.readFileSync(file, "utf8"));

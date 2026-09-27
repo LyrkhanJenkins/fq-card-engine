@@ -285,7 +285,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/mana_recovery_iii.png",
           "text": "FQCARDDESCRIPTION.ManaRecoveryIII"
         }
       ],
@@ -1138,7 +1138,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_v.PNG",
+          "img": "modules/fq-card-engine/images/cards/neutral/turn_booster_v.png",
           "text": "FQCARDDESCRIPTION.TurnBoosterV"
         }
       ],
