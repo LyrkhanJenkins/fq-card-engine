@@ -1,4 +1,5 @@
-import {beforeEach, describe, expect, it} from "vitest";
+import {beforeAll, beforeEach, describe, expect, it} from "vitest";
+import {classSlugs} from "../script/uat/classes.mjs";
 import {existsSync} from "node:fs";
 import {mkdir, mkdtemp, readFile, writeFile} from "node:fs/promises";
 import os from "node:os";
@@ -15,6 +16,17 @@ import {generateWorld} from "../script/generate-world.mjs";
  */
 
 let worldsDir;
+/**
+ * Classes témoins résolues au catalogue réel plutôt que nommées : le module ne
+ * livre plus les neuf classes (les étendues vivent dans `fq-card-engine-extended`),
+ * et un slug en dur y désignerait un fichier absent.
+ */
+let CLASS_A;
+
+beforeAll(async () => {
+    [CLASS_A] = await classSlugs(process.cwd());
+});
+
 
 beforeEach(async () => {
     worldsDir = await mkdtemp(path.join(os.tmpdir(), "uat-clean-worlds-"));
@@ -27,7 +39,7 @@ beforeEach(async () => {
  */
 async function seedRepresentativeWorldsDir() {
     // Monde généré par l'outil, avec marqueur — SEUL candidat à la suppression.
-    await generateWorld({seed: 4242, class: "witch", level: 1, name: "uat-4242", "worlds-dir": worldsDir});
+    await generateWorld({seed: 4242, class: CLASS_A, level: 1, name: "uat-4242", "worlds-dir": worldsDir});
 
     // Bon préfixe, mais AUCUN marqueur.
     const fakeDir = path.join(worldsDir, "uat-fake");

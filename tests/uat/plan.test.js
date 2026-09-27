@@ -1,7 +1,7 @@
 import {beforeAll, describe, expect, it} from "vitest";
 import path from "node:path";
 import {buildUatPlan, loadDeckVariants, loadMinions} from "../script/uat/plan.mjs";
-import {loadClassCatalog} from "../script/uat/classes.mjs";
+import {classSlugs, loadClassCatalog} from "../script/uat/classes.mjs";
 import {loadMonsterIndex} from "../script/uat/monsters.mjs";
 
 /**
@@ -18,12 +18,20 @@ let catalog;
 let monsterIndex;
 let minions;
 let deckVariants;
+/**
+ * Classes témoins résolues au catalogue réel plutôt que nommées : le module ne
+ * livre plus les neuf classes (les étendues vivent dans `fq-card-engine-extended`),
+ * et un slug en dur y désignerait une classe absente du catalogue.
+ */
+let CLASS_A;
+let CLASS_B;
 
 beforeAll(async () => {
     catalog = await loadClassCatalog(REPO_ROOT);
     monsterIndex = loadMonsterIndex(INDEX_PATH);
     minions = await loadMinions(REPO_ROOT);
     deckVariants = await loadDeckVariants(REPO_ROOT);
+    [CLASS_A, CLASS_B] = await classSlugs(REPO_ROOT);
 });
 
 function build(seed, options = {}) {
@@ -32,7 +40,7 @@ function build(seed, options = {}) {
 
 describe("buildUatPlan — déterminisme", () => {
     it("deux plans de même graine et mêmes options sont identiques à l'octet près", () => {
-        const options = {class: "witch", level: 5, difficulty: "hard", placement: "line", allies: 1, regions: 2};
+        const options = {class: CLASS_A, level: 5, difficulty: "hard", placement: "line", allies: 1, regions: 2};
         const a = JSON.stringify(build(4242, options));
         const b = JSON.stringify(build(4242, options));
         expect(a).toBe(b);
@@ -54,13 +62,13 @@ describe("buildUatPlan — déterminisme", () => {
 
 describe("buildUatPlan — priorité des surcharges (les sept axes)", () => {
     it("class: la classe imposée se retrouve en classe principale", () => {
-        const plan = build(1, {class: "guardian", level: 4});
-        expect(plan.hero.classes[0].slug).toBe("guardian");
-        expect(plan.overrides.class).toBe("guardian:4");
+        const plan = build(1, {class: CLASS_B, level: 4});
+        expect(plan.hero.classes[0].slug).toBe(CLASS_B);
+        expect(plan.overrides.class).toBe(`${CLASS_B}:4`);
     });
 
     it("level: le niveau imposé se retrouve dans overrides et dans la somme des classes", () => {
-        const plan = build(1, {class: "witch", level: 17});
+        const plan = build(1, {class: CLASS_A, level: 17});
         expect(plan.overrides.level).toBe(17);
         expect(plan.hero.classes.reduce((sum, c) => sum + c.level, 0)).toBe(17);
     });
@@ -106,10 +114,10 @@ describe("buildUatPlan — priorité des surcharges (les sept axes)", () => {
 
 describe("buildUatPlan — multi-classe", () => {
     it("deux entrées de hero.classes dont la somme des niveaux vaut le niveau total", () => {
-        const plan = build(9001, {class: "witch:5,guardian:3"});
+        const plan = build(9001, {class: `${CLASS_A}:5,${CLASS_B}:3`});
         expect(plan.hero.classes).toHaveLength(2);
-        expect(plan.hero.classes[0].slug).toBe("witch");
-        expect(plan.hero.classes[1].slug).toBe("guardian");
+        expect(plan.hero.classes[0].slug).toBe(CLASS_A);
+        expect(plan.hero.classes[1].slug).toBe(CLASS_B);
         expect(plan.hero.classes[0].level + plan.hero.classes[1].level).toBe(8);
         expect(plan.overrides.level).toBe(8);
     });
@@ -117,11 +125,11 @@ describe("buildUatPlan — multi-classe", () => {
 
 describe("buildUatPlan — picks de stats", () => {
     it("toutes les entrées de hero.picks référencent le compendium des stats de classe", () => {
-        const plan = build(42, {class: "runic-warrior", level: 20});
+        const plan = build(42, {class: CLASS_A, level: 20});
         expect(plan.hero.picks.length).toBeGreaterThan(0);
         for (const pick of plan.hero.picks) {
             expect(pick.uuid).toMatch(/^Compendium\.fq-card-engine\.classes-stats-fq8\.Item\./);
-            expect(pick.slug).toBe("runic-warrior");
+            expect(pick.slug).toBe(CLASS_A);
         }
     });
 });
@@ -196,11 +204,11 @@ describe("buildUatPlan — combat.start", () => {
 
 describe("buildUatPlan — journal.regenerateCommand", () => {
     it("contient la graine et chaque surcharge effective", () => {
-        const plan = build(4242, {class: "witch", level: 5, difficulty: "hard", placement: "line", allies: 1, regions: 2});
+        const plan = build(4242, {class: CLASS_A, level: 5, difficulty: "hard", placement: "line", allies: 1, regions: 2});
         const cmd = plan.journal.regenerateCommand;
 
         expect(cmd).toContain("--seed=4242");
-        expect(cmd).toContain("--class=witch:5");
+        expect(cmd).toContain(`--class=${CLASS_A}:5`);
         expect(cmd).toContain("--level=5");
         expect(cmd).toContain("--difficulty=hard");
         expect(cmd).toContain("--placement=line");
@@ -210,7 +218,7 @@ describe("buildUatPlan — journal.regenerateCommand", () => {
     });
 
     it("rejoue le combat quand il a été demandé", () => {
-        const plan = build(4242, {class: "witch", level: 5, combat: true});
+        const plan = build(4242, {class: CLASS_A, level: 5, combat: true});
         expect(plan.journal.regenerateCommand).toContain("--combat=true");
     });
 });

@@ -1,4 +1,5 @@
-import {beforeEach, describe, expect, it} from "vitest";
+import {beforeAll, beforeEach, describe, expect, it} from "vitest";
+import {classSlugs} from "../script/uat/classes.mjs";
 import {existsSync} from "node:fs";
 import {mkdir, mkdtemp, readFile, readdir, rm, writeFile} from "node:fs/promises";
 import os from "node:os";
@@ -22,6 +23,18 @@ import {
 
 const REPO_ROOT = process.cwd();
 const WORLD_SCRIPTS = ["uat-seeder.mjs", "uat-random-deck.mjs"];
+/**
+ * Classes témoins résolues au catalogue réel plutôt que nommées : le module ne
+ * livre plus les neuf classes (les étendues vivent dans `fq-card-engine-extended`),
+ * et un slug en dur y désignerait un fichier absent.
+ */
+let CLASS_A;
+let CLASS_B;
+
+beforeAll(async () => {
+    [CLASS_A, CLASS_B] = await classSlugs(REPO_ROOT);
+});
+
 
 let worldsDir;
 
@@ -31,7 +44,7 @@ beforeEach(async () => {
 
 describe("generateWorld", () => {
     it("produit un monde complet, jamais vers le DataPath réel", async () => {
-        const {targetDir, plan} = await generateWorld({seed: 4242, class: "witch", level: 1, "worlds-dir": worldsDir});
+        const {targetDir, plan} = await generateWorld({seed: 4242, class: CLASS_A, level: 1, "worlds-dir": worldsDir});
 
         expect(targetDir).toBe(path.join(path.resolve(worldsDir), "uat-4242"));
 
@@ -43,7 +56,7 @@ describe("generateWorld", () => {
         expect(world.title).toBe("uat-4242");
 
         expect(plan.seed).toBe(4242);
-        expect(plan.hero.classes[0].slug).toBe("witch");
+        expect(plan.hero.classes[0].slug).toBe(CLASS_A);
         expect(plan.enemies.length).toBeGreaterThan(0);
         expect(Number.isInteger(plan.hero.col)).toBe(true);
         expect(Number.isInteger(plan.hero.row)).toBe(true);
@@ -52,7 +65,7 @@ describe("generateWorld", () => {
     });
 
     it("écrit uat-seed.json cohérent avec le plan retourné", async () => {
-        const {targetDir, plan} = await generateWorld({seed: 4242, class: "witch", level: 1, "worlds-dir": worldsDir});
+        const {targetDir, plan} = await generateWorld({seed: 4242, class: CLASS_A, level: 1, "worlds-dir": worldsDir});
 
         const writtenPlan = JSON.parse(await readFile(path.join(targetDir, "uat-seed.json"), "utf8"));
         expect(writtenPlan).toEqual(plan);
@@ -73,7 +86,7 @@ describe("generateWorld", () => {
     });
 
     it("est déterministe : deux générations avec les mêmes arguments produisent le même uat-seed.json", async () => {
-        const args = {seed: 4242, class: "witch", level: 1, difficulty: "hard", placement: "line", allies: 1, regions: 2};
+        const args = {seed: 4242, class: CLASS_A, level: 1, difficulty: "hard", placement: "line", allies: 1, regions: 2};
         const runA = await generateWorld({...args, name: "uat-4242-a", "worlds-dir": worldsDir});
         const runB = await generateWorld({...args, name: "uat-4242-b", "worlds-dir": worldsDir});
 
@@ -88,7 +101,7 @@ describe("generateWorld", () => {
     it("chaque surcharge CLI se retrouve dans uat-seed.json", async () => {
         const {plan} = await generateWorld({
             seed: 4242,
-            class: "guardian",
+            class: CLASS_B,
             level: 6,
             enemies: 3,
             difficulty: "deadly",
@@ -98,7 +111,7 @@ describe("generateWorld", () => {
             "worlds-dir": worldsDir
         });
 
-        expect(plan.overrides.class).toBe("guardian:6");
+        expect(plan.overrides.class).toBe(`${CLASS_B}:6`);
         expect(plan.overrides.level).toBe(6);
         expect(plan.overrides.enemies).toBe(3);
         expect(plan.overrides.difficulty).toBe("deadly");
@@ -110,7 +123,7 @@ describe("generateWorld", () => {
     });
 
     it("ne demande pas le combat sans --combat, et le demande avec", async () => {
-        const args = {seed: 4242, class: "witch", level: 1, "worlds-dir": worldsDir, "dry-run": true};
+        const args = {seed: 4242, class: CLASS_A, level: 1, "worlds-dir": worldsDir, "dry-run": true};
 
         const {plan} = await generateWorld(args);
         expect(plan.combat.start).toBe(false);
@@ -152,8 +165,8 @@ describe("generateWorld", () => {
 
     it("régénère avec succès un monde déjà produit par l'outil, et remplace son contenu", async () => {
         const targetName = "uat-idempotent";
-        const first = await generateWorld({seed: 4242, class: "witch", level: 1, name: targetName, "worlds-dir": worldsDir});
-        const second = await generateWorld({seed: 4242, class: "witch", level: 1, name: targetName, "worlds-dir": worldsDir});
+        const first = await generateWorld({seed: 4242, class: CLASS_A, level: 1, name: targetName, "worlds-dir": worldsDir});
+        const second = await generateWorld({seed: 4242, class: CLASS_A, level: 1, name: targetName, "worlds-dir": worldsDir});
 
         const planA = await readFile(path.join(first.targetDir, "uat-seed.json"), "utf8");
         const planB = await readFile(path.join(second.targetDir, "uat-seed.json"), "utf8");

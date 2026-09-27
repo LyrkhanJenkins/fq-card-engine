@@ -26,10 +26,18 @@ import {FORMULA_FIELDS} from "../../src/domain/interface/card-svg/formula-displa
  * prouver que la garde détecte une régression) : le corpus est balayé par
  * clé (toutes les `FQCARDDESCRIPTION.*` de `lang/fr.json`/`lang/en.json`) et
  * par glob de répertoire (`packs/_source/decks-pattern-fq8`).
+ *
+ * Les decks d'ARCHIVE (`decks-historique-fq8`) sont hors garde : leurs cartes sont
+ * figées dans un format antérieur et ne seront pas corrigées. Une clé que seules
+ * les archives portent est donc ignorée plutôt que signalée — le cas s'est
+ * généralisé depuis que les classes étendues vivent dans un autre module, leurs
+ * cartes actives étant parties en laissant l'archive derrière elles.
  */
 
 const LANG_DIR = path.join(process.cwd(), "lang");
-const DECKS_DIR = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq8");
+const SOURCE_DIR = path.join(process.cwd(), "packs", "_source");
+const DECKS_DIR = path.join(SOURCE_DIR, "decks-pattern-fq8");
+const ARCHIVE_DIR = path.join(SOURCE_DIR, "decks-historique-fq8");
 
 const fr = JSON.parse(fs.readFileSync(path.join(LANG_DIR, "fr.json"), "utf-8"));
 const en = JSON.parse(fs.readFileSync(path.join(LANG_DIR, "en.json"), "utf-8"));
@@ -89,17 +97,48 @@ const SIMPLE_TOKEN_ALLOWLIST = {
     "FQCARDDESCRIPTION.PreciseShot": "bonus de portée — jeton seul",
     "FQCARDDESCRIPTION.ShadowChanneling": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.ShadowExplosion": "taille de zone — jeton seul",
-    "FQCARDDESCRIPTION.SiftRune": "coût en points d’action — jeton seul",
-    "FQCARDDESCRIPTION.SiftRuneII": "coût en points d’action — jeton seul",
-    "FQCARDDESCRIPTION.SiftRuneIII": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.SkeletonSorcerer": "points de vie/dégâts/déplacement — jetons seuls",
-    "FQCARDDESCRIPTION.CrossOfSkeletons": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.SteelRain": "rayon de la zone — jeton seul",
     "FQCARDDESCRIPTION.Uppercut": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.Vortex": "portée — jeton seul",
     "FQCARDDESCRIPTION.WeakPointStudy": "bonus de dégâts — jeton seul",
-    "FQCARDDESCRIPTION.WrathRune": "coût en points d’action — jeton seul",
 };
+
+/**
+/**
+ * Les fichiers de deck d'un paquet source, triés. Rend une liste vide si le
+ * paquet n'existe pas : un module peut ne pas embarquer d'archives.
+ *
+ * @param {string} dir - Le dossier du paquet.
+ *
+ * @returns {string[]} Les chemins des fichiers de deck.
+ */
+function deckFilesIn(dir) {
+    return fs.existsSync(dir)
+        ? fs.readdirSync(dir).filter(f => f.endsWith(".json")).sort().map(f => path.join(dir, f))
+        : [];
+}
+
+/**
+ * Les clés de description que portent les cartes d'ARCHIVE. Servent à distinguer
+ * une clé orpheline (à signaler) d'une clé dont seule l'archive témoigne (à
+ * ignorer).
+ *
+ * @returns {Set<string>} Les clés portées par les archives.
+ */
+function archivedDescriptionKeys() {
+    const keys = new Set();
+    for (const file of deckFilesIn(ARCHIVE_DIR)) {
+        const deck = JSON.parse(fs.readFileSync(file, "utf-8"));
+        for (const card of deck.cards ?? []) {
+            const text = card.faces?.[0]?.text;
+            if (text?.startsWith("FQCARDDESCRIPTION.")) {
+                keys.add(text);
+            }
+        }
+    }
+    return keys;
+}
 
 /**
  * Charge toutes les cartes de `packs/_source/decks-pattern-fq8` et construit
@@ -111,9 +150,9 @@ const SIMPLE_TOKEN_ALLOWLIST = {
  */
 function collectDescriptionChoices() {
     const map = new Map();
-    const files = fs.readdirSync(DECKS_DIR).filter(f => f.endsWith(".json")).sort();
+    const files = deckFilesIn(DECKS_DIR);
     for (const file of files) {
-        const deck = JSON.parse(fs.readFileSync(path.join(DECKS_DIR, file), "utf-8"));
+        const deck = JSON.parse(fs.readFileSync(file, "utf-8"));
         for (const card of deck.cards ?? []) {
             const text = card.faces?.[0]?.text;
             if (!text || !text.startsWith("FQCARDDESCRIPTION.")) continue;
@@ -153,6 +192,7 @@ describe("Garde de non-régression : arithmétique en dur dans les descriptions 
 
     describe("chaque placeholder {i_champ} désigne un champ de carte existant", () => {
         const descriptionChoices = collectDescriptionChoices();
+        const archivedOnly = archivedDescriptionKeys();
 
         test("le corpus des choix par description couvre au moins 90 clés (garde-fou anti-glob-vide)", () => {
             expect(descriptionChoices.size).toBeGreaterThanOrEqual(90);
@@ -162,6 +202,8 @@ describe("Garde de non-régression : arithmétique en dur dans les descriptions 
             const value = fr[key];
             const placeholders = [...value.matchAll(PLACEHOLDER_PATTERN)];
             if (placeholders.length === 0) continue;
+            // Clé dont seule une archive témoigne : contenu figé, hors garde.
+            if (!descriptionChoices.has(key) && archivedOnly.has(key)) continue;
 
             test(`${key} : chaque placeholder désigne un choix existant`, () => {
                 const choicesList = descriptionChoices.get(key);
@@ -202,7 +244,10 @@ describe("Garde de non-régression : arithmétique en dur dans les descriptions 
         }
 
         test("un placeholder pointant vers un index de choix inexistant (ex. {9_damage}) fait échouer la vérification", () => {
-            const choicesList = descriptionChoices.get("FQCARDDESCRIPTION.BalmRune");
+            // Carte témoin prise dans le deck NEUTRE : partagé par toutes les
+            // classes, il survit à tout découpage du contenu par classe — la
+            // précédente (BalmRune) a suivi le Guerrier runique dans un autre module.
+            const choicesList = descriptionChoices.get("FQCARDDESCRIPTION.ManaRecoveryI");
             expect(choicesList).toBeDefined();
             const bogusIndex = 9;
             const hasMatchingChoice = choicesList.some(choices => choices[bogusIndex] !== undefined);
@@ -243,8 +288,8 @@ describe("Garde de non-régression : arithmétique en dur dans les descriptions 
             expect(undocumented).toEqual([]);
         });
 
-        test("la liste blanche contient exactement 43 clés (seau « laisser » du triage, plan 20-06)", () => {
-            expect(Object.keys(SIMPLE_TOKEN_ALLOWLIST).length).toBe(43);
+        test("la liste blanche contient exactement 38 clés (seau « laisser » du triage, plan 20-06)", () => {
+            expect(Object.keys(SIMPLE_TOKEN_ALLOWLIST).length).toBe(38);
         });
     });
 });

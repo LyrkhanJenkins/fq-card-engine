@@ -1,6 +1,6 @@
 import {readFile, readdir} from "node:fs/promises";
 import path from "node:path";
-import {CLASS_SLUGS, resolveAbilityScoreImprovements, resolveHitPoints, resolvePicks, splitClassLevels} from "./classes.mjs";
+import {classSlugs, resolveAbilityScoreImprovements, resolveHitPoints, resolvePicks, splitClassLevels} from "./classes.mjs";
 import {DIFFICULTY_FACTORS, composeOpposition, crBudgetForLevel, parseEnemiesOption, resolveExplicitEnemies} from "./monsters.mjs";
 import {ARENA_AREA, PLACEMENT_PATTERNS, placeEncounter} from "./placement.mjs";
 import {createRng} from "./rng.mjs";
@@ -85,7 +85,7 @@ export async function loadDeckVariants(repoRoot = process.cwd()) {
     const files = await readdir(dir);
 
     const result = {};
-    for (const slug of CLASS_SLUGS) {
+    for (const slug of await classSlugs(repoRoot)) {
         const prefix = `${slug}-`;
         const slugFiles = files.filter(file => file.startsWith(prefix) && file.endsWith(".json"));
 

@@ -14,23 +14,32 @@ const HEROES_PACK = "starter-heroes";
 const STATS_PACK = "classes-stats-fq8";
 
 /**
- * Les neuf identifiants de classe FQ, présents à la fois dans
- * `packs/_source/classes-fq8` et `packs/_source/starter-heroes` (nom de
+ * Les identifiants de classe FQ jouables par l'outil : ceux présents À LA FOIS
+ * dans `packs/_source/classes-fq8` et `packs/_source/starter-heroes` (nom de
  * fichier == slug).
  *
- * @type {string[]}
+ * L'intersection est CALCULÉE et non figée : depuis que les classes étendues
+ * vivent dans `fq-card-engine-extended`, ce module ne livre plus les neuf classes,
+ * et les starters des classes parties restent là sans leur item de classe. Une
+ * liste en dur ouvrirait un fichier absent.
+ *
+ * @param {string} [repoRoot] - La racine du dépôt (défaut : `process.cwd()`).
+ *
+ * @returns {Promise<string[]>} Les slugs jouables, triés.
  */
-export const CLASS_SLUGS = [
-    "elementalist",
-    "fencing-master",
-    "guardian",
-    "illusionist",
-    "monk",
-    "runic-warrior",
-    "trapper",
-    "white-mage",
-    "witch"
-];
+export async function classSlugs(repoRoot = process.cwd()) {
+    const slugsIn = async pack => new Set((await readdir(path.join(repoRoot, "packs", "_source", pack)))
+        .filter(name => name.endsWith(".json"))
+        .map(name => name.slice(0, -".json".length)));
+    const classes = await slugsIn(CLASSES_PACK);
+    const heroes = await slugsIn(HEROES_PACK);
+    const slugs = [...classes].filter(slug => heroes.has(slug)).sort();
+    if (slugs.length === 0) {
+        throw new Error(
+            `Aucune classe jouable : ${CLASSES_PACK} et ${HEROES_PACK} n'ont aucun slug en commun.`);
+    }
+    return slugs;
+}
 
 const ABILITY_KEYS = ["str", "dex", "con", "int", "wis", "cha"];
 
@@ -81,7 +90,7 @@ async function startingAbilityChanges(repoRoot, classData) {
 }
 
 /**
- * Charge le catalogue des neuf classes FQ depuis les sources de packs
+ * Charge le catalogue des classes FQ jouables depuis les sources de packs
  * committées, hors ligne (aucune ouverture de Foundry, key_links du plan 19-02).
  *
  * @param {string} [repoRoot] - La racine du dépôt (défaut : `process.cwd()`).
@@ -94,7 +103,7 @@ async function startingAbilityChanges(repoRoot, classData) {
 export async function loadClassCatalog(repoRoot = process.cwd()) {
     const catalog = {};
 
-    for (const slug of CLASS_SLUGS) {
+    for (const slug of await classSlugs(repoRoot)) {
         const classPath = path.join(repoRoot, "packs", "_source", CLASSES_PACK, `${slug}.json`);
         const heroPath = path.join(repoRoot, "packs", "_source", HEROES_PACK, `${slug}.json`);
 

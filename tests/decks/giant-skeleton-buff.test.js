@@ -14,13 +14,11 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
-const {playChoice} = await import("./play-harness.js");
 const {installMacroStub} = await import("./corpus-helpers.js");
 installMacroStub();
 const Minion = (await import("../../src/domain/engine/shared/minion.js")).default;
 const Constants = (await import("../../src/domain/constants.js")).default;
 const CardFqSystem = (await import("../../src/domain/system/cards/card-fq-system.mjs")).default;
-const {socket} = await import("../../src/hook/integration/socketlib.hook.js");
 
 /**
  * Le CÂBLAGE des rituels d'invocation : une carte qui promet « le prochain sbire
@@ -65,15 +63,6 @@ const rituals = corpus.flatMap(({file, card}) =>
         return bonuses.length ? [{file, cardName: card.name, card, index, choice, bonuses}] : [];
     }));
 
-/** Le monde minimal d'un rituel : un score de sacrifice à dépenser, un dossier de sbires. */
-const ritualWorld = (sacrificedMinion = 4) => ({
-    world: {
-        character: {system: {fq: {minions: {sacrificedMinion}}}},
-        folders: [{type: "Actor", name: "Temporaire", id: "ritual-temp-folder"}],
-        canvas: {scene: {grid: {distance: 1, size: 5}, tokens: []}}
-    }
-});
-
 describe("Rituels d'invocation — le bonus promis atteint bien un sbire", () => {
 
     test("le corpus porte au moins un rituel (garde-fou d'auto-couverture)", () => {
@@ -114,110 +103,15 @@ const stampedToken = (id, type, summoner = "world-character", hp = 10) => ({
     object: {id, name: id}
 });
 
-describe("Éclats d'os → Squelette Géant — la chaîne complète", () => {
-
-    const witch = JSON.parse(fs.readFileSync(path.join(DECKS_DIR, "witch-base.json"), "utf-8"));
-    const cardNamed = name => witch.cards.find(c => c.name === "FQCARDTITLE." + name);
-    /** L'entrée de sbire du Squelette Géant, telle que sa carte d'invocation la déclare. */
-    const giantEntry = cardNamed("GiantSkeleton").system.fq.choices[0].minions[0];
-
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
-    test("le rituel écrit le compteur du Géant, proportionnel au sacrifice dépensé", async () => {
-        // xmax vaut 2 : deux points de sacrifice au plus, soit 4 PV × 2.
-        const result = await playChoice(cardNamed("BoneShards"), 0, ritualWorld(4));
-
-        expect(result.threw).toBe(false);
-        const changes = result.activeEffectCalls.flatMap(call => call[0].changes ?? []);
-        expect(changes).toContainEqual(expect.objectContaining({
-            key: "system.fq.minions.giantSkeleton.hp", value: 8
-        }));
-    });
-
-    test("le compteur ainsi écrit est celui que lit l'invocation du Géant", async () => {
-        globalThis.FqCardEngineModule = {...globalThis.FqCardEngineModule, moduleName: "fq-card-engine"};
-        game.user.character = {
-            id: "witch",
-            system: {fq: {minions: {giantSkeleton: {max: 1, hp: 8, damage: 3, movement: 5}}}}
-        };
-        game.canvas = {scene: {dimensions: {size: 100}, tokens: []}};
-        vi.spyOn(Minion, "getTempActorFolder").mockReturnValue({id: "tmp"});
-        game.packs.get.mockReturnValue({
-            getDocuments: vi.fn(async () => ([{
-                name: "Giant Skeleton",
-                ownership: {},
-                system: {
-                    attributes: {hp: {max: 25, value: 25}, movement: {speeds: {walk: 20}}},
-                    fq: {
-                        attributes: {critical: 2, evasion: 1},
-                        action: {max: 10, value: 10},
-                        mana: {max: 0, value: 0},
-                        zeal: {max: 0, value: 0},
-                        bonus: {damage: 0, heal: 0}
-                    }
-                }
-            }]))
-        });
-
-        await Minion.createActorData({name: "Giant Skeleton", type: giantEntry.type, data: giantEntry.data}, "left");
-
-        const summoned = socket.executeAsGM.mock.calls.at(-1)[1];
-        // Les formules du sbire sont résolues à 10 par le Roll déterministe des tests :
-        // seuls comptent ici les +8 / +3 / +5 rendus par les compteurs du rituel.
-        expect(summoned.system.attributes.hp).toEqual({max: 18, value: 18});
-        expect(summoned.system.fq.bonus.damage).toBe(13);
-        expect(summoned.system.attributes.movement.speeds.walk).toBe(15);
-        expect(summoned.flags["fq-card-engine"].minionType).toBe("giantSkeleton");
-
-        Minion.getTempActorFolder.mockRestore();
-    });
-});
-
-describe("Hécatombe d'ossements — l'armée sacrifiée convertie en Géant", () => {
-
-    const witchDeck = JSON.parse(fs.readFileSync(path.join(DECKS_DIR, "witch-base.json"), "utf-8"));
-    const hecatomb = witchDeck.cards.find(c => c.name === "FQCARDTITLE.BoneHecatomb");
-
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
-    test("dépense le score de sacrifice jusqu'à son plafond et dope le Géant à proportion", async () => {
-        // Un score de 12 : la carte n'en prend que 8 (xmax), soit 6 PV et 2 dégâts par point.
-        const result = await playChoice(hecatomb, 0, ritualWorld(12));
-
-        expect(result.threw).toBe(false);
-        const changes = result.activeEffectCalls.flatMap(call => call[0].changes ?? []);
-        expect(changes).toContainEqual(expect.objectContaining({
-            key: "system.fq.minions.giantSkeleton.hp", value: 48
-        }));
-        expect(changes).toContainEqual(expect.objectContaining({
-            key: "system.fq.minions.giantSkeleton.damage", value: 16
-        }));
-
-        // Le reliquat reste disponible pour la carte suivante : le score est déduit, pas vidé.
-        expect(result.updates).toContainEqual([{"system.fq.minions.sacrificedMinion": 4}]);
-    });
-
-    test("sous le minimum de sacrifice, la carte est refusée et rien n'est appliqué", async () => {
-        const result = await playChoice(hecatomb, 0, ritualWorld(4));
-
-        // Une condition non remplie n'est pas une exception : la carte est refusée,
-        // un avertissement part au chat, et rien du tout n'est appliqué.
-        expect(result.threw).toBe(false);
-        expect(result.activeEffectCalls).toEqual([]);
-        expect(JSON.stringify(result.chatMessages)).toContain("CardWarningMsgNoSacrificedMinion");
-    });
-
-    test("aucune carte du corpus ne supprime de jetons : le charnier reste au HUD du joueur", () => {
-        const scripts = JSON.stringify(corpus);
-
-        expect(scripts).not.toContain("consumeOnScene");
-        expect(scripts).not.toContain("deleteToken");
-    });
-});
+/*
+ * Retires : les deux suites qui jouaient les cartes de la Sorciere depuis
+ * `witch-base.json` (chaine Eclats d'os -> Squelette Geant, et Hecatombe
+ * d'ossements). Cette classe est livree par `fq-card-engine-extended` : ses
+ * cartes ne sont plus ici, et un test qui les charge ne peut que casser. Les
+ * deux suites conservees ci-dessus et ci-dessous exercent les MECANISMES
+ * (bonus promis atteignant un sbire, famille de sbires) sur des donnees
+ * fabriquees, sans dependre d'aucune carte livree.
+ */
 
 describe("Famille de sbires — le Géant reste un squelette pour les sorts de masse", () => {
 

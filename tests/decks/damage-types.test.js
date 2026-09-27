@@ -19,7 +19,8 @@ import {DAMAGE_TYPE_LABELS} from "../../src/domain/damage-types.js";
 const DECKS_DIR = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq8");
 const KNOWN = new Set(Object.keys(DAMAGE_TYPE_LABELS));
 
-const cards = fs.readdirSync(DECKS_DIR).filter(file => file.endsWith(".json"))
+const deckFiles = fs.readdirSync(DECKS_DIR).filter(file => file.endsWith(".json"));
+const cards = deckFiles
     .flatMap(file => (JSON.parse(fs.readFileSync(path.join(DECKS_DIR, file), "utf8")).cards ?? [])
         .map(card => ({file, card})));
 
@@ -35,8 +36,12 @@ const dots = cards.flatMap(({file, card}) => card.system.fq.choices
 describe("Types de dégâts des paquets pattern", () => {
 
     it("balaie effectivement des formules et des dégâts par tour", () => {
-        expect(cards.length).toBeGreaterThan(400);
-        expect(dots.length).toBeGreaterThan(10);
+        // Garde-fou anti-corpus-vide, calibré sur ce que le module livre : au moins
+        // dix cartes par deck présent. Un compte absolu devrait être réécrit à
+        // chaque déplacement de classe vers `fq-card-engine-extended`.
+        expect(deckFiles.length).toBeGreaterThan(0);
+        expect(cards.length).toBeGreaterThan(deckFiles.length * 10);
+        expect(dots.length).toBeGreaterThan(0);
     });
 
     it("chaque formule de dégâts porte au moins un type, et dnd5e les connaît tous", () => {

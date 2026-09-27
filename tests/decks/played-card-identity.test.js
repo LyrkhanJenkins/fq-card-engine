@@ -1,6 +1,7 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
 import fs from "fs";
 import path from "path";
+import {basicCard} from "./card-fixtures.js";
 
 // ─── Mocks requis par tests/decks/play-harness.js (vi.mock est hissé PAR FICHIER,
 // voir le commentaire JSDoc en tête de play-harness.js pour la liste canonique) ──
@@ -104,13 +105,20 @@ function myTurnWithLogs(logs) {
     };
 }
 
-describe("Intervention — le soin suit les dégâts de la CIBLE, pas les miens", () => {
+describe("Soin indexé sur les dégâts — il suit ceux de la CIBLE, pas les miens", () => {
 
     // Le journal porte DEUX blessures de valeurs différentes : celle de la cible
     // (7) puis la mienne (3), la mienne en dernier. Un `xvalue` qui retomberait
     // sur le personnage de l'utilisateur soignerait 3.
     test("soigne la cible du montant qu'ELLE a encaissé ce round", async () => {
-        const card = loadRawCard("guardian-base.json", "FQCARDTITLE.Intervention");
+        // Carte FABRIQUEE portant le mecanisme teste : un `xvalue` SCRIPT qui lit
+        // les derniers degats de la CIBLE, reinjecte dans le soin par {XXX}.
+        // C'est la resolution du xvalue qui est en jeu, pas la carte Intervention
+        // (partie avec le Gardien dans `fq-card-engine-extended`).
+        const card = basicCard({
+            heal: "XXX",
+            xvalue: "SCRIPT:FqCardEngineModule.cst.lastDamageThisTurn(FqCardEngineModule.cst.myTargets()[0])"
+        }, {id: "FIXTUREheal", name: "FIXTURE.HealFromTargetDamage"});
         const world = otherTurnWithLogs([
             damageLog({targetActorId: worldFixture.target.actorId, targetTokenId: worldFixture.target.tokenId, value: 7}),
             damageLog({targetActorId: worldFixture.character.id, targetTokenId: worldFixture.myToken.tokenId, value: 3})

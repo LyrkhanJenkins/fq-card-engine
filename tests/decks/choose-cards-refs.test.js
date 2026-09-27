@@ -35,12 +35,28 @@ for (const deck of decks) {
     }
 }
 
+/**
+ * `test.each` tolerant a une liste vide. Le module ne livre plus les neuf classes
+ * (les etendues sont dans `fq-card-engine-extended`), et une famille de cas peut
+ * n'avoir aucun representant ici. Un `test.each([])` ferait echouer Vitest sur
+ * « No test found in suite » : on marque la famille sautee au lieu de casser.
+ *
+ * @param {object[]} cases - Les cas decouverts par glob.
+ *
+ * @returns {Function} `test.each` s'il y a des cas, `test.skip.each` sinon.
+ */
+const eachOf = cases => (cases.length > 0
+    ? test.each(cases)
+    : test.skip.each([{deckName: "-", cardName: "-", choiceIndex: 0, reference: "-"}]));
+
 describe("Références des encarts 🃏 des decks pattern fq8", () => {
-    test("au moins un encart 🃏 est découvert (auto-couverture)", () => {
-        expect(chooseEntries.length).toBeGreaterThanOrEqual(1);
+    test("au moins une famille d'encart 🃏 est découverte (auto-couverture)", () => {
+        // Les deux familles ensemble : `chooseCardsFrom` ne subsiste que dans les
+        // decks partis, `chooseCardsList` est encore servi ici.
+        expect(chooseEntries.length + listEntries.length).toBeGreaterThanOrEqual(1);
     });
 
-    test.each(chooseEntries)(
+    eachOf(chooseEntries)(
         "$deckName :: $cardName :: choix $choiceIndex",
         ({choice, source}) => {
             // La source désigne un deck du pack pattern, par son id complet.
@@ -74,7 +90,7 @@ describe("Références des encarts 🃏 des decks pattern fq8", () => {
         expect(listEntries.length).toBeGreaterThanOrEqual(1);
     });
 
-    test.each(listEntries)(
+    eachOf(listEntries)(
         "$deckName :: $cardName :: choix $choiceIndex → $reference",
         ({reference}) => {
             // Chaque référence de liste désigne une carte d'un deck du pack pattern, par id complet.

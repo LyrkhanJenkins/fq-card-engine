@@ -1,6 +1,5 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
-import fs from "fs";
-import path from "path";
+import {basicCard} from "./card-fixtures.js";
 
 // ─── Mocks requis par tests/decks/play-harness.js (vi.mock est hissé PAR FICHIER,
 // voir le commentaire JSDoc en tête de play-harness.js pour la liste canonique) ──
@@ -16,31 +15,19 @@ globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {playChoice} = await import("./play-harness.js");
 
-/**
- * Charge une entrée de carte brute depuis un deck du dépôt
- * (`packs/_source/decks-pattern-fq8/<deckFile>`), par index dans `cards[]`.
- *
- * @param {string} deckFile   - Le nom de fichier du deck (ex. `monk-base.json`).
- * @param {number} cardIndex  - L'indice de la carte dans `deck.cards`.
- *
- * @returns {object} L'entrée carte brute.
- */
-function loadRawCard(deckFile, cardIndex) {
-    const deckPath = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq8", deckFile);
-    const deck = JSON.parse(fs.readFileSync(deckPath, "utf-8"));
-    return deck.cards[cardIndex];
-}
-
 describe("Socle exhaustif (07-02) — tracer end-to-end sur une carte réelle", () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
-    test("joue FQCARDTITLE.RightPunch (monk-base, choix 0) via le vrai playValidatedCard, pipeline complet + Roll déterministe", async () => {
-        const rightPunch = loadRawCard("monk-base.json", 0);
-        expect(rightPunch.name).toBe("FQCARDTITLE.RightPunch");
+    test("joue une carte à dégâts via le vrai playValidatedCard, pipeline complet + Roll déterministe", async () => {
+        // Carte FABRIQUEE : le pipeline exerce reste le vrai, mais le tracage ne
+        // depend plus de quelle carte est livree (RightPunch a suivi le Moine dans
+        // `fq-card-engine-extended`). Degats fixes, sans modificateur ni de : la
+        // valeur attendue ne bouge pas avec la fixture du monde.
+        const rightPunch = basicCard({damage: "3[bludgeoning]"});
 
-        // RightPunch : damage "(2 + ceil(@str/3))[bludgeoning]", @str=3 (fixture) -> 2 + ceil(1) = 3.
+        // damage "3[bludgeoning]" -> 3 degats.
         // Aucun dé piloté : le d20 de critique/esquive retombe sur le défaut stable (1),
         // ni l'un ni l'autre n'atteint son seuil -> dégâts pleins, non critiques.
         const result = await playChoice(rightPunch, 0);
@@ -58,7 +45,11 @@ describe("Socle exhaustif (07-02) — tracer end-to-end sur une carte réelle", 
     });
 
     test("pilotage des dés : un critique forcé (1d20 = 20) double les dégâts", async () => {
-        const rightPunch = loadRawCard("monk-base.json", 0);
+        // Carte FABRIQUEE : le pipeline exerce reste le vrai, mais le tracage ne
+        // depend plus de quelle carte est livree (RightPunch a suivi le Moine dans
+        // `fq-card-engine-extended`). Degats fixes, sans modificateur ni de : la
+        // valeur attendue ne bouge pas avec la fixture du monde.
+        const rightPunch = basicCard({damage: "3[bludgeoning]"});
 
         const result = await playChoice(rightPunch, 0, {dice: [20]});
 

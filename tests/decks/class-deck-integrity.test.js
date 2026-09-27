@@ -44,7 +44,8 @@ const IGNORED_DECKS = new Set(["draft.json"]);
 
 const KNOWN_ISSUES = new Set([
     // Pools de stats
-    "pool vide :: witch.json :: AQmRm5kfcKCJcGxS",
+    // L'ItemChoice vide de la Sorciere est parti avec elle dans
+    // `fq-card-engine-extended` : la dette suit son contenu.
 ]);
 
 const readJson = file => JSON.parse(fs.readFileSync(file, "utf8"));
@@ -169,8 +170,11 @@ const issues = detectIssues();
 describe("Intégrité des decks de classe et des pools de stats", () => {
 
     it("balaie effectivement des cartes et des classes", () => {
-        expect(cards.length).toBeGreaterThan(200);
-        expect(classes.length).toBeGreaterThanOrEqual(9);
+        // Compte relatif aux decks livres : le module n'en porte plus vingt depuis
+        // que les classes etendues sont dans `fq-card-engine-extended`.
+        expect(decks.length).toBeGreaterThan(0);
+        expect(cards.length).toBeGreaterThan(decks.length * 10);
+        expect(classes.length).toBeGreaterThan(0);
     });
 
     it("aucune anomalie nouvelle (niveau, exemplaires, classe, image, portée, pools de stats)", () => {
