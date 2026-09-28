@@ -5096,6 +5096,130 @@
       "height": null,
       "cards": [],
       "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mnkSecretRemed01"
+    },
+    {
+      "_id": "Cr3sZnDoLp8yTvQ1",
+      "name": "FQCARDTITLE.Crescendo",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Crescendo"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 40,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Crescendo",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Crescendo",
+                          "img": "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+                          "showIcon": 2,
+                          "changes": [
+                            {
+                              "key": "system.fq.zeal.max",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": []
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "executeEval": ""
+            }
+          ],
+          "level": 3,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.365",
+        "systemId": "dnd5e",
+        "systemVersion": "5.3.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1789978822598,
+        "modifiedTime": 1789978822598,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.Cr3sZnDoLp8yTvQ1"
     }
   ],
   "rotation": 0,
