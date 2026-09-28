@@ -68,13 +68,14 @@ The module provides several resources for start playing Final Quest 8 :
 
 ### Extended content
 
-Five classes are not shipped with this module: **Guardian, Illusionist, Monk, Runic Warrior
-and Witch**. They live in a separate module, along with their cards, illustrations and summons.
+Six classes are not shipped with this module: **Fencing Master, Guardian, Illusionist,
+Runic Warrior, White Mage and Witch**. They live in a separate module, along with their
+cards, illustrations and summons.
 
-This module is fully playable on its own. **Elementalist, Fencing Master, Trapper and White
-Mage** are complete, every level included, as are the neutral cards that all classes share.
+This module is fully playable on its own. **Elementalist, Monk and Trapper** are complete,
+every level included, as are the neutral cards that all classes share.
 
-The starter heroes of the five extended classes are still listed in the Starter Heroes
+The starter heroes of the six extended classes are still listed in the Starter Heroes
 compendium, but without their class item: they are there as a preview.
 
 Want the extended content? Send me a message:

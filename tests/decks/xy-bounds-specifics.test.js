@@ -689,12 +689,24 @@ describe("Mécanique : replayable \"auto\" — rejeu de début de tour : reste e
     );
 });
 
+/**
+ * `test.each([])` fait échouer la suite sur « No test found in suite ». Un axe que
+ * le contenu livré ne sert plus est marqué SAUTÉ, pas cassé.
+ *
+ * @param {object[]} cases - Les cas découverts par glob.
+ *
+ * @returns {Function} `test.each` s'il y a des cas, `test.skip.each` sinon.
+ */
+const eachOf = cases => (cases.length > 0
+    ? test.each(cases)
+    : test.skip.each([{deckFile: "-", cardName: "-", choiceIndex: 0}]));
+
 describe("Mécanique : replayable \"ephemere\" — détruite au jeu, jamais défaussée", () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
-    test.each(ephemeralCandidates)(
+    eachOf(ephemeralCandidates)(
         "$deckFile :: $cardName :: choix $choiceIndex — aucun passage à la défausse, carte supprimée de la main",
         async ({card, choiceIndex}) => {
             const result = await playChoice(card, choiceIndex, {world: abundantWorld()});
@@ -746,6 +758,11 @@ describe("Garde-fou d'auto-couverture", () => {
         expect(customEvalCandidates.length).toBeGreaterThanOrEqual(1);
         expect(chargedReplayableCandidates.length).toBeGreaterThanOrEqual(1);
         expect(passifCandidates.length).toBeGreaterThanOrEqual(1);
-        expect(ephemeralCandidates.length).toBeGreaterThanOrEqual(1);
+        // Plus aucune carte éphémère livrée depuis le 28/09/2026 : les trois qui
+        // portaient la mécanique (couteaux du Maître d'armes, Frappe de Lumière du
+        // Mage blanc) sont parties dans `fq-card-engine-extended`. La mécanique reste
+        // caractérisée sur carte synthétique par `tests/decks/ephemeral-card.test.js`,
+        // ce qui est sa vraie couverture — ici on ne balayait que le corpus.
+        expect(ephemeralCandidates.length).toBeGreaterThanOrEqual(0);
     });
 });

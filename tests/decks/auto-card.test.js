@@ -1,6 +1,7 @@
 import {beforeEach, describe, expect, test, vi} from "vitest";
 import fs from "fs";
 import path from "path";
+import {basicCard} from "./card-fixtures.js";
 
 // ─── Mocks requis par tests/decks/play-harness.js (vi.mock est hissé PAR FICHIER,
 // voir le commentaire JSDoc en tête de play-harness.js pour la liste canonique) ──
@@ -35,25 +36,7 @@ const {default: TradingCards, HAND_TYPE} = await import("../../src/domain/tradin
  * « aura » est le nom de ces cartes, pas celui de la mécanique.
  */
 
-const DECKS_DIR = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq8");
 const worldFixture = JSON.parse(fs.readFileSync(path.join(process.cwd(), "tests", "decks", "world-fixture.json"), "utf-8"));
-
-/**
- * Charge une carte du dépôt par son nom (clé i18n), depuis un deck pattern.
- *
- * @param {string} deckFile - Le nom de fichier du deck.
- * @param {string} cardName - La clé i18n du nom de la carte.
- *
- * @returns {object} L'entrée carte brute.
- */
-function loadRawCard(deckFile, cardName) {
-    const deck = JSON.parse(fs.readFileSync(path.join(DECKS_DIR, deckFile), "utf-8"));
-    const card = deck.cards.find(c => c.name === cardName);
-    if (!card) {
-        throw new Error(`carte introuvable : ${cardName} dans ${deckFile}`);
-    }
-    return card;
-}
 
 /**
  * Surcharges de monde donnant un combat actif dont les deux tokens de la scène
@@ -149,10 +132,14 @@ describe("Carte automatique — le jeu d'un choix `replayable: \"auto\"` (pipeli
         vi.clearAllMocks();
     });
 
-    test("FQCARDTITLE.LifeAura reste en main, marque le round et annonce le rejeu automatique", async () => {
-        const lifeAura = loadRawCard("white-mage-base.json", "FQCARDTITLE.LifeAura");
+    test("un choix auto reste en main, marque le round et annonce le rejeu automatique", async () => {
+        // Carte synthétique : ce qui est vérifié est le TRAITEMENT du marqueur
+        // `auto` par le pipeline, pas une carte particulière. Les cartes auto
+        // réellement livrées sont balayées par `xy-bounds-specifics.test.js`.
+        const autoCard = basicCard({replayable: "auto"},
+            {id: "FIXTUREauto", name: "FIXTURE.AutoSpell"});
 
-        const result = await playChoice(lifeAura, 0, {world: combatWorld()});
+        const result = await playChoice(autoCard, 0, {world: combatWorld()});
 
         expect(result.threw).toBe(false);
         // Ni défausse ni destruction : la carte vit en main comme un passif.
@@ -165,10 +152,13 @@ describe("Carte automatique — le jeu d'un choix `replayable: \"auto\"` (pipeli
         expect(chat).not.toContain("FQCARDENGINE.InfoMsgPassiveSpell");
     });
 
-    test("FQCARDTITLE.LifeAura soigne le lanceur et ses alliés du combat", async () => {
-        const lifeAura = loadRawCard("white-mage-base.json", "FQCARDTITLE.LifeAura");
+    test("un choix auto à ciblage Combat soigne les combattants atteints", async () => {
+        // L'aura de soin : un choix `auto` dont le soin porte sur le ciblage
+        // « Combat ». Synthétique pour la même raison que le test précédent.
+        const healAura = basicCard({replayable: "auto", heal: "2", targetType: "Combat"},
+            {id: "FIXTUREautoheal", name: "FIXTURE.AutoHealAura"});
 
-        const result = await playChoice(lifeAura, 0, {world: combatWorld()});
+        const result = await playChoice(healAura, 0, {world: combatWorld()});
 
         expect(result.threw).toBe(false);
         expect(result.hpCalls.length).toBeGreaterThan(0);

@@ -35,20 +35,26 @@ const DECKS_DIR = path.join(process.cwd(), "packs", "_source", "decks-pattern-fq
 const worldFixture = JSON.parse(fs.readFileSync(path.join(process.cwd(), "tests", "decks", "world-fixture.json"), "utf-8"));
 
 /**
- * Charge une carte du dépôt par son nom (clé i18n), depuis un deck pattern.
+ * Tous les choix réactifs livrés par les decks du dépôt, découverts par balayage.
  *
- * @param {string} deckFile - Le nom de fichier du deck.
- * @param {string} cardName - La clé i18n du nom de la carte.
+ * Jamais par nom de carte : les classes livrées par ce module changent selon le
+ * découpage public/étendu, et un nom en dur casse à chaque déplacement de contenu.
  *
- * @returns {object} L'entrée carte brute.
+ * @returns {Array<{deckFile: string, cardName: string, choice: object}>} Les choix réactifs.
  */
-function loadRawCard(deckFile, cardName) {
-    const deck = JSON.parse(fs.readFileSync(path.join(DECKS_DIR, deckFile), "utf-8"));
-    const card = deck.cards.find(c => c.name === cardName);
-    if (!card) {
-        throw new Error(`carte introuvable : ${cardName} dans ${deckFile}`);
+function reactiveChoicesFromDecks() {
+    const out = [];
+    for (const deckFile of fs.readdirSync(DECKS_DIR).filter(name => name.endsWith(".json"))) {
+        const deck = JSON.parse(fs.readFileSync(path.join(DECKS_DIR, deckFile), "utf-8"));
+        for (const card of deck.cards ?? []) {
+            for (const choice of card.system?.fq?.choices ?? []) {
+                if (choice.reactive) {
+                    out.push({deckFile, cardName: card.name, choice});
+                }
+            }
+        }
     }
-    return card;
+    return out;
 }
 
 /**
@@ -127,10 +133,15 @@ describe("Carte réactive préparée — ce qui peut être armé", () => {
         vi.clearAllMocks();
     });
 
-    test("un choix réactif du dépôt est préparable", () => {
-        const riposte = loadRawCard("fencing-master-base.json", "FQCARDTITLE.Riposte");
+    test("au moins un choix réactif du dépôt est préparable", () => {
+        // Le dépôt doit livrer de quoi armer une réaction : sans cela la
+        // fonctionnalité serait morte pour le joueur, quel que soit le découpage.
+        const reactive = reactiveChoicesFromDecks();
+        expect(reactive.length).toBeGreaterThan(0);
 
-        expect(PreparedCard.isPreparable(riposte.system.fq.choices[0])).toBe(true);
+        const preparable = reactive.filter(entry => PreparedCard.isPreparable(entry.choice));
+
+        expect(preparable.length).toBeGreaterThan(0);
     });
 
     test("un choix non réactif ne l'est pas", () => {

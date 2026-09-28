@@ -1,0 +1,155 @@
+{
+  "name": "Monk Generated",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_monk.PNG",
+  "cards": [
+    {
+      "_id": "mkZealSurgeGen01",
+      "name": "FQCARDTITLE.ZealSurge",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/ZealSurge.png",
+          "text": "FQCARDDESCRIPTION.ZealSurge"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 99,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "auto",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgZealRecover",
+                  "arg": "{\"zeal\": \"1\"}"
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.detect_magic.circle.blue",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 1,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790013856694,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!MonkGeneratedFQ8.mkZealSurgeGen01"
+    }
+  ],
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1788096000000,
+    "modifiedTime": 1788096000000,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "system": {
+    "fq": {
+      "type": "",
+      "owner": "",
+      "classLevels": {}
+    }
+  },
+  "width": null,
+  "height": null,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "MonkGeneratedFQ8",
+  "sort": 300000,
+  "_key": "!cards!MonkGeneratedFQ8"
+}

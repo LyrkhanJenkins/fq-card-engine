@@ -48,6 +48,11 @@ function isSimpleChoice(choice) {
         && !(choice.customEvals && choice.customEvals.length)
         && !(choice.applyEffectsFormulas && choice.applyEffectsFormulas.length)
         && !choice.reactive
+        // Récupération en deck ou en défausse : la lançabilité dépend de l'état des
+        // piles, pas des ressources. Un tel choix est refusé en amont de l'axe testé
+        // (`WarningMsgNoRetrievableDeckCard`), ce qui ferait passer un refus légitime
+        // pour une faute du moteur. Couverts par les tests de récupération.
+        && !isFilled(choice.retrieveFromDeck) && !isFilled(choice.retrieveFromDiscard)
         && !isFilled(choice.xmin) && !isFilled(choice.xmax)
         && !isFilled(choice.ymin) && !isFilled(choice.ymax)
         && !isFilled(choice.xvalue) && !isFilled(choice.yvalue)
@@ -646,7 +651,6 @@ describe("Garde-fou d'auto-couverture", () => {
     test("au moins un choix par axe a été découvert par glob (sans nom en dur)", () => {
         expect(negativeMana.length).toBeGreaterThanOrEqual(1);
         expect(negativeAction.length).toBeGreaterThanOrEqual(1);
-        expect(negativeZeal.length).toBeGreaterThanOrEqual(1);
         expect(dropCandidates.length).toBeGreaterThanOrEqual(1);
         expect(reachCandidatesInRange.length).toBeGreaterThanOrEqual(1);
         expect(outOfRangeCandidates.length).toBeGreaterThanOrEqual(1);
@@ -654,5 +658,11 @@ describe("Garde-fou d'auto-couverture", () => {
         // `fq-card-engine-extended`. Les axes ci-dessus, eux, restent servis par le
         // contenu livre ici, et un zero y signalerait un glob casse.
         expect(skeletonEntries.length).toBeGreaterThanOrEqual(0);
+        // Le zele negatif a rejoint ce cas le 28/09/2026, quand le module public est
+        // passe a trois classes : les choix a zele negatif qu'il livre encore sont
+        // tous reactifs ou a bornes X/Y, donc ecartes par `isSimpleChoice`. L'axe est
+        // servi par `xy-bounds-specifics.test.js` (zele lie a X) et par le calcul de
+        // cout de `tests/utils/consumption-utils.test.js`.
+        expect(negativeZeal.length).toBeGreaterThanOrEqual(0);
     });
 });

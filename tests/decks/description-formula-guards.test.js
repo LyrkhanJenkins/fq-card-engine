@@ -98,7 +98,6 @@ const SIMPLE_TOKEN_ALLOWLIST = {
     "FQCARDDESCRIPTION.ShadowChanneling": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.ShadowExplosion": "taille de zone — jeton seul",
     "FQCARDDESCRIPTION.SkeletonSorcerer": "points de vie/dégâts/déplacement — jetons seuls",
-    "FQCARDDESCRIPTION.SteelRain": "rayon de la zone — jeton seul",
     "FQCARDDESCRIPTION.Uppercut": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.Vortex": "portée — jeton seul",
     "FQCARDDESCRIPTION.WeakPointStudy": "bonus de dégâts — jeton seul",
@@ -288,8 +287,10 @@ describe("Garde de non-régression : arithmétique en dur dans les descriptions 
             expect(undocumented).toEqual([]);
         });
 
-        test("la liste blanche contient exactement 38 clés (seau « laisser » du triage, plan 20-06)", () => {
-            expect(Object.keys(SIMPLE_TOKEN_ALLOWLIST).length).toBe(38);
+        test("la liste blanche contient exactement 37 clés (seau « laisser » du triage, plan 20-06)", () => {
+            // 38 avant le 28/09/2026 : `SteelRain` est partie avec le Maître d'armes
+            // vers le module étendu, et sa clé n'est plus livrée par ce module.
+            expect(Object.keys(SIMPLE_TOKEN_ALLOWLIST).length).toBe(37);
         });
     });
 });

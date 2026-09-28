@@ -1,0 +1,5131 @@
+{
+  "name": "Monk Base",
+  "type": "deck",
+  "description": "",
+  "img": "modules/fq-card-engine/images/cards/back_monk.PNG",
+  "cards": [
+    {
+      "_id": "GISvDf1bVWL3rXJj",
+      "name": "FQCARDTITLE.RightPunch",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/right_punch.png",
+          "text": "FQCARDDESCRIPTION.RightPunch"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 5,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 6,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(2 + ceil(@str/3))[bludgeoning]",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "str",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:(game.user.character?.system?.fq.action.value <= (game.user.character?.system?.fq.action.max - 4)) ? 2 : 1",
+              "yvalue": "",
+              "replayable": "XXX",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.melee_generic.creature_attack.fist.002",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ],
+          "level": 1,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790013871880,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.GISvDf1bVWL3rXJj"
+    },
+    {
+      "_id": "kUzw0G1Qx48BTLcH",
+      "name": "FQCARDTITLE.LeftPunch",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/left_punch.PNG",
+          "text": "FQCARDDESCRIPTION.LeftPunch"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 12,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "str",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-4",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "(1+ ceil(@str/2) + 1d4)[bludgeoning]",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:(game.user.character?.system?.fq.action.value <= (game.user.character?.system?.fq.action.max - 5)) ? 2 : 1",
+              "yvalue": "",
+              "replayable": "XXX",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.melee_generic.creature_attack.fist.001",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "maxSameCard": 4,
+          "level": 2,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790056876689,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.kUzw0G1Qx48BTLcH"
+    },
+    {
+      "_id": "jSivUUglRWgkqOEo",
+      "name": "FQCARDTITLE.Combo",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/combo.PNG",
+          "text": "FQCARDDESCRIPTION.Combo"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 11,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "-7",
+              "mana": "-2",
+              "zeal": "-(XXX)",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(1d10+((@dex-1)*XXX))[bludgeoning]",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "dex",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "xmin": "",
+              "xmax": "6",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.flurry_of_blows.physical.blue",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ],
+          "level": 1,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790013878138,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.jSivUUglRWgkqOEo"
+    },
+    {
+      "_id": "bUBt57YPrJZcDCmo",
+      "name": "FQCARDTITLE.ZealousShield",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/zealous_shield.PNG",
+          "text": "FQCARDDESCRIPTION.ZealousShield"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 3,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "1",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Zealous Shield",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "data": [
+                        {
+                          "name": "Actions -2",
+                          "img": "icons/magic/defensive/shield-barrier-glowing-triangle-red.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.action.max",
+                              "value": "-2",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgZealousShield",
+                          "arg": "{\"action\": \"2\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.tookSpellThisRound()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoSpellTakenThisRound",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "targetType": "Default",
+              "visual": {
+                "path": "jb2a.shield.01.complete.01.blue",
+                "onTarget": false
+              }
+            }
+          ],
+          "level": 1,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790013946172,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.bUBt57YPrJZcDCmo"
+    },
+    {
+      "_id": "B9XMU0cXNPaDDfoG",
+      "name": "FQCARDTITLE.InhibitingCape",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/inhibiting_cape.PNG",
+          "text": "FQCARDDESCRIPTION.InhibitingCape"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 6,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "-2",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "@con - 2",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgInhibitingCape",
+                  "arg": "{\"hp\": \"@con - 2\"}"
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.selfHasEffect()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNeedEffect",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Inhibition",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [],
+                      "messages": [],
+                      "removeEffectName": "@choose"
+                    }
+                  ]
+                }
+              ],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ],
+          "level": 11,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790057948671,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.B9XMU0cXNPaDDfoG"
+    },
+    {
+      "_id": "GHHqVtHNG0jaU6o3",
+      "name": "FQCARDTITLE.SecretWeapons",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/secret_weapons.PNG",
+          "text": "FQCARDDESCRIPTION.SecretWeapons"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 9,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "-XXX",
+              "minReach": "1",
+              "maxReach": "6",
+              "nbTargets": "",
+              "damage": "(XXX + @cha)[piercing]",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "-9999",
+              "bonusEva": "-9999",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "cha",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "xmin": "1",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.dagger.throw.01.white",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "targetType": "Default"
+            }
+          ],
+          "level": 5,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014410570,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.GHHqVtHNG0jaU6o3"
+    },
+    {
+      "_id": "MTKXT8n2j2ZfTaYv",
+      "name": "FQCARDTITLE.QuickDodge",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/quick_dodge.PNG",
+          "text": "FQCARDDESCRIPTION.QuickDodge"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 13,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "isInnate": false,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": true,
+              "hp": "2*@dex",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgHealthPointRecover",
+                  "arg": "{\"hp\": \"2*@dex\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.wind_lines.01.01.white",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.tookDamageThisRound()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoDamageTakenThisRound",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "targetType": "Default"
+            }
+          ],
+          "level": 6
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014525016,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.MTKXT8n2j2ZfTaYv"
+    },
+    {
+      "_id": "R0huynxFiKzHV9n9",
+      "name": "FQCARDTITLE.Conversion",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/conversion.PNG",
+          "text": "FQCARDDESCRIPTION.Conversion"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 4,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "",
+              "mana": "XXX",
+              "zeal": "-(XXX)",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "4+@wis",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgConversionEffect",
+                  "arg": "{\"zeal\": \"XXX\",\"mana\": \"XXX\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ],
+          "level": 4,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014321739,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.R0huynxFiKzHV9n9"
+    },
+    {
+      "_id": "dpsb91WKHuYPwc0S",
+      "name": "FQCARDTITLE.FlashMove",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/flash_move.PNG",
+          "text": "FQCARDDESCRIPTION.FlashMove"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 10,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "-9",
+              "mana": "-1",
+              "zeal": "+2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "6+@dex",
+              "nbTargets": "6+@dex",
+              "damage": "(3+@str+1d6)[force]",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "str",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Flash Move",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Flash Move",
+                          "img": "icons/magic/movement/trail-streak-zigzag-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "macro.execute",
+                              "value": "FlashMove \"6+@dex\"",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgFlashMove",
+                  "arg": "{\"movement\": \"7+@dex\"}"
+                }
+              ],
+              "customEvals": [
+                {
+                  "script": "!game.user.targets.size || FqCardEngineModule.cond.targetsAlignedOnOneSide()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgFlashMove",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "minions": [],
+              "hasBeenPlayed": false,
+              "targetType": "Default"
+            }
+          ],
+          "level": 5,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014436417,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.dpsb91WKHuYPwc0S"
+    },
+    {
+      "_id": "lUrrQoyIuFK7ZMm5",
+      "name": "FQCARDTITLE.ZenMeditation",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/zen_meditation.PNG",
+          "text": "FQCARDDESCRIPTION.ZenMeditation"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 8,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "-2*(XXX)",
+              "mana": "-1",
+              "zeal": "-(XXX)",
+              "reactive": false,
+              "hp": "(3+@con)*(XXX)",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgHealthPointRecover",
+                  "arg": "{\"hp\": \"(3+@con)*XXX\"}"
+                },
+                {
+                  "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                  "arg": "{\"effectName\":\"Zen Meditation\",\"turn\":\"1\"}"
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.magic_signs.circle.02.transmutation.intro.yellow",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Zen Meditation",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Zen Meditation",
+                          "img": "icons/magic/life/heart-cross-blue.webp",
+                          "showIcon": 2,
+                          "changes": [
+                            {
+                              "key": "system.attributes.hp.tempmax",
+                              "value": "+((3+@con)*XXX)",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": []
+                    }
+                  ]
+                }
+              ],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 7,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014562618,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.lUrrQoyIuFK7ZMm5"
+    },
+    {
+      "_id": "beGYc1j9ZjFGI8AK",
+      "name": "FQCARDTITLE.PhantomBlade",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/phantom_blade.PNG",
+          "text": "FQCARDDESCRIPTION.PhantomBlade"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 1,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "dex",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "(@dex + 1d8)[slashing]",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "6+@str",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgPhantomBlade",
+                  "arg": "{\"critical\": \"@str\"}"
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.melee_generic.slash.02.001.blue",
+                "onTarget": true
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 4,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790057028033,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.beGYc1j9ZjFGI8AK"
+    },
+    {
+      "_id": "tyBaqGt92r9MCeRa",
+      "name": "FQCARDTITLE.Concealment",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/concealment.PNG",
+          "text": "FQCARDDESCRIPTION.Concealment"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 7,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-9",
+              "mana": "-2",
+              "zeal": "2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Concealment",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Concealment damage",
+                          "img": "icons/magic/perception/shadow-stealth-eyes-purple.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.movement.speeds.walk",
+                              "value": "20",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "+1d@dex",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "2",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        },
+                        {
+                          "status": "",
+                          "name": "Concealment  evasion",
+                          "img": "icons/magic/perception/shadow-stealth-eyes-purple.webp",
+                          "changes": [
+                            {
+                              "key": "system.attributes.hp.value",
+                              "value": "9999999",
+                              "type": "override",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "-9999999",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "PersistAura jb2a.shield.01.loop",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        },
+                        {
+                          "status": "invisible",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgConcealment",
+                          "arg": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.smoke.puff.centered.grey",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 11,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790057944599,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.tyBaqGt92r9MCeRa"
+    },
+    {
+      "_id": "L2bESANHccb70cJk",
+      "name": "FQCARDTITLE.KiBreath",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/ki_breath.PNG",
+          "text": "FQCARDDESCRIPTION.KiBreath"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 2,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "2*XXX",
+              "mana": "",
+              "zeal": "-XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "XXX",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "4 + @cha",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              }
+            }
+          ],
+          "level": 11,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014865436,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.L2bESANHccb70cJk"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/uppercut.PNG",
+          "text": "FQCARDDESCRIPTION.Uppercut"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Uppercut",
+      "description": "",
+      "_id": "T6bc7cmQ1bAuciBo",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 4,
+          "level": 5,
+          "isInnate": false,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "dex",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-6+@con",
+              "mana": "0",
+              "zeal": "+1",
+              "reactive": false,
+              "hp": "",
+              "draw": "1",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "@dex[bludgeoning]",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgTaunting",
+                  "arg": ""
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.unarmed_strike.physical.01.blue",
+                "onTarget": true
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790057219915,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.T6bc7cmQ1bAuciBo"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/interruption.PNG",
+          "text": "FQCARDDESCRIPTION.Interruption"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Interruption",
+      "description": "",
+      "_id": "1MOAMJjs8KTHDHEW",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "level": 3,
+          "isInnate": false,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "save",
+              "hitSource": "ability",
+              "hitAbility": "wis",
+              "saveAbility": "con",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "",
+              "mana": "-1",
+              "zeal": "-2",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Interruption",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Interruption",
+                          "img": "icons/skills/wounds/injury-pain-body-orange.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.action.value",
+                              "value": "-1d6",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        },
+                        {
+                          "status": "restrained",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Interruption\", \"turn\":\"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title": "Stunned",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": false,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "stunned",
+                          "name": "",
+                          "img": "icons/consumables/drinks/alcohol-beer-mug-yellow.webp",
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "changes": []
+                        }
+                      ],
+                      "messages": []
+                    }
+                  ]
+                }
+              ],
+              "minionsOnZone": false,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.icon.mute.dark_red",
+                "onTarget": true
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014301907,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.1MOAMJjs8KTHDHEW"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.JadePalm"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.JadePalm",
+      "description": "",
+      "_id": "KigGsmE7nWg6Rwsp",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "level": 4,
+          "isInnate": false,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "-3*XXX",
+              "mana": "",
+              "zeal": "-XXX",
+              "reactive": false,
+              "hp": "XXX",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "(2 + @dex + @wis)*XXX",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "3",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.cure_wounds.400px.blue",
+                "onTarget": true
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgHealthPointRecover",
+                  "arg": "{\"hp\":\"XXX\"}"
+                }
+              ],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014380524,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.KigGsmE7nWg6Rwsp"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/chi_master.PNG",
+          "text": "FQCARDDESCRIPTION.ChiMaster"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.ChiMaster",
+      "description": "",
+      "_id": "q2oHQW93vQd9gdZF",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "level": 3,
+          "isInnate": true,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "FQCARDCHOICE.CardsToZeal",
+              "action": "-3",
+              "mana": "",
+              "zeal": "+XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-XXX",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "@str",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            },
+            {
+              "name": "FQCARDCHOICE.ZealToCards",
+              "action": "-3",
+              "mana": "",
+              "zeal": "-XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "XXX",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "@dex",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "passif",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014267272,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.q2oHQW93vQd9gdZF"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/red_fist.PNG",
+          "text": "FQCARDDESCRIPTION.RedFist"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.RedFist",
+      "description": "",
+      "_id": "mbO8tqz920uqbsxy",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "level": 12,
+          "isInnate": false,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "-14",
+              "mana": "-1",
+              "zeal": "+5",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Red Fist",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Red Fist",
+                          "img": "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+                          "showIcon": 2,
+                          "changes": [
+                            {
+                              "key": "system.fq.zeal.max",
+                              "value": "5",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": []
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.flames.02.orange",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014782918,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mbO8tqz920uqbsxy"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/combo_2.PNG",
+          "text": "FQCARDDESCRIPTION.Combo2"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Combo2",
+      "description": "",
+      "_id": "bYsdx4dlNmhBsYGd",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "level": 7,
+          "isInnate": false,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "-2*XXX",
+              "mana": "-1",
+              "zeal": "-XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(2*XXX+1d(3*@dex))[bludgeoning]",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "2*XXX",
+              "bonusEva": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "dex",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "xmin": "",
+              "xmax": "999",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.flurry_of_blows.magical.01.blue",
+                "onTarget": true
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": []
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004426408,
+        "modifiedTime": 1790014541064,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.bYsdx4dlNmhBsYGd"
+    },
+    {
+      "_id": "mkHyperactivity1",
+      "name": "FQCARDTITLE.Hyperactivity",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/Hyperactivity.png",
+          "text": "FQCARDDESCRIPTION.Hyperactivity"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 15,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "",
+              "action": "XXX",
+              "mana": "",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:Math.max(0, (game.cards?.find(c => c.ownership?.[game.user.id] === 3 && c.system?.fq?.type === \"HAND\" && c.system?.fq?.owner === game.user.id)?.cards?.size ?? 0) - 1)",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.flurry_of_blows.physical.blue",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 2,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790014237183,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkHyperactivity1"
+    },
+    {
+      "_id": "mkMartialMomentm",
+      "name": "FQCARDTITLE.MartialMomentum",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/MartialMomentum.png",
+          "text": "FQCARDDESCRIPTION.MartialMomentum"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 16,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "",
+              "action": "-3",
+              "mana": "",
+              "zeal": "XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:(game.combat?.flags?.fq?.logs ?? []).filter(l => l.actorId === FqCardEngineModule.cst.myId && l.round === game.combat.round).length",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.flurry_of_blows.magical.01.blue",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 9,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790014743446,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkMartialMomentm"
+    },
+    {
+      "_id": "mkBreathReading1",
+      "name": "FQCARDTITLE.BreathReading",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/BreathReading.png",
+          "text": "FQCARDDESCRIPTION.BreathReading"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 18,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "",
+              "action": "-4",
+              "mana": "-1",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "fq-card-engine.decks-pattern-fq8.Monk Base",
+              "chooseCardsLevels": "1,2,3,4,5,6,7,13,14,15,16",
+              "chooseCardsProposed": "3",
+              "chooseCardsCount": "1",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.detect_magic.circle.blue",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 2,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790056843543,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkBreathReading1"
+    },
+    {
+      "_id": "mkSecondWind0001",
+      "name": "FQCARDTITLE.SecondWind",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/SecondWind.png",
+          "text": "FQCARDDESCRIPTION.SecondWind"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 19,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-3",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Second Wind",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Second Wind",
+                          "img": "icons/magic/air/wind-tornado-spiral-teal-green.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.cards.pick",
+                              "value": "2",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "showIcon": 1,
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgTemporaryEffect",
+                          "arg": "{\"effectName\":\"Second Wind\", \"turn\":\"1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.wind_lines.01.01.white",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 6,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790057193169,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkSecondWind0001"
+    },
+    {
+      "_id": "mkHundredForms01",
+      "name": "FQCARDTITLE.HundredFormsFists",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/HundredFormsFists.png",
+          "text": "FQCARDDESCRIPTION.HundredFormsFists"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 20,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-15",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "(2*XXX + @str)[bludgeoning]",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:Math.max(0, (game.cards?.find(c => c.ownership?.[game.user.id] === 3 && c.system?.fq?.type === \"HAND\" && c.system?.fq?.owner === game.user.id)?.cards?.size ?? 0) - 1)",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.melee_generic.creature_attack.fist.001",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 10,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790057560346,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkHundredForms01"
+    },
+    {
+      "_id": "mkFullSerenity01",
+      "name": "FQCARDTITLE.FullSerenity",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/FullSerenity.png",
+          "text": "FQCARDDESCRIPTION.FullSerenity"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 21,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-4",
+              "mana": "-1",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "XXX + @wis",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:Math.max(0, (game.cards?.find(c => c.ownership?.[game.user.id] === 3 && c.system?.fq?.type === \"HAND\" && c.system?.fq?.owner === game.user.id)?.cards?.size ?? 0) - 1)",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Full Serenity",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Full Serenity",
+                          "img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "+XXX",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "showIcon": 2,
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgEvasionBonus",
+                          "arg": "{\"evasion\":\"XXX\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgHealthPointRecover",
+                  "arg": "{\"hp\": \"XXX + @wis\"}"
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.healing_generic.400px.green",
+                "onTarget": false
+              },
+              "name": "",
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 3,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790056997921,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkFullSerenity01"
+    },
+    {
+      "_id": "mkThousandLeaves",
+      "name": "FQCARDTITLE.ThousandLeavesPalm",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/ThousandLeavesPalm.png",
+          "text": "FQCARDDESCRIPTION.ThousandLeavesPalm"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 22,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "",
+              "action": "-7",
+              "mana": "-2",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Adjacent",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(XXX + @dex)[force]",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "hitType": "save",
+              "hitSource": "ability",
+              "hitAbility": "dex",
+              "saveAbility": "dex",
+              "hitBonus": "",
+              "saveDc": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:Math.max(0, (game.cards?.find(c => c.ownership?.[game.user.id] === 3 && c.system?.fq?.type === \"HAND\" && c.system?.fq?.owner === game.user.id)?.cards?.size ?? 0) - 1)",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.melee_generic.whirlwind.01.orange",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 7,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790014504307,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkThousandLeaves"
+    },
+    {
+      "_id": "mkInnerFervor001",
+      "name": "FQCARDTITLE.InnerFervor",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/InnerFervor.png",
+          "text": "FQCARDDESCRIPTION.InnerFervor"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 23,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-9",
+              "mana": "-2",
+              "zeal": "XXX/2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:Math.max(0, (game.cards?.find(c => c.ownership?.[game.user.id] === 3 && c.system?.fq?.type === \"HAND\" && c.system?.fq?.owner === game.user.id)?.cards?.size ?? 0) - 1)",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.bardic_inspiration.greenorange",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 8,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790057955198,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkInnerFervor001"
+    },
+    {
+      "_id": "mkCadence0000001",
+      "name": "FQCARDTITLE.Cadence",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/Cadence.png",
+          "text": "FQCARDDESCRIPTION.Cadence"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 24,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "",
+              "action": "-5",
+              "mana": "-1",
+              "zeal": "1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "damage": "(2*XXX + @dex)[bludgeoning]",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "dex",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:(game.combat?.flags?.fq?.logs ?? []).filter(l => l.actorId === FqCardEngineModule.cst.myId && l.round === game.combat.round).length",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.flurry_of_blows.physical.blue",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 6,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790014458463,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkCadence0000001"
+    },
+    {
+      "_id": "mkBreathCycle001",
+      "name": "FQCARDTITLE.BreathCycle",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/BreathCycle.png",
+          "text": "FQCARDDESCRIPTION.BreathCycle"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 25,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "0",
+              "mana": "-1",
+              "zeal": "-4",
+              "reactive": false,
+              "hp": "",
+              "draw": "XXX",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:(game.combat?.flags?.fq?.logs ?? []).filter(l => l.actorId === FqCardEngineModule.cst.myId && l.round === game.combat.round).length",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.misty_step.01.blue",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 12,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790015027511,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkBreathCycle001"
+    },
+    {
+      "_id": "mkEmptiness00001",
+      "name": "FQCARDTITLE.Emptiness",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/Emptiness.png",
+          "text": "FQCARDDESCRIPTION.Emptiness"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 26,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "",
+              "action": "XXX",
+              "mana": "-1",
+              "zeal": "XXX",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "-XXX",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.smoke.puff.centered.grey",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 11,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790014876110,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkEmptiness00001"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/IronGauntlet.png",
+          "text": "FQCARDDESCRIPTION.IronGauntlet"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.IronGauntlet",
+      "description": "",
+      "_id": "mkIronGauntlet01",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "level": 12,
+          "isInnate": false,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-8",
+              "mana": "0",
+              "zeal": "-3",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Iron Gauntlet",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Iron Gauntlet",
+                          "img": "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "showIcon": 2,
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSelfApplyEffect",
+                          "arg": "{\"effectName\": \"Iron Gauntlet\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.magic_signs.circle.02.transmutation.intro.yellow",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ]
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 27,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788346961046,
+        "modifiedTime": 1790015110438,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkIronGauntlet01"
+    },
+    {
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/charge.PNG",
+          "text": "FQCARDDESCRIPTION.Charge"
+        }
+      ],
+      "face": 0,
+      "name": "FQCARDTITLE.Charge",
+      "description": "",
+      "_id": "5GilfLyqatqXn5tS",
+      "type": "base",
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "isInnate": false,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "-3",
+              "mana": "",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "1",
+              "maxReach": "9",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "applyEffectsFormulas": [
+                {
+                  "title": "Charge Bonus",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Charge Bonus",
+                          "img": "icons/skills/movement/arrow-upward-yellow.webp",
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "+@dex+1d4",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "system.fq.attributes.critical",
+                              "value": "+@str",
+                              "type": "add",
+                              "priority": null
+                            },
+                            {
+                              "key": "macro.execute",
+                              "value": "Charge",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgSelfApplyEffect",
+                          "arg": "{\"effectName\":\"Charge Bonus\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "name": "",
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default"
+            }
+          ],
+          "level": 1
+        }
+      },
+      "suit": "",
+      "value": null,
+      "back": {
+        "text": "",
+        "img": null,
+        "name": ""
+      },
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 28,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1786004418439,
+        "modifiedTime": 1790014097666,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.5GilfLyqatqXn5tS"
+    },
+    {
+      "_id": "mkHealingRing001",
+      "name": "FQCARDTITLE.HealingRing",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/HealingRing.png",
+          "text": "FQCARDDESCRIPTION.HealingRing"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 29,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "",
+              "action": "-2",
+              "mana": "-1",
+              "zeal": "-1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "0",
+              "maxReach": "1",
+              "nbTargets": "1",
+              "damage": "",
+              "magical": true,
+              "heal": "XXX",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:Math.max(0, -(game.combat?.flags?.fq?.logs ?? []).filter(l => l.actorId === FqCardEngineModule.cst.myId && l.round === game.combat?.round && l.turn === game.combat?.turn).reduce((s, l) => s + Number(l.cardContent?.action || 0), 0))",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                },
+                {
+                  "script": "XXX > 0",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoActionSpent",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.healing_generic.200px.green",
+                "onTarget": true
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 10,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788609600000,
+        "modifiedTime": 1790057542102,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkHealingRing001"
+    },
+    {
+      "_id": "mkVoidStep000001",
+      "name": "FQCARDTITLE.VoidStep",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/VoidStep.png",
+          "text": "FQCARDDESCRIPTION.VoidStep"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 30,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "",
+              "action": "-3",
+              "mana": "",
+              "zeal": "+1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "@dex",
+              "nbTargets": "1",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Void Step",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "data": [
+                        {
+                          "name": "Void Step",
+                          "img": "icons/magic/movement/trail-streak-zigzag-teal.webp",
+                          "changes": [
+                            {
+                              "key": "macro.execute",
+                              "value": "FlashMove \"@dex\"",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false,
+                          "showIcon": 0
+                        }
+                      ],
+                      "messages": [],
+                      "removeEffectName": ""
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgFlashMove",
+                  "arg": "{\"movement\": \"@dex\"}"
+                }
+              ],
+              "minions": [],
+              "replayable": "2",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [
+                {
+                  "script": "game.user.targets.size === 1 && FqCardEngineModule.cond.targetsAlignedOnOneSide()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgFlashMove",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 9,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788609600000,
+        "modifiedTime": 1790014778093,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkVoidStep000001"
+    },
+    {
+      "_id": "mkHealTransfer01",
+      "name": "FQCARDTITLE.HealingTransfer",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/HealingTransfer.png",
+          "text": "FQCARDDESCRIPTION.HealingTransfer"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 31,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-4",
+              "mana": "0",
+              "zeal": "-2",
+              "reactive": false,
+              "hp": "-(XXX)",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "1",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "XXX",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "3*@con",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgHealingTransfer",
+                  "arg": "{\"heal\": \"XXX\"}"
+                }
+              ],
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.healing_generic.200px.green",
+                "onTarget": true
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 8,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788400000000,
+        "modifiedTime": 1790057419317,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkHealTransfer01"
+    },
+    {
+      "_id": "mkZealSurge00001",
+      "name": "FQCARDTITLE.PerpetualBreath",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/PerpetualBreath.png",
+          "text": "FQCARDDESCRIPTION.PerpetualBreath"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 32,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "action": "-10",
+              "mana": "",
+              "zeal": "",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.detect_magic.circle.blue",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "hasBeenPlayed": false,
+              "customEvals": [],
+              "targetType": "Default",
+              "chooseCardsList": "fq-card-engine.decks-pattern-fq8.Monk Generated.FQCARDTITLE.ZealSurge"
+            }
+          ],
+          "level": 10,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1788096000000,
+        "modifiedTime": 1790014922882,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkZealSurge00001"
+    },
+    {
+      "_id": "mkHealingPalm001",
+      "name": "FQCARDTITLE.HealingPalm",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/monk/healing_palm.PNG",
+          "text": "FQCARDDESCRIPTION.HealingPalm"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 33,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 4,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-4",
+              "mana": "-1",
+              "zeal": "+1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "1",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "(2 + ceil(@dex/2))",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.cure_wounds.400px.blue",
+                "onTarget": true
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 2,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1790035200000,
+        "modifiedTime": 1790056790790,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkHealingPalm001"
+    },
+    {
+      "_id": "mkHealingWake001",
+      "name": "FQCARDTITLE.HealingWake",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.HealingWake"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 34,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 2,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-10",
+              "mana": "-1",
+              "zeal": "+1",
+              "reactive": false,
+              "hp": "2 + @dex",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "6+@dex",
+              "nbTargets": "6+@dex",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "(2 + @dex + 1d6)",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Healing Wake",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Healing Wake",
+                          "img": "modules/fq-card-engine/images/cards/monk/healing_palm.PNG",
+                          "changes": [
+                            {
+                              "key": "macro.execute",
+                              "value": "FlashMove \"6+@dex\"",
+                              "type": "custom",
+                              "priority": null
+                            }
+                          ],
+                          "showIcon": 2,
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": []
+                    }
+                  ]
+                }
+              ],
+              "messages": [
+                {
+                  "key": "FQCARDENGINE.CardMsgFlashMove",
+                  "arg": "{\"movement\":\"7+@dex\"}"
+                },
+                {
+                  "key": "FQCARDENGINE.CardMsgHealthPointRecover",
+                  "arg": "{\"hp\":\"2 + @dex\"}"
+                }
+              ],
+              "minionsOnZone": false,
+              "customEvals": [
+                {
+                  "script": "!game.user.targets.size || FqCardEngineModule.cond.targetsAlignedOnOneSide()",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgFlashMove",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.healing_generic.400px.green",
+                "onTarget": false
+              },
+              "name": "",
+              "minions": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 9,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1790035200000,
+        "modifiedTime": 1790057454447,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkHealingWake001"
+    },
+    {
+      "_id": "mkReedStance0001",
+      "name": "FQCARDTITLE.ReedStance",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.ReedStance"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 35,
+      "flags": {
+        "maxSameCard": {}
+      },
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "",
+              "action": "-3",
+              "mana": "",
+              "zeal": "+1",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "",
+              "maxReach": "",
+              "nbTargets": "",
+              "damage": "",
+              "magical": true,
+              "heal": "",
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "applyEffectsFormulas": [
+                {
+                  "title": "Reed Stance",
+                  "formula": "1",
+                  "effects": [
+                    {
+                      "result": "1",
+                      "self": true,
+                      "removeEffectName": "",
+                      "data": [
+                        {
+                          "status": "",
+                          "name": "Reed Stance",
+                          "img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
+                          "showIcon": 2,
+                          "changes": [
+                            {
+                              "key": "system.fq.attributes.evasion",
+                              "value": "+1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        },
+                        {
+                          "status": "",
+                          "name": "Reed Guard",
+                          "img": "icons/magic/movement/pinwheel-turning-blue.webp",
+                          "showIcon": 2,
+                          "changes": [
+                            {
+                              "key": "system.fq.bonus.damage",
+                              "value": "-1",
+                              "type": "add",
+                              "priority": null
+                            }
+                          ],
+                          "duration": {
+                            "value": "1",
+                            "units": "rounds"
+                          },
+                          "expireOnDamage": false
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "key": "FQCARDENGINE.CardMsgEvasionBonus",
+                          "arg": "{\"evasion\":\"1\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgPermanentEffect",
+                          "arg": "{\"effectName\":\"Reed Stance\"}"
+                        },
+                        {
+                          "key": "FQCARDENGINE.CardMsgDamageBonus",
+                          "arg": "{\"damage\":\"-1\"}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "messages": [],
+              "minions": [],
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "customEvals": [],
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.condition.boon.01",
+                "onTarget": false
+              },
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 5,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1790035200000,
+        "modifiedTime": 1790014403938,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkReedStance0001"
+    },
+    {
+      "_id": "mnkHookStrike001",
+      "name": "FQCARDTITLE.Hook",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.Hook"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 36,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 3,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "attack",
+              "hitSource": "ability",
+              "hitAbility": "str",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-6",
+              "mana": "",
+              "zeal": "1d2",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "(2 + ceil(@str/3))[bludgeoning]",
+              "heal": "",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "SCRIPT:(game.user.character?.system?.fq.action.value <= (game.user.character?.system?.fq.action.max - 4)) ? 2 : 1",
+              "yvalue": "",
+              "replayable": "XXX",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.melee_generic.creature_attack.fist.002",
+                "onTarget": false
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 8,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1790020000000,
+        "modifiedTime": 1790057298907,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mnkHookStrike001"
+    },
+    {
+      "_id": "mnkDawnPalm00001",
+      "name": "FQCARDTITLE.DawnPalm",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.DawnPalm"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 37,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "action": "-(XXX)",
+              "mana": "-2",
+              "zeal": "-3",
+              "reactive": false,
+              "hp": "",
+              "draw": "",
+              "drop": "",
+              "targetType": "Default",
+              "minReach": "1",
+              "maxReach": "1",
+              "nbTargets": "1",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "XXX",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "xmin": "1",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.cure_wounds.400px.blue",
+                "onTarget": true
+              },
+              "name": "",
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "customEvals": [],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 12,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1790021000000,
+        "modifiedTime": 1790058047530,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mnkDawnPalm00001"
+    },
+    {
+      "_id": "mnkSecretRemed01",
+      "name": "FQCARDTITLE.SecretRemedies",
+      "description": "",
+      "type": "base",
+      "suit": "",
+      "back": {
+        "name": "",
+        "text": "",
+        "img": null
+      },
+      "faces": [
+        {
+          "name": "",
+          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "text": "FQCARDDESCRIPTION.SecretRemedies"
+        }
+      ],
+      "face": 0,
+      "drawn": false,
+      "origin": null,
+      "rotation": 0,
+      "sort": 38,
+      "flags": {},
+      "value": null,
+      "system": {
+        "fq": {
+          "maxSameCard": 1,
+          "class": "monk",
+          "choices": [
+            {
+              "name": "",
+              "action": "",
+              "mana": "",
+              "zeal": "",
+              "reactive": true,
+              "hp": "",
+              "draw": "",
+              "drop": "-XXX",
+              "targetType": "Default",
+              "minReach": "0",
+              "maxReach": "6",
+              "nbTargets": "1",
+              "zoneShape": "circle",
+              "zoneSize": "",
+              "zoneAngle": "",
+              "zoneWidth": "",
+              "damage": "",
+              "heal": "(XXX + @dex)",
+              "magical": true,
+              "bonusCrit": "",
+              "bonusEva": "",
+              "hitType": "",
+              "hitSource": "",
+              "hitAbility": "",
+              "saveAbility": "",
+              "hitBonus": "",
+              "saveDc": "",
+              "xmin": "1",
+              "xmax": "",
+              "ymin": "",
+              "ymax": "",
+              "xvalue": "",
+              "yvalue": "",
+              "replayable": "",
+              "retrieveFromDiscard": "",
+              "retrieveFromDeck": "",
+              "destroyFromDiscard": "",
+              "duplicateFromHand": "",
+              "chooseCardsList": "",
+              "chooseCardsFrom": "",
+              "chooseCardsLevels": "",
+              "chooseCardsProposed": "",
+              "chooseCardsCount": "",
+              "chooseCardsExcludeDeck": false,
+              "chooseCardsPlayNow": false,
+              "minionsOnZone": false,
+              "executeEval": "",
+              "sound": "",
+              "visual": {
+                "path": "jb2a.cure_wounds.400px.blue",
+                "onTarget": true
+              },
+              "applyEffectsFormulas": [],
+              "messages": [],
+              "minions": [],
+              "customEvals": [
+                {
+                  "script": "FqCardEngineModule.cond.targetsWithinReach(cardContent)",
+                  "errorMessages": [
+                    {
+                      "key": "FQCARDENGINE.CardWarningMsgNoTargetWithinReach",
+                      "arg": ""
+                    }
+                  ]
+                }
+              ],
+              "hasBeenPlayed": false
+            }
+          ],
+          "level": 7,
+          "isInnate": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "14.368",
+        "systemId": "dnd5e",
+        "systemVersion": "6.0.3",
+        "lastModifiedBy": "uUbINdqSmS5ll9IK",
+        "createdTime": 1790100000000,
+        "modifiedTime": 1790100000000,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "width": null,
+      "height": null,
+      "cards": [],
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mnkSecretRemed01"
+    }
+  ],
+  "rotation": 0,
+  "displayCount": false,
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.365",
+    "systemId": "dnd5e",
+    "systemVersion": "5.3.3",
+    "createdTime": 1786004426408,
+    "modifiedTime": 1786004435245,
+    "lastModifiedBy": "dnd5ebuilder0000",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "system": {
+    "fq": {
+      "type": "",
+      "owner": "",
+      "classLevels": {}
+    }
+  },
+  "width": null,
+  "height": null,
+  "ownership": {
+    "default": 0
+  },
+  "_id": "vvhvdqE8g3zOKbFA",
+  "sort": 100000,
+  "_key": "!cards!vvhvdqE8g3zOKbFA"
+}
