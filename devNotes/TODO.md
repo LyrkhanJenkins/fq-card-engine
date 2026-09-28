@@ -16,6 +16,7 @@
 ### Versions prévues
 #### 3.0.0
 - Utiliser la portée des armes pour certaines cartes?
+- Une rapière pour l'illusionniste de base
 
 #### 3.1.x
 - Rajouter des règles d'architectures

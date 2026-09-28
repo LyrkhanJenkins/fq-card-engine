@@ -1,0 +1,190 @@
+name: Release
+
+# Remplace le stage `release` de l'ancienne pipeline GitLab. Deux differences
+# tenaient au fait que GitLab publiait un ARTEFACT DE JOB : l'URL de
+# telechargement portait un numero de job, et elle mourait avec l'artefact. Ici le
+# zip est un asset de release, donc l'URL est stable.
+on:
+  push:
+    tags:
+      - "v[0-9]*"
+      - "[0-9]*"
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag existant a (re)publier, ex. 3.0.0"
+        required: true
+      latest:
+        description: "Marquer comme release 'Latest' (decocher pour retro-publier une ancienne version)"
+        type: boolean
+        default: true
+      skip_checks:
+        description: "Sauter lint + tests (retro-publication d'un vieux tag uniquement)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+env:
+  MODULE_ID: fq-card-engine
+
+jobs:
+  release:
+    name: Build & publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.event.release.tag_name || github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Meme garde-fou que l'ancienne pipeline GitLab : pas de release sur du rouge.
+      # Contournable seulement a la main, pour retro-publier un tag ancien.
+      - name: Lint
+        if: ${{ !inputs.skip_checks }}
+        run: npm run lint
+
+      - name: Test
+        if: ${{ !inputs.skip_checks }}
+        run: npx vitest run --reporter=default --reporter=github-actions
+
+      - name: Resolve version and check module.json
+        id: version
+        run: |
+          set -euo pipefail
+          TAG="${{ inputs.tag || github.event.release.tag_name || github.ref_name }}"
+          VERSION="${TAG#v}"
+          MANIFEST_VERSION="$(jq -r '.version' module.json)"
+
+          if [ "$VERSION" != "$MANIFEST_VERSION" ]; then
+            echo "::error::Tag $TAG (version $VERSION) != module.json version $MANIFEST_VERSION"
+            exit 1
+          fi
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          case "$VERSION" in
+            *-*) echo "prerelease=true" >> "$GITHUB_OUTPUT" ;;
+            *)   echo "prerelease=false" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      # Les paquets LevelDB sont gitignores : le checkout ne porte que
+      # `packs/_source`. Sans cette etape, le module s'installerait sans un seul
+      # compendium.
+      - name: Compile packs
+        run: npm run build
+
+      - name: Build release package
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist/package
+
+          # Liste BLANCHE, a l'inverse de l'ancien `rm -rf` GitLab : ce qui est
+          # ajoute au depot demain n'atterrit pas dans le zip par accident.
+          cp -r src styles lang images sounds visuals packs dist/package/
+          cp module.json sequencer.json LICENSE LICENSE-CONTENT CREDITS README.md dist/package/
+
+          # `packs/_source` est l'ENTREE de la compilation, pas ce que Foundry lit :
+          # 2 Mo de JSON que personne n'ouvre depuis le module.
+          rm -rf dist/package/packs/_source
+          # `images/doc` ne sert qu'aux captures du README : 16 Mo que chaque
+          # utilisateur telechargerait sans jamais les voir dans Foundry.
+          rm -rf dist/package/images/doc
+
+          # Garde-fou : chaque compendium declare doit etre dans le paquet, sinon
+          # Foundry affiche un compendium vide sans rien dire.
+          missing=0
+          while read -r path; do
+            if [ ! -d "dist/package/$path" ]; then
+              echo "::error::compendium declare absent du paquet : $path"
+              missing=1
+            fi
+          done < <(jq -r '.packs[].path' module.json)
+          [ "$missing" -eq 0 ]
+
+          # Le manifest pointe sur "latest" (Foundry y detecte les mises a jour),
+          # le download est epingle sur ce tag (installation d'une version precise).
+          jq \
+            --arg manifest "$REPO_URL/releases/latest/download/module.json" \
+            --arg download "$REPO_URL/releases/download/$TAG/$MODULE_ID.zip" \
+            '.manifest = $manifest | .download = $download' \
+            module.json > dist/package/module.json
+
+          (cd dist/package && zip -rq "../$MODULE_ID.zip" .)
+          ls -lh dist
+          echo "Contenu de premier niveau du paquet :"
+          (cd dist/package && du -sh -- * | sort -h)
+
+      - name: Extract release notes
+        id: notes
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          # Le fichier RELEASE decrit chaque version par un bloc « Update X.Y.Z: »
+          # suivi de lignes indentees, jusqu'au prochain « Update ».
+          awk -v v="$VERSION" '
+            index($0, "Update ") == 1 {
+              if (found) exit
+              if (index($0, "Update " v ":") == 1) { found = 1; next }
+            }
+            found
+          ' RELEASE > dist/notes.md || true
+
+          if [ -s dist/notes.md ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Pas de bloc 'Update $VERSION:' dans RELEASE, notes auto-generees."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+          PRERELEASE: ${{ steps.version.outputs.prerelease }}
+          NOTES_FOUND: ${{ steps.notes.outputs.found }}
+          IS_LATEST: ${{ github.event_name != 'workflow_dispatch' || inputs.latest }}
+        run: |
+          set -euo pipefail
+          ARGS=(--title "$TAG" --verify-tag)
+          if [ "$PRERELEASE" = "true" ]; then
+            ARGS+=(--prerelease)
+          fi
+
+          # Explicite : GitHub classe "Latest" par date de creation, donc
+          # retro-publier une vieille version detournerait releases/latest/.
+          if [ "$IS_LATEST" = "true" ]; then
+            ARGS+=(--latest)
+          else
+            ARGS+=(--latest=false)
+          fi
+
+          if [ "$NOTES_FOUND" = "true" ]; then
+            ARGS+=(--notes-file dist/notes.md)
+          else
+            ARGS+=(--generate-notes)
+          fi
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG deja existante : mise a jour des assets."
+            gh release upload "$TAG" --clobber \
+              "dist/$MODULE_ID.zip" \
+              "dist/package/module.json"
+          else
+            gh release create "$TAG" "${ARGS[@]}" \
+              "dist/$MODULE_ID.zip" \
+              "dist/package/module.json"
+          fi

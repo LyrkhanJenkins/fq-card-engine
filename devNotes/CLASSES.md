@@ -356,14 +356,14 @@ Détail des cartes :
 
 | Spécialisation | Principe | Cartes existantes | Manques |
 |---|---|---|---|
-| **Enchaînement** (cadence, frappes) | Petites frappes rejouables qui montent le zèle, puis consommateurs scalables | Coup Droit, Coup Gauche, Combo, Combo 2, Lame Fantôme, Uppercut, Cadence, Élan Martial, Cycle du Souffle, Vacuité, Gant de Fer | Finisher N10‑12 |
+| **Enchaînement** (cadence, frappes) | Petites frappes rejouables qui montent le zèle, puis consommateurs scalables | Coup Droit, Coup Gauche, Combo, Combo 2, Lame Fantôme, Uppercut, Cadence, Élan Martial, Cycle du Souffle, Vacuité, Gant de Fer, **Crescendo** | Finisher N10‑12 |
 | **Main pleine** (garde les cartes) | X = cartes restant en main : plus la main est pleine, plus les cartes frappent | Poings des Cent Formes, Paume des Mille Feuilles, Sérénité Pleine, Ferveur Intérieure, Hyperactivité, Lecture du Souffle, Second Souffle, Maître du Chi | Carte défensive qui scale sur la main |
 | **Paume / soins au contact** | Soigne en frappant, à portée 1, sans jamais quitter la mêlée | Paume Curative, Paume De Jade, Sillage Curatif, Bague de Soins, Transfert de Soins, Méditation Zen, Vive-Esquive | Soin de groupe au contact, N8+ |
 | **Tank esquive / mobilité** *(transverse)* | Encaisse en esquivant plutôt qu'en PV, et se replace sans cesse | Posture du Roseau, Sérénité Pleine, Dissimulation, Bouclier Zélé, Interruption, Déplacement Éclair, Sillage Curatif, Pas du Vide, Charge, Souffle de Ki, Poing Rouge, Souffle Perpétuel, Armes Secrètes, Cape Inhibitrice, Conversion | Provocation autre qu'Uppercut |
 
 **Mécaniques signature** :
 - **Économie de zèle fermée** : générateurs spammables (Coup Droit ×6, Coup Gauche ×5, Uppercut ×6, Paume Curative ×4, Posture du Roseau ×3, +1 chacun) → consommateurs scalables (Combo, Combo 2 non borné, Souffle de Ki, Méditation Zen, Paume De Jade).
-  - Poing Rouge monte `zeal.max` (+5, permanent) ; depuis le 2026‑09‑21, *Crescendo* (Illusionniste, N3) fait de même pour +1 contre 1 zèle.
+  - Poing Rouge monte `zeal.max` (+5, permanent) ; *Crescendo* (N3, ×2) fait de même pour +1 chacun contre 1 zèle — carte reprise à l'Illusionniste le 2026‑09‑28.
 - **Soigner au contact, en frappant** : c'est le seul soigneur de mêlée du jeu, tous ses soins sont à portée 1 (Paume Curative, Paume De Jade, Bague de Soins, Transfert de Soins) ou sur la trajectoire d'un déplacement (Sillage Curatif). Depuis le lot 2026‑09‑20, deux étages : **Paume Curative** (3 PA, aucun mana, petit soin fixe, **+1 zèle**) est un générateur spammable au même tempo que Coup Droit ; **Paume De Jade** (l'ancienne Paume Curative, améliorée : X jusqu'à 3, +2 au soin de base, et le Moine se soigne de SAG au passage) est le gros soin à zèle dépensé.
 - **Le pendant soin du déplacement** : Déplacement Éclair (dégâts) et **Sillage Curatif** (soins) partagent la macro `FlashMove` et le même `customEval` d'alignement — deux faces d'une même mécanique, l'une traverse des ennemis, l'autre des alliés.
 - **PV temporaires, et rien d'autre, pour l'auto-soin de tempo** : Méditation Zen rend ses PV en **temporaires pendant 1 tour** (patron du Gardien : le `hp` soigne, l'effet monte `hp.tempmax` de la même formule). Le vrai soin personnel passe par Vive-Esquive (réactif), Sérénité Pleine, Sillage Curatif et l'appoint en X de Paume De Jade.
@@ -698,7 +698,7 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - Le moins de PA au N1
 
 ### Constat des cartes (données)
-- **42 cartes réparties sur N1‑N12**, le Chronomancien ouvrant au N5 : coût moyen 5,2 PA et 13 cartes à 1‑4 PA. Deux cartes de trop pour la cible de 30‑40 depuis le lot du 2026‑09‑21 (*Estoc perçant*, *Refrain Vivifiant*, *Crescendo*).
+- **41 cartes réparties sur N1‑N12**, le Chronomancien ouvrant au N5 : coût moyen 5,2 PA et 13 cartes à 1‑4 PA. Une carte de trop pour la cible de 30‑40 depuis le lot du 2026‑09‑21 (*Estoc perçant*, *Refrain Vivifiant*) ; *Crescendo* est passée au Moine le 2026‑09‑28.
 - 12 cartes à 1‑4 PA ; coût moyen 4,8 PA, le plus bas du jeu — cohérent avec ses 8,3 PA au N1, le plus bas aussi.
 - 7 générateurs de zèle pour 19 consommateurs.
 - *(résolu par le lot du 2026‑09‑20)* Magie des Arcanes est rattachée au dps (Lame d'allonge), **Magie Verte** au soutien (Barde) : elles ne sont plus « à reclasser ». *Magie Blanche* a été renommée **Magie Verte** le 2026‑09‑21 (clé `FQCARDTITLE.GreenMagic`, image `GreenMagic.png`) ; son `_id` technique `illWhiteMagic001` est conservé.
@@ -713,7 +713,7 @@ Le Barde devient explicitement le **healeur HOT** de la classe. Deux cartes ajou
 | Spé | Cartes existantes | Manques |
 |---|---|---|
 | **Lame d'allonge** (mêlée qui scale sur la portée) | Fouet Enchanté, Frappe avec Salto Arrière, Frappe Illusoire, Allonge Magique, Rapière Enchantée, Prise en Traître, Volée de Shuriken, Nuage de Dague, Orbe Grandissante, Shuriken, Shuriken Empoisonné, Illusion de Caractéristiques, Magie des Arcanes, **Estoc Perçant** | Finisher N8‑12 |
-| **Barde** (soutien, healeur HOT) | Inspiration Chantée, Danse Enfiévrée, Inspiration Effrénée, Apothicaire I, Apothicaire II, Immatérialité, Vases Communicants, Succion de Mana, Soins Expansifs, Magie Verte, Rémission Illusoire, Écho de Convalescence, **Refrain Vivifiant**, **Crescendo** | Sorts d'assistance (voir TODO) |
+| **Barde** (soutien, healeur HOT) | Inspiration Chantée, Danse Enfiévrée, Inspiration Effrénée, Apothicaire I, Apothicaire II, Immatérialité, Vases Communicants, Succion de Mana, Soins Expansifs, Magie Verte, Rémission Illusoire, Écho de Convalescence, **Refrain Vivifiant** | Sorts d'assistance (voir TODO) |
 | **Chronomancien / manipulateur** | Passage vers le Plan Éthéré, Peste Noire, Contagion, Frappe Temporelle, Miroir, Distorsion, Bombe à Retardement, Cage de Rappel, Illusion de Maître de Jeu, Piège de Retour dans le Temps, Illusion Infranchissable, Regard Envoûtant, Berceuse, Images Miroir | Cartes N8‑N11 |
 
 ### Redondances à trancher

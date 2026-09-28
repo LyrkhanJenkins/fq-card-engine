@@ -1,0 +1,92 @@
+name: CI
+
+# Reprend les etapes `test` et `lint` de l'ancienne pipeline GitLab. Aucune
+# compilation de compendium ici : les tests balaient `packs/_source/*.json`, la
+# source versionnee, et jamais les paquets LevelDB compiles — qui sont d'ailleurs
+# gitignores, donc absents d'un checkout de runner.
+on:
+  push:
+    branches: [final-quest-8]
+  pull_request:
+    branches: [final-quest-8]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+
+  test:
+    name: Vitest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Le reporter github-actions annote directement les tests en echec dans la PR.
+      - name: Run tests
+        run: >-
+          npx vitest run
+          --reporter=default
+          --reporter=github-actions
+          --reporter=junit
+          --outputFile.junit=test-results.xml
+
+      - name: Upload JUnit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results.xml
+          if-no-files-found: warn
+
+  build:
+    name: Compendiums
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # La compilation des neuf compendiums est verifiee a chaque poussee, pas
+      # seulement au moment de publier : une source de deck invalide casserait la
+      # release, et on veut le savoir avant de poser le tag.
+      - name: Compile packs
+        run: npm run build
+
+      - name: Check every declared pack was produced
+        run: |
+          set -euo pipefail
+          missing=0
+          while read -r path; do
+            if [ ! -d "$path" ]; then
+              echo "::error::compendium declare mais absent apres compilation : $path"
+              missing=1
+            fi
+          done < <(jq -r '.packs[].path' module.json)
+          exit "$missing"
