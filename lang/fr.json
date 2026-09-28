@@ -1072,6 +1072,8 @@
   "FQCARDDESCRIPTION.AngelAndDemonEffect": "Pose 2 malédictions sur la cible, qui lui infligent chacune 4 dégâts par tour, plus @wis.\nOU : vous et tous vos alliés du combat récupérez le triple des malédictions portées par les ennemis du combat en points de vie.",
   "FQCARDTITLE.RedFist": "Poing Rouge",
   "FQCARDDESCRIPTION.RedFist": "Augmente le maximum de zèle de 5.",
+  "FQCARDTITLE.Crescendo": "Crescendo",
+  "FQCARDDESCRIPTION.Crescendo": "Le morceau monte d’un ton : votre maximum de zèle augmente définitivement de 1.",
   "FQCARDTITLE.Combo2": "Combo 2",
   "FQCARDDESCRIPTION.Combo2": "Augmente le critique de 2X pour cette attaque, Inflige {0_damage} dégâts contondants",
   "FQCARDTITLE.SkeletonSorcerer": "Sorcier Squelette",

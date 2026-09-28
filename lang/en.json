@@ -1072,6 +1072,8 @@
   "FQCARDDESCRIPTION.AngelAndDemonEffect": "2 curses are placed on the target, each dealing 4 damage per turn, plus @wis.\nOR: you and all your combat allies recover three times the curses carried by the combat's enemies in hit points.",
   "FQCARDTITLE.RedFist": "Red Fist",
   "FQCARDDESCRIPTION.RedFist": "Increase maximum zeal by 5.",
+  "FQCARDTITLE.Crescendo": "Crescendo",
+  "FQCARDDESCRIPTION.Crescendo": "The tune rises a tone: your maximum zeal permanently increases by 1.",
   "FQCARDTITLE.Combo2": "Combo 2",
   "FQCARDDESCRIPTION.Combo2": "Increase critical by 2X for this attack.\nDeals {0_damage} bludgeoning damage.",
   "FQCARDTITLE.SkeletonSorcerer": "Skeleton Sorcerer",
