@@ -94,8 +94,18 @@ jobs:
 
           # Liste BLANCHE, a l'inverse de l'ancien `rm -rf` GitLab : ce qui est
           # ajoute au depot demain n'atterrit pas dans le zip par accident.
-          cp -r src styles lang images sounds visuals packs dist/package/
-          cp module.json sequencer.json LICENSE LICENSE-CONTENT CREDITS README.md dist/package/
+          #
+          # Chaque entree n'est copiee QUE SI ELLE EXISTE. Un tag ancien n'a pas
+          # forcement `visuals/` (absent avant 1.1.0), `sequencer.json`,
+          # `LICENSE-CONTENT` ni `CREDITS` (crees en 2026) : une copie rigide
+          # faisait echouer toute retro-publication des tags 2.0.x.
+          for item in src styles lang images sounds visuals packs                       module.json sequencer.json LICENSE LICENSE-CONTENT CREDITS README.md; do
+            if [ -e "$item" ]; then
+              cp -r "$item" dist/package/
+            else
+              echo "::notice::absent de ce tag, non embarque : $item"
+            fi
+          done
 
           # `packs/_source` est l'ENTREE de la compilation, pas ce que Foundry lit :
           # 2 Mo de JSON que personne n'ouvre depuis le module.
