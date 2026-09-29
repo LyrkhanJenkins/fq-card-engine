@@ -4,15 +4,20 @@ name: Release
 # tenaient au fait que GitLab publiait un ARTEFACT DE JOB : l'URL de
 # telechargement portait un numero de job, et elle mourait avec l'artefact. Ici le
 # zip est un asset de release, donc l'URL est stable.
-# Le declencheur `release: published` est INDISPENSABLE : pour un evenement
-# `release`, GitHub prend le workflow sur la BRANCHE PAR DEFAUT, pas sur le tag.
-# C'est donc la seule voie pour republier un vieux tag, dont le commit ne contient
-# pas ce fichier — et c'est ce qui se passe quand on cree une release a la main
-# dans l'interface GitHub.
+# AUCUN declencheur automatique ne marche sur un tag anterieur a ce fichier :
+#   `push: tags`         charge le workflow AU COMMIT DU TAG
+#   `release: published` le charge AU TAG DE LA RELEASE, et non sur la branche par
+#                        defaut comme on le croit souvent (GITHUB_SHA vaut le commit
+#                        tague, GITHUB_REF vaut refs/tags/<tag>)
+# Verifie le 29/09/2026 : une release creee a la main sur le tag 0.1.0 de
+# fq-restrain-movement n'a rien declenche, ce tag n'ayant pas de dossier .github.
 #
-# Le `concurrency` plus bas absorbe les declenchements en double, quelle qu'en soit
-# la cause : le 29/09/2026, un seul push du tag 3.0.0 a produit deux runs, tous
-# deux de type `push`. Retirer un declencheur n'y changeait rien.
+# Pour republier un tel tag, la SEULE voie est `workflow_dispatch` depuis la branche
+# par defaut, en passant le tag dans `tag` : le workflow vient de la branche, et
+# `actions/checkout` va chercher l'arbre du tag.
+#
+# Le `concurrency` plus bas absorbe les declenchements en double : le 29/09/2026, un
+# seul push du tag 3.0.0 a produit deux runs, tous deux de type `push`.
 on:
   push:
     tags:

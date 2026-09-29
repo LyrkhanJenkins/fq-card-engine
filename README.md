@@ -2,6 +2,7 @@
 
 The FQ Card Engine is a combat system for Final Quest 8 combined with DnD5e rules.
 
+
 ![img.png](images/doc/summary.png)
 
 ## Mandatory modules
@@ -11,6 +12,23 @@ The FQ Card Engine is a combat system for Final Quest 8 combined with DnD5e rule
 ## Optional modules
 - DAE https://foundryvtt.com/packages/dae (non à jour)
 - Dice So Nice https://foundryvtt.com/packages/dice-so-nice
+
+## Extended content
+
+Six classes are not shipped with this module: **Fencing Master, Guardian, Illusionist,
+Runic Warrior, White Mage and Witch**. They live in a separate module, along with their
+cards, illustrations and summons.
+
+This module is fully playable on its own. **Elementalist, Monk and Trapper** are complete,
+every level included, as are the neutral cards that all classes share.
+
+The starter heroes of the six extended classes are still listed in the Starter Heroes
+compendium, but without their class item: they are there as a preview.
+
+Want the extended content? Send me a message:
+
+- Discord: `lyrkhanjenkins`
+- Email: <lyrkhanjenkins@gmail.com>
 
 ## Get Started
 
@@ -66,24 +84,6 @@ The module provides several resources for start playing Final Quest 8 :
 
 ![img.png](images/doc/assets.png)
 
-### Extended content
-
-Six classes are not shipped with this module: **Fencing Master, Guardian, Illusionist,
-Runic Warrior, White Mage and Witch**. They live in a separate module, along with their
-cards, illustrations and summons.
-
-This module is fully playable on its own. **Elementalist, Monk and Trapper** are complete,
-every level included, as are the neutral cards that all classes share.
-
-The starter heroes of the six extended classes are still listed in the Starter Heroes
-compendium, but without their class item: they are there as a preview.
-
-Want the extended content? Send me a message:
-
-- Discord: `lyrkhanjenkins`
-- Email: <lyrkhanjenkins@gmail.com>
-
-
 ### Character new resources
 Specials resources are used for using cards or spells for FQ battle system.
 
@@ -120,7 +120,6 @@ The module provides also a special ui for creating your own deck with your Spell
     - Critical and Evasion can cancel each other out.
 
 ### Other
-- Level 1 to 5, decks are the same for each character of the same class, after that, decks are customizable
 - The cards are design to be used with rectilinear grids
 ![img.png](images/doc/rectilinear-grid.png)
 
