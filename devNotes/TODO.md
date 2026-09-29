@@ -20,6 +20,7 @@
 
 #### 3.1.x
 - Rajouter des règles d'architectures
+- Déplacer la tooltip de distance entre les cibles + Attaques dd'opportunités dans le fq-enhanced-combat
 - Valeurs sentinelles (`-9999`, `999999999`, `99999999`) utilisées comme drapeaux (pas de crit, cible inesquivable,
   portée/cibles infinies, rejouable infini) : fragiles, à remplacer par de vrais flags.
 - Faire un générateur pour créer son propre start heroes? stats de base?
