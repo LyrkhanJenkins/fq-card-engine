@@ -55,7 +55,8 @@ Fix :
 - Le scintillement des dégâts rend des fois le token invisible
 
 Chore :
-- Support de la version 14.366, 14.367, 14.368
+- Support de la version 14.366, 14.367, 14.368 et DND5E 6.0.x
+- Supprimer les visuals et ne plus utiliser que J2BA
 
 v2.0.2:
 Feat :
