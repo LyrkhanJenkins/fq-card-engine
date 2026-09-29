@@ -53,6 +53,7 @@ Fix :
 - Limitation des droits des joueurs n'enlève plus le ciblage et le choix du mouvement sur les tokens
 - Les coordonnées d'un token dans le moteur sont simplifié à la case qui contient le centre du token
 - Le scintillement des dégâts rend des fois le token invisible
+- Le clignotement de dégâts n'écrit plus l'opacité sur le document du token
 
 Chore :
 - Support de la version 14.366, 14.367, 14.368 et DND5E 6.0.x

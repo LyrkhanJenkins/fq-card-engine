@@ -1,4 +1,4 @@
-## V2.x
+## V3.x
 ### Fix Prioritaire
 - TODO tests modules importé dans l'ordre : Restrain movement enhanced combat, card engine, et card engine extended
 
@@ -6,13 +6,7 @@
 - Vérifier la localisation notamment pour les macros
 - La main ne parait pas entière des fois, besoin de refraichir??? si piocher avant connexion??? --> VOIR SI CA REVIENT SINON FIX MINEUR
 
-### Fix à prioriser
-- Problème encore avec le clignotement (Reporté en phases de tests)
-
 ### Versions prévues
-#### 3.0.0
-- Une rapière pour l'illusionniste de base
-
 #### 3.1.x
 - Utiliser la portée des armes pour certaines cartes?
 - Rajouter des règles d'architectures

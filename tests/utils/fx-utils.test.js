@@ -6,7 +6,8 @@ import {visualEffectData} from "../../src/domain/system/fx/visualEffectData.js";
 vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     default: {},
     socket: {
-        executeAsGM: vi.fn(async () => "modules/fq-card-engine/sounds/fire/1.mp3")
+        executeAsGM: vi.fn(async () => "modules/fq-card-engine/sounds/fire/1.mp3"),
+        executeForEveryone: vi.fn()
     }
 }));
 
@@ -20,7 +21,7 @@ function makeChainableSequence() {
     const chainable = {};
     const chainMethods = [
         "effect", "file", "atLocation", "size", "stretchTo", "waitUntilFinished",
-        "animation", "on", "fadeIn", "opacity", "duration", "sound", "rotate", "thenDo"
+        "animation", "on", "fadeIn", "opacity", "duration", "sound", "rotate", "thenDo", "wait"
     ];
     chainMethods.forEach(method => {
         chainable[method] = vi.fn(() => chainable);
@@ -251,13 +252,13 @@ describe("Fx", () => {
         });
 
         it("_createTargetFeedback : dégâts non esquivés -> clignotement joué sur la cible", () => {
-            const target = {id: "t1"};
+            const target = {id: "t1", document: {uuid: "Scene.s1.Token.t1"}};
 
             Fx._createTargetFeedback(target, {damage: "1d6"}, false);
 
             const seq = globalThis.Sequence.mock.results[0].value;
-            expect(seq.animation).toHaveBeenCalled();
-            expect(seq.on).toHaveBeenCalledWith(target);
+            expect(seq.thenDo).toHaveBeenCalled();
+            expect(seq.animation).not.toHaveBeenCalled();
             expect(seq.play).toHaveBeenCalled();
         });
 
@@ -268,7 +269,7 @@ describe("Fx", () => {
 
             const seq = globalThis.Sequence.mock.results[0].value;
             expect(seq.file).toHaveBeenCalledWith(visualEffectData.generics.other.evasion);
-            expect(seq.animation).not.toHaveBeenCalled();
+            expect(seq.thenDo).not.toHaveBeenCalled();
         });
 
         it("_createTargetFeedback : ni dégâts ni esquive -> aucune séquence", () => {
@@ -295,7 +296,7 @@ describe("Fx", () => {
 
             const instances = globalThis.Sequence.mock.results.map(r => r.value);
             expect(instances.every(seq => seq.file.mock.calls.length === 0)).toBe(true);
-            expect(instances.some(seq => seq.animation.mock.calls.length > 0)).toBe(true);
+            expect(instances.some(seq => seq.thenDo.mock.calls.length > 0)).toBe(true);
         });
 
         it("esquive -> pas de visuel, mais le son d'esquive est joué", () => {
@@ -316,7 +317,7 @@ describe("Fx", () => {
         });
     });
 
-    describe("clignotement de dégâts (getBlinkAnimation / restoreTokenOpacity)", () => {
+    describe("clignotement de dégâts (getBlinkAnimation / blinkToken)", () => {
 
         beforeEach(() => {
             globalThis.Sequence = vi.fn().mockImplementation(function () {
@@ -324,55 +325,69 @@ describe("Fx", () => {
             });
         });
 
-        it("ne descend jamais jusqu'à une opacité nulle", () => {
-            const seq = new globalThis.Sequence();
-
-            Fx.getBlinkAnimation(seq, {id: "t1"}, 100, 3);
-
-            const opacities = seq.opacity.mock.calls.map(call => call[0]);
-            expect(opacities).not.toContain(0);
-            expect(opacities).toContain(Fx.BLINK_MIN_OPACITY);
-            expect(opacities).toContain(1);
+        afterEach(() => {
+            delete globalThis.fromUuidSync;
         });
 
-        it("restaure l'opacité pleine à la fin de la séquence", () => {
+        it("n'anime aucune opacité via Sequencer : le document du token reste intact", () => {
             const seq = new globalThis.Sequence();
-            const token = {id: "t1", alpha: 1, mesh: {alpha: 1}};
 
-            Fx.getBlinkAnimation(seq, token, 100, 2);
-            token.alpha = Fx.BLINK_MIN_OPACITY;
-            token.mesh.alpha = Fx.BLINK_MIN_OPACITY;
+            Fx.getBlinkAnimation(seq, {id: "t1", document: {uuid: "Scene.s1.Token.t1"}}, 100, 3);
+
+            // `animation().on(token)` écrirait l'opacité sur le document du token :
+            // c'est précisément ce qui laissait des tokens estompés en base.
+            expect(seq.animation).not.toHaveBeenCalled();
+            expect(seq.opacity).not.toHaveBeenCalled();
+            expect(seq.wait).toHaveBeenCalledWith(3 * (100 + Fx.BLINK_STEP_DURATION));
+        });
+
+        it("diffuse le clignotement à tous les clients, par uuid", () => {
+            const seq = new globalThis.Sequence();
+
+            Fx.getBlinkAnimation(seq, {id: "t1", document: {uuid: "Scene.s1.Token.t1"}}, 100, 8);
             seq.thenDo.mock.calls.at(-1)[0]();
 
-            expect(token.alpha).toBe(1);
-            expect(token.mesh.alpha).toBe(1);
+            expect(socket.executeForEveryone)
+                .toHaveBeenCalledWith("blinkToken", "Scene.s1.Token.t1", 100, 8);
         });
 
-        it("restaure l'opacité même si la séquence est interrompue en plein clignotement", () => {
+        it("blinkToken : l'opacité bat sans jamais s'annuler et revient à son repos", async () => {
             vi.useFakeTimers();
-            const seq = new globalThis.Sequence();
-            const token = {id: "t1", alpha: 1, mesh: {alpha: 1}};
+            const opacities = [];
+            let alpha = 1;
+            const mesh = {};
+            Object.defineProperty(mesh, "alpha", {
+                get: () => alpha,
+                set: value => {
+                    alpha = value;
+                    opacities.push(value);
+                }
+            });
+            const placeable = {alpha: 1, mesh, document: {alpha: 1}};
+            globalThis.fromUuidSync = vi.fn(() => ({object: placeable}));
 
-            Fx.getBlinkAnimation(seq, token, 100, 8);
-            seq.thenDo.mock.calls[0][0]();
-            token.alpha = Fx.BLINK_MIN_OPACITY;
-            token.mesh.alpha = Fx.BLINK_MIN_OPACITY;
-            vi.advanceTimersByTime(8 * (100 + Fx.BLINK_STEP_DURATION) + Fx.BLINK_SAFETY_MARGIN);
+            const blink = Fx.blinkToken("Scene.s1.Token.t1", 100, 2);
+            await vi.advanceTimersByTimeAsync(2 * (100 + Fx.BLINK_STEP_DURATION) + Fx.BLINK_FRAME_DURATION);
+            await blink;
 
-            expect(token.alpha).toBe(1);
-            expect(token.mesh.alpha).toBe(1);
+            expect(opacities.length).toBeGreaterThan(0);
+            expect(Math.min(...opacities)).toBeGreaterThanOrEqual(Fx.BLINK_MIN_OPACITY - 0.001);
+            expect(alpha).toBe(1);
         });
 
-        it("le filet de sécurité est annulé quand la séquence va au bout", () => {
-            vi.useFakeTimers();
-            const seq = new globalThis.Sequence();
-            const token = {id: "t1", alpha: 1, mesh: {alpha: 1}};
+        it("blinkToken : un token absent du canvas ne jette pas", async () => {
+            globalThis.fromUuidSync = vi.fn(() => null);
 
-            Fx.getBlinkAnimation(seq, token, 100, 2);
-            seq.thenDo.mock.calls[0][0]();
-            seq.thenDo.mock.calls.at(-1)[0]();
+            await expect(Fx.blinkToken("Scene.s1.Token.absent", 100, 2)).resolves.toBeUndefined();
+        });
 
-            expect(vi.getTimerCount()).toBe(0);
+        it("restoreTokenOpacity : rend l'opacité du document, pas un 1 d'office", () => {
+            const placeable = {alpha: 0.15, mesh: {alpha: 0.15}, document: {alpha: 0.5}};
+
+            Fx.restoreTokenOpacity(placeable);
+
+            expect(placeable.alpha).toBe(0.5);
+            expect(placeable.mesh.alpha).toBe(0.5);
         });
 
         it("restoreTokenOpacity : accepte un document de token et ignore un placeable détruit", () => {

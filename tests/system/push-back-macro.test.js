@@ -56,7 +56,10 @@ function makeWorld({casterAt = {x: 5, y: 5}, targetAt = {x: 6, y: 5}, targeted =
     const target = toPlaceable(targetAt);
     const actor = {id: "caster"};
     const user = {character: {id: "caster"}, targets: targeted ? new Set([target]) : new Set()};
-    const game = {actors: {get: vi.fn(() => actor)}, users: [user]};
+    // La macro localise ses avertissements : le stub renvoie la clé demandée,
+    // ce qui laisse les tests vérifier laquelle est affichée.
+    const i18n = {localize: vi.fn(key => key)};
+    const game = {actors: {get: vi.fn(() => actor)}, users: [user], i18n};
     const ui = {notifications: {warn: vi.fn(), error: vi.fn()}};
     const canvas = {grid: {size: GRID}};
     return {token, target, game, ui, canvas};
@@ -113,7 +116,7 @@ describe("PushBack — projection d'une cible", () => {
         const {teleportedTo} = await runMacro(daeArgs("5"), world);
 
         expect(teleportedTo).toBeUndefined();
-        expect(world.ui.notifications.warn).toHaveBeenCalled();
+        expect(world.ui.notifications.warn).toHaveBeenCalledWith("FQCARDENGINE.MacroErrorMsgNoTarget");
     });
 
     test("cible sur la case du lanceur : aucune direction, rien n'est déplacé", async () => {
@@ -121,7 +124,7 @@ describe("PushBack — projection d'une cible", () => {
         const {teleportedTo} = await runMacro(daeArgs("5"), world);
 
         expect(teleportedTo).toBeUndefined();
-        expect(world.ui.notifications.error).toHaveBeenCalled();
+        expect(world.ui.notifications.error).toHaveBeenCalledWith("FQCARDENGINE.MacroErrorMsgNoPushDirection");
     });
 
     test("déclenchement autre que la pose de l'effet : la macro ne fait rien", async () => {

@@ -24,7 +24,7 @@ export default class Fx {
 
     /**
      * Opacité basse du clignotement de dégâts : le token est fortement estompé mais
-     * jamais totalement invisible, pour qu'une animation interrompue ne puisse pas
+     * jamais totalement invisible, pour qu'un battement interrompu ne puisse pas
      * le faire disparaître de la scène.
      */
     static BLINK_MIN_OPACITY = 0.15;
@@ -32,8 +32,8 @@ export default class Fx {
     /** Durée (ms) du retour à l'opacité pleine d'un battement de clignotement. */
     static BLINK_STEP_DURATION = 200;
 
-    /** Marge (ms) au-delà du clignotement avant de forcer la restauration d'opacité. */
-    static BLINK_SAFETY_MARGIN = 1500;
+    /** Pas (ms) entre deux images du fondu d'un battement. */
+    static BLINK_FRAME_DURATION = 25;
 
     /**
      * True si la bibliothèque JB2A est installée et active dans le monde.
@@ -345,15 +345,21 @@ export default class Fx {
     }
 
     /**
-     * Ajoute à une séquence une animation de clignotement (fondu bas → plein)
-     * répétée sur un token, typiquement pour signaler l'encaissement de dégâts.
+     * Ajoute à une séquence le clignotement de dégâts d'un token. Le battement
+     * lui-même ne passe PAS par Sequencer : il est diffusé à tous les clients et
+     * joué dans leur canvas, la séquence se contentant d'en attendre la durée
+     * pour que la suite reste ordonnée.
      *
-     * Le clignotement descend jusqu'à {@link Fx.BLINK_MIN_OPACITY} et non jusqu'à
-     * zéro, et un filet de sécurité restaure l'opacité pleine même si la séquence
-     * n'atteint jamais sa fin : une animation Sequencer sur l'alpha d'un token peut
-     * être annulée par une autre séquence lancée sur le même token (enchaînements
-     * rapides de dégâts), auquel cas le `waitUntilFinished` qui suit ne se résout
-     * plus et le token resterait estompé indéfiniment.
+     * `animation().on(token)` résout le placeable en `TokenDocument` et écrit
+     * l'opacité SUR CE DOCUMENT, via une mise à jour côté MJ par battement,
+     * lancée sans jamais être attendue : un clignotement de dégâts, c'est seize
+     * écritures concurrentes en base dont l'ordre d'application n'est pas garanti.
+     * Que la dernière appliquée soit l'opacité basse, ou que la séquence soit
+     * interrompue avant son dernier battement, et le token reste estompé — pour
+     * tous les clients, et jusqu'au rechargement du monde, puisque c'est son
+     * document qui porte la valeur. Aucune restauration en mémoire ne rattrape
+     * cela. Un retour visuel de dégâts n'a rien à persister : le clignotement vit
+     * donc entièrement dans le canvas, et le document du token n'est plus touché.
      *
      * @param {object} seq         - La séquence Sequencer à enrichir.
      * @param {object} token       - Le token sur lequel jouer le clignotement.
@@ -363,37 +369,131 @@ export default class Fx {
      * @returns {void}
      */
     static getBlinkAnimation(seq, token, fadeIn, repeats = 2) {
-        const blinkDuration = repeats * (fadeIn + Fx.BLINK_STEP_DURATION);
-        let safetyTimeout = null;
-
-        seq.thenDo(() => {
-            safetyTimeout = setTimeout(() => Fx.restoreTokenOpacity(token), blinkDuration + Fx.BLINK_SAFETY_MARGIN);
-        });
-
-        for (let i = 0; i < repeats; i++) {
-            seq.animation()
-                .on(token)
-                .fadeIn(fadeIn)
-                .opacity(Fx.BLINK_MIN_OPACITY)
-                .waitUntilFinished()
-                .animation()
-                .duration(Fx.BLINK_STEP_DURATION)
-                .on(token)
-                .fadeIn(fadeIn)
-                .opacity(1)
-                .waitUntilFinished();
-        }
-
-        seq.thenDo(() => {
-            clearTimeout(safetyTimeout);
-            Fx.restoreTokenOpacity(token);
-        });
+        seq.thenDo(() => Fx.broadcastBlink(token, fadeIn, repeats));
+        seq.wait(repeats * (fadeIn + Fx.BLINK_STEP_DURATION));
     }
 
     /**
-     * Redonne son opacité pleine à un token, indépendamment de Sequencer. Sert de
-     * filet de sécurité au clignotement : un token dont l'animation a été interrompue
-     * ne doit jamais rester estompé sur la scène.
+     * Demande le clignotement d'un token à tous les clients — le lanceur des FX
+     * n'est pas forcément celui qui regarde la cible encaisser.
+     *
+     * Repli local (aucun uuid, ou socketlib indisponible) : le clignotement ne
+     * sera vu que sur ce client, ce qui vaut toujours mieux que pas de retour
+     * visuel du tout.
+     *
+     * @param {object} token       - Le token qui encaisse (placeable ou document).
+     * @param {number} fadeIn      - La durée du fondu (ms).
+     * @param {number} [repeats=2] - Le nombre de clignotements.
+     *
+     * @returns {void}
+     */
+    static broadcastBlink(token, fadeIn, repeats = 2) {
+        const tokenUuid = (token?.document ?? token)?.uuid;
+        if (tokenUuid && socket) {
+            socket.executeForEveryone("blinkToken", tokenUuid, fadeIn, repeats);
+            return;
+        }
+        Fx.#playBlink(token?.object ?? token, fadeIn, repeats);
+    }
+
+    /**
+     * Joue le clignotement sur ce client. Point d'entrée socketlib : reçoit un
+     * uuid, la seule forme d'un token qui traverse le réseau.
+     *
+     * @param {string} tokenUuid   - L'uuid du token qui encaisse.
+     * @param {number} fadeIn      - La durée du fondu (ms).
+     * @param {number} [repeats=2] - Le nombre de clignotements.
+     *
+     * @returns {Promise<void>}
+     */
+    static blinkToken(tokenUuid, fadeIn, repeats = 2) {
+        return Fx.#playBlink(fromUuidSync(tokenUuid)?.object, fadeIn, repeats);
+    }
+
+    /**
+     * Fait battre l'opacité du token entre {@link Fx.BLINK_MIN_OPACITY} et son
+     * opacité de repos, puis la restaure quoi qu'il arrive : rien n'est écrit en
+     * base, un client qui s'interrompt en plein battement (rechargement, changement
+     * de scène) retrouve donc un token intact.
+     *
+     * @param {object} placeable - Le token du canvas à faire clignoter.
+     * @param {number} fadeIn    - La durée du fondu (ms).
+     * @param {number} repeats   - Le nombre de clignotements.
+     *
+     * @returns {Promise<void>}
+     */
+    static async #playBlink(placeable, fadeIn, repeats) {
+        if (!placeable || placeable.destroyed) {
+            return;
+        }
+        try {
+            for (let beat = 0; beat < repeats && !placeable.destroyed; beat++) {
+                await Fx.#fadeTokenOpacity(placeable, Fx.BLINK_MIN_OPACITY, fadeIn);
+                await Fx.#fadeTokenOpacity(placeable, Fx.#restingOpacity(placeable), Fx.BLINK_STEP_DURATION);
+            }
+        } finally {
+            Fx.restoreTokenOpacity(placeable);
+        }
+    }
+
+    /**
+     * Fait glisser l'opacité d'un token jusqu'à une valeur cible, par pas de
+     * {@link Fx.BLINK_FRAME_DURATION}.
+     *
+     * @param {object} placeable - Le token du canvas.
+     * @param {number} to        - L'opacité visée.
+     * @param {number} duration  - La durée du fondu (ms).
+     *
+     * @returns {Promise<void>}
+     */
+    static async #fadeTokenOpacity(placeable, to, duration) {
+        const from = placeable.mesh?.alpha ?? placeable.alpha ?? 1;
+        const frames = Math.max(1, Math.round(duration / Fx.BLINK_FRAME_DURATION));
+        for (let frame = 1; frame <= frames; frame++) {
+            await new Promise(resolve => setTimeout(resolve, Fx.BLINK_FRAME_DURATION));
+            if (placeable.destroyed) {
+                return;
+            }
+            Fx.#setTokenOpacity(placeable, from + (to - from) * (frame / frames));
+        }
+    }
+
+    /**
+     * L'opacité hors clignotement d'un token : celle que Foundry lui appliquerait,
+     * et non un 1 d'office — un token estompé par le MJ, ou masqué (que le MJ voit
+     * à demi), doit le rester une fois le battement fini.
+     *
+     * @param {object} placeable - Le token du canvas.
+     *
+     * @returns {number} L'opacité de repos.
+     */
+    static #restingOpacity(placeable) {
+        return placeable._getTargetAlpha?.() ?? placeable.document?.alpha ?? 1;
+    }
+
+    /**
+     * Applique une opacité au token du canvas, sans jamais toucher son document.
+     * Le sprite vit dans le groupe primaire (`mesh`) et le conteneur du placeable
+     * porte sa propre opacité : les deux doivent suivre.
+     *
+     * @param {object} placeable - Le token du canvas.
+     * @param {number} alpha     - L'opacité à appliquer.
+     *
+     * @returns {void}
+     */
+    static #setTokenOpacity(placeable, alpha) {
+        if (typeof placeable.alpha === "number") {
+            placeable.alpha = alpha;
+        }
+        if (placeable.mesh && !placeable.mesh.destroyed) {
+            placeable.mesh.alpha = alpha;
+        }
+    }
+
+    /**
+     * Rend au token son opacité de repos. Appelée à la fin de chaque clignotement,
+     * y compris interrompu : un token qui a clignoté ne doit jamais rester estompé
+     * sur la scène.
      *
      * @param {object} token - Le token (placeable ou document) à restaurer.
      *
@@ -404,12 +504,7 @@ export default class Fx {
         if (!placeable || placeable.destroyed) {
             return;
         }
-        if (typeof placeable.alpha === "number") {
-            placeable.alpha = 1;
-        }
-        if (placeable.mesh && !placeable.mesh.destroyed) {
-            placeable.mesh.alpha = 1;
-        }
+        Fx.#setTokenOpacity(placeable, Fx.#restingOpacity(placeable));
     }
 
     /**
