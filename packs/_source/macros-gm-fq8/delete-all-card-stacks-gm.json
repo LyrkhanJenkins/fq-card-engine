@@ -1,7 +1,7 @@
 {
   "name": "Delete all card stacks (GM)",
   "type": "script",
-  "command": "game.cards.forEach(async cardStack => {\n   await Cards.deleteDocuments([cardStack.id]);\n})\nui.notifications.info(\"Suppression de tous les decks !\");",
+  "command": "game.cards.forEach(async cardStack => {\n   await Cards.deleteDocuments([cardStack.id]);\n})\nui.notifications.info(game.i18n.localize(\"FQCARDENGINE.MacroMsgAllStacksDeleted\"));",
   "img": "icons/magic/fire/barrier-wall-explosion-orange.webp",
   "author": "uUbINdqSmS5ll9IK",
   "scope": "global",

@@ -1,7 +1,7 @@
 {
   "name": "Create deck with all cards maxNumber/2",
   "type": "script",
-  "command": "const compendium = await game.packs.get(FqCardEngineModule.moduleName + \".decks-pattern-fq8\").getDocuments();\nlet cards = [];\ncompendium.forEach((deckOrigin) => {\n[ ... deckOrigin.cards].forEach(card => {\n  for (let i = 0; i < Math.ceil((card?.system?.fq?.maxSameCard ?? 1) / 2); i++) {\n    cards.push({...card});\n     }\n  });\n});\nlet originDeck = compendium[0];\nlet deck = await Cards.create({\n  ...originDeck,\n  name: \"AllCards\",\n  type: \"deck\",\n  cards: [],\n  system: {...originDeck?.system, fq: {type: \"DECK\"}},\n  ownership: {default: 0}\n});\nawait deck.createEmbeddedDocuments(\"Card\", [...cards], {keepId: false});\nui.notifications.info(\"Création d'un deck avec plusieurs exemplaire de chaque carte!\");",
+  "command": "const compendium = await game.packs.get(FqCardEngineModule.moduleName + \".decks-pattern-fq8\").getDocuments();\nlet cards = [];\ncompendium.forEach((deckOrigin) => {\n[ ... deckOrigin.cards].forEach(card => {\n  for (let i = 0; i < Math.ceil((card?.system?.fq?.maxSameCard ?? 1) / 2); i++) {\n    cards.push({...card});\n     }\n  });\n});\nlet originDeck = compendium[0];\nlet deck = await Cards.create({\n  ...originDeck,\n  name: \"AllCards\",\n  type: \"deck\",\n  cards: [],\n  system: {...originDeck?.system, fq: {type: \"DECK\"}},\n  ownership: {default: 0}\n});\nawait deck.createEmbeddedDocuments(\"Card\", [...cards], {keepId: false});\nui.notifications.info(game.i18n.localize(\"FQCARDENGINE.MacroMsgDeckSeveralCopies\"));",
   "img": "icons/commodities/treasure/puzzle-box-glowing-blue.webp",
   "author": "uUbINdqSmS5ll9IK",
   "scope": "global",

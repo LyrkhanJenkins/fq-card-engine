@@ -1,7 +1,7 @@
 {
   "name": "Delete decks of all player (GM)",
   "type": "script",
-  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.deleteDeckForUser(user.id);\n})\nui.notifications.info(\"Suppression des decks des joueurs !\");",
+  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.deleteDeckForUser(user.id);\n})\nui.notifications.info(game.i18n.localize(\"FQCARDENGINE.MacroMsgPlayerDecksDeleted\"));",
   "img": "icons/magic/fire/beam-jet-stream-spiral-yellow.webp",
   "author": "SA6JKCaEua1JXSu4",
   "scope": "global",

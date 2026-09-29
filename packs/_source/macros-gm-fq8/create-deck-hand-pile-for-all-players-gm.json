@@ -1,7 +1,7 @@
 {
   "name": "Create deck/hand/pile for all players (GM)",
   "type": "script",
-  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.updateDeckForUser(user.id);\n});\nui.notifications.info(\"Création des decks/main/défausse pour les joueurs !\");",
+  "command": "game.users.forEach(async user => {\n   await FqCardEngineModule.updateDeckForUser(user.id);\n});\nui.notifications.info(game.i18n.localize(\"FQCARDENGINE.MacroMsgPlayerDecksCreated\"));",
   "img": "icons/magic/symbols/squares-3d-green.webp",
   "author": "uUbINdqSmS5ll9IK",
   "scope": "global",
