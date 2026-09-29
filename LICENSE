@@ -5,8 +5,8 @@ This MIT license applies to the SOURCE CODE of this module: the contents of
 src/, styles/, utils/, tests/, and the module's configuration files.
 
 Final Quest 8 itself is the original work of lyrkhan: its game design, cards,
-classes, balance, card layout, illustrations, compendiums, visual effects and
-sounds. That work is deliberately kept out of this MIT grant — the MIT license
+classes, balance, card layout, illustrations, compendiums and sounds. That
+work is deliberately kept out of this MIT grant — the MIT license
 would let anyone redistribute and sell it. It is licensed under LICENSE-CONTENT
 instead, which reserves all rights.
 

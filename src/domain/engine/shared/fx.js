@@ -13,8 +13,14 @@ import PackUtils from "../../../core/utils/pack.utils.js";
 export default class Fx {
 
     static SOUND_PATH = "modules/fq-card-engine/sounds/";
-    static VISUAL_PATH = "modules/fq-card-engine/visuals/";
-    static GENERIC_VISUAL_PATH = this.VISUAL_PATH + "generics/";
+
+    /**
+     * Identifiant du module qui fournit les effets visuels : la bibliothèque JB2A
+     * n'est pas redistribuée ici, elle est installée par le joueur. Sans elle,
+     * aucun fichier vidéo n'est jouable et les cartes se limitent au son et au
+     * clignotement de dégâts.
+     */
+    static JB2A_MODULE_ID = "JB2A_DnD5e";
 
     /**
      * Opacité basse du clignotement de dégâts : le token est fortement estompé mais
@@ -28,6 +34,42 @@ export default class Fx {
 
     /** Marge (ms) au-delà du clignotement avant de forcer la restauration d'opacité. */
     static BLINK_SAFETY_MARGIN = 1500;
+
+    /**
+     * True si la bibliothèque JB2A est installée et active dans le monde.
+     *
+     * @returns {boolean}
+     */
+    static isJb2aAvailable() {
+        return !!game.modules.get(Fx.JB2A_MODULE_ID)?.active;
+    }
+
+    /**
+     * True si le chemin désigne un asset JB2A, qu'il s'agisse d'un chemin de
+     * fichier (`modules/JB2A_DnD5e/…`) ou d'une clé de la base Sequencer que le
+     * module publie (`jb2a.…`), sous n'importe quelle casse.
+     *
+     * @param {string} path - Le chemin ou la clé à tester.
+     *
+     * @returns {boolean}
+     */
+    static _isJb2aAsset(path) {
+        return typeof path === "string" && path.toLowerCase().includes("jb2a");
+    }
+
+    /**
+     * Filtre un fichier d'effet selon la présence de JB2A : le chemin est renvoyé
+     * tel quel s'il est jouable, et `null` si c'est un asset JB2A alors que le
+     * module est absent. Les appelants qui reçoivent `null` doivent simplement se
+     * passer de visuel — le son et le clignotement, eux, restent joués.
+     *
+     * @param {string} path - Le chemin du fichier d'effet.
+     *
+     * @returns {string|null} Le chemin jouable, ou null.
+     */
+    static _availableFile(path) {
+        return Fx._isJb2aAsset(path) && !Fx.isJb2aAvailable() ? null : path;
+    }
 
     /**
      * Importe une macro depuis le compendium `macros-sequencer` si elle n'existe
@@ -129,25 +171,34 @@ export default class Fx {
      */
     static _handleSequencerEffects(cardContent, myToken, targets, resultArray, typeEffect) {
         const effectFile = Fx._getEffectFile(cardContent, typeEffect);
+        const criticalFile = Fx._availableFile(visualEffectData.generics.other.critical);
         const hasTargets = targets.length > 0;
 
         [...resultArray].forEach((result) => {
-            if (result.critical) {
-                new Sequence().effect().file(this.GENERIC_VISUAL_PATH + "other/critical.webm").atLocation(myToken)
+            if (result.critical && criticalFile) {
+                new Sequence().effect().file(criticalFile).atLocation(myToken)
                     .size(2.5, {gridUnits: true}).play();
             }
         });
 
         if (cardContent.zonePlacement) {
-            Fx._createSequenceForZone(effectFile, cardContent.zonePlacement);
+            if (effectFile) {
+                Fx._createSequenceForZone(effectFile, cardContent.zonePlacement);
+            }
             targets.forEach(target => {
                 Fx._createTargetFeedback(target, cardContent, [...resultArray].find(res => res.targetTokenId === target.id)?.evasion);
             });
         } else if (hasTargets && cardContent.maxReach) {
             targets.forEach(target => {
-                Fx._createSequenceForTarget(effectFile, myToken, target, cardContent, [...resultArray].find(res => res.targetTokenId === target.id)?.evasion);
+                const isEvade = [...resultArray].find(res => res.targetTokenId === target.id)?.evasion;
+                if (effectFile) {
+                    Fx._createSequenceForTarget(effectFile, myToken, target, cardContent, isEvade);
+                } else {
+                    // Sans JB2A, il ne reste que le retour visuel propre à la cible.
+                    Fx._createTargetFeedback(target, cardContent, isEvade);
+                }
             });
-        } else {
+        } else if (effectFile) {
             Fx._createSequenceForSelf(effectFile, myToken);
         }
     }
@@ -218,30 +269,50 @@ export default class Fx {
             Fx.getBlinkAnimation(seq, target, 100, 8);
         }
         if (isEvade) {
-            seq.effect().file(this.GENERIC_VISUAL_PATH + "other/evasion.webm").atLocation(target)
-                .size(2.5, {gridUnits: true}).sound().file(this.SOUND_PATH + "evasion/1.mp3");
+            const evasionFile = Fx._availableFile(visualEffectData.generics.other.evasion);
+            if (evasionFile) {
+                seq.effect().file(evasionFile).atLocation(target).size(2.5, {gridUnits: true});
+            }
+            seq.sound().file(this.SOUND_PATH + "evasion/1.mp3");
         }
     }
 
     /**
      * Détermine le fichier vidéo d'effet à jouer selon le contenu de la carte :
-     * visuel personnalisé (hors jb2a si le module est absent), soin, dégâts
-     * génériques, ou buff par défaut.
+     * visuel personnalisé, soin, dégâts génériques, ou buff par défaut.
+     *
+     * Les visuels génériques vivent tous dans JB2A : sans ce module, il n'y a
+     * plus de repli local et la méthode renvoie `null` plutôt qu'un chemin
+     * introuvable. Seul un visuel personnalisé étranger à JB2A reste jouable.
      *
      * @param {object} cardContent - Le contenu (choix) de la carte jouée.
      * @param {string} typeEffect  - Le type d'effet/dégâts pilotant le fichier générique.
      *
-     * @returns {string} Le chemin du fichier vidéo d'effet à jouer.
+     * @returns {string|null} Le chemin du fichier vidéo d'effet à jouer, ou null.
      */
     static _getEffectFile(cardContent, typeEffect) {
-        if (cardContent.visual?.path && (!cardContent.visual?.path.includes("jb2a") || game.modules.get("JB2A_DnD5e")?.active)) {
-            return cardContent.visual?.path;
+        return Fx._availableFile(Fx._resolveEffectFile(cardContent, typeEffect));
+    }
+
+    /**
+     * Choisit le fichier d'effet correspondant au contenu de la carte, sans se
+     * soucier de sa disponibilité : visuel personnalisé, soin, dégâts génériques,
+     * ou buff par défaut.
+     *
+     * @param {object} cardContent - Le contenu (choix) de la carte jouée.
+     * @param {string} typeEffect  - Le type d'effet/dégâts pilotant le fichier générique.
+     *
+     * @returns {string} Le chemin du fichier vidéo d'effet retenu.
+     */
+    static _resolveEffectFile(cardContent, typeEffect) {
+        if (cardContent.visual?.path) {
+            return cardContent.visual.path;
         } else if (cardContent.heal) {
-            return this.GENERIC_VISUAL_PATH + "other/heal.webm";
+            return visualEffectData.generics.other.heal;
         } else if (cardContent.damage) {
             return Fx.getDamageGenericEffectPath(cardContent.damage, cardContent.maxReach, typeEffect);
         } else {
-            return this.GENERIC_VISUAL_PATH + "other/buff.webm";
+            return visualEffectData.generics.other.buff;
         }
     }
 

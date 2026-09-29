@@ -13,8 +13,8 @@ Requires Foundry VTT **v14** and the **dnd5e** system **6.x**.
 - DAE https://foundryvtt.com/packages/dae — runs the effect macros used by the cards
 
 ## Recommended modules
-- Sequencer https://foundryvtt.com/packages/sequencer — plays the visual effects shipped with the cards
-- JB2A https://foundryvtt.com/packages/JB2A_DnD5e — asset library used by Sequencer
+- Sequencer https://foundryvtt.com/packages/sequencer — plays the visual effects of the cards
+- JB2A https://foundryvtt.com/packages/JB2A_DnD5e — the asset library those effects are read from; without it the cards keep their sounds but play no animation
 - FQ Enhanced Combat https://github.com/final-quest/fq-enhanced-combat — death saving throws at the start of a turn, initiative rolled on joining combat
 - FQ Restrain Movement https://github.com/final-quest/fq-restrain-movement — restricts the movement of players' tokens
 
@@ -183,8 +183,8 @@ npm run testWorld:random -- --seed=12345 --class=elementalist:3,trapper:2 --leve
 ## License
 
 - **Source code** (`src/`, `styles/`, `utils/`, `tests/`): MIT — see [LICENSE](LICENSE).
-- **Final Quest 8 game content** (compendiums, card illustrations, visual effects,
-  sounds, card titles and descriptions): all rights reserved — see
+- **Final Quest 8 game content** (compendiums, card illustrations, sounds, card
+  titles and descriptions): all rights reserved — see
   [LICENSE-CONTENT](LICENSE-CONTENT).
 
 You are free to use the Final Quest 8 content to play at your own table, and to

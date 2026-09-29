@@ -9,7 +9,6 @@ which are NOT part of the MIT-licensed source code in LICENSE:
   - packs/ and packs/_source/   card compendiums, classes, decks, minions,
                                 items, NPC spells, starter heroes, macros
   - images/                     card illustrations, class art, tokens
-  - visuals/                    visual effects
   - sounds/                     sound effects
   - artwork/                    module artwork
   - devNotes/                   game design notes and balance data
@@ -58,8 +57,9 @@ the D&D 5th edition SRD 5.1 are used under CC BY 4.0; no content outside the
 SRD is reproduced.
 
 The JB2A and Sequencer modules are optional dependencies, downloaded by the
-user from their own sources. No JB2A asset is redistributed here.
+user from their own sources. No JB2A asset is redistributed here: the cards
+only reference paths inside the JB2A module the user installed.
 
-Assets in visuals/ and sounds/ are subject to the licenses of their respective
-sources where those assets are not original to this project. See CREDITS for
-the current attribution list.
+Assets in sounds/ are subject to the licenses of their respective sources where
+those assets are not original to this project. See CREDITS for the current
+attribution list.

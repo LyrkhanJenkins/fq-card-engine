@@ -1,6 +1,7 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from "vitest";
 import {socket} from "../../src/hook/integration/socketlib.hook.js";
 import Fx from "../../src/domain/engine/shared/fx.js";
+import {visualEffectData} from "../../src/domain/system/fx/visualEffectData.js";
 
 vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({
     default: {},
@@ -32,6 +33,9 @@ describe("Fx", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        // Les visuels génériques vivent dans JB2A : sauf mention contraire, les
+        // tests se placent dans la configuration recommandée, module installé.
+        game.modules.set("JB2A_DnD5e", {active: true});
     });
 
     afterEach(() => {
@@ -40,44 +44,43 @@ describe("Fx", () => {
     });
 
     describe("chemins statiques", () => {
-        it("expose SOUND_PATH, VISUAL_PATH et GENERIC_VISUAL_PATH", () => {
+        it("expose SOUND_PATH et l'identifiant du module JB2A", () => {
             expect(Fx.SOUND_PATH).toBe("modules/fq-card-engine/sounds/");
-            expect(Fx.VISUAL_PATH).toBe("modules/fq-card-engine/visuals/");
-            expect(Fx.GENERIC_VISUAL_PATH).toBe("modules/fq-card-engine/visuals/generics/");
+            expect(Fx.JB2A_MODULE_ID).toBe("JB2A_DnD5e");
         });
     });
 
     describe("getDamageGenericEffectPath", () => {
-        it("maxReach <= 2 -> sous-dossier melee/ avec type mappé", () => {
+        it("maxReach <= 2 -> catégorie melee avec type mappé", () => {
             expect(Fx.getDamageGenericEffectPath("1d6", 1, "fire"))
-                .toBe("modules/fq-card-engine/visuals/generics/melee/fire.webm");
+                .toBe(visualEffectData.generics.melee.fire);
         });
 
-        it("maxReach > 2 -> sous-dossier range/ avec type mappé", () => {
+        it("maxReach > 2 -> catégorie range avec type mappé", () => {
             expect(Fx.getDamageGenericEffectPath("1d6", 5, "cold"))
-                .toBe("modules/fq-card-engine/visuals/generics/range/cold.webm");
+                .toBe(visualEffectData.generics.range.cold);
         });
 
-        it("typeEffect falsy -> default.webm", () => {
+        it("typeEffect falsy -> entrée default", () => {
             expect(Fx.getDamageGenericEffectPath("1d6", 1, undefined))
-                .toBe("modules/fq-card-engine/visuals/generics/melee/default.webm");
+                .toBe(visualEffectData.generics.melee.default);
         });
     });
 
     describe("_getEffectFile", () => {
-        it("heal -> other/heal.webm", () => {
+        it("heal -> visuel de soin", () => {
             expect(Fx._getEffectFile({heal: "1d4"}, null))
-                .toBe("modules/fq-card-engine/visuals/generics/other/heal.webm");
+                .toBe(visualEffectData.generics.other.heal);
         });
 
         it("damage sans visuel -> délègue à getDamageGenericEffectPath", () => {
             expect(Fx._getEffectFile({damage: "1d6", maxReach: 1}, "fire"))
-                .toBe("modules/fq-card-engine/visuals/generics/melee/fire.webm");
+                .toBe(visualEffectData.generics.melee.fire);
         });
 
-        it("ni heal ni damage -> other/buff.webm", () => {
+        it("ni heal ni damage -> visuel de buff", () => {
             expect(Fx._getEffectFile({}, null))
-                .toBe("modules/fq-card-engine/visuals/generics/other/buff.webm");
+                .toBe(visualEffectData.generics.other.buff);
         });
 
         it("visual.path custom (hors jb2a) -> renvoyé tel quel", () => {
@@ -85,18 +88,33 @@ describe("Fx", () => {
                 .toBe("custom/path.webm");
         });
 
-        it("visual.path jb2a avec module JB2A_DnD5e inactif -> ignoré, retombe sur damage", () => {
-            const cardContent = {visual: {path: "modules/jb2a/fireball.webm"}, damage: "1d6", maxReach: 1};
+        it("visual.path jb2a avec module JB2A_DnD5e actif -> renvoyé tel quel", () => {
+            const cardContent = {visual: {path: "jb2a.fire_bolt.orange"}, damage: "1d6", maxReach: 1};
 
-            expect(Fx._getEffectFile(cardContent, "fire"))
-                .toBe("modules/fq-card-engine/visuals/generics/melee/fire.webm");
+            expect(Fx._getEffectFile(cardContent, "fire")).toBe("jb2a.fire_bolt.orange");
+        });
+    });
+
+    describe("_getEffectFile - JB2A ABSENT", () => {
+
+        beforeEach(() => {
+            game.modules.delete("JB2A_DnD5e");
         });
 
-        it("visual.path jb2a avec module JB2A_DnD5e actif -> renvoyé tel quel", () => {
-            game.modules.set("JB2A_DnD5e", {active: true});
-            const cardContent = {visual: {path: "modules/jb2a/fireball.webm"}, damage: "1d6", maxReach: 1};
+        it("visuel générique -> null, faute de repli local", () => {
+            expect(Fx._getEffectFile({damage: "1d6", maxReach: 1}, "fire")).toBeNull();
+            expect(Fx._getEffectFile({heal: "1d4"}, null)).toBeNull();
+            expect(Fx._getEffectFile({}, null)).toBeNull();
+        });
 
-            expect(Fx._getEffectFile(cardContent, "fire")).toBe("modules/jb2a/fireball.webm");
+        it("visual.path jb2a -> null, quelle que soit la casse", () => {
+            expect(Fx._getEffectFile({visual: {path: "jb2a.fire_bolt.orange"}}, null)).toBeNull();
+            expect(Fx._getEffectFile({visual: {path: "modules/JB2A_DnD5e/Library/x.webm"}}, null)).toBeNull();
+        });
+
+        it("visual.path étranger à JB2A -> toujours joué", () => {
+            expect(Fx._getEffectFile({visual: {path: "custom/path.webm"}}, null))
+                .toBe("custom/path.webm");
         });
     });
 
@@ -249,12 +267,50 @@ describe("Fx", () => {
             Fx._createTargetFeedback(target, {damage: "1d6"}, true);
 
             const seq = globalThis.Sequence.mock.results[0].value;
-            expect(seq.file).toHaveBeenCalledWith("modules/fq-card-engine/visuals/generics/other/evasion.webm");
+            expect(seq.file).toHaveBeenCalledWith(visualEffectData.generics.other.evasion);
             expect(seq.animation).not.toHaveBeenCalled();
         });
 
         it("_createTargetFeedback : ni dégâts ni esquive -> aucune séquence", () => {
             Fx._createTargetFeedback({id: "t1"}, {heal: "1d4"}, false);
+
+            expect(globalThis.Sequence).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("effets sans JB2A (UTIL-02)", () => {
+
+        beforeEach(() => {
+            game.modules.set("sequencer", {active: true});
+            game.modules.delete("JB2A_DnD5e");
+            globalThis.Sequence = vi.fn().mockImplementation(function () {
+                return makeChainableSequence();
+            });
+        });
+
+        it("dégâts sur une cible -> pas de visuel, mais le clignotement est joué", async () => {
+            const cardContent = {damage: "1d6", maxReach: 5, targetType: "Default"};
+
+            await Fx.handleSpecialEffect(cardContent, [], {actorId: "userCharacterId"}, "fire");
+
+            const instances = globalThis.Sequence.mock.results.map(r => r.value);
+            expect(instances.every(seq => seq.file.mock.calls.length === 0)).toBe(true);
+            expect(instances.some(seq => seq.animation.mock.calls.length > 0)).toBe(true);
+        });
+
+        it("esquive -> pas de visuel, mais le son d'esquive est joué", () => {
+            Fx._createTargetFeedback({id: "t1"}, {damage: "1d6"}, true);
+
+            const seq = globalThis.Sequence.mock.results[0].value;
+            expect(seq.effect).not.toHaveBeenCalled();
+            expect(seq.file).toHaveBeenCalledWith("modules/fq-card-engine/sounds/evasion/1.mp3");
+        });
+
+        it("critique -> aucune séquence de critique construite", async () => {
+            const cardContent = {damage: "1d6", maxReach: 0, targetType: "Default"};
+            const resultArray = [{targetTokenId: "token1", critical: true}];
+
+            await Fx.handleSpecialEffect(cardContent, resultArray, {actorId: "userCharacterId"}, "fire");
 
             expect(globalThis.Sequence).not.toHaveBeenCalled();
         });

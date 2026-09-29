@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {visualEffectData} from "../../src/domain/system/fx/visualEffectData.js";
+import {JB2A_PATH, visualEffectData} from "../../src/domain/system/fx/visualEffectData.js";
 
 const DAMAGE_TYPES = [
     "default", "acid", "bludgeoning", "cold", "fire", "force", "lightning",
@@ -49,25 +49,34 @@ describe("visualEffectData", () => {
 
     describe("chemins témoins exacts", () => {
         it("generics.melee.fire", () => {
-            expect(visualEffectData.generics.melee.fire).toBe("modules/fq-card-engine/visuals/generics/melee/fire.webm");
+            expect(visualEffectData.generics.melee.fire)
+                .toBe("modules/JB2A_DnD5e/Library/Generic/Impact/ImpactFire01_01_Regular_Orange_600x600.webm");
         });
 
         it("generics.other.heal", () => {
-            expect(visualEffectData.generics.other.heal).toBe("modules/fq-card-engine/visuals/generics/other/heal.webm");
+            expect(visualEffectData.generics.other.heal)
+                .toBe("modules/JB2A_DnD5e/Library/Generic/Healing/HealingAbility_01_Green_400x400.webm");
         });
 
         it("elementalist.tornado", () => {
-            expect(visualEffectData.elementalist.tornado).toBe("modules/fq-card-engine/visuals/elementalist/tornado.webm");
+            expect(visualEffectData.elementalist.tornado)
+                .toBe("modules/JB2A_DnD5e/Library/Generic/Nature/SwirlingLeaves01_01_Regular_GreenOrange_60ft_2800x400.webm");
         });
     });
 
     describe("invariante de format", () => {
-        it("chaque chemin (feuille) commence par le préfixe visuels et se termine par .webm", () => {
+        it("chaque chemin (feuille) pointe dans la bibliothèque JB2A et se termine par .webm", () => {
             const leaves = collectLeaves(visualEffectData);
             expect(leaves.length).toBeGreaterThan(0);
             leaves.forEach(path => {
-                expect(path).toMatch(/^modules\/fq-card-engine\/visuals\//);
+                expect(path).toMatch(new RegExp("^" + JB2A_PATH));
                 expect(path).toMatch(/\.webm$/);
+            });
+        });
+
+        it("les effets à distance sont les variantes 60ft, les seules qui tiennent l'étirement", () => {
+            Object.values(visualEffectData.generics.range).forEach(path => {
+                expect(path).toMatch(/_60ft_[^/]*\.webm$/);
             });
         });
     });

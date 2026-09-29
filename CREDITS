@@ -28,5 +28,7 @@ Final Quest 8 are the work of lyrkhan.
 
 Sound effects are original to this project (see RELEASE 2.0.0).
 
-Visual effects in visuals/ are rendered for this project. They are played through
-the optional Sequencer module; no JB2A asset is redistributed here.
+Visual effects are not shipped with this package: the cards point at the JB2A
+asset library, which the user installs from its own source, and Sequencer plays
+it. No JB2A asset is redistributed here. Without JB2A the cards still work, with
+their sounds and their damage blink, but no animation.
