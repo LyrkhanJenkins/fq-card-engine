@@ -1862,7 +1862,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/monk/JadePalm.png",
           "text": "FQCARDDESCRIPTION.JadePalm"
         }
       ],
@@ -1940,15 +1940,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1786004426408,
-        "modifiedTime": 1790014380524,
+        "modifiedTime": 1790699432323,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.KigGsmE7nWg6Rwsp"
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.KigGsmE7nWg6Rwsp",
+      "cards": []
     },
     {
       "faces": [
@@ -4440,7 +4440,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/monk/HealingWake.png",
           "text": "FQCARDDESCRIPTION.HealingWake"
         }
       ],
@@ -4581,15 +4581,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1790035200000,
-        "modifiedTime": 1790057454447,
+        "modifiedTime": 1790699488758,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkHealingWake001"
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkHealingWake001",
+      "cards": []
     },
     {
       "_id": "mkReedStance0001",
@@ -4605,7 +4605,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/monk/ReedStance.png",
           "text": "FQCARDDESCRIPTION.ReedStance"
         }
       ],
@@ -4747,15 +4747,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1790035200000,
-        "modifiedTime": 1790014403938,
+        "modifiedTime": 1790699447355,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkReedStance0001"
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mkReedStance0001",
+      "cards": []
     },
     {
       "_id": "mnkHookStrike001",
@@ -4771,7 +4771,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/monk/hook.png",
           "text": "FQCARDDESCRIPTION.Hook"
         }
       ],
@@ -4857,15 +4857,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1790020000000,
-        "modifiedTime": 1790057298907,
+        "modifiedTime": 1790699474620,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mnkHookStrike001"
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mnkHookStrike001",
+      "cards": []
     },
     {
       "_id": "mnkDawnPalm00001",
@@ -4881,7 +4881,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/monk/DawnPalm.png",
           "text": "FQCARDDESCRIPTION.DawnPalm"
         }
       ],
@@ -4967,15 +4967,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1790021000000,
-        "modifiedTime": 1790058047530,
+        "modifiedTime": 1790699517763,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mnkDawnPalm00001"
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mnkDawnPalm00001",
+      "cards": []
     },
     {
       "_id": "mnkSecretRemed01",
@@ -4991,7 +4991,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/monk/SecretRemedies.png",
           "text": "FQCARDDESCRIPTION.SecretRemedies"
         }
       ],
@@ -5087,15 +5087,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1790100000000,
-        "modifiedTime": 1790100000000,
+        "modifiedTime": 1790699462568,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mnkSecretRemed01"
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.mnkSecretRemed01",
+      "cards": []
     },
     {
       "_id": "Cr3sZnDoLp8yTvQ1",
@@ -5111,7 +5111,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/monk/Crescendo.png",
           "text": "FQCARDDESCRIPTION.Crescendo"
         }
       ],
@@ -5206,20 +5206,20 @@
         }
       },
       "_stats": {
-        "coreVersion": "14.365",
+        "coreVersion": "14.368",
         "systemId": "dnd5e",
         "systemVersion": "5.3.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789978822598,
-        "modifiedTime": 1789978822598,
+        "modifiedTime": 1790699412509,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.Cr3sZnDoLp8yTvQ1"
+      "_key": "!cards.cards!vvhvdqE8g3zOKbFA.Cr3sZnDoLp8yTvQ1",
+      "cards": []
     }
   ],
   "rotation": 0,

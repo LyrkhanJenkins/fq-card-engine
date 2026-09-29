@@ -4961,7 +4961,7 @@
       "faces": [
         {
           "name": "",
-          "img": "modules/fq-card-engine/images/cards/in_progress.png",
+          "img": "modules/fq-card-engine/images/cards/trapper/BeastBound.png",
           "text": "FQCARDDESCRIPTION.BeastBond"
         }
       ],
@@ -5062,15 +5062,15 @@
         "systemVersion": "6.0.3",
         "lastModifiedBy": "uUbINdqSmS5ll9IK",
         "createdTime": 1789905600000,
-        "modifiedTime": 1790067987773,
+        "modifiedTime": 1790699544984,
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null
       },
       "width": null,
       "height": null,
-      "cards": [],
-      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trpBeastBond0001"
+      "_key": "!cards.cards!6b9vSzD4cZQZSYIu.trpBeastBond0001",
+      "cards": []
     }
   ],
   "width": null,
