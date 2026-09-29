@@ -1,9 +1,6 @@
 name: Release
 
-# Remplace le stage `release` de l'ancienne pipeline GitLab. Deux differences
-# tenaient au fait que GitLab publiait un ARTEFACT DE JOB : l'URL de
-# telechargement portait un numero de job, et elle mourait avec l'artefact. Ici le
-# zip est un asset de release, donc l'URL est stable.
+# Remplace le stage `release` de l'ancienne pipeline.
 # AUCUN declencheur automatique ne marche sur un tag anterieur a ce fichier :
 #   `push: tags`         charge le workflow AU COMMIT DU TAG
 #   `release: published` le charge AU TAG DE LA RELEASE, et non sur la branche par
@@ -65,7 +62,7 @@ jobs:
 
       - run: npm ci
 
-      # Meme garde-fou que l'ancienne pipeline GitLab : pas de release sur du rouge.
+      # Meme garde-fou que l'ancienne pipeline : pas de release sur du rouge.
       # Contournable seulement a la main, pour retro-publier un tag ancien.
       - name: Lint
         if: ${{ !inputs.skip_checks }}
@@ -109,7 +106,7 @@ jobs:
           set -euo pipefail
           mkdir -p dist/package
 
-          # Liste BLANCHE, a l'inverse de l'ancien `rm -rf` GitLab : ce qui est
+          # Liste BLANCHE, a l'inverse de l'ancien `rm -rf` : ce qui est
           # ajoute au depot demain n'atterrit pas dans le zip par accident.
           #
           # Chaque entree n'est copiee QUE SI ELLE EXISTE. Un tag ancien n'a pas

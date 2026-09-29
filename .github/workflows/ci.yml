@@ -1,6 +1,6 @@
 name: CI
 
-# Reprend les etapes `test` et `lint` de l'ancienne pipeline GitLab. Aucune
+# Reprend les etapes `test` et `lint` de l'ancienne pipeline. Aucune
 # compilation de compendium ici : les tests balaient `packs/_source/*.json`, la
 # source versionnee, et jamais les paquets LevelDB compiles — qui sont d'ailleurs
 # gitignores, donc absents d'un checkout de runner.

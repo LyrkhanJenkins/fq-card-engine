@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="build:db ALL" type="CompoundRunConfigurationType">
+    <toRun name="build:db card-engine" type="js.build_tools.npm" />
+    <toRun name="build:db extended" type="js.build_tools.npm" />
+    <method v="2" />
+  </configuration>
+</component>

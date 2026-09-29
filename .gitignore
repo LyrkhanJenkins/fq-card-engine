@@ -5,8 +5,9 @@ packs/*
 assets/*
 !assets/.gitkeep
 
-# IDE
-.idea/
+# IDE : seules les configurations de run IntelliJ sont versionnées.
+.idea/*
+!.idea/runConfigurations/
 .nova/
 .vs/
 .vscode/
