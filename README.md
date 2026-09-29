@@ -2,16 +2,21 @@
 
 The FQ Card Engine is a combat system for Final Quest 8 combined with DnD5e rules.
 
+Requires Foundry VTT **v14** and the **dnd5e** system **6.x**.
+
 
 ![img.png](images/doc/summary.png)
 
 ## Mandatory modules
 - socketlib https://foundryvtt.com/packages/socketlib
 - lib-wrapper https://foundryvtt.com/packages/lib-wrapper
+- DAE https://foundryvtt.com/packages/dae — runs the effect macros used by the cards
 
-## Optional modules
-- DAE https://foundryvtt.com/packages/dae (non à jour)
-- Dice So Nice https://foundryvtt.com/packages/dice-so-nice
+## Recommended modules
+- Sequencer https://foundryvtt.com/packages/sequencer — plays the visual effects shipped with the cards
+- JB2A https://foundryvtt.com/packages/JB2A_DnD5e — asset library used by Sequencer
+- FQ Enhanced Combat https://github.com/LyrkhanJenkins/fq-enhanced-combat — death saving throws at the start of a turn, initiative rolled on joining combat
+- FQ Restrain Movement https://github.com/LyrkhanJenkins/fq-restrain-movement — restricts the movement of players' tokens
 
 ## Extended content
 
@@ -27,7 +32,7 @@ compendium, but without their class item: they are there as a preview.
 
 Want the extended content? Send me a message:
 
-- Discord: `lyrkhanjenkins`
+- Discord: `lyrkhan_jenkins`
 - Email: <lyrkhanjenkins@gmail.com>
 
 ## Get Started
@@ -76,7 +81,7 @@ The 8th Version is an adaptation to combine the trading card battle system with 
 
 The module provides several resources for start playing Final Quest 8 :
 - Cards for the first 5 level
-- Classes (four in this module, five more in the extended content)
+- Classes (three in this module, six more in the extended content)
 - Items
 - Passive Spells
 - Monsters
@@ -124,6 +129,30 @@ The module provides also a special ui for creating your own deck with your Spell
 ![img.png](images/doc/rectilinear-grid.png)
 
 ## Dev
+
+The compiled compendiums in `packs/` are not versioned, only their JSON sources in
+`packs/_source/`. After cloning, compile them before opening the module in Foundry,
+otherwise every compendium shows up empty:
+
+```bash
+npm ci
+npm run build
+```
+
+| Command                    | What it does                                                       |
+|----------------------------|--------------------------------------------------------------------|
+| `npm run build`            | Compiles `packs/_source/` into the LevelDB packs Foundry reads     |
+| `npm run build:json`       | Unpacks the LevelDB packs back into `packs/_source/`               |
+| `npm test`                 | Runs the unit test suite (vitest)                                  |
+| `npm run test:coverage`    | Same, with a coverage report                                       |
+| `npm run lint`             | ESLint over `src/` and `tests/`                                    |
+| `npm run report:classes`   | Prints the class balance report                                    |
+
+### Releases
+
+Pushing a tag equal to the `version` field of `module.json` triggers the `Release`
+workflow: it lints, tests, compiles the packs and publishes the GitHub release, with
+the notes taken from the matching `Update x.y.z:` block of [RELEASE](RELEASE).
 
 ### Generate a random test world
 
