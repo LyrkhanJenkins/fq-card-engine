@@ -123,7 +123,8 @@ async function addHeroClass(actor, classEntry, {primary}) {
         return classItem;
     }
 
-    const reached = (classData.system.advancement ?? []).filter(a => Number(a.level) <= classEntry.level);
+    const advancements = Object.values(classData.system.advancement ?? {});
+    const reached = advancements.filter(a => Number(a.level) <= classEntry.level);
     const grantedUuids = reached
         .filter(a => a.type === "ItemGrant" && a.classRestriction !== "secondary")
         .flatMap(a => a.configuration?.items ?? [])
