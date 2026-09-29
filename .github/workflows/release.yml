@@ -4,14 +4,22 @@ name: Release
 # tenaient au fait que GitLab publiait un ARTEFACT DE JOB : l'URL de
 # telechargement portait un numero de job, et elle mourait avec l'artefact. Ici le
 # zip est un asset de release, donc l'URL est stable.
-# Pas de declencheur `release: published` : ce workflow PUBLIE la release, donc
-# l'ecouter le ferait tourner deux fois pour un seul tag. Constate sur
-# fq-restrain-movement 3.0.0, ou un push de tag a produit deux executions.
+# Le declencheur `release: published` est INDISPENSABLE : pour un evenement
+# `release`, GitHub prend le workflow sur la BRANCHE PAR DEFAUT, pas sur le tag.
+# C'est donc la seule voie pour republier un vieux tag, dont le commit ne contient
+# pas ce fichier — et c'est ce qui se passe quand on cree une release a la main
+# dans l'interface GitHub.
+#
+# Le `concurrency` plus bas absorbe les declenchements en double, quelle qu'en soit
+# la cause : le 29/09/2026, un seul push du tag 3.0.0 a produit deux runs, tous
+# deux de type `push`. Retirer un declencheur n'y changeait rien.
 on:
   push:
     tags:
       - "v[0-9]*"
       - "[0-9]*"
+  release:
+    types: [published]
   workflow_dispatch:
     inputs:
       tag:
@@ -29,6 +37,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: release-${{ inputs.tag || github.event.release.tag_name || github.ref }}
+  cancel-in-progress: true
+
 env:
   MODULE_ID: fq-card-engine
 
@@ -39,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.tag || github.ref }}
+          ref: ${{ inputs.tag || github.event.release.tag_name || github.ref }}
 
       - uses: actions/setup-node@v4
         with:
@@ -62,7 +74,7 @@ jobs:
         id: version
         run: |
           set -euo pipefail
-          TAG="${{ inputs.tag || github.ref_name }}"
+          TAG="${{ inputs.tag || github.event.release.tag_name || github.ref_name }}"
           VERSION="${TAG#v}"
           MANIFEST_VERSION="$(jq -r '.version' module.json)"
 
