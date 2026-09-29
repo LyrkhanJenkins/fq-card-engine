@@ -15,8 +15,8 @@ Requires Foundry VTT **v14** and the **dnd5e** system **6.x**.
 ## Recommended modules
 - Sequencer https://foundryvtt.com/packages/sequencer — plays the visual effects shipped with the cards
 - JB2A https://foundryvtt.com/packages/JB2A_DnD5e — asset library used by Sequencer
-- FQ Enhanced Combat https://github.com/LyrkhanJenkins/fq-enhanced-combat — death saving throws at the start of a turn, initiative rolled on joining combat
-- FQ Restrain Movement https://github.com/LyrkhanJenkins/fq-restrain-movement — restricts the movement of players' tokens
+- FQ Enhanced Combat https://github.com/final-quest/fq-enhanced-combat — death saving throws at the start of a turn, initiative rolled on joining combat
+- FQ Restrain Movement https://github.com/final-quest/fq-restrain-movement — restricts the movement of players' tokens
 
 ## Extended content
 
