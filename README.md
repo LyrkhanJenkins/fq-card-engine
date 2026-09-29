@@ -106,9 +106,9 @@ You can choose to play the card or discard it to use other cards.
 For using cards that affects other target than you, you must target at least one character
 ![img.png](images/doc/target-ennemy.png)
 
-All actions are displayed on chat.
-After playing a card, automatic roll, effect, damage, heal are applied, also critical and evasion rolls.
-![img.png](images/doc/chat-roll.png)
+All actions are displayed on a result dialog.
+After playing a card, automatic roll, effect, damage, heal are applied, also critical, save, evasion and attack rolls.
+![img.png](images/doc/result-dialog.png)
 
 The module provides also a special ui for creating your own deck with your Spellbook
 ![img.png](images/doc/spellbook.png)

@@ -1,3 +1,82 @@
+Update 3.0.0:
+    Feat:
+        - Content split: Elementalist, Monk and Trapper ship with this module, the six other classes move to FQ Card Engine Extended
+        - FQ class registry: classes are no longer hardcoded in the schema, the extended module registers its own
+        - Two new classes, Runic Warrior and Fencing Master, with their tokens, decks and illustrations
+        - Every class deck reworked up to level 10 (12 for some), with 22 balance passes and a full characterisation pass
+        - Neutral cards become common cards, added to the spellbooks at the right levels, up to level 20
+        - White Mage gets the Haunting specialization and its ghost minion
+        - Crescendo becomes a monk spell
+        - FQ classes capped at level 12, level-up macros, and a level is only gained once the XP exceeds the maximum for the level
+        - New illustrations for every card (18 passes)
+        - Equipped weapon damage added to the cards that use it, rwak and mwak taken into account when there is no attack activity
+        - Attack rolls and saving throws for cards and dnd5e activities, and a successful save protects from the card effects
+        - New spell/card result window, and chat messages that put the final result first
+        - Resistances, immunities, vulnerabilities and absorption for card damage and damage over turns, plus a magical damage flag
+        - Advantage and disadvantage handled with two dedicated FQ statuses and the dnd5e conditions
+        - Rationalized effects (earth, air, fire, curse, poison, etc.) and the new VIRUS status
+        - Area targeting (circle/cone/rectangle/line) from the play dialog: the covered tokens become the targets, with their own FX
+        - Target all adjacent tokens, all allies or all enemies, and the distance of each target shown in the play dialog
+        - Target selection is frozen in the activity when it is used, and the token auto-rotates to face its targets
+        - Opportunity attacks with the first equipped weapon and automatic damage, announced in chat, only between combatants with hit points
+        - Ephemeral cards: playing one destroys it for good
+        - Generated cards replace the "JSON after use": cards are generated in hand from a choice offered to the player, and can be deleted from the discard
+        - A card from the hand can be duplicated
+        - Cards can be retrieved from the discard or from the deck back into the hand (all of them, or a given list)
+        - When the deck is empty the discard is shuffled back into it, and fatigue deals damage on every reshuffle - the Runic Warrior is the only one able to lower the fatigue score
+        - Base cards become innate cards and can be deleted
+        - Reactive cards can be prepared during your turn and are highlighted when they become usable
+        - A replayable AUTO card is played every turn (White Mage auras)
+        - Cards can drop tiles carrying walls (Frost Wall)
+        - Level 0 cards are no longer mandatory, and the number of level 1 cards of the main class sets the minimum size of a deck
+        - Bonus score available on every type of card
+        - Formulas simplified in the card descriptions, with tooltips, and localized tooltips on the card emojis
+        - Improved hit bubbles
+        - Minions can be placed anywhere in an area instead of an adjacent square, with a maximum number per type and summoning buffs
+        - The giant skeleton becomes the Skeleton King, buffing a single skeleton
+        - Spellbook reworked as a card grid, with filters, search, preview and deck size, copies toggled from the spellbook and an extra copy on right-click
+        - The spellbook opens on level-up, without populating itself
+        - The discard score is gone, replaced by a UI to discard cards
+        - FQ costs can be set on items and spells
+        - Player rights cut to the minimum: no drag and drop from the compendiums, no card drag and drop nor item edition with limited rights, on their own characters and items too
+        - The GM follows a player, and the old configuration path is gone
+        - A player's toolbar resolves its own hand
+        - Macros: roll the current combatant's weapon damage, use the first equipped ranged weapon (macro and HUD button), end the turn, and the natural weapon in the HUD shortcuts
+        - Option to bypass the attack and damage dialogs (no armour class)
+        - Token coordinates in the engine are reduced to the square holding the token centre
+        - Random UAT world generator (npm run testWorld:random)
+        - Death saving throws and the initiative rolled on joining combat move to FQ Enhanced Combat
+    Chore:
+        - Version bump 14.368 and dnd5e 6.0.3, with the compendiums migrated (DAE 14.0.14, Sequencer 4.2.3)
+        - Versions aligned across FQ Card Engine, FQ Enhanced Combat and FQ Restrain Movement: the three modules are published together
+        - Repository moved to the final-quest GitHub organization, with a release pipeline that lints, tests, compiles the packs and publishes the release
+        - LevelDB packs are no longer versioned, only their JSON sources in packs/_source (npm run build)
+        - Dual licence: MIT on the source code, all rights reserved on the Final Quest 8 content
+        - A utils pack to keep the pack scripts in a single place
+        - LF line endings everywhere, to match what build:json writes
+        - Code audit, duplication refactor and dead code removal
+        - Test world updated with the new classes
+        - Class balance report (npm run report:classes) and CLASSES.md documentation
+    Fix:
+        - Fix the OpenDeck button in the player hand
+        - Cards sorted by level then by name in the decks, and the broken button removed
+        - Limiting the player rights no longer removes targeting and movement on the tokens
+        - Token HUD buttons follow the rights on the token's actor
+        - The damage flicker no longer leaves the token invisible
+        - Ephemeral cards are destroyed at the right time and show the right card back
+        - Free necromancy after the first use through a generated card
+        - Instant curse: the logs it relies on do not always carry the right actors or targets
+        - Empty hand shown in a generated world
+        - Starter heroes: max hit points override
+        - FQ resources consumed at the right time with the new bypass option, and for every activity
+        - Damage formulas used when an activity has damage but no attack
+        - Card descriptions resized when they overflow the frame
+        - Fix Light Energy and Improved Fire Ray descriptions
+        - Fix orphan translations and i18n keys
+        - Fix image paths
+        - The result window test no longer depends on the speed of the machine
+        - Opportunity attacks: FX on the right token, and the reaction reserved to combatants
+
 Update 2.0.2:
     Feat:
         - Card draw animation
