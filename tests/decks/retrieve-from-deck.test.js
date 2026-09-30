@@ -12,16 +12,16 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {playChoice, makeHandCard} = await import("./play-harness.js");
-const {mockDialogPrompt} = await import("./corpus-helpers.js");
+const {mockSelectionVeil} = await import("./corpus-helpers.js");
 
 /**
  * Récupération d'une carte dans le DECK de combat du joueur
  * (`retrieveFromDeck`), jouée via le VRAI `playValidatedCard` : une pioche
  * CHOISIE plutôt que tirée au hasard. Mode `*` : toute la pioche est éligible,
- * plusieurs éligibles → dialog de choix d'UNE carte, une seule → transfert
- * automatique sans dialog, aucune → injouable
+ * plusieurs éligibles → voile de choix d'UNE carte, une seule → transfert
+ * automatique sans voile, aucune → injouable
  * (`WarningMsgNoRetrievableDeckCard`). Mode liste : TOUTES les cartes listées
- * sont récupérées sans dialog ; un nom sans correspondance → injouable
+ * sont récupérées sans voile ; un nom sans correspondance → injouable
  * (`WarningMsgMissingRetrievableDeckCards`). Les cartes DÉJÀ PIOCHÉES
  * (`drawn`) ne sont jamais éligibles : elles sont en main ou en défausse. Le
  * transfert emprunte `Cards#pass` du deck vers la main — aucune copie générée
@@ -62,20 +62,22 @@ function deckCard(id, name, drawn = false) {
 describe("retrieveFromDeck — récupération d'une carte du deck de combat vers la main", () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        delete globalThis.foundry.applications.api;
+        // Les espions du voile posés par un test (ou par le harnais) ne doivent pas
+        // suivre au suivant : chaque test repart du comportement par défaut.
+        vi.restoreAllMocks();
     });
 
-    test("'*' avec plusieurs cartes : dialog de choix, la carte choisie est transférée en main", async () => {
-        const prompt = mockDialogPrompt(Promise.resolve("d2"));
+    test("'*' avec plusieurs cartes : voile de choix, la carte choisie est transférée en main", async () => {
+        const veil = mockSelectionVeil("d2");
         const cards = [deckCard("d1", "FQCARDTITLE.A"), deckCard("d2", "FQCARDTITLE.B")];
 
         const result = await playChoice(makeRetrieverCard("*"), 0, {world: {deck: {cards}}});
 
         expect(result.threw).toBe(false);
-        expect(prompt).toHaveBeenCalledTimes(1);
-        const dialogContent = prompt.mock.calls[0][0].content;
-        expect(dialogContent).toContain("FQCARDTITLE.A");
-        expect(dialogContent).toContain("FQCARDTITLE.B");
+        expect(veil).toHaveBeenCalledTimes(1);
+        const [proposed, count] = veil.mock.calls[0];
+        expect(proposed.map(c => c.id)).toEqual(["d1", "d2"]);
+        expect(count).toBe(1);
 
         expect(result.deckRetrieveCalls).toHaveLength(1);
         const [destination, ids, options] = result.deckRetrieveCalls[0];
@@ -89,20 +91,20 @@ describe("retrieveFromDeck — récupération d'une carte du deck de combat vers
         expect(result.passCalls).toHaveLength(1);
     });
 
-    test("une seule carte éligible : récupération automatique, aucune dialog", async () => {
-        const prompt = mockDialogPrompt(Promise.resolve("jamais"));
+    test("une seule carte éligible : récupération automatique, aucun voile", async () => {
+        const veil = mockSelectionVeil("jamais");
         const cards = [deckCard("d1", "FQCARDTITLE.A")];
 
         const result = await playChoice(makeRetrieverCard("*"), 0, {world: {deck: {cards}}});
 
         expect(result.threw).toBe(false);
-        expect(prompt).not.toHaveBeenCalled();
+        expect(veil).not.toHaveBeenCalled();
         expect(result.deckRetrieveCalls).toHaveLength(1);
         expect(result.deckRetrieveCalls[0][1]).toEqual(["d1"]);
     });
 
     test("les cartes déjà piochées sont hors du vivier : seule celle restée dans la pioche est prise", async () => {
-        const prompt = mockDialogPrompt(Promise.resolve("jamais"));
+        const veil = mockSelectionVeil("jamais");
         const cards = [
             deckCard("dDrawn", "FQCARDTITLE.DejaPiochee", true),
             deckCard("dLeft", "FQCARDTITLE.EnPioche")
@@ -110,7 +112,7 @@ describe("retrieveFromDeck — récupération d'une carte du deck de combat vers
 
         const result = await playChoice(makeRetrieverCard("*"), 0, {world: {deck: {cards}}});
 
-        expect(prompt).not.toHaveBeenCalled();
+        expect(veil).not.toHaveBeenCalled();
         expect(result.deckRetrieveCalls).toHaveLength(1);
         expect(result.deckRetrieveCalls[0][1]).toEqual(["dLeft"]);
     });
@@ -126,8 +128,8 @@ describe("retrieveFromDeck — récupération d'une carte du deck de combat vers
         expect(result.chatMessages.some(m => String(m.content).includes("WarningMsgNoRetrievableDeckCard"))).toBe(true);
     });
 
-    test("liste de noms : TOUTES les cartes listées sont récupérées, sans dialog", async () => {
-        const prompt = mockDialogPrompt(Promise.resolve("jamais"));
+    test("liste de noms : TOUTES les cartes listées sont récupérées, sans voile", async () => {
+        const veil = mockSelectionVeil("jamais");
         const cards = [
             deckCard("dA", "FQCARDTITLE.A"),
             deckCard("dB", "FQCARDTITLE.B"),
@@ -138,7 +140,7 @@ describe("retrieveFromDeck — récupération d'une carte du deck de combat vers
             {world: {deck: {cards}}});
 
         expect(result.threw).toBe(false);
-        expect(prompt).not.toHaveBeenCalled();
+        expect(veil).not.toHaveBeenCalled();
         // Un transfert par carte : `updateData` est propre à chacune.
         expect(result.deckRetrieveCalls.map(call => call[1])).toEqual([["dA"], ["dC"]]);
     });
@@ -172,8 +174,8 @@ describe("retrieveFromDeck — récupération d'une carte du deck de combat vers
         expect(result.passCalls).toHaveLength(0);
     });
 
-    test("dialog fermée sans choix : aucune récupération, le jeu de la carte continue", async () => {
-        mockDialogPrompt(Promise.reject(new Error("closed")));
+    test("voile annulé sans choix : aucune récupération, le jeu de la carte continue", async () => {
+        mockSelectionVeil(null);
         const cards = [deckCard("d1", "FQCARDTITLE.A"), deckCard("d2", "FQCARDTITLE.B")];
 
         const result = await playChoice(makeRetrieverCard("*"), 0, {world: {deck: {cards}}});

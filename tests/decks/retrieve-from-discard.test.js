@@ -12,16 +12,17 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {playChoice} = await import("./play-harness.js");
-const {mockDialogPrompt} = await import("./corpus-helpers.js");
+const {mockSelectionVeil} = await import("./corpus-helpers.js");
 
 /**
  * Récupération de cartes de la défausse vers la main (`retrieveFromDiscard`),
  * jouée via le VRAI `playValidatedCard`, en deux modes — la carte jouée étant
  * toujours exclue. Mode `*` : toute la pile est éligible, plusieurs éligibles →
- * dialog de choix (DialogV2.prompt) d'UNE carte, une seule → récupération
- * automatique sans dialog, aucune → injouable (`WarningMsgNoRetrievableCard`).
+ * voile de sélection (`CardSelection.openSelectionVeil`, celui de tous les choix
+ * de cartes) d'UNE carte, une seule → récupération automatique sans voile,
+ * aucune → injouable (`WarningMsgNoRetrievableCard`).
  * Mode liste (noms séparés par des virgules) : TOUTES les cartes listées sont
- * récupérées sans dialog (un nom en double exige deux exemplaires distincts) ;
+ * récupérées sans voile (un nom en double exige deux exemplaires distincts) ;
  * un nom sans correspondance → injouable (`WarningMsgMissingRetrievableCards`,
  * aucun transfert). Les cartes sont DÉPLACÉES (`pile.pass(main)`) face visible
  * (même défaussées face cachée) et horodatées `generatedAt` (halo vert).
@@ -60,21 +61,23 @@ function pileCard(id, name, face = 0, origin = null) {
 describe("retrieveFromDiscard — récupération d'une carte de la défausse vers la main", () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        delete globalThis.foundry.applications.api;
+        // Les espions du voile posés par un test (ou par le harnais) ne doivent pas
+        // suivre au suivant : chaque test repart du comportement par défaut.
+        vi.restoreAllMocks();
     });
 
-    test("'*' avec plusieurs cartes : dialog de choix, la carte choisie est déplacée vers la main (face visible + halo)", async () => {
-        const prompt = mockDialogPrompt(Promise.resolve("p2"));
+    test("'*' avec plusieurs cartes : voile de choix, la carte choisie est déplacée vers la main (face visible + halo)", async () => {
+        const veil = mockSelectionVeil("p2");
         const cards = [pileCard("p1", "FQCARDTITLE.A"), pileCard("p2", "FQCARDTITLE.B")];
 
         const result = await playChoice(makeRetrieverCard("*"), 0, {world: {discardPile: {cards}}});
 
         expect(result.threw).toBe(false);
-        expect(prompt).toHaveBeenCalledTimes(1);
-        // La dialog présente bien toutes les cartes éligibles
-        const dialogContent = prompt.mock.calls[0][0].content;
-        expect(dialogContent).toContain("FQCARDTITLE.A");
-        expect(dialogContent).toContain("FQCARDTITLE.B");
+        expect(veil).toHaveBeenCalledTimes(1);
+        // Le voile propose bien toutes les cartes éligibles, une seule à retenir
+        const [proposed, count] = veil.mock.calls[0];
+        expect(proposed.map(c => c.id)).toEqual(["p1", "p2"]);
+        expect(count).toBe(1);
 
         expect(result.retrieveCalls).toHaveLength(1);
         const [dest, ids, opts] = result.retrieveCalls[0];
@@ -87,20 +90,20 @@ describe("retrieveFromDiscard — récupération d'une carte de la défausse ver
         expect(result.passCalls).toHaveLength(1);
     });
 
-    test("une seule carte éligible : récupération automatique, aucune dialog", async () => {
-        const prompt = mockDialogPrompt(Promise.resolve("jamais"));
+    test("une seule carte éligible : récupération automatique, aucun voile", async () => {
+        const veil = mockSelectionVeil("jamais");
         const cards = [pileCard("p1", "FQCARDTITLE.A")];
 
         const result = await playChoice(makeRetrieverCard("*"), 0, {world: {discardPile: {cards}}});
 
         expect(result.threw).toBe(false);
-        expect(prompt).not.toHaveBeenCalled();
+        expect(veil).not.toHaveBeenCalled();
         expect(result.retrieveCalls).toHaveLength(1);
         expect(result.retrieveCalls[0][1]).toEqual(["p1"]);
     });
 
-    test("liste de noms : TOUTES les cartes listées sont récupérées, sans dialog", async () => {
-        const prompt = mockDialogPrompt(Promise.resolve("jamais"));
+    test("liste de noms : TOUTES les cartes listées sont récupérées, sans voile", async () => {
+        const veil = mockSelectionVeil("jamais");
         const cards = [
             pileCard("pA", "FQCARDTITLE.A"),
             pileCard("pB", "FQCARDTITLE.B"),
@@ -111,7 +114,7 @@ describe("retrieveFromDiscard — récupération d'une carte de la défausse ver
             {world: {discardPile: {cards}}});
 
         expect(result.threw).toBe(false);
-        expect(prompt).not.toHaveBeenCalled();
+        expect(veil).not.toHaveBeenCalled();
         expect(result.retrieveCalls).toHaveLength(2);
         expect(result.retrieveCalls.map(call => call[1])).toEqual([["pA"], ["pC"]]);
         // Chaque transfert porte face visible + horodatage du halo
@@ -189,8 +192,8 @@ describe("retrieveFromDiscard — récupération d'une carte de la défausse ver
         expect(result.chatMessages.some(m => String(m.content).includes("WarningMsgNoRetrievableCard"))).toBe(true);
     });
 
-    test("dialog fermée sans choix : aucune récupération, le jeu de la carte continue", async () => {
-        mockDialogPrompt(Promise.reject(new Error("closed")));
+    test("voile annulé sans choix : aucune récupération, le jeu de la carte continue", async () => {
+        mockSelectionVeil(null);
         const cards = [pileCard("p1", "FQCARDTITLE.A"), pileCard("p2", "FQCARDTITLE.B")];
 
         const result = await playChoice(makeRetrieverCard("*"), 0, {world: {discardPile: {cards}}});

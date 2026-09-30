@@ -12,17 +12,17 @@ vi.mock("../../src/hook/integration/socketlib.hook.js", () => ({socket: {execute
 globalThis.socketlib = {registerModule: vi.fn(() => ({register: vi.fn()}))};
 
 const {playChoice, makeHandCard} = await import("./play-harness.js");
-const {mockDialogPrompt} = await import("./corpus-helpers.js");
+const {mockSelectionVeil} = await import("./corpus-helpers.js");
 const {default: CardSelection} = await import("../../src/domain/interface/window/card-selection.js");
 
 /**
  * Duplication d'une carte de la main (`duplicateFromHand`), jouée via le VRAI
  * `playValidatedCard`, en deux modes — la carte jouée étant toujours exclue.
- * Mode `*` : toute la main est éligible, plusieurs éligibles → dialog de choix
- * (DialogV2.prompt) d'UNE carte, une seule → duplication automatique sans
- * dialog, aucune → injouable (`WarningMsgNoDuplicableCard`). Mode liste (noms
- * séparés par des virgules) : TOUTES les cartes listées sont dupliquées sans
- * dialog ; un nom sans correspondance → injouable
+ * Mode `*` : toute la main est éligible, plusieurs éligibles → voile de choix
+ * (`CardSelection.openSelectionVeil`) d'UNE carte, une seule → duplication
+ * automatique sans voile, aucune → injouable (`WarningMsgNoDuplicableCard`).
+ * Mode liste (noms séparés par des virgules) : TOUTES les cartes listées sont
+ * dupliquées sans voile ; un nom sans correspondance → injouable
  * (`WarningMsgMissingDuplicableCards`, aucune création). Les originaux ne
  * bougent pas : chaque carte choisie est COPIÉE en copie générée créée dans la
  * main (drapeau `generated`, sans deck d'origine), non épuisée sauf si
@@ -53,21 +53,23 @@ const handCard = makeHandCard;
 describe("duplicateFromHand — duplication d'une carte de la main en copie générée", () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        delete globalThis.foundry.applications.api;
+        // Les espions du voile posés par un test (ou par le harnais) ne doivent pas
+        // suivre au suivant : chaque test repart du comportement par défaut.
+        vi.restoreAllMocks();
     });
 
-    test("'*' avec plusieurs cartes : dialog de choix, la carte choisie est copiée dans la main", async () => {
-        const prompt = mockDialogPrompt(Promise.resolve("h2"));
+    test("'*' avec plusieurs cartes : voile de choix, la carte choisie est copiée dans la main", async () => {
+        const veil = mockSelectionVeil("h2");
         const handCards = [handCard("h1", "FQCARDTITLE.A"), handCard("h2", "FQCARDTITLE.B")];
 
         const result = await playChoice(makeDuplicatorCard("*"), 0, {cardOptions: {handCards}});
 
         expect(result.threw).toBe(false);
-        expect(prompt).toHaveBeenCalledTimes(1);
-        // La dialog présente bien toutes les cartes éligibles de la main
-        const dialogContent = prompt.mock.calls[0][0].content;
-        expect(dialogContent).toContain("FQCARDTITLE.A");
-        expect(dialogContent).toContain("FQCARDTITLE.B");
+        expect(veil).toHaveBeenCalledTimes(1);
+        // Le voile propose bien toutes les cartes éligibles de la main, une seule à retenir
+        const [proposed, count] = veil.mock.calls[0];
+        expect(proposed.map(c => c.id)).toEqual(["h1", "h2"]);
+        expect(count).toBe(1);
 
         expect(result.generatedCards).toHaveLength(1);
         const [embeddedName, [data]] = result.generatedCards[0];
@@ -82,14 +84,14 @@ describe("duplicateFromHand — duplication d'une carte de la main en copie gén
         expect(result.passCalls).toHaveLength(1);
     });
 
-    test("une seule carte éligible : duplication automatique, aucune dialog", async () => {
-        const prompt = mockDialogPrompt(Promise.resolve("jamais"));
+    test("une seule carte éligible : duplication automatique, aucun voile", async () => {
+        const veil = mockSelectionVeil("jamais");
         const handCards = [handCard("h1", "FQCARDTITLE.A")];
 
         const result = await playChoice(makeDuplicatorCard("*"), 0, {cardOptions: {handCards}});
 
         expect(result.threw).toBe(false);
-        expect(prompt).not.toHaveBeenCalled();
+        expect(veil).not.toHaveBeenCalled();
         expect(result.generatedCards).toHaveLength(1);
         expect(result.generatedCards[0][1][0].name).toBe("FQCARDTITLE.A");
     });
@@ -107,8 +109,8 @@ describe("duplicateFromHand — duplication d'une carte de la main en copie gén
         expect(data.system.fq.choices[0].playedRound).toBeUndefined();
     });
 
-    test("liste de noms : TOUTES les cartes listées sont copiées, sans dialog", async () => {
-        const prompt = mockDialogPrompt(Promise.resolve("jamais"));
+    test("liste de noms : TOUTES les cartes listées sont copiées, sans voile", async () => {
+        const veil = mockSelectionVeil("jamais");
         const handCards = [
             handCard("hA", "FQCARDTITLE.A"),
             handCard("hB", "FQCARDTITLE.B"),
@@ -119,7 +121,7 @@ describe("duplicateFromHand — duplication d'une carte de la main en copie gén
             {cardOptions: {handCards}});
 
         expect(result.threw).toBe(false);
-        expect(prompt).not.toHaveBeenCalled();
+        expect(veil).not.toHaveBeenCalled();
         expect(result.generatedCards).toHaveLength(1);
         expect(result.generatedCards[0][1].map(data => data.name))
             .toEqual(["FQCARDTITLE.A", "FQCARDTITLE.C"]);
@@ -157,8 +159,8 @@ describe("duplicateFromHand — duplication d'une carte de la main en copie gén
         expect(result.chatMessages.some(m => String(m.content).includes("WarningMsgNoDuplicableCard"))).toBe(true);
     });
 
-    test("dialog fermée sans choix : aucune duplication, le jeu de la carte continue", async () => {
-        mockDialogPrompt(Promise.reject(new Error("closed")));
+    test("voile annulé sans choix : aucune duplication, le jeu de la carte continue", async () => {
+        mockSelectionVeil(null);
         const handCards = [handCard("h1", "FQCARDTITLE.A"), handCard("h2", "FQCARDTITLE.B")];
 
         const result = await playChoice(makeDuplicatorCard("*"), 0, {cardOptions: {handCards}});

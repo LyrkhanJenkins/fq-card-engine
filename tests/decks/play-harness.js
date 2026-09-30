@@ -279,7 +279,7 @@ export function mountWorld(overrides = {}) {
     // Deck de combat du joueur, publié dans `game.cards` : une carte encore dans
     // la pioche suffit à satisfaire la garde de lançabilité de tout choix
     // `retrieveFromDeck` (en mode `*`, l'unique éligible est auto-choisie SANS
-    // DialogV2 — non mocké par défaut), au même titre que la main duplicable par
+    // voile de sélection), au même titre que la main duplicable par
     // défaut de `wrapCard` ; les autres choix ignorent le deck.
     lastPlayerDeck = deepMerge({
         id: "harness-player-deck",
@@ -333,7 +333,7 @@ export function mountWorld(overrides = {}) {
  *        consommées par la duplication en main (`duplicateFromHand`). Par défaut,
  *        une main d'UNE carte duplicable : elle satisfait la garde de lançabilité
  *        de tout choix `duplicateFromHand` (en mode `*`, l'unique éligible est
- *        auto-choisie SANS DialogV2 — non mocké par défaut), au même titre que la
+ *        auto-choisie SANS voile de sélection), au même titre que la
  *        défausse abondante de resources-targeting pour `retrieveFromDiscard` ;
  *        les autres choix ignorent la main. Passer `[]` pour une main vide.
  *

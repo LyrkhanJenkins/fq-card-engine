@@ -116,7 +116,7 @@ function abundantWorld(extra = {}) {
         },
         // Une défausse d'une carte : satisfait la garde de lançabilité de tout
         // choix `retrieveFromDiscard` (en mode `*`, l'unique éligible est
-        // auto-choisie SANS DialogV2 — non mocké ici) ; les autres choix
+        // auto-choisie SANS voile de sélection) ; les autres choix
         // ignorent la pile. Sans elle, ces cartes seraient rejetées avant même
         // la consommation de coûts sous test. Elle porte le drapeau `generated`
         // pour satisfaire de la même façon les choix `destroyFromDiscard`, qui

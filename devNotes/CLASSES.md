@@ -558,13 +558,6 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - Seulement 2 cartes distinctes au N1 (Nécromancie, Trait d'Ombre-Verte ×9).
 - 4 générateurs de zèle pour 11 consommateurs.
 
-### Spécialisations — cartes par spé
-| Spé | Cartes existantes | Manques |
-|---|---|---|
-| **Armée** (piétaille) | Nécromancie, Trait d'Ombre-Verte, Croix de Squelettes, Carré de Squelettes, Levée d'Ossements, Fosse Commune, Bouclier d'Os, Canalisation des Ombres, Forme d'Ombre, Ossature Renforcée, Fureur des Morts, Apothéose Macabre, Déplacement Morbide, Afflux d'Agilité, Afflux de Pouvoir, Rituel du Sang, Sorcier Squelette | Invocation peu chère |
-| **Colosse** (squelette géant) | Squelette Géant, Couronne d'Ossements, Sceptre de l'Ossuaire, Marche Funèbre, Éclats d'Os, Crocs d'Ivoire, Talons d'Ossements, Onction de Moelle, Hécatombe d'Ossements | Version haut niveau du Géant |
-| **Charnier** (sacrifice, défausse, sorts directs) | Ostéologie, Afflux de Vie, Afflux de Mana, Sortilège d'Ombre, Mauvais Œil, Explosion d'Ombre, Frappe Arcanique, Offrande de Cendres, Rappel d'Outre-Tombe, Pacte d'Ossements, Récolte Macabre, Exhumation | Défense personnelle ? |
-
 ### Redondances à trancher
 - Récupération de défausse : Rappel d'Outre-Tombe / Pacte d'Ossements / Récolte Macabre / Exhumation (4 cartes).
 - Rituels du Géant : 8 cartes sur 3 paliers × 3 stats → garder un palier par stat, ou fusionner en cartes à choix.
@@ -576,10 +569,6 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - ~~Trait d'Ombre-Verte ×9~~ → ×3, avec une version mineure ×5 qui alimente le score de sacrifice.
 - Sorcier Squelette (15 PA, 4 mana, 4 zèle) et Apothéose Macabre (14 PA) hors de portée avant le N6‑N7.
 
-### À définir à la main
-- **Spécificités** :
-- **Spécialisations** :
-- **Contraintes** :
 
 **Questionnement et TODO :**
 - Une des cartes du squelette géant permet d'aller chercher la carte dans le deck en deuxième choix ?

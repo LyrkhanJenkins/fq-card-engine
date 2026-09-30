@@ -209,7 +209,7 @@ export default class CardEffect {
      * choisira UNE carte ; liste de noms séparés par des virgules → mode TOUTES
      * (`choose: false`), chaque nom listé doit correspondre à une carte DISTINCTE
      * de la pile (un nom en double exige deux exemplaires), toutes seront
-     * récupérées sans dialog, et les noms sans correspondance sont rapportés dans
+     * récupérées sans voile, et les noms sans correspondance sont rapportés dans
      * `missing` (la carte est alors injouable). La carte jouée elle-même
      * (`excludeCardId`) est toujours exclue : au moment où l'effet s'applique,
      * elle vient d'arriver (ou arrive) dans la pile et ne peut pas se récupérer
@@ -257,8 +257,8 @@ export default class CardEffect {
 
     /**
      * Descripteurs des opérations de pile (récupération en défausse ou dans le
-     * deck, destruction, duplication) : clés i18n de la dialog de choix et des
-     * avertissements, restriction aux copies générées et aux cartes non piochées.
+     * deck, destruction, duplication) : clés i18n du bandeau du voile de choix et
+     * des avertissements, restriction aux copies générées et aux cartes non piochées.
      * Toute la plomberie commune (résolution, garde, choix) est pilotée par cette table.
      */
     static #DISCARD_OPS = Object.freeze({
@@ -310,8 +310,11 @@ export default class CardEffect {
     /**
      * Plomberie commune des opérations de pile : résout la spécification,
      * publie l'avertissement et abandonne si la résolution est incomplète, puis
-     * en mode CHOIX fait choisir UNE carte (dialog, automatique s'il n'y en a
-     * qu'une éligible).
+     * en mode CHOIX fait choisir UNE carte dans le voile de sélection plein écran
+     * (cf. {@link CardSelection.openSelectionVeil}), commun à TOUS les choix de
+     * cartes du module — proposition de cartes, coût en défausse, opérations de
+     * pile. Le voile est annulable : renoncer laisse la pile intacte. Une seule
+     * carte éligible est retenue d'office, sans voile (aucune décision à prendre).
      *
      * @param {string} op            - L'opération (`retrieve`, `retrieveDeck`, `destroy` ou `duplicate`).
      * @param {string} spec          - La spécification (`*` ou liste de noms séparés par des virgules).
@@ -331,12 +334,13 @@ export default class CardEffect {
             return null;
         }
         let cards = resolution.cards;
-        if (resolution.choose) {
-            const chosenId = cards.length === 1 ? cards[0].id : await CardEffect.chooseDiscardCardDialog(cards, desc.titleKey);
-            if (!chosenId) {
+        if (resolution.choose && cards.length > 1) {
+            const chosen = await CardSelection.openSelectionVeil(cards, 1,
+                {title: game.i18n.localize(desc.titleKey)});
+            if (!chosen?.length) {
                 return null;
             }
-            cards = [cards.find(c => c.id === chosenId)];
+            cards = chosen;
         }
         return cards;
     }
@@ -364,45 +368,12 @@ export default class CardEffect {
     }
 
     /**
-     * Ouvre la dialog de choix de la carte à récupérer dans la défausse : chaque
-     * carte éligible est présentée face révélée (image + nom localisé), y compris
-     * les cartes défaussées face cachée. Renvoie l'id de la carte choisie, ou
-     * undefined si la dialog est fermée sans valider (aucune récupération).
-     *
-     * @param {Card[]} cards      - Les cartes éligibles de la défausse.
-     * @param {string} [titleKey] - La clé i18n du titre de la dialog.
-     *
-     * @returns {Promise<string|undefined>} L'id de la carte choisie, ou undefined.
-     */
-    static async chooseDiscardCardDialog(cards, titleKey = "FQCARDENGINE.RetrieveCardTitle") {
-        const options = cards.map((c, i) => {
-            const img = c.faces?.[c.face ?? 0]?.img ?? c.faces?.[0]?.img ?? "";
-            const name = game.i18n.localize(c.name);
-            return `<label class="fq-retrieve-option">
-                <input type="radio" name="cardId" value="${c.id}" ${i === 0 ? "checked" : ""}/>
-                <img src="${img}" alt="${name}"/>
-                <span>${name}</span>
-            </label>`;
-        }).join("");
-        try {
-            return await foundry.applications.api.DialogV2.prompt({
-                window: {title: game.i18n.localize(titleKey)},
-                content: `<div class="fq-retrieve-grid">${options}</div>`,
-                ok: {callback: (event, button) => button.form.elements.cardId.value}
-            });
-        } catch {
-            // Dialog fermée/annulée sans choix : aucune carte récupérée.
-            return undefined;
-        }
-    }
-
-    /**
      * Récupère une ou plusieurs cartes de la défausse vers la main
      * (`retrieveFromDiscard`) : résout la récupération
      * (cf. {@link CardEffect.resolveDiscardRetrieval}) puis, en mode `*`, fait
-     * choisir UNE carte au joueur via une dialog (choix automatique s'il n'y en a
-     * qu'une éligible) ; en mode liste, récupère TOUTES les cartes listées sans
-     * dialog. Les cartes sont DÉPLACÉES — contrairement aux copies générées de
+     * choisir UNE carte au joueur dans le voile de sélection (choix automatique
+     * s'il n'y en a qu'une éligible) ; en mode liste, récupère TOUTES les cartes
+     * listées sans voile. Les cartes sont DÉPLACÉES — contrairement aux copies générées de
      * l'encart 🃏, chacune garde son deck d'origine et sera défaussée/rappelée
      * normalement. Elles reviennent face visible (même défaussées face cachée) et
      * sont horodatées `generatedAt` pour le halo vert temporaire de la main
@@ -443,9 +414,9 @@ export default class CardEffect {
      * Duplique une ou plusieurs cartes de la main (`duplicateFromHand`) : la
      * résolution est celle des piles (cf.
      * {@link CardEffect.resolveDiscardRetrieval}, appliquée à la main, la carte
-     * jouée étant exclue) — `*` → le joueur choisit UNE carte via une dialog
-     * (choix automatique s'il n'y en a qu'une éligible) ; liste de noms → toutes
-     * les cartes listées, sans dialog. Contrairement à la récupération, les
+     * jouée étant exclue) — `*` → le joueur choisit UNE carte dans le voile de
+     * sélection (choix automatique s'il n'y en a qu'une éligible) ; liste de noms
+     * → toutes les cartes listées, sans voile. Contrairement à la récupération, les
      * originaux ne bougent pas : chaque carte choisie est COPIÉE en copie générée
      * (cf. {@link CardGenerated.buildGeneratedCardData}) créée dans la main —
      * sans deck d'origine, détruite au nettoyage de combat, et arrivant épuisée
@@ -478,9 +449,9 @@ export default class CardEffect {
      * Récupère dans la MAIN une ou plusieurs cartes du DECK de combat du joueur
      * (`retrieveFromDeck`) : une pioche CHOISIE plutôt que tirée au hasard. La
      * résolution est celle des piles (cf. {@link CardEffect.resolveDiscardRetrieval},
-     * appliquée au deck) — `*` → le joueur choisit UNE carte via une dialog (choix
-     * automatique s'il n'y en a qu'une éligible) ; liste de noms → toutes les cartes
-     * listées, sans dialog. Seules les cartes ENCORE DANS LA PIOCHE sont éligibles :
+     * appliquée au deck) — `*` → le joueur choisit UNE carte dans le voile de sélection
+     * (choix automatique s'il n'y en a qu'une éligible) ; liste de noms → toutes les cartes
+     * listées, sans voile. Seules les cartes ENCORE DANS LA PIOCHE sont éligibles :
      * une carte déjà piochée reste dans le deck marquée `drawn`, mais elle se trouve
      * en main ou en défausse. Le transfert emprunte le chemin de pioche normal
      * (`Cards#pass`) : la carte garde son deck d'origine, et sera défaussée puis
@@ -549,8 +520,8 @@ export default class CardEffect {
      * sont éligibles : une carte permanente du deck ne peut jamais être détruite
      * par une carte. Résolution identique à la récupération
      * (cf. {@link CardEffect.resolveDiscardRetrieval}) : `*` → le joueur choisit
-     * UNE carte via une dialog (choix automatique s'il n'y en a qu'une éligible) ;
-     * liste de noms → toutes les cartes listées, sans dialog. Contrairement à la
+     * UNE carte dans le voile de sélection (choix automatique s'il n'y en a qu'une
+     * éligible) ; liste de noms → toutes les cartes listées, sans voile. Contrairement à la
      * récupération, les cartes ne changent pas de pile : elles disparaissent, et
      * ne seront donc plus rappelées dans le deck au remélange.
      *

@@ -4,6 +4,7 @@ import {vi} from "vitest";
 import {makeEquippedWeapon, mountWorld} from "./play-harness.js";
 import {DeterministicRoll, resetDiceControl} from "./deterministic-roll.js";
 import RollService from "../../src/domain/engine/roll/roll-service.js";
+import CardSelection from "../../src/domain/interface/window/card-selection.js";
 
 /**
  * Helpers PARTAGÉS des suites « corpus » (damage-heal, resources-targeting,
@@ -89,16 +90,24 @@ export async function reachAllowsFixtureDistance(choice) {
 }
 
 /**
- * Installe l'espion `DialogV2.prompt` (absent du socle tests/setup.js) et le renvoie.
+ * Installe l'espion du voile de sélection (`CardSelection.openSelectionVeil`) pour
+ * les opérations de pile — récupération en défausse ou dans le deck, destruction,
+ * duplication — et le renvoie. L'espion retient la carte proposée portant `chosenId`,
+ * comme le clic du joueur ; un id absent des propositions (ou `null`) simule le
+ * renoncement, voile fermé sans rien retenir.
  *
- * @param {Promise<string|undefined>} resolution - La promesse renvoyée par le prompt.
+ * Posé AVANT `playChoice`, il prend le pas sur l'espion par défaut du harnais (qui
+ * retient les premières cartes proposées, cf. play-harness.js).
  *
- * @returns {import("vitest").Mock} L'espion prompt installé.
+ * @param {string|null} chosenId - L'id de la carte à retenir, ou null pour renoncer.
+ *
+ * @returns {import("vitest").MockInstance} L'espion installé.
  */
-export function mockDialogPrompt(resolution) {
-    const prompt = vi.fn(() => resolution);
-    globalThis.foundry.applications.api = {DialogV2: {prompt}};
-    return prompt;
+export function mockSelectionVeil(chosenId) {
+    return vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => {
+        const chosen = cards.find(card => card.id === chosenId);
+        return chosen ? [chosen] : null;
+    });
 }
 
 /**
