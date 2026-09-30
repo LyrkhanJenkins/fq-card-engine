@@ -16,11 +16,14 @@ const {mockSelectionVeil} = await import("./corpus-helpers.js");
 
 /**
  * Récupération de cartes de la défausse vers la main (`retrieveFromDiscard`),
- * jouée via le VRAI `playValidatedCard`, en deux modes — la carte jouée étant
+ * jouée via le VRAI `playValidatedCard`, en trois modes — la carte jouée étant
  * toujours exclue. Mode `*` : toute la pile est éligible, plusieurs éligibles →
  * voile de sélection (`CardSelection.openSelectionVeil`, celui de tous les choix
  * de cartes) d'UNE carte, une seule → récupération automatique sans voile,
  * aucune → injouable (`WarningMsgNoRetrievableCard`).
+ * Mode hasard (`?N`, `?` seul = 1) : le moteur tire N cartes au sort, sans voile ;
+ * une pile qui n'en compte pas N rend la carte INJOUABLE
+ * (`WarningMsgNotEnoughPileCards`), coûts non prélevés.
  * Mode liste (noms séparés par des virgules) : TOUTES les cartes listées sont
  * récupérées sans voile (un nom en double exige deux exemplaires distincts) ;
  * un nom sans correspondance → injouable (`WarningMsgMissingRetrievableCards`,
@@ -30,8 +33,10 @@ const {mockSelectionVeil} = await import("./corpus-helpers.js");
 
 /**
  * Construit une carte de main minimale dont l'unique choix récupère `spec`.
+ * Elle coûte une action : un refus de lançabilité se prouve alors par l'absence
+ * de mise à jour de l'acteur (`result.updates`), rien n'ayant été prélevé.
  *
- * @param {string} spec - La spécification (`*` ou liste de noms séparés par des virgules).
+ * @param {string} spec - La spécification (`*`, `?N`, ou liste de noms séparés par des virgules).
  *
  * @returns {object} La carte brute consommable par `playChoice`.
  */
@@ -40,7 +45,7 @@ function makeRetrieverCard(spec) {
         _id: "retriever-card",
         name: "FQCARDTITLE.Retriever",
         face: 0,
-        system: {fq: {choices: [{retrieveFromDiscard: spec, bonusCrit: "0", bonusEva: "0"}]}}
+        system: {fq: {choices: [{retrieveFromDiscard: spec, action: "-1", bonusCrit: "0", bonusEva: "0"}]}}
     };
 }
 
@@ -201,6 +206,70 @@ describe("retrieveFromDiscard — récupération d'une carte de la défausse ver
         expect(result.threw).toBe(false);
         expect(result.retrieveCalls).toHaveLength(0);
         expect(result.passCalls).toHaveLength(1);
+    });
+
+    test("'?2' : deux cartes tirées au sort reviennent en main, sans voile", async () => {
+        const veil = mockSelectionVeil("jamais");
+        const cards = [
+            pileCard("p1", "FQCARDTITLE.A"),
+            pileCard("p2", "FQCARDTITLE.B"),
+            pileCard("p3", "FQCARDTITLE.C")
+        ];
+
+        const result = await playChoice(makeRetrieverCard("?2"), 0, {world: {discardPile: {cards}}});
+
+        expect(result.threw).toBe(false);
+        // Tirage, pas choix : aucune décision n'est demandée au joueur.
+        expect(veil).not.toHaveBeenCalled();
+        expect(result.retrieveCalls).toHaveLength(2);
+        const taken = result.retrieveCalls.flatMap(call => call[1]);
+        expect(new Set(taken).size).toBe(2);
+        taken.forEach(id => expect(["p1", "p2", "p3"]).toContain(id));
+        expect(result.passCalls).toHaveLength(1);
+    });
+
+    test("'?' seul : une carte tirée au sort", async () => {
+        const cards = [pileCard("p1", "FQCARDTITLE.A"), pileCard("p2", "FQCARDTITLE.B")];
+
+        const result = await playChoice(makeRetrieverCard("?"), 0, {world: {discardPile: {cards}}});
+
+        expect(result.threw).toBe(false);
+        expect(result.retrieveCalls).toHaveLength(1);
+    });
+
+    test("'?2' avec une seule carte en défausse : carte INJOUABLE, aucun coût prélevé", async () => {
+        const cards = [pileCard("p1", "FQCARDTITLE.A")];
+
+        const result = await playChoice(makeRetrieverCard("?2"), 0, {world: {discardPile: {cards}}});
+
+        expect(result.threw).toBe(false);
+        expect(result.retrieveCalls).toHaveLength(0);
+        // Ni transfert de la carte jouée, ni consommation d'action : le garde a refusé.
+        expect(result.passCalls).toHaveLength(0);
+        expect(result.updates).toEqual([]);
+        expect(result.chatMessages.some(m => String(m.content).includes("WarningMsgNotEnoughPileCards"))).toBe(true);
+    });
+
+    test("'?2' sur une défausse vide : carte injouable", async () => {
+        const result = await playChoice(makeRetrieverCard("?2"), 0, {world: {discardPile: {cards: []}}});
+
+        expect(result.retrieveCalls).toHaveLength(0);
+        expect(result.passCalls).toHaveLength(0);
+        expect(result.updates).toEqual([]);
+        expect(result.chatMessages.some(m => String(m.content).includes("WarningMsgNotEnoughPileCards"))).toBe(true);
+    });
+
+    test("'?2' : la carte jouée ne compte pas dans le vivier du tirage", async () => {
+        const cards = [
+            pileCard("retriever-card", "FQCARDTITLE.Retriever"),
+            pileCard("p1", "FQCARDTITLE.A")
+        ];
+
+        const result = await playChoice(makeRetrieverCard("?2"), 0, {world: {discardPile: {cards}}});
+
+        // Une seule carte réellement éligible : le tirage de 2 est impossible.
+        expect(result.retrieveCalls).toHaveLength(0);
+        expect(result.chatMessages.some(m => String(m.content).includes("WarningMsgNotEnoughPileCards"))).toBe(true);
     });
 
     test("carte défaussée face cachée : éligible et récupérée face visible", async () => {

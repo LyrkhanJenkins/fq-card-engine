@@ -426,6 +426,7 @@
   "FQCARDENGINE.FormulaCapMin": "min",
   "FQCARDENGINE.WarningMsgNoRetrievableCard": "n'a aucune carte récupérable dans la défausse",
   "FQCARDENGINE.WarningMsgMissingRetrievableCards": "ne trouve pas dans la défausse : {names}",
+  "FQCARDENGINE.WarningMsgNotEnoughPileCards": "n'a pas assez de cartes : {wanted} demandée(s), {available} disponible(s)",
   "FQCARDENGINE.WarningMsgNoDuplicableCard": "n'a aucune carte duplicable en main",
   "FQCARDENGINE.WarningMsgMissingDuplicableCards": "ne trouve pas en main : {names}",
   "FQCARDENGINE.WarningMsgNoRetrievableDeckCard": "n'a aucune carte à récupérer dans son deck",

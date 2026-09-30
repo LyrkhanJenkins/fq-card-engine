@@ -393,6 +393,7 @@
   "FQCARDENGINE.WarningMsgNoRangedWeapon": "does not have a ranged weapon equipped",
   "FQCARDENGINE.WarningMsgNoRetrievableCard": "has no retrievable card in the discard pile",
   "FQCARDENGINE.WarningMsgMissingRetrievableCards": "cannot find in the discard pile: {names}",
+  "FQCARDENGINE.WarningMsgNotEnoughPileCards": "does not have enough cards: {wanted} needed, {available} available",
   "FQCARDENGINE.WarningMsgNoDuplicableCard": "has no duplicable card in hand",
   "FQCARDENGINE.WarningMsgMissingDuplicableCards": "cannot find in hand: {names}",
   "FQCARDENGINE.WarningMsgNoRetrievableDeckCard": "has no card to retrieve in their deck",
