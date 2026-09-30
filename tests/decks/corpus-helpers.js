@@ -92,21 +92,23 @@ export async function reachAllowsFixtureDistance(choice) {
 /**
  * Installe l'espion du voile de sélection (`CardSelection.openSelectionVeil`) pour
  * les opérations de pile — récupération en défausse ou dans le deck, destruction,
- * duplication — et le renvoie. L'espion retient la carte proposée portant `chosenId`,
- * comme le clic du joueur ; un id absent des propositions (ou `null`) simule le
- * renoncement, voile fermé sans rien retenir.
+ * duplication — et le renvoie. L'espion retient les cartes proposées portant
+ * `chosenIds`, comme les clics du joueur ; un id absent des propositions (ou `null`)
+ * simule le renoncement, voile fermé sans rien retenir.
  *
  * Posé AVANT `playChoice`, il prend le pas sur l'espion par défaut du harnais (qui
  * retient les premières cartes proposées, cf. play-harness.js).
  *
- * @param {string|null} chosenId - L'id de la carte à retenir, ou null pour renoncer.
+ * @param {string|string[]|null} chosenIds - Le ou les ids à retenir, ou null pour renoncer.
  *
  * @returns {import("vitest").MockInstance} L'espion installé.
  */
-export function mockSelectionVeil(chosenId) {
+export function mockSelectionVeil(chosenIds) {
+    const wanted = chosenIds == null ? [] : [].concat(chosenIds);
     return vi.spyOn(CardSelection, "openSelectionVeil").mockImplementation(async cards => {
-        const chosen = cards.find(card => card.id === chosenId);
-        return chosen ? [chosen] : null;
+        const chosen = wanted.map(id => cards.find(card => card.id === id)).filter(Boolean);
+        // Une sélection incomplète vaut un renoncement : le voile ne valide que le compte exact.
+        return chosen.length && chosen.length === wanted.length ? chosen : null;
     });
 }
 

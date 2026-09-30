@@ -12,7 +12,6 @@ import Constants, {OriginFQEffectLabel, isGeneratedCard} from "../../constants.j
 import Facing from "./facing.js";
 import Fx from "./fx.js";
 import {createInfo, createWarning} from "../../../core/utils/chat.utils.js";
-import {sampleItems} from "../../../core/utils/random.utils.js";
 import {ERROR_COLOR} from "../../../core/constants.js";
 import CardFqSystem from "../../system/cards/card-fq-system.mjs";
 import {socket} from "../../../hook/integration/socketlib.hook.js";
@@ -205,11 +204,10 @@ export default class CardEffect {
     }
 
     /**
-     * Résout une récupération en défausse (`retrieveFromDiscard`) en trois modes :
-     * `*` → mode CHOIX (`choose: true`), toute la pile est éligible et le joueur
-     * choisira UNE carte ; `?N` → mode HASARD (`random: N`, `?` seul = 1), le
-     * moteur tire N cartes au sort parmi les éligibles — la carte est INJOUABLE
-     * si la pile n'en compte pas N (`shortfall`), au même titre qu'une liste non
+     * Résout une récupération en défausse (`retrieveFromDiscard`) en deux modes :
+     * `*N` → mode CHOIX (`choose: true`, `count: N` ; `*` seul = 1), toute la pile
+     * est éligible et le joueur choisira N cartes — la carte est INJOUABLE si la
+     * pile n'en compte pas N (`shortfall`), au même titre qu'une liste non
      * satisfaite ; liste de noms séparés par des virgules → mode TOUTES
      * (`choose: false`), chaque nom listé doit correspondre à une carte DISTINCTE
      * de la pile (un nom en double exige deux exemplaires), toutes seront
@@ -219,24 +217,24 @@ export default class CardEffect {
      * elle vient d'arriver (ou arrive) dans la pile et ne peut pas se récupérer
      * elle-même.
      *
-     * Le mode HASARD rend le vivier ENTIER : le tirage n'a lieu qu'à l'application,
-     * si bien que la résolution reste pure et que le garde de lançabilité peut la
-     * rejouer sans consommer de hasard.
+     * Le mode CHOIX rend le vivier ENTIER : c'est le voile de sélection qui en
+     * retiendra N à l'application, si bien que la résolution reste pure et que le
+     * garde de lançabilité peut la rejouer sans rien décider à la place du joueur.
      *
      * La résolution est indépendante de la pile fournie : la duplication en main
      * (`duplicateFromHand`) l'applique à la main, la récupération dans le deck
      * (`retrieveFromDeck`) au deck de combat.
      *
-     * @param {string}  spec                   - La spécification (`*`, `?N`, ou liste de noms séparés par des virgules).
+     * @param {string}  spec                   - La spécification (`*N` ou liste de noms séparés par des virgules).
      * @param {Cards}   pile                   - La pile inspectée (défausse, main, ou deck de combat).
      * @param {string}  excludeCardId          - L'id de la carte jouée, à exclure.
      * @param {object}  [options]              - Les options de résolution.
      * @param {boolean} [options.generatedOnly] - True pour ne retenir que les copies générées.
      * @param {boolean} [options.undrawnOnly]   - True pour ne retenir que les cartes non encore piochées.
      *
-     * @returns {{choose: boolean, cards: Card[], missing: string[], random?: number,
+     * @returns {{choose: boolean, cards: Card[], missing: string[], count?: number,
      *          shortfall?: {wanted: number, available: number}}} Le mode, les cartes résolues,
-     *          les noms manquants et, en mode HASARD, le nombre voulu et le manque éventuel.
+     *          les noms manquants et, en mode CHOIX, le nombre voulu et le manque éventuel.
      */
     static resolveDiscardRetrieval(spec, pile, excludeCardId, {generatedOnly = false, undrawnOnly = false} = {}) {
         const trimmed = spec?.trim() ?? "";
@@ -246,20 +244,19 @@ export default class CardEffect {
             // Une carte piochée reste dans le deck, marquée `drawn` : elle est déjà
             // sortie de la pioche et n'est donc plus récupérable depuis le deck.
             .filter(c => !undrawnOnly || !c.drawn);
-        if (trimmed === "*") {
-            return {choose: true, cards: available, missing: []};
-        }
-        if (trimmed.startsWith("?")) {
+        if (trimmed.startsWith("*")) {
             const wanted = Math.max(1, Math.trunc(Number(trimmed.slice(1))) || 1);
             // Vivier trop court : `cards` vide, comme une liste non satisfaite, pour
             // que le garde de lançabilité refuse la carte AVANT tout prélèvement.
+            // Le manque n'est chiffré que s'il reste des cartes : un vivier vide se
+            // dit mieux avec l'avertissement générique de l'opération.
             const enough = available.length >= wanted;
             return {
-                choose: false,
-                random: wanted,
+                choose: true,
+                count: wanted,
                 cards: enough ? available : [],
                 missing: [],
-                shortfall: enough ? null : {wanted, available: available.length}
+                shortfall: (enough || !available.length) ? null : {wanted, available: available.length}
             };
         }
         const names = trimmed.split(",").map(name => name.trim()).filter(Boolean);
@@ -314,7 +311,7 @@ export default class CardEffect {
 
     /**
      * Publie l'avertissement d'indisponibilité d'une opération de pile : le
-     * manque chiffré (mode hasard : tant de cartes voulues, tant de disponibles),
+     * manque chiffré (mode choix : tant de cartes voulues, tant de disponibles),
      * sinon les noms manquants (mode liste, localisés) si la résolution en
      * rapporte, sinon l'avertissement générique de l'opération.
      *
@@ -340,15 +337,14 @@ export default class CardEffect {
     /**
      * Plomberie commune des opérations de pile : résout la spécification,
      * publie l'avertissement et abandonne si la résolution est incomplète, puis
-     * en mode CHOIX fait choisir UNE carte dans le voile de sélection plein écran
+     * en mode CHOIX fait choisir N cartes dans le voile de sélection plein écran
      * (cf. {@link CardSelection.openSelectionVeil}), commun à TOUS les choix de
      * cartes du module — proposition de cartes, coût en défausse, opérations de
-     * pile. Le voile est annulable : renoncer laisse la pile intacte. Une seule
-     * carte éligible est retenue d'office, sans voile (aucune décision à prendre).
-     * En mode HASARD, le tirage remplace le voile : aucune décision n'est demandée.
+     * pile. Le voile est annulable : renoncer laisse la pile intacte. Un vivier
+     * réduit à N cartes est retenu d'office, sans voile (aucune décision à prendre).
      *
      * @param {string} op            - L'opération (`retrieve`, `retrieveDeck`, `destroy` ou `duplicate`).
-     * @param {string} spec          - La spécification (`*`, `?N`, ou liste de noms séparés par des virgules).
+     * @param {string} spec          - La spécification (`*N` ou liste de noms séparés par des virgules).
      * @param {Cards}  pile          - La pile inspectée (défausse, main, ou deck de combat).
      * @param {string} excludeCardId - L'id de la carte jouée, à exclure.
      *
@@ -365,11 +361,10 @@ export default class CardEffect {
             return null;
         }
         let cards = resolution.cards;
-        if (resolution.random) {
-            // Le vivier est complet (garde passée) : le tirage a lieu ici, une seule fois.
-            cards = sampleItems(cards, resolution.random);
-        } else if (resolution.choose && cards.length > 1) {
-            const chosen = await CardSelection.openSelectionVeil(cards, 1,
+        // Autant d'éligibles que de cartes à retenir : le voile n'offrirait aucune
+        // décision réelle (le vivier plus court a déjà été refusé par le garde).
+        if (resolution.choose && cards.length > resolution.count) {
+            const chosen = await CardSelection.openSelectionVeil(cards, resolution.count,
                 {title: game.i18n.localize(desc.titleKey)});
             if (!chosen?.length) {
                 return null;
@@ -384,7 +379,7 @@ export default class CardEffect {
      * publie l'avertissement d'indisponibilité le cas échéant.
      *
      * @param {string} op            - L'opération (`retrieve`, `retrieveDeck`, `destroy` ou `duplicate`).
-     * @param {string} spec          - La spécification (`*`, `?N`, ou liste de noms séparés par des virgules).
+     * @param {string} spec          - La spécification (`*N` ou liste de noms séparés par des virgules).
      * @param {Cards}  pile          - La pile inspectée (défausse, main, ou deck de combat).
      * @param {string} excludeCardId - L'id de la carte jouée, à exclure.
      *
@@ -413,7 +408,7 @@ export default class CardEffect {
      * sont horodatées `generatedAt` pour le halo vert temporaire de la main
      * (cf. hand-board.js).
      *
-     * @param {string} spec       - La spécification (`*`, `?N`, ou liste de noms séparés par des virgules).
+     * @param {string} spec       - La spécification (`*N` ou liste de noms séparés par des virgules).
      * @param {Cards}  pile       - La pile de défausse cible du jeu de la carte.
      * @param {Card}   playedCard - La carte jouée (exclue, et dont le parent est la main).
      *
@@ -494,7 +489,7 @@ export default class CardEffect {
      * (cf. hand-board.js). Sans deck de combat, la récupération est sans effet
      * (l'avertissement est publié par {@link TradingCards.getFirstDeck}).
      *
-     * @param {string} spec       - La spécification (`*`, `?N`, ou liste de noms séparés par des virgules).
+     * @param {string} spec       - La spécification (`*N` ou liste de noms séparés par des virgules).
      * @param {Card}   playedCard - La carte jouée (exclue, et dont le parent est la main).
      *
      * @returns {Promise<Card[]|null>} Les cartes piochées, ou null si aucune récupération.
@@ -559,7 +554,7 @@ export default class CardEffect {
      * récupération, les cartes ne changent pas de pile : elles disparaissent, et
      * ne seront donc plus rappelées dans le deck au remélange.
      *
-     * @param {string} spec       - La spécification (`*`, `?N`, ou liste de noms séparés par des virgules).
+     * @param {string} spec       - La spécification (`*N` ou liste de noms séparés par des virgules).
      * @param {Cards}  pile       - La pile de défausse cible du jeu de la carte.
      * @param {Card}   playedCard - La carte jouée (exclue de la résolution).
      *
