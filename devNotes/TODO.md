@@ -1,6 +1,7 @@
 ## V3.x
 ### Fix Prioritaire
 - TODO tests modules importé dans l'ordre : Restrain movement enhanced combat, card engine, et card engine extended
+- Unifier les interface pour récupérer des cartes UI différente pour les cartes venant de la défausse?
 
 ### Fix mineure
 - Vérifier la localisation notamment pour les macros
