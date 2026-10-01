@@ -117,6 +117,14 @@
             <rect x="138" y="360" width="347" height="45"/>
         </clipPath>
 
+        <!-- Le bombé de la gemme de spécialisations : le reflet des bulles rondes
+             de la carte, assombri sur le bord. -->
+        <radialGradient id="specGemShine" cx="35%" cy="28%" r="75%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity=".55"></stop>
+            <stop offset="55%" stop-color="#ffffff" stop-opacity="0"></stop>
+            <stop offset="100%" stop-color="#000000" stop-opacity=".25"></stop>
+        </radialGradient>
+
     </defs>
 
     <!-- Outer card -->
@@ -240,6 +248,23 @@
             <span class="fq-card-description">{{fqEmojiTooltips description}}</span>
         </div>
     </foreignObject>
+
+    {{!-- Gemme de spécialisations : un quartier par spé, peint par
+          styles/card-engine/specializations.css via data-fq-spec. --}}
+    {{#if specs}}
+        <g class="fq-spec-gem">
+            {{#each specs}}
+                <path class="fq-spec-facet" data-fq-spec="{{ id }}" d="{{ facet }}"
+                      stroke="#1f1f1f" stroke-width="2">
+                    <title>{{ localize label }}</title>
+                </path>
+            {{/each}}
+            <circle cx="{{ gem.cx }}" cy="{{ gem.cy }}" r="{{ gem.radius }}"
+                    fill="url(#specGemShine)"></circle>
+            <circle cx="{{ gem.cx }}" cy="{{ gem.cy }}" r="{{ gem.radius }}" fill="none"
+                    stroke="#1f1f1f" stroke-width="6"></circle>
+        </g>
+    {{/if}}
 
 
     <!-- Zèle -->

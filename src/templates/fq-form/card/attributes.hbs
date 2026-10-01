@@ -16,6 +16,18 @@
                     localize=true
                     rootId=rootId}}
     </div>
+    {{!-- Spécialisations : les choix viennent du contexte (ceux de la classe de la
+          carte), pas du champ, qui admet ceux de toutes les classes. --}}
+    {{#if hasSpecChoices}}
+        <div class="form-fields fq-form-specs">
+            <label>{{localize "FQCARDENGINE.CardSpecs"}}</label>
+            {{formInput fields.fq.fields.specs value=source.system.fq.specs name="system.fq.specs"
+                        choices=specChoices
+                        type="checkboxes"
+                        localize=true
+                        rootId=rootId}}
+        </div>
+    {{/if}}
     {{#each source.system.fq.choices as |choice i|}}
         <fieldset data-choice data-index="{{i}}">
             <legend>

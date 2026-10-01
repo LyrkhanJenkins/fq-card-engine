@@ -29,6 +29,13 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - [ ] Revoir la constitution avec les dés de vie
   - [ ] Réatribuer les stats dnd5E sur les cartes (en rajouter sur les cartes qui en ont pas)
   - [ ] IA - Points sur les coûts ET dégâts/heal et à chaque niveau
+  - [x] Renseigner la **spécialisation** de chaque carte (champ « Spécialisations » de la
+    feuille de carte, `system.fq.specs` ; jusqu'à 4 par carte, celles de sa classe).
+    Les cartes de paire de l'Élémentaliste en portent deux. La gemme de couleur de la
+    carte et le cadre des vignettes de deck en découlent.
+    **Fait pour les trois classes de ce dépôt**, d'après les tableaux de ce document :
+    Élémentaliste (35 spécialisées, 8 transverses), Moine (29 / 14), Trappeur (39 / 0).
+    Les six classes de `fq-card-engine-extended` restent à faire.
   - [ ] Detection incohérence entre descriptions et ce aue fais réélement la carte
   - [ ] Vérifier la lisibilité des descriptions
   - [ ] Vérifier chaque fonctionnalité du moteur et des cartes utilisée par chaque classe.
@@ -43,6 +50,18 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 - Plus un sort est haut en niveau plus il doit avoir un ratio cout/efficacité élevé (légèrement, il faut que les sorts de faible niveau reste interessant)
 
 ## TODO détéctés
+- [ ] **Spécialisations** : les identifiants et les libellés de `BASE_FQ_SPECIALIZATIONS`
+  (`src/domain/classes.js`) sont repris des tableaux ci-dessous, y compris les listes
+  encore marquées « à valider » — à relire, en particulier « Rempart » (Gardien, le
+  « sac à PV temp » du tableau) et « Soins » (Mage Blanc, dont la spé portait le nom de
+  la classe). Les couleurs sont dans `styles/globals.css`, l'allure de la gemme dans
+  `styles/card-engine/specializations.css`. Le Guerrier Runique n'a pas de spé déclarée :
+  il n'est pas encore caractérisé dans ce document.
+- [ ] **Moine, trois cartes absentes des tableaux de spés** : *Crochet* a été rangée en
+  Enchaînement (petite frappe au contact qui rend du zèle, rejouable sous condition)
+  et *Paume de l'Aube* en Paume (soin à portée 1) ; **Remèdes Secrets reste sans spé** —
+  elle soigne, mais à portée 6 et en défaussant la main, donc ni Paume (contact) ni
+  Main pleine (qui garde ses cartes). À trancher.
 - [ ] Nouvelles cartes : clés de localisation FR/EN, illustrations, sons et visuels. **En attente** : *Lien du Fauve*, *Rémission Illusoire*, *Écho de Convalescence*, *Estoc Perçant*, *Refrain Vivifiant*, *Crescendo* et *Trait d'Ombre-Verte Mineur* sont encore sur `in_progress.png`.
 - [ ] Reste ouvert : **dés de vie**, Élémentaliste (d4) à 52 PV au N12 contre 164 pour le Gardien.
 - [ ] Reste ouvert : nettoyer l'`ItemChoice` vide de la Sorcière (`classes-fq8/witch.json`), puis retirer la ligne `pool vide :: witch.json` de `KNOWN_ISSUES`.

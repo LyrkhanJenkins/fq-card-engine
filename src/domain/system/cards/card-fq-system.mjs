@@ -1,9 +1,11 @@
 import StatusEffects from "../effects/status-effects.js";
 import {ABILITY_CHOICE} from "../../abilities.js";
 import {WEAPON_TOKEN_CHOICE} from "../../weapon-tokens.js";
-import {NEUTRAL_CLASS as NEUTRAL, fqClassChoices} from "../../classes.js";
+import {NEUTRAL_CLASS as NEUTRAL, fqClassChoices, fqSpecChoices} from "../../classes.js";
 
-const {SchemaField, StringField, NumberField, BooleanField, ArrayField, FilePathField} = foundry.data.fields;
+const {
+    SchemaField, StringField, NumberField, BooleanField, ArrayField, SetField, FilePathField
+} = foundry.data.fields;
 
 /**
  * Data model for system card.
@@ -272,6 +274,18 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
         return fqClassChoices();
     }
 
+    /**
+     * Les specialisations declarees, TOUTES CLASSES CONFONDUES, en table de
+     * choix. Plate et complete parce que les choix d'un champ sont figes a la
+     * premiere carte instanciee : c'est le FORMULAIRE qui n'offre que les spes de
+     * la classe de la carte (`fqSpecChoicesOf`, `fq-card-sheet.js`).
+     *
+     * @returns {Object<string, string>} Identifiant de specialisation vers cle de libelle.
+     */
+    static get SPEC_CHOICE() {
+        return fqSpecChoices();
+    }
+
     static CHANGE_TYPE_CHOICES = Object.fromEntries(
         Object.keys(CONST.ACTIVE_EFFECT_CHANGE_TYPES).map(key => [key, key])
     );
@@ -303,6 +317,17 @@ export default class CardFqSystem extends foundry.abstract.TypeDataModel {
                     choices: this.CLASS_CHOICE,
                     initial: () => this.NEUTRAL_CLASS
                 }),
+                // Les spécialisations de la carte : aucune, ou jusqu'à
+                // `MAX_CARD_SPECS` de SA classe (`domain/classes.js`). Un `SetField`
+                // plutôt qu'un `StringField` pour deux raisons : une carte peut
+                // relever de plusieurs spés (les cartes de paire de l'Élémentaliste),
+                // et un set vide dit « aucune spé » sans valeur sentinelle — la chaîne
+                // vide dans une liste de choix est un piège à part entière
+                // (`tests/system/schema-choice-fields.test.js`).
+                specs: new SetField(new StringField({
+                    required: true,
+                    choices: this.SPEC_CHOICE
+                }), {required: true, initial: [], label: "FQCARDENGINE.CardSpecs"}),
                 level: new NumberField({required: true, label: "FQCARDENGINE.CardLevel"}),
                 isInnate: new BooleanField({required: true, label: "FQCARDENGINE.CardFQInnate"}),
                 choices: new ArrayField(this.getChoiceSchema())

@@ -34,6 +34,9 @@
       "system": {
         "fq": {
           "class": "elementalist",
+          "specs": [
+            "elementalist.earth"
+          ],
           "choices": [
             {
               "action": "-(2*XXX)",
@@ -147,6 +150,9 @@
       "system": {
         "fq": {
           "class": "elementalist",
+          "specs": [
+            "elementalist.air"
+          ],
           "choices": [
             {
               "action": "-6",
@@ -293,6 +299,9 @@
         "fq": {
           "maxSameCard": 4,
           "class": "elementalist",
+          "specs": [
+            "elementalist.frost"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -436,6 +445,9 @@
       "system": {
         "fq": {
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire"
+          ],
           "choices": [
             {
               "action": "-6",
@@ -596,6 +608,7 @@
         "fq": {
           "maxSameCard": 3,
           "class": "elementalist",
+          "specs": [],
           "choices": [
             {
               "action": "",
@@ -709,6 +722,10 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.earth",
+            "elementalist.air"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -908,6 +925,10 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire",
+            "elementalist.frost"
+          ],
           "choices": [
             {
               "action": "-9",
@@ -1039,6 +1060,10 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire",
+            "elementalist.earth"
+          ],
           "choices": [
             {
               "action": "-9",
@@ -1172,6 +1197,7 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [],
           "choices": [
             {
               "action": "-(XXX)",
@@ -1277,6 +1303,7 @@
         "fq": {
           "maxSameCard": 3,
           "class": "elementalist",
+          "specs": [],
           "choices": [
             {
               "hitType": "",
@@ -1428,6 +1455,10 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.frost",
+            "elementalist.earth"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -1621,6 +1652,10 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.frost",
+            "elementalist.air"
+          ],
           "choices": [
             {
               "hitType": "save",
@@ -1743,6 +1778,10 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire",
+            "elementalist.air"
+          ],
           "choices": [
             {
               "action": "-10",
@@ -1877,6 +1916,7 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [],
           "choices": [
             {
               "action": "-4",
@@ -2008,6 +2048,7 @@
           "level": 3,
           "isInnate": true,
           "class": "elementalist",
+          "specs": [],
           "choices": [
             {
               "name": "FQCARDCHOICE.FireElement",
@@ -2382,6 +2423,9 @@
           "level": 4,
           "isInnate": false,
           "class": "elementalist",
+          "specs": [
+            "elementalist.air"
+          ],
           "choices": [
             {
               "action": "-5",
@@ -2595,6 +2639,9 @@
           "level": 4,
           "isInnate": false,
           "class": "elementalist",
+          "specs": [
+            "elementalist.earth"
+          ],
           "choices": [
             {
               "action": "-(4*XXX)",
@@ -2726,6 +2773,9 @@
           "level": 4,
           "isInnate": false,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire"
+          ],
           "choices": [
             {
               "action": "-3",
@@ -2883,6 +2933,9 @@
           "level": 4,
           "isInnate": false,
           "class": "elementalist",
+          "specs": [
+            "elementalist.frost"
+          ],
           "choices": [
             {
               "action": "-10",
@@ -3019,6 +3072,7 @@
           "level": 11,
           "isInnate": false,
           "class": "elementalist",
+          "specs": [],
           "choices": [
             {
               "action": "-16",
@@ -3134,6 +3188,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire"
+          ],
           "choices": [
             {
               "name": "",
@@ -3273,6 +3330,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.earth"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -3433,6 +3493,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.air"
+          ],
           "choices": [
             {
               "hitType": "save",
@@ -3740,6 +3803,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.frost"
+          ],
           "choices": [
             {
               "name": "",
@@ -3863,6 +3929,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.frost"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -4090,6 +4159,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.earth"
+          ],
           "choices": [
             {
               "name": "",
@@ -4265,6 +4337,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.air"
+          ],
           "choices": [
             {
               "name": "",
@@ -4416,6 +4491,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.air"
+          ],
           "choices": [
             {
               "name": "",
@@ -4575,6 +4653,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire"
+          ],
           "choices": [
             {
               "name": "",
@@ -4714,6 +4795,10 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire",
+            "elementalist.earth"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -4929,6 +5014,10 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire",
+            "elementalist.air"
+          ],
           "choices": [
             {
               "name": "",
@@ -5140,6 +5229,10 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire",
+            "elementalist.frost"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -5332,6 +5425,10 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.earth",
+            "elementalist.air"
+          ],
           "choices": [
             {
               "name": "",
@@ -5479,6 +5576,10 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.frost",
+            "elementalist.earth"
+          ],
           "choices": [
             {
               "name": "",
@@ -5635,6 +5736,10 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.frost",
+            "elementalist.air"
+          ],
           "choices": [
             {
               "name": "",
@@ -5816,6 +5921,7 @@
         "fq": {
           "maxSameCard": 5,
           "class": "elementalist",
+          "specs": [],
           "choices": [
             {
               "name": "",
@@ -5930,6 +6036,9 @@
         "fq": {
           "maxSameCard": 4,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire"
+          ],
           "choices": [
             {
               "hitType": "save",
@@ -6094,6 +6203,7 @@
         "fq": {
           "maxSameCard": 3,
           "class": "elementalist",
+          "specs": [],
           "choices": [
             {
               "name": "",
@@ -6252,6 +6362,10 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire",
+            "elementalist.earth"
+          ],
           "choices": [
             {
               "name": "",
@@ -6410,6 +6524,10 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.fire",
+            "elementalist.air"
+          ],
           "choices": [
             {
               "hitType": "save",
@@ -6562,6 +6680,10 @@
         "fq": {
           "maxSameCard": 2,
           "class": "elementalist",
+          "specs": [
+            "elementalist.earth",
+            "elementalist.air"
+          ],
           "choices": [
             {
               "hitType": "save",
@@ -6753,6 +6875,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.frost"
+          ],
           "choices": [
             {
               "hitType": "save",
@@ -6895,6 +7020,10 @@
         "fq": {
           "maxSameCard": 1,
           "class": "elementalist",
+          "specs": [
+            "elementalist.frost",
+            "elementalist.air"
+          ],
           "choices": [
             {
               "name": "",

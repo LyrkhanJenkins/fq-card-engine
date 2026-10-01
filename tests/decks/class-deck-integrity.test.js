@@ -2,6 +2,7 @@ import {describe, expect, it} from "vitest";
 import fs from "fs";
 import path from "path";
 import {SOURCE_DIR} from "./pack-source.js";
+import {MAX_CARD_SPECS, fqSpecClassId, hasFqSpec} from "../../src/domain/classes.js";
 
 /**
  * Garde d'intégrité des decks de classe et des pools de stats, pendant la passe
@@ -12,7 +13,8 @@ import {SOURCE_DIR} from "./pack-source.js";
  * dégradent silencieusement le deck : carte à un niveau jamais atteint, nombre
  * d'exemplaires absent, carte rangée dans la mauvaise classe, image dont la
  * casse diffère (invisible sous Windows, cassée sur un serveur Linux), pool de
- * stats vide ou pointant vers un objet disparu.
+ * stats vide ou pointant vers un objet disparu, spécialisation d'une autre
+ * classe restée sur une carte déplacée.
  *
  * Les clés de traduction sont déjà couvertes par `deck-references.test.js`.
  *
@@ -114,6 +116,21 @@ function detectIssues() {
             if (fq.class !== expectedClass) {
                 issues.push(`classe :: ${label} :: ${fq.class} (attendu ${expectedClass})`);
             }
+            // Les spés d'une carte : de SA classe, et pas plus que la gemme n'en
+            // peut porter. Une spé étrangère ne casse rien en jeu — elle est
+            // filtrée à la lecture (`sortCardSpecs`) — mais la carte prétend
+            // alors dans ses données ce qu'elle ne montre pas.
+            const specs = [...(fq.specs ?? [])];
+            if (specs.length > MAX_CARD_SPECS) {
+                issues.push(`spés :: ${label} :: ${specs.length} spés (maximum ${MAX_CARD_SPECS})`);
+            }
+            for (const specId of specs) {
+                if (!hasFqSpec(specId)) {
+                    issues.push(`spé inconnue :: ${label} :: ${specId}`);
+                } else if (fqSpecClassId(specId) !== fq.class) {
+                    issues.push(`spé étrangère :: ${label} :: ${specId} (carte ${fq.class})`);
+                }
+            }
             if (!Number.isInteger(fq.level) || fq.level < 1 || fq.level > MAX_LEVEL) {
                 issues.push(`niveau :: ${label} :: ${fq.level}`);
             }
@@ -177,7 +194,7 @@ describe("Intégrité des decks de classe et des pools de stats", () => {
         expect(classes.length).toBeGreaterThan(0);
     });
 
-    it("aucune anomalie nouvelle (niveau, exemplaires, classe, image, portée, pools de stats)", () => {
+    it("aucune anomalie nouvelle (niveau, exemplaires, classe, spés, image, portée, pools de stats)", () => {
         expect(issues.filter(issue => !KNOWN_ISSUES.has(issue))).toEqual([]);
     });
 

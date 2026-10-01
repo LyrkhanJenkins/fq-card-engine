@@ -8,6 +8,7 @@ import {WEAPON_TOKENS} from "../../engine/roll/weapon-damage.js";
 import HitProfile from "../../engine/roll/hit-profile.js";
 import {expandPills, makePill, PILL_SOURCE, sanitizePillInput, stripPills} from "./formula-pill.js";
 import {escapeHtml} from "../../../core/utils/html.utils.js";
+import {fqSpecLabelKey, sortCardSpecs} from "../../classes.js";
 
 /**
  * La caractéristique d'un jet pour toucher telle que l'infobulle de la bulle la
@@ -36,6 +37,21 @@ const BUBBLE_SIZE_STEPS = [[2, 36], [3, 30], [4, 25], [5, 21], [6, 18], [9999, 1
 const REACH_SIZE_STEPS = [[6, 28], [8, 23], [10, 19], [12, 16], [9999, 13]];
 
 /**
+ * La gemme de spécialisations : la pierre posée dans le coin inférieur droit du
+ * cadre de description (`card-svg.hbs`), partagée en autant de quartiers que la
+ * carte porte de spés.
+ *
+ * Un disque cerclé de noir et bombé comme les bulles de coût : la carte ne parle
+ * que cette langue-là. Elle est dessinée APRÈS le texte de la description, qui
+ * est centré dans son cadre et ne l'atteint qu'en débordant.
+ *
+ * La géométrie vit ici et non dans le gabarit : Handlebars ne calcule pas, et
+ * l'angle d'un quartier dépend du nombre de spés.
+ * @type {Readonly<object>}
+ */
+const SPEC_GEM = Object.freeze({cx: 453, cy: 638, radius: 22});
+
+/**
  * Retourne la taille associée au premier seuil de longueur atteint.
  *
  * @param {Array<[number, number]>} steps - Paires [longueur max, taille px] triées.
@@ -45,6 +61,49 @@ const REACH_SIZE_STEPS = [[6, 28], [8, 23], [10, 19], [12, 16], [9999, 13]];
  */
 function sizeForLength(steps, length) {
     return steps.find(([limit]) => length <= limit)?.[1] ?? steps[steps.length - 1][1];
+}
+
+/**
+ * Arrondit une coordonnée SVG au centième : le bord d'un quartier de gemme tombe
+ * rarement juste (360 / 3), et un flottant à quinze décimales dans le balisage
+ * ne se relit pas.
+ *
+ * @param {number} value - La coordonnée à arrondir.
+ *
+ * @returns {number} La coordonnée arrondie au centième.
+ */
+function roundCoordinate(value) {
+    return Math.round(value * 100) / 100;
+}
+
+/**
+ * Le tracé d'un quartier de gemme : le `d` d'un `<path>`, en part de camembert
+ * depuis le centre, dans le sens des aiguilles d'une montre à partir de midi.
+ *
+ * Une spé seule n'a pas de part : deux arcs en font un disque plein. Un arc `A`
+ * ne sait pas dessiner un cercle entier — ses deux extrémités se confondraient
+ * et le navigateur n'en tracerait rien.
+ *
+ * @param {number} index - Le rang du quartier (0 pour le premier).
+ * @param {number} count - Le nombre de quartiers à découper.
+ *
+ * @returns {string} L'attribut `d` du quartier.
+ */
+function gemFacet(index, count) {
+    const {cx, cy, radius} = SPEC_GEM;
+    if (count <= 1) {
+        return `M ${cx - radius} ${cy} a ${radius} ${radius} 0 1 0 ${radius * 2} 0`
+            + ` a ${radius} ${radius} 0 1 0 ${-radius * 2} 0 Z`;
+    }
+    const angle = 360 / count;
+    const point = degrees => {
+        const radians = (degrees - 90) * Math.PI / 180;
+        return `${roundCoordinate(cx + (radius * Math.cos(radians)))}`
+            + ` ${roundCoordinate(cy + (radius * Math.sin(radians)))}`;
+    };
+    const sweep = angle > 180 ? 1 : 0;
+    return `M ${cx} ${cy} L ${point(index * angle)}`
+        + ` A ${radius} ${radius} 0 ${sweep} 1 ${point((index + 1) * angle)} Z`;
 }
 
 /**
@@ -490,11 +549,12 @@ export default class DisplayCard {
      * dialogue « Jouer la carte », voile plein écran) : coûts, portées, réactivité,
      * rejouabilité (« P » passif, « A » automatique, « E » éphémère, ou le nombre de charges),
      * limite d'exemplaires, classe, et les indicateurs de modificateur
-     * (`*Mod`) signalant qu'un coût/portée dépend d'une caractéristique (@str, @int…).
+     * (`*Mod`) signalant qu'un coût/portée dépend d'une caractéristique (@str, @int…),
+     * et la gemme de spécialisations (`buildSpecGem`).
      * Le voile plein écran ignore simplement les `*Mod` qu'il n'affiche pas.
      *
      * @param {object}  [choice={}] - Le choix (contenu) de la carte.
-     * @param {Card}    [card=null] - La carte (pour `maxSameCard`/`class`).
+     * @param {Card}    [card=null] - La carte (pour `maxSameCard`/`class`/`specs`).
      * @param {?object} [actor]     - L'acteur qui tient la carte, pour la bulle de toucher ;
      *        le personnage de l'utilisateur par défaut, comme les descriptions.
      *
@@ -526,6 +586,7 @@ export default class DisplayCard {
             replayable,
             maxSameCard: card?.system?.fq?.maxSameCard,
             fqClass: card?.system?.fq?.class,
+            ...DisplayCard.buildSpecGem(card),
             actionMod,
             manaMod,
             zealMod,
@@ -553,6 +614,56 @@ export default class DisplayCard {
             replayableSize: DisplayCard.getBubbleSizeForCardSvg(replayable),
             reachSize: DisplayCard.getReachSizeForCardSvg(minReach, maxReach),
         };
+    }
+
+    /**
+     * Construit la gemme de spécialisations d'une carte : un quartier par spé,
+     * dans le sens des aiguilles d'une montre à partir de midi, et dans l'ordre de
+     * déclaration des spés de sa classe (`sortCardSpecs`). Une seule spé : la
+     * pierre est d'un bloc ; quatre : quatre quarts.
+     *
+     * Aucune COULEUR ici : chaque quartier porte son identifiant de spé en
+     * `data-fq-spec`, et c'est la feuille de style
+     * (`styles/card-engine/specializations.css`) qui le peint — le même sélecteur
+     * habille la gemme de la carte SVG et celle des vignettes de la liste d'un
+     * deck, qui ne sont pas du même langage.
+     *
+     * @param {?Card} [card=null] - La carte, pour ses `system.fq.specs`.
+     *
+     * @returns {{specs: {id: string, label: string, facet: string}[], gem: object}}
+     *   Les quartiers — vide si la carte ne porte aucune spé déclarée — et la pierre
+     *   elle-même, que le gabarit cercle et fait briller.
+     */
+    static buildSpecGem(card = null) {
+        const specs = DisplayCard.cardSpecs(card);
+        return {
+            gem: SPEC_GEM,
+            specs: specs.map((spec, index) => ({
+                ...spec,
+                facet: gemFacet(index, specs.length)
+            }))
+        };
+    }
+
+    /**
+     * Les spécialisations d'une carte, prêtes à peindre : identifiant (pour le
+     * sélecteur de style) et clé de libellé (pour l'infobulle), dans l'ordre de
+     * déclaration de la classe — et seulement celles de SA classe, c'est elle
+     * qui fait foi (`sortCardSpecs`).
+     *
+     * Sans géométrie, contrairement à `buildSpecGem` : la liste des cartes d'un deck
+     * peint ses gemmes en HTML, où c'est la feuille de style qui en découpe les
+     * quartiers. C'est aussi ce que rend le helper Handlebars `fqCardSpecs`
+     * (`setup.hook.js`) — `system.fq.specs` est un `Set`, sur lequel `{{#each}}`
+     * ne sait pas boucler.
+     *
+     * @param {?Card} [card=null] - La carte, pour ses `system.fq.specs`.
+     *
+     * @returns {{id: string, label: string}[]} Les spés déclarées de la carte, ordonnées.
+     */
+    static cardSpecs(card = null) {
+        return sortCardSpecs(card?.system?.fq?.specs, card?.system?.fq?.class)
+            .map(specId => ({id: specId, label: fqSpecLabelKey(specId)}));
     }
 
     /**

@@ -35,6 +35,7 @@
         "fq": {
           "maxSameCard": 99,
           "class": "elementalist",
+          "specs": [],
           "choices": [
             {
               "hitType": "",
@@ -186,6 +187,7 @@
         "fq": {
           "maxSameCard": 99,
           "class": "elementalist",
+          "specs": [],
           "choices": [
             {
               "hitType": "save",

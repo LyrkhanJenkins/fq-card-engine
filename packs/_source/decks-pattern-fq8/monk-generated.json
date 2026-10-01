@@ -35,6 +35,7 @@
         "fq": {
           "maxSameCard": 99,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "hitType": "",

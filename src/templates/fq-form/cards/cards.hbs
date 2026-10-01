@@ -29,8 +29,25 @@
                         <i class="fa-solid fa-fw fa-2x fa-circle-arrow-left"></i>
                     </a>
                 {{/if}}
-                <img class="face fq-card-viewable" src="{{card.img}}" alt="{{localize card.name}}" loading="lazy"
-                     data-action="fqViewCard" data-tooltip="FQCARDENGINE.ViewCard">
+                {{!-- Vignette : cerclée de la couleur de sa classe, et marquée de la
+                      gemme de ses spécialisations. Les deux sont peintes par
+                      styles/card-engine/specializations.css. --}}
+                <div class="fq-card-thumb" data-fq-class="{{card.system.fq.class}}">
+                    <img class="face fq-card-viewable" src="{{card.img}}" alt="{{localize card.name}}"
+                         loading="lazy"
+                         data-action="fqViewCard" data-tooltip="FQCARDENGINE.ViewCard">
+                    {{!-- `with` plutot que `if` : Handlebars ne sait pas lire le
+                          `.length` d'une sous-expression, et saute deja le bloc sur un
+                          tableau vide. --}}
+                    {{#with (fqCardSpecs card) as |specs|}}
+                        <span class="fq-spec-gem" data-fq-spec-count="{{specs.length}}">
+                            {{#each specs}}
+                                <span class="fq-spec-facet" data-fq-spec="{{id}}"
+                                      data-tooltip="{{localize label}}"></span>
+                            {{/each}}
+                        </span>
+                    {{/with}}
+                </div>
                 <strong class="name">{{localize card.name}}{{#if card.isGenerated}}
                     <span class="fq-generated-badge" data-tooltip="FQCARDENGINE.GeneratedCardBadgeTooltip">✨</span>
                 {{/if}}</strong>

@@ -2,6 +2,7 @@ Update 3.0.0:
     Feat:
         - Content split: Elementalist, Monk and Trapper ship with this module, the six other classes move to FQ Card Engine Extended
         - FQ class registry: classes are no longer hardcoded in the schema, the extended module registers its own
+        - Card specializations: a card carries up to four specializations of its class, shown as a gem cut in as many facets, in the corner of its description and on the thumbnails of a deck list, where the frame also shows the class colour
         - Two new classes, Runic Warrior and Fencing Master, with their tokens, decks and illustrations
         - Every class deck reworked up to level 10 (12 for some), with 22 balance passes and a full characterisation pass
         - Neutral cards become common cards, added to the spellbooks at the right levels, up to level 20

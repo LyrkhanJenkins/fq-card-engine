@@ -48,6 +48,7 @@
     "styles/card-engine/toolbar.css",
     "styles/card-engine/hand.css",
     "styles/card-engine/card.css",
+    "styles/card-engine/specializations.css",
     "styles/card-engine/chat.css",
     "styles/card-engine/utilities.css",
     "styles/card-engine/dialog-play.css",

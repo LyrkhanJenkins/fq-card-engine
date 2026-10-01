@@ -90,6 +90,7 @@ globalThis.foundry = {
             NumberField: mockField(),
             BooleanField: mockField(),
             ArrayField: mockField(),
+            SetField: mockField(),
             FilePathField: mockField(),
             ObjectField: mockField(),
             HTMLField: mockField(),

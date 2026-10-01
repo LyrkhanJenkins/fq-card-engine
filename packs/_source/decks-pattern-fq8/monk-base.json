@@ -35,6 +35,9 @@
         "fq": {
           "maxSameCard": 6,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "action": "-3",
@@ -129,6 +132,9 @@
       "system": {
         "fq": {
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -242,6 +248,9 @@
         "fq": {
           "maxSameCard": 3,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "action": "-7",
@@ -337,6 +346,7 @@
         "fq": {
           "maxSameCard": 3,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "action": "",
@@ -472,6 +482,7 @@
         "fq": {
           "maxSameCard": 3,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "action": "-2",
@@ -590,6 +601,7 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "action": "",
@@ -696,6 +708,9 @@
           "maxSameCard": 2,
           "isInnate": false,
           "class": "monk",
+          "specs": [
+            "monk.palm"
+          ],
           "choices": [
             {
               "action": "",
@@ -799,6 +814,7 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "action": "",
@@ -893,6 +909,7 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "action": "-9",
@@ -1039,6 +1056,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [
+            "monk.palm"
+          ],
           "choices": [
             {
               "action": "-2*(XXX)",
@@ -1171,6 +1191,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -1288,6 +1311,7 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "hitType": "",
@@ -1488,6 +1512,7 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "action": "2*XXX",
@@ -1565,6 +1590,9 @@
           "level": 5,
           "isInnate": false,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -1680,6 +1708,7 @@
           "level": 3,
           "isInnate": false,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "hitType": "save",
@@ -1877,6 +1906,9 @@
           "level": 4,
           "isInnate": false,
           "class": "monk",
+          "specs": [
+            "monk.palm"
+          ],
           "choices": [
             {
               "action": "-3*XXX",
@@ -1969,6 +2001,9 @@
           "level": 3,
           "isInnate": true,
           "class": "monk",
+          "specs": [
+            "monk.full-hand"
+          ],
           "choices": [
             {
               "name": "FQCARDCHOICE.CardsToZeal",
@@ -2092,6 +2127,7 @@
           "level": 12,
           "isInnate": false,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "action": "-14",
@@ -2211,6 +2247,9 @@
           "level": 7,
           "isInnate": false,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "action": "-2*XXX",
@@ -2316,6 +2355,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [
+            "monk.full-hand"
+          ],
           "choices": [
             {
               "name": "",
@@ -2416,6 +2458,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "name": "",
@@ -2516,6 +2561,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [
+            "monk.full-hand"
+          ],
           "choices": [
             {
               "name": "",
@@ -2616,6 +2664,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [
+            "monk.full-hand"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -2767,6 +2818,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [
+            "monk.full-hand"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -2889,6 +2943,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [
+            "monk.full-hand"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -3045,6 +3102,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [
+            "monk.full-hand"
+          ],
           "choices": [
             {
               "name": "",
@@ -3151,6 +3211,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [
+            "monk.full-hand"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -3263,6 +3326,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "name": "",
@@ -3379,6 +3445,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -3491,6 +3560,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "name": "",
@@ -3579,6 +3651,9 @@
           "level": 12,
           "isInnate": false,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -3727,6 +3802,7 @@
           "maxSameCard": 2,
           "isInnate": false,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "action": "-3",
@@ -3873,6 +3949,9 @@
         "fq": {
           "maxSameCard": 3,
           "class": "monk",
+          "specs": [
+            "monk.palm"
+          ],
           "choices": [
             {
               "name": "",
@@ -3990,6 +4069,7 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "name": "",
@@ -4138,6 +4218,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [
+            "monk.palm"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -4255,6 +4338,7 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "action": "-10",
@@ -4345,6 +4429,9 @@
         "fq": {
           "maxSameCard": 4,
           "class": "monk",
+          "specs": [
+            "monk.palm"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -4457,6 +4544,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [
+            "monk.palm"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -4622,6 +4712,7 @@
         "fq": {
           "maxSameCard": 3,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "name": "",
@@ -4786,6 +4877,9 @@
         "fq": {
           "maxSameCard": 3,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -4896,6 +4990,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [
+            "monk.palm"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -5006,6 +5103,7 @@
         "fq": {
           "maxSameCard": 1,
           "class": "monk",
+          "specs": [],
           "choices": [
             {
               "name": "",
@@ -5128,6 +5226,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "monk",
+          "specs": [
+            "monk.chain"
+          ],
           "choices": [
             {
               "action": "",

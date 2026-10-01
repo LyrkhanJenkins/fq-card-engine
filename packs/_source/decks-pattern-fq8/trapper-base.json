@@ -35,6 +35,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "action": "-8",
@@ -139,6 +142,9 @@
         "fq": {
           "maxSameCard": 5,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "action": "-XXX",
@@ -234,6 +240,9 @@
         "fq": {
           "maxSameCard": 3,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -346,6 +355,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "action": "-10",
@@ -475,6 +487,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -587,6 +602,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -699,6 +717,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "action": "-2",
@@ -839,6 +860,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "action": "",
@@ -944,6 +968,9 @@
         "fq": {
           "maxSameCard": 3,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "action": "-5",
@@ -1069,6 +1096,9 @@
         "fq": {
           "maxSameCard": 3,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "action": "-9",
@@ -1166,6 +1196,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "action": "",
@@ -1306,6 +1339,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "action": "-XXX",
@@ -1450,6 +1486,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -1567,6 +1606,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -1667,6 +1709,9 @@
           "level": 6,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -1792,6 +1837,9 @@
           "level": 3,
           "isInnate": true,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "action": "-3",
@@ -1929,6 +1977,9 @@
           "level": 6,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "action": "",
@@ -2032,6 +2083,9 @@
           "level": 3,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -2196,6 +2250,9 @@
           "level": 4,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "action": "-8",
@@ -2350,6 +2407,9 @@
           "level": 4,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "action": "-10",
@@ -2473,6 +2533,9 @@
           "level": 10,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "hitType": "save",
@@ -2664,6 +2727,9 @@
           "level": 7,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -2850,6 +2916,9 @@
           "level": 11,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "action": "",
@@ -2962,6 +3031,9 @@
           "level": 7,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -3091,6 +3163,9 @@
           "level": 5,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -3275,6 +3350,9 @@
           "level": 6,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -3439,6 +3517,9 @@
           "level": 3,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -3593,6 +3674,9 @@
           "level": 11,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -3747,6 +3831,9 @@
           "level": 4,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -3913,6 +4000,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "level": 9,
           "isInnate": false,
           "choices": [
@@ -4028,6 +4118,9 @@
           "level": 8,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -4165,6 +4258,9 @@
         "fq": {
           "maxSameCard": 1,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "action": "-16",
@@ -4257,6 +4353,9 @@
           "level": 12,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "name": "",
@@ -4369,6 +4468,9 @@
           "level": 10,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.traps"
+          ],
           "choices": [
             {
               "name": "",
@@ -4468,6 +4570,9 @@
           "level": 10,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "hitType": "",
@@ -4578,6 +4683,9 @@
           "level": 9,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.sniper"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -4698,6 +4806,9 @@
           "level": 5,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -4832,6 +4943,9 @@
           "level": 9,
           "isInnate": false,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "hitType": "attack",
@@ -4978,6 +5092,9 @@
         "fq": {
           "maxSameCard": 2,
           "class": "trapper",
+          "specs": [
+            "trapper.beastmaster"
+          ],
           "choices": [
             {
               "name": "",

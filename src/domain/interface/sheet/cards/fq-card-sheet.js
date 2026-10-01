@@ -1,4 +1,5 @@
 import CardFqSystem from "../../../system/cards/card-fq-system.mjs";
+import {fqSpecChoicesOf} from "../../../classes.js";
 
 /**
  * Feuille de configuration d'une carte FQ. Étend `CardConfig` en ajoutant un
@@ -74,7 +75,17 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
 
     /**
      * Enrichit le contexte de la partie « attributes » en y injectant le schéma
-     * du champ `fq` de la carte, nécessaire au rendu des champs FQ.
+     * du champ `fq` de la carte, nécessaire au rendu des champs FQ, et les
+     * spécialisations offertes par SA classe.
+     *
+     * Le champ `specs` admet, lui, les spés de toutes les classes : ses choix sont
+     * figés au schéma (`CardFqSystem.SPEC_CHOICE`), alors que le formulaire doit
+     * suivre la classe de la carte. C'est donc le gabarit qui restreint la liste,
+     * en passant ces choix-ci au `formInput` — Foundry n'utilise plus ceux du
+     * champ dès qu'on lui en fournit (`StringField._prepareChoiceConfig`).
+     *
+     * `specChoices` vide (le neutre, une classe apportée par un module de contenu
+     * sans spés) : le gabarit n'affiche pas le champ du tout.
      *
      * @inheritDoc
      * @param {string} partId  - L'identifiant de la partie de gabarit en cours de rendu.
@@ -87,6 +98,8 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
         const partContext = await super._preparePartContext(partId, context, options);
         if (partId === "attributes") {
             partContext.fields.fq = CardFqSystem.defineSchema().fq;
+            partContext.specChoices = fqSpecChoicesOf(this.document.system.fq?.class);
+            partContext.hasSpecChoices = Object.keys(partContext.specChoices).length > 0;
         }
         return partContext;
     }
@@ -95,6 +108,47 @@ export default class FqCardSheet extends foundry.applications.sheets.CardConfig 
     /*  Event Listeners and Handlers                */
 
     /* -------------------------------------------- */
+
+    /**
+     * Écoute le changement de classe : la liste des spécialisations offertes en
+     * dépend, et cette feuille ne se redessine pas d'elle-même à la saisie (pas
+     * de `submitOnChange`, et `closeOnSubmit` ne concerne que l'envoi du
+     * formulaire par son bouton, pas `submit()` appelé ici).
+     *
+     * @inheritDoc
+     * @param {object} context - Le contexte de rendu de l'application.
+     * @param {object} options - Les options de rendu Foundry.
+     *
+     * @returns {void}
+     */
+    _onRender(context, options) {
+        super._onRender(context, options);
+        this.element.querySelector("[name='system.fq.class']")
+            ?.addEventListener("change", () => this.#onChangeClass());
+    }
+
+    /**
+     * Suit un changement de classe : persiste la saisie en cours — c'est elle qui
+     * porte la nouvelle classe, que `_preparePartContext` relit sur le document —
+     * puis redessine la feuille pour offrir les spécialisations de cette classe.
+     *
+     * Les spés déjà cochées ne sont PAS retouchées : celles qui appartenaient à
+     * l'ancienne classe cessent simplement de compter, la classe de la carte
+     * faisant foi partout où on les lit (`sortCardSpecs`). Rien n'est donc réécrit
+     * dans la carte, et revenir à la classe de départ les retrouve intactes.
+     *
+     * Le redessin est demandé explicitement : rien ne garantit que la mise à jour
+     * change quelque chose, et sans différence Foundry ne rend pas la feuille — les
+     * cases à cocher resteraient celles de l'ancienne classe.
+     *
+     * @this {FqCardSheet}
+     *
+     * @returns {Promise<void>}
+     */
+    async #onChangeClass() {
+        await this.submit({operation: {render: false}});
+        await this.render();
+    }
 
     /**
      * Ajoute un élément vierge à un tableau du formulaire courant et resoumet.

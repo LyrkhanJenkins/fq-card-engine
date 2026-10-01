@@ -957,3 +957,155 @@ describe("DisplayCard.fitDescriptionSize (passe de correction post-rendu du déb
         expect(() => DisplayCard.fitDescriptionSize(undefined)).not.toThrow();
     });
 });
+
+// ─── Gemme de spécialisations ─────────────────────────────────────────────────
+//
+// La gemme est la seule géométrie que le JS calcule pour la carte : Handlebars ne
+// divise pas, et l'angle d'un quartier dépend du nombre de spés. Le gabarit ne
+// tient aucune coordonnée de lui-même, ce que le dernier bloc vérifie.
+
+/**
+ * Une carte réduite à ce que lit la gemme : sa classe et ses spés.
+ *
+ * @param {string} fqClass - La classe FQ de la carte.
+ * @param {string[]} specs - Les identifiants de spés portés par la carte.
+ *
+ * @returns {object} Une carte factice.
+ */
+function cardWithSpecs(fqClass, specs) {
+    return {system: {fq: {class: fqClass, specs: new Set(specs)}}};
+}
+
+describe("DisplayCard.cardSpecs — les spés d'une carte", () => {
+
+    it("rend chaque spé avec sa clé de libellé, pour l'infobulle", () => {
+        const specs = DisplayCard.cardSpecs(cardWithSpecs("monk", ["monk.palm"]));
+
+        expect(specs).toEqual([{id: "monk.palm", label: "FQCARDENGINE.SpecMonkPalm"}]);
+    });
+
+    it("ne retient que les spés de la classe de la carte", () => {
+        // La classe fait foi : une spé héritée d'une autre classe devient muette,
+        // sans que les données de la carte soient retouchées.
+        const card = cardWithSpecs("monk", ["monk.chain", "elementalist.fire"]);
+
+        expect(DisplayCard.cardSpecs(card).map(spec => spec.id)).toEqual(["monk.chain"]);
+    });
+
+    it("rend une liste vide pour une carte sans spé, ou sans carte du tout", () => {
+        expect(DisplayCard.cardSpecs(cardWithSpecs("neutral", []))).toEqual([]);
+        expect(DisplayCard.cardSpecs(null)).toEqual([]);
+        expect(DisplayCard.cardSpecs()).toEqual([]);
+    });
+});
+
+describe("DisplayCard.buildSpecGem — découpe de la gemme", () => {
+
+    /**
+     * Les quartiers d'une carte d'Élémentaliste portant les `count` premières spés
+     * de sa classe.
+     *
+     * @param {number} count - Le nombre de spés à poser sur la carte.
+     *
+     * @returns {{id: string, label: string, facet: string}[]} Les quartiers.
+     */
+    function facetsOf(count) {
+        const specs = ["fire", "frost", "earth", "air"].slice(0, count)
+            .map(spec => `elementalist.${spec}`);
+        return DisplayCard.buildSpecGem(cardWithSpecs("elementalist", specs)).specs;
+    }
+
+    it("ne découpe rien sans spé, mais rend tout de même la pierre au gabarit", () => {
+        const {specs, gem} = DisplayCard.buildSpecGem(cardWithSpecs("monk", []));
+
+        expect(specs).toEqual([]);
+        expect(gem.radius).toBeGreaterThan(0);
+    });
+
+    it("tient dans le cadre de description, qui va de (23, 408) à (485, 670)", () => {
+        // Le cercle déborderait sur l'illustration ou hors de la carte sans ça.
+        const {gem} = DisplayCard.buildSpecGem(cardWithSpecs("monk", ["monk.palm"]));
+
+        expect(gem.cx - gem.radius).toBeGreaterThan(23);
+        expect(gem.cx + gem.radius).toBeLessThan(485);
+        expect(gem.cy - gem.radius).toBeGreaterThan(408);
+        expect(gem.cy + gem.radius).toBeLessThan(670);
+    });
+
+    it("fait une pierre d'un bloc pour une spé seule, en deux arcs", () => {
+        // Un seul arc ne peut pas fermer un cercle : ses extrémités se confondraient
+        // et le navigateur ne tracerait rien.
+        const [facet] = facetsOf(1);
+
+        expect(facet.facet).toMatch(/^M .* a .* a .* Z$/);
+        expect(facet.facet).not.toContain("L");
+    });
+
+    it("découpe des parts depuis le centre dès qu'il y a plusieurs spés", () => {
+        const {gem} = DisplayCard.buildSpecGem(cardWithSpecs("elementalist", ["elementalist.fire"]));
+
+        for (const count of [2, 3, 4]) {
+            const facets = facetsOf(count);
+
+            expect(facets, `${count} spés`).toHaveLength(count);
+            for (const {facet} of facets) {
+                // Chaque part part du centre, file vers le bord et revient par un arc.
+                expect(facet, `${count} spés`).toContain(`M ${gem.cx} ${gem.cy} L `);
+                expect(facet, `${count} spés`).toContain(` A ${gem.radius} ${gem.radius} `);
+            }
+            // Deux parts ne se superposent jamais.
+            expect(new Set(facets.map(spec => spec.facet)).size, `${count} spés`).toBe(count);
+        }
+    });
+
+    it("part de midi et tourne dans le sens des aiguilles d'une montre", () => {
+        const {gem} = DisplayCard.buildSpecGem(cardWithSpecs("elementalist", ["elementalist.fire"]));
+        const [first, second] = facetsOf(4);
+
+        // La première part s'ouvre à midi et se referme à l'est.
+        expect(first.facet).toContain(`L ${gem.cx} ${gem.cy - gem.radius}`);
+        expect(first.facet).toContain(`1 ${gem.cx + gem.radius} ${gem.cy}`);
+        // La suivante reprend là où elle s'arrête.
+        expect(second.facet).toContain(`L ${gem.cx + gem.radius} ${gem.cy}`);
+    });
+
+    it("ordonne les quartiers comme la classe déclare ses spés, pas comme on les a cochés", () => {
+        const card = cardWithSpecs("elementalist", ["elementalist.air", "elementalist.fire"]);
+
+        expect(DisplayCard.buildSpecGem(card).specs.map(spec => spec.id))
+            .toEqual(["elementalist.fire", "elementalist.air"]);
+    });
+});
+
+describe("card-svg.hbs — gemme de spécialisations", () => {
+
+    const template = fs.readFileSync(path.join(process.cwd(), "src", "templates", "partials", "card-svg.hbs"), "utf8");
+
+    it("ne dessine la gemme que sous son drapeau", () => {
+        expect(template).toContain("{{#if specs}}");
+    });
+
+    it("étiquette chaque quartier pour la feuille de style, sans couleur en dur", () => {
+        expect(template).toContain(`class="fq-spec-facet"`);
+        expect(template).toContain(`data-fq-spec="{{ id }}"`);
+        expect(template).toContain(`d="{{ facet }}"`);
+    });
+
+    it("ne tient aucune coordonnée de lui-même : tout vient de `SPEC_GEM`", () => {
+        for (const coordinate of ["gem.cx", "gem.cy", "gem.radius"]) {
+            expect(template, coordinate).toContain(coordinate);
+        }
+    });
+
+    it("bombe la pierre comme les bulles rondes de la carte", () => {
+        expect(template).toContain(`id="specGemShine"`);
+        expect(template).toContain("url(#specGemShine)");
+    });
+
+    it("dessine la gemme APRÈS le texte de la description, qu'elle ne rétrécit pas", () => {
+        // Le texte garde la pleine largeur du cadre ; la gemme se pose par-dessus
+        // dans son coin, et c'est l'ordre du balisage qui le garantit.
+        expect(template).toContain(`<foreignObject x="23" y="404" width="462" height="266">`);
+        expect(template.indexOf("fq-spec-facet")).toBeGreaterThan(template.indexOf("fq-card-description"));
+    });
+});

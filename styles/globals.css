@@ -104,6 +104,62 @@
 
     --fq8-color-sacrifice: #c9b8e0;
     --fq8-color-range: #e0c56b;
+
+    /* ═══════════════════════════════════════════════════════════
+       CLASSES & SPÉCIALISATIONS — repères de couleur d'une carte
+       (gemme de la carte SVG, vignettes de la liste d'un deck ; le mapping
+        attribut → jeton est dans styles/card-engine/specializations.css)
+       ═══════════════════════════════════════════════════════════ */
+
+    /* Une classe : la couleur MOYENNE de sa texture de carte
+       (images/cards/texture/<classe>.png), pour que le cadre d'une vignette
+       rappelle la carte elle-même. */
+    --fq-class-neutral: #d0d0d0;
+    --fq-class-elementalist: #c55a55;
+    --fq-class-fencing-master: #53524f;
+    --fq-class-guardian: #f39f5a;
+    --fq-class-illusionist: #98725d;
+    --fq-class-monk: #6e98cf;
+    --fq-class-runic-warrior: #cde9f6;
+    --fq-class-trapper: #798d5a;
+    --fq-class-white-mage: #e3ce7d;
+    --fq-class-witch: #7d5692;
+
+    /* Une spécialisation : sa propre couleur, lisible contre les autres spés de
+       SA classe avant tout — c'est au sein d'une classe qu'on les compare
+       (devNotes/CLASSES.md). */
+    --fq-spec-elementalist-fire: #d4451d;
+    --fq-spec-elementalist-frost: #4ea3d8;
+    --fq-spec-elementalist-earth: #8a6b3c;
+    --fq-spec-elementalist-air: #9fcfae;
+
+    --fq-spec-fencing-master-melee: #c0533f;
+    --fq-spec-fencing-master-ranged: #4f7fb5;
+    --fq-spec-fencing-master-thrown: #c08a3e;
+
+    --fq-spec-guardian-berserker: #c0392b;
+    --fq-spec-guardian-bulwark: #4d7ea8;
+    --fq-spec-guardian-guardian-angel: #e8c86a;
+
+    --fq-spec-illusionist-reaching-blade: #6f8fd0;
+    --fq-spec-illusionist-bard: #d98cc4;
+    --fq-spec-illusionist-chronomancer: #8f7fd6;
+
+    --fq-spec-monk-chain: #d98b3a;
+    --fq-spec-monk-full-hand: #5aa36b;
+    --fq-spec-monk-palm: #e0cf8a;
+
+    --fq-spec-trapper-sniper: #b5543c;
+    --fq-spec-trapper-traps: #7a8c4a;
+    --fq-spec-trapper-beastmaster: #a9762f;
+
+    --fq-spec-white-mage-healing: #e8d9a0;
+    --fq-spec-white-mage-curse: #7b4a8f;
+    --fq-spec-white-mage-haunt: #5d7f8f;
+
+    --fq-spec-witch-army: #6f8f4f;
+    --fq-spec-witch-colossus: #b0a98f;
+    --fq-spec-witch-charnel: #8f4a5c;
 }
 
 /* ── Couleurs des statistiques secondaires (pastilles jauges) ──

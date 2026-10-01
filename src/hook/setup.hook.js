@@ -21,6 +21,11 @@ Hooks.on("setup", function () {
     Handlebars.registerHelper("fqEmojiTooltips",
         text => new Handlebars.SafeString(DisplayCard.wrapEmojiTooltips(text)));
 
+    // Helper des spécialisations d'une carte : rend un tableau ordonné
+    // {id, label} que les gabarits parcourent pour peindre une gemme. Nécessaire
+    // parce que `system.fq.specs` est un `Set`, que `{{#each}}` ne parcourt pas.
+    Handlebars.registerHelper("fqCardSpecs", card => DisplayCard.cardSpecs(card));
+
     // Ajoute les jauges FQ (action/mana/zèle) aux attributs suivables du HUD de
     // jeton et du tracker de combat. dnd5e peuple `CONFIG.Actor.trackableAttributes`
     // dans son propre hook `setup`, exécuté avant celui-ci (le système est chargé
