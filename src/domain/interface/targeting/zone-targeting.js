@@ -190,6 +190,12 @@ export default class ZoneTargeting {
      * de `TargetingView.build`, pour que la zone posée corresponde à ce que le
      * panneau affiche.
      *
+     * Un choix qui FIXE lui-même X/Y (`xvalue`/`yvalue`) ne les fait pas saisir au
+     * dialogue : `fd` est alors vide, et les substituer par 0 poserait une zone plus
+     * petite que celle que la carte appliquera — c'est le cône de la Volée de
+     * Shuriken, qui grandit du bonus de portée. Ces valeurs sont donc CALCULÉES ici
+     * comme au jeu ({@link CardEffect.substituteXAndYValue}), et non supposées nulles.
+     *
      * @param {object} cardContent - Le choix de carte brut sélectionné.
      * @param {object} [fd={}]     - Les données du formulaire (XXX/YYY saisis).
      *
@@ -198,7 +204,11 @@ export default class ZoneTargeting {
     static resolveCardContent(cardContent, fd = {}) {
         const cc = ObjectUtils.deepCopy(cardContent);
         CardEffect.replaceCardContentAbilitiesBonus(cc);
-        CardEffect.recalculatedWithWYValue(cc, fd?.XXX ?? 0, fd?.YYY ?? 0);
+        if (fd?.XXX === undefined && fd?.YYY === undefined && (cc.xvalue || cc.yvalue)) {
+            CardEffect.substituteXAndYValue(cc, false, 0, 0);
+        } else {
+            CardEffect.recalculatedWithWYValue(cc, fd?.XXX ?? 0, fd?.YYY ?? 0);
+        }
         return cc;
     }
 

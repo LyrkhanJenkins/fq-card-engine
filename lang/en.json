@@ -853,7 +853,7 @@
   "FQCARDTITLE.DaggerCloud": "Dagger Cloud",
   "FQCARDDESCRIPTION.DaggerCloud": "Place a dagger cloud on a target. It deals X + 1d8 damage each turn for @cha turns, where X is your range bonus.",
   "FQCARDTITLE.ShurikenVolley": "Shuriken Volley",
-  "FQCARDDESCRIPTION.ShurikenVolley": "Place a 2-tile cone.\nDeals {0_damage} damage to covered targets, where X is your range bonus.",
+  "FQCARDDESCRIPTION.ShurikenVolley": "Place a 2-tile cone, extended by your range bonus (X).\nDeals {0_damage} damage to covered targets.",
   "FQCARDTITLE.ApothecaryI": "Apothecary I",
   "FQCARDDESCRIPTION.ApothecaryI": "Choose one:\n- Life Potion: {0_heal} health\n- Reach Potion: +1 range for 3 turns\n- Speed Potion: 1 movement, plus @wis, for 3 turns\n- Earth Strength Potion: Reduces the target's evasion by @wis for 3 turns\n- Wind Potion: Reduces the target's movement by @wis for 3 turns",
   "FQCARDTITLE.EtherealPlanePassage": "Ethereal Plane Passage",

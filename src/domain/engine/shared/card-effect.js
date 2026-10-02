@@ -1352,12 +1352,19 @@ export default class CardEffect {
      * cibles, distance jusqu'à l'unique cible, résultat d'un script (`SCRIPT:`),
      * ou attribut du système du personnage.
      *
-     * @param {string}   value     - Le mot-clé/expression décrivant la valeur à calculer.
+     * @param {string}   [value]   - Le mot-clé/expression décrivant la valeur à calculer (absent : 0).
      * @param {object[]} myTargets - Les cibles courantes.
      *
      * @returns {number} La valeur calculée.
      */
     static getXYValue(value, myTargets) {
+        // Un `xvalue`/`yvalue` absent vaut 0 : le schéma de carte garantit deux
+        // chaînes, mais la résolution est aussi appelée depuis le ciblage sur un
+        // choix non passé par le modèle, et une valeur manquante doit y rendre un
+        // nombre plutôt que de rompre la pose de zone.
+        if (!value) {
+            return 0;
+        }
         if (value === "nbTargets") {
             return myTargets.length ? myTargets.length : 0;
         } else if (myTargets.length === 1 && value === "reach") {

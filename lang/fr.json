@@ -853,7 +853,7 @@
   "FQCARDTITLE.DaggerCloud": "Nuage de dague",
   "FQCARDDESCRIPTION.DaggerCloud": "Place un nuage de dague sur une cible. Il inflige X+1d8 dégâts chaque tour pendant @cha tours, X étant votre bonus de portée",
   "FQCARDTITLE.ShurikenVolley": "Volée de shuriken",
-  "FQCARDDESCRIPTION.ShurikenVolley": "Posez un cône de 2 cases\nInflige {0_damage} dégâts aux cibles couvertes, X étant votre bonus de portée",
+  "FQCARDDESCRIPTION.ShurikenVolley": "Posez un cône de 2 cases, agrandi de votre bonus de portée (X)\nInflige {0_damage} dégâts aux cibles couvertes",
   "FQCARDTITLE.ApothecaryI": "Apothicaire I",
   "FQCARDDESCRIPTION.ApothecaryI": "Au choix : \n- Potion de vie : {0_heal} vie\n- Potion d’allonge: +1 portée pdt 3 tours\n- Potion de vitesse : 1 déplacement, plus @wis, pendant 3 tours\n- Potion de force terrestre : réduit l’esquive de la cible de @wis pendant 3 tours.\n- Potion de vent : réduit le déplacement de la cible de @wis pendant 3 tours",
   "FQCARDTITLE.EtherealPlanePassage": "Passage vers le plan éthéré",

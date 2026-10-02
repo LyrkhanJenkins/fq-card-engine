@@ -223,6 +223,65 @@ describe("ZoneTargeting.buildShapeData — formes en pixels (grille 5)", () => {
     });
 });
 
+/**
+ * `resolveCardContent` est ce qui donne sa TAILLE a la zone posee. Un choix qui
+ * fixe lui-meme X (`xvalue`) ne le fait pas saisir au dialogue : si la pose le
+ * supposait nul, le cone de la Volee de Shuriken serait pose a 2 cases pendant
+ * que les degats, eux, compteraient le vrai bonus de portee. C'est cet ecart
+ * entre la zone posee et la zone appliquee que ces cas verrouillent.
+ */
+describe("ZoneTargeting.resolveCardContent — X calcule vs X saisi", () => {
+    test("xvalue sans saisie : X vaut le bonus de portee du lanceur, et le cone grandit d'autant", () => {
+        mountZoneWorld(null, null, {character: {system: {fq: {bonus: {range: 3}}}}});
+        const choice = makeChoice({
+            targetType: "Zone", zoneShape: "cone", zoneSize: "2+XXX",
+            damage: "(XXX+1d10)[piercing]", xvalue: "fq.bonus.range", yvalue: ""
+        });
+
+        const resolved = ZoneTargeting.resolveCardContent(choice);
+
+        expect(resolved.zoneSize).toBe("2+3");
+        // 2 + 3 = 5 cases, grille de 5 px : le rayon suit la taille resolue.
+        expect(ZoneTargeting.buildShapeData(resolved).radius).toBe(25);
+    });
+
+    test("bonus de portee nul : la zone reste a sa taille de base", () => {
+        mountZoneWorld();
+        const choice = makeChoice({
+            targetType: "Zone", zoneShape: "cone", zoneSize: "2+XXX", xvalue: "fq.bonus.range", yvalue: ""
+        });
+
+        expect(ZoneTargeting.buildShapeData(ZoneTargeting.resolveCardContent(choice)).radius).toBe(10);
+    });
+
+    test("X saisi au dialogue : la valeur du formulaire l'emporte sur le calcul", () => {
+        mountZoneWorld(null, null, {character: {system: {fq: {bonus: {range: 3}}}}});
+        const choice = makeChoice({
+            targetType: "Zone", zoneShape: "cone", zoneSize: "2+XXX", xvalue: "fq.bonus.range", yvalue: ""
+        });
+
+        expect(ZoneTargeting.resolveCardContent(choice, {XXX: 1}).zoneSize).toBe("2+1");
+    });
+
+    test("choix sans xvalue ni saisie : X retombe a 0, comme auparavant", () => {
+        mountZoneWorld();
+        const choice = makeChoice({targetType: "Zone", zoneShape: "circle", zoneSize: "2", nbTargets: "XXX"});
+
+        expect(ZoneTargeting.resolveCardContent(choice).nbTargets).toBe("0");
+    });
+
+    test("yvalue absent du choix : la pose rend 0 au lieu de rompre", () => {
+        mountZoneWorld(null, null, {character: {system: {fq: {bonus: {range: 3}}}}});
+        // Le schema de carte garantit deux chaines, mais le ciblage recoit parfois
+        // un choix construit a la main : l'absence ne doit pas lever.
+        const choice = makeChoice({
+            targetType: "Zone", zoneShape: "cone", zoneSize: "2+XXX", xvalue: "fq.bonus.range"
+        });
+
+        expect(ZoneTargeting.resolveCardContent(choice).zoneSize).toBe("2+3");
+    });
+});
+
 describe("ZoneTargeting.tokensCoveredByRegion — contenance par centre de case", () => {
     test("un token 1×1 est couvert si le centre de sa case passe testPoint", () => {
         const enemy = sceneToken({id: "t1", x: 0, y: 5}); // centre (2.5, 7.5)
