@@ -536,42 +536,42 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 | Charnier (dps) | Sacrifie squelettes et défausse pour lancer elle-même des sorts directs et récupérer ses cartes | 12 |
 
 **Mécaniques signature** :
-- **Armée** : quasiment chaque carte offensive invoque un squelette en plus de son effet (Trait D'Ombre-Verte ×9 en deck). Paliers : Skeleton lvl 1‑2 → Giant Skeleton → Skeleton Sorcerer (capstone N7, mini-nécromancien autonome). Piétaille plafonnée à 6 ; le Sorcier en fait partie.
+- **Armée** : les cartes d'invocation pure (Main Sortie de Terre, Levée d'ossements, Croix / Carré de Squelettes, Nécromancie, Ostéologie) et la seule attaque qui invoque encore, Frappe Arcanique. Les deux Traits d'Ombre-Verte ont quitté ce rail : ils alimentent le charnier. Paliers : Skeleton lvl 1‑2 → Giant Skeleton → Skeleton Sorcerer (capstone N7, mini-nécromancien autonome). Piétaille plafonnée à 6 ; le Sorcier en fait partie.
 - **Le squelette géant** : a son propre TYPE de sbire (`giantSkeleton`), donc son propre plafond de 1 hors des 6 de la piétaille, et il est le seul bénéficiaire des cartes de rituel. Mais il reste de FAMILLE `skeleton` (`CardFqSystem.MINION_FAMILY`) : les sorts qui dopent « tous vos squelettes » le prennent, et les comptages d'armée le comptent. Type = emplacement d'invocation, famille = genre de créature — c'est la seule créature où les deux divergent.
 - **Rituels d'invocation** : des cartes qui ne font RIEN sur le champ de bataille — elles alimentent `system.fq.minions.giantSkeleton.{hp,damage,movement}`, compteurs que `Minion.statBonus` relit à l'invocation SUIVANTE du Squelette Géant. Faible coût (Éclats d'os, Crocs d'ivoire, Talons d'ossements : 1‑2 points de sacrifice), moyen (Onction de moelle : 2‑3), élevé (Couronne d'ossements, Sceptre de l'ossuaire, Marche funèbre : 3‑4, avec une seconde face jouable sur le Géant DÉJÀ en jeu ; Hécatombe d'ossements : 5‑8, soit une armée entière passée au charnier). Ces bonus tombent avec les effets FQ à la fin du combat.
-- **Le charnier reste manuel** : aucune carte ne détruit de sbire (hors Déplacement Morbide qui l'exige). Le joueur sacrifie ses squelettes au bouton du HUD de jeton, ce qui alimente `fq.minions.sacrificedMinion` — remis à zéro au début de chacun de ses tours. Réduire son armée pour dépenser gros est donc un choix de tour, jamais un effet de carte.
-- **Score de sacrifice** (`fq.minions.sacrificedMinion`) : détruire ses squelettes alimente un compteur-ressource consommé par Ostéologie (invoque un squelette de niveau = sacrifices, cap 4), Afflux De Vie/Mana, Déplacement Morbide, Récolte Macabre et les rituels.
+- **Le charnier se remplit de deux façons** : aucune carte ne détruit de sbire (hors Déplacement Morbide qui l'exige), le joueur sacrifie ses squelettes au bouton du HUD de jeton — réduire son armée pour dépenser gros reste un choix de tour. Mais trois cartes créditent désormais le compteur sans passer par l'armée : Trait d'Ombre-Verte Mineur (1 chance sur 2 de +1), Trait d'Ombre-Verte (+1d3) et Sortilège d'Ombre (+1d2), par `executeEval`. `fq.minions.sacrificedMinion` est remis à zéro au début de chacun de ses tours : tout ce qui est gagné doit être dépensé dans le tour.
+- **Score de sacrifice** (`fq.minions.sacrificedMinion`) : compteur-ressource de tour, consommé par Ostéologie (invoque un squelette de niveau = sacrifices, cap 4), Afflux De Vie/Mana, Déplacement Morbide, les rituels du Géant, et le choix 2 des cinq cartes de la ligne charnier (2 à 4 points chacune).
 - **Comptage de l'armée** (`SCRIPT:` sur les tokens « Skeleton ») : Afflux D'Agilité (esquive), Afflux De Pouvoir (actions), Rituel Du Sang (zèle) — plus l'armée est grande, plus la sorcière est forte.
 - **`targetType: Skeletons`** : buffs de masse dédiés (Bouclier D'Os, Canalisation Des Ombres — invulnérabilité 1 round —, Forme d'Ombre, Déplacement Morbide, Ossature Renforcée, Fureur des Morts, Apothéose Macabre).
 - Défausse en coût d'appoint (Sortilège d'Ombre, Rituel Du Sang) et en carburant (Offrande de Cendres : X cartes défaussées → dégâts) — la ressource centrale reste le **sacrifice**.
+- **La ligne charnier (récupération de défausse = buff de dégâts)** : les cinq cartes qui ramènent une carte de la défausse posent en plus un effet sur la sorcière qui écrit dans `system.fq.bonus.damage` — lu par `Damage.getFormulaWithBonus`, donc appliqué à TOUS ses jets de dégâts, pas aux seuls sorts de la ligne. Chacune porte **deux choix** qui ne diffèrent QUE par la monnaie : choix 1 le zèle, plus cher mais accumulé sur tout le combat ; choix 2 le score de sacrifice, moins cher mais à produire dans le tour même. Aucune ne se paie en mana seul :
+
+| Carte | N | × | Choix 1 — zèle | Choix 2 — sacrifice | Bonus de dégâts | Durée |
+|---|---|---|---|---|---|---|
+| Écho Sépulcral | 1 | 2 | 3 | 2 | `+@int` | 1 round |
+| Rappel d'Outre-Tombe | 4 | 2 | 4 | 3 | `+@int+1d4` | 1 round |
+| Pacte d'Ossements | 6 | 2 | 4 (+ 4 PV) | 3 (+ 4 PV) | `+@int` | 2 rounds |
+| Récolte Macabre | 8 | 1 | 5 | 3‑4 | `+3` en zèle, `+XXX` en sacrifice | 1 round |
+| Exhumation (2 cartes) | 10 | 1 | 6 | 4 | `+(2*@int)` | 2 rounds |
+
+  Le choix sacrifice porte le garde `minionsAtLeast("sacrificedMinion", N)` et sa borne `xmin`/`xmax` ; le choix zèle n'a ni l'un ni l'autre, et laisse `ResourceHandler` refuser la carte faute de zèle. Les deux choix partagent le nom d'effet : le joueur ne gagne rien à alterner les monnaies sur la même carte.
+
+  Les noms d'effet sont distincts : enchaîner deux cartes de la ligne cumule les deux bonus. C'est le seul rail de la classe où INT pèse plus que SAG.
 
 **Boucle de jeu** : invoquer en attaquant → sacrifier → recycler en mana/PV/actions/zèle → réinvoquer plus gros. Aucune défense personnelle : l'armée est le rempart.
 
 **Faiblesses** :
-- ~~Vite à court de mana~~ → corrigé par le rééquilibrage des stats de départ : 5,8 mana au N1 (contre 2,5 avant) et 18 objets de mana dans son pool. Reste le coût en action : Trait d'Ombre-Verte (×9) coûte 7 PA pour 10,2 PA disponibles au N1.
+- ~~Vite à court de mana~~.
 - **Déplacement figé à 6 cases** sur toute la campagne : aucun objet de déplacement dans son pool.
 - Peu de points de vie
 
 ### Constat des cartes (données)
 - **39 cartes réparties sur N1‑N12**, le Colosse n'ouvrant qu'au N6 : coût moyen 6,8 PA et 5 cartes à 1‑4 PA (elle n'en avait aucune avant la passe). *Trait d'Ombre-Verte* est passé de 9 à 3 exemplaires, doublé par un *Trait d'Ombre-Verte Mineur* (×5) qui alimente le charnier au lieu de l'armée.
 - **Aucune carte à 1‑4 PA** parmi les débloquables ; coût moyen 8,1 PA (le plus élevé) pour 8,5 PA au N1 : **une carte par tour au N1**.
-- Seulement 2 cartes distinctes au N1 (Nécromancie, Trait d'Ombre-Verte ×9).
-- 4 générateurs de zèle pour 11 consommateurs.
-
-### Redondances à trancher
-- Récupération de défausse : Rappel d'Outre-Tombe / Pacte d'Ossements / Récolte Macabre / Exhumation (4 cartes).
-- Rituels du Géant : 8 cartes sur 3 paliers × 3 stats → garder un palier par stat, ou fusionner en cartes à choix.
-- Ossature Renforcée + Fureur des Morts = Apothéose Macabre.
-- Croix de Squelettes / Carré de Squelettes.
-
-### Incohérences relevées
-- `ItemChoice` vide dans `classes-fq8/witch.json`.
-- ~~Trait d'Ombre-Verte ×9~~ → ×3, avec une version mineure ×5 qui alimente le score de sacrifice.
-- Sorcier Squelette (15 PA, 4 mana, 4 zèle) et Apothéose Macabre (14 PA) hors de portée avant le N6‑N7.
-
+- 3 cartes distinctes au N1 : Main Sortie De Terre (×3, 2 zèle et aucune action), Trait d'Ombre-Verte Mineur (×5) et Écho Sépulcral (×2).
+- 4 générateurs de zèle pour **16** consommateurs depuis que les cinq cartes de la ligne charnier offrent un choix payé en zèle (3, 4, 4, 5, 6). Le zèle n'étant remis à son `init` qu'au premier round, il s'accumule sur tout le combat, et c'est précisément la soupape : un tour sans armée à sacrifier reste jouable. Mais 22 points de zèle si la ligne entière passe par le choix 1, avec Rituel Du Sang pour seul générateur de volume, reste à surveiller.
 
 **Questionnement et TODO :**
-- Une des cartes du squelette géant permet d'aller chercher la carte dans le deck en deuxième choix ?
 
 ---
 
