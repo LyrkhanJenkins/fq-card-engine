@@ -976,6 +976,7 @@
   "FQCARDCHOICE.ApplyEffectManaCost": "Apply Effect (With Mana Cost)",
   "FQCARDCHOICE.ApplyEffectHpCost": "Apply Effect (With HP Cost)",
   "FQCARDCHOICE.Critical": "Critical",
+  "FQCARDCHOICE.Normal": "Normal",
   "FQCARDCHOICE.Reactive": "Reactive",
   "FQCARDCHOICE.Mana": "Mana",
   "FQCARDCHOICE.CardsToZeal": "Cards → Zeal",
