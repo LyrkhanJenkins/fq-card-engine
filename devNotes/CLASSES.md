@@ -43,7 +43,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 - Plus un sort est haut en niveau plus il doit avoir un ratio cout/efficacité élevé (légèrement, il faut que les sorts de faible niveau reste interessant)
 
 ## TODO détéctés
-- [ ] Nouvelles cartes : clés de localisation FR/EN, illustrations, sons et visuels. **En attente** : *Lien du Fauve*, *Rémission Illusoire*, *Écho de Convalescence*, *Estoc Perçant*, *Refrain Vivifiant*, *Crescendo* et *Trait d'Ombre-Verte Mineur* sont encore sur `in_progress.png`.
+- [ ] Nouvelles cartes : clés de localisation FR/EN, illustrations, sons et visuels. **En attente** : *Lien du Fauve*, *Rémission Illusoire*, *Écho de Convalescence*, *Estoc Perçant*, *Refrain Vivifiant*, *Crescendo*, *Trait d'Ombre-Verte Mineur*, *Tir de Maître*, *Leçon Partagée* et *Leçon de Jeu de Jambes* sont encore sur `in_progress.png`.
 - [ ] Reste ouvert : **dés de vie**, Élémentaliste (d4) à 52 PV au N12 contre 164 pour le Gardien.
 - [ ] Reste ouvert : nettoyer l'`ItemChoice` vide de la Sorcière (`classes-fq8/witch.json`), puis retirer la ligne `pool vide :: witch.json` de `KNOWN_ISSUES`.
 - [ ] ▶️ **Fin de l'étape** : `npm run report:classes -- --check` ne doit plus signaler d'écart sur le nombre de cartes (les niveaux sont faits), puis `npm test`.
@@ -602,7 +602,7 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - **Tous les buffs/malus durent 1 tour**
 - **Moteur couteaux de lancer** : Ceinture de couteaux (−3 PA, −1 zèle) fabrique 3 cartes *Couteau de lancer* **gratuites** (jusqu'à ×24), boostées par Affûtage des couteaux (`@bonus.knife`, cumulable), Sang-froid, Momentum, Lancer lesté, Prise inversée, Volée de couteaux.
 - **Armes de jet uniques** (5 innées, une fois par combat, malus de PA au tour suivant) : Javelot, Plumbata, Chakram, Filet de rétiaire, Kpinga ; Choix de l'Arsenal en fait revenir une.
-- **Soutien (Charisme)** : Leçons d'estoc / de visée (dégâts d'arme d'un allié portés à 5 + CHA, plus fort pour les faibles jets), Leçon d'esquive (esquive portée à 7) + réduit l'esquive à 0 ?
+- **Soutien (Charisme)** : Leçons d'estoc / de visée (dégâts d'arme d'un allié portés à 5 + CHA, plus fort pour les faibles jets), Leçon d'esquive (esquive portée à 7) + réduit l'esquive à 0 ?, Leçon de jeu de jambes (déplacement porté à 8 cases), Leçon partagée (donne une carte de sa main à un allié).
 - Le seul à avoir des sorts faisant des dégâts d'armes touchant plusieurs cibles (Attaque Latérale, Diagonale, En Cercle, Pluie d'acier) — à vérifier : Illusionniste (Volée de shuriken, sans arme), Guerrier Runique (Frappe vindicative) et Gardien (Tourbillon de Lame, `@wpnM`).
 
 **Boucle de jeu** : réunir les bonnes cartes pour faire de gros dégâts au corps à corps OU à distance OU monter les couteaux de lancer OU …
@@ -612,31 +612,27 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 - Pas d'amélioration personnelle d'esquive par les cartes (⚠️ Leçon d'esquive a une portée minimale de 0 : elle peut se cibler soi-même)
 
 ### Constat des cartes (données)
-- **39 cartes réparties sur N1‑N12** : les deux rails d'arme au N1, les armes de jet au N3, l'instructeur au N5, et les cinq armes innées tous les deux niveaux (N3, N5, N7, N9, N11). Coût moyen 5,1 PA et **18 cartes à 1‑4 PA, la plus grande densité du jeu**.
-- 12 cartes générées (couteaux, étapes des forges).
-- 18 cartes à 1‑4 PA : la plus grande densité de cartes peu chères. Zèle 14 générateurs / 16 consommateurs (14 / 14 avant le lot du 2026‑09‑20, les deux finishers en consommant 2 chacun) ; 79 exemplaires.
-- Déjà dans la cible des 30‑40 cartes : la passe consiste surtout à **élaguer** et à compléter N11‑N12 — les deux finishers du lot du 2026‑09‑20 couvrent ce second point.
+- **42 cartes réparties sur N1‑N12** (3 | 4 | 5 | 4 | 3 | 4 | 3 | 3 | 4 | 3 | 3 | 3) : les deux rails d'arme au N1, le moteur couteaux au N2, l'instructeur au N3, et les cinq armes innées aux N3, N5, N6, N8 et N10. Coût moyen 5,3 PA et **20 cartes à 1‑4 PA, la plus grande densité du jeu**.
+- 12 cartes générées (couteaux, étapes des forges), 46 exemplaires.
+- 88 exemplaires, dont **9 au N1** : c'est le plancher du deck de départ, au‑dessus de la cible de 7‑8. Zèle 13 générateurs / 18 consommateurs ; 3 cartes réactives, 5 armes innées.
+- **Au‑dessus de la cible des 30‑40 cartes** (42) et le N3 est à 5 cartes : la prochaine carte ajoutée doit en faire sortir une, et deux candidates attendent dans « Redondances à trancher ».
+- Lot du 2026‑10‑02 — trois cartes, **illustrations, visuels et sons à faire** :
+  - *Tir de Maître* (N11, ×1) — 16 PA, 2 mana, −3 zèle, portée 4 à 16 cases, le triple des dégâts de l'arme à distance plus la Dextérité, **inesquivable**. Le finisher distance qui manquait. Le rail mêlée s'arrête toujours à *Frappe Triple* (N10), et **aucune carte ne fait de dégâts au N12**.
+  - *Leçon Partagée* (N3, ×2) — 4 PA, −1 zèle, portée 1 à 6 : donne une carte de la main à un allié, qui la jouera avec **ses propres** caractéristiques. Première carte du jeu à déplacer une carte d'une main à une autre : `executeEval` + `passCards` en MJ par socketlib, faute de champ dédié dans le schéma.
+  - *Leçon de Jeu de Jambes* (N4, ×2) — 4 PA, −1 zèle : déplacement d'un allié porté à 8 cases (40 ft, `upgrade`) pendant 2 tours. Ouvre l'instructeur avant le N7.
 
 ### Spécialisations — cartes par spé
 | Spé | Cartes existantes | Manques |
 |---|---|---|
-| **Mêlée** | Attaque Simple, Fente Précise, Frappe Double, Frappe Triple, Huile d'Affûtage, Riposte, Attaque Latérale, Attaque Diagonale, Attaque en Cercle, Forge Spectrale, Forge Astrale, Reprise de Garde | |
-| **Distance** | Tir Simple, Visée Posée, Tir Appuyé, Prise Équilibrée, Riposte à Distance, Pluie d'Acier, Forge Éthérée, Forge Arcanique | |
+| **Mêlée** | Frappe Simple, Fente Précise, Frappe Double, Frappe Triple, Huile d'Affûtage, Riposte, Attaque Latérale, Attaque Diagonale, Attaque en Cercle, Forge Spectrale, Forge Astrale, Reprise de Garde | Finisher au N12 (le rail s'arrête à Frappe Triple, N10) |
+| **Distance** | Tir Simple, Visée Posée, Tir Appuyé, Prise Équilibrée, Riposte à Distance, Pluie d'Acier, Tir de Maître, Forge Éthérée, Forge Arcanique | |
 | **Armes de jet** | Ceinture de Couteaux, Affûtage des Couteaux, Fourreau Caché, Sang-froid, Volée de Couteaux, Momentum, Lancer Lesté, Prise Inversée, Javelot, Plumbata, Chakram, Filet de Rétiaire, Kpinga, Choix de l'Arsenal | |
-| **Instructeur** (soutien CHA) | Leçon d'Esquive, Leçon d'Estoc, Leçon de Visée, Maîtrise des Armes, Réplique Parfaite | Cartes N7+ |
-
-### Deux finishers abandonnés (2026‑09‑21)
-*Coup de Faux* (mêlée) et *Salve Groupée* (distance) avaient été annoncées dans le lot du 2026‑09‑20 avec leurs clés de traduction FR/EN et leurs messages d'erreur, mais **aucune carte ne les a jamais portées** : deux tests restaient rouges sur des placeholders de description sans carte. Décision du 2026‑09‑21 : **les traductions ont été supprimées** plutôt que les cartes écrites. La classe reste à 39 cartes, sans finisher de mêlée ni de distance au-delà de *Frappe triple* (N12) et *Pluie d'acier* (N11). Les conditions `targetsAdjacentPair` et `targetsWithinSquare` restent dans le moteur, testées, sans carte qui les utilise.
+| **Instructeur** (soutien CHA) | Leçon Partagée, Leçon de Jeu de Jambes, Leçon d'Esquive, Leçon d'Estoc, Leçon de Visée, Maîtrise des Armes, Réplique Parfaite | |
 
 ### Redondances à trancher
-- Attaque Simple / Fente Précise et Tir Simple / Visée Posée (même dégâts, +1 PA pour un bonus au toucher).
+- Frappe Simple / Fente Précise et Tir Simple / Visée Posée (même dégâts, +1 PA pour un bonus au toucher) — atténué par le rangement : les variantes à bonus sont au N4, trois niveaux après les cartes de base, et se lisent donc comme des montées en gamme.
 - Six buffs de couteaux sur le même axe : Sang-froid, Momentum, Lancer Lesté, Prise Inversée, Affûtage, Volée.
 - Quatre chaînes de forge (2 mêlée, 2 distance).
-
-### À définir à la main
-- **Spécificités** :
-- **Spécialisations** :
-- **Contraintes** :
 
 **Questionnement et TODO :**
 
