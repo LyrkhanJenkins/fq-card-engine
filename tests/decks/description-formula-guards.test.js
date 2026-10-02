@@ -65,39 +65,14 @@ const PLACEHOLDER_PATTERN = /\{(\d+)_(\w+)\}/g;
  */
 const SIMPLE_TOKEN_ALLOWLIST = {
     "FQCARDDESCRIPTION.AdjustedShot": "bonus de critique — jeton seul",
-    "FQCARDDESCRIPTION.AgilityInflux": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.Ambush": "bonus de dégâts — jeton seul",
-    "FQCARDDESCRIPTION.ArmorReinforcement": "durée — jeton seul",
-    "FQCARDDESCRIPTION.BackflipStrike": "distance de recul, distincte des dégâts déjà interpolés ({0_damage}) — jeton seul",
-    "FQCARDDESCRIPTION.Backstab": "taille de dé symbolique (1d@dex) sans parenthèses — hors portée de l’INLINE_ARITHMETIC_PATTERN, laissé tel quel par le PLAN",
-    "FQCARDDESCRIPTION.BerzerkerStance": "durée — jeton seul",
-    "FQCARDDESCRIPTION.BlackPlague": "nombre de réutilisations — jeton seul",
     "FQCARDDESCRIPTION.BurningHand": "probabilité de brûlure (1d8 de chance) sans jeton de caractéristique adjacent à un opérateur — jeton seul",
-    "FQCARDDESCRIPTION.CommunicatingVessels": "nombre de réutilisations — jeton seul",
-    "FQCARDDESCRIPTION.Curse": "dégâts par tour — jeton seul",
-    "FQCARDDESCRIPTION.DaggerCloud": "durée — jeton seul (le X+1d8 de dégâts n’est pas un jeton de caractéristique)",
     "FQCARDDESCRIPTION.DamagePropagation": "dégâts par tour — jeton seul",
     "FQCARDDESCRIPTION.ElementalMagic": "probabilité d’effet (1d3 de chance) sans jeton de caractéristique adjacent — jeton seul",
-    "FQCARDDESCRIPTION.Exorcism": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.Fog": "perte de critique/esquive — jetons seuls",
-    "FQCARDDESCRIPTION.FrenziedInspiration": "bonus de dégâts — jeton seul",
-    "FQCARDDESCRIPTION.GoodAndEvil": "transfert de points de vie — jetons seuls (@con/@int, choix OU, sans opérateur)",
-    "FQCARDDESCRIPTION.GreenShadowBolt": "dégâts déjà interpolés ({0_damage}) + dé nu 1d6 sans jeton de caractéristique — jeton seul",
-    "FQCARDDESCRIPTION.Hemorrhage": "dégâts de saignement — jeton seul",
-    "FQCARDDESCRIPTION.InstantCurse": "dégâts par tour — jeton seul",
-    "FQCARDDESCRIPTION.ManaDrain": "coût en points d’action — jeton seul",
-    "FQCARDDESCRIPTION.ManaInflux": "coût en points d’action — jeton seul",
-    "FQCARDDESCRIPTION.ManaInfusion": "coût en points d’action — jeton seul",
-    "FQCARDDESCRIPTION.ManaShield": "points de vie récupérés — jeton seul (redite bare d’un champ, sans opérateur)",
-    "FQCARDDESCRIPTION.ManaSurge": "coût en points d’action — jeton seul",
-    "FQCARDDESCRIPTION.MirrorImages": "bonus d’esquive — jeton seul",
-    "FQCARDDESCRIPTION.Necromancy": "bonus de portée — jeton seul",
     "FQCARDDESCRIPTION.PhantomBlade": "bonus de critique — jeton seul",
     "FQCARDDESCRIPTION.PoisonedShot": "dégâts par tour / bonus de portée — jetons seuls",
     "FQCARDDESCRIPTION.PreciseShot": "bonus de portée — jeton seul",
-    "FQCARDDESCRIPTION.ShadowChanneling": "coût en points d’action — jeton seul",
-    "FQCARDDESCRIPTION.ShadowExplosion": "taille de zone — jeton seul",
-    "FQCARDDESCRIPTION.SkeletonSorcerer": "points de vie/dégâts/déplacement — jetons seuls",
     "FQCARDDESCRIPTION.Uppercut": "coût en points d’action — jeton seul",
     "FQCARDDESCRIPTION.Vortex": "portée — jeton seul",
     "FQCARDDESCRIPTION.WeakPointStudy": "bonus de dégâts — jeton seul",
@@ -166,8 +141,13 @@ function collectDescriptionChoices() {
 describe("Garde de non-régression : arithmétique en dur dans les descriptions (T-20-06)", () => {
     const descriptionKeys = Object.keys(fr).filter(k => k.startsWith("FQCARDDESCRIPTION."));
 
-    test("le balayage du corpus inspecte au moins 200 clés de description (garde-fou anti-glob-vide)", () => {
-        expect(descriptionKeys.length).toBeGreaterThanOrEqual(200);
+    test("le balayage du corpus inspecte au moins 140 clés de description (garde-fou anti-glob-vide)", () => {
+        // Plancher à 200 jusqu'au passage des descriptions des classes premium dans le
+        // lang de `fq-card-engine-extended` : ce module n'en livre plus que 147, celles
+        // de l'élémentaliste, du moine, du trappeur et du deck neutre. Le plancher ne
+        // vaut que comme garde-fou : il doit rester nettement sous le compte réel pour
+        // signaler un `fr.json` vide ou un glob cassé, pas un retrait de contenu.
+        expect(descriptionKeys.length).toBeGreaterThanOrEqual(140);
     });
 
     test("aucune valeur FQCARDDESCRIPTION.* de fr.json ne contient d'arithmétique hors placeholder", () => {
@@ -287,10 +267,13 @@ describe("Garde de non-régression : arithmétique en dur dans les descriptions 
             expect(undocumented).toEqual([]);
         });
 
-        test("la liste blanche contient exactement 37 clés (seau « laisser » du triage, plan 20-06)", () => {
+        test("la liste blanche contient exactement 12 clés (seau « laisser » du triage, plan 20-06)", () => {
             // 38 avant le 28/09/2026 : `SteelRain` est partie avec le Maître d'armes
-            // vers le module étendu, et sa clé n'est plus livrée par ce module.
-            expect(Object.keys(SIMPLE_TOKEN_ALLOWLIST).length).toBe(37);
+            // vers le module étendu, et sa clé n'est plus livrée par ce module. Puis 37
+            // jusqu'au passage des titres, descriptions et libellés de choix des classes
+            // premium dans le lang de `fq-card-engine-extended` : 25 entrées ont suivi
+            // leurs clés, la liste ne juge que ce que CE module livre.
+            expect(Object.keys(SIMPLE_TOKEN_ALLOWLIST).length).toBe(12);
         });
     });
 });
