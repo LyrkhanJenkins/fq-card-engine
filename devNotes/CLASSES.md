@@ -675,7 +675,6 @@ Utilitaires / transverses : Magie des Éléments (innée), Captation de Mana, In
 
 **Problème de caractérisation**
 - Soutien un peu trop similaire au maître d'armes
-- ~~Attaque latérale et en cercle à déplacer vers le maître d'armes~~ → fait (Attaque Latérale, Diagonale et En Cercle sont chez le Maître d'Armes)
 - Bien différencier les soins des autres soigneurs : Moine (corps à corps) et Mage Blanc (soins directs et bouclier)
 
 **Faiblesses** :
@@ -701,20 +700,10 @@ Le Barde devient explicitement le **healeur HOT** de la classe. Deux cartes ajou
 | **Barde** (soutien, healeur HOT) | Inspiration Chantée, Danse Enfiévrée, Inspiration Effrénée, Apothicaire I, Apothicaire II, Immatérialité, Vases Communicants, Succion de Mana, Soins Expansifs, Magie Verte, Rémission Illusoire, Écho de Convalescence, **Refrain Vivifiant** | Sorts d'assistance (voir TODO) |
 | **Chronomancien / manipulateur** | Passage vers le Plan Éthéré, Peste Noire, Contagion, Frappe Temporelle, Miroir, Distorsion, Bombe à Retardement, Cage de Rappel, Illusion de Maître de Jeu, Piège de Retour dans le Temps, Illusion Infranchissable, Regard Envoûtant, Berceuse, Images Miroir | Cartes N8‑N11 |
 
-### Redondances à trancher
-- Peste Noire / Contagion.
-- Apothicaire I / II (3 potions sur 5 identiques).
-- Inspiration Chantée / Danse Enfiévrée (même gabarit).
-- Placement : Passage Éthéré / Illusion de Maître de Jeu / Cage de Rappel.
-
 ### Incohérences relevées
 - Jets sur INT (non primaire).
 - Orbe Grandissante coûte 14 PA : hors de portée avant le N6‑N7 en moyenne.
 
-### À définir à la main
-- **Spécificités** :
-- **Spécialisations** :
-- **Contraintes** :
 
 **Questionnement et TODO :**
 - Reprendre en `@cha` les soins historiques restés en `@wis` (Soins Expansifs, potion de vie de l'Apothicaire I et II) : SAG 10 plate, jamais montée.
