@@ -14,6 +14,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
 | Rapport des classes (`utils/class-report.mjs`) | `npm run report:classes` | Affiche en markdown les tableaux de ce fichier : stats moyennes, vue d'ensemble des cartes, exemplaires, caracs utilisées, rendement des cartes (dégâts/soins par PA). |
 | | `npm run report:classes -- --out devNotes/rapport-classes.md` | Écrit le même rapport dans un fichier, pour copier les tableaux dans CLASSES.md. |
 | | `npm run report:classes -- --check` | Contrôle les cibles de la passe : 30‑40 cartes distinctes N1‑N12, aucune carte hors N1‑N12, et exemplaires par niveau une fois la cible fixée (`TARGETS` en tête du script). Code de sortie 1 s'il reste des écarts. |
+| | `npm run report:classes -- --extended <dir>` | Joint un autre emplacement du module d'extension (`none` pour s'en passer). Par défaut le rapport lit `../fq-card-engine-extended` s'il est installé à côté : sans lui il n'a que trois classes et le dit en tête. |
 | Test d'intégrité (`tests/decks/class-deck-integrity.test.js`) | `npx vitest run tests/decks` | Tests des decks : intégrité (niveau, exemplaires, classe, image avec la bonne casse, portée, pools de stats), clés de traduction (`deck-references`), clés de paquet (`pack-keys`)… Les anomalies déjà connues sont listées dans `KNOWN_ISSUES` : **retirer chaque entrée corrigée**, le test l'exige. |
 | Suite complète | `npm test` | Toute la suite (~2 min), à lancer en fin d'étape. |
 
@@ -56,7 +57,7 @@ Deux outils ont été ajoutés pour cette passe. **Ils seront supprimés à la f
   - [ ] **Casse des images** : 30 cartes et le dos du deck Moine généré pointent vers un fichier dont la casse diffère (`.png` / `.PNG`, dossier `Illusionist` au lieu de `illusionist`). Invisible sous Windows, image cassée sur un serveur Linux. Liste complète dans `KNOWN_ISSUES` du test d'intégrité.
 - [ ] Caractéristiques dnd5e (tableau « Caracs utilisées par les cartes ») :
   - [ ] Illusionniste : 17 jets de toucher/sauvegarde sur **INT**, qui n'est ni primaire ni montée (INT 10).
-  - [ ] Sorcière : les formules utilisent SAG 9 fois contre INT 3 fois, alors que INT est primaire.
+  - [ ] Sorcière : les formules sont revenues à INT 9 / SAG 9, mais les **jets** restent sur SAG (4) plutôt que sur INT (3), alors que INT est primaire.
   - [ ] Trapper : la spé bêtes scale sur **CHA** (7 formules) alors que le Trapper démarre à CHA 6 (-2).
   - [ ] Mage Blanc : *Aura de Force* et *Exorcisme* scalent sur CHA, alors que le Mage Blanc a CHA 6 (-2).
 
@@ -96,17 +97,17 @@ Chaque carac a un usage dominant bien tranché dans les formules de cartes. Dans
 
 | Classe | Primaires | FOR | DEX | CON | INT | SAG | CHA | Arme (`@wpnM`/`@wpnR`) | Jets (toucher/sauvegarde) |
 |---|---|---|---|---|---|---|---|---|---|
-| Moine | FOR + DEX | 7 | 15 | 4 | – | 3 | 2 | – | DEX 6, FOR 4, CHA 1, SAG 1 |
-| Gardien | FOR + CON | 15 | – | 19 | – | – | 3 | 7 | arme 9, FOR 3, CHA 2, CON 1 |
-| Mage Blanc | CON + SAG | – | – | 5 | 8 | 15 | 1 | – | SAG 18, INT 4 |
+| Moine | FOR + DEX | 8 | 16 | 4 | – | 3 | 2 | – | DEX 6, FOR 4, CHA 1, SAG 1 |
+| Gardien | FOR + CON | 16 | – | 20 | – | – | 3 | 8 | arme 11, FOR 3, CHA 2, CON 1 |
+| Mage Blanc | CON + SAG | – | – | 4 | 8 | 15 | 2 | – | SAG 18, INT 4 |
 | Élémentaliste | INT + SAG | – | 1 | – | 25 | 18 | 1 | – | INT 25, SAG 13, DEX 1 |
 | Trapper | DEX + SAG | 1 | 16 | – | 3 | 6 | **7** | 10 | arme 10, SAG 6, DEX 4, CHA 2, INT 1 |
-| Sorcière | INT + CHA | – | – | – | **3** | **9** | 11 | – | SAG 4, INT 1 |
-| Illusionniste | DEX + CHA | 2 | 6 | 1 | 1 | 7 | 8 | 2 | **INT 17**, DEX 2, arme 2 |
-| Maître d'Armes | FOR + DEX | 5 | 9 | – | – | – | 3 | 13 | arme 13, DEX 4, FOR 1 |
+| Sorcière | INT + CHA | – | – | – | 9 | **9** | 11 | – | SAG 4, INT 3 |
+| Illusionniste | DEX + CHA | 2 | 7 | 1 | 1 | 7 | 10 | 2 | **INT 17**, DEX 3, arme 2 |
+| Maître d'Armes | FOR + DEX | 5 | 10 | – | – | – | 3 | 14 | arme 14, DEX 4, FOR 1 |
 | Guerrier Runique | FOR + INT | 4 | – | 4 | 4 | – | – | 12 | arme 12 |
 
-Écarts à traiter : INT pour l'Illusionniste, SAG/INT pour la Sorcière, CHA pour la spé bêtes du Trapper.
+Écarts à traiter : INT pour l'Illusionniste (17 jets sur une carac ni primaire ni montée), CHA pour la spé bêtes du Trapper. La Sorcière est revenue à INT 9 à égalité avec SAG, mais ses **jets** restent sur SAG 4 contre INT 3.
 
 ### Stats FQ du personnage
 
@@ -212,20 +213,19 @@ Quand une classe ne garde qu'une partie d'une stat, les objets retenus sont **r�
 Stats de départ notables (détail dans « Stats de départ ») : **critique** de départ nul pour Moine, Mage Blanc et Sorcière — et le Moine ne peut pas le monter du tout ; **esquive** nulle pour Trapper et Élémentaliste, le Trapper ne pouvant pas la monter non plus ; **zèle** nul pour toutes les classes ; **pioche** nulle pour le Gardien, qui n'a qu'un objet de pioche dans son pool ; **aucun point d'action** pour l'Illusionniste, qui compense par les cartes les moins chères du jeu.
 
 ### Vue d'ensemble des cartes (decks de base)
-# TODO A mettre à jour:
-| Classe | N1 | N2 | N3 | N4 | N5 | N6 | N7 | N8 | N9 | N10 | N11 | N12 | Hors N1‑12 | Plancher deck | Total distinctes / exemplaires | Générées (dist./ex.) | Coût moyen PA | Cartes 1‑4 PA | Réactives | Zèle + / − | Innées |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Moine | 3 | 3 | 4 | 3 | 3 | 4 | 3 | 3 | 3 | 4 | 3 | 3 | 0 | 13 | 39 / 79 | 1 / 1 | 5,2 | 15 | 4 | 20 / 13 | 1 |
-| Gardien | 3 | 4 | 3 | 3 | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 4 | 0 | 12 | 41 / 75 | 3 / 32 | 5,1 | 11 | 6 | 13 / 17 | 1 |
-| Mage Blanc | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 4 | 3 | 3 | 0 | 13 | 41 / 79 | 2 / 4 | 6,0 | 7 | 9 | 12 / 12 | 3 |
-| Élémentaliste | 4 | 4 | 4 | 4 | 4 | 3 | 4 | 4 | 3 | 3 | 3 | 3 | 0 | 19 | 43 / 86 | 2 / 4 | 7,8 | 7 | 2 | 9 / 25 | 1 |
-| Trapper | 3 | 3 | 3 | 3 | 3 | 4 | 4 | 4 | 3 | 3 | 3 | 3 | 0 | 9 | 39 / 72 | 0 / 0 | 7,9 | 5 | 9 | 8 / 18 | 1 |
-| Sorcière | 4 | 3 | 3 | 3 | 4 | 4 | 3 | 3 | 3 | 3 | 3 | 3 | 0 | 13 | 39 / 78 | 1 / 3 | 6,8 | 5 | 1 | 5 / 11 | 2 |
-| Illusionniste | 4 | 4 | 4 | 3 | 3 | 4 | 3 | 3 | 4 | 3 | 4 | 3 | 0 | 9 | 42 / 70 | 0 / 0 | 5,2 | 13 | 2 | 8 / 20 | 2 |
-| Maître d'Armes | 3 | 3 | 3 | 3 | 4 | 3 | 3 | 3 | 4 | 3 | 4 | 3 | 0 | 10 | 39 / 77 | 12 / 46 | 5,1 | 18 | 3 | 14 / 14 | 5 |
-| Guerrier Runique | 4 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 5 | 15 / 16 | 17 / 408 | 5,9 | 1 | 0 | 12 / 0 | 0 |
+| Classe | N1 | N2 | N3 | N4 | N5 | N6 | N7 | N8 | N9 | N10 | N11 | N12 | Hors N1‑12 | Plancher deck | Total distinctes / exemplaires | Générées (dist./ex.) | Annexes (dist./ex.) | Coût moyen PA | Cartes 1‑4 PA | Réactives | Zèle + / − | Innées |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Moine | 4 | 4 | 4 | 3 | 4 | 3 | 4 | 3 | 3 | 3 | 4 | 4 | 0 | 14 | 43 / 87 | 1 / 99 | – | 5,7 | 14 | 5 | 20 / 18 | 1 |
+| Gardien | 4 | 3 | 4 | 3 | 3 | 3 | 4 | 4 | 4 | 4 | 3 | 3 | 0 | 15 | 42 / 86 | 3 / 297 | – | 5,5 | 10 | 6 | 14 / 19 | 1 |
+| Mage Blanc | 3 | 3 | 3 | 3 | 3 | 5 | 3 | 5 | 4 | 3 | 3 | 3 | 0 | 12 | 41 / 85 | 2 / 198 | – | 6,7 | 5 | 9 | 13 / 14 | 4 |
+| Élémentaliste | 4 | 3 | 3 | 4 | 3 | 4 | 3 | 4 | 4 | 4 | 3 | 4 | 0 | 16 | 43 / 89 | 2 / 198 | – | 7,9 | 7 | 2 | 13 / 27 | 1 |
+| Trapper | 3 | 3 | 4 | 4 | 3 | 3 | 3 | 4 | 3 | 3 | 3 | 3 | 0 | 9 | 39 / 74 | 0 / 0 | – | 8,1 | 5 | 9 | 17 / 16 | 1 |
+| Sorcière | 3 | 3 | 2 | 4 | 6 | 4 | 3 | 4 | 4 | 3 | 3 | 3 | 0 | 10 | 42 / 86 | 1 / 99 | – | 6,6 | 6 | 1 | 5 / 17 | 2 |
+| Illusionniste | 3 | 4 | 4 | 3 | 3 | 4 | 3 | 4 | 4 | 3 | 3 | 3 | 0 | 11 | 41 / 76 | 0 / 0 | – | 5,3 | 12 | 2 | 11 / 17 | 2 |
+| Maître d'Armes | 4 | 4 | 4 | 4 | 3 | 4 | 3 | 3 | 4 | 3 | 3 | 3 | 0 | 12 | 42 / 88 | 12 / 46 | – | 5,5 | 20 | 3 | 14 / 22 | 5 |
+| Guerrier Runique | 4 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 5 | 15 / 16 | 17 / 408 | 117 / 597 | 5,9 | 1 | 0 | 12 / 0 | 0 |
 
-**Hors N1‑12** : plus aucune carte, les neuf decks sont rangés. **Plancher deck** : exemplaires des cartes N1, figés comme `minSize` du deck de départ — il reste à le ramener autour de 7‑8 partout (étape 4), l'Élémentaliste à 19 et la Sorcière à 13 étant les plus lourds. Tableau copié de `npm run report:classes`.
+**Hors N1‑12** : plus aucune carte, les neuf decks sont rangés. **Plancher deck** : exemplaires des cartes N1, figés comme `minSize` du deck de départ — il reste à le ramener autour de 7‑8 partout (étape 4), l'Élémentaliste à 16 et le Gardien à 15 étant les plus lourds. **Annexes** : decks que le moteur *propose* en cours de partie (`chooseCardsFrom`) au lieu de les débloquer au niveau — les trois decks de runes du Guerrier Runique, dont les 117 cartes ne comptent dans aucune autre colonne. Tableau copié de `npm run report:classes` (2026‑10‑03).
 
 
 ### Règles générales sur les cartes

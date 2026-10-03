@@ -12,7 +12,8 @@ import {SOURCE_DIR} from "./pack-source.js";
  * dégradent silencieusement le deck : carte à un niveau jamais atteint, nombre
  * d'exemplaires absent, carte rangée dans la mauvaise classe, image dont la
  * casse diffère (invisible sous Windows, cassée sur un serveur Linux), pool de
- * stats vide ou pointant vers un objet disparu.
+ * stats vide, pointant vers un objet disparu, ou nommant le mauvais module —
+ * l'objet existe, mais pas là où l'uuid le cherche.
  *
  * Les clés de traduction sont déjà couvertes par `deck-references.test.js`.
  *
@@ -29,6 +30,15 @@ const DECKS_DIR = path.join(SOURCE_DIR, "decks-pattern-fq8");
 const CLASSES_DIR = path.join(SOURCE_DIR, "classes-fq8");
 const STATS_DIR = path.join(SOURCE_DIR, "classes-stats-fq8");
 const MODULE_PREFIX = "modules/fq-card-engine/";
+/**
+ * Le module que doit nommer un uuid de `classes-stats-fq8` : les objets de stats
+ * des classes livrées ici vivent ici, start stats comme pools.
+ *
+ * Les classes étendues ont le miroir de cette contrainte, mais `fq-card-engine-extended`
+ * n'a pas de lanceur de tests (cf. son `tests/LISEZ-MOI.md`) : elles ne sont
+ * gardées par rien.
+ */
+const STATS_MODULE = "fq-card-engine";
 /**
  * Niveau maximum admis pour une carte : celui d'un personnage dnd5e au plafond.
  *
@@ -158,6 +168,11 @@ function detectIssues() {
                 const id = entry.uuid.split(".").pop();
                 if (!statIds.has(id)) {
                     issues.push(`stat introuvable :: ${file} :: ${entry.uuid}`);
+                } else if (entry.uuid.includes("classes-stats-fq8")
+                    && entry.uuid.split(".")[1] !== STATS_MODULE) {
+                    // L'objet est bien ici, mais l'uuid nomme un autre module :
+                    // Foundry ne résout rien et l'advancement est sauté sans un mot.
+                    issues.push(`stat hors module :: ${file} :: ${entry.uuid}`);
                 }
             }
         }
@@ -177,7 +192,7 @@ describe("Intégrité des decks de classe et des pools de stats", () => {
         expect(classes.length).toBeGreaterThan(0);
     });
 
-    it("aucune anomalie nouvelle (niveau, exemplaires, classe, image, portée, pools de stats)", () => {
+    it("aucune anomalie nouvelle (niveau, exemplaires, classe, image, portée, pools et module des stats)", () => {
         expect(issues.filter(issue => !KNOWN_ISSUES.has(issue))).toEqual([]);
     });
 

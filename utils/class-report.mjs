@@ -11,6 +11,7 @@
  *   npm run report:classes                      → rapport sur la sortie standard
  *   npm run report:classes -- --out rapport.md  → rapport écrit dans un fichier
  *   npm run report:classes -- --check           → contrôle des cibles de la passe (code de sortie 1 si écart)
+ *   npm run report:classes -- --extended <dir>  → module d'extension à joindre (`none` pour l'ignorer)
  *
  * Les moyennes sont des espérances, pas des mesures en partie : voir la section
  * « Hypothèses » du rapport.
@@ -19,8 +20,54 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT = process.cwd();
-const SOURCE = path.join(ROOT, "packs", "_source");
-const DECKS_DIR = path.join(SOURCE, "decks-pattern-fq8");
+
+/**
+ * Le module d'extension à joindre à la lecture, ou null.
+ *
+ * Depuis le découpage, six des neuf classes ne vivent plus ici : sans leurs
+ * paquets le rapport n'en voit que trois et les tableaux sont inexploitables.
+ * Par défaut on prend le module installé à côté ; `--extended <chemin>` en
+ * désigne un autre et `--extended none` s'en passe.
+ *
+ * @returns {string|null} La racine du module, si elle existe.
+ */
+function extendedRoot() {
+    const flag = process.argv.indexOf("--extended");
+    const asked = flag >= 0 ? process.argv[flag + 1] : null;
+    if (asked === "none") return null;
+    const dir = path.resolve(asked ?? path.join(ROOT, "..", "fq-card-engine-extended"));
+    return fs.existsSync(path.join(dir, "packs", "_source")) ? dir : null;
+}
+
+/** Les modules lus, le courant d'abord : il gagne en cas de doublon. */
+const MODULES = [ROOT, extendedRoot()].filter(Boolean);
+const SOURCES = MODULES.map(module => path.join(module, "packs", "_source"));
+
+/**
+ * Le premier chemin existant sous les racines source, ou null.
+ *
+ * @param {...string} parts - Le chemin cherché, relatif à `packs/_source`.
+ *
+ * @returns {string|null} Le chemin absolu.
+ */
+function findSource(...parts) {
+    for (const source of SOURCES) {
+        const full = path.join(source, ...parts);
+        if (fs.existsSync(full)) return full;
+    }
+    return null;
+}
+
+/**
+ * Tous les dossiers de paquet portant ce nom, dans tous les modules lus.
+ *
+ * @param {string} name - Le nom du dossier de paquet.
+ *
+ * @returns {string[]} Les dossiers existants.
+ */
+function sourceDirs(name) {
+    return SOURCES.map(source => path.join(source, name)).filter(dir => fs.existsSync(dir));
+}
 
 /** Classes suivies, dans l'ordre de CLASSES.md, avec leur libellé. */
 const CLASSES = [
@@ -57,7 +104,11 @@ const ARMORS = {
 };
 
 const readJson = file => JSON.parse(fs.readFileSync(file, "utf8"));
-const FR = readJson(path.join(ROOT, "lang", "fr.json"));
+/** Les libellés de tous les modules lus : les titres des classes étendues y sont aussi. */
+const FR = Object.assign({}, ...MODULES
+    .map(module => path.join(module, "lang", "fr.json"))
+    .filter(file => fs.existsSync(file))
+    .map(readJson));
 const title = card => FR[card.name] ?? card.name;
 const fmt = value => Number.isInteger(value) ? String(value) : value.toFixed(1).replace(".", ",");
 const signed = value => (value >= 0 ? "+" : "") + value;
@@ -70,16 +121,17 @@ const mod = score => Math.floor((score - 10) / 2);
 /** Les objets de stats indexés par _id, avec leurs changements agrégés (clé → valeur). */
 function loadStatItems() {
     const items = new Map();
-    const dir = path.join(SOURCE, "classes-stats-fq8");
-    for (const file of fs.readdirSync(dir).filter(f => f.endsWith(".json"))) {
-        const item = readJson(path.join(dir, file));
-        const changes = {};
-        for (const effect of item.effects ?? []) {
-            for (const change of effect.system?.changes ?? effect.changes ?? []) {
-                changes[change.key] = (changes[change.key] ?? 0) + Number(change.value);
+    for (const dir of sourceDirs("classes-stats-fq8")) {
+        for (const file of fs.readdirSync(dir).filter(f => f.endsWith(".json"))) {
+            const item = readJson(path.join(dir, file));
+            const changes = {};
+            for (const effect of item.effects ?? []) {
+                for (const change of effect.system?.changes ?? effect.changes ?? []) {
+                    changes[change.key] = (changes[change.key] ?? 0) + Number(change.value);
+                }
             }
+            items.set(item._id, {name: item.name, file, changes});
         }
-        items.set(item._id, {name: item.name, file, changes});
     }
     return items;
 }
@@ -88,7 +140,7 @@ const idFromUuid = uuid => String(uuid).split(".").pop();
 
 /** Valeurs de base d'un personnage, lues sur le starter hero de la classe. */
 function starterBase(classKey) {
-    const hero = readJson(path.join(SOURCE, "starter-heroes", `${classKey}.json`));
+    const hero = readJson(findSource("starter-heroes", `${classKey}.json`));
     const fq = hero.system.fq;
     return {
         "system.fq.action.max": Number(fq.action?.max ?? 0),
@@ -118,8 +170,11 @@ const FQ_ROWS = [
 
 /** Calcule les stats moyennes d'une classe pour chaque niveau de 1 à 12. */
 function classProfile(classKey, statItems) {
-    const cls = readJson(path.join(SOURCE, "classes-fq8", `${classKey}.json`));
-    const advancement = cls.system.advancement ?? [];
+    const cls = readJson(findSource("classes-fq8", `${classKey}.json`));
+    // dnd5e indexe `advancement` par id depuis la 6.0 ; les exports plus anciens
+    // en font un tableau. Les deux formes se croisent encore dans les paquets.
+    const rawAdvancement = cls.system.advancement ?? [];
+    const advancement = Array.isArray(rawAdvancement) ? rawAdvancement : Object.values(rawAdvancement);
     const hd = Number(String(cls.system.hd?.denomination ?? "d0").slice(1));
     const primary = cls.system.primaryAbility?.value ?? [];
     const base = starterBase(classKey);
@@ -237,14 +292,36 @@ export function averageFormula(formula, abilities) {
 
 /** Les cartes du deck de base d'une classe (vide si le deck n'existe pas). */
 function baseCards(classKey) {
-    const file = path.join(DECKS_DIR, `${classKey}-base.json`);
-    return fs.existsSync(file) ? readJson(file).cards ?? [] : [];
+    const file = findSource("decks-pattern-fq8", `${classKey}-base.json`);
+    return file ? readJson(file).cards ?? [] : [];
+}
+
+/**
+ * Les cartes des decks annexes d'une classe : ni le deck de base, ni les
+ * générées. Ce sont les decks que le moteur propose en cours de partie plutôt
+ * que de débloquer au niveau — aujourd'hui les trois decks de runes du
+ * Guerrier Runique, invisibles de toutes les autres colonnes.
+ *
+ * @param {string} classKey - L'identifiant de la classe.
+ *
+ * @returns {object[]} Les cartes.
+ */
+function annexCards(classKey) {
+    const cards = [];
+    for (const dir of sourceDirs("decks-pattern-fq8")) {
+        for (const file of fs.readdirSync(dir)) {
+            if (!file.startsWith(`${classKey}-`) || !file.endsWith(".json")) continue;
+            if (file === `${classKey}-base.json` || file === `${classKey}-generated.json`) continue;
+            cards.push(...readJson(path.join(dir, file)).cards ?? []);
+        }
+    }
+    return cards;
 }
 
 /** Les cartes générées d'une classe (vide si le deck n'existe pas). */
 function generatedCards(classKey) {
-    const file = path.join(DECKS_DIR, `${classKey}-generated.json`);
-    return fs.existsSync(file) ? readJson(file).cards ?? [] : [];
+    const file = findSource("decks-pattern-fq8", `${classKey}-generated.json`);
+    return file ? readJson(file).cards ?? [] : [];
 }
 
 const levelOf = card => Number(card.system?.fq?.level ?? NaN);
@@ -311,10 +388,12 @@ function cardProfile(classKey, profile) {
         .reduce((acc, [, v]) => ({distinct: acc.distinct + v.distinct, copies: acc.copies + v.copies}),
             {distinct: 0, copies: 0});
     const generated = generatedCards(classKey);
+    const annex = annexCards(classKey);
 
     return {
         cards, perLevel, tags, costs, abilityUse, hitUse, yields, outOfRange, unlocked,
         generated: {distinct: generated.length, copies: generated.reduce((s, c) => s + copiesOf(c), 0)},
+        annex: {distinct: annex.length, copies: annex.reduce((s, c) => s + copiesOf(c), 0)},
         costAverage: costs.length ? costs.reduce((a, b) => a + b, 0) / costs.length : null,
         cheap: costs.filter(c => c > 0 && c <= 4).length,
     };
@@ -345,6 +424,7 @@ function render(data) {
     const perLevel = fn => data.map(d => LEVELS.map(level => fn(d, level)).join(" / "));
 
     out.push(`# Rapport des classes FQ (${new Date().toISOString().slice(0, 10)})`);
+    out.push(`\nModules lus : ${MODULES.map(module => path.basename(module)).join(" + ")}.`);
 
     out.push("\n## Stats moyennes par classe (N1 / N6 / N12)\n");
     const rows = [];
@@ -378,7 +458,7 @@ alternativement sur les deux caracs primaires (plafond 20) ; PV = dé max au N1 
     const levelHeaders = Array.from({length: 12}, (_, i) => `N${i + 1}`);
     out.push(table(
         ["Classe", ...levelHeaders, "Hors N1‑12", "Plancher deck", "Total distinctes / exemplaires", "Générées (dist./ex.)",
-            "Coût moyen PA", "Cartes 1‑4 PA", "Réactives", "Zèle + / −", "Innées"],
+            "Annexes (dist./ex.)", "Coût moyen PA", "Cartes 1‑4 PA", "Réactives", "Zèle + / −", "Innées"],
         data.map(d => {
             const c = d.cards;
             const cell = key => c.perLevel[key]?.distinct ?? 0;
@@ -386,6 +466,7 @@ alternativement sur les deux caracs primaires (plafond 20) ; PV = dé max au N1 
                 `${c.perLevel[1]?.copies ?? 0}`,
                 `${c.cards.length} / ${c.cards.reduce((s, x) => s + copiesOf(x), 0)}`,
                 `${c.generated.distinct} / ${c.generated.copies}`,
+                c.annex.distinct ? `${c.annex.distinct} / ${c.annex.copies}` : "–",
                 c.costAverage === null ? "–" : fmt(c.costAverage), c.cheap, c.tags.reactive,
                 `${c.tags.zealGain} / ${c.tags.zealCost}`, c.tags.innate];
         })));
@@ -454,10 +535,16 @@ function check(data) {
 function main() {
     const args = process.argv.slice(2);
     const statItems = loadStatItems();
-    const data = CLASSES.map(([key, label]) => {
+    // Une classe dont les paquets ne sont pas là est laissée de côté plutôt que
+    // de faire tomber le rapport : c'est le cas sans le module d'extension.
+    const missing = CLASSES.filter(([key]) => !findSource("classes-fq8", `${key}.json`));
+    const data = CLASSES.filter(([key]) => findSource("classes-fq8", `${key}.json`)).map(([key, label]) => {
         const profile = classProfile(key, statItems);
         return {key, label, profile, cards: cardProfile(key, profile)};
     });
+    if (missing.length) {
+        console.error(`Classes absentes des modules lus, hors rapport : ${missing.map(([, label]) => label).join(", ")}.`);
+    }
 
     if (args.includes("--check")) {
         const problems = check(data);
